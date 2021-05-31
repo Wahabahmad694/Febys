@@ -1,61 +1,43 @@
 package com.android.febys.ui.screens.home
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.android.febys.R
 import com.android.febys.databinding.ItemStoreYouFollowBinding
 
-class HomeStoresAdapter(private val interaction: Interaction? = null) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class HomeStoresAdapter :
+    ListAdapter<String, HomeStoresAdapter.StoreYouFollowViewHolder>(diffCallback) {
+    companion object {
+        private val diffCallback = object : DiffUtil.ItemCallback<String>() {
 
-    private val diffCallback = object : DiffUtil.ItemCallback<String>() {
+            override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
+                return oldItem == newItem
+            }
 
-        override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
-            return oldItem == newItem
-        }
-
-        override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
-            return oldItem == newItem
-        }
-
-    }
-    private val differ = AsyncListDiffer(this, diffCallback)
-
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-
-        return VH(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.item_store_you_follow, parent, false
-            ),
-            interaction
-        )
-    }
-
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when (holder) {
-            is VH -> {
-                holder.bind(differ.currentList[position], position)
+            override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
+                return oldItem == newItem
             }
         }
     }
 
-    override fun getItemCount(): Int {
-        return differ.currentList.size
+    var interaction: Interaction? = null
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoreYouFollowViewHolder {
+        return StoreYouFollowViewHolder(
+            ItemStoreYouFollowBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false
+            )
+        )
     }
 
-    fun submitList(list: List<String>) {
-        differ.submitList(list)
+    override fun onBindViewHolder(holder: StoreYouFollowViewHolder, position: Int) {
+        holder.bind(getItem(position), position)
     }
 
-    class VH constructor(
-        itemView: View, private val interaction: Interaction?
-    ) : RecyclerView.ViewHolder(itemView) {
-        private val binding = ItemStoreYouFollowBinding.bind(itemView)
+    inner class StoreYouFollowViewHolder(val binding: ItemStoreYouFollowBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: String, position: Int) {
             binding.root.setOnClickListener {
@@ -63,8 +45,8 @@ class HomeStoresAdapter(private val interaction: Interaction? = null) :
             }
 
             binding.imageUrl = item
-            binding.tvStoreName.text = "Deal-Train store"
-            binding.tvStoreSlogan.text = "Patch belted denim dress"
+            binding.storeName = "Deal-Train store"
+            binding.storeSlogan = "Patch belted denim dress"
         }
     }
 

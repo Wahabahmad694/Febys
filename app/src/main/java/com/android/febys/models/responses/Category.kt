@@ -20,5 +20,5 @@ data class Category(
     @SerializedName("child_name")
     val childNames: String,
     @SerializedName("total_child")
-    val totalChild: Int,
+    val totalChild: Int
 )

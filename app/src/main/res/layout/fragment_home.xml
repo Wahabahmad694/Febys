@@ -113,6 +113,7 @@
                     app:sliderScrollTimeInSec="3"
                     app:sliderStartAutoCycle="true" />
 
+                <!--region toady deals-->
                 <TextView
                     android:id="@+id/tv_today_deals"
                     style="@style/Febys.TextTheme.Title1"
@@ -155,7 +156,9 @@
                     android:layout_marginTop="@dimen/margin_normal_x_2"
                     android:text="@string/label_shop_now"
                     app:layout_constraintTop_toBottomOf="@id/rv_today_deals" />
+                <!--endregion toady deals-->
 
+                <!--region featured categories-->
                 <TextView
                     android:id="@+id/tv_featured_categories"
                     style="@style/Febys.TextTheme.Title1"
@@ -217,7 +220,9 @@
                     android:layout_marginTop="@dimen/margin_normal_x_2"
                     android:text="@string/label_shop_now"
                     app:layout_constraintTop_toBottomOf="@id/rv_featured_category_products" />
+                <!--endregion featured categories-->
 
+                <!--region seasonal offers-->
                 <com.facebook.drawee.view.SimpleDraweeView
                     android:id="@+id/iv_bg_seasonal_offers"
                     android:layout_width="match_parent"
@@ -265,7 +270,9 @@
                     app:layout_constraintEnd_toEndOf="@id/iv_bg_seasonal_offers"
                     app:layout_constraintStart_toStartOf="@id/iv_bg_seasonal_offers"
                     app:layout_constraintTop_toBottomOf="@id/tv_seasonal_offers_slogan" />
+                <!--endregion seasonal offers-->
 
+                <!--region trending products-->
                 <TextView
                     android:id="@+id/tv_trending_products"
                     style="@style/Febys.TextTheme.Title1"
@@ -308,6 +315,7 @@
                     android:layout_marginTop="@dimen/margin_normal_x_2"
                     android:text="@string/label_shop_now"
                     app:layout_constraintTop_toBottomOf="@id/rv_trending_products" />
+                <!--endregion trending products-->
 
                 <!--region store you follow-->
                 <TextView
@@ -354,6 +362,7 @@
                     app:layout_constraintTop_toBottomOf="@id/rv_store_you_follow" />
                 <!--endregion store you follow-->
 
+                <!--region same day delivery-->
                 <com.facebook.drawee.view.SimpleDraweeView
                     android:id="@+id/iv_bg_same_day_delivery"
                     android:layout_width="match_parent"
@@ -402,7 +411,9 @@
                     app:layout_constraintStart_toStartOf="@id/iv_bg_same_day_delivery"
                     app:layout_constraintTop_toBottomOf="@id/tv_same_day_delivery"
                     app:strokeColor="@color/white" />
+                <!--endregion same day delivery-->
 
+                <!--region under $100 items-->
                 <TextView
                     android:id="@+id/tv_label_under_100_dollars_items"
                     style="@style/Febys.TextTheme.Title1"
@@ -445,6 +456,7 @@
                     android:layout_marginTop="@dimen/margin_normal_x_2"
                     android:text="@string/label_shop_now"
                     app:layout_constraintTop_toBottomOf="@id/rv_under_100_dollars_items" />
+                <!--endregion under $100 items-->
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

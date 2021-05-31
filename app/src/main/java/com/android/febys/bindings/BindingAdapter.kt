@@ -18,6 +18,7 @@ object BindingAdapter {
     @JvmStatic
     @BindingAdapter("binding:image_url")
     fun imageUrl(imageView: SimpleDraweeView, imageUrl: String) {
+        // todo add retry image, placeholder image or any other settings here
         imageView.setImageURI(imageUrl)
     }
 

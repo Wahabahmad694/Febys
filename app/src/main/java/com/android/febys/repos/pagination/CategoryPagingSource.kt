@@ -47,7 +47,7 @@ class CategoryPagingSource constructor(
             LoadResult.Page(
                 data = responseAllCategories.categories,
                 prevKey = previousPageNo,
-                nextKey = nextPageNo,
+                nextKey = nextPageNo
             )
         } catch (e: Exception) {
             LoadResult.Error(e)

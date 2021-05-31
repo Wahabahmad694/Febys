@@ -3,8 +3,10 @@ package com.android.febys.utils
 import android.app.Activity
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.DimenRes
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import com.android.febys.R
 
 fun View.show() {
     visibility = View.VISIBLE
@@ -56,4 +58,22 @@ fun <T> Fragment.getErrorMessage(e: Resource.Error<T>): String {
             e.errorMessage.message
         }
     }
+}
+
+fun RecyclerView.applySpaceItemDecoration(
+    @DimenRes verticalDimenRes: Int? = null,
+    @DimenRes horizontalDimenRes: Int? = null
+) {
+    val verticalSpace =
+        verticalDimenRes?.let { resources.getDimension(verticalDimenRes).toInt() } ?: 0
+
+    val horizontalSpace =
+        horizontalDimenRes?.let { resources.getDimension(horizontalDimenRes).toInt() } ?: 0
+
+    addItemDecoration(
+        SpaceItemDecoration(
+            vertical = verticalSpace,
+            horizontal = horizontalSpace
+        )
+    )
 }

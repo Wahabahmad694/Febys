@@ -15,5 +15,4 @@ object AppModule {
     @Singleton
     @Provides
     fun provideFebysApp(@ApplicationContext context: Context): FebysApp = context as FebysApp
-
 }

@@ -4,59 +4,49 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import com.android.febys.R
 import com.android.febys.databinding.ItemUniqueCategoryBinding
 import com.android.febys.models.UniqueCategory
 
-class UniqueCategoryAdapter(private val interaction: Interaction? = null) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class UniqueCategoryAdapter :
+    ListAdapter<UniqueCategory, UniqueCategoryAdapter.UniqueCategoryViewHolder>(diffCallback) {
+    companion object {
+        private val diffCallback = object : DiffUtil.ItemCallback<UniqueCategory>() {
 
-    private val diffCallback = object : DiffUtil.ItemCallback<UniqueCategory>() {
+            override fun areItemsTheSame(
+                oldItem: UniqueCategory,
+                newItem: UniqueCategory
+            ): Boolean {
+                return oldItem == newItem
+            }
 
-        override fun areItemsTheSame(oldItem: UniqueCategory, newItem: UniqueCategory): Boolean {
-            return oldItem == newItem
-        }
-
-        override fun areContentsTheSame(oldItem: UniqueCategory, newItem: UniqueCategory): Boolean {
-            return oldItem.productName == newItem.productName && oldItem.imgUrl == newItem.imgUrl
-        }
-
-    }
-    private val differ = AsyncListDiffer(this, diffCallback)
-
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-
-        return VH(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.item_unique_category, parent, false
-            ),
-            interaction
-        )
-    }
-
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when (holder) {
-            is VH -> {
-                holder.bind(differ.currentList[position], position)
+            override fun areContentsTheSame(
+                oldItem: UniqueCategory,
+                newItem: UniqueCategory
+            ): Boolean {
+                return oldItem.productName == newItem.productName && oldItem.imgUrl == newItem.imgUrl
             }
         }
     }
 
-    override fun getItemCount(): Int {
-        return differ.currentList.size
+    var interaction: Interaction? = null
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UniqueCategoryViewHolder {
+        return UniqueCategoryViewHolder(
+            ItemUniqueCategoryBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false
+            )
+        )
     }
 
-    fun submitList(list: List<UniqueCategory>) {
-        differ.submitList(list)
+    override fun onBindViewHolder(holder: UniqueCategoryViewHolder, position: Int) {
+        holder.bind(getItem(position), position)
     }
 
-    class VH constructor(
-        itemView: View, private val interaction: Interaction?
-    ) : RecyclerView.ViewHolder(itemView) {
-        private val binding = ItemUniqueCategoryBinding.bind(itemView)
+    inner class UniqueCategoryViewHolder(val binding: ItemUniqueCategoryBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: UniqueCategory, position: Int) {
             binding.root.setOnClickListener {

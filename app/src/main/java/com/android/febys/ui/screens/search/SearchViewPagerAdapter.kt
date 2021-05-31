@@ -11,7 +11,8 @@ import com.android.febys.R
 import com.android.febys.databinding.ItemSearchViewPagerBinding
 import com.android.febys.models.responses.Category
 
-class SearchViewPagerAdapter : PagingDataAdapter<Category, RecyclerView.ViewHolder>(diffCallback) {
+class SearchViewPagerAdapter :
+    PagingDataAdapter<Category, SearchViewPagerAdapter.SearchViewPagerViewHolder>(diffCallback) {
     companion object {
         private val diffCallback = object : DiffUtil.ItemCallback<Category>() {
 
@@ -27,24 +28,20 @@ class SearchViewPagerAdapter : PagingDataAdapter<Category, RecyclerView.ViewHold
 
     var interaction: Interaction? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-
-        return VH(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.item_search_view_pager, parent, false
-            )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewPagerViewHolder {
+        return SearchViewPagerViewHolder(
+            ItemSearchViewPagerBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false
+            ).root
         )
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when (holder) {
-            is VH -> {
-                holder.bind(getItem(position) ?: return, position)
-            }
-        }
+    override fun onBindViewHolder(holder: SearchViewPagerViewHolder, position: Int) {
+        holder.bind(getItem(position) ?: return, position)
+
     }
 
-    inner class VH constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class SearchViewPagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ItemSearchViewPagerBinding.bind(itemView)
 
         fun bind(item: Category, position: Int) {

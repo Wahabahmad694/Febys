@@ -5,10 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
-import androidx.recyclerview.widget.RecyclerView
 import com.android.febys.R
 import com.android.febys.databinding.FragmentHomeBinding
 import com.android.febys.models.Product
@@ -21,6 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class HomeFragment : BaseFragment() {
     private lateinit var binding: FragmentHomeBinding
     private val viewModel: HomeViewModel by viewModels()
+
     private val sliderAdapter = SliderHomeAdapter()
     private val uniqueCategoryAdapter = UniqueCategoryAdapter()
     private val todayDealsAdapter = HomeProductsAdapter()
@@ -40,73 +39,63 @@ class HomeFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initUi()
+        setupObserver()
+
+        viewModel.fetchUniqueCategory()
+        viewModel.fetchSliderImages()
+        viewModel.fetchTodayDeals()
+        viewModel.fetchFeaturedCategories()
+        viewModel.fetchFeaturedCategoryProducts()
+        viewModel.fetchTrendingProducts()
+        viewModel.fetchStoresYouFollow()
+        viewModel.fetchUnder100DollarsItems()
     }
 
     private fun initUi() {
-        setupUniqueCategories()
-        sliderSetup()
-
-        // today deals
-        productListSetup(
-            binding.rvTodayDeals,
-            todayDealsAdapter,
-            viewModel.fetchTodayDeals()
-        )
-
-        // featured categories
-        viewModel.fetchFeaturedCategories().observe(viewLifecycleOwner) {
-            when (it) {
-                is Resource.Loading -> {
-
-                }
-                is Resource.Error -> {
-
-                }
-                is Resource.Data -> {
-                    val featuredCategories = it.data
-                    featuredCategories.forEach { category ->
-                        val chip =
-                            layoutInflater.inflate(
-                                R.layout.item_featured_category,
-                                binding.chipGroupFeaturedCategories,
-                                false
-                            ) as Chip
-                        chip.id = category.id
-                        chip.text = category.name
-                        binding.chipGroupFeaturedCategories.addView(chip)
-                    }
-                }
-            }
+        // unique category
+        binding.rvUniqueCategories.adapter = uniqueCategoryAdapter
+        // custom scroll bar position
+        binding.rvUniqueCategories.setOnScrollChangeListener { _, _, _, _, _ ->
+            val horizontalScrollPosition =
+                binding.rvUniqueCategories.getHorizontalScrollPosition()
+            val param =
+                (binding.ivIcScrollUniqueCategory.layoutParams as ConstraintLayout.LayoutParams)
+            param.horizontalBias = horizontalScrollPosition
+            binding.ivIcScrollUniqueCategory.layoutParams = param
         }
 
-        // featured category products
-        productListSetup(
-            binding.rvFeaturedCategoryProducts,
-            featuredCategoryProductsAdapter,
-            viewModel.fetchFeaturedCategoryProducts()
-        )
+        // slider
+        binding.imageSliderHome.setSliderAdapter(sliderAdapter)
 
-        // seasonal feature
-        seasonalOfferSetup()
+        // today deals
+        binding.rvTodayDeals.applySpaceItemDecoration(horizontalDimenRes = R.dimen.margin_large)
+        binding.rvTodayDeals.setHasFixedSize(true)
+        binding.rvTodayDeals.adapter = todayDealsAdapter
+
+        // featured category products
+        binding.rvFeaturedCategoryProducts.applySpaceItemDecoration(horizontalDimenRes = R.dimen.margin_large)
+        binding.rvFeaturedCategoryProducts.setHasFixedSize(true)
+        binding.rvFeaturedCategoryProducts.adapter = featuredCategoryProductsAdapter
+
+        // store you follow
+        binding.rvStoreYouFollow.applySpaceItemDecoration(horizontalDimenRes = R.dimen.margin_large)
+        binding.rvStoreYouFollow.setHasFixedSize(true)
+        binding.rvStoreYouFollow.adapter = storeYouFollowAdapter
 
         // trending products
-        productListSetup(
-            binding.rvTrendingProducts,
-            trendingProductsAdapter,
-            viewModel.fetchTrendingProducts()
-        )
+        binding.rvTrendingProducts.applySpaceItemDecoration(horizontalDimenRes = R.dimen.margin_large)
+        binding.rvTrendingProducts.setHasFixedSize(true)
+        binding.rvTrendingProducts.adapter = trendingProductsAdapter
 
         // under 100$ items
-        productListSetup(
-            binding.rvUnder100DollarsItems,
-            under100DollarsItemAdapter,
-            viewModel.fetchUnder100DollarsItems()
-        )
+        binding.rvUnder100DollarsItems.applySpaceItemDecoration(horizontalDimenRes = R.dimen.margin_large)
+        binding.rvUnder100DollarsItems.setHasFixedSize(true)
+        binding.rvUnder100DollarsItems.adapter = under100DollarsItemAdapter
     }
 
-    private fun setupUniqueCategories() {
-        binding.rvUniqueCategories.adapter = uniqueCategoryAdapter
-        viewModel.fetchUniqueCategory().observe(viewLifecycleOwner) {
+    private fun setupObserver() {
+        // unique category
+        viewModel.observeUniqueCategories.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Loading -> {
 
@@ -121,19 +110,8 @@ class HomeFragment : BaseFragment() {
             }
         }
 
-        // custom scroll bar position
-        binding.rvUniqueCategories.setOnScrollChangeListener { _, _, _, _, _ ->
-            val horizontalScrollPosition = binding.rvUniqueCategories.getHorizontalScrollPosition()
-            val param =
-                (binding.ivIcScrollUniqueCategory.layoutParams as ConstraintLayout.LayoutParams)
-            param.horizontalBias = horizontalScrollPosition
-            binding.ivIcScrollUniqueCategory.layoutParams = param
-        }
-    }
-
-    private fun sliderSetup() {
-        binding.imageSliderHome.setSliderAdapter(sliderAdapter)
-        viewModel.fetchSliderImages().observe(viewLifecycleOwner) {
+        // slider
+        viewModel.observeSliderImages.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Loading -> {
 
@@ -150,20 +128,45 @@ class HomeFragment : BaseFragment() {
                 }
             }
         }
-    }
 
-    private fun seasonalOfferSetup() {
-        binding.rvStoreYouFollow.apply {
-            addItemDecoration(
-                SpaceItemDecoration(
-                    horizontal = resources.getDimension(R.dimen.margin_large)
-                        .toInt()
-                )
-            )
-            this.adapter = storeYouFollowAdapter
+        //today deals
+        observeAndSubmitProductList(
+            todayDealsAdapter,
+            viewModel.observeTodayDeals
+        )
+
+        // featured categories
+        viewModel.observeFeaturedCategories.observe(viewLifecycleOwner) {
+            when (it) {
+                is Resource.Loading -> {
+
+                }
+                is Resource.Error -> {
+
+                }
+                is Resource.Data -> {
+                    val featuredCategories = it.data
+                    featuredCategories.forEach { category ->
+                        addChip(category.id, category.name)
+                    }
+                }
+            }
         }
 
-        viewModel.fetchStoresYouFollow().observe(viewLifecycleOwner) {
+        // featured category products
+        observeAndSubmitProductList(
+            featuredCategoryProductsAdapter,
+            viewModel.observeFeaturedCategoryProducts
+        )
+
+        // trending products
+        observeAndSubmitProductList(
+            trendingProductsAdapter,
+            viewModel.observeTrendingProducts
+        )
+
+        // store you follow
+        viewModel.observeStoreYouFollow.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Loading -> {
 
@@ -177,22 +180,29 @@ class HomeFragment : BaseFragment() {
                 }
             }
         }
+
+        // under $100 items
+        observeAndSubmitProductList(
+            under100DollarsItemAdapter,
+            viewModel.observeUnder100DollarsItems
+        )
     }
 
-    private fun productListSetup(
-        rv: RecyclerView,
+    private fun addChip(id: Int, text: String) {
+        val chip =
+            layoutInflater.inflate(
+                R.layout.item_featured_category, binding.chipGroupFeaturedCategories, false
+            ) as Chip
+
+        chip.id = id
+        chip.text = text
+        binding.chipGroupFeaturedCategories.addView(chip)
+    }
+
+    private fun observeAndSubmitProductList(
         adapter: HomeProductsAdapter,
         observable: LiveData<Resource<List<Product>>>
     ) {
-        with(rv) {
-            addItemDecoration(
-                SpaceItemDecoration(
-                    horizontal = resources.getDimension(R.dimen.margin_large).toInt()
-                )
-            )
-            this.adapter = adapter
-        }
-
         observable.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Loading -> {

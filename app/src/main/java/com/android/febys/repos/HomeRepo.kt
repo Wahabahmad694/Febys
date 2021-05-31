@@ -214,7 +214,7 @@ class HomeRepo @Inject constructor() {
                 15.12,
                 14.18,
                 false
-            ),
+            )
         )
     }
 }
