@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">Febys</string>
+    <!-- TODO: Remove or change this placeholder text -->
+
+    <string name="label_unique_categories">Unique Categories</string>
+    <string name="label_today_deals">Today\'s Deals</string>
+    <string name="label_today_deals_slogan">Discover new deal\'s, just for you</string>
+    <string name="label_featured_categories">Featured Categories</string>
+    <string name="label_featured_categories_slogan">We think you\'ll love these</string>
+    <string name="label_trending_products">Trending Products</string>
+    <string name="label_trending_products_slogan">Discover the top selling products</string>
+    <string name="label_under_100_dollar_items">Under $100 Items</string>
+    <string name="label_under_100_dollar_items_slogan">Discover new deal\'s, just for you</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_search">Search</string>
+    <string name="menu_message">Message</string>
+    <string name="menu_cart">Cart</string>
+    <string name="menu_account">Account</string>
+
+    <string name="hint_search">Search…</string>
+
+    <string name="error_socket_timeout">Socket Timeout</string>
+    <string name="error_unknown">Unknown Error</string>
+    <string name="label_shop_now">Shop Now</string>
+
+    <string name="minus">-</string>
+    <string name="label_seasonal_offers">Seasonal Offers</string>
+    <string name="label_seasonal_offers_slogan">Black Sunday</string>
+    <string name="label_tap_to_explore">Tap to Explore</string>
+    <string name="label_same_day_delivery">Same day delivery</string>
+    <string name="label_store_you_follow">Stores You Follow</string>
+    <string name="label_store_you_follow_slogan">This week\'s highlights</string>
+
+</resources>
