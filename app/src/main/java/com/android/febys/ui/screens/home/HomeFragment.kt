@@ -9,8 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
 import com.android.febys.R
 import com.android.febys.databinding.FragmentHomeBinding
-import com.android.febys.models.Product
-import com.android.febys.ui.base.BaseFragment
+import com.android.febys.network.domain.models.Product
+import com.android.febys.base.BaseFragment
+import com.android.febys.network.DataState
 import com.android.febys.utils.*
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
@@ -97,13 +98,13 @@ class HomeFragment : BaseFragment() {
         // unique category
         viewModel.observeUniqueCategories.observe(viewLifecycleOwner) {
             when (it) {
-                is Resource.Loading -> {
+                is DataState.Loading -> {
 
                 }
-                is Resource.Error -> {
+                is DataState.Error -> {
 
                 }
-                is Resource.Data -> {
+                is DataState.Data -> {
                     val uniqueCategories = it.data
                     uniqueCategoryAdapter.submitList(uniqueCategories)
                 }
@@ -113,13 +114,13 @@ class HomeFragment : BaseFragment() {
         // slider
         viewModel.observeSliderImages.observe(viewLifecycleOwner) {
             when (it) {
-                is Resource.Loading -> {
+                is DataState.Loading -> {
 
                 }
-                is Resource.Error -> {
+                is DataState.Error -> {
 
                 }
-                is Resource.Data -> {
+                is DataState.Data -> {
                     binding.imageSliderHome.show()
                     val sliderImages = it.data
                     sliderAdapter.submitList(sliderImages)
@@ -138,13 +139,13 @@ class HomeFragment : BaseFragment() {
         // featured categories
         viewModel.observeFeaturedCategories.observe(viewLifecycleOwner) {
             when (it) {
-                is Resource.Loading -> {
+                is DataState.Loading -> {
 
                 }
-                is Resource.Error -> {
+                is DataState.Error -> {
 
                 }
-                is Resource.Data -> {
+                is DataState.Data -> {
                     val featuredCategories = it.data
                     featuredCategories.forEach { category ->
                         addChip(category.id, category.name)
@@ -168,13 +169,13 @@ class HomeFragment : BaseFragment() {
         // store you follow
         viewModel.observeStoreYouFollow.observe(viewLifecycleOwner) {
             when (it) {
-                is Resource.Loading -> {
+                is DataState.Loading -> {
 
                 }
-                is Resource.Error -> {
+                is DataState.Error -> {
 
                 }
-                is Resource.Data -> {
+                is DataState.Data -> {
                     val storesList = it.data
                     storeYouFollowAdapter.submitList(storesList)
                 }
@@ -201,17 +202,17 @@ class HomeFragment : BaseFragment() {
 
     private fun observeAndSubmitProductList(
         adapter: HomeProductsAdapter,
-        observable: LiveData<Resource<List<Product>>>
+        observable: LiveData<DataState<List<Product>>>
     ) {
         observable.observe(viewLifecycleOwner) {
             when (it) {
-                is Resource.Loading -> {
+                is DataState.Loading -> {
 
                 }
-                is Resource.Error -> {
+                is DataState.Error -> {
 
                 }
-                is Resource.Data -> {
+                is DataState.Data -> {
                     val products = it.data
                     adapter.submitList(products)
                 }

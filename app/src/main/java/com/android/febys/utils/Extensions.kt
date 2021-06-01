@@ -6,7 +6,8 @@ import android.widget.Toast
 import androidx.annotation.DimenRes
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.android.febys.R
+import com.android.febys.network.DataState
+import com.android.febys.network.ErrorMessage
 
 fun View.show() {
     visibility = View.VISIBLE
@@ -38,7 +39,7 @@ fun Fragment.showToast(msg: String, length: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(context, msg, length).show()
 }
 
-fun <T> Activity.getErrorMessage(e: Resource.Error<T>): String {
+fun <T> Activity.getErrorMessage(e: DataState.Error<T>): String {
     return when (e.errorMessage) {
         is ErrorMessage.ErrorRes -> {
             getString(e.errorMessage.resId)
@@ -49,7 +50,7 @@ fun <T> Activity.getErrorMessage(e: Resource.Error<T>): String {
     }
 }
 
-fun <T> Fragment.getErrorMessage(e: Resource.Error<T>): String {
+fun <T> Fragment.getErrorMessage(e: DataState.Error<T>): String {
     return when (e.errorMessage) {
         is ErrorMessage.ErrorRes -> {
             getString(e.errorMessage.resId)

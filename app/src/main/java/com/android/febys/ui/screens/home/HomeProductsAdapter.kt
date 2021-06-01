@@ -1,13 +1,12 @@
 package com.android.febys.ui.screens.home
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.android.febys.databinding.ItemProductHomeBinding
-import com.android.febys.models.Product
+import com.android.febys.network.domain.models.Product
 
 class HomeProductsAdapter :
     ListAdapter<Product, HomeProductsAdapter.ProductHomeViewHolder>(diffCallback) {

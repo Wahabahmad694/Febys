@@ -8,7 +8,7 @@
 
         <variable
             name="product"
-            type="com.android.febys.models.Product" />
+            type="com.android.febys.network.domain.models.Product" />
 
         <variable
             name="isFav"

@@ -1,15 +1,15 @@
-package com.android.febys.repos.pagination
+package com.android.febys.paginations
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.android.febys.models.requests.RequestAllCategories
-import com.android.febys.models.responses.Category
-import com.android.febys.models.responses.ResponseAllCategories
-import com.android.febys.network.FebysService
+import com.android.febys.network.requests.RequestAllCategories
+import com.android.febys.network.response.Category
+import com.android.febys.network.response.ResponseAllCategories
+import com.android.febys.network.FebysBackendService
 import com.google.gson.Gson
 
 class CategoryPagingSource constructor(
-    private val service: FebysService,
+    private val service: FebysBackendService,
     private val request: RequestAllCategories
 ) : PagingSource<Int, Category>() {
     override fun getRefreshKey(state: PagingState<Int, Category>): Int? {

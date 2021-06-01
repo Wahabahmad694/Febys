@@ -1,6 +1,4 @@
-package com.android.febys.models
-
-import androidx.annotation.DrawableRes
+package com.android.febys.network.domain.models
 
 data class UniqueCategory(
     val imgUrl: String,

@@ -1,4 +1,4 @@
-package com.android.febys.models.requests
+package com.android.febys.network.requests
 
 data class RequestAllCategories(
     var chunkSize: Int = 10,
