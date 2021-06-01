@@ -2,12 +2,13 @@ package com.android.febys.ui.screens.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.android.febys.models.*
-import com.android.febys.models.responses.Category
-import com.android.febys.repos.HomeRepo
-import com.android.febys.utils.Resource
+import com.android.febys.base.BaseViewModel
+import com.android.febys.network.domain.models.*
+import com.android.febys.network.response.Category
+import com.android.febys.repos.HomeRepoImpl
+import com.android.febys.network.DataState
+import com.android.febys.repos.IHomeRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -15,38 +16,39 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val repo: HomeRepo
-) : ViewModel() {
-    private val _observeUniqueCategories = MutableLiveData<Resource<List<UniqueCategory>>>()
-    val observeUniqueCategories: LiveData<Resource<List<UniqueCategory>>> = _observeUniqueCategories
+    private val repo: IHomeRepo
+) : BaseViewModel() {
+    private val _observeUniqueCategories = MutableLiveData<DataState<List<UniqueCategory>>>()
+    val observeUniqueCategories: LiveData<DataState<List<UniqueCategory>>> =
+        _observeUniqueCategories
 
-    private val _observeSliderImages = MutableLiveData<Resource<List<String>>>()
-    val observeSliderImages: LiveData<Resource<List<String>>> = _observeSliderImages
+    private val _observeSliderImages = MutableLiveData<DataState<List<String>>>()
+    val observeSliderImages: LiveData<DataState<List<String>>> = _observeSliderImages
 
-    private val _observeTodayDeals = MutableLiveData<Resource<List<Product>>>()
-    val observeTodayDeals: LiveData<Resource<List<Product>>> = _observeTodayDeals
+    private val _observeTodayDeals = MutableLiveData<DataState<List<Product>>>()
+    val observeTodayDeals: LiveData<DataState<List<Product>>> = _observeTodayDeals
 
-    private val _observeFeaturedCategories = MutableLiveData<Resource<List<Category>>>()
-    val observeFeaturedCategories: LiveData<Resource<List<Category>>> = _observeFeaturedCategories
+    private val _observeFeaturedCategories = MutableLiveData<DataState<List<Category>>>()
+    val observeFeaturedCategories: LiveData<DataState<List<Category>>> = _observeFeaturedCategories
 
-    private val _observeFeaturedCategoryProducts = MutableLiveData<Resource<List<Product>>>()
-    val observeFeaturedCategoryProducts: LiveData<Resource<List<Product>>> =
+    private val _observeFeaturedCategoryProducts = MutableLiveData<DataState<List<Product>>>()
+    val observeFeaturedCategoryProducts: LiveData<DataState<List<Product>>> =
         _observeFeaturedCategoryProducts
 
-    private val _observeTrendingProducts = MutableLiveData<Resource<List<Product>>>()
-    val observeTrendingProducts: LiveData<Resource<List<Product>>> = _observeTrendingProducts
+    private val _observeTrendingProducts = MutableLiveData<DataState<List<Product>>>()
+    val observeTrendingProducts: LiveData<DataState<List<Product>>> = _observeTrendingProducts
 
-    private val _observeStoreYouFollow = MutableLiveData<Resource<List<String>>>()
-    val observeStoreYouFollow: LiveData<Resource<List<String>>> = _observeStoreYouFollow
+    private val _observeStoreYouFollow = MutableLiveData<DataState<List<String>>>()
+    val observeStoreYouFollow: LiveData<DataState<List<String>>> = _observeStoreYouFollow
 
-    private val _observeUnder100DollarsItems = MutableLiveData<Resource<List<Product>>>()
-    val observeUnder100DollarsItems: LiveData<Resource<List<Product>>> =
+    private val _observeUnder100DollarsItems = MutableLiveData<DataState<List<Product>>>()
+    val observeUnder100DollarsItems: LiveData<DataState<List<Product>>> =
         _observeUnder100DollarsItems
 
 
     fun fetchSliderImages() {
         viewModelScope.launch {
-            _observeSliderImages.postValue(Resource.Loading())
+            _observeSliderImages.postValue(DataState.Loading())
             repo.fetchSliderImages().collect {
                 _observeSliderImages.postValue(it)
             }
@@ -55,7 +57,7 @@ class HomeViewModel @Inject constructor(
 
     fun fetchUniqueCategory() {
         viewModelScope.launch {
-            _observeUniqueCategories.postValue(Resource.Loading())
+            _observeUniqueCategories.postValue(DataState.Loading())
             repo.fetchUniqueCategory().collect {
                 _observeUniqueCategories.postValue(it)
             }
@@ -64,7 +66,7 @@ class HomeViewModel @Inject constructor(
 
     fun fetchTodayDeals() {
         viewModelScope.launch {
-            _observeTodayDeals.postValue(Resource.Loading())
+            _observeTodayDeals.postValue(DataState.Loading())
             repo.fetchTodayDeals().collect {
                 _observeTodayDeals.postValue(it)
             }
@@ -73,7 +75,7 @@ class HomeViewModel @Inject constructor(
 
     fun fetchFeaturedCategories() {
         viewModelScope.launch {
-            _observeFeaturedCategories.postValue(Resource.Loading())
+            _observeFeaturedCategories.postValue(DataState.Loading())
             repo.fetchFeaturedCategories().collect {
                 _observeFeaturedCategories.postValue(it)
             }
@@ -82,7 +84,7 @@ class HomeViewModel @Inject constructor(
 
     fun fetchFeaturedCategoryProducts() {
         viewModelScope.launch {
-            _observeFeaturedCategoryProducts.postValue(Resource.Loading())
+            _observeFeaturedCategoryProducts.postValue(DataState.Loading())
             repo.fetchFeaturedCategoryProducts().collect {
                 _observeFeaturedCategoryProducts.postValue(it)
             }
@@ -91,7 +93,7 @@ class HomeViewModel @Inject constructor(
 
     fun fetchTrendingProducts() {
         viewModelScope.launch {
-            _observeTrendingProducts.postValue(Resource.Loading())
+            _observeTrendingProducts.postValue(DataState.Loading())
             repo.fetchTrendingProducts().collect {
                 _observeTrendingProducts.postValue(it)
             }
@@ -100,7 +102,7 @@ class HomeViewModel @Inject constructor(
 
     fun fetchStoresYouFollow() {
         viewModelScope.launch {
-            _observeStoreYouFollow.postValue(Resource.Loading())
+            _observeStoreYouFollow.postValue(DataState.Loading())
             repo.fetchStoresYouFollow().collect {
                 _observeStoreYouFollow.postValue(it)
             }
@@ -109,7 +111,7 @@ class HomeViewModel @Inject constructor(
 
     fun fetchUnder100DollarsItems() {
         viewModelScope.launch {
-            _observeUnder100DollarsItems.postValue(Resource.Loading())
+            _observeUnder100DollarsItems.postValue(DataState.Loading())
             repo.fetchUnder100DollarsItems().collect {
                 _observeUnder100DollarsItems.postValue(it)
             }

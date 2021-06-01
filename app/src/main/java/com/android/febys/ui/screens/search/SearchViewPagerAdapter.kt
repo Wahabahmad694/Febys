@@ -7,9 +7,8 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import com.android.febys.R
 import com.android.febys.databinding.ItemSearchViewPagerBinding
-import com.android.febys.models.responses.Category
+import com.android.febys.network.response.Category
 
 class SearchViewPagerAdapter :
     PagingDataAdapter<Category, SearchViewPagerAdapter.SearchViewPagerViewHolder>(diffCallback) {

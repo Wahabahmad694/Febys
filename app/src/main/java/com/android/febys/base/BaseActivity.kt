@@ -1,4 +1,4 @@
-package com.android.febys.ui.base
+package com.android.febys.base
 
 import androidx.appcompat.app.AppCompatActivity
 

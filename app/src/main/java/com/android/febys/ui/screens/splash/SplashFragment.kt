@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.android.febys.databinding.FragmentSplashBinding
-import com.android.febys.ui.base.BaseFragment
+import com.android.febys.base.BaseFragment
 import kotlinx.coroutines.delay
 
 class SplashFragment : BaseFragment() {

@@ -1,4 +1,4 @@
-package com.android.febys.models
+package com.android.febys.network.domain.models
 
 data class Product(
     val imgUrl: String,

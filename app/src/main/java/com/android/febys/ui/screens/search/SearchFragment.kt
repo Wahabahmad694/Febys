@@ -5,10 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
-import com.android.febys.R
 import com.android.febys.databinding.FragmentSearchBinding
-import com.android.febys.ui.base.BaseFragment
+import com.android.febys.base.BaseFragment
+import com.android.febys.network.DataState
+import com.android.febys.utils.getErrorMessage
+import com.android.febys.utils.showToast
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,7 +28,28 @@ class SearchFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val tabsList = viewModel.fetchTabs()
+        setObserver()
+        viewModel.fetchTabs()
+    }
+
+    private fun setObserver() {
+        viewModel.observeTabs.observe(viewLifecycleOwner) {
+            when (it) {
+                is DataState.Loading -> {
+
+                }
+                is DataState.Error -> {
+                    val error = getErrorMessage(it)
+                    showToast(error)
+                }
+                is DataState.Data -> {
+                    updateTabs(it.data)
+                }
+            }
+        }
+    }
+
+    private fun updateTabs(tabsList: List<String>) {
         binding.viewPagerSearchFragment.adapter = SearchTabsAdapter(this, tabsList)
 
         TabLayoutMediator(

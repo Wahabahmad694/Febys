@@ -2,13 +2,11 @@ package com.android.febys.ui.screens.home
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.android.febys.R
 import com.android.febys.databinding.ItemUniqueCategoryBinding
-import com.android.febys.models.UniqueCategory
+import com.android.febys.network.domain.models.UniqueCategory
 
 class UniqueCategoryAdapter :
     ListAdapter<UniqueCategory, UniqueCategoryAdapter.UniqueCategoryViewHolder>(diffCallback) {

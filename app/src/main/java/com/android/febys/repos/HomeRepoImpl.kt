@@ -1,10 +1,11 @@
 package com.android.febys.repos
 
 import com.android.febys.R
-import com.android.febys.models.*
-import com.android.febys.models.responses.Category
-import com.android.febys.utils.Resource
+import com.android.febys.network.domain.models.*
+import com.android.febys.network.response.Category
+import com.android.febys.network.DataState
 import dagger.hilt.android.scopes.ViewModelScoped
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -12,11 +13,10 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-@ViewModelScoped
-class HomeRepo @Inject constructor() {
+class HomeRepoImpl : IHomeRepo {
 
-    fun fetchUniqueCategory(): Flow<Resource<List<UniqueCategory>>> {
-        return flow<Resource<List<UniqueCategory>>> {
+    override fun fetchUniqueCategory(dispatcher: CoroutineDispatcher): Flow<DataState<List<UniqueCategory>>> {
+        return flow {
             val list = listOf(
                 UniqueCategory(
                     "res:///${R.drawable.ic_motors_parts_and_accessories}",
@@ -39,84 +39,60 @@ class HomeRepo @Inject constructor() {
                     "Smart Livings"
                 )
             )
-            // save to cache
-            emit(Resource.Data(list))
-        }.catch {
-            emit(Resource.getError(it))
-        }.flowOn(Dispatchers.IO)
+            emit(DataState.Data(list))
+        }.flowOn(dispatcher)
     }
 
-    fun fetchSliderImages(): Flow<Resource<List<String>>> {
-        return flow<Resource<List<String>>> {
+    override fun fetchSliderImages(dispatcher: CoroutineDispatcher): Flow<DataState<List<String>>> {
+        return flow {
             val list = listOf("res:///${R.drawable.slider_image}")
-            // save to cache
-            emit(Resource.Data(list))
-        }.catch {
-            emit(Resource.getError(it))
-        }.flowOn(Dispatchers.IO)
+            emit(DataState.Data(list))
+        }.flowOn(dispatcher)
     }
 
-    fun fetchTodayDeals(): Flow<Resource<List<Product>>> {
-        return flow<Resource<List<Product>>> {
+    override fun fetchTodayDeals(dispatcher: CoroutineDispatcher): Flow<DataState<List<Product>>> {
+        return flow {
             val list = getProductList()
-            // save to cache
-            emit(Resource.Data(list))
-        }.catch {
-            emit(Resource.getError(it))
-        }.flowOn(Dispatchers.IO)
+            emit(DataState.Data(list))
+        }.flowOn(dispatcher)
     }
 
-    fun fetchFeaturedCategories(): Flow<Resource<List<Category>>> {
-        return flow<Resource<List<Category>>> {
+    override fun fetchFeaturedCategories(dispatcher: CoroutineDispatcher): Flow<DataState<List<Category>>> {
+        return flow {
             val list = getCategories()
-            // save to cache
-            emit(Resource.Data(list))
-        }.catch {
-            emit(Resource.getError(it))
-        }.flowOn(Dispatchers.IO)
+            emit(DataState.Data(list))
+        }.flowOn(dispatcher)
     }
 
-    fun fetchFeaturedCategoryProducts(): Flow<Resource<List<Product>>> {
-        return flow<Resource<List<Product>>> {
+    override fun fetchFeaturedCategoryProducts(dispatcher: CoroutineDispatcher): Flow<DataState<List<Product>>> {
+        return flow {
             val list = getProductList()
-            // save to cache
-            emit(Resource.Data(list))
-        }.catch {
-            emit(Resource.getError(it))
-        }.flowOn(Dispatchers.IO)
+            emit(DataState.Data(list))
+        }.flowOn(dispatcher)
     }
 
-    fun fetchTrendingProducts(): Flow<Resource<List<Product>>> {
-        return flow<Resource<List<Product>>> {
+    override fun fetchTrendingProducts(dispatcher: CoroutineDispatcher): Flow<DataState<List<Product>>> {
+        return flow<DataState<List<Product>>> {
             val list = getProductList()
-            // save to cache
-            emit(Resource.Data(list))
-        }.catch {
-            emit(Resource.getError(it))
-        }.flowOn(Dispatchers.IO)
+            emit(DataState.Data(list))
+        }.flowOn(dispatcher)
     }
 
-    fun fetchStoresYouFollow(): Flow<Resource<List<String>>> {
-        return flow<Resource<List<String>>> {
+    override fun fetchStoresYouFollow(dispatcher: CoroutineDispatcher): Flow<DataState<List<String>>> {
+        return flow {
             val list = listOf(
                 "res:///${R.drawable.ic_shirt}",
                 "res:///${R.drawable.ic_shirt}"
             )
-            // save to cache
-            emit(Resource.Data(list))
-        }.catch {
-            emit(Resource.getError(it))
-        }.flowOn(Dispatchers.IO)
+            emit(DataState.Data(list))
+        }.flowOn(dispatcher)
     }
 
-    fun fetchUnder100DollarsItems(): Flow<Resource<List<Product>>> {
-        return flow<Resource<List<Product>>> {
+    override fun fetchUnder100DollarsItems(dispatcher: CoroutineDispatcher): Flow<DataState<List<Product>>> {
+        return flow {
             val list = getProductList()
-            // save to cache
-            emit(Resource.Data(list))
-        }.catch {
-            emit(Resource.getError(it))
-        }.flowOn(Dispatchers.IO)
+            emit(DataState.Data(list))
+        }.flowOn(dispatcher)
     }
 
     private fun getCategories(): List<Category> {

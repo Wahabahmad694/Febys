@@ -6,7 +6,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.android.febys.R
 import com.android.febys.databinding.ActivityMainBinding
-import com.android.febys.ui.base.BaseActivity
+import com.android.febys.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

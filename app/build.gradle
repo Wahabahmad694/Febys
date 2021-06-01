@@ -31,7 +31,8 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField("String", "baseUrl", credentialsProperties['BASE_URL_DEBUG'])
+            buildConfigField("String", "backendBaseUrl", credentialsProperties['BASE_URL_BACKEND_DEBUG'])
+            buildConfigField("String", "webCustomizationBaseUrl", credentialsProperties['BASE_URL_BACKEND_DEBUG'])
         }
         release {
             minifyEnabled false

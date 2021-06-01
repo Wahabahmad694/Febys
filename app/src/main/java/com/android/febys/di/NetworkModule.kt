@@ -1,7 +1,7 @@
 package com.android.febys.di
 
 import com.android.febys.BuildConfig
-import com.android.febys.network.FebysService
+import com.android.febys.network.FebysBackendService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,9 +30,10 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+    @FebysBackendClient
+    fun provideRetrofitBackend(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(BuildConfig.baseUrl)
+            .baseUrl(BuildConfig.backendBaseUrl)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -40,7 +41,18 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideFebysService(retrofit: Retrofit): FebysService {
-        return retrofit.create(FebysService::class.java)
+    @FebysWebCustomizationClient
+    fun provideRetrofitWebCustomization(okHttpClient: OkHttpClient): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(BuildConfig.webCustomizationBaseUrl)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideFebysService(@FebysBackendClient retrofit: Retrofit): FebysBackendService {
+        return retrofit.create(FebysBackendService::class.java)
     }
 }

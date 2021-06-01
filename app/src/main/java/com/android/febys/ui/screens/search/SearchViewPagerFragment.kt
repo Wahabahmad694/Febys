@@ -10,11 +10,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.android.febys.R
 import com.android.febys.databinding.FragmentSearchViewPagerBinding
-import com.android.febys.models.responses.Category
-import com.android.febys.ui.base.BaseFragment
-import com.android.febys.utils.Resource
-import com.android.febys.utils.getErrorMessage
+import com.android.febys.network.response.Category
+import com.android.febys.base.BaseFragment
 import com.android.febys.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -82,8 +81,7 @@ class SearchViewPagerFragment : BaseFragment() {
                 binding.progressBar.isVisible = state is LoadState.Loading
 
                 if (state is LoadState.Error) {
-                    val error = Resource.getError<Nothing>(state.error) as Resource.Error<Nothing>
-                    showToast(getErrorMessage(error))
+                    showToast(getString(R.string.error_something_went_wrong))
                 }
             }
         }
