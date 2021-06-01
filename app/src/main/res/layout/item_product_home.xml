@@ -45,7 +45,7 @@
 
         <TextView
             android:id="@+id/tv_product_name"
-            style="@style/Febys.TextTheme.Title2.Bold"
+            style="@style/TextTheme.Arial.TS12"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_normal_x_2"
@@ -58,7 +58,7 @@
 
         <TextView
             android:id="@+id/tv_product_off_price"
-            style="@style/Febys.TextTheme.CaptionSmall"
+            style="@style/TextTheme.Arial.TS10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{`` + product.productPriceOff}"
@@ -71,7 +71,7 @@
 
         <TextView
             android:id="@+id/tv_product_off_price_separator"
-            style="@style/Febys.TextTheme.Title2.Bold"
+            style="@style/TextTheme.Arial.TS12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="2dp"
@@ -82,7 +82,7 @@
 
         <TextView
             android:id="@+id/tv_product_price"
-            style="@style/Febys.TextTheme.Title2.Bold"
+            style="@style/TextTheme.Arial.TS12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_normal"

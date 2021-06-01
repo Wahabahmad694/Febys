@@ -37,7 +37,7 @@
 
         <TextView
             android:id="@+id/tv_unique_categories"
-            style="@style/Febys.TextTheme.Title1"
+            style="@style/TextTheme.HelveticaNeue.TS16"
             android:layout_width="match_parent"
             android:layout_height="@dimen/button_height"
             android:layout_marginTop="@dimen/margin_normal_x_2"
@@ -116,7 +116,7 @@
                 <!--region toady deals-->
                 <TextView
                     android:id="@+id/tv_today_deals"
-                    style="@style/Febys.TextTheme.Title1"
+                    style="@style/TextTheme.HelveticaNeue.TS16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_normal_x_2"
@@ -127,7 +127,7 @@
 
                 <TextView
                     android:id="@+id/tv_today_deals_slogan"
-                    style="@style/Febys.TextTheme.Title2.Bold"
+                    style="@style/TextTheme.Arial.TS12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_normal"
@@ -149,7 +149,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_shop_now_today_deals"
-                    style="@style/Febys.ButtonTheme.ShopNow"
+                    style="@style/ButtonTheme.OutLine"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_normal_x_2"
@@ -161,7 +161,7 @@
                 <!--region featured categories-->
                 <TextView
                     android:id="@+id/tv_featured_categories"
-                    style="@style/Febys.TextTheme.Title1"
+                    style="@style/TextTheme.HelveticaNeue.TS16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_normal_x_2"
@@ -172,7 +172,7 @@
 
                 <TextView
                     android:id="@+id/tv_featured_categories_slogan"
-                    style="@style/Febys.TextTheme.Title2.Bold"
+                    style="@style/TextTheme.Arial.TS12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_normal"
@@ -213,7 +213,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_shop_now_featured_categories"
-                    style="@style/Febys.ButtonTheme.ShopNow"
+                    style="@style/ButtonTheme.OutLine"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_normal_x_2"
@@ -261,7 +261,7 @@
 
                 <TextView
                     android:id="@+id/tv_tap_to_explore_seasonal_offers"
-                    style="@style/Febys.TextTheme.Title1"
+                    style="@style/TextTheme.HelveticaNeue.TS16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_tap_to_explore"
@@ -275,7 +275,7 @@
                 <!--region trending products-->
                 <TextView
                     android:id="@+id/tv_trending_products"
-                    style="@style/Febys.TextTheme.Title1"
+                    style="@style/TextTheme.HelveticaNeue.TS16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_normal_x_2"
@@ -286,7 +286,7 @@
 
                 <TextView
                     android:id="@+id/tv_trending_products_slogan"
-                    style="@style/Febys.TextTheme.Title2.Bold"
+                    style="@style/TextTheme.Arial.TS12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_normal"
@@ -308,7 +308,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_shop_now_trending_products"
-                    style="@style/Febys.ButtonTheme.ShopNow"
+                    style="@style/ButtonTheme.OutLine"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_normal_x_2"
@@ -320,7 +320,7 @@
                 <!--region store you follow-->
                 <TextView
                     android:id="@+id/tv_store_you_follow"
-                    style="@style/Febys.TextTheme.Title1"
+                    style="@style/TextTheme.HelveticaNeue.TS16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_normal_x_2"
@@ -331,7 +331,7 @@
 
                 <TextView
                     android:id="@+id/tv_store_you_follow_slogan"
-                    style="@style/Febys.TextTheme.Title2.Bold"
+                    style="@style/TextTheme.Arial.TS12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_normal"
@@ -353,7 +353,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_shop_now_store_you_follow"
-                    style="@style/Febys.ButtonTheme.ShopNow"
+                    style="@style/ButtonTheme.OutLine"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_normal_x_2"
@@ -388,7 +388,7 @@
 
                 <TextView
                     android:id="@+id/tv_same_day_delivery"
-                    style="@style/Febys.TextTheme.Title1"
+                    style="@style/TextTheme.HelveticaNeue.TS16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_same_day_delivery"
@@ -401,7 +401,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_shop_now_same_day_delivery"
-                    style="@style/Febys.ButtonTheme.ShopNow.Small"
+                    style="@style/ButtonTheme.OutLine.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_normal"
@@ -416,7 +416,7 @@
                 <!--region under $100 items-->
                 <TextView
                     android:id="@+id/tv_label_under_100_dollars_items"
-                    style="@style/Febys.TextTheme.Title1"
+                    style="@style/TextTheme.HelveticaNeue.TS16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_normal_x_2"
@@ -427,7 +427,7 @@
 
                 <TextView
                     android:id="@+id/tv_label_under_100_dollars_items_slogan"
-                    style="@style/Febys.TextTheme.Title2.Bold"
+                    style="@style/TextTheme.Arial.TS12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_normal"
@@ -449,7 +449,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_shop_now_under_100_dollars_items"
-                    style="@style/Febys.ButtonTheme.ShopNow"
+                    style="@style/ButtonTheme.OutLine"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_normal_x_2"
