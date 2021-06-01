@@ -1,0 +1,68 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.Febys" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryVariant">@color/black</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/black</item>
+        <item name="colorSecondaryVariant">@color/black</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">@color/white</item>
+        <!-- Customize your theme here. -->
+
+        <item name="android:windowBackground">@color/bg_windows_light</item>
+
+        <item name="android:listDivider">@color/list_divider</item>
+    </style>
+
+    <style name="Febys.TextTheme.Title1" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="Febys.TextTheme.Title2" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="Febys.TextTheme.Title2.Bold" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="Febys.TextTheme.CaptionSmall" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="Febys.TextTheme.Input" parent="TextAppearance.MaterialComponents.Body2" />
+
+    <style name="Febys.TextTheme.SearchTabs" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Febys.ButtonTheme.ShopNow" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="strokeColor">@color/black</item>
+    </style>
+
+    <style name="Febys.ButtonTheme.ShopNow.Small" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="strokeColor">@color/black</item>
+    </style>
+
+    <style name="Febys.Chip.Choice" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="chipStrokeWidth">2dp</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="chipBackgroundColor">@color/selector_chip</item>
+        <item name="chipStrokeColor">@color/grey</item>
+        <item name="shapeAppearanceOverlay">@null</item>
+        <item name="android:textAppearance">@style/Febys.TextTheme.Title2</item>
+    </style>
+</resources>

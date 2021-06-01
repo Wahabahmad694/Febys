@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:binding="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="product"
+            type="com.android.febys.models.Product" />
+
+        <variable
+            name="isFav"
+            type="Boolean" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="220dp"
+        android:layout_height="wrap_content">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/iv_product_image"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
+            android:background="@drawable/bg_grey"
+            android:padding="@dimen/padding_extra_large"
+            app:actualImageScaleType="fitCenter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:roundedCornerRadius="8dp"
+            binding:image_url="@{product.imgUrl}" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_fav"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="@dimen/margin_normal_x_2"
+            android:layout_marginEnd="@dimen/margin_normal_x_2"
+            android:src="@{isFav ? @drawable/ic_fav: @drawable/ic_un_fav}"
+            app:layout_constraintEnd_toEndOf="@id/iv_product_image"
+            app:layout_constraintTop_toTopOf="@id/iv_product_image" />
+
+        <TextView
+            android:id="@+id/tv_product_name"
+            style="@style/Febys.TextTheme.Title2.Bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal_x_2"
+            android:text="@{product.productName}"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="@id/iv_product_image"
+            app:layout_constraintStart_toStartOf="@id/iv_product_image"
+            app:layout_constraintTop_toBottomOf="@id/iv_product_image"
+            tools:text="Ideas Running Shop" />
+
+        <TextView
+            android:id="@+id/tv_product_off_price"
+            style="@style/Febys.TextTheme.CaptionSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{`` + product.productPriceOff}"
+            app:layout_constraintBaseline_toBaselineOf="@id/tv_product_price"
+            app:layout_constraintEnd_toStartOf="@id/tv_product_off_price_separator"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@id/tv_product_name"
+            binding:strike_through="@{true}"
+            tools:text="$14" />
+
+        <TextView
+            android:id="@+id/tv_product_off_price_separator"
+            style="@style/Febys.TextTheme.Title2.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="2dp"
+            android:text="@string/minus"
+            app:layout_constraintBaseline_toBaselineOf="@id/tv_product_price"
+            app:layout_constraintEnd_toStartOf="@id/tv_product_price"
+            app:layout_constraintStart_toEndOf="@id/tv_product_off_price" />
+
+        <TextView
+            android:id="@+id/tv_product_price"
+            style="@style/Febys.TextTheme.Title2.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:text="@{`` + product.productPrice}"
+            app:layout_constraintEnd_toEndOf="@id/tv_product_name"
+            app:layout_constraintStart_toEndOf="@id/tv_product_off_price_separator"
+            app:layout_constraintTop_toBottomOf="@id/tv_product_name"
+            tools:text="$14" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

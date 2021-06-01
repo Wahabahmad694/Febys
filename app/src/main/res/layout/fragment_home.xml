@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.screens.home.HomeFragment">
+
+        <ImageView
+            android:id="@+id/iv_febys"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_febys"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_cart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_normal_x_2"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_cart"
+            app:layout_constraintBottom_toBottomOf="@id/iv_febys"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iv_febys" />
+
+        <TextView
+            android:id="@+id/tv_unique_categories"
+            style="@style/Febys.TextTheme.Title1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginTop="@dimen/margin_normal_x_2"
+            android:background="@color/grey"
+            android:gravity="center"
+            android:text="@string/label_unique_categories"
+            android:textAlignment="center"
+            app:layout_constraintTop_toBottomOf="@id/iv_febys" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_unique_categories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal_x_2"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/margin_normal_x_2"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/tv_unique_categories"
+            tools:listitem="@layout/item_unique_category" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_bg_scroll_unique_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal_x_2"
+            android:src="@drawable/bg_scroll_home"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rv_unique_categories" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_ic_scroll_unique_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_scroll_home"
+            app:layout_constraintBottom_toBottomOf="@id/iv_bg_scroll_unique_category"
+            app:layout_constraintEnd_toEndOf="@id/iv_bg_scroll_unique_category"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@id/iv_bg_scroll_unique_category"
+            app:layout_constraintTop_toTopOf="@id/iv_bg_scroll_unique_category" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/margin_normal_x_2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_ic_scroll_unique_category">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.smarteist.autoimageslider.SliderView
+                    android:id="@+id/image_slider_home"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginHorizontal="@dimen/margin_normal_x_2"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:sliderAnimationDuration="600"
+                    app:sliderAutoCycleDirection="back_and_forth"
+                    app:sliderAutoCycleEnabled="true"
+                    app:sliderIndicatorAnimationDuration="600"
+                    app:sliderIndicatorEnabled="false"
+                    app:sliderIndicatorGravity="center_horizontal|bottom"
+                    app:sliderIndicatorMargin="16dp"
+                    app:sliderIndicatorOrientation="horizontal"
+                    app:sliderIndicatorPadding="3dp"
+                    app:sliderIndicatorRadius="2dp"
+                    app:sliderIndicatorSelectedColor="#5A5A5A"
+                    app:sliderIndicatorUnselectedColor="#FFF"
+                    app:sliderScrollTimeInSec="3"
+                    app:sliderStartAutoCycle="true" />
+
+                <!--region toady deals-->
+                <TextView
+                    android:id="@+id/tv_today_deals"
+                    style="@style/Febys.TextTheme.Title1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_normal_x_2"
+                    android:text="@string/label_today_deals"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/image_slider_home" />
+
+                <TextView
+                    android:id="@+id/tv_today_deals_slogan"
+                    style="@style/Febys.TextTheme.Title2.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_normal"
+                    android:text="@string/label_today_deals_slogan"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_today_deals" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_today_deals"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_normal_x_2"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/tv_today_deals_slogan"
+                    tools:listitem="@layout/item_product_home" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_shop_now_today_deals"
+                    style="@style/Febys.ButtonTheme.ShopNow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_normal_x_2"
+                    android:layout_marginTop="@dimen/margin_normal_x_2"
+                    android:text="@string/label_shop_now"
+                    app:layout_constraintTop_toBottomOf="@id/rv_today_deals" />
+                <!--endregion toady deals-->
+
+                <!--region featured categories-->
+                <TextView
+                    android:id="@+id/tv_featured_categories"
+                    style="@style/Febys.TextTheme.Title1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_normal_x_2"
+                    android:text="@string/label_featured_categories"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/btn_shop_now_today_deals" />
+
+                <TextView
+                    android:id="@+id/tv_featured_categories_slogan"
+                    style="@style/Febys.TextTheme.Title2.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_normal"
+                    android:text="@string/label_featured_categories_slogan"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_featured_categories" />
+
+                <HorizontalScrollView
+                    android:id="@+id/scroll_view_featured_categories"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none"
+                    app:layout_constraintTop_toBottomOf="@id/tv_featured_categories_slogan">
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/chip_group_featured_categories"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_normal_x_2"
+                        android:clipToPadding="false"
+                        android:paddingHorizontal="@dimen/margin_normal_x_2"
+                        app:singleLine="true"
+                        app:singleSelection="true" />
+
+                </HorizontalScrollView>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_featured_category_products"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_normal_x_2"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/scroll_view_featured_categories"
+                    tools:listitem="@layout/item_product_home" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_shop_now_featured_categories"
+                    style="@style/Febys.ButtonTheme.ShopNow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_normal_x_2"
+                    android:layout_marginTop="@dimen/margin_normal_x_2"
+                    android:text="@string/label_shop_now"
+                    app:layout_constraintTop_toBottomOf="@id/rv_featured_category_products" />
+                <!--endregion featured categories-->
+
+                <!--region seasonal offers-->
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/iv_bg_seasonal_offers"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginHorizontal="@dimen/margin_normal_x_2"
+                    android:layout_marginTop="@dimen/margin_normal_x_2"
+                    app:actualImageResource="@drawable/bg_seasonal_offers"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintTop_toBottomOf="@id/btn_shop_now_featured_categories" />
+
+                <TextView
+                    android:id="@+id/tv_seasonal_offers"
+                    style="@style/TextAppearance.MaterialComponents.Headline6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_seasonal_offers"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toTopOf="@id/tv_seasonal_offers_slogan"
+                    app:layout_constraintEnd_toEndOf="@id/iv_bg_seasonal_offers"
+                    app:layout_constraintStart_toStartOf="@id/iv_bg_seasonal_offers"
+                    app:layout_constraintTop_toTopOf="@id/iv_bg_seasonal_offers"
+                    app:layout_constraintVertical_chainStyle="packed" />
+
+                <TextView
+                    android:id="@+id/tv_seasonal_offers_slogan"
+                    style="@style/TextAppearance.MaterialComponents.Headline4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_seasonal_offers_slogan"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@id/tv_tap_to_explore_seasonal_offers"
+                    app:layout_constraintEnd_toEndOf="@id/iv_bg_seasonal_offers"
+                    app:layout_constraintStart_toStartOf="@id/iv_bg_seasonal_offers"
+                    app:layout_constraintTop_toBottomOf="@id/tv_seasonal_offers" />
+
+                <TextView
+                    android:id="@+id/tv_tap_to_explore_seasonal_offers"
+                    style="@style/Febys.TextTheme.Title1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_tap_to_explore"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_bg_seasonal_offers"
+                    app:layout_constraintEnd_toEndOf="@id/iv_bg_seasonal_offers"
+                    app:layout_constraintStart_toStartOf="@id/iv_bg_seasonal_offers"
+                    app:layout_constraintTop_toBottomOf="@id/tv_seasonal_offers_slogan" />
+                <!--endregion seasonal offers-->
+
+                <!--region trending products-->
+                <TextView
+                    android:id="@+id/tv_trending_products"
+                    style="@style/Febys.TextTheme.Title1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_normal_x_2"
+                    android:text="@string/label_trending_products"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_bg_seasonal_offers" />
+
+                <TextView
+                    android:id="@+id/tv_trending_products_slogan"
+                    style="@style/Febys.TextTheme.Title2.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_normal"
+                    android:text="@string/label_trending_products_slogan"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_trending_products" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_trending_products"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_normal_x_2"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/tv_trending_products_slogan"
+                    tools:listitem="@layout/item_product_home" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_shop_now_trending_products"
+                    style="@style/Febys.ButtonTheme.ShopNow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_normal_x_2"
+                    android:layout_marginTop="@dimen/margin_normal_x_2"
+                    android:text="@string/label_shop_now"
+                    app:layout_constraintTop_toBottomOf="@id/rv_trending_products" />
+                <!--endregion trending products-->
+
+                <!--region store you follow-->
+                <TextView
+                    android:id="@+id/tv_store_you_follow"
+                    style="@style/Febys.TextTheme.Title1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_normal_x_2"
+                    android:text="@string/label_store_you_follow"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/btn_shop_now_trending_products" />
+
+                <TextView
+                    android:id="@+id/tv_store_you_follow_slogan"
+                    style="@style/Febys.TextTheme.Title2.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_normal"
+                    android:text="@string/label_store_you_follow_slogan"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_store_you_follow" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_store_you_follow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_normal_x_2"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/tv_store_you_follow_slogan"
+                    tools:listitem="@layout/item_store_you_follow" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_shop_now_store_you_follow"
+                    style="@style/Febys.ButtonTheme.ShopNow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_normal_x_2"
+                    android:layout_marginTop="@dimen/margin_normal_x_2"
+                    android:text="@string/label_shop_now"
+                    app:layout_constraintTop_toBottomOf="@id/rv_store_you_follow" />
+                <!--endregion store you follow-->
+
+                <!--region same day delivery-->
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/iv_bg_same_day_delivery"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginHorizontal="@dimen/margin_normal_x_2"
+                    android:layout_marginTop="@dimen/margin_normal_x_2"
+                    app:actualImageResource="@drawable/bg_same_day_delivery"
+                    app:actualImageScaleType="none"
+                    app:layout_constraintDimensionRatio="93:44"
+                    app:layout_constraintTop_toBottomOf="@id/btn_shop_now_store_you_follow" />
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/iv_bg_transparent_layer_same_day_delivery"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="@dimen/margin_normal_x_2"
+                    app:actualImageResource="@drawable/bg_transparent_layer_same_day_delivery"
+                    app:actualImageScaleType="none"
+                    app:layout_constraintDimensionRatio="93:44"
+                    app:layout_constraintEnd_toEndOf="@id/iv_bg_same_day_delivery"
+                    app:layout_constraintStart_toStartOf="@id/iv_bg_same_day_delivery"
+                    app:layout_constraintTop_toBottomOf="@id/btn_shop_now_store_you_follow" />
+
+                <TextView
+                    android:id="@+id/tv_same_day_delivery"
+                    style="@style/Febys.TextTheme.Title1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_same_day_delivery"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_bg_same_day_delivery"
+                    app:layout_constraintEnd_toEndOf="@id/iv_bg_same_day_delivery"
+                    app:layout_constraintStart_toStartOf="@id/iv_bg_same_day_delivery"
+                    app:layout_constraintTop_toTopOf="@id/iv_bg_same_day_delivery"
+                    app:layout_constraintVertical_bias="0.4" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_shop_now_same_day_delivery"
+                    style="@style/Febys.ButtonTheme.ShopNow.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_normal"
+                    android:text="@string/label_shop_now"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="@id/iv_bg_same_day_delivery"
+                    app:layout_constraintStart_toStartOf="@id/iv_bg_same_day_delivery"
+                    app:layout_constraintTop_toBottomOf="@id/tv_same_day_delivery"
+                    app:strokeColor="@color/white" />
+                <!--endregion same day delivery-->
+
+                <!--region under $100 items-->
+                <TextView
+                    android:id="@+id/tv_label_under_100_dollars_items"
+                    style="@style/Febys.TextTheme.Title1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_normal_x_2"
+                    android:text="@string/label_under_100_dollar_items"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_bg_same_day_delivery" />
+
+                <TextView
+                    android:id="@+id/tv_label_under_100_dollars_items_slogan"
+                    style="@style/Febys.TextTheme.Title2.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_normal"
+                    android:text="@string/label_under_100_dollar_items_slogan"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_label_under_100_dollars_items" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_under_100_dollars_items"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_normal_x_2"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/tv_label_under_100_dollars_items_slogan"
+                    tools:listitem="@layout/item_product_home" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_shop_now_under_100_dollars_items"
+                    style="@style/Febys.ButtonTheme.ShopNow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_normal_x_2"
+                    android:layout_marginTop="@dimen/margin_normal_x_2"
+                    android:text="@string/label_shop_now"
+                    app:layout_constraintTop_toBottomOf="@id/rv_under_100_dollars_items" />
+                <!--endregion under $100 items-->
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

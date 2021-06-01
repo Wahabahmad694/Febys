@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="@dimen/padding_root_horizontal"
+        tools:context=".ui.screens.search.SearchFragment">
+
+        <ImageView
+            android:id="@+id/iv_febys"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_febys"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_cart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_cart"
+            app:layout_constraintBottom_toBottomOf="@id/iv_febys"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iv_febys" />
+
+        <LinearLayout
+            android:id="@+id/ll_search_container_search_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal_x_2"
+            android:background="@color/grey"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/padding_normal"
+            android:paddingEnd="@dimen/padding_none"
+            app:layout_constraintTop_toBottomOf="@id/iv_febys">
+
+            <EditText
+                android:id="@+id/et_search"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:autofillHints="@null"
+                android:background="@null"
+                android:hint="@string/hint_search"
+                android:inputType="text"
+                android:singleLine="true"
+                android:textAppearance="@style/Febys.TextTheme.Input"
+                android:textColorHint="@color/black" />
+
+            <ImageView
+                android:id="@+id/iv_search"
+                android:layout_width="48dp"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/hint_search"
+                android:padding="@dimen/padding_normal_x_2"
+                android:src="@drawable/ic_search" />
+
+        </LinearLayout>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout_search_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal_x_2"
+            app:tabTextAppearance="@style/Febys.TextTheme.SearchTabs"
+            app:layout_constraintTop_toBottomOf="@id/ll_search_container_search_fragment"
+            app:tabMode="scrollable" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/view_pager_search_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tab_layout_search_fragment" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
