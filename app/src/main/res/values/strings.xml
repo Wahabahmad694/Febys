@@ -30,5 +30,7 @@
     <string name="label_same_day_delivery">Same day delivery</string>
     <string name="label_store_you_follow">Stores You Follow</string>
     <string name="label_store_you_follow_slogan">This week\'s highlights</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
