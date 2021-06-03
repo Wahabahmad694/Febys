@@ -21,7 +21,6 @@ class HomeFragment : BaseFragment() {
     private lateinit var binding: FragmentHomeBinding
     private val viewModel: HomeViewModel by viewModels()
 
-    private val sliderAdapter = SliderHomeAdapter()
     private val uniqueCategoryAdapter = UniqueCategoryAdapter()
     private val todayDealsAdapter = HomeProductsAdapter()
     private val featuredCategoryProductsAdapter = HomeProductsAdapter()
@@ -43,10 +42,11 @@ class HomeFragment : BaseFragment() {
         setupObserver()
 
         viewModel.fetchUniqueCategory()
-        viewModel.fetchSliderImages()
+        viewModel.fetchAllBanner()
         viewModel.fetchTodayDeals()
         viewModel.fetchFeaturedCategories()
         viewModel.fetchFeaturedCategoryProducts()
+        viewModel.fetchAllSeasonalOffers()
         viewModel.fetchTrendingProducts()
         viewModel.fetchStoresYouFollow()
         viewModel.fetchUnder100DollarsItems()
@@ -64,9 +64,6 @@ class HomeFragment : BaseFragment() {
             param.horizontalBias = horizontalScrollPosition
             binding.ivIcScrollUniqueCategory.layoutParams = param
         }
-
-        // slider
-        binding.imageSliderHome.setSliderAdapter(sliderAdapter)
 
         // today deals
         binding.rvTodayDeals.applySpaceItemDecoration(horizontalDimenRes = R.dimen.margin_large)
@@ -102,7 +99,8 @@ class HomeFragment : BaseFragment() {
 
                 }
                 is DataState.Error -> {
-
+                    val error = getErrorMessage(it)
+                    showToast(error)
                 }
                 is DataState.Data -> {
                     val uniqueCategories = it.data
@@ -118,14 +116,13 @@ class HomeFragment : BaseFragment() {
 
                 }
                 is DataState.Error -> {
-
+                    val error = getErrorMessage(it)
+                    showToast(error)
                 }
                 is DataState.Data -> {
-                    binding.imageSliderHome.show()
                     val sliderImages = it.data
-                    sliderAdapter.submitList(sliderImages)
-                    binding.imageSliderHome.setInfiniteAdapterEnabled(true)
-                    binding.imageSliderHome.startAutoCycle()
+                    val adapter = SliderHomeAdapter(sliderImages, true)
+                    binding.imageSliderHome.adapter = adapter
                 }
             }
         }
@@ -148,7 +145,8 @@ class HomeFragment : BaseFragment() {
                 is DataState.Data -> {
                     val featuredCategories = it.data
                     featuredCategories.forEach { category ->
-                        addChip(category.id, category.name)
+                        val chip = makeChip(category.id, category.name)
+                        binding.chipGroupFeaturedCategories.addView(chip)
                     }
                 }
             }
@@ -159,6 +157,24 @@ class HomeFragment : BaseFragment() {
             featuredCategoryProductsAdapter,
             viewModel.observeFeaturedCategoryProducts
         )
+
+        // seasonal offers
+        viewModel.observeSeasonalOffers.observe(viewLifecycleOwner) {
+            when (it) {
+                is DataState.Loading -> {
+
+                }
+                is DataState.Error -> {
+                    val error = getErrorMessage(it)
+                    showToast(error)
+                }
+                is DataState.Data -> {
+                    binding.imageSliderHome.show()
+                    val seasonalOffers = it.data
+                    // todo update seasonal offer ui
+                }
+            }
+        }
 
         // trending products
         observeAndSubmitProductList(
@@ -189,7 +205,7 @@ class HomeFragment : BaseFragment() {
         )
     }
 
-    private fun addChip(id: Int, text: String) {
+    private fun makeChip(id: Int, text: String): Chip {
         val chip =
             layoutInflater.inflate(
                 R.layout.item_featured_category, binding.chipGroupFeaturedCategories, false
@@ -197,7 +213,8 @@ class HomeFragment : BaseFragment() {
 
         chip.id = id
         chip.text = text
-        binding.chipGroupFeaturedCategories.addView(chip)
+
+        return chip
     }
 
     private fun observeAndSubmitProductList(
@@ -218,5 +235,16 @@ class HomeFragment : BaseFragment() {
                 }
             }
         }
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        binding.imageSliderHome.resumeAutoScroll()
+    }
+
+    override fun onPause() {
+        binding.imageSliderHome.pauseAutoScroll()
+        super.onPause()
     }
 }

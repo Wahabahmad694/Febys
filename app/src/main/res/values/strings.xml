@@ -21,6 +21,7 @@
     <string name="hint_search">Search…</string>
 
     <string name="error_something_went_wrong">Something went wrong!</string>
+    <string name="error_no_network_connected">No network connected!</string>
 
     <string name="minus">-</string>
     <string name="label_shop_now">Shop Now</string>

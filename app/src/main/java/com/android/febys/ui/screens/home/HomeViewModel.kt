@@ -6,8 +6,10 @@ import androidx.lifecycle.viewModelScope
 import com.android.febys.base.BaseViewModel
 import com.android.febys.network.domain.models.*
 import com.android.febys.network.response.Category
-import com.android.febys.repos.HomeRepoImpl
 import com.android.febys.network.DataState
+import com.android.febys.network.response.Banner
+import com.android.febys.network.response.SeasonalOffer
+import com.android.febys.network.response.UniqueCategory
 import com.android.febys.repos.IHomeRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
@@ -22,14 +24,17 @@ class HomeViewModel @Inject constructor(
     val observeUniqueCategories: LiveData<DataState<List<UniqueCategory>>> =
         _observeUniqueCategories
 
-    private val _observeSliderImages = MutableLiveData<DataState<List<String>>>()
-    val observeSliderImages: LiveData<DataState<List<String>>> = _observeSliderImages
+    private val _observeSliderImages = MutableLiveData<DataState<List<Banner>>>()
+    val observeSliderImages: LiveData<DataState<List<Banner>>> = _observeSliderImages
 
     private val _observeTodayDeals = MutableLiveData<DataState<List<Product>>>()
     val observeTodayDeals: LiveData<DataState<List<Product>>> = _observeTodayDeals
 
     private val _observeFeaturedCategories = MutableLiveData<DataState<List<Category>>>()
     val observeFeaturedCategories: LiveData<DataState<List<Category>>> = _observeFeaturedCategories
+
+    private val _observeSeasonalOffers = MutableLiveData<DataState<List<SeasonalOffer>>>()
+    val observeSeasonalOffers: LiveData<DataState<List<SeasonalOffer>>> = _observeSeasonalOffers
 
     private val _observeFeaturedCategoryProducts = MutableLiveData<DataState<List<Product>>>()
     val observeFeaturedCategoryProducts: LiveData<DataState<List<Product>>> =
@@ -46,10 +51,10 @@ class HomeViewModel @Inject constructor(
         _observeUnder100DollarsItems
 
 
-    fun fetchSliderImages() {
+    fun fetchAllBanner() {
         viewModelScope.launch {
             _observeSliderImages.postValue(DataState.Loading())
-            repo.fetchSliderImages().collect {
+            repo.fetchAllBanner().collect {
                 _observeSliderImages.postValue(it)
             }
         }
@@ -58,7 +63,7 @@ class HomeViewModel @Inject constructor(
     fun fetchUniqueCategory() {
         viewModelScope.launch {
             _observeUniqueCategories.postValue(DataState.Loading())
-            repo.fetchUniqueCategory().collect {
+            repo.fetchAllUniqueCategories().collect {
                 _observeUniqueCategories.postValue(it)
             }
         }
@@ -78,6 +83,15 @@ class HomeViewModel @Inject constructor(
             _observeFeaturedCategories.postValue(DataState.Loading())
             repo.fetchFeaturedCategories().collect {
                 _observeFeaturedCategories.postValue(it)
+            }
+        }
+    }
+
+    fun fetchAllSeasonalOffers() {
+        viewModelScope.launch {
+            _observeSeasonalOffers.postValue(DataState.Loading())
+            repo.fetchAllSeasonalOffers().collect {
+                _observeSeasonalOffers.postValue(it)
             }
         }
     }
