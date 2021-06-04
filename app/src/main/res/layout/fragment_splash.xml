@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:contentDescription="@string/app_name"
-            android:padding="@dimen/padding_normal_x_2"
+            android:padding="@dimen/padding_normal_x2"
             android:src="@drawable/ic_febys" />
 
     </FrameLayout>

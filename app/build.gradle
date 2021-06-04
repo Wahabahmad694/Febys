@@ -136,8 +136,8 @@ dependencies {
 
     // image slider
     def image_slider_version = "1.4.0"
-    def slider_version = "1.4.1"
+    def slider_version = "4.2"
     implementation "com.github.smarteist:autoimageslider:$image_slider_version"
-    implementation "com.asksira.android:loopingviewpager:$slider_version"
+    implementation "com.tbuonomo:dotsindicator:$slider_version"
 
 }
