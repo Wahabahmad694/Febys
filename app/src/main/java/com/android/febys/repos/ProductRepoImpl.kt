@@ -11,7 +11,7 @@ class ProductRepoImpl(service: FebysBackendService) : IProductRepo {
     override fun fetchProductDetail(
         productId: String, dispatcher: CoroutineDispatcher
     ) = flow<DataState<ProductDetailDTO>> {
-        val productDetailD = ProductDetailDTO(
+        val productDetail = ProductDetailDTO(
             "abc",
             "TCL",
             false,
@@ -33,5 +33,7 @@ class ProductRepoImpl(service: FebysBackendService) : IProductRepo {
             "32S335",
             "Easy Voice Control works with Amazon Alexa and Google Assistant; Advanced Digital TV Tuner with Live TV Channel Guide"
         )
+
+        emit(DataState.data(productDetail))
     }
 }

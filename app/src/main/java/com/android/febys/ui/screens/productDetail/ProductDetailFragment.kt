@@ -46,7 +46,7 @@ class ProductDetailFragment : SliderFragment() {
 
     private fun initUi() {
         binding.llContainerProductDescriptionToggle.setOnClickListener {
-            binding.tvProductDescription.isVisible =
+            binding.llContainerProductDescription.isVisible =
                 !binding.llContainerProductDescription.isVisible
 
             val arrow = if (binding.llContainerProductDescription.isVisible)
