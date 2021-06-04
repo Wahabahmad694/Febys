@@ -32,5 +32,22 @@
     <string name="label_store_you_follow_slogan">This week\'s highlights</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="label_add_protection">Add Protection</string>
+    <string name="label_mobile_payment_offer">Mobile Money Payments accepted across all networks <b>Read More</b></string>
+    <string name="label_buy_the_exchange_offer">Get up to $99.99 off on exchangeBuy with Exchange</string>
+    <string name="label_credit_card_payment_offer">Bank Offer Extra 5% Off With Axis Bank Buzz Credit Card T$C</string>
+    <string name="label_add_delivery_address">Add Delivery Address</string>
+    <string name="label_enter_delivery_address">Enter Delivery Address</string>
+    <string name="label_check">Check</string>
+    <string name="label_add_delivery_address_info">Usually delivered and installed in 7–9 days Enter pin code for exact delivery dates charges</string>
+    <string name="label_description">Description</string>
+    <string name="label_technical_details">Technical Details</string>
+    <string name="label_brand_name">Brand Name</string>
+    <string name="label_product_weight">Product Weight</string>
+    <string name="label_product_dimension">Product Dimension</string>
+    <string name="label_product_model_number">Product Model Number</string>
+    <string name="label_special_features">Special Features</string>
+    <string name="label_size">Size</string>
+    <string name="label_protection">%1d-Year Protection for $%2d</string>
 
 </resources>

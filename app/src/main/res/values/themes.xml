@@ -55,6 +55,32 @@
         <item name="android:textSize">12sp</item>
     </style>
 
+    <style name="TextTheme.Arial.TS14">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextTheme.Arial.TS14.Bold">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextTheme.Arial.TS16">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextTheme.OpenSans">
+        <item name="fontFamily">@font/open_sans</item>
+    </style>
+
+    <style name="TextTheme.OpenSans.TS14">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextTheme.OpenSans.TS14.Bold">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="ButtonTheme">
         <item name="android:textAllCaps">false</item>
         <item name="android:textColor">@color/black</item>
@@ -74,7 +100,7 @@
         <item name="chipStrokeWidth">1dp</item>
         <item name="cornerRadius">8dp</item>
         <item name="chipBackgroundColor">@color/selector_chip</item>
-        <item name="chipStrokeColor">@color/bg_chip</item>
+        <item name="chipStrokeColor">@color/dark_grey</item>
         <item name="shapeAppearanceOverlay">@null</item>
         <item name="android:textAppearance">@style/TextTheme.HelveticaNeue.TS12</item>
     </style>
