@@ -14,6 +14,6 @@ interface FebysWebCustomizationService {
     @GET("v1/banner/mobile")
     suspend fun fetchAllBanner(): ApiResponse<List<Banner>>
 
-    @GET("v1/banner/mobile")
+    @GET("v1/seasonal-offer/mobile")
     suspend fun fetchAllSeasonalOffers(): ApiResponse<List<SeasonalOffer>>
 }

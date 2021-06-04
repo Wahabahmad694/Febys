@@ -1,19 +1,19 @@
-package com.android.febys.ui.screens.productDetail
+package com.android.febys.ui.screens.home
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.android.febys.base.BaseFragment
-import com.android.febys.databinding.FragmentProductSliderPageBinding
+import com.android.febys.databinding.FragmentHomeSliderPageBinding
+import com.android.febys.network.response.Banner
 
 private const val ARG_IMAGE = "imageArg"
 
-class ProductSliderPageFragment : BaseFragment() {
+class HomeSliderPageFragment : BaseFragment() {
     private lateinit var imageUrl: String
 
-    private lateinit var binding: FragmentProductSliderPageBinding
+    private lateinit var binding: FragmentHomeSliderPageBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,10 +22,9 @@ class ProductSliderPageFragment : BaseFragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        binding = FragmentProductSliderPageBinding.inflate(inflater, container, false)
+        binding = FragmentHomeSliderPageBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -36,9 +35,9 @@ class ProductSliderPageFragment : BaseFragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(imageUrl: String) =
-            ProductSliderPageFragment().apply {
-                arguments = Bundle().apply { putString(ARG_IMAGE, imageUrl) }
+        fun newInstance(banner: Banner) =
+            HomeSliderPageFragment().apply {
+                arguments = Bundle().apply { putString(ARG_IMAGE, banner.images[0]) }
             }
     }
 }

@@ -1,6 +1,9 @@
 package com.android.febys.base
 
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.*
 
 abstract class SliderFragment : BaseFragment() {
@@ -14,16 +17,18 @@ abstract class SliderFragment : BaseFragment() {
 
         timer.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
-                val slider = getSlider()
-                val totalIndex = slider.adapter?.itemCount?.minus(1) ?: -1
-                val currentPageIndex = slider.currentItem
+                lifecycleScope.launch(Dispatchers.Main) {
+                    val slider = getSlider()
+                    val totalIndex = slider.adapter?.itemCount?.minus(1) ?: -1
+                    val currentPageIndex = slider.currentItem
 
-                if (totalIndex == 0) return
+                    if (totalIndex == 0) return@launch
 
-                if (currentPageIndex == totalIndex) {
-                    slider.currentItem = 0
-                } else {
-                    slider.currentItem = currentPageIndex + 1
+                    if (currentPageIndex == totalIndex) {
+                        slider.currentItem = 0
+                    } else {
+                        slider.currentItem = currentPageIndex + 1
+                    }
                 }
             }
         }, getRotateInterval(), getRotateInterval())

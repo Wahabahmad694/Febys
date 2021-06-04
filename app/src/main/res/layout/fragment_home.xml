@@ -91,27 +91,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <com.smarteist.autoimageslider.SliderView
+                <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/image_slider_home"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginHorizontal="@dimen/margin_normal_x2"
                     app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:sliderAnimationDuration="600"
-                    app:sliderAutoCycleDirection="back_and_forth"
-                    app:sliderAutoCycleEnabled="true"
-                    app:sliderIndicatorAnimationDuration="600"
-                    app:sliderIndicatorEnabled="false"
-                    app:sliderIndicatorGravity="center_horizontal|bottom"
-                    app:sliderIndicatorMargin="16dp"
-                    app:sliderIndicatorOrientation="horizontal"
-                    app:sliderIndicatorPadding="3dp"
-                    app:sliderIndicatorRadius="2dp"
-                    app:sliderIndicatorSelectedColor="#5A5A5A"
-                    app:sliderIndicatorUnselectedColor="#FFF"
-                    app:sliderScrollTimeInSec="3"
-                    app:sliderStartAutoCycle="true" />
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+                    android:id="@+id/dots_indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_large"
+                    app:dotsColor="@color/slider_dot_color"
+                    app:dotsCornerRadius="8dp"
+                    app:dotsSize="4dp"
+                    app:dotsSpacing="4dp"
+                    app:dotsWidthFactor="2.5"
+                    app:layout_constraintBottom_toBottomOf="@id/image_slider_home"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:progressMode="true"
+                    app:selectedDotColor="@color/slider_dot_selected_color" />
 
                 <!--region toady deals-->
                 <TextView

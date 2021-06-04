@@ -5,19 +5,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.android.febys.R
 import com.android.febys.databinding.FragmentHomeBinding
 import com.android.febys.network.domain.models.Product
-import com.android.febys.base.BaseFragment
+import com.android.febys.base.SliderFragment
 import com.android.febys.network.DataState
+import com.android.febys.network.response.Banner
 import com.android.febys.utils.*
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeFragment : BaseFragment() {
+class HomeFragment : SliderFragment() {
     private lateinit var binding: FragmentHomeBinding
     private val viewModel: HomeViewModel by viewModels()
 
@@ -121,8 +125,8 @@ class HomeFragment : BaseFragment() {
                 }
                 is DataState.Data -> {
                     val sliderImages = it.data
-                    val adapter = SliderHomeAdapter(sliderImages, true)
-                    binding.imageSliderHome.adapter = adapter
+                    binding.imageSliderHome.adapter = HomeSliderPageAdapter(sliderImages, this)
+                    binding.dotsIndicator.setViewPager2(binding.imageSliderHome)
                 }
             }
         }
@@ -170,8 +174,11 @@ class HomeFragment : BaseFragment() {
                 }
                 is DataState.Data -> {
                     binding.imageSliderHome.show()
-                    val seasonalOffers = it.data
-                    // todo update seasonal offer ui
+                    val seasonalOffer = it.data[0]
+                    binding.tvSeasonalOffers.text = seasonalOffer.name
+                    val offer = seasonalOffer.offers[0]
+                    val image = offer.images[0]
+                    binding.ivBgSeasonalOffers.setImageURI(image)
                 }
             }
         }
@@ -237,14 +244,16 @@ class HomeFragment : BaseFragment() {
         }
     }
 
+    override fun getSlider(): ViewPager2 = binding.imageSliderHome
 
-    override fun onResume() {
-        super.onResume()
-        binding.imageSliderHome.resumeAutoScroll()
-    }
+    override fun getRotateInterval(): Long = 5000L
 
-    override fun onPause() {
-        binding.imageSliderHome.pauseAutoScroll()
-        super.onPause()
+    private inner class HomeSliderPageAdapter(
+        val banners: List<Banner>, fa: Fragment
+    ) : FragmentStateAdapter(fa) {
+        override fun getItemCount(): Int = banners.size
+
+        override fun createFragment(position: Int): Fragment =
+            HomeSliderPageFragment.newInstance(banners[position])
     }
 }

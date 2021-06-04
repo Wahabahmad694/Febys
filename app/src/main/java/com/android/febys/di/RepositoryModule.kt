@@ -1,6 +1,7 @@
 package com.android.febys.di
 
 import com.android.febys.network.FebysBackendService
+import com.android.febys.network.FebysWebCustomizationService
 import com.android.febys.repos.*
 import dagger.Module
 import dagger.Provides
