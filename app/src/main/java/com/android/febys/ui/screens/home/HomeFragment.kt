@@ -5,23 +5,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.android.febys.R
 import com.android.febys.databinding.FragmentHomeBinding
 import com.android.febys.network.domain.models.Product
-import com.android.febys.base.BaseFragment
+import com.android.febys.base.SliderFragment
 import com.android.febys.network.DataState
+import com.android.febys.network.response.Banner
 import com.android.febys.utils.*
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeFragment : BaseFragment() {
+class HomeFragment : SliderFragment() {
     private lateinit var binding: FragmentHomeBinding
     private val viewModel: HomeViewModel by viewModels()
 
-    private val sliderAdapter = SliderHomeAdapter()
     private val uniqueCategoryAdapter = UniqueCategoryAdapter()
     private val todayDealsAdapter = HomeProductsAdapter()
     private val featuredCategoryProductsAdapter = HomeProductsAdapter()
@@ -43,10 +46,11 @@ class HomeFragment : BaseFragment() {
         setupObserver()
 
         viewModel.fetchUniqueCategory()
-        viewModel.fetchSliderImages()
+        viewModel.fetchAllBanner()
         viewModel.fetchTodayDeals()
         viewModel.fetchFeaturedCategories()
         viewModel.fetchFeaturedCategoryProducts()
+        viewModel.fetchAllSeasonalOffers()
         viewModel.fetchTrendingProducts()
         viewModel.fetchStoresYouFollow()
         viewModel.fetchUnder100DollarsItems()
@@ -64,9 +68,6 @@ class HomeFragment : BaseFragment() {
             param.horizontalBias = horizontalScrollPosition
             binding.ivIcScrollUniqueCategory.layoutParams = param
         }
-
-        // slider
-        binding.imageSliderHome.setSliderAdapter(sliderAdapter)
 
         // today deals
         binding.rvTodayDeals.applySpaceItemDecoration(horizontalDimenRes = R.dimen.margin_large)
@@ -102,7 +103,8 @@ class HomeFragment : BaseFragment() {
 
                 }
                 is DataState.Error -> {
-
+                    val error = getErrorMessage(it)
+                    showToast(error)
                 }
                 is DataState.Data -> {
                     val uniqueCategories = it.data
@@ -118,14 +120,13 @@ class HomeFragment : BaseFragment() {
 
                 }
                 is DataState.Error -> {
-
+                    val error = getErrorMessage(it)
+                    showToast(error)
                 }
                 is DataState.Data -> {
-                    binding.imageSliderHome.show()
                     val sliderImages = it.data
-                    sliderAdapter.submitList(sliderImages)
-                    binding.imageSliderHome.setInfiniteAdapterEnabled(true)
-                    binding.imageSliderHome.startAutoCycle()
+                    binding.imageSliderHome.adapter = HomeSliderPageAdapter(sliderImages, this)
+                    binding.dotsIndicator.setViewPager2(binding.imageSliderHome)
                 }
             }
         }
@@ -148,7 +149,8 @@ class HomeFragment : BaseFragment() {
                 is DataState.Data -> {
                     val featuredCategories = it.data
                     featuredCategories.forEach { category ->
-                        addChip(category.id, category.name)
+                        val chip = makeChip(category.id, category.name)
+                        binding.chipGroupFeaturedCategories.addView(chip)
                     }
                 }
             }
@@ -159,6 +161,27 @@ class HomeFragment : BaseFragment() {
             featuredCategoryProductsAdapter,
             viewModel.observeFeaturedCategoryProducts
         )
+
+        // seasonal offers
+        viewModel.observeSeasonalOffers.observe(viewLifecycleOwner) {
+            when (it) {
+                is DataState.Loading -> {
+
+                }
+                is DataState.Error -> {
+                    val error = getErrorMessage(it)
+                    showToast(error)
+                }
+                is DataState.Data -> {
+                    binding.imageSliderHome.show()
+                    val seasonalOffer = it.data[0]
+                    binding.tvSeasonalOffers.text = seasonalOffer.name
+                    val offer = seasonalOffer.offers[0]
+                    val image = offer.images[0]
+                    binding.ivBgSeasonalOffers.setImageURI(image)
+                }
+            }
+        }
 
         // trending products
         observeAndSubmitProductList(
@@ -189,7 +212,7 @@ class HomeFragment : BaseFragment() {
         )
     }
 
-    private fun addChip(id: Int, text: String) {
+    private fun makeChip(id: Int, text: String): Chip {
         val chip =
             layoutInflater.inflate(
                 R.layout.item_featured_category, binding.chipGroupFeaturedCategories, false
@@ -197,7 +220,8 @@ class HomeFragment : BaseFragment() {
 
         chip.id = id
         chip.text = text
-        binding.chipGroupFeaturedCategories.addView(chip)
+
+        return chip
     }
 
     private fun observeAndSubmitProductList(
@@ -218,5 +242,18 @@ class HomeFragment : BaseFragment() {
                 }
             }
         }
+    }
+
+    override fun getSlider(): ViewPager2 = binding.imageSliderHome
+
+    override fun getRotateInterval(): Long = 5000L
+
+    private inner class HomeSliderPageAdapter(
+        val banners: List<Banner>, fa: Fragment
+    ) : FragmentStateAdapter(fa) {
+        override fun getItemCount(): Int = banners.size
+
+        override fun createFragment(position: Int): Fragment =
+            HomeSliderPageFragment.newInstance(banners[position])
     }
 }

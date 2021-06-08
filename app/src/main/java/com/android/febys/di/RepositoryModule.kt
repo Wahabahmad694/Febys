@@ -1,10 +1,8 @@
 package com.android.febys.di
 
 import com.android.febys.network.FebysBackendService
-import com.android.febys.repos.HomeRepoImpl
-import com.android.febys.repos.IHomeRepo
-import com.android.febys.repos.ISearchRepo
-import com.android.febys.repos.SearchRepoImpl
+import com.android.febys.network.FebysWebCustomizationService
+import com.android.febys.repos.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,7 +21,13 @@ object RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideHomeRepo(): IHomeRepo {
-        return HomeRepoImpl()
+    fun provideHomeRepo(service: FebysWebCustomizationService): IHomeRepo {
+        return HomeRepoImpl(service)
+    }
+
+    @Singleton
+    @Provides
+    fun provideProductRepo(service: FebysBackendService): IProductRepo {
+        return ProductRepoImpl(service)
     }
 }

@@ -38,7 +38,7 @@
             android:id="@+id/ll_search_container_search_fragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_normal_x_2"
+            android:layout_marginTop="@dimen/margin_normal_x2"
             android:background="@color/grey"
             android:orientation="horizontal"
             android:paddingStart="@dimen/padding_normal"
@@ -63,7 +63,7 @@
                 android:layout_width="48dp"
                 android:layout_height="match_parent"
                 android:contentDescription="@string/hint_search"
-                android:padding="@dimen/padding_normal_x_2"
+                android:padding="@dimen/padding_normal_x2"
                 android:src="@drawable/ic_search" />
 
         </LinearLayout>
@@ -72,7 +72,7 @@
             android:id="@+id/tab_layout_search_fragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_normal_x_2"
+            android:layout_marginTop="@dimen/margin_normal_x2"
             app:tabTextAppearance="@style/TextTheme.HelveticaNeue.TS12"
             app:layout_constraintTop_toBottomOf="@id/ll_search_container_search_fragment"
             app:tabMode="scrollable" />

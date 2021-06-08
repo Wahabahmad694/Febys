@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.android.febys.databinding.ItemUniqueCategoryBinding
-import com.android.febys.network.domain.models.UniqueCategory
+import com.android.febys.network.response.UniqueCategory
 
 class UniqueCategoryAdapter :
     ListAdapter<UniqueCategory, UniqueCategoryAdapter.UniqueCategoryViewHolder>(diffCallback) {
@@ -14,17 +14,15 @@ class UniqueCategoryAdapter :
         private val diffCallback = object : DiffUtil.ItemCallback<UniqueCategory>() {
 
             override fun areItemsTheSame(
-                oldItem: UniqueCategory,
-                newItem: UniqueCategory
+                oldItem: UniqueCategory, newItem: UniqueCategory
             ): Boolean {
                 return oldItem == newItem
             }
 
             override fun areContentsTheSame(
-                oldItem: UniqueCategory,
-                newItem: UniqueCategory
+                oldItem: UniqueCategory, newItem: UniqueCategory
             ): Boolean {
-                return oldItem.productName == newItem.productName && oldItem.imgUrl == newItem.imgUrl
+                return oldItem.id == newItem.id
             }
         }
     }
@@ -51,8 +49,8 @@ class UniqueCategoryAdapter :
                 interaction?.onItemSelected(position, item)
             }
 
-            binding.imageUrl = item.imgUrl
-            binding.tvProductNameUniqueCategory.text = item.productName
+            binding.item = item
+            binding.executePendingBindings()
         }
     }
 

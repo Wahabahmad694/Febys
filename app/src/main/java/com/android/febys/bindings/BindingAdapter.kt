@@ -1,23 +1,16 @@
 package com.android.febys.bindings
 
-import android.R.attr.fadeDuration
-import android.R.attr.scaleType
 import android.graphics.Paint
 import android.widget.TextView
-import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.BindingAdapter
-import com.android.febys.R
-import com.facebook.drawee.drawable.ScalingUtils
-import com.facebook.drawee.generic.GenericDraweeHierarchy
-import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder
 import com.facebook.drawee.view.SimpleDraweeView
-
 
 object BindingAdapter {
 
     @JvmStatic
     @BindingAdapter("binding:image_url")
-    fun imageUrl(imageView: SimpleDraweeView, imageUrl: String) {
+    fun imageUrl(imageView: SimpleDraweeView, imageUrl: String?) {
+        if (imageUrl.isNullOrEmpty()) return
         // todo add retry image, placeholder image or any other settings here
         imageView.setImageURI(imageUrl)
     }

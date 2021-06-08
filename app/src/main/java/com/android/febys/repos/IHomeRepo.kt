@@ -2,22 +2,26 @@ package com.android.febys.repos
 
 import com.android.febys.network.DataState
 import com.android.febys.network.domain.models.Product
-import com.android.febys.network.domain.models.UniqueCategory
+import com.android.febys.network.response.Banner
+import com.android.febys.network.response.UniqueCategory
 import com.android.febys.network.response.Category
+import com.android.febys.network.response.SeasonalOffer
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 
 interface IHomeRepo {
-    fun fetchUniqueCategory(dispatcher: CoroutineDispatcher = Dispatchers.IO): Flow<DataState<List<UniqueCategory>>>
+    fun fetchAllUniqueCategories(dispatcher: CoroutineDispatcher = Dispatchers.IO): Flow<DataState<List<UniqueCategory>>>
 
-    fun fetchSliderImages(dispatcher: CoroutineDispatcher = Dispatchers.IO): Flow<DataState<List<String>>>
+    fun fetchAllBanner(dispatcher: CoroutineDispatcher = Dispatchers.IO): Flow<DataState<List<Banner>>>
 
     fun fetchTodayDeals(dispatcher: CoroutineDispatcher = Dispatchers.IO): Flow<DataState<List<Product>>>
 
     fun fetchFeaturedCategories(dispatcher: CoroutineDispatcher = Dispatchers.IO): Flow<DataState<List<Category>>>
 
     fun fetchFeaturedCategoryProducts(dispatcher: CoroutineDispatcher = Dispatchers.IO): Flow<DataState<List<Product>>>
+
+    fun fetchAllSeasonalOffers(dispatcher: CoroutineDispatcher = Dispatchers.IO): Flow<DataState<List<SeasonalOffer>>>
 
     fun fetchTrendingProducts(dispatcher: CoroutineDispatcher = Dispatchers.IO): Flow<DataState<List<Product>>>
 

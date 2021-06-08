@@ -2,7 +2,6 @@ package com.android.febys.ui.screens.search
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
@@ -31,7 +30,7 @@ class SearchViewPagerAdapter :
         return SearchViewPagerViewHolder(
             ItemSearchViewPagerBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
-            ).root
+            )
         )
     }
 
@@ -40,8 +39,9 @@ class SearchViewPagerAdapter :
 
     }
 
-    inner class SearchViewPagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val binding = ItemSearchViewPagerBinding.bind(itemView)
+    inner class SearchViewPagerViewHolder(
+        private val binding: ItemSearchViewPagerBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Category, position: Int) {
             itemView.setOnClickListener {
