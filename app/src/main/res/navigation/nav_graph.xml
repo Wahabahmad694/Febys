@@ -15,6 +15,11 @@
             app:destination="@id/homeFragment"
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
@@ -31,4 +36,36 @@
         android:name="com.android.febys.ui.screens.productDetail.ProductDetailFragment"
         android:label="ProductDetailFragment"
         tools:layout="@layout/fragment_product_detail" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.android.febys.ui.screens.auth.login.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_signupFragment"
+            app:destination="@id/signupFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signupFragment"
+        android:name="com.android.febys.ui.screens.auth.signup.SignupFragment"
+        android:label="SignupFragment"
+        tools:layout="@layout/fragment_signup">
+        <action
+            android:id="@+id/action_signupFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_signupFragment_to_otpVerificationDialog"
+            app:destination="@id/otpVerificationDialog" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/otpVerificationDialog"
+        android:name="com.android.febys.ui.screens.dialog.OtpVerificationDialog"
+        android:label="OtpVerificationDialog"
+        tools:layout="@layout/dialog_otp_verfication">
+        <argument
+            android:name="isCancelable"
+            android:defaultValue="true"
+            app:argType="boolean" />
+    </dialog>
 </navigation>

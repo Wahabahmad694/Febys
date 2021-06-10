@@ -15,6 +15,12 @@ object RepositoryModule {
 
     @Singleton
     @Provides
+    fun provideAuthRepo(): IAuthRepo {
+        return AuthRepoImpl()
+    }
+
+    @Singleton
+    @Provides
     fun provideSearchRepo(service: FebysBackendService): ISearchRepo {
         return SearchRepoImpl(service)
     }

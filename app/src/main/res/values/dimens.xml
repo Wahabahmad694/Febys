@@ -6,6 +6,7 @@
     <dimen name="padding_normal_x2">16dp</dimen>
     <dimen name="padding_extra_large">32dp</dimen>
     <dimen name="padding_extra_large_x2">64dp</dimen>
+    <dimen name="margin_small">4dp</dimen>
     <dimen name="margin_normal">8dp</dimen>
     <dimen name="margin_normal_x2">16dp</dimen>
     <dimen name="margin_large">24dp</dimen>

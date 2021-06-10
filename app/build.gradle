@@ -140,4 +140,8 @@ dependencies {
     implementation "com.github.smarteist:autoimageslider:$image_slider_version"
     implementation "com.tbuonomo:dotsindicator:$slider_version"
 
+    // otp
+    def otp_version = "2.1.2"
+    implementation "com.github.mukeshsolanki:android-otpview-pinview:$otp_version"
+
 }
