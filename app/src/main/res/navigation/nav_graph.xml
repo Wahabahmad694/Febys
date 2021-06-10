@@ -51,9 +51,6 @@
         android:label="SignupFragment"
         tools:layout="@layout/fragment_signup">
         <action
-            android:id="@+id/action_signupFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
-        <action
             android:id="@+id/action_signupFragment_to_otpVerificationDialog"
             app:destination="@id/otpVerificationDialog" />
     </fragment>
@@ -62,7 +59,7 @@
         android:id="@+id/otpVerificationDialog"
         android:name="com.android.febys.ui.screens.dialog.OtpVerificationDialog"
         android:label="OtpVerificationDialog"
-        tools:layout="@layout/dialog_otp_verfication">
+        tools:layout="@layout/dialog_otp_verification">
         <argument
             android:name="isCancelable"
             android:defaultValue="true"

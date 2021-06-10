@@ -6,19 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
 import com.android.febys.base.BaseDialog
-import com.android.febys.databinding.DialogOtpVerficationBinding
+import com.android.febys.databinding.DialogOtpVerificationBinding
 import com.android.febys.utils.goBack
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class OtpVerificationDialog : BaseDialog() {
-    private lateinit var binding: DialogOtpVerficationBinding
+    private lateinit var binding: DialogOtpVerificationBinding
     private val args: OtpVerificationDialogArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        binding = DialogOtpVerficationBinding.inflate(inflater, container, false)
+        binding = DialogOtpVerificationBinding.inflate(inflater, container, false)
         return binding.root
     }
 
