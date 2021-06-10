@@ -8,6 +8,7 @@ import androidx.navigation.fragment.navArgs
 import com.android.febys.base.BaseDialog
 import com.android.febys.databinding.DialogOtpVerificationBinding
 import com.android.febys.utils.goBack
+import com.android.febys.utils.navigateTo
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -33,7 +34,9 @@ class OtpVerificationDialog : BaseDialog() {
         }
 
         binding.btnSkip.setOnClickListener {
-            goBack()
+            val navigateToHomeScreen =
+                OtpVerificationDialogDirections.actionOtpVerificationDialogToHomeFragment()
+            navigateTo(navigateToHomeScreen)
         }
     }
 

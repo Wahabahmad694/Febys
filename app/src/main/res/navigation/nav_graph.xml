@@ -64,5 +64,10 @@
             android:name="isCancelable"
             android:defaultValue="true"
             app:argType="boolean" />
+        <action
+            android:id="@+id/action_otpVerificationDialog_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
     </dialog>
 </navigation>
