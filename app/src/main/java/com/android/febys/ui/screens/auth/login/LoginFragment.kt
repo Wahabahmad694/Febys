@@ -39,5 +39,11 @@ class LoginFragment : AuthFragment() {
             val navigateToHomeScreen = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
             navigateTo(navigateToHomeScreen)
         }
+
+        binding.tvForgotPassword.setOnClickListener {
+            val navigateToResetCredential =
+                LoginFragmentDirections.actionLoginFragmentToResetCredentialFragment()
+            navigateTo(navigateToResetCredential)
+        }
     }
 }

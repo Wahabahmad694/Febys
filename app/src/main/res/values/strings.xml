@@ -52,6 +52,10 @@
     <string name="label_login_slogan">Welcom back. Log in to continue.</string>
     <string name="label_forgot_password">Forgot Password?</string>
     <string name="label_not_have_an_account">Don\'t have an account?</string>
+    <string name="label_send_reset_password_link">Send Reset Password Link</string>
+    <string name="label_forgot_credential_slogan">Please enter your email address to request a password reset.</string>
+    <string name="label_forgot_credential">Forgot Password</string>
+    <string name="label_loading">Loading…</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_search">Search</string>
