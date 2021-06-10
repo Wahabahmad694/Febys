@@ -26,8 +26,18 @@ class LoginFragment : AuthFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // todo remove testing navigation once actual work done
-        val navigateToSignUp = LoginFragmentDirections.actionLoginFragmentToSignupFragment()
-        navigateTo(navigateToSignUp)
+        uiListeners()
+    }
+
+    private fun uiListeners() {
+        binding.tvGotoSignUp.setOnClickListener {
+            val navigateToSignUp = LoginFragmentDirections.actionLoginFragmentToSignupFragment()
+            navigateTo(navigateToSignUp)
+        }
+
+        binding.btnLogin.setOnClickListener {
+            val navigateToHomeScreen = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
+            navigateTo(navigateToHomeScreen)
+        }
     }
 }
