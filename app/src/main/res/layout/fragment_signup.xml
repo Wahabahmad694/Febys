@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.screens.auth.signup.SignupFragment">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_normal_x2"
+            android:src="@drawable/ic_back" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/label_sign_up"
+                    style="@style/TextTheme.HelveticaNeue.TS32"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_normal_x2"
+                    android:layout_marginTop="@dimen/margin_large"
+                    android:text="@string/label_sign_up"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/label_sign_up_slogan"
+                    style="@style/TextTheme.Arial.TS14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_sign_up_slogan"
+                    app:layout_constraintStart_toStartOf="@id/label_sign_up"
+                    app:layout_constraintTop_toBottomOf="@id/label_sign_up" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_first_name"
+                    style="@style/TextInputLayout.FilledBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_normal_x2"
+                    android:layout_marginTop="@dimen/margin_extra_large_x2"
+                    android:hint="@string/label_first_name"
+                    app:layout_constraintTop_toBottomOf="@id/label_sign_up_slogan">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_first_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionNext"
+                        android:inputType="textCapWords" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_last_name"
+                    style="@style/TextInputLayout.FilledBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_normal_x2"
+                    android:layout_marginTop="@dimen/margin_large"
+                    android:hint="@string/label_last_name"
+                    app:layout_constraintTop_toBottomOf="@id/til_first_name">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_last_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionNext"
+                        android:inputType="textCapWords" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_email_address"
+                    style="@style/TextInputLayout.FilledBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_normal_x2"
+                    android:layout_marginTop="@dimen/margin_large"
+                    android:hint="@string/label_email_address"
+                    app:layout_constraintTop_toBottomOf="@id/til_last_name">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_email_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionNext"
+                        android:inputType="textEmailAddress" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_phone"
+                    style="@style/TextInputLayout.FilledBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_normal_x2"
+                    android:layout_marginTop="@dimen/margin_large"
+                    android:hint="@string/label_phone"
+                    app:layout_constraintTop_toBottomOf="@id/til_email_address">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionNext"
+                        android:inputType="phone" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_password"
+                    style="@style/TextInputLayout.FilledBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_normal_x2"
+                    android:layout_marginTop="@dimen/margin_large"
+                    android:hint="@string/label_password"
+                    app:endIconMode="password_toggle"
+                    app:layout_constraintTop_toBottomOf="@id/til_phone">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPassword" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_confirm_password"
+                    style="@style/TextInputLayout.FilledBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_normal_x2"
+                    android:layout_marginTop="@dimen/margin_large"
+                    android:hint="@string/label_confirm_password"
+                    app:endIconMode="password_toggle"
+                    app:layout_constraintTop_toBottomOf="@id/til_password">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_confirm_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionDone"
+                        android:inputType="textPassword" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_sign_up"
+                    style="@style/ButtonTheme.Contained"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_normal_x2"
+                    android:layout_marginTop="@dimen/margin_extra_large_x2"
+                    android:text="@string/label_sign_up"
+                    app:layout_constraintTop_toBottomOf="@id/til_confirm_password" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_google"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_extra_large"
+                    android:layout_marginEnd="@dimen/margin_normal"
+                    android:src="@drawable/ic_google"
+                    app:layout_constraintEnd_toStartOf="@id/iv_facebook"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/btn_sign_up" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_facebook"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_normal"
+                    android:layout_marginTop="@dimen/margin_extra_large"
+                    android:src="@drawable/ic_facebook"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/iv_google"
+                    app:layout_constraintTop_toBottomOf="@id/btn_sign_up" />
+
+                <TextView
+                    android:id="@+id/label_already_have_account"
+                    style="@style/TextTheme.HelveticaNeue.TS14.Grey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_extra_large"
+                    android:layout_marginBottom="@dimen/margin_normal_x2"
+                    android:text="@string/label_already_have_an_account"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/tv_goto_login"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_google" />
+
+                <TextView
+                    android:id="@+id/tv_goto_login"
+                    style="@style/TextTheme.OpenSans.TS14.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_small"
+                    android:layout_marginTop="@dimen/margin_extra_large"
+                    android:text="@string/label_login"
+                    app:layout_constraintBaseline_toBaselineOf="@id/label_already_have_account"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/label_already_have_account" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+    </LinearLayout>
+</layout>

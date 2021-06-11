@@ -1,0 +1,44 @@
+package com.android.febys.ui.screens.dialog
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.navigation.fragment.navArgs
+import com.android.febys.base.BaseDialog
+import com.android.febys.databinding.DialogOtpVerificationBinding
+import com.android.febys.utils.goBack
+import com.android.febys.utils.navigateTo
+import dagger.hilt.android.AndroidEntryPoint
+
+@AndroidEntryPoint
+class OtpVerificationDialog : BaseDialog() {
+    private lateinit var binding: DialogOtpVerificationBinding
+    private val args: OtpVerificationDialogArgs by navArgs()
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
+        binding = DialogOtpVerificationBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        uiListeners()
+    }
+
+    private fun uiListeners() {
+        binding.otpView.setOtpCompletionListener { otp ->
+            // send otp to backend
+        }
+
+        binding.btnSkip.setOnClickListener {
+            val navigateToHomeScreen =
+                OtpVerificationDialogDirections.actionOtpVerificationDialogToHomeFragment()
+            navigateTo(navigateToHomeScreen)
+        }
+    }
+
+    override fun cancelable() = args.isCancelable
+}

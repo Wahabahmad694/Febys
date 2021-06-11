@@ -15,7 +15,7 @@
 
         <item name="android:windowBackground">@color/bg_windows_light</item>
 
-        <item name="android:listDivider">@color/list_divider</item>
+        <item name="otpViewStyle">@style/OtpWidget.OtpView</item>
     </style>
 
     <style name="TextTheme">
@@ -35,12 +35,21 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="TextTheme.HelveticaNeue.TS14.Grey">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/text_grey</item>
+    </style>
+
     <style name="TextTheme.HelveticaNeue.TS16">
         <item name="android:textSize">16sp</item>
     </style>
 
     <style name="TextTheme.HelveticaNeue.TS18">
         <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="TextTheme.HelveticaNeue.TS32">
+        <item name="android:textSize">32sp</item>
     </style>
 
     <style name="TextTheme.Arial">
@@ -96,6 +105,22 @@
         <item name="strokeColor">@color/black</item>
     </style>
 
+    <style name="Button.ShapeAppearance" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">4dp</item>
+    </style>
+
+    <style name="ButtonTheme.Contained" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">@color/white</item>
+        <item name="backgroundTint">@color/selector_contained_button</item>
+        <item name="android:textAppearance">@style/TextTheme.HelveticaNeue.TS18</item>
+        <item name="shapeAppearance">@style/Button.ShapeAppearance</item>
+    </style>
+
+    <style name="ButtonTheme.Text" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textAppearance">@style/TextTheme.OpenSans.TS14.Bold</item>
+    </style>
+
     <style name="ChipTheme.Choice" parent="Widget.MaterialComponents.Chip.Choice">
         <item name="chipStrokeWidth">1dp</item>
         <item name="cornerRadius">8dp</item>
@@ -104,4 +129,19 @@
         <item name="shapeAppearanceOverlay">@null</item>
         <item name="android:textAppearance">@style/TextTheme.HelveticaNeue.TS12</item>
     </style>
+
+    <style name="TextInputLayout.ShapeAppearance" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">4dp</item>
+    </style>
+
+    <style name="TextInputLayout.FilledBox" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="boxBackgroundColor">@color/grey</item>
+        <item name="hintTextColor">@color/black</item>
+        <item name="hintTextAppearance">@style/TextTheme.HelveticaNeue.TS12</item>
+        <item name="android:textAppearance">@style/TextTheme.Arial.TS16</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="shapeAppearance">@style/TextInputLayout.ShapeAppearance</item>
+    </style>
+
 </resources>

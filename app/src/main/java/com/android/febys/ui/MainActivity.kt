@@ -13,6 +13,13 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : BaseActivity() {
     private lateinit var binding: ActivityMainBinding
 
+    private val showBottomNavInDestinations =
+        listOf(
+            R.id.homeFragment,
+            R.id.searchFragment,
+            R.id.productDetailFragment /* todo remove this destination once flow implemented */
+        )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -28,7 +35,7 @@ class MainActivity : BaseActivity() {
         }
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            binding.bottomNavigation.isVisible = destination.id != R.id.splashFragment
+            binding.bottomNavigation.isVisible = destination.id in showBottomNavInDestinations
         }
     }
 }

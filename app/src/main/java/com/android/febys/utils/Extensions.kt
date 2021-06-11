@@ -5,6 +5,8 @@ import android.view.View
 import android.widget.Toast
 import androidx.annotation.DimenRes
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.android.febys.network.DataState
 import com.android.febys.network.ErrorMessage
@@ -60,6 +62,10 @@ fun <T> Fragment.getErrorMessage(e: DataState.Error<T>): String {
         }
     }
 }
+
+fun Fragment.navigateTo(directions: NavDirections) = findNavController().navigate(directions)
+
+fun Fragment.goBack() = findNavController().popBackStack()
 
 fun RecyclerView.applySpaceItemDecoration(
     @DimenRes verticalDimenRes: Int? = null,

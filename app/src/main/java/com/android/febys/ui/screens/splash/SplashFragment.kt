@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import com.android.febys.databinding.FragmentSplashBinding
 import com.android.febys.base.BaseFragment
+import com.android.febys.utils.navigateTo
 import kotlinx.coroutines.delay
 
 class SplashFragment : BaseFragment() {
@@ -25,8 +25,10 @@ class SplashFragment : BaseFragment() {
 
         lifecycleScope.launchWhenResumed {
             delay(2000)
-            val actionToHome = SplashFragmentDirections.actionSplashFragmentToHomeFragment()
-            findNavController().navigate(actionToHome)
+            // todo navigate by checking auth token
+            // this navigation is for testing purpose
+            val navigateToLogin = SplashFragmentDirections.actionSplashFragmentToLoginFragment()
+            navigateTo(navigateToLogin)
         }
     }
 }

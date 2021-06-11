@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Febys</string>
-    <!-- TODO: Remove or change this placeholder text -->
 
     <string name="label_unique_categories">Unique Categories</string>
     <string name="label_today_deals">Today\'s Deals</string>
@@ -11,19 +10,6 @@
     <string name="label_trending_products_slogan">Discover the top selling products</string>
     <string name="label_under_100_dollar_items">Under $100 Items</string>
     <string name="label_under_100_dollar_items_slogan">Discover new deal\'s, just for you</string>
-
-    <string name="menu_home">Home</string>
-    <string name="menu_search">Search</string>
-    <string name="menu_message">Message</string>
-    <string name="menu_cart">Cart</string>
-    <string name="menu_account">Account</string>
-
-    <string name="hint_search">Search…</string>
-
-    <string name="error_something_went_wrong">Something went wrong!</string>
-    <string name="error_no_network_connected">No network connected!</string>
-
-    <string name="minus">-</string>
     <string name="label_shop_now">Shop Now</string>
     <string name="label_seasonal_offers">Seasonal Offers</string>
     <string name="label_seasonal_offers_slogan">Black Sunday</string>
@@ -31,8 +17,6 @@
     <string name="label_same_day_delivery">Same day delivery</string>
     <string name="label_store_you_follow">Stores You Follow</string>
     <string name="label_store_you_follow_slogan">This week\'s highlights</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="label_add_protection">Add Protection</string>
     <string name="label_mobile_payment_offer">Mobile Money Payments accepted across all networks <b>Read More</b></string>
     <string name="label_buy_the_exchange_offer">Get up to $99.99 off on exchangeBuy with Exchange</string>
@@ -50,5 +34,34 @@
     <string name="label_special_features">Special Features</string>
     <string name="label_size">Size</string>
     <string name="label_protection">%1d-Year Protection for $%2d</string>
+    <string name="label_sign_up">Sign Up</string>
+    <string name="label_sign_up_slogan">Create an account to FEBYS to get all features.</string>
+    <string name="label_first_name">First Name</string>
+    <string name="label_last_name">Last Name</string>
+    <string name="label_email_address">Email Address</string>
+    <string name="label_password">Password</string>
+    <string name="label_confirm_password">Confirm Password</string>
+    <string name="label_phone">Phone</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_search">Search</string>
+    <string name="menu_message">Message</string>
+    <string name="menu_cart">Cart</string>
+    <string name="menu_account">Account</string>
+
+    <string name="hint_search">Search…</string>
+
+    <string name="error_something_went_wrong">Something went wrong!</string>
+    <string name="error_no_network_connected">No network connected!</string>
+
+    <string name="minus">-</string>
+    <string name="label_verification">Verification</string>
+    <string name="label_otp_verification_slogan">We will send you a One Time OTP Code on your phone number</string>
+    <string name="label_resend_otp">Didn\'t receive the verification OTP?</string>
+    <string name="label_resend">Resend</string>
+    <string name="label_skip_now">Skip Now</string>
+    <string name="label_login">Login</string>
+    <string name="label_already_have_an_account">Already have an account?</string>
+
 
 </resources>
