@@ -27,14 +27,14 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/padding_normal_x2">
 
                 <TextView
                     android:id="@+id/label_sign_up"
                     style="@style/TextTheme.HelveticaNeue.TS32"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_normal_x2"
                     android:layout_marginTop="@dimen/margin_large"
                     android:text="@string/label_sign_up"
                     app:layout_constraintStart_toStartOf="parent"
@@ -54,7 +54,6 @@
                     style="@style/TextInputLayout.FilledBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_normal_x2"
                     android:layout_marginTop="@dimen/margin_extra_large_x2"
                     android:hint="@string/label_first_name"
                     app:layout_constraintTop_toBottomOf="@id/label_sign_up_slogan">
@@ -74,7 +73,6 @@
                     style="@style/TextInputLayout.FilledBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_normal_x2"
                     android:layout_marginTop="@dimen/margin_large"
                     android:hint="@string/label_last_name"
                     app:layout_constraintTop_toBottomOf="@id/til_first_name">
@@ -94,7 +92,6 @@
                     style="@style/TextInputLayout.FilledBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_normal_x2"
                     android:layout_marginTop="@dimen/margin_large"
                     android:hint="@string/label_email_address"
                     app:layout_constraintTop_toBottomOf="@id/til_last_name">
@@ -113,7 +110,6 @@
                     style="@style/TextInputLayout.FilledBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_normal_x2"
                     android:layout_marginTop="@dimen/margin_large"
                     android:hint="@string/label_phone"
                     app:layout_constraintTop_toBottomOf="@id/til_email_address">
@@ -132,7 +128,6 @@
                     style="@style/TextInputLayout.FilledBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_normal_x2"
                     android:layout_marginTop="@dimen/margin_large"
                     android:hint="@string/label_password"
                     app:endIconMode="password_toggle"
@@ -153,7 +148,6 @@
                     style="@style/TextInputLayout.FilledBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_normal_x2"
                     android:layout_marginTop="@dimen/margin_large"
                     android:hint="@string/label_confirm_password"
                     app:endIconMode="password_toggle"
@@ -173,7 +167,6 @@
                     style="@style/ButtonTheme.Contained"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_normal_x2"
                     android:layout_marginTop="@dimen/margin_extra_large_x2"
                     android:text="@string/label_sign_up"
                     app:layout_constraintTop_toBottomOf="@id/til_confirm_password" />

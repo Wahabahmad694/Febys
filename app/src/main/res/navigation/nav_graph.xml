@@ -53,6 +53,13 @@
             app:destination="@id/homeFragment"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_loginFragment_to_resetCredentialFragment"
+            app:destination="@id/resetCredentialFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/signupFragment"
@@ -79,4 +86,9 @@
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
     </dialog>
+    <fragment
+        android:id="@+id/resetCredentialFragment"
+        android:name="com.android.febys.ui.screens.auth.credential.ResetCredentialFragment"
+        android:label="ResetCredentialFragment"
+        tools:layout="@layout/fragment_reset_credential" />
 </navigation>
