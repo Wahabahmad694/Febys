@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_extra_large"
             android:inputType="number"
-            app:OtpItemCount="4"
+            app:OtpItemCount="6"
             app:OtpItemSpacing="@dimen/margin_normal"
             app:OtpLineColor="@color/dark_grey"
             app:OtpViewType="rectangle"
