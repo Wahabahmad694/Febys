@@ -165,6 +165,14 @@ class SignupFragment : AuthFragment() {
         }
     }
 
+    private fun signup() {
+        val requestSignup = RequestSignup(
+            firstName, lastName, email, phone, password
+        )
+
+        viewModel.signup(requestSignup)
+    }
+
     private fun validate() {
         var isValid = true
 
@@ -196,14 +204,6 @@ class SignupFragment : AuthFragment() {
         }
 
         binding.btnSignUp.isEnabled = isValid
-    }
-
-    private fun signup() {
-        val requestSignup = RequestSignup(
-            firstName, lastName, email, phone, password
-        )
-
-        viewModel.signup(requestSignup)
     }
 
     private fun navigateToOTPVerification() {
