@@ -1,5 +1,7 @@
 package com.android.febys.di
 
+import com.android.febys.database.dao.UserDao
+import com.android.febys.network.AuthService
 import com.android.febys.network.FebysBackendService
 import com.android.febys.network.FebysWebCustomizationService
 import com.android.febys.repos.*
@@ -15,8 +17,8 @@ object RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideAuthRepo(): IAuthRepo {
-        return AuthRepoImpl()
+    fun provideAuthRepo(service: AuthService, userDao: UserDao): IAuthRepo {
+        return AuthRepoImpl(service, userDao)
     }
 
     @Singleton
