@@ -136,7 +136,7 @@
     </style>
 
     <style name="TextInputLayout.FilledBox" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
-        <item name="boxBackgroundColor">@color/grey</item>
+        <item name="boxBackgroundColor">@android:color/transparent</item>
         <item name="hintTextColor">@color/black</item>
         <item name="hintTextAppearance">@style/TextTheme.HelveticaNeue.TS12</item>
         <item name="android:textAppearance">@style/TextTheme.Arial.TS16</item>
