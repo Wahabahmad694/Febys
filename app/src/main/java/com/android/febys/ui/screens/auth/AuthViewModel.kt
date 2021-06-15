@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.android.febys.base.BaseViewModel
-import com.android.febys.dto.UserDTO
 import com.android.febys.network.DataState
 import com.android.febys.network.requests.RequestSignup
 import com.android.febys.network.response.ResponseOtpVerification
@@ -32,20 +31,10 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    fun saveUser(userDTO: UserDTO, onComplete: () -> Unit) = viewModelScope.launch {
-        repo.saveUser(userDTO)
-        onComplete.invoke()
-    }
-
     fun verifyUser(otp: String) = viewModelScope.launch {
         _observeOtpResponse.postValue(DataState.loading())
         repo.verifyUser(otp).collect {
             _observeOtpResponse.postValue(it)
         }
-    }
-
-    fun updateUser(userDTO: UserDTO, onComplete: () -> Unit) = viewModelScope.launch {
-        repo.updateUser(userDTO)
-        onComplete.invoke()
     }
 }

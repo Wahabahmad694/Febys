@@ -1,6 +1,6 @@
 package com.android.febys.repos
 
-import com.android.febys.dto.UserDTO
+import com.android.febys.dto.User
 import com.android.febys.network.DataState
 import com.android.febys.network.requests.RequestSignup
 import com.android.febys.network.response.ResponseOtpVerification
@@ -18,7 +18,7 @@ interface IAuthRepo {
         otp: String, dispatcher: CoroutineDispatcher = Dispatchers.IO
     ): Flow<DataState<ResponseOtpVerification>>
 
-    suspend fun saveUser(userDTO: UserDTO)
+    suspend fun saveUser(user: User)
 
-    suspend fun updateUser(userDTO: UserDTO)
+    suspend fun updateUser(user: User)
 }

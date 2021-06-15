@@ -70,9 +70,7 @@ class OtpVerificationDialog : BaseDialog() {
                     response.signupErrors.find { it.field == "otp" }?.error ?: ""
             }
             is ResponseOtpVerification.Success -> {
-                viewModel.updateUser(response.userDTO) {
-                    navigateToHomeScreen()
-                }
+                navigateToHomeScreen()
             }
         }
     }

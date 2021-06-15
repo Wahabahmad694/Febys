@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 @Entity
-data class UserDTO(
+data class User(
     @PrimaryKey
     @SerializedName("id")
     val id: Int,

@@ -2,7 +2,7 @@ package com.android.febys.repos
 
 import com.android.febys.R
 import com.android.febys.database.dao.UserDao
-import com.android.febys.dto.UserDTO
+import com.android.febys.dto.User
 import com.android.febys.network.AuthService
 import com.android.febys.network.DataState
 import com.android.febys.network.adapter.*
@@ -26,23 +26,22 @@ class AuthRepoImpl(
         return flow<DataState<ResponseSignup>> {
             service.signup(signupReq)
                 .onSuccess {
-                    emit(
-                        DataState.data(Gson().fromJson(data!!, ResponseSignup.Success::class.java))
-                    )
+                    val response = Gson().fromJson(data!!, ResponseSignup.Success::class.java)
+                    saveUser(response.user)
+                    emit(DataState.data(response))
                 }
                 .onError {
                     val errorBody = response.errorBody()?.string()
-                    emit(
-                        if (errorBody.isNullOrEmpty()) {
-                            DataState.error(message())
-                        } else {
-                            DataState.data(
-                                Gson().fromJson(
-                                    errorBody, ResponseSignup.Fail::class.java
-                                )
-                            )
-                        }
-                    )
+
+                    val dataState = if (errorBody.isNullOrEmpty()) {
+                        DataState.error(message())
+                    } else {
+                        val errorResponse: ResponseSignup =
+                            Gson().fromJson(errorBody, ResponseSignup.Fail::class.java)
+                        DataState.data(errorResponse)
+                    }
+
+                    emit(dataState)
                 }
                 .onException { emit(DataState.error(R.string.error_something_went_wrong)) }
                 .onNetworkError { emit(DataState.error(R.string.error_no_network_connected)) }
@@ -57,36 +56,34 @@ class AuthRepoImpl(
             val verificationReq = mapOf("otp" to otp)
             service.verifyUser(verificationReq, user.id)
                 .onSuccess {
-                    emit(
-                        DataState.data(
-                            Gson().fromJson(data!!, ResponseOtpVerification.Success::class.java)
-                        )
-                    )
+                    val response =
+                        Gson().fromJson(data!!, ResponseOtpVerification.Success::class.java)
+                    updateUser(response.user)
+                    emit(DataState.data(response))
                 }
                 .onError {
                     val errorBody = response.errorBody()?.string()
-                    emit(
-                        if (errorBody.isNullOrEmpty()) {
-                            DataState.error(message())
-                        } else {
-                            DataState.data(
-                                Gson().fromJson(
-                                    errorBody, ResponseOtpVerification.Fail::class.java
-                                )
-                            )
-                        }
-                    )
+
+                    val dataState = if (errorBody.isNullOrEmpty()) {
+                        DataState.error(message())
+                    } else {
+                        val errorResponse: ResponseOtpVerification =
+                            Gson().fromJson(errorBody, ResponseOtpVerification.Fail::class.java)
+                        DataState.data(errorResponse)
+                    }
+
+                    emit(dataState)
                 }
                 .onException { emit(DataState.error(R.string.error_something_went_wrong)) }
                 .onNetworkError { emit(DataState.error(R.string.error_no_network_connected)) }
         }.flowOn(dispatcher)
     }
 
-    override suspend fun saveUser(userDTO: UserDTO) {
-        userDao.insert(userDTO)
+    override suspend fun saveUser(user: User) {
+        userDao.insert(user)
     }
 
-    override suspend fun updateUser(userDTO: UserDTO) {
-        userDao.update(userDTO)
+    override suspend fun updateUser(user: User) {
+        userDao.update(user)
     }
 }

@@ -1,6 +1,6 @@
 package com.android.febys.network.response
 
-import com.android.febys.dto.UserDTO
+import com.android.febys.dto.User
 import com.google.gson.annotations.SerializedName
 
 sealed class ResponseSignup {
@@ -8,7 +8,7 @@ sealed class ResponseSignup {
         @SerializedName("message")
         val message: String,
         @SerializedName("user")
-        val userDTO: UserDTO
+        val user: User
     ) : ResponseSignup()
 
     data class Fail(
@@ -17,13 +17,6 @@ sealed class ResponseSignup {
         @SerializedName("status")
         val status: Int?,
         @SerializedName("errors")
-        val signupErrors: List<SignupError>
+        val signupErrors: List<FieldError>
     ) : ResponseSignup()
 }
-
-data class SignupError(
-    @SerializedName("field")
-    val field: String,
-    @SerializedName("error")
-    val error: String
-)

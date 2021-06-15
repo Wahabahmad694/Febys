@@ -8,4 +8,8 @@ object Validator {
 
     fun isValidPhone(number: String): Boolean =
         number.isNotEmpty() && Patterns.PHONE.matcher(number).matches()
+
+    fun isValidName(name: String): Boolean = name.isNotEmpty()
+
+    fun isValidPassword(password: String): Boolean = password.isNotEmpty()
 }

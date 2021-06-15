@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import com.android.febys.R
@@ -15,7 +14,6 @@ import com.android.febys.network.response.ResponseSignup
 import com.android.febys.ui.screens.auth.AuthFragment
 import com.android.febys.ui.screens.auth.AuthViewModel
 import com.android.febys.utils.*
-import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -52,7 +50,7 @@ class SignupFragment : AuthFragment() {
                 binding.tilFirstName.error = getString(R.string.error_enter_first_name)
             }
 
-            validate()
+            updateSignupButtonVisibility()
         }
 
         binding.etLastName.addTextChangedListener {
@@ -62,33 +60,31 @@ class SignupFragment : AuthFragment() {
                 binding.tilLastName.error = getString(R.string.error_enter_last_name)
             }
 
-            validate()
+            updateSignupButtonVisibility()
         }
 
         binding.etEmailAddress.addTextChangedListener {
             email = it.toString()
             binding.tilEmailAddress.clearError()
-            if (!Validator.isValidEmail(email)) {
-                binding.tilEmailAddress.error = getString(R.string.error_enter_valid_email)
-            }
             if (email.isEmpty()) {
                 binding.tilEmailAddress.error = getString(R.string.error_enter_email)
+            } else if (!Validator.isValidEmail(email)) {
+                binding.tilEmailAddress.error = getString(R.string.error_enter_valid_email)
             }
 
-            validate()
+            updateSignupButtonVisibility()
         }
 
         binding.etPhone.addTextChangedListener {
             phone = it.toString()
             binding.tilPhone.clearError()
-            if (!Validator.isValidPhone(phone)) {
-                binding.tilPhone.error = getString(R.string.error_enter_valid_phone)
-            }
             if (phone.isEmpty()) {
                 binding.tilPhone.error = getString(R.string.error_enter_phone)
+            } else if (!Validator.isValidPhone(phone)) {
+                binding.tilPhone.error = getString(R.string.error_enter_valid_phone)
             }
 
-            validate()
+            updateSignupButtonVisibility()
         }
 
         binding.etPassword.addTextChangedListener {
@@ -98,21 +94,20 @@ class SignupFragment : AuthFragment() {
                 binding.tilPassword.error = getString(R.string.error_enter_password)
             }
 
-            validate()
+            updateSignupButtonVisibility()
         }
 
         binding.etConfirmPassword.addTextChangedListener {
             confirmPassword = it.toString()
             binding.tilConfirmPassword.clearError()
-            if (confirmPassword != password) {
+            if (confirmPassword.isEmpty()) {
+                binding.tilConfirmPassword.error = getString(R.string.error_enter_confirm_password)
+            } else if (confirmPassword != password) {
                 binding.tilConfirmPassword.error =
                     getString(R.string.error_confirm_password_not_match)
             }
-            if (confirmPassword.isEmpty()) {
-                binding.tilConfirmPassword.error = getString(R.string.error_enter_confirm_password)
-            }
 
-            validate()
+            updateSignupButtonVisibility()
         }
 
 
@@ -158,9 +153,7 @@ class SignupFragment : AuthFragment() {
                 binding.tilPhone.error = phoneError
             }
             is ResponseSignup.Success -> {
-                viewModel.saveUser(response.userDTO) {
-                    navigateToOTPVerification()
-                }
+                navigateToOTPVerification()
             }
         }
     }
@@ -173,37 +166,34 @@ class SignupFragment : AuthFragment() {
         viewModel.signup(requestSignup)
     }
 
-    private fun validate() {
-        var isValid = true
+    private fun updateSignupButtonVisibility() {
+        var enableButton = true
 
-        if (firstName.isEmpty()) {
-            isValid = false
+        if (!Validator.isValidName(firstName)) {
+            enableButton = false
         }
 
-        if (lastName.isEmpty()) {
-            isValid = false
+        if (!Validator.isValidName(lastName)) {
+            enableButton = false
         }
 
-        if (email.isEmpty() || !Validator.isValidEmail(email)) {
-            isValid = false
+        if (!Validator.isValidEmail(email)) {
+            enableButton = false
         }
 
-        if (phone.isEmpty() || !Validator.isValidPhone(phone)) {
-            isValid = false
+        if (!Validator.isValidPhone(phone)) {
+            enableButton = false
         }
 
-        if (password.isEmpty()) {
-            isValid = false
+        if (!Validator.isValidPassword(password)) {
+            enableButton = false
         }
 
-        if (confirmPassword != password) {
-            isValid = false
-        }
-        if (confirmPassword.isEmpty()) {
-            isValid = false
+        if (confirmPassword.isEmpty() || confirmPassword != password) {
+            enableButton = false
         }
 
-        binding.btnSignUp.isEnabled = isValid
+        binding.btnSignUp.isEnabled = enableButton
     }
 
     private fun navigateToOTPVerification() {
