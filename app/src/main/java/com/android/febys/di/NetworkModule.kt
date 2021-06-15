@@ -1,6 +1,7 @@
 package com.android.febys.di
 
 import com.android.febys.BuildConfig
+import com.android.febys.network.AuthService
 import com.android.febys.network.FebysBackendService
 import com.android.febys.network.FebysWebCustomizationService
 import com.android.febys.network.adapter.ApiResponseCallAdapterFactory
@@ -51,8 +52,8 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    @FebysBackendClient
-    fun provideRetrofitBackend(okHttpClient: OkHttpClient): Retrofit {
+    @BackendClient
+    fun provideBackendClient(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.backendBaseUrl)
             .client(okHttpClient)
@@ -63,8 +64,8 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    @FebysWebCustomizationClient
-    fun provideRetrofitWebCustomization(okHttpClient: OkHttpClient): Retrofit {
+    @WebCustomizationClient
+    fun provideWebCustomizationClient(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.webCustomizationBaseUrl)
             .client(okHttpClient)
@@ -75,13 +76,19 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideFebysBackendService(@FebysBackendClient retrofit: Retrofit): FebysBackendService {
+    fun provideBackendService(@BackendClient retrofit: Retrofit): FebysBackendService {
         return retrofit.create(FebysBackendService::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideFebysWebCustomizationService(@FebysWebCustomizationClient retrofit: Retrofit): FebysWebCustomizationService {
+    fun provideWebCustomizationService(@WebCustomizationClient retrofit: Retrofit): FebysWebCustomizationService {
         return retrofit.create(FebysWebCustomizationService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAuthService(@BackendClient retrofit: Retrofit): AuthService {
+        return retrofit.create(AuthService::class.java)
     }
 }

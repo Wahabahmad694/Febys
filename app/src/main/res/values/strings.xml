@@ -39,6 +39,7 @@
     <string name="label_first_name">First Name</string>
     <string name="label_last_name">Last Name</string>
     <string name="label_email_address">Email Address</string>
+    <string name="label_user_name">User Name</string>
     <string name="label_password">Password</string>
     <string name="label_confirm_password">Confirm Password</string>
     <string name="label_phone">Phone</string>
@@ -47,7 +48,7 @@
     <string name="label_resend_otp">Didn\'t receive the verification OTP?</string>
     <string name="label_resend">Resend</string>
     <string name="label_skip_now">Skip Now</string>
-    <string name="label_login">Login</string>
+    <string name="label_login">Log In</string>
     <string name="label_already_have_an_account">Already have an account?</string>
     <string name="label_login_slogan">Welcom back. Log in to continue.</string>
     <string name="label_forgot_password">Forgot Password?</string>
@@ -69,5 +70,14 @@
     <string name="error_no_network_connected">No network connected!</string>
 
     <string name="minus">-</string>
+    <string name="error_enter_first_name">Please Enter First Name</string>
+    <string name="error_enter_last_name">Please Enter Last Name</string>
+    <string name="error_enter_email">Please Enter Email</string>
+    <string name="error_enter_valid_email">Please Enter Valid Email</string>
+    <string name="error_enter_password">Please Enter Password</string>
+    <string name="error_enter_confirm_password">Please Enter Password Again</string>
+    <string name="error_confirm_password_not_match">Password doesn\'t match</string>
+    <string name="error_enter_phone">Please Enter Phone No</string>
+    <string name="error_enter_valid_phone">Please Enter Valid Phone No</string>
 
 </resources>
