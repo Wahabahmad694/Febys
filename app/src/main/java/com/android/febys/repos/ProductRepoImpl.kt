@@ -6,8 +6,9 @@ import com.android.febys.network.DataState
 import com.android.febys.network.FebysBackendService
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class ProductRepoImpl(service: FebysBackendService) : IProductRepo {
+class ProductRepoImpl @Inject constructor(service: FebysBackendService) : IProductRepo {
     override fun fetchProductDetail(
         productId: String, dispatcher: CoroutineDispatcher
     ) = flow<DataState<ProductDetailDTO>> {

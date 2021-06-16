@@ -4,7 +4,7 @@ import android.content.Context
 import com.android.febys.FebysApp
 import com.android.febys.prefs.IPrefManger
 import com.android.febys.prefs.PrefManagerImpl
-import com.android.febys.utils.PREF_FILE
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,15 +14,12 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AppModule {
+abstract class AppModule {
     @Singleton
     @Provides
     fun provideFebysApp(@ApplicationContext context: Context): FebysApp = context as FebysApp
 
     @Singleton
-    @Provides
-    fun providePrefManger(@ApplicationContext context: Context): IPrefManger {
-        val sharedPreferences = context.getSharedPreferences(PREF_FILE, Context.MODE_PRIVATE)
-        return PrefManagerImpl(sharedPreferences)
-    }
+    @Binds
+    abstract fun bindPrefManger(pref: PrefManagerImpl): IPrefManger
 }

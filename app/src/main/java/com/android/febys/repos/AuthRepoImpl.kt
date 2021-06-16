@@ -16,8 +16,9 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import javax.inject.Inject
 
-class AuthRepoImpl(
+class AuthRepoImpl @Inject constructor(
     private val service: AuthService,
     private val userDao: UserDao,
     private val pref: IPrefManger
