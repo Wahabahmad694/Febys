@@ -4,6 +4,7 @@ import com.android.febys.database.dao.UserDao
 import com.android.febys.network.AuthService
 import com.android.febys.network.FebysBackendService
 import com.android.febys.network.FebysWebCustomizationService
+import com.android.febys.prefs.IPrefManger
 import com.android.febys.repos.*
 import dagger.Module
 import dagger.Provides
@@ -17,8 +18,8 @@ object RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideAuthRepo(service: AuthService, userDao: UserDao): IAuthRepo {
-        return AuthRepoImpl(service, userDao)
+    fun provideAuthRepo(service: AuthService, userDao: UserDao, pref: IPrefManger): IAuthRepo {
+        return AuthRepoImpl(service, userDao, pref)
     }
 
     @Singleton
