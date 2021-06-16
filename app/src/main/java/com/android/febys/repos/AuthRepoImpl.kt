@@ -31,9 +31,9 @@ class AuthRepoImpl @Inject constructor(
             service.signup(signupReq)
                 .onSuccess {
                     val response = Gson().fromJson(data!!, ResponseSignup.Success::class.java)
-                    val accessToken = data.get("user").asJsonObject["access_token"].asString
-                    pref.saveAuthToken(accessToken)
-                    saveUser(response.user)
+                    val user = response.user
+                    user.accessToken?.let { pref.saveAuthToken(it) }
+                    saveUser(user)
                     emit(DataState.data(response))
                 }
                 .onError {
@@ -93,9 +93,9 @@ class AuthRepoImpl @Inject constructor(
             val loginReq = mapOf("email" to email, "password" to password)
             service.login(loginReq).onSuccess {
                 val response = Gson().fromJson(data!!, ResponseLogin.Success::class.java)
-                val accessToken = data.get("user").asJsonObject["access_token"].asString
-                pref.saveAuthToken(accessToken)
-                saveUser(response.user)
+                val user = response.user
+                user.accessToken?.let { pref.saveAuthToken(it) }
+                saveUser(user)
                 emit(DataState.data(response))
             }
                 .onError {

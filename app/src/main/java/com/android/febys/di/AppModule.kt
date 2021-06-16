@@ -15,9 +15,11 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class AppModule {
-    @Singleton
-    @Provides
-    fun provideFebysApp(@ApplicationContext context: Context): FebysApp = context as FebysApp
+    companion object{
+        @Singleton
+        @Provides
+        fun provideFebysApp(@ApplicationContext context: Context): FebysApp = context as FebysApp
+    }
 
     @Singleton
     @Binds
