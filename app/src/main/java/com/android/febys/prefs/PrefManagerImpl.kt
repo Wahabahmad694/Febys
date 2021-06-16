@@ -16,7 +16,7 @@ class PrefManagerImpl @Inject constructor(@ApplicationContext context: Context) 
     }
 
     override fun saveAuthToken(authToken: String) {
-        saveString(AUTH_TOKEN, authToken)
+        saveString(AUTH_TOKEN, "Bearer $authToken")
     }
 
     override fun getAuthToken(defValue: String): String {

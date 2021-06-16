@@ -59,8 +59,9 @@ class AuthRepoImpl @Inject constructor(
     ): Flow<DataState<ResponseOtpVerification>> {
         return flow<DataState<ResponseOtpVerification>> {
             val user = userDao.getUser()
+            val authToken = pref.getAuthToken()
             val verificationReq = mapOf("otp" to otp)
-            service.verifyUser(verificationReq, user.id)
+            service.verifyUser(authToken, verificationReq, user.id)
                 .onSuccess {
                     val response =
                         Gson().fromJson(data!!, ResponseOtpVerification.Success::class.java)

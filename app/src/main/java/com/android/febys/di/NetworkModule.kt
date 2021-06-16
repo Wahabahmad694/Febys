@@ -25,19 +25,12 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(pref: IPrefManger): OkHttpClient {
+    fun provideOkHttpClient(): OkHttpClient {
         val interceptor = HttpLoggingInterceptor()
         interceptor.apply { interceptor.level = HttpLoggingInterceptor.Level.BODY }
 
         return OkHttpClient.Builder()
-            .addInterceptor(
-                fun(chain: Interceptor.Chain): Response {
-                    val newRequest = chain.request().newBuilder()
-                        .addHeader("Authorization", "Bearer ${pref.getAuthToken()}")
-                        .build()
-                    return chain.proceed(newRequest)
-                }
-            ).addInterceptor(HttpLoggingInterceptor().apply {
+            .addInterceptor(HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BODY
             })
             .connectTimeout(1, TimeUnit.MINUTES)
