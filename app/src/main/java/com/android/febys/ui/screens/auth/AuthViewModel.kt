@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.android.febys.base.BaseViewModel
 import com.android.febys.network.DataState
 import com.android.febys.network.requests.RequestSignup
+import com.android.febys.network.response.ResponseLogin
 import com.android.febys.network.response.ResponseOtpVerification
 import com.android.febys.network.response.ResponseSignup
 import com.android.febys.repos.IAuthRepo
@@ -24,6 +25,9 @@ class AuthViewModel @Inject constructor(
     private val _observeOtpResponse = MutableLiveData<DataState<ResponseOtpVerification>>()
     val observeOtpResponse: LiveData<DataState<ResponseOtpVerification>> = _observeOtpResponse
 
+    private val _observeLoginResponse = MutableLiveData<DataState<ResponseLogin>>()
+    val observeLoginResponse: LiveData<DataState<ResponseLogin>> = _observeLoginResponse
+
     fun signup(requestSignup: RequestSignup) = viewModelScope.launch {
         _observeSignupResponse.postValue(DataState.loading())
         repo.signup(requestSignup).collect {
@@ -35,6 +39,13 @@ class AuthViewModel @Inject constructor(
         _observeOtpResponse.postValue(DataState.loading())
         repo.verifyUser(otp).collect {
             _observeOtpResponse.postValue(it)
+        }
+    }
+
+    fun login(email: String, password: String) = viewModelScope.launch {
+        _observeLoginResponse.postValue(DataState.loading())
+        repo.login(email, password).collect {
+            _observeLoginResponse.postValue(it)
         }
     }
 }

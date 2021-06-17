@@ -14,8 +14,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import javax.inject.Inject
 
-class SearchRepoImpl(
+class SearchRepoImpl @Inject constructor(
     private val service: FebysBackendService
 ) : ISearchRepo {
 

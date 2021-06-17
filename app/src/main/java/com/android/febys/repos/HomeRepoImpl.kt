@@ -13,8 +13,9 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import javax.inject.Inject
 
-class HomeRepoImpl(
+class HomeRepoImpl @Inject constructor(
     private val service: FebysWebCustomizationService
 ) : IHomeRepo {
 
