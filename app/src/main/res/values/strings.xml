@@ -79,5 +79,12 @@
     <string name="error_confirm_password_not_match">Password doesn\'t match</string>
     <string name="error_enter_phone">Please Enter Phone No</string>
     <string name="error_enter_valid_phone">Please Enter Valid Phone No</string>
+    <string name="label_manufacture">Manufacture</string>
+    <string name="label_shipping_fee"><![CDATA[Shipping Fee & Returns]]></string>
+    <string name="label_q_and_a"><![CDATA[Q&As]]></string>
+    <string name="label_reviews">Reviews</string>
+    <string name="label_store_information">Store Infromation</string>
+    <string name="label_official">Official</string>
+    <string name="store_rating">(%1.1f) Ratings</string>
 
 </resources>

@@ -68,6 +68,8 @@ class OtpVerificationDialog : BaseDialog() {
             is ResponseOtpVerification.Fail -> {
                 val otpError =
                     response.signupErrors.find { it.field == "otp" }?.error ?: ""
+
+                showToast(otpError)
             }
             is ResponseOtpVerification.Success -> {
                 navigateToHomeScreen()

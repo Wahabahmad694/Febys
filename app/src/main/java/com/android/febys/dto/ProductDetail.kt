@@ -1,6 +1,6 @@
 package com.android.febys.dto
 
-data class ProductDetailDTO(
+data class ProductDetail(
     val id: String,
     val name: String,
     val isFav: Boolean,

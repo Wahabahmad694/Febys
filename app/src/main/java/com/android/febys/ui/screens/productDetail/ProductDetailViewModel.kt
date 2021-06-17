@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.android.febys.base.BaseViewModel
-import com.android.febys.dto.ProductDetailDTO
+import com.android.febys.dto.ProductDetail
 import com.android.febys.network.DataState
 import com.android.febys.repos.IProductRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,8 +16,8 @@ import javax.inject.Inject
 class ProductDetailViewModel @Inject constructor(
     private val repo: IProductRepo
 ) : BaseViewModel() {
-    private val _observeProductDetail = MutableLiveData<DataState<ProductDetailDTO>>()
-    val observeProductDetail: LiveData<DataState<ProductDetailDTO>> = _observeProductDetail
+    private val _observeProductDetail = MutableLiveData<DataState<ProductDetail>>()
+    val observeProductDetail: LiveData<DataState<ProductDetail>> = _observeProductDetail
 
     fun fetchProductDetail(productId: String) = viewModelScope.launch {
         _observeProductDetail.postValue(DataState.Loading())
