@@ -50,118 +50,165 @@
                     app:layout_constraintStart_toStartOf="@id/label_sign_up"
                     app:layout_constraintTop_toBottomOf="@id/label_sign_up" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_first_name"
-                    style="@style/TextInputLayout.FilledBox"
+                <TextView
+                    android:id="@+id/label_first_name"
+                    style="@style/TextTheme.Arial.TS16"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_extra_large_x2"
-                    android:hint="@string/label_first_name"
-                    app:layout_constraintTop_toBottomOf="@id/label_sign_up_slogan">
+                    android:text="@string/label_first_name"
+                    app:layout_constraintTop_toBottomOf="@id/label_sign_up_slogan" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_first_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:imeOptions="actionNext"
-                        android:inputType="textCapWords" />
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_first_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapWords"
+                    android:paddingVertical="@dimen/padding_normal"
+                    android:textAppearance="@style/TextTheme.Arial.TS16"
+                    app:layout_constraintTop_toBottomOf="@id/label_first_name" />
 
-                </com.google.android.material.textfield.TextInputLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/dark_grey"
+                    app:layout_constraintTop_toBottomOf="@id/et_first_name" />
 
+                <TextView
+                    android:id="@+id/label_last_name"
+                    style="@style/TextTheme.Arial.TS16"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_large"
+                    android:text="@string/label_last_name"
+                    app:layout_constraintTop_toBottomOf="@id/et_first_name" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_last_name"
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_last_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapWords"
+                    android:paddingVertical="@dimen/margin_normal"
+                    android:textAppearance="@style/TextTheme.Arial.TS16"
+                    app:layout_constraintTop_toBottomOf="@id/label_last_name" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/dark_grey"
+                    app:layout_constraintTop_toBottomOf="@id/et_last_name" />
+
+                <TextView
+                    android:id="@+id/label_email_address"
                     style="@style/TextInputLayout.FilledBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_large"
-                    android:hint="@string/label_last_name"
-                    app:layout_constraintTop_toBottomOf="@id/til_first_name">
+                    android:text="@string/label_email_address"
+                    app:layout_constraintTop_toBottomOf="@id/et_last_name" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_last_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:imeOptions="actionNext"
-                        android:inputType="textCapWords" />
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_email_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress"
+                    android:paddingVertical="@dimen/margin_normal"
+                    android:textAppearance="@style/TextTheme.Arial.TS16"
+                    app:layout_constraintTop_toBottomOf="@id/label_email_address" />
 
-                </com.google.android.material.textfield.TextInputLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/dark_grey"
+                    app:layout_constraintTop_toBottomOf="@id/et_email_address" />
 
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_email_address"
-                    style="@style/TextInputLayout.FilledBox"
+                <TextView
+                    android:id="@+id/label_phone"
+                    style="@style/TextTheme.Arial.TS16"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_large"
-                    android:hint="@string/label_email_address"
-                    app:layout_constraintTop_toBottomOf="@id/til_last_name">
+                    android:text="@string/label_phone"
+                    app:layout_constraintTop_toBottomOf="@id/et_email_address" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_email_address"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:imeOptions="actionNext"
-                        android:inputType="textEmailAddress" />
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:imeOptions="actionNext"
+                    android:inputType="phone"
+                    android:paddingVertical="@dimen/margin_normal"
+                    android:textAppearance="@style/TextTheme.Arial.TS16"
+                    app:layout_constraintTop_toBottomOf="@id/label_phone" />
 
-                </com.google.android.material.textfield.TextInputLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/dark_grey"
+                    app:layout_constraintTop_toBottomOf="@id/et_phone" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_phone"
-                    style="@style/TextInputLayout.FilledBox"
+                <TextView
+                    android:id="@+id/label_password"
+                    style="@style/TextTheme.Arial.TS16"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_large"
-                    android:hint="@string/label_phone"
-                    app:layout_constraintTop_toBottomOf="@id/til_email_address">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_phone"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:imeOptions="actionNext"
-                        android:inputType="phone" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_password"
-                    style="@style/TextInputLayout.FilledBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_large"
-                    android:hint="@string/label_password"
+                    android:text="@string/label_password"
                     app:endIconMode="password_toggle"
-                    app:layout_constraintTop_toBottomOf="@id/til_phone">
+                    app:layout_constraintTop_toBottomOf="@id/et_phone" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_password"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:imeOptions="actionNext"
-                        android:inputType="textPassword" />
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:drawableEnd="@drawable/ic_password_show"
+                    android:imeOptions="actionNext"
+                    android:inputType="textPassword"
+                    android:paddingVertical="@dimen/margin_normal"
+                    android:textAppearance="@style/TextTheme.Arial.TS16"
+                    app:layout_constraintTop_toBottomOf="@id/label_password" />
 
-                </com.google.android.material.textfield.TextInputLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/dark_grey"
+                    app:layout_constraintTop_toBottomOf="@id/et_password" />
 
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_confirm_password"
-                    style="@style/TextInputLayout.FilledBox"
+                <TextView
+                    android:id="@+id/label_confirm_password"
+                    style="@style/TextTheme.Arial.TS16"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_large"
-                    android:hint="@string/label_confirm_password"
+                    android:text="@string/label_confirm_password"
                     app:endIconMode="password_toggle"
-                    app:layout_constraintTop_toBottomOf="@id/til_password">
+                    app:layout_constraintTop_toBottomOf="@id/et_password" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_confirm_password"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:imeOptions="actionDone"
-                        android:inputType="textPassword" />
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_confirm_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:drawableEnd="@drawable/ic_password_show"
+                    android:imeOptions="actionDone"
+                    android:inputType="textPassword"
+                    android:paddingVertical="@dimen/margin_normal"
+                    android:textAppearance="@style/TextTheme.Arial.TS16"
+                    app:layout_constraintTop_toBottomOf="@id/label_confirm_password" />
 
-                </com.google.android.material.textfield.TextInputLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/dark_grey"
+                    app:layout_constraintTop_toBottomOf="@id/et_confirm_password" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_sign_up"
@@ -171,7 +218,7 @@
                     android:layout_marginTop="@dimen/margin_extra_large_x2"
                     android:enabled="false"
                     android:text="@string/label_sign_up"
-                    app:layout_constraintTop_toBottomOf="@id/til_confirm_password" />
+                    app:layout_constraintTop_toBottomOf="@id/label_confirm_password" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/iv_google"

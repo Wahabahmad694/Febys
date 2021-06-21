@@ -45,9 +45,9 @@ class SignupFragment : AuthFragment() {
     private fun uiListeners() {
         binding.etFirstName.addTextChangedListener {
             firstName = it.toString()
-            binding.tilFirstName.clearError()
+            binding.etFirstName.clearError()
             if (firstName.isEmpty()) {
-                binding.tilFirstName.error = getString(R.string.error_enter_first_name)
+                binding.etFirstName.error = getString(R.string.error_enter_first_name)
             }
 
             updateSignupButtonVisibility()
@@ -55,9 +55,9 @@ class SignupFragment : AuthFragment() {
 
         binding.etLastName.addTextChangedListener {
             lastName = it.toString()
-            binding.tilLastName.clearError()
+            binding.etLastName.clearError()
             if (lastName.isEmpty()) {
-                binding.tilLastName.error = getString(R.string.error_enter_last_name)
+                binding.etLastName.error = getString(R.string.error_enter_last_name)
             }
 
             updateSignupButtonVisibility()
@@ -65,11 +65,11 @@ class SignupFragment : AuthFragment() {
 
         binding.etEmailAddress.addTextChangedListener {
             email = it.toString()
-            binding.tilEmailAddress.clearError()
+            binding.etEmailAddress.clearError()
             if (email.isEmpty()) {
-                binding.tilEmailAddress.error = getString(R.string.error_enter_email)
+                binding.etEmailAddress.error = getString(R.string.error_enter_email)
             } else if (!Validator.isValidEmail(email)) {
-                binding.tilEmailAddress.error = getString(R.string.error_enter_valid_email)
+                binding.etEmailAddress.error = getString(R.string.error_enter_valid_email)
             }
 
             updateSignupButtonVisibility()
@@ -77,11 +77,11 @@ class SignupFragment : AuthFragment() {
 
         binding.etPhone.addTextChangedListener {
             phone = it.toString()
-            binding.tilPhone.clearError()
+            binding.etPhone.clearError()
             if (phone.isEmpty()) {
-                binding.tilPhone.error = getString(R.string.error_enter_phone)
+                binding.etPhone.error = getString(R.string.error_enter_phone)
             } else if (!Validator.isValidPhone(phone)) {
-                binding.tilPhone.error = getString(R.string.error_enter_valid_phone)
+                binding.etPhone.error = getString(R.string.error_enter_valid_phone)
             }
 
             updateSignupButtonVisibility()
@@ -89,9 +89,9 @@ class SignupFragment : AuthFragment() {
 
         binding.etPassword.addTextChangedListener {
             password = it.toString()
-            binding.tilPassword.clearError()
+            binding.etPassword.clearError()
             if (password.isEmpty()) {
-                binding.tilPassword.error = getString(R.string.error_enter_password)
+                binding.etPassword.error = getString(R.string.error_enter_password)
             }
 
             updateSignupButtonVisibility()
@@ -99,11 +99,11 @@ class SignupFragment : AuthFragment() {
 
         binding.etConfirmPassword.addTextChangedListener {
             confirmPassword = it.toString()
-            binding.tilConfirmPassword.clearError()
+            binding.etConfirmPassword.clearError()
             if (confirmPassword.isEmpty()) {
-                binding.tilConfirmPassword.error = getString(R.string.error_enter_confirm_password)
+                binding.etConfirmPassword.error = getString(R.string.error_enter_confirm_password)
             } else if (confirmPassword != password) {
-                binding.tilConfirmPassword.error =
+                binding.etConfirmPassword.error =
                     getString(R.string.error_confirm_password_not_match)
             }
 
@@ -149,8 +149,8 @@ class SignupFragment : AuthFragment() {
                 val phoneError =
                     response.signupErrors.find { it.field == "phone_number" }?.error ?: ""
 
-                binding.tilEmailAddress.error = emailError
-                binding.tilPhone.error = phoneError
+                binding.etEmailAddress.error = emailError
+                binding.etPhone.error = phoneError
             }
             is ResponseSignup.Success -> {
                 navigateToOTPVerification()

@@ -2,6 +2,7 @@ package com.android.febys.utils
 
 import android.app.Activity
 import android.view.View
+import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.DimenRes
 import androidx.core.view.isVisible
@@ -91,6 +92,6 @@ fun RecyclerView.applySpaceItemDecoration(
     )
 }
 
-fun TextInputLayout.clearError() {
-    error = ""
+fun EditText.clearError() {
+    error = null
 }
