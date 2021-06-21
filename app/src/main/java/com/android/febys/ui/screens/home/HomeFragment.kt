@@ -174,6 +174,7 @@ class HomeFragment : SliderFragment() {
                 }
                 is DataState.Data -> {
                     binding.imageSliderHome.show()
+                    if (it.data.isNullOrEmpty()) return@observe
                     val seasonalOffer = it.data[0]
                     binding.tvSeasonalOffers.text = seasonalOffer.name
                     val offer = seasonalOffer.offers[0]
