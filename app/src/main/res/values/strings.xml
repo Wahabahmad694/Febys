@@ -19,8 +19,8 @@
     <string name="label_store_you_follow_slogan">This week\'s highlights</string>
     <string name="label_add_protection">Add Protection</string>
     <string name="label_mobile_payment_offer">Mobile Money Payments accepted across all networks <b>Read More</b></string>
-    <string name="label_buy_the_exchange_offer">Get up to $99.99 off on exchangeBuy with Exchange</string>
-    <string name="label_credit_card_payment_offer">Bank Offer Extra 5% Off With Axis Bank Buzz Credit Card T$C</string>
+    <string name="label_buy_the_exchange_offer">Get up to $99.99 off on exchange <b>Buy with Exchange</b></string>
+    <string name="label_credit_card_payment_offer">Bank Offer Extra 5% Off With Axis Bank Buzz Credit Card <b>T&amp;C</b></string>
     <string name="label_add_delivery_address">Add Delivery Address</string>
     <string name="label_enter_delivery_address">Enter Delivery Address</string>
     <string name="label_check">Check</string>
@@ -50,13 +50,30 @@
     <string name="label_skip_now">Skip Now</string>
     <string name="label_login">Log In</string>
     <string name="label_already_have_an_account">Already have an account?</string>
-    <string name="label_login_slogan">Welcom back. Log in to continue.</string>
+    <string name="label_login_slogan">Welcome back. Log in to continue.</string>
     <string name="label_forgot_password">Forgot Password?</string>
     <string name="label_not_have_an_account">Don\'t have an account?</string>
     <string name="label_send_reset_password_link">Send Reset Password Link</string>
     <string name="label_forgot_credential_slogan">Please enter your email address to request a password reset.</string>
     <string name="label_forgot_credential">Forgot Password</string>
     <string name="label_loading">Loading…</string>
+    <string name="label_manufacture">Manufacture</string>
+    <string name="label_shipping_fee"><![CDATA[Shipping Fee & Returns]]></string>
+    <string name="label_q_and_a"><![CDATA[Q&As]]></string>
+    <string name="label_reviews">Reviews</string>
+    <string name="label_store_information">Store Information</string>
+    <string name="label_official">Official</string>
+    <string name="store_rating">(%1.1f) Ratings</string>
+    <string name="label_product_availability">Product Availability</string>
+    <string name="label_in_stock">In Stock</string>
+    <string name="label_product_will_be_fulfilled_by">Product Will Be Fulfilled By</string>
+    <string name="label_vendor">Vendor</string>
+    <string name="label_product_warranty">Product Warranty</string>
+    <string name="label_yes">Yes</string>
+    <string name="label_duration">Duration</string>
+    <string name="dummy_12_month_s">12 Month’s</string>
+    <string name="label_product_return_and_refundable">Product Return &amp; Refundable</string>
+    <string name="label_return_and_refund_policy">Return &amp; Refund Policy</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_search">Search</string>
@@ -79,12 +96,5 @@
     <string name="error_confirm_password_not_match">Password doesn\'t match</string>
     <string name="error_enter_phone">Please Enter Phone No</string>
     <string name="error_enter_valid_phone">Please Enter Valid Phone No</string>
-    <string name="label_manufacture">Manufacture</string>
-    <string name="label_shipping_fee"><![CDATA[Shipping Fee & Returns]]></string>
-    <string name="label_q_and_a"><![CDATA[Q&As]]></string>
-    <string name="label_reviews">Reviews</string>
-    <string name="label_store_information">Store Infromation</string>
-    <string name="label_official">Official</string>
-    <string name="store_rating">(%1.1f) Ratings</string>
 
 </resources>

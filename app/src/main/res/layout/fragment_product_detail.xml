@@ -763,6 +763,142 @@
                         android:orientation="vertical"
                         android:visibility="gone">
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingVertical="@dimen/margin_normal">
+
+                            <TextView
+                                style="@style/TextTheme.HelveticaNeue.TS14"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/label_product_availability" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chip_product_is_in_stock"
+                                style="@style/ChipTheme.Choice"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="true"
+                                android:text="@string/label_in_stock"
+                                app:chipBackgroundColor="@color/grey"
+                                app:chipStrokeColor="@color/grey" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/dark_grey" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingVertical="@dimen/margin_normal">
+
+                            <TextView
+                                style="@style/TextTheme.HelveticaNeue.TS14"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/label_product_will_be_fulfilled_by" />
+
+                            <TextView
+                                style="@style/TextTheme.HelveticaNeue.TS14"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/label_vendor" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/dark_grey" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingVertical="@dimen/margin_normal">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    style="@style/TextTheme.HelveticaNeue.TS14"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/label_product_warranty" />
+
+                                <TextView
+                                    style="@style/TextTheme.HelveticaNeue.TS14"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/label_yes" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin_normal">
+
+                                <TextView
+                                    style="@style/TextTheme.Arial.TS14"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/label_duration" />
+
+                                <TextView
+                                    style="@style/TextTheme.Arial.TS14"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/dummy_12_month_s" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/dark_grey" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingVertical="@dimen/margin_normal">
+
+                            <TextView
+                                style="@style/TextTheme.HelveticaNeue.TS14"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/label_product_return_and_refundable" />
+
+                            <TextView
+                                style="@style/TextTheme.HelveticaNeue.TS14"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/label_yes" />
+
+                        </LinearLayout>
+
+                        <com.google.android.material.chip.Chip
+                            style="@style/ChipTheme.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_normal"
+                            android:checked="true"
+                            android:text="@string/label_return_and_refund_policy"
+                            app:chipBackgroundColor="@color/grey"
+                            app:chipStrokeColor="@color/grey" />
+
                     </LinearLayout>
 
                     <View
