@@ -1,25 +1,20 @@
 package com.android.febys.ui.screens.productDetail
 
-import android.graphics.Color
 import android.os.Bundle
-import android.transition.AutoTransition
-import android.transition.TransitionManager
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
-import androidx.core.content.res.ResourcesCompat
+import android.widget.ImageView
 import androidx.core.view.isVisible
-import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import androidx.viewpager2.widget.ViewPager2
 import com.android.febys.R
 import com.android.febys.base.SliderFragment
 import com.android.febys.databinding.FragmentProductDetailBinding
-import com.android.febys.dto.ProductDetailDTO
+import com.android.febys.dto.ProductDetail
 import com.android.febys.network.DataState
+import com.android.febys.utils.toggleVisibility
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -45,19 +40,36 @@ class ProductDetailFragment : SliderFragment() {
     }
 
     private fun initUi() {
-        binding.llContainerProductDescriptionToggle.setOnClickListener {
-            binding.llContainerProductDescription.isVisible =
-                !binding.llContainerProductDescription.isVisible
+        binding.productDescriptionToggle.setOnClickListener {
+            binding.containerProductDescription.toggleVisibility()
+            binding.ivDescriptionArrow.updateArrowByVisibility(binding.containerProductDescription.isVisible)
+            binding.scrollView.scrollToDescendant(binding.containerProductDescription)
+        }
 
-            val arrow = if (binding.llContainerProductDescription.isVisible)
-                R.drawable.ic_arrow_up
-            else
-                R.drawable.ic_arrow_down
+        binding.productManufactureToggle.setOnClickListener {
+            binding.containerProductManufacture.toggleVisibility()
+            binding.ivManufactureArrow.updateArrowByVisibility(binding.containerProductManufacture.isVisible)
+            binding.scrollView.scrollToDescendant(binding.containerProductManufacture)
+        }
 
-            binding.ivDescriptionArrow.setImageResource(arrow)
+        binding.productReviewsToggle.setOnClickListener {
+            binding.containerProductReviews.toggleVisibility()
+            binding.ivReviewsArrow.updateArrowByVisibility(binding.containerProductReviews.isVisible)
+            binding.scrollView.scrollToDescendant(binding.containerProductReviews)
+        }
+
+        binding.productQNdAToggle.setOnClickListener {
+            binding.containerProductQNdA.toggleVisibility()
+            binding.ivQAndAArrow.updateArrowByVisibility(binding.containerProductQNdA.isVisible)
+            binding.scrollView.scrollToDescendant(binding.containerProductQNdA)
+        }
+
+        binding.productShippingFeeToggle.setOnClickListener {
+            binding.containerProductShippingFee.toggleVisibility()
+            binding.ivShippingFeeArrow.updateArrowByVisibility(binding.containerProductShippingFee.isVisible)
+            binding.scrollView.scrollToDescendant(binding.containerProductShippingFee)
         }
     }
-
 
     private fun observersSetup() {
         viewModel.observeProductDetail.observe(viewLifecycleOwner) {
@@ -75,7 +87,7 @@ class ProductDetailFragment : SliderFragment() {
         }
     }
 
-    private fun updateUi(productDetail: ProductDetailDTO) {
+    private fun updateUi(productDetail: ProductDetail) {
         binding.productDetail = productDetail
         setupProductImagesSlider(productDetail.images)
     }
@@ -83,6 +95,15 @@ class ProductDetailFragment : SliderFragment() {
     private fun setupProductImagesSlider(images: List<String>) {
         binding.sliderProductImages.adapter = ProductSliderPageAdapter(images, this)
         binding.dotsIndicator.setViewPager2(binding.sliderProductImages)
+    }
+
+    private fun ImageView.updateArrowByVisibility(visibility: Boolean) {
+        val arrow = if (visibility)
+            R.drawable.ic_arrow_up
+        else
+            R.drawable.ic_arrow_down
+
+        setImageResource(arrow)
     }
 
     override fun getSlider() = binding.sliderProductImages

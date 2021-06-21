@@ -4,6 +4,7 @@ import android.app.Activity
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.DimenRes
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
@@ -22,6 +23,10 @@ fun View.hide() {
 
 fun View.invisible() {
     visibility = View.INVISIBLE
+}
+
+fun View.toggleVisibility() {
+    isVisible = !isVisible
 }
 
 /**

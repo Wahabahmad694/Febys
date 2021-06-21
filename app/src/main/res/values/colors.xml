@@ -9,4 +9,5 @@
     <color name="slider_dot_selected_color">#18224C</color>
     <color name="text_grey">#979797</color>
     <color name="disable_button_color">#979797</color>
+    <color name="red">#C41429</color>
 </resources>

@@ -12,10 +12,9 @@ interface AuthService {
     @POST("v1/consumers/login")
     suspend fun login(@Body reqLogin: Map<String, String>): ApiResponse<JsonObject>
 
-    @PATCH("v1/consumers/verify-otp/{userId}")
+    @PATCH("v1/consumers/verify-otp")
     suspend fun verifyUser(
         @Header("Authorization") authToken: String,
-        @Body otp: Map<String, String>,
-        @Path("userId") userId: Int
+        @Body otp: Map<String, String>
     ): ApiResponse<JsonObject>
 }
