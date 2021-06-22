@@ -41,11 +41,11 @@ class LoginFragment : AuthFragment() {
     private fun uiListeners() {
         binding.etEmailAddress.addTextChangedListener {
             email = it.toString()
-            binding.tilEmailAddress.clearError()
+            binding.etEmailAddress.clearError()
             if (email.isEmpty()) {
-                binding.tilEmailAddress.error = getString(R.string.error_enter_email)
+                binding.etEmailAddress.error = getString(R.string.error_enter_email)
             } else if (!Validator.isValidEmail(email)) {
-                binding.tilEmailAddress.error = getString(R.string.error_enter_valid_email)
+                binding.etEmailAddress.error = getString(R.string.error_enter_valid_email)
             }
 
             updateLoginButtonVisibility()
@@ -53,9 +53,9 @@ class LoginFragment : AuthFragment() {
 
         binding.etPassword.addTextChangedListener {
             password = it.toString()
-            binding.tilPassword.clearError()
+            binding.etPassword.clearError()
             if (password.isEmpty()) {
-                binding.tilPassword.error = getString(R.string.error_enter_password)
+                binding.etPassword.error = getString(R.string.error_enter_password)
             }
 
             updateLoginButtonVisibility()
