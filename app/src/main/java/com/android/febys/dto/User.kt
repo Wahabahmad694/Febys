@@ -5,7 +5,6 @@ import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
-@Entity
 data class User @JvmOverloads constructor(
     @PrimaryKey
     @SerializedName("id")

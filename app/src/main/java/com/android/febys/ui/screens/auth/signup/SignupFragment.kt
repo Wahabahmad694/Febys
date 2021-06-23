@@ -10,7 +10,6 @@ import com.android.febys.R
 import com.android.febys.databinding.FragmentSignupBinding
 import com.android.febys.network.DataState
 import com.android.febys.network.requests.RequestSignup
-import com.android.febys.network.response.ResponseSignup
 import com.android.febys.ui.screens.auth.AuthFragment
 import com.android.febys.ui.screens.auth.AuthViewModel
 import com.android.febys.utils.*
@@ -135,25 +134,8 @@ class SignupFragment : AuthFragment() {
                     showToast(msg)
                 }
                 is DataState.Data -> {
-                    handleResponse(it.data)
+                    navigateToOTPVerification()
                 }
-            }
-        }
-    }
-
-    private fun handleResponse(response: ResponseSignup) {
-        when (response) {
-            is ResponseSignup.Fail -> {
-                val emailError =
-                    response.signupErrors.find { it.field == "email" }?.error ?: ""
-                val phoneError =
-                    response.signupErrors.find { it.field == "phone_number" }?.error ?: ""
-
-                binding.etEmailAddress.error = emailError
-                binding.etPhone.error = phoneError
-            }
-            is ResponseSignup.Success -> {
-                navigateToOTPVerification()
             }
         }
     }

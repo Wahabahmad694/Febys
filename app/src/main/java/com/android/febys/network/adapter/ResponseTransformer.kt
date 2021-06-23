@@ -1,6 +1,7 @@
 package com.android.febys.network.adapter
 
 import com.android.febys.network.response.ErrorResponse
+import com.google.gson.Gson
 import java.io.IOException
 
 /**
@@ -54,6 +55,17 @@ suspend fun <T> ApiResponse<T>.onNetworkError(
 
 /** A message from the [ApiResponse.ApiFailureResponse.Error]. */
 fun <T> ApiResponse.ApiFailureResponse.Error<T>.message(): String = toString()
+
+fun <T> ApiResponse.ApiFailureResponse.Error<T>.responseErrorMessage(): String {
+    return try {
+        val errorRes =
+            Gson().fromJson(response.errorBody()?.charStream(), ErrorResponse::class.java)
+        errorRes.message ?: response.message() ?: ""
+    } catch (e: Exception) {
+        response.message() ?: ""
+    }
+
+}
 
 fun <T> ApiResponse.ApiFailureResponse.Error<T>.parseMessage(): String {
 

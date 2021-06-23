@@ -1,6 +1,5 @@
 package com.android.febys.repos
 
-import com.android.febys.dto.User
 import com.android.febys.network.DataState
 import com.android.febys.network.requests.RequestSignup
 import com.android.febys.network.response.ResponseLogin
@@ -23,8 +22,4 @@ interface IAuthRepo {
     fun login(
         email: String, password: String, dispatcher: CoroutineDispatcher = Dispatchers.IO
     ): Flow<DataState<ResponseLogin>>
-
-    suspend fun saveUser(user: User)
-
-    suspend fun updateUser(user: User)
 }
