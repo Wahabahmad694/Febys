@@ -9,8 +9,6 @@ import androidx.fragment.app.viewModels
 import com.android.febys.R
 import com.android.febys.databinding.FragmentLoginBinding
 import com.android.febys.network.DataState
-import com.android.febys.network.response.ResponseLogin
-import com.android.febys.network.response.ResponseSignup
 import com.android.febys.ui.screens.auth.AuthFragment
 import com.android.febys.ui.screens.auth.AuthViewModel
 import com.android.febys.utils.*
@@ -90,20 +88,8 @@ class LoginFragment : AuthFragment() {
                     showToast(msg)
                 }
                 is DataState.Data -> {
-                    handleResponse(it.data)
+                    navigateToHomeScreen()
                 }
-            }
-        }
-    }
-
-    private fun handleResponse(response: ResponseLogin) {
-        when (response) {
-            is ResponseLogin.Fail -> {
-                val error = response.message
-                showToast(error)
-            }
-            is ResponseLogin.Success -> {
-                navigateToHomeScreen()
             }
         }
     }

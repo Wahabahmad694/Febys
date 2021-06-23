@@ -9,7 +9,6 @@ import androidx.navigation.fragment.navArgs
 import com.android.febys.base.BaseDialog
 import com.android.febys.databinding.DialogOtpVerificationBinding
 import com.android.febys.network.DataState
-import com.android.febys.network.response.ResponseOtpVerification
 import com.android.febys.ui.screens.auth.AuthViewModel
 import com.android.febys.utils.getErrorMessage
 import com.android.febys.utils.navigateTo
@@ -56,24 +55,8 @@ class OtpVerificationDialog : BaseDialog() {
                     showToast(msg)
                 }
                 is DataState.Data -> {
-                    handleResponse(it.data)
+                    navigateToHomeScreen()
                 }
-            }
-        }
-    }
-
-    private fun handleResponse(response: ResponseOtpVerification) {
-        when (response) {
-            is ResponseOtpVerification.Fail -> {
-                val otpError =
-                    response.signupErrors.find { it.field == "otp" }?.error ?: ""
-
-                showToast(otpError)
-
-                binding.otpView.text?.clear()
-            }
-            is ResponseOtpVerification.Success -> {
-                navigateToHomeScreen()
             }
         }
     }
