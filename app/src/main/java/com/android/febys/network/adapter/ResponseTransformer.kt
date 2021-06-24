@@ -60,7 +60,14 @@ fun <T> ApiResponse.ApiFailureResponse.Error<T>.responseErrorMessage(): String {
     return try {
         val errorRes =
             Gson().fromJson(response.errorBody()?.charStream(), ErrorResponse::class.java)
-        errorRes.message ?: response.message() ?: ""
+
+        val errorMsg = if (!errorRes.errors.isNullOrEmpty()) {
+            errorRes.errors[0].error
+        } else {
+            errorRes.message
+        }
+
+        errorMsg ?: response.message() ?: ""
     } catch (e: Exception) {
         response.message() ?: ""
     }

@@ -10,7 +10,6 @@ import javax.inject.Inject
 
 class PrefManagerImpl @Inject constructor(@ApplicationContext context: Context) : IPrefManger {
     companion object {
-        private const val AUTH_TOKEN = "authToken"
         private const val KEY_USER = "user"
     }
 
@@ -18,23 +17,23 @@ class PrefManagerImpl @Inject constructor(@ApplicationContext context: Context) 
         context.getSharedPreferences("febysPrefs", Context.MODE_PRIVATE)
     }
 
-    override fun saveAuthToken(authToken: String) {
-        saveString(AUTH_TOKEN, "Bearer $authToken")
-    }
-
     override fun getAuthToken(defValue: String): String {
-        return getString(AUTH_TOKEN, defValue)
+        return getUser()?.accessToken?.let { "Bearer $it" } ?: defValue
     }
 
     override fun saveUser(user: User) {
         val userJson = Gson().toJson(user)
-        saveString("", userJson)
+        saveString(KEY_USER, userJson)
     }
 
     override fun getUser(): User? {
-        val userJson = getString("", "")
+        val userJson = getString(KEY_USER, "")
         if (userJson.isEmpty()) return null
         return Gson().fromJson(userJson, User::class.java)
+    }
+
+    override fun getRefreshToken(defValue: String): String {
+        return getUser()?.refreshToken ?: defValue
     }
 
     private fun saveString(key: String, value: String) {

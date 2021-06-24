@@ -29,7 +29,6 @@ class AuthRepoImpl @Inject constructor(
             service.signup(signupReq)
                 .onSuccess {
                     data!!.apply {
-                        user.accessToken?.let { pref.saveAuthToken(it) }
                         userDataSource.saveUser(user)
                         emit(DataState.data(this))
                     }
@@ -49,7 +48,6 @@ class AuthRepoImpl @Inject constructor(
             service.verifyUser(authToken, verificationReq)
                 .onSuccess {
                     data!!.apply {
-                        user.accessToken?.let { pref.saveAuthToken(it) }
                         userDataSource.saveUser(user)
                         emit(DataState.data(this))
                     }
@@ -67,7 +65,6 @@ class AuthRepoImpl @Inject constructor(
             val loginReq = mapOf("email" to email, "password" to password)
             service.login(loginReq).onSuccess {
                 data!!.apply {
-                    user.accessToken?.let { pref.saveAuthToken(it) }
                     userDataSource.saveUser(user)
                     emit(DataState.data(this))
                 }

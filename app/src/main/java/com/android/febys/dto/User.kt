@@ -1,12 +1,8 @@
 package com.android.febys.dto
 
-import androidx.room.Entity
-import androidx.room.Ignore
-import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 data class User @JvmOverloads constructor(
-    @PrimaryKey
     @SerializedName("id")
     val id: Int,
     @SerializedName("first_name")
@@ -26,6 +22,7 @@ data class User @JvmOverloads constructor(
     @SerializedName("is_verified")
     val is_verified: Int,
     @SerializedName("access_token")
-    @Ignore
-    val accessToken: String? = null
+    val accessToken: String? = null,
+    @SerializedName("refresh_token")
+    val refreshToken: String? = null
 )
