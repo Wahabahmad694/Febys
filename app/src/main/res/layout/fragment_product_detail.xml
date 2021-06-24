@@ -24,7 +24,7 @@
             android:layout_height="?actionBarSize"
             android:background="@color/grey"
             android:gravity="center"
-            android:paddingHorizontal="@dimen/padding_extra_large"
+            android:paddingHorizontal="@dimen/_32dp"
             android:text="@{productDetail.name}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -34,7 +34,7 @@
             android:id="@+id/iv_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_normal_x2"
+            android:layout_marginStart="@dimen/_16dp"
             android:src="@drawable/ic_back"
             app:layout_constraintBottom_toBottomOf="@id/tv_product_name_appbar"
             app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +44,7 @@
             android:id="@+id/iv_cart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_normal_x2"
+            android:layout_marginEnd="@dimen/_16dp"
             android:src="@drawable/ic_cart"
             app:layout_constraintBottom_toBottomOf="@id/tv_product_name_appbar"
             app:layout_constraintEnd_toEndOf="parent"
@@ -73,8 +73,8 @@
                     android:id="@+id/iv_product_fav"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_normal_x2"
-                    android:layout_marginEnd="@dimen/margin_normal_x2"
+                    android:layout_marginTop="@dimen/_16dp"
+                    android:layout_marginEnd="@dimen/_16dp"
                     android:src="@drawable/ic_un_fav"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/slider_product_images" />
@@ -83,8 +83,8 @@
                     android:id="@+id/iv_product_share"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_large"
-                    android:layout_marginEnd="@dimen/margin_normal_x2"
+                    android:layout_marginTop="@dimen/_24dp"
+                    android:layout_marginEnd="@dimen/_16dp"
                     android:src="@drawable/ic_product_share"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/iv_product_fav" />
@@ -93,7 +93,7 @@
                     android:id="@+id/dots_indicator"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin_large"
+                    android:layout_marginBottom="@dimen/_24dp"
                     app:dotsColor="@color/slider_dot_color"
                     app:dotsCornerRadius="8dp"
                     app:dotsSize="4dp"
@@ -110,7 +110,7 @@
                     style="@style/TextTheme.HelveticaNeue.TS14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_normal_x2"
+                    android:layout_marginTop="@dimen/_16dp"
                     android:text="@{productDetail.name}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -121,7 +121,7 @@
                     style="@style/TextTheme.Arial.TS14"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
-                    android:layout_marginTop="@dimen/margin_normal"
+                    android:layout_marginTop="@dimen/_8dp"
                     android:text="@{productDetail.shortDescription}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -133,7 +133,7 @@
                     style="@style/TextTheme.Arial.TS14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_normal"
+                    android:layout_marginTop="@dimen/_8dp"
                     android:text="@{`` + productDetail.price}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -142,8 +142,8 @@
                 <com.facebook.drawee.view.SimpleDraweeView
                     android:id="@+id/iv_product_verified_logo"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/margin_large"
-                    android:layout_marginTop="@dimen/margin_normal"
+                    android:layout_height="@dimen/_24dp"
+                    android:layout_marginTop="@dimen/_8dp"
                     app:actualImageScaleType="none"
                     app:layout_constraintDimensionRatio="7:1"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -156,12 +156,12 @@
                     style="@style/TextTheme.Arial.TS14"
                     android:layout_width="0dp"
                     android:layout_height="48dp"
-                    android:layout_marginStart="@dimen/padding_normal_x2"
-                    android:layout_marginTop="@dimen/margin_extra_large"
+                    android:layout_marginStart="@dimen/_16dp"
+                    android:layout_marginTop="@dimen/_32dp"
                     android:background="@drawable/bg_border_balckish"
                     android:gravity="center_vertical"
-                    android:paddingStart="@dimen/padding_normal_x2"
-                    android:paddingEnd="@dimen/padding_none"
+                    android:paddingStart="@dimen/_16dp"
+                    android:paddingEnd="@dimen/_0dp"
                     android:text="@string/label_size"
                     app:layout_constraintEnd_toStartOf="@id/iv_size_arrow"
                     app:layout_constraintStart_toStartOf="parent"
@@ -171,9 +171,9 @@
                     android:id="@+id/iv_size_arrow"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_marginEnd="@dimen/padding_normal_x2"
+                    android:layout_marginEnd="@dimen/_16dp"
                     android:background="@drawable/bg_border_balckish"
-                    android:padding="@dimen/padding_normal_x2"
+                    android:padding="@dimen/_16dp"
                     android:src="@drawable/ic_arrow_down"
                     app:layout_constraintBottom_toBottomOf="@id/tv_product_size"
                     app:layout_constraintDimensionRatio="1:1"
@@ -185,7 +185,7 @@
                     style="@style/TextTheme.HelveticaNeue.TS16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_extra_large"
+                    android:layout_marginTop="@dimen/_32dp"
                     android:text="@string/label_add_protection"
                     app:layout_constraintStart_toStartOf="@id/tv_product_size"
                     app:layout_constraintTop_toBottomOf="@id/tv_product_size" />
@@ -194,8 +194,8 @@
                     android:id="@+id/rg_add_protection"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/padding_normal_x2"
-                    android:layout_marginTop="@dimen/margin_extra_large"
+                    android:layout_marginHorizontal="@dimen/_16dp"
+                    android:layout_marginTop="@dimen/_32dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_add_protection">
@@ -205,7 +205,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/bg_border_dark_grey"
                         android:orientation="horizontal"
-                        android:paddingHorizontal="@dimen/padding_normal_x2">
+                        android:paddingHorizontal="@dimen/_16dp">
 
                         <RadioButton
                             android:id="@+id/rb_add_four_year_protection"
@@ -223,10 +223,10 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/padding_normal_x2"
+                        android:layout_marginTop="@dimen/_16dp"
                         android:background="@drawable/bg_border_dark_grey"
                         android:orientation="horizontal"
-                        android:paddingHorizontal="@dimen/padding_normal_x2">
+                        android:paddingHorizontal="@dimen/_16dp">
 
                         <RadioButton
                             android:id="@+id/rb_add_three_year_protection"
@@ -246,13 +246,13 @@
                     android:id="@+id/ll_container_payment_offers"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_normal_x2"
-                    android:layout_marginTop="@dimen/margin_extra_large"
+                    android:layout_marginHorizontal="@dimen/_16dp"
+                    android:layout_marginTop="@dimen/_32dp"
                     android:background="@drawable/bg_grey_fill"
                     android:gravity="center_vertical"
                     android:orientation="vertical"
-                    android:paddingHorizontal="@dimen/margin_normal_x2"
-                    android:paddingVertical="@dimen/margin_large"
+                    android:paddingHorizontal="@dimen/_16dp"
+                    android:paddingVertical="@dimen/_24dp"
                     app:layout_constraintTop_toBottomOf="@id/rg_add_protection">
 
                     <LinearLayout
@@ -270,7 +270,7 @@
                             style="@style/TextTheme.Arial.TS14"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/margin_normal_x2"
+                            android:layout_marginStart="@dimen/_16dp"
                             android:layout_weight="1"
                             android:text="@string/label_mobile_payment_offer" />
                     </LinearLayout>
@@ -278,7 +278,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_normal_x2"
+                        android:layout_marginTop="@dimen/_16dp"
                         android:gravity="center_vertical">
 
                         <androidx.appcompat.widget.AppCompatImageView
@@ -291,7 +291,7 @@
                             style="@style/TextTheme.Arial.TS14"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/margin_normal_x2"
+                            android:layout_marginStart="@dimen/_16dp"
                             android:layout_weight="1"
                             android:text="@string/label_buy_the_exchange_offer" />
                     </LinearLayout>
@@ -299,7 +299,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_normal_x2"
+                        android:layout_marginTop="@dimen/_16dp"
                         android:gravity="center_vertical">
 
                         <androidx.appcompat.widget.AppCompatImageView
@@ -312,7 +312,7 @@
                             style="@style/TextTheme.Arial.TS14"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/margin_normal_x2"
+                            android:layout_marginStart="@dimen/_16dp"
                             android:layout_weight="1"
                             android:text="@string/label_credit_card_payment_offer" />
                     </LinearLayout>
@@ -324,7 +324,7 @@
                     style="@style/TextTheme.HelveticaNeue.TS16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_extra_large"
+                    android:layout_marginTop="@dimen/_32dp"
                     android:text="@string/label_add_delivery_address"
                     app:layout_constraintStart_toStartOf="@id/tv_product_size"
                     app:layout_constraintTop_toBottomOf="@id/ll_container_payment_offers" />
@@ -333,12 +333,12 @@
                     android:id="@+id/ll_container_add_delivery_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_normal_x2"
-                    android:layout_marginTop="@dimen/margin_large"
+                    android:layout_marginHorizontal="@dimen/_16dp"
+                    android:layout_marginTop="@dimen/_24dp"
                     android:background="@drawable/bg_border_dark_grey"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:padding="@dimen/margin_normal_x2"
+                    android:padding="@dimen/_16dp"
                     app:layout_constraintTop_toBottomOf="@id/tv_add_delivery_address">
 
                     <androidx.appcompat.widget.AppCompatImageView
@@ -352,7 +352,7 @@
                         style="@style/TextTheme.Arial.TS14"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/margin_normal_x2"
+                        android:layout_marginHorizontal="@dimen/_16dp"
                         android:layout_weight="1"
                         android:text="@string/label_enter_delivery_address" />
 
@@ -370,8 +370,8 @@
                     style="@style/TextTheme.Arial.TS14"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_normal_x2"
-                    android:layout_marginTop="@dimen/margin_large"
+                    android:layout_marginHorizontal="@dimen/_16dp"
+                    android:layout_marginTop="@dimen/_24dp"
                     android:text="@string/label_add_delivery_address_info"
                     app:layout_constraintTop_toBottomOf="@id/ll_container_add_delivery_address" />
 
@@ -379,20 +379,20 @@
                     android:id="@+id/container_product_detail_information"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/padding_normal_x2"
-                    android:layout_marginTop="@dimen/margin_extra_large"
+                    android:layout_marginHorizontal="@dimen/_16dp"
+                    android:layout_marginTop="@dimen/_32dp"
                     android:orientation="vertical"
                     app:layout_constraintTop_toBottomOf="@id/tv_delivery_info">
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="@dimen/_1dp"
                         android:background="@color/dark_grey" />
 
                     <LinearLayout
                         android:id="@+id/product_description_toggle"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/button_height"
+                        android:layout_height="@dimen/_48dp"
                         android:gravity="center_vertical">
 
                         <TextView
@@ -415,7 +415,7 @@
                         android:id="@+id/container_product_description"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/_24dp"
                         android:orientation="vertical"
                         android:visibility="gone">
 
@@ -431,13 +431,13 @@
                             style="@style/TextTheme.HelveticaNeue.TS14"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_large"
+                            android:layout_marginTop="@dimen/_24dp"
                             android:text="@string/label_technical_details" />
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_large">
+                            android:layout_marginTop="@dimen/_24dp">
 
                             <androidx.constraintlayout.widget.Guideline
                                 android:id="@+id/guideline_technical_detail"
@@ -460,7 +460,7 @@
                                 style="@style/TextTheme.OpenSans.TS14.Bold"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/margin_normal"
+                                android:layout_marginStart="@dimen/_8dp"
                                 android:text="@string/label_brand_name"
                                 app:layout_constraintBottom_toBottomOf="@id/tv_product_brand_name"
                                 app:layout_constraintEnd_toStartOf="@id/guideline_technical_detail"
@@ -472,9 +472,9 @@
                                 style="@style/TextTheme.Arial.TS14"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/margin_normal"
+                                android:layout_marginStart="@dimen/_8dp"
                                 android:gravity="center_vertical"
-                                android:minHeight="@dimen/button_height"
+                                android:minHeight="@dimen/_48dp"
                                 android:text="@{productDetail.brandName}"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toEndOf="@id/guideline_technical_detail"
@@ -482,7 +482,7 @@
 
                             <View
                                 android:layout_width="0dp"
-                                android:layout_height="1dp"
+                                android:layout_height="@dimen/_1dp"
                                 android:background="@color/dark_grey"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toEndOf="@id/guideline_technical_detail"
@@ -493,7 +493,7 @@
                                 style="@style/TextTheme.OpenSans.TS14.Bold"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/margin_normal"
+                                android:layout_marginStart="@dimen/_8dp"
                                 android:text="@string/label_product_weight"
                                 app:layout_constraintBottom_toBottomOf="@id/tv_product_weight"
                                 app:layout_constraintEnd_toStartOf="@id/guideline_technical_detail"
@@ -505,9 +505,9 @@
                                 style="@style/TextTheme.Arial.TS14"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/margin_normal"
+                                android:layout_marginStart="@dimen/_8dp"
                                 android:gravity="center_vertical"
-                                android:minHeight="@dimen/button_height"
+                                android:minHeight="@dimen/_48dp"
                                 android:text="@{productDetail.weight + `pounds`}"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toEndOf="@id/guideline_technical_detail"
@@ -515,7 +515,7 @@
 
                             <View
                                 android:layout_width="0dp"
-                                android:layout_height="1dp"
+                                android:layout_height="@dimen/_1dp"
                                 android:background="@color/dark_grey"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toEndOf="@id/guideline_technical_detail"
@@ -526,7 +526,7 @@
                                 style="@style/TextTheme.OpenSans.TS14.Bold"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/margin_normal"
+                                android:layout_marginStart="@dimen/_8dp"
                                 android:text="@string/label_product_dimension"
                                 app:layout_constraintBottom_toBottomOf="@id/tv_product_dimension"
                                 app:layout_constraintEnd_toStartOf="@id/guideline_technical_detail"
@@ -538,9 +538,9 @@
                                 style="@style/TextTheme.Arial.TS14"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/margin_normal"
+                                android:layout_marginStart="@dimen/_8dp"
                                 android:gravity="center_vertical"
-                                android:minHeight="@dimen/button_height"
+                                android:minHeight="@dimen/_48dp"
                                 android:text="@{productDetail.dimensions.first + ` x ` + productDetail.dimensions.second + ` inches`}"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toEndOf="@id/guideline_technical_detail"
@@ -548,7 +548,7 @@
 
                             <View
                                 android:layout_width="0dp"
-                                android:layout_height="1dp"
+                                android:layout_height="@dimen/_1dp"
                                 android:background="@color/dark_grey"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toEndOf="@id/guideline_technical_detail"
@@ -559,7 +559,7 @@
                                 style="@style/TextTheme.OpenSans.TS14.Bold"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/margin_normal"
+                                android:layout_marginStart="@dimen/_8dp"
                                 android:text="@string/label_product_model_number"
                                 app:layout_constraintBottom_toBottomOf="@id/tv_product_model_no"
                                 app:layout_constraintEnd_toStartOf="@id/guideline_technical_detail"
@@ -571,9 +571,9 @@
                                 style="@style/TextTheme.Arial.TS14"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/margin_normal"
+                                android:layout_marginStart="@dimen/_8dp"
                                 android:gravity="center_vertical"
-                                android:minHeight="@dimen/button_height"
+                                android:minHeight="@dimen/_48dp"
                                 android:text="@{productDetail.modelNo}"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toEndOf="@id/guideline_technical_detail"
@@ -581,7 +581,7 @@
 
                             <View
                                 android:layout_width="0dp"
-                                android:layout_height="1dp"
+                                android:layout_height="@dimen/_1dp"
                                 android:background="@color/dark_grey"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toEndOf="@id/guideline_technical_detail"
@@ -592,7 +592,7 @@
                                 style="@style/TextTheme.OpenSans.TS14.Bold"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/margin_normal"
+                                android:layout_marginStart="@dimen/_8dp"
                                 android:text="@string/label_special_features"
                                 app:layout_constraintEnd_toStartOf="@id/guideline_technical_detail"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -603,9 +603,9 @@
                                 style="@style/TextTheme.Arial.TS14"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/margin_normal"
-                                android:layout_marginTop="@dimen/margin_normal_x2"
-                                android:minHeight="@dimen/button_height"
+                                android:layout_marginStart="@dimen/_8dp"
+                                android:layout_marginTop="@dimen/_16dp"
+                                android:minHeight="@dimen/_48dp"
                                 android:text="@{productDetail.specialFeature}"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -618,13 +618,13 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="@dimen/_1dp"
                         android:background="@color/dark_grey" />
 
                     <LinearLayout
                         android:id="@+id/product_manufacture_toggle"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/button_height"
+                        android:layout_height="@dimen/_48dp"
                         android:gravity="center_vertical">
 
                         <TextView
@@ -647,7 +647,7 @@
                         android:id="@+id/container_product_manufacture"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/_24dp"
                         android:orientation="vertical"
                         android:visibility="gone">
 
@@ -655,13 +655,13 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="@dimen/_1dp"
                         android:background="@color/dark_grey" />
 
                     <LinearLayout
                         android:id="@+id/product_reviews_toggle"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/button_height"
+                        android:layout_height="@dimen/_48dp"
                         android:gravity="center_vertical">
 
                         <TextView
@@ -684,7 +684,7 @@
                         android:id="@+id/container_product_reviews"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/_24dp"
                         android:orientation="vertical"
                         android:visibility="gone">
 
@@ -693,13 +693,13 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="@dimen/_1dp"
                         android:background="@color/dark_grey" />
 
                     <LinearLayout
                         android:id="@+id/product_q_nd_a_toggle"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/button_height"
+                        android:layout_height="@dimen/_48dp"
                         android:gravity="center_vertical">
 
                         <TextView
@@ -722,7 +722,7 @@
                         android:id="@+id/container_product_q_nd_a"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/_24dp"
                         android:orientation="vertical"
                         android:visibility="gone">
 
@@ -730,13 +730,13 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="@dimen/_1dp"
                         android:background="@color/dark_grey" />
 
                     <LinearLayout
                         android:id="@+id/product_shipping_fee_toggle"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/button_height"
+                        android:layout_height="@dimen/_48dp"
                         android:gravity="center_vertical">
 
                         <TextView
@@ -759,14 +759,14 @@
                         android:id="@+id/container_product_shipping_fee"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/_24dp"
                         android:orientation="vertical"
                         android:visibility="gone">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingVertical="@dimen/margin_normal">
+                            android:paddingVertical="@dimen/_8dp">
 
                             <TextView
                                 style="@style/TextTheme.HelveticaNeue.TS14"
@@ -789,13 +789,13 @@
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="1dp"
+                            android:layout_height="@dimen/_1dp"
                             android:background="@color/dark_grey" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingVertical="@dimen/margin_normal">
+                            android:paddingVertical="@dimen/_8dp">
 
                             <TextView
                                 style="@style/TextTheme.HelveticaNeue.TS14"
@@ -814,14 +814,14 @@
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="1dp"
+                            android:layout_height="@dimen/_1dp"
                             android:background="@color/dark_grey" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:paddingVertical="@dimen/margin_normal">
+                            android:paddingVertical="@dimen/_8dp">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -845,7 +845,7 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/margin_normal">
+                                android:layout_marginTop="@dimen/_8dp">
 
                                 <TextView
                                     style="@style/TextTheme.Arial.TS14"
@@ -866,13 +866,13 @@
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="1dp"
+                            android:layout_height="@dimen/_1dp"
                             android:background="@color/dark_grey" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingVertical="@dimen/margin_normal">
+                            android:paddingVertical="@dimen/_8dp">
 
                             <TextView
                                 style="@style/TextTheme.HelveticaNeue.TS14"
@@ -893,7 +893,7 @@
                             style="@style/ChipTheme.Choice"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_normal"
+                            android:layout_marginTop="@dimen/_8dp"
                             android:checked="true"
                             android:text="@string/label_return_and_refund_policy"
                             app:chipBackgroundColor="@color/grey"
@@ -903,7 +903,7 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="@dimen/_1dp"
                         android:background="@color/dark_grey" />
 
                 </LinearLayout>
@@ -921,12 +921,12 @@
                         style="@style/TextTheme.HelveticaNeue.TS16"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginVertical="@dimen/margin_extra_large"
+                        android:layout_marginVertical="@dimen/_32dp"
                         android:text="@string/label_store_information" />
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="@dimen/_1dp"
                         android:background="@color/dark_grey" />
 
                     <LinearLayout
@@ -937,7 +937,7 @@
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/margin_normal_x2"
+                            android:layout_margin="@dimen/_16dp"
                             android:layout_weight="1"
                             android:gravity="center"
                             android:orientation="horizontal">
@@ -953,7 +953,7 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/margin_normal"
+                                android:layout_marginStart="@dimen/_8dp"
                                 android:orientation="vertical">
 
                                 <TextView
@@ -975,14 +975,14 @@
                         </LinearLayout>
 
                         <View
-                            android:layout_width="1dp"
+                            android:layout_width="@dimen/_1dp"
                             android:layout_height="match_parent"
                             android:background="@color/dark_grey" />
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_margin="@dimen/margin_normal_x2"
+                            android:layout_margin="@dimen/_16dp"
                             android:layout_weight="1"
                             android:gravity="center"
                             android:orientation="vertical">
@@ -1009,7 +1009,7 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="@dimen/_1dp"
                         android:background="@color/dark_grey" />
 
                 </LinearLayout>

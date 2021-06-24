@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="padding_root_horizontal">16dp</dimen>
-    <dimen name="padding_none">0dp</dimen>
-    <dimen name="padding_normal">8dp</dimen>
-    <dimen name="padding_normal_x2">16dp</dimen>
-    <dimen name="padding_extra_large">32dp</dimen>
-    <dimen name="padding_extra_large_x2">64dp</dimen>
-    <dimen name="margin_small">4dp</dimen>
-    <dimen name="margin_normal">8dp</dimen>
-    <dimen name="margin_normal_x2">16dp</dimen>
-    <dimen name="margin_large">24dp</dimen>
-    <dimen name="margin_extra_large">32dp</dimen>
-    <dimen name="margin_extra_large_x2">64dp</dimen>
-    <dimen name="button_height">48dp</dimen>
+    <dimen name="_0dp">0dp</dimen>
+    <dimen name="_1dp">@dimen/_1sdp</dimen>
+    <dimen name="_4dp">@dimen/_3sdp</dimen>
+    <dimen name="_8dp">@dimen/_6sdp</dimen>
+    <dimen name="_16dp">@dimen/_13sdp</dimen>
+    <dimen name="_24dp">@dimen/_19sdp</dimen>
+    <dimen name="_32dp">@dimen/_26sdp</dimen>
+    <dimen name="_48dp">@dimen/_38sdp</dimen>
+    <dimen name="_64dp">@dimen/_51sdp</dimen>
+
+
+    <dimen name="_10sp">@dimen/_8ssp</dimen>
+    <dimen name="_12sp">@dimen/_10ssp</dimen>
+    <dimen name="_14sp">@dimen/_11ssp</dimen>
+    <dimen name="_16sp">@dimen/_13ssp</dimen>
+    <dimen name="_18sp">@dimen/_14ssp</dimen>
+    <dimen name="_32sp">@dimen/_26ssp</dimen>
 </resources>

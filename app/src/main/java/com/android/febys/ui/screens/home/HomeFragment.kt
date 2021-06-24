@@ -70,27 +70,27 @@ class HomeFragment : SliderFragment() {
         }
 
         // today deals
-        binding.rvTodayDeals.applySpaceItemDecoration(horizontalDimenRes = R.dimen.margin_large)
+        binding.rvTodayDeals.applySpaceItemDecoration(horizontalDimenRes = R.dimen._24dp)
         binding.rvTodayDeals.setHasFixedSize(true)
         binding.rvTodayDeals.adapter = todayDealsAdapter
 
         // featured category products
-        binding.rvFeaturedCategoryProducts.applySpaceItemDecoration(horizontalDimenRes = R.dimen.margin_large)
+        binding.rvFeaturedCategoryProducts.applySpaceItemDecoration(horizontalDimenRes = R.dimen._24dp)
         binding.rvFeaturedCategoryProducts.setHasFixedSize(true)
         binding.rvFeaturedCategoryProducts.adapter = featuredCategoryProductsAdapter
 
         // store you follow
-        binding.rvStoreYouFollow.applySpaceItemDecoration(horizontalDimenRes = R.dimen.margin_large)
+        binding.rvStoreYouFollow.applySpaceItemDecoration(horizontalDimenRes = R.dimen._24dp)
         binding.rvStoreYouFollow.setHasFixedSize(true)
         binding.rvStoreYouFollow.adapter = storeYouFollowAdapter
 
         // trending products
-        binding.rvTrendingProducts.applySpaceItemDecoration(horizontalDimenRes = R.dimen.margin_large)
+        binding.rvTrendingProducts.applySpaceItemDecoration(horizontalDimenRes = R.dimen._24dp)
         binding.rvTrendingProducts.setHasFixedSize(true)
         binding.rvTrendingProducts.adapter = trendingProductsAdapter
 
         // under 100$ items
-        binding.rvUnder100DollarsItems.applySpaceItemDecoration(horizontalDimenRes = R.dimen.margin_large)
+        binding.rvUnder100DollarsItems.applySpaceItemDecoration(horizontalDimenRes = R.dimen._24dp)
         binding.rvUnder100DollarsItems.setHasFixedSize(true)
         binding.rvUnder100DollarsItems.adapter = under100DollarsItemAdapter
     }

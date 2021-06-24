@@ -28,28 +28,28 @@
     </style>
 
     <style name="TextTheme.HelveticaNeue.TS12">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">@dimen/_12sp</item>
     </style>
 
     <style name="TextTheme.HelveticaNeue.TS14">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">@dimen/_14sp</item>
     </style>
 
     <style name="TextTheme.HelveticaNeue.TS14.Grey">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">@dimen/_14sp</item>
         <item name="android:textColor">@color/text_grey</item>
     </style>
 
     <style name="TextTheme.HelveticaNeue.TS16">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">@dimen/_16sp</item>
     </style>
 
     <style name="TextTheme.HelveticaNeue.TS18">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">@dimen/_18sp</item>
     </style>
 
     <style name="TextTheme.HelveticaNeue.TS32">
-        <item name="android:textSize">32sp</item>
+        <item name="android:textSize">@dimen/_32sp</item>
     </style>
 
     <style name="TextTheme.Arial">
@@ -57,24 +57,24 @@
     </style>
 
     <style name="TextTheme.Arial.TS10">
-        <item name="android:textSize">10sp</item>
+        <item name="android:textSize">@dimen/_10sp</item>
     </style>
 
     <style name="TextTheme.Arial.TS12">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">@dimen/_12sp</item>
     </style>
 
     <style name="TextTheme.Arial.TS14">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">@dimen/_14sp</item>
     </style>
 
     <style name="TextTheme.Arial.TS14.Bold">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">@dimen/_14sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="TextTheme.Arial.TS16">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">@dimen/_16sp</item>
     </style>
 
     <style name="TextTheme.OpenSans">
@@ -82,11 +82,11 @@
     </style>
 
     <style name="TextTheme.OpenSans.TS14">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">@dimen/_14sp</item>
     </style>
 
     <style name="TextTheme.OpenSans.TS14.Bold">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">@dimen/_14sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
@@ -107,12 +107,12 @@
 
     <style name="Button.ShapeAppearance" parent="ShapeAppearance.MaterialComponents.SmallComponent">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">4dp</item>
+        <item name="cornerSize">@dimen/_4dp</item>
     </style>
 
     <style name="ButtonTheme.Contained" parent="Widget.MaterialComponents.Button">
         <item name="android:textColor">@color/white</item>
-        <item name="android:minHeight">60dp</item>
+        <item name="android:minHeight">@dimen/_64dp</item>
         <item name="backgroundTint">@color/selector_contained_button</item>
         <item name="android:textAppearance">@style/TextTheme.HelveticaNeue.TS18</item>
         <item name="shapeAppearance">@style/Button.ShapeAppearance</item>
@@ -123,8 +123,8 @@
     </style>
 
     <style name="ChipTheme.Choice" parent="Widget.MaterialComponents.Chip.Choice">
-        <item name="chipStrokeWidth">1dp</item>
-        <item name="cornerRadius">8dp</item>
+        <item name="chipStrokeWidth">@dimen/_1dp</item>
+        <item name="cornerRadius">@dimen/_8dp</item>
         <item name="chipBackgroundColor">@color/selector_chip</item>
         <item name="chipStrokeColor">@color/dark_grey</item>
         <item name="shapeAppearanceOverlay">@null</item>
@@ -133,7 +133,7 @@
 
     <style name="TextInputLayout.ShapeAppearance" parent="ShapeAppearance.MaterialComponents.SmallComponent">
         <item name="cornerFamily">cut</item>
-        <item name="cornerSize">4dp</item>
+        <item name="cornerSize">@dimen/_4dp</item>
     </style>
 
     <style name="TextInputLayout.FilledBox" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
