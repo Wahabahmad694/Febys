@@ -164,16 +164,10 @@
                     app:endIconMode="password_toggle"
                     app:layout_constraintTop_toBottomOf="@id/et_phone" />
 
-                <androidx.appcompat.widget.AppCompatEditText
+                <com.android.febys.utils.PasswordEditText
                     android:id="@+id/et_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:drawableEnd="@drawable/ic_password_show"
-                    android:imeOptions="actionNext"
-                    android:inputType="textPassword"
-                    android:paddingVertical="@dimen/margin_normal"
-                    android:textAppearance="@style/TextTheme.Arial.TS16"
                     app:layout_constraintTop_toBottomOf="@id/label_password" />
 
                 <View
@@ -192,16 +186,10 @@
                     app:endIconMode="password_toggle"
                     app:layout_constraintTop_toBottomOf="@id/et_password" />
 
-                <androidx.appcompat.widget.AppCompatEditText
+                <com.android.febys.utils.PasswordEditText
                     android:id="@+id/et_confirm_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:drawableEnd="@drawable/ic_password_show"
-                    android:imeOptions="actionDone"
-                    android:inputType="textPassword"
-                    android:paddingVertical="@dimen/margin_normal"
-                    android:textAppearance="@style/TextTheme.Arial.TS16"
                     app:layout_constraintTop_toBottomOf="@id/label_confirm_password" />
 
                 <View

@@ -44,30 +44,18 @@ class SignupFragment : AuthFragment() {
     private fun uiListeners() {
         binding.etFirstName.addTextChangedListener {
             firstName = it.toString()
-            binding.etFirstName.clearError()
-            if (firstName.isEmpty()) {
-                binding.etFirstName.error = getString(R.string.error_enter_first_name)
-            }
-
             updateSignupButtonVisibility()
         }
 
         binding.etLastName.addTextChangedListener {
             lastName = it.toString()
-            binding.etLastName.clearError()
-            if (lastName.isEmpty()) {
-                binding.etLastName.error = getString(R.string.error_enter_last_name)
-            }
-
             updateSignupButtonVisibility()
         }
 
         binding.etEmailAddress.addTextChangedListener {
             email = it.toString()
             binding.etEmailAddress.clearError()
-            if (email.isEmpty()) {
-                binding.etEmailAddress.error = getString(R.string.error_enter_email)
-            } else if (!Validator.isValidEmail(email)) {
+            if (email.isNotEmpty() && !Validator.isValidEmail(email)) {
                 binding.etEmailAddress.error = getString(R.string.error_enter_valid_email)
             }
 
@@ -77,9 +65,7 @@ class SignupFragment : AuthFragment() {
         binding.etPhone.addTextChangedListener {
             phone = it.toString()
             binding.etPhone.clearError()
-            if (phone.isEmpty()) {
-                binding.etPhone.error = getString(R.string.error_enter_phone)
-            } else if (!Validator.isValidPhone(phone)) {
+            if (phone.isNotEmpty() && !Validator.isValidPhone(phone)) {
                 binding.etPhone.error = getString(R.string.error_enter_valid_phone)
             }
 
@@ -88,20 +74,13 @@ class SignupFragment : AuthFragment() {
 
         binding.etPassword.addTextChangedListener {
             password = it.toString()
-            binding.etPassword.clearError()
-            if (password.isEmpty()) {
-                binding.etPassword.error = getString(R.string.error_enter_password)
-            }
-
             updateSignupButtonVisibility()
         }
 
         binding.etConfirmPassword.addTextChangedListener {
             confirmPassword = it.toString()
             binding.etConfirmPassword.clearError()
-            if (confirmPassword.isEmpty()) {
-                binding.etConfirmPassword.error = getString(R.string.error_enter_confirm_password)
-            } else if (confirmPassword != password) {
+            if (confirmPassword != password) {
                 binding.etConfirmPassword.error =
                     getString(R.string.error_confirm_password_not_match)
             }
