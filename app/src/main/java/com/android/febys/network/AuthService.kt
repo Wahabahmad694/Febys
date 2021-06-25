@@ -5,8 +5,10 @@ import com.android.febys.network.requests.RequestSignup
 import com.android.febys.network.response.ResponseLogin
 import com.android.febys.network.response.ResponseOtpVerification
 import com.android.febys.network.response.ResponseSignup
-import com.google.gson.JsonObject
-import retrofit2.http.*
+import retrofit2.http.Body
+import retrofit2.http.Header
+import retrofit2.http.PATCH
+import retrofit2.http.POST
 
 interface AuthService {
     @POST("v1/consumers")
@@ -20,4 +22,9 @@ interface AuthService {
         @Header("Authorization") authToken: String,
         @Body otp: Map<String, String>
     ): ApiResponse<ResponseOtpVerification>
+
+    @POST("v1/consumers/forgot-password")
+    suspend fun resetCredentials(
+        @Body email: Map<String, String>
+    ): ApiResponse<Unit>
 }

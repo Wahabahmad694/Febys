@@ -149,4 +149,8 @@ dependencies {
     implementation "com.intuit.sdp:sdp-android:$sdp_lib"
     implementation "com.intuit.ssp:ssp-android:$sdp_lib"
 
+    // google auth
+    def auth_version = "19.0.0"
+    implementation "com.google.android.gms:play-services-auth:$auth_version"
+
 }
