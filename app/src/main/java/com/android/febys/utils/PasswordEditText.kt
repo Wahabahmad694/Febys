@@ -46,11 +46,11 @@ class PasswordEditText : ConstraintLayout {
             val resId = if (isPasswordVisible) {
                 binding.etPassword.transformationMethod =
                     HideReturnsTransformationMethod.getInstance()
-                R.drawable.ic_password_hide
+                R.drawable.ic_password_show
             } else {
                 binding.etPassword.transformationMethod =
                     PasswordTransformationMethod.getInstance()
-                R.drawable.ic_password_show
+                R.drawable.ic_password_hide
             }
 
             binding.btnPasswordToggle.setImageResource(resId)
