@@ -74,4 +74,17 @@ class AuthRepoImpl @Inject constructor(
                 .onNetworkError { emit(DataState.error(R.string.error_no_network_connected)) }
         }.flowOn(dispatcher)
     }
+
+    override fun resetCredentials(
+        email: String, dispatcher: CoroutineDispatcher
+    ): Flow<DataState<Unit>> {
+        return flow<DataState<Unit>> {
+            val resetCredentialReq = mapOf("email" to email)
+            service.resetCredentials(resetCredentialReq)
+                .onSuccess { emit(DataState.data(Unit)) }
+                .onError { emit(DataState.error(responseErrorMessage())) }
+                .onException { emit(DataState.error(R.string.error_something_went_wrong)) }
+                .onNetworkError { emit(DataState.error(R.string.error_no_network_connected)) }
+        }.flowOn(dispatcher)
+    }
 }

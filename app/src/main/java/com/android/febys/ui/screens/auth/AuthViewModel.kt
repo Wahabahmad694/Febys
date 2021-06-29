@@ -28,6 +28,11 @@ class AuthViewModel @Inject constructor(
     private val _observeLoginResponse = MutableLiveData<DataState<ResponseLogin>>()
     val observeLoginResponse: LiveData<DataState<ResponseLogin>> = _observeLoginResponse
 
+    private val _observeResetCredentialResponse =
+        MutableLiveData<DataState<Unit>>()
+    val observeResetCredentialResponse: LiveData<DataState<Unit>> =
+        _observeResetCredentialResponse
+
     fun signup(requestSignup: RequestSignup) = viewModelScope.launch {
         _observeSignupResponse.postValue(DataState.loading())
         repo.signup(requestSignup).collect {
@@ -46,6 +51,13 @@ class AuthViewModel @Inject constructor(
         _observeLoginResponse.postValue(DataState.loading())
         repo.login(email, password).collect {
             _observeLoginResponse.postValue(it)
+        }
+    }
+
+    fun resetCredentials(email: String) = viewModelScope.launch {
+        _observeResetCredentialResponse.postValue(DataState.loading())
+        repo.resetCredentials(email).collect {
+            _observeResetCredentialResponse.postValue(it)
         }
     }
 }

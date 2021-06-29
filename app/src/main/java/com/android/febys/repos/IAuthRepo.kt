@@ -22,4 +22,8 @@ interface IAuthRepo {
     fun login(
         email: String, password: String, dispatcher: CoroutineDispatcher = Dispatchers.IO
     ): Flow<DataState<ResponseLogin>>
+
+    fun resetCredentials(
+        email: String, dispatcher: CoroutineDispatcher = Dispatchers.IO
+    ): Flow<DataState<Unit>>
 }
