@@ -32,7 +32,7 @@
             style="@style/TextTheme.HelveticaNeue.TS14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_normal"
+            android:layout_marginTop="@dimen/_8dp"
             android:text="@{item.name}"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="@id/iv_item_unique_category"

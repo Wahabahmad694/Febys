@@ -17,7 +17,7 @@
             android:id="@+id/iv_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/padding_normal_x2"
+            android:padding="@dimen/_16dp"
             android:src="@drawable/ic_back"
             android:visibility="invisible" />
 
@@ -30,14 +30,14 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/padding_normal_x2">
+                android:paddingHorizontal="@dimen/_16dp">
 
                 <TextView
                     android:id="@+id/label_login"
                     style="@style/TextTheme.HelveticaNeue.TS32"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_large"
+                    android:layout_marginTop="@dimen/_24dp"
                     android:text="@string/label_login"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -56,7 +56,7 @@
                     style="@style/TextTheme.Arial.TS16"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_extra_large_x2"
+                    android:layout_marginTop="@dimen/_64dp"
                     android:text="@string/label_user_name"
                     app:layout_constraintTop_toBottomOf="@id/label_login_slogan" />
 
@@ -67,13 +67,13 @@
                     android:background="@null"
                     android:imeOptions="actionNext"
                     android:inputType="textEmailAddress"
-                    android:paddingVertical="@dimen/padding_normal"
+                    android:paddingVertical="@dimen/_8dp"
                     android:textAppearance="@style/TextTheme.Arial.TS16"
                     app:layout_constraintTop_toBottomOf="@id/label_email_address" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/_1dp"
                     android:background="@color/dark_grey"
                     app:layout_constraintTop_toBottomOf="@id/et_email_address" />
 
@@ -82,25 +82,19 @@
                     style="@style/TextTheme.Arial.TS16"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_large"
+                    android:layout_marginTop="@dimen/_24dp"
                     android:text="@string/label_password"
                     app:layout_constraintTop_toBottomOf="@id/et_email_address" />
 
-                <androidx.appcompat.widget.AppCompatEditText
+                <com.android.febys.utils.PasswordEditText
                     android:id="@+id/et_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:drawableEnd="@drawable/ic_password_show"
-                    android:imeOptions="actionDone"
-                    android:inputType="textPassword"
-                    android:paddingVertical="@dimen/padding_normal"
-                    android:textAppearance="@style/TextTheme.Arial.TS16"
                     app:layout_constraintTop_toBottomOf="@id/label_password" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/_1dp"
                     android:background="@color/dark_grey"
                     app:layout_constraintTop_toBottomOf="@id/et_password" />
 
@@ -109,7 +103,7 @@
                     style="@style/TextTheme.HelveticaNeue.TS14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_extra_large"
+                    android:layout_marginTop="@dimen/_32dp"
                     android:text="@string/label_forgot_password"
                     android:textStyle="normal"
                     app:layout_constraintEnd_toEndOf="@id/et_password"
@@ -120,7 +114,7 @@
                     style="@style/ButtonTheme.Contained"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_extra_large"
+                    android:layout_marginTop="@dimen/_32dp"
                     android:enabled="false"
                     android:text="@string/label_login"
                     app:layout_constraintTop_toBottomOf="@id/tv_forgot_password" />
@@ -129,8 +123,8 @@
                     android:id="@+id/iv_google"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_extra_large"
-                    android:layout_marginEnd="@dimen/margin_normal"
+                    android:layout_marginTop="@dimen/_32dp"
+                    android:layout_marginEnd="@dimen/_8dp"
                     android:src="@drawable/ic_google"
                     app:layout_constraintEnd_toStartOf="@id/iv_facebook"
                     app:layout_constraintHorizontal_chainStyle="packed"
@@ -141,8 +135,8 @@
                     android:id="@+id/iv_facebook"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_normal"
-                    android:layout_marginTop="@dimen/margin_extra_large"
+                    android:layout_marginStart="@dimen/_8dp"
+                    android:layout_marginTop="@dimen/_32dp"
                     android:src="@drawable/ic_facebook"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/iv_google"
@@ -153,8 +147,8 @@
                     style="@style/TextTheme.HelveticaNeue.TS14.Grey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_extra_large"
-                    android:layout_marginBottom="@dimen/margin_normal_x2"
+                    android:layout_marginTop="@dimen/_32dp"
+                    android:layout_marginBottom="@dimen/_16dp"
                     android:text="@string/label_not_have_an_account"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/tv_goto_sign_up"
@@ -168,8 +162,8 @@
                     style="@style/TextTheme.OpenSans.TS14.Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_small"
-                    android:layout_marginTop="@dimen/margin_extra_large"
+                    android:layout_marginStart="@dimen/_4dp"
+                    android:layout_marginTop="@dimen/_32dp"
                     android:text="@string/label_sign_up"
                     app:layout_constraintBaseline_toBaselineOf="@id/label_not_have_account"
                     app:layout_constraintEnd_toEndOf="parent"

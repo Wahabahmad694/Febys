@@ -144,4 +144,9 @@ dependencies {
     def otp_version = "2.1.2"
     implementation "com.github.mukeshsolanki:android-otpview-pinview:$otp_version"
 
+    //sdpi library
+    def sdp_lib = '1.0.6'
+    implementation "com.intuit.sdp:sdp-android:$sdp_lib"
+    implementation "com.intuit.ssp:ssp-android:$sdp_lib"
+
 }

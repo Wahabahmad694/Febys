@@ -40,9 +40,7 @@ class LoginFragment : AuthFragment() {
         binding.etEmailAddress.addTextChangedListener {
             email = it.toString()
             binding.etEmailAddress.clearError()
-            if (email.isEmpty()) {
-                binding.etEmailAddress.error = getString(R.string.error_enter_email)
-            } else if (!Validator.isValidEmail(email)) {
+            if (email.isNotEmpty() && !Validator.isValidEmail(email)) {
                 binding.etEmailAddress.error = getString(R.string.error_enter_valid_email)
             }
 
@@ -51,11 +49,6 @@ class LoginFragment : AuthFragment() {
 
         binding.etPassword.addTextChangedListener {
             password = it.toString()
-            binding.etPassword.clearError()
-            if (password.isEmpty()) {
-                binding.etPassword.error = getString(R.string.error_enter_password)
-            }
-
             updateLoginButtonVisibility()
         }
 

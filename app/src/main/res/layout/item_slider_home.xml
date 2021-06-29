@@ -20,17 +20,17 @@
             android:id="@+id/iv_auto_image_slider"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/margin_normal_x2"
+            android:layout_margin="@dimen/_16dp"
             app:actualImageScaleType="none"
-            app:roundedCornerRadius="8dp"
+            app:roundedCornerRadius="@dimen/_8dp"
             binding:image_url="@{imageUrl}" />
 
         <ImageView
             android:id="@+id/iv_gif_container"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="@dimen/_64sdp"
+            android:layout_height="@dimen/_64sdp"
             android:layout_gravity="bottom|start"
-            android:layout_margin="50dp"
+            android:layout_margin="@dimen/_40sdp"
             android:contentDescription="@null" />
 
         <FrameLayout

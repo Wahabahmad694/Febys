@@ -53,6 +53,7 @@ class OtpVerificationDialog : BaseDialog() {
                 is DataState.Error -> {
                     val msg = getErrorMessage(it)
                     showToast(msg)
+                    binding.otpView.text?.clear()
                 }
                 is DataState.Data -> {
                     navigateToHomeScreen()
