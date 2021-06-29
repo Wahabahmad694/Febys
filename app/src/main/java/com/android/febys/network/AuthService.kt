@@ -4,11 +4,9 @@ import com.android.febys.network.adapter.ApiResponse
 import com.android.febys.network.requests.RequestSignup
 import com.android.febys.network.response.ResponseLogin
 import com.android.febys.network.response.ResponseOtpVerification
+import com.android.febys.network.response.ResponseRefreshToken
 import com.android.febys.network.response.ResponseSignup
-import retrofit2.http.Body
-import retrofit2.http.Header
-import retrofit2.http.PATCH
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface AuthService {
     @POST("v1/consumers")
@@ -27,4 +25,10 @@ interface AuthService {
     suspend fun resetCredentials(
         @Body email: Map<String, String>
     ): ApiResponse<Unit>
+
+    @POST
+    @FormUrlEncoded
+    suspend fun refreshToken(
+        @Url url: String, @FieldMap fields: Map<String, String>
+    ): ApiResponse<ResponseRefreshToken>
 }

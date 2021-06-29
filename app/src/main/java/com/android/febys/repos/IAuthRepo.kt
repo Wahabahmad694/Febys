@@ -4,6 +4,7 @@ import com.android.febys.network.DataState
 import com.android.febys.network.requests.RequestSignup
 import com.android.febys.network.response.ResponseLogin
 import com.android.febys.network.response.ResponseOtpVerification
+import com.android.febys.network.response.ResponseRefreshToken
 import com.android.febys.network.response.ResponseSignup
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -26,4 +27,8 @@ interface IAuthRepo {
     fun resetCredentials(
         email: String, dispatcher: CoroutineDispatcher = Dispatchers.IO
     ): Flow<DataState<Unit>>
+
+    fun refreshToken(dispatcher: CoroutineDispatcher = Dispatchers.IO): Flow<DataState<ResponseRefreshToken>>
+
+    fun signOut()
 }

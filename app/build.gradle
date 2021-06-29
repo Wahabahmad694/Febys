@@ -33,12 +33,16 @@ android {
         debug {
             buildConfigField("String", "backendBaseUrl", credentialsProperties['BASE_URL_BACKEND_DEBUG'])
             buildConfigField("String", "webCustomizationBaseUrl", credentialsProperties['BASE_URL_WEB_CUSTOMIZATION_DEBUG'])
+            buildConfigField("String", "keycloakClientId", credentialsProperties['KEYCLOAK_CLIENT_ID'])
+            buildConfigField("String", "keycloakClientSecret", credentialsProperties['KEYCLOAK_CLIENT_SECRET'])
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField("String", "backendBaseUrl", credentialsProperties['BASE_URL_BACKEND_RELEASE'])
             buildConfigField("String", "webCustomizationBaseUrl", credentialsProperties['BASE_URL_WEB_CUSTOMIZATION_RELEASE'])
+            buildConfigField("String", "keycloakClientId", credentialsProperties['KEYCLOAK_CLIENT_ID'])
+            buildConfigField("String", "keycloakClientSecret", credentialsProperties['KEYCLOAK_CLIENT_SECRET'])
         }
     }
     compileOptions {
