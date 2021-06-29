@@ -1,12 +1,12 @@
 package com.android.febys.repos
 
 import com.android.febys.R
-import com.android.febys.network.domain.models.*
-import com.android.febys.network.response.Category
 import com.android.febys.network.DataState
 import com.android.febys.network.FebysWebCustomizationService
 import com.android.febys.network.adapter.*
+import com.android.febys.network.domain.models.Product
 import com.android.febys.network.response.Banner
+import com.android.febys.network.response.Category
 import com.android.febys.network.response.SeasonalOffer
 import com.android.febys.network.response.UniqueCategory
 import kotlinx.coroutines.CoroutineDispatcher
@@ -177,14 +177,18 @@ class HomeRepoImpl @Inject constructor(
     private fun getProductList(): List<Product> {
         return listOf(
             Product(
+                1,
                 "res:///${R.drawable.ic_shoes}",
+                "Service Running Shoe",
                 "Service Running Shoe",
                 15.12,
                 14.18,
                 false
             ),
             Product(
+                2,
                 "res:///${R.drawable.ic_bag}",
+                "Bags",
                 "Bags",
                 15.12,
                 14.18,

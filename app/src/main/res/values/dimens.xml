@@ -4,6 +4,7 @@
     <dimen name="_1dp">@dimen/_1sdp</dimen>
     <dimen name="_4dp">@dimen/_3sdp</dimen>
     <dimen name="_8dp">@dimen/_6sdp</dimen>
+    <dimen name="_12dp">@dimen/_10sdp</dimen>
     <dimen name="_16dp">@dimen/_13sdp</dimen>
     <dimen name="_24dp">@dimen/_19sdp</dimen>
     <dimen name="_32dp">@dimen/_26sdp</dimen>
