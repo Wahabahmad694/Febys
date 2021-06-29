@@ -67,7 +67,6 @@ class AuthViewModel @Inject constructor(
     }
 
     fun refreshToken() = viewModelScope.launch {
-        _observeRefreshTokenResponse.postValue(DataState.loading())
         repo.refreshToken().collect {
             _observeRefreshTokenResponse.postValue(it)
         }

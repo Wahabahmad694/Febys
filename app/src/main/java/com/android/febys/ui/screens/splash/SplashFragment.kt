@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.android.febys.base.BaseFragment
 import com.android.febys.databinding.FragmentSplashBinding
-import com.android.febys.network.DataState
 import com.android.febys.ui.screens.auth.AuthViewModel
 import com.android.febys.utils.navigateTo
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,21 +32,9 @@ class SplashFragment : BaseFragment() {
 
     private fun setupObservers() {
         authViewModel.observeRefreshTokenResponse.observe(viewLifecycleOwner) {
-            when (it) {
-                is DataState.Loading -> {
-
-                }
-                is DataState.Error -> {
-                    val navigateToLogin =
-                        SplashFragmentDirections.actionSplashFragmentToLoginFragment()
-                    navigateTo(navigateToLogin)
-                }
-                is DataState.Data -> {
-                    val navigateToHome =
-                        SplashFragmentDirections.actionSplashFragmentToHomeFragment()
-                    navigateTo(navigateToHome)
-                }
-            }
+            val navigateToHome =
+                SplashFragmentDirections.actionSplashFragmentToHomeFragment()
+            navigateTo(navigateToHome)
         }
     }
 }

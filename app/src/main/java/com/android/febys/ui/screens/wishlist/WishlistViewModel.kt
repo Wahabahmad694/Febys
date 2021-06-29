@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.android.febys.base.BaseViewModel
 import com.android.febys.network.DataState
 import com.android.febys.network.domain.models.Product
 import com.android.febys.repos.IProductRepo
@@ -15,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class WishlistViewModel @Inject constructor(
     private val repo: IProductRepo
-) : ViewModel() {
+) : BaseViewModel() {
     private val _observeWishlist = MutableLiveData<DataState<List<Product>>>()
     val observeWishlist: LiveData<DataState<List<Product>>> = _observeWishlist
 

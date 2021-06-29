@@ -27,14 +27,27 @@ class AccountFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         uiListeners()
+        setupObserver()
+    }
+
+    private fun setupObserver() {
+        observesUserLoggedIn.observe(viewLifecycleOwner) {
+            binding.isUserLoggedIn = it
+        }
     }
 
     private fun uiListeners() {
-        binding.btnSignOut.setOnClickListener {
+        binding.btnSignIn.setOnClickListener {
             authViewModel.signOut {
                 val navigateToLogin =
                     AccountFragmentDirections.actionAccountFragmentToLoginFragment()
                 navigateTo(navigateToLogin)
+            }
+        }
+
+        binding.btnSignOut.setOnClickListener {
+            authViewModel.signOut {
+                super.signOut()
             }
         }
     }

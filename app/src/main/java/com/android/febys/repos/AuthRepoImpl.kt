@@ -116,7 +116,10 @@ class AuthRepoImpl @Inject constructor(
                         emit(DataState.data(this))
                     }
                 }
-                .onError { emit(DataState.error(responseErrorMessage())) }
+                .onError {
+                    signOut()
+                    emit(DataState.error(responseErrorMessage()))
+                }
                 .onException { emit(DataState.error(R.string.error_something_went_wrong)) }
                 .onNetworkError { emit(DataState.error(R.string.error_no_network_connected)) }
         }.flowOn(dispatcher)

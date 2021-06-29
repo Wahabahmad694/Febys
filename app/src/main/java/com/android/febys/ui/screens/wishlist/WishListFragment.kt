@@ -36,7 +36,11 @@ class WishListFragment : BaseFragment() {
         uiListeners()
         setupObserver()
 
-        viewModel.fetchWishList()
+        if (isUserLoggedIn)
+            viewModel.fetchWishList()
+        else {
+            binding.wishListCount = 0
+        }
     }
 
     private fun initUi() {

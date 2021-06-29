@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.android.febys.R
 import com.android.febys.databinding.FragmentLoginBinding
 import com.android.febys.network.DataState
@@ -81,15 +82,10 @@ class LoginFragment : AuthFragment() {
                     showToast(msg)
                 }
                 is DataState.Data -> {
-                    navigateToHomeScreen()
+                    findNavController().popBackStack(R.id.loginFragment, true)
                 }
             }
         }
-    }
-
-    private fun navigateToHomeScreen() {
-        val navigateToHomeScreen = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
-        navigateTo(navigateToHomeScreen)
     }
 
     private fun updateLoginButtonVisibility() {

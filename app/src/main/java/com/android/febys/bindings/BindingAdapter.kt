@@ -1,7 +1,9 @@
 package com.android.febys.bindings
 
 import android.graphics.Paint
+import android.view.View
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import com.facebook.drawee.view.SimpleDraweeView
 
@@ -23,5 +25,11 @@ object BindingAdapter {
         } else {
             textView.paintFlags = textView.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
         }
+    }
+
+    @JvmStatic
+    @BindingAdapter("binding:is_visible")
+    fun isVisible(view: View, isVisible: Boolean) {
+        view.isVisible = isVisible
     }
 }
