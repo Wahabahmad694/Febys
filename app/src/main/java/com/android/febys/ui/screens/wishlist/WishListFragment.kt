@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import com.android.febys.base.BaseFragment
 import com.android.febys.databinding.FragmentWishListBinding
@@ -41,6 +42,8 @@ class WishListFragment : BaseFragment() {
     private fun initUi() {
         binding.rvWishList.apply {
             setHasFixedSize(true)
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL))
             layoutManager = GridLayoutManager(context, 2)
             adapter = this@WishListFragment.adapter
         }
