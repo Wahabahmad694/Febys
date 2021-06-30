@@ -4,14 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.lifecycleScope
-import com.android.febys.databinding.FragmentSplashBinding
+import androidx.fragment.app.viewModels
 import com.android.febys.base.BaseFragment
+import com.android.febys.databinding.FragmentSplashBinding
+import com.android.febys.ui.screens.auth.AuthViewModel
 import com.android.febys.utils.navigateTo
-import kotlinx.coroutines.delay
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SplashFragment : BaseFragment() {
     private lateinit var binding: FragmentSplashBinding
+    private val authViewModel: AuthViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -23,12 +26,15 @@ class SplashFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        lifecycleScope.launchWhenResumed {
-            delay(2000)
-            // todo navigate by checking auth token
-            // this navigation is for testing purpose
-            val navigateToLogin = SplashFragmentDirections.actionSplashFragmentToLoginFragment()
-            navigateTo(navigateToLogin)
+        setupObservers()
+        authViewModel.refreshToken()
+    }
+
+    private fun setupObservers() {
+        authViewModel.observeRefreshTokenResponse.observe(viewLifecycleOwner) {
+            val navigateToHome =
+                SplashFragmentDirections.actionSplashFragmentToHomeFragment()
+            navigateTo(navigateToHome)
         }
     }
 }

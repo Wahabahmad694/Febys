@@ -12,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.android.febys.network.DataState
 import com.android.febys.network.ErrorMessage
-import com.google.android.material.textfield.TextInputLayout
 
 fun View.show() {
     visibility = View.VISIBLE

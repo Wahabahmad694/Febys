@@ -74,11 +74,16 @@
     <string name="dummy_12_month_s">12 Month’s</string>
     <string name="label_product_return_and_refundable">Product Return &amp; Refundable</string>
     <string name="label_return_and_refund_policy">Return &amp; Refund Policy</string>
+    <string name="label_wishlist">Wishlist</string>
+    <string name="wish_list_count">(%d)</string>
+    <string name="label_your_wish_list_is_empty">Your wish list is empty</string>
+    <string name="label_get_inspired">Get Inspired</string>
+    <string name="label_empty_wish_list_slogan">But not for long! Tap ♡ to start saving you favorite pieces</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_search">Search</string>
     <string name="menu_message">Message</string>
-    <string name="menu_cart">Cart</string>
+    <string name="menu_wishlist">Wishlist</string>
     <string name="menu_account">Account</string>
 
     <string name="hint_search">Search…</string>
@@ -98,5 +103,7 @@
     <string name="error_enter_valid_phone">Please Enter Valid Phone No</string>
 
     <string name="toast_email_sent">Email Sent</string>
+    <string name="label_add_to_cart">Add to Cart</string>
+    <string name="label_sign_out">Sign Out</string>
 
 </resources>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="wishListCount"
+            type="Integer" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.screens.wishlist.WishListFragment">
+
+        <TextView
+            android:id="@+id/label_wish_list"
+            style="@style/TextTheme.HelveticaNeue.TS32"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16dp"
+            android:layout_marginTop="@dimen/_16dp"
+            android:text="@string/label_wishlist"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_wish_list_count"
+            style="@style/TextTheme.HelveticaNeue.TS32"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16dp"
+            android:layout_marginTop="@dimen/_16dp"
+            android:text="@{@string/wish_list_count(wishListCount)}"
+            android:visibility="@{wishListCount > 0 ? View.VISIBLE : View.GONE, default = gone}"
+            app:layout_constraintBaseline_toBaselineOf="@id/label_wish_list"
+            app:layout_constraintStart_toEndOf="@id/label_wish_list" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_wish_list"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_0dp"
+            android:clipToPadding="false"
+            android:paddingTop="@dimen/_16dp"
+            android:visibility="@{wishListCount > 0 ? View.VISIBLE : View.GONE, default = gone}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_wish_list"
+            tools:listitem="@layout/item_wish_list" />
+
+        <LinearLayout
+            android:id="@+id/container_empty_wish_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="@{wishListCount > 0 ? View.GONE : View.VISIBLE, default = visible}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                style="@style/TextTheme.HelveticaNeue.TS16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_your_wish_list_is_empty" />
+
+            <TextView
+                style="@style/TextTheme.Arial.TS14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16dp"
+                android:text="@string/label_empty_wish_list_slogan" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_get_inspired"
+                style="@style/ButtonTheme.Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_24dp"
+                android:drawablePadding="@dimen/_16dp"
+                android:text="@string/label_get_inspired"
+                app:icon="@drawable/ic_arrow_forward"
+                app:iconGravity="end"
+                app:iconPadding="@dimen/_8dp"
+                app:iconSize="@dimen/_12dp" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -8,6 +8,7 @@ import com.android.febys.network.DataState
 import com.android.febys.network.requests.RequestSignup
 import com.android.febys.network.response.ResponseLogin
 import com.android.febys.network.response.ResponseOtpVerification
+import com.android.febys.network.response.ResponseRefreshToken
 import com.android.febys.network.response.ResponseSignup
 import com.android.febys.repos.IAuthRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,6 +28,10 @@ class AuthViewModel @Inject constructor(
 
     private val _observeLoginResponse = MutableLiveData<DataState<ResponseLogin>>()
     val observeLoginResponse: LiveData<DataState<ResponseLogin>> = _observeLoginResponse
+
+    private val _observeRefreshTokenResponse = MutableLiveData<DataState<ResponseRefreshToken>>()
+    val observeRefreshTokenResponse: LiveData<DataState<ResponseRefreshToken>> =
+        _observeRefreshTokenResponse
 
     private val _observeResetCredentialResponse =
         MutableLiveData<DataState<Unit>>()
@@ -59,5 +64,16 @@ class AuthViewModel @Inject constructor(
         repo.resetCredentials(email).collect {
             _observeResetCredentialResponse.postValue(it)
         }
+    }
+
+    fun refreshToken() = viewModelScope.launch {
+        repo.refreshToken().collect {
+            _observeRefreshTokenResponse.postValue(it)
+        }
+    }
+
+    fun signOut(onSignOut: () -> Unit) {
+        repo.signOut()
+        onSignOut.invoke()
     }
 }

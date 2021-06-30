@@ -11,14 +11,20 @@ import javax.inject.Inject
 class PrefManagerImpl @Inject constructor(@ApplicationContext context: Context) : IPrefManger {
     companion object {
         private const val KEY_USER = "user"
+        private const val KEY_ACCESS_TOKEN = "accessToken"
+        private const val KEY_REFRESH_TOKEN = "refreshToken"
     }
 
     private val pref: SharedPreferences by lazy {
         context.getSharedPreferences("febysPrefs", Context.MODE_PRIVATE)
     }
 
-    override fun getAuthToken(defValue: String): String {
-        return getUser()?.accessToken?.let { "Bearer $it" } ?: defValue
+    override fun saveAccessToken(accessToken: String) {
+        saveString(KEY_ACCESS_TOKEN, "Bearer $accessToken")
+    }
+
+    override fun getAccessToken(defValue: String): String {
+        return getString(KEY_ACCESS_TOKEN, defValue)
     }
 
     override fun saveUser(user: User) {
@@ -32,8 +38,24 @@ class PrefManagerImpl @Inject constructor(@ApplicationContext context: Context) 
         return Gson().fromJson(userJson, User::class.java)
     }
 
+    override fun saveRefreshToken(refreshToken: String) {
+        saveString(KEY_REFRESH_TOKEN, refreshToken)
+    }
+
     override fun getRefreshToken(defValue: String): String {
-        return getUser()?.refreshToken ?: defValue
+        return getString(KEY_REFRESH_TOKEN, defValue)
+    }
+
+    override fun clearUser() {
+        removeString(KEY_USER)
+    }
+
+    override fun clearAccessToken() {
+        removeString(KEY_ACCESS_TOKEN)
+    }
+
+    override fun clearRefreshToken() {
+        removeString(KEY_REFRESH_TOKEN)
     }
 
     private fun saveString(key: String, value: String) {
@@ -44,5 +66,11 @@ class PrefManagerImpl @Inject constructor(@ApplicationContext context: Context) 
 
     private fun getString(key: String, defValue: String): String {
         return pref.getString(key, defValue)!!
+    }
+
+    private fun removeString(key: String) {
+        pref.edit {
+            remove(key)
+        }
     }
 }

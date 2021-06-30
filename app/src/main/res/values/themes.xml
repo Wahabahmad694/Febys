@@ -16,6 +16,7 @@
         <item name="android:windowBackground">@color/bg_windows_light</item>
 
         <item name="otpViewStyle">@style/OtpWidget.OtpView</item>
+        <item name="android:listDivider">@color/dark_grey</item>
     </style>
 
     <style name="TextTheme">
