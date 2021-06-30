@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "555465482562",
+    "project_id": "febys-1624613123038",
+    "storage_bucket": "febys-1624613123038.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:555465482562:android:0dbed9aa34dc01264468db",
+        "android_client_info": {
+          "package_name": "com.android.febys"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "555465482562-pnia6kqavdubphskpde9r1hols5i1qpu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-0eK6s26uAuz6-I0A_pc-0HA6kDMOdo4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "555465482562-pnia6kqavdubphskpde9r1hols5i1qpu.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "555465482562-qrjit97nqopu0mbpdd0cfelt715c84nu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ios.febys"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

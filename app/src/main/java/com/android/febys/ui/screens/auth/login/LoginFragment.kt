@@ -68,6 +68,22 @@ class LoginFragment : AuthFragment() {
                 LoginFragmentDirections.actionLoginFragmentToResetCredentialFragment()
             navigateTo(navigateToResetCredential)
         }
+
+        binding.ivGoogle.setOnClickListener {
+            signInWithGoogle { token ->
+                token?.let {
+
+                }
+            }
+        }
+
+        binding.ivFacebook.setOnClickListener {
+            signInWithFacebook { token ->
+                token?.let {
+
+                }
+            }
+        }
     }
 
 
