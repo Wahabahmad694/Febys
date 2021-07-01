@@ -109,5 +109,9 @@
     <string name="google_web_client" translatable="false">555465482562-pnia6kqavdubphskpde9r1hols5i1qpu.apps.googleusercontent.com</string>
     <string name="facebook_app_id" translatable="false">513496399703774</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb513496399703774</string>
+    <string name="label_connection_error">Connection Error</string>
+    <string name="cancel">Cancel</string>
+    <string name="label_retry">Retry</string>
+    <string name="label_no_internet">There\'s a problem with your network connection. Please check your connection</string>
 
 </resources>

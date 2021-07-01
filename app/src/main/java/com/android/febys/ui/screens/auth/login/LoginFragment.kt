@@ -13,7 +13,9 @@ import com.android.febys.enum.SocialLogin
 import com.android.febys.network.DataState
 import com.android.febys.ui.screens.auth.AuthFragment
 import com.android.febys.ui.screens.auth.AuthViewModel
-import com.android.febys.utils.*
+import com.android.febys.utils.Validator
+import com.android.febys.utils.clearError
+import com.android.febys.utils.navigateTo
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -95,6 +97,8 @@ class LoginFragment : AuthFragment() {
                 }
                 is DataState.Error -> {
                     // todo navigate to error dialog
+                    val navigateToErrorDialog = LoginFragmentDirections.actionToErrorDialog()
+                    navigateTo(navigateToErrorDialog)
                 }
                 is DataState.Data -> {
                     findNavController().popBackStack(R.id.loginFragment, true)

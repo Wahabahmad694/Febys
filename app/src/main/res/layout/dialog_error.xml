@@ -12,10 +12,10 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bg_white_rounded_corner"
         android:minWidth="@dimen/_280sdp"
-        tools:context=".ui.screens.dialog.LoginFragment">
+        tools:context=".ui.screens.dialog.ErrorDialog">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/btn_skip"
+            android:id="@+id/btn_dismiss"
             style="@style/ButtonTheme.Text"
             android:layout_width="@dimen/_32dp"
             android:layout_height="@dimen/_32dp"
@@ -26,75 +26,68 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_otp_verification"
+            android:id="@+id/iv_error"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_otp_verification"
+            android:src="@drawable/ic_no_internet"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_skip" />
+            app:layout_constraintTop_toBottomOf="@id/btn_dismiss" />
 
         <TextView
-            android:id="@+id/label_verification"
+            android:id="@+id/tv_error_title"
             style="@style/TextTheme.HelveticaNeue.TS32"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_24dp"
-            android:text="@string/label_verification"
+            android:text="@string/label_connection_error"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_otp_verification" />
+            app:layout_constraintTop_toBottomOf="@id/iv_error" />
 
         <TextView
-            android:id="@+id/label_verification_slogan"
+            android:id="@+id/tv_error_msg"
             style="@style/TextTheme.Arial.TS14"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_64dp"
-            android:text="@string/label_otp_verification_slogan"
+            android:text="@string/label_no_internet"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/label_verification" />
+            app:layout_constraintTop_toBottomOf="@id/tv_error_title" />
 
-        <com.mukesh.OtpView
-            android:id="@+id/otp_view"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_32dp"
             android:layout_marginTop="@dimen/_32dp"
-            android:cursorVisible="false"
-            android:inputType="number"
-            app:OtpItemCount="4"
-            app:OtpItemSpacing="@dimen/_8dp"
-            app:OtpLineColor="@color/dark_grey"
-            app:OtpViewType="rectangle"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/label_verification_slogan" />
-
-        <TextView
-            android:id="@+id/label_resend_otp"
-            style="@style/TextTheme.HelveticaNeue.TS14.Grey"
-            android:layout_width="@dimen/_0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_8dp"
-            android:layout_marginTop="@dimen/_32dp"
-            android:text="@string/label_resend_otp"
-            android:textAlignment="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/otp_view" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_resend_otp"
-            style="@style/ButtonTheme.Text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_16dp"
-            android:text="@string/label_resend"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/label_resend_otp" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_error_msg">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_cancel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/cancel"
+                android:textAllCaps="false" />
+
+            <View
+                android:layout_width="@dimen/_8dp"
+                android:layout_height="1dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_retry"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/label_retry" />
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
