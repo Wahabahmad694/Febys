@@ -103,8 +103,7 @@ class HomeFragment : SliderFragment() {
 
                 }
                 is DataState.Error -> {
-                    val error = getErrorMessage(it)
-                    showToast(error)
+                    // todo navigate to error dialog
                 }
                 is DataState.Data -> {
                     val uniqueCategories = it.data
@@ -120,8 +119,7 @@ class HomeFragment : SliderFragment() {
 
                 }
                 is DataState.Error -> {
-                    val error = getErrorMessage(it)
-                    showToast(error)
+                    // navigate to error dialog
                 }
                 is DataState.Data -> {
                     val sliderImages = it.data
@@ -169,8 +167,7 @@ class HomeFragment : SliderFragment() {
 
                 }
                 is DataState.Error -> {
-                    val error = getErrorMessage(it)
-                    showToast(error)
+                    // todo navigate to error dialog
                 }
                 is DataState.Data -> {
                     binding.imageSliderHome.show()

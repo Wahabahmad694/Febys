@@ -3,7 +3,10 @@ package com.android.febys.repos
 import com.android.febys.R
 import com.android.febys.network.DataState
 import com.android.febys.network.FebysWebCustomizationService
-import com.android.febys.network.adapter.*
+import com.android.febys.network.adapter.onError
+import com.android.febys.network.adapter.onException
+import com.android.febys.network.adapter.onNetworkError
+import com.android.febys.network.adapter.onSuccess
 import com.android.febys.network.domain.models.Product
 import com.android.febys.network.response.Banner
 import com.android.febys.network.response.Category
@@ -22,20 +25,20 @@ class HomeRepoImpl @Inject constructor(
     override fun fetchAllUniqueCategories(dispatcher: CoroutineDispatcher): Flow<DataState<List<UniqueCategory>>> {
         return flow<DataState<List<UniqueCategory>>> {
             service.fetchAllUniqueCategories()
-                .onSuccess { emit(DataState.data(data!!)) }
-                .onError { emit(DataState.error(message())) }
-                .onException { emit(DataState.error(R.string.error_something_went_wrong)) }
-                .onNetworkError { emit(DataState.error(R.string.error_no_network_connected)) }
+                .onSuccess { emit(DataState.Data(data!!)) }
+                .onError { emit(DataState.ApiError(message)) }
+                .onException { emit(DataState.ExceptionError()) }
+                .onNetworkError { emit(DataState.NetworkError()) }
         }.flowOn(dispatcher)
     }
 
     override fun fetchAllBanner(dispatcher: CoroutineDispatcher): Flow<DataState<List<Banner>>> {
         return flow<DataState<List<Banner>>> {
             service.fetchAllBanner()
-                .onSuccess { emit(DataState.data(data!!)) }
-                .onError { emit(DataState.error(message())) }
-                .onException { emit(DataState.error(R.string.error_something_went_wrong)) }
-                .onNetworkError { emit(DataState.error(R.string.error_no_network_connected)) }
+                .onSuccess { emit(DataState.Data(data!!)) }
+                .onError { emit(DataState.ApiError(message)) }
+                .onException { emit(DataState.ExceptionError()) }
+                .onNetworkError { emit(DataState.NetworkError()) }
         }.flowOn(dispatcher)
     }
 
@@ -63,10 +66,10 @@ class HomeRepoImpl @Inject constructor(
     override fun fetchAllSeasonalOffers(dispatcher: CoroutineDispatcher): Flow<DataState<List<SeasonalOffer>>> {
         return flow<DataState<List<SeasonalOffer>>> {
             service.fetchAllSeasonalOffers()
-                .onSuccess { emit(DataState.data(data!!)) }
-                .onError { emit(DataState.error(message())) }
-                .onException { emit(DataState.error(R.string.error_something_went_wrong)) }
-                .onNetworkError { emit(DataState.error(R.string.error_no_network_connected)) }
+                .onSuccess { emit(DataState.Data(data!!)) }
+                .onError { emit(DataState.ApiError(message)) }
+                .onException { emit(DataState.ExceptionError()) }
+                .onNetworkError { emit(DataState.NetworkError()) }
         }.flowOn(dispatcher)
     }
 

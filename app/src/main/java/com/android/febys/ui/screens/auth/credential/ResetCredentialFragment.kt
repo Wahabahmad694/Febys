@@ -11,7 +11,6 @@ import com.android.febys.databinding.FragmentResetCredentialBinding
 import com.android.febys.network.DataState
 import com.android.febys.ui.screens.auth.AuthViewModel
 import com.android.febys.utils.Validator
-import com.android.febys.utils.getErrorMessage
 import com.android.febys.utils.goBack
 import com.android.febys.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -57,8 +56,7 @@ class ResetCredentialFragment : BaseFragment() {
 
                 }
                 is DataState.Error -> {
-                    val msg = getErrorMessage(it)
-                    showToast(msg)
+                    // todo navigate to error dialog
                 }
                 is DataState.Data -> {
                     showToast(getString(R.string.toast_email_sent))

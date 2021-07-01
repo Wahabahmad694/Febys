@@ -56,29 +56,5 @@ suspend fun <T> ApiResponse<T>.onNetworkError(
 /** A message from the [ApiResponse.ApiFailureResponse.Error]. */
 fun <T> ApiResponse.ApiFailureResponse.Error<T>.message(): String = toString()
 
-fun <T> ApiResponse.ApiFailureResponse.Error<T>.responseErrorMessage(): String {
-    return try {
-        val errorRes =
-            Gson().fromJson(response.errorBody()?.charStream(), ErrorResponse::class.java)
-
-        val errorMsg = if (!errorRes.errors.isNullOrEmpty()) {
-            errorRes.errors[0].error
-        } else {
-            errorRes.message
-        }
-
-        errorMsg ?: response.message() ?: ""
-    } catch (e: Exception) {
-        response.message() ?: ""
-    }
-
-}
-
-fun <T> ApiResponse.ApiFailureResponse.Error<T>.parseMessage(): String {
-
-    val errorResponse = response.body() as ErrorResponse
-    return errorResponse.message ?: ""
-}
-
 /** A message from the [ApiResponse.ApiFailureResponse.Exception]. */
 fun <T> ApiResponse.ApiFailureResponse.Exception<T>.message(): String = toString()

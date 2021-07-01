@@ -132,8 +132,7 @@ class SignupFragment : AuthFragment() {
 
                 }
                 is DataState.Error -> {
-                    val msg = getErrorMessage(it)
-                    showToast(msg)
+                    // todo navigate error dialog
                 }
                 is DataState.Data -> {
                     if (isSocialLogin) {

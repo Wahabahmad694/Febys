@@ -94,8 +94,7 @@ class LoginFragment : AuthFragment() {
 
                 }
                 is DataState.Error -> {
-                    val msg = getErrorMessage(it)
-                    showToast(msg)
+                    // todo navigate to error dialog
                 }
                 is DataState.Data -> {
                     findNavController().popBackStack(R.id.loginFragment, true)

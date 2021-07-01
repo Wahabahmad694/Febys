@@ -1,7 +1,6 @@
 package com.android.febys.repos
 
 import com.android.febys.BuildConfig
-import com.android.febys.R
 import com.android.febys.dataSource.IUserDataSource
 import com.android.febys.dto.User
 import com.android.febys.enum.SocialLogin
@@ -35,12 +34,12 @@ class AuthRepoImpl @Inject constructor(
                 .onSuccess {
                     data!!.apply {
                         saveUserAndToken(user)
-                        emit(DataState.data(this))
+                        emit(DataState.Data(this))
                     }
                 }
-                .onError { emit(DataState.error(responseErrorMessage())) }
-                .onException { emit(DataState.error(R.string.error_something_went_wrong)) }
-                .onNetworkError { emit(DataState.error(R.string.error_no_network_connected)) }
+                .onError { emit(DataState.ApiError(message)) }
+                .onException { emit(DataState.ExceptionError()) }
+                .onNetworkError { emit(DataState.NetworkError()) }
         }.flowOn(dispatcher)
     }
 
@@ -54,12 +53,12 @@ class AuthRepoImpl @Inject constructor(
                 .onSuccess {
                     data!!.apply {
                         saveUserAndToken(user)
-                        emit(DataState.data(this))
+                        emit(DataState.Data(this))
                     }
                 }
-                .onError { emit(DataState.error(responseErrorMessage())) }
-                .onException { emit(DataState.error(R.string.error_something_went_wrong)) }
-                .onNetworkError { emit(DataState.error(R.string.error_no_network_connected)) }
+                .onError { emit(DataState.ApiError(message)) }
+                .onException { emit(DataState.ExceptionError()) }
+                .onNetworkError { emit(DataState.NetworkError()) }
         }.flowOn(dispatcher)
     }
 
@@ -71,12 +70,12 @@ class AuthRepoImpl @Inject constructor(
             service.login(loginReq).onSuccess {
                 data!!.apply {
                     saveUserAndToken(user)
-                    emit(DataState.data(this))
+                    emit(DataState.Data(data))
                 }
             }
-                .onError { emit(DataState.error(responseErrorMessage())) }
-                .onException { emit(DataState.error(R.string.error_something_went_wrong)) }
-                .onNetworkError { emit(DataState.error(R.string.error_no_network_connected)) }
+                .onError { emit(DataState.ApiError(message)) }
+                .onException { emit(DataState.ExceptionError()) }
+                .onNetworkError { emit(DataState.NetworkError()) }
         }.flowOn(dispatcher)
     }
 
@@ -86,10 +85,10 @@ class AuthRepoImpl @Inject constructor(
         return flow<DataState<Unit>> {
             val resetCredentialReq = mapOf("email" to email)
             service.resetCredentials(resetCredentialReq)
-                .onSuccess { emit(DataState.data(Unit)) }
-                .onError { emit(DataState.error(responseErrorMessage())) }
-                .onException { emit(DataState.error(R.string.error_something_went_wrong)) }
-                .onNetworkError { emit(DataState.error(R.string.error_no_network_connected)) }
+                .onSuccess { emit(DataState.Data(Unit)) }
+                .onError { emit(DataState.ApiError(message)) }
+                .onException { emit(DataState.ExceptionError()) }
+                .onNetworkError { emit(DataState.NetworkError()) }
         }.flowOn(dispatcher)
     }
 
@@ -97,7 +96,7 @@ class AuthRepoImpl @Inject constructor(
         return flow<DataState<ResponseRefreshToken>> {
             val refreshToken = userDataSource.getRefreshToken()
             if (refreshToken.isEmpty()) {
-                emit(DataState.error(""))
+                emit(DataState.ApiError(""))
                 return@flow
             }
 
@@ -115,15 +114,15 @@ class AuthRepoImpl @Inject constructor(
                     data!!.apply {
                         userDataSource.saveAccessToken(accessToken)
                         userDataSource.saveRefreshToken(this.refreshToken)
-                        emit(DataState.data(this))
+                        emit(DataState.Data(this))
                     }
                 }
                 .onError {
                     signOut()
-                    emit(DataState.error(responseErrorMessage()))
+                    emit(DataState.ApiError(message))
                 }
-                .onException { emit(DataState.error(R.string.error_something_went_wrong)) }
-                .onNetworkError { emit(DataState.error(R.string.error_no_network_connected)) }
+                .onException { emit(DataState.ExceptionError()) }
+                .onNetworkError { emit(DataState.NetworkError()) }
         }.flowOn(dispatcher)
     }
 
@@ -140,12 +139,12 @@ class AuthRepoImpl @Inject constructor(
             service.socialLogin(socialLoginReq).onSuccess {
                 data!!.apply {
                     saveUserAndToken(user)
-                    emit(DataState.data(this))
+                    emit(DataState.Data(this))
                 }
             }
-                .onError { emit(DataState.error(responseErrorMessage())) }
-                .onException { emit(DataState.error(R.string.error_something_went_wrong)) }
-                .onNetworkError { emit(DataState.error(R.string.error_no_network_connected)) }
+                .onError { emit(DataState.ApiError(message)) }
+                .onException { emit(DataState.ExceptionError()) }
+                .onNetworkError { emit(DataState.NetworkError()) }
         }.flowOn(dispatcher)
     }
 

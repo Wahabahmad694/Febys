@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.android.febys.base.BaseFragment
 import com.android.febys.databinding.FragmentWishListBinding
 import com.android.febys.network.DataState
-import com.android.febys.utils.getErrorMessage
 import com.android.febys.utils.goBack
 import com.android.febys.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -64,8 +63,7 @@ class WishListFragment : BaseFragment() {
 
                 }
                 is DataState.Error -> {
-                    val error = getErrorMessage(it)
-                    showToast(error)
+                    // todo navigate to error dialog
                 }
                 is DataState.Data -> {
                     val wishList = it.data

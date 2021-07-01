@@ -37,11 +37,11 @@ class ProductRepoImpl @Inject constructor(service: FebysBackendService) : IProdu
             "Easy Voice Control works with Amazon Alexa and Google Assistant; Advanced Digital TV Tuner with Live TV Channel Guide"
         )
 
-        emit(DataState.data(productDetail))
+        emit(DataState.Data(productDetail))
     }.flowOn(dispatcher)
 
     override fun fetchWishList(dispatcher: CoroutineDispatcher) = flow<DataState<List<Product>>> {
-        emit(DataState.data(getProductList()))
+        emit(DataState.Data(getProductList()))
     }.flowOn(dispatcher)
 
     // this is dummy list
