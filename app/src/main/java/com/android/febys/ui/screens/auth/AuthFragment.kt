@@ -7,7 +7,6 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.android.febys.R
 import com.android.febys.base.BaseFragment
-import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -17,7 +16,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-
 
 abstract class AuthFragment : BaseFragment() {
     private lateinit var googleClient: GoogleSignInClient
@@ -37,10 +35,9 @@ abstract class AuthFragment : BaseFragment() {
                 try {
                     val account = task.getResult(ApiException::class.java)!!
                     googleSignInCallback?.invoke(account.idToken!!)
+                    googleClient.signOut()
                 } catch (e: ApiException) {
                     googleSignInCallback?.invoke(null)
-                } finally {
-                    googleClient.signOut()
                 }
             }
 
@@ -64,13 +61,6 @@ abstract class AuthFragment : BaseFragment() {
 
     fun signInWithFacebook(callback: (idToken: String?) -> Unit) {
         fbSignInCallback = callback
-
-        val accessToken = AccessToken.getCurrentAccessToken()
-        val isLoggedIn = accessToken != null && !accessToken.isExpired
-        if (isLoggedIn) {
-            fbSignInCallback?.invoke(accessToken.token)
-            return
-        }
 
         LoginManager.getInstance().registerCallback(callbackManager,
             object : FacebookCallback<LoginResult?> {
