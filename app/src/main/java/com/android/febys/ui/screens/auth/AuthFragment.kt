@@ -39,6 +39,8 @@ abstract class AuthFragment : BaseFragment() {
                     googleSignInCallback?.invoke(account.idToken!!)
                 } catch (e: ApiException) {
                     googleSignInCallback?.invoke(null)
+                } finally {
+                    googleClient.signOut()
                 }
             }
 
@@ -56,13 +58,6 @@ abstract class AuthFragment : BaseFragment() {
 
     fun signInWithGoogle(callback: (idToken: String?) -> Unit) {
         googleSignInCallback = callback
-
-        val existingAccount = GoogleSignIn.getLastSignedInAccount(context)
-        existingAccount?.idToken?.let {
-            googleSignInCallback?.invoke(it)
-            return
-        }
-
         val signInIntent = googleClient.signInIntent
         googleSignInActivityForResult.launch(signInIntent)
     }
@@ -82,6 +77,7 @@ abstract class AuthFragment : BaseFragment() {
                 override fun onSuccess(result: LoginResult?) {
                     result?.accessToken?.token?.let {
                         fbSignInCallback?.invoke(it)
+                        LoginManager.getInstance().logOut()
                     }
                 }
 

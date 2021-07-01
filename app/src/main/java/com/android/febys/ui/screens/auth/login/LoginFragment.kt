@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.android.febys.R
 import com.android.febys.databinding.FragmentLoginBinding
+import com.android.febys.enum.SocialLogin
 import com.android.febys.network.DataState
 import com.android.febys.ui.screens.auth.AuthFragment
 import com.android.febys.ui.screens.auth.AuthViewModel
@@ -53,7 +54,6 @@ class LoginFragment : AuthFragment() {
             updateLoginButtonVisibility()
         }
 
-
         binding.tvGotoSignUp.setOnClickListener {
             val navigateToSignUp = LoginFragmentDirections.actionLoginFragmentToSignupFragment()
             navigateTo(navigateToSignUp)
@@ -72,7 +72,7 @@ class LoginFragment : AuthFragment() {
         binding.ivGoogle.setOnClickListener {
             signInWithGoogle { token ->
                 token?.let {
-
+                    viewModel.socialLogin(token, SocialLogin.GOOGLE)
                 }
             }
         }
@@ -80,7 +80,7 @@ class LoginFragment : AuthFragment() {
         binding.ivFacebook.setOnClickListener {
             signInWithFacebook { token ->
                 token?.let {
-
+                    viewModel.socialLogin(token, SocialLogin.FACEBOOK)
                 }
             }
         }

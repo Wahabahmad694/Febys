@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.android.febys.base.BaseViewModel
+import com.android.febys.enum.SocialLogin
 import com.android.febys.network.DataState
 import com.android.febys.network.requests.RequestSignup
 import com.android.febys.network.response.ResponseLogin
@@ -75,5 +76,12 @@ class AuthViewModel @Inject constructor(
     fun signOut(onSignOut: () -> Unit) {
         repo.signOut()
         onSignOut.invoke()
+    }
+
+    fun socialLogin(token: String, socialLogin: SocialLogin) = viewModelScope.launch {
+        _observeLoginResponse.postValue(DataState.loading())
+        repo.socialLogin(token, socialLogin).collect {
+            _observeLoginResponse.postValue(it)
+        }
     }
 }

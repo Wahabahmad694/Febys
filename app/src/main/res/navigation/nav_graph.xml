@@ -88,6 +88,9 @@
         tools:layout="@layout/fragment_account">
         <action
             android:id="@+id/action_accountFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 </navigation>

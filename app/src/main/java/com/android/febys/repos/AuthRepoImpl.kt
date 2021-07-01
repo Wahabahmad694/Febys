@@ -4,6 +4,7 @@ import com.android.febys.BuildConfig
 import com.android.febys.R
 import com.android.febys.dataSource.IUserDataSource
 import com.android.febys.dto.User
+import com.android.febys.enum.SocialLogin
 import com.android.febys.network.AuthService
 import com.android.febys.network.DataState
 import com.android.febys.network.adapter.*
@@ -17,6 +18,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import java.util.*
 import javax.inject.Inject
 
 class AuthRepoImpl @Inject constructor(
@@ -120,6 +122,28 @@ class AuthRepoImpl @Inject constructor(
                     signOut()
                     emit(DataState.error(responseErrorMessage()))
                 }
+                .onException { emit(DataState.error(R.string.error_something_went_wrong)) }
+                .onNetworkError { emit(DataState.error(R.string.error_no_network_connected)) }
+        }.flowOn(dispatcher)
+    }
+
+    override fun socialLogin(
+        token: String, socialLogin: SocialLogin, dispatcher: CoroutineDispatcher
+    ): Flow<DataState<ResponseLogin>> {
+        return flow<DataState<ResponseLogin>> {
+            val socialLoginReq = mapOf(
+                "access_token" to token,
+                "type" to socialLogin.name.lowercase(),
+                "client" to "android"
+            )
+
+            service.socialLogin(socialLoginReq).onSuccess {
+                data!!.apply {
+                    saveUserAndToken(user)
+                    emit(DataState.data(this))
+                }
+            }
+                .onError { emit(DataState.error(responseErrorMessage())) }
                 .onException { emit(DataState.error(R.string.error_something_went_wrong)) }
                 .onNetworkError { emit(DataState.error(R.string.error_no_network_connected)) }
         }.flowOn(dispatcher)

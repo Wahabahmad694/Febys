@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.android.febys.R
 import com.android.febys.databinding.FragmentSignupBinding
+import com.android.febys.enum.SocialLogin
 import com.android.febys.network.DataState
 import com.android.febys.network.requests.RequestSignup
 import com.android.febys.ui.screens.auth.AuthFragment
@@ -26,6 +28,8 @@ class SignupFragment : AuthFragment() {
     private var phone: String = ""
     private var password: String = ""
     private var confirmPassword: String = ""
+
+    private var isSocialLogin = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -94,11 +98,30 @@ class SignupFragment : AuthFragment() {
         }
 
         binding.btnSignUp.setOnClickListener {
+            isSocialLogin = false
             signup()
         }
 
         binding.tvGotoLogin.setOnClickListener {
             goBack()
+        }
+
+        binding.ivGoogle.setOnClickListener {
+            signInWithGoogle { token ->
+                token?.let {
+                    viewModel.socialLogin(token, SocialLogin.GOOGLE)
+                    isSocialLogin = true
+                }
+            }
+        }
+
+        binding.ivFacebook.setOnClickListener {
+            signInWithFacebook { token ->
+                token?.let {
+                    viewModel.socialLogin(token, SocialLogin.FACEBOOK)
+                    isSocialLogin = true
+                }
+            }
         }
     }
 
@@ -113,7 +136,11 @@ class SignupFragment : AuthFragment() {
                     showToast(msg)
                 }
                 is DataState.Data -> {
-                    navigateToOTPVerification()
+                    if (isSocialLogin) {
+                        findNavController().popBackStack(R.id.loginFragment, true)
+                    } else {
+                        navigateToOTPVerification()
+                    }
                 }
             }
         }
