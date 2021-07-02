@@ -16,6 +16,7 @@ import com.android.febys.network.domain.models.Product
 import com.android.febys.base.SliderFragment
 import com.android.febys.network.DataState
 import com.android.febys.network.response.Banner
+import com.android.febys.ui.screens.dialog.ErrorDialog
 import com.android.febys.utils.*
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
@@ -103,7 +104,7 @@ class HomeFragment : SliderFragment() {
 
                 }
                 is DataState.Error -> {
-                    // todo navigate to error dialog
+                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
                 }
                 is DataState.Data -> {
                     val uniqueCategories = it.data
@@ -119,7 +120,7 @@ class HomeFragment : SliderFragment() {
 
                 }
                 is DataState.Error -> {
-                    // navigate to error dialog
+                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
                 }
                 is DataState.Data -> {
                     val sliderImages = it.data
@@ -142,7 +143,7 @@ class HomeFragment : SliderFragment() {
 
                 }
                 is DataState.Error -> {
-
+                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
                 }
                 is DataState.Data -> {
                     val featuredCategories = it.data
@@ -167,7 +168,7 @@ class HomeFragment : SliderFragment() {
 
                 }
                 is DataState.Error -> {
-                    // todo navigate to error dialog
+                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
                 }
                 is DataState.Data -> {
                     binding.imageSliderHome.show()
@@ -194,7 +195,7 @@ class HomeFragment : SliderFragment() {
 
                 }
                 is DataState.Error -> {
-
+                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
                 }
                 is DataState.Data -> {
                     val storesList = it.data
@@ -232,7 +233,7 @@ class HomeFragment : SliderFragment() {
 
                 }
                 is DataState.Error -> {
-
+                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
                 }
                 is DataState.Data -> {
                     val products = it.data

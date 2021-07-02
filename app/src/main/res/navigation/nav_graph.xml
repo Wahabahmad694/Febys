@@ -5,12 +5,6 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/splashFragment">
 
-    <action
-        android:id="@+id/action_to_error_dialog"
-        app:destination="@id/errorDialog"
-        app:enterAnim="@anim/slide_in_left"
-        app:popExitAnim="@anim/slide_out_right" />
-
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.android.febys.ui.screens.splash.SplashFragment"
@@ -94,16 +88,6 @@
         android:name="com.android.febys.ui.screens.dialog.OtpVerificationDialog"
         android:label="OtpVerificationDialog"
         tools:layout="@layout/dialog_otp_verification">
-        <argument
-            android:name="isCancelable"
-            android:defaultValue="true"
-            app:argType="boolean" />
-    </dialog>
-    <dialog
-        android:id="@+id/errorDialog"
-        android:name="com.android.febys.ui.screens.dialog.ErrorDialog"
-        android:label="ErrorDialog"
-        tools:layout="@layout/dialog_error">
         <argument
             android:name="isCancelable"
             android:defaultValue="true"

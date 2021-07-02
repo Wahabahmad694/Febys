@@ -10,6 +10,8 @@ import com.android.febys.base.BaseFragment
 import com.android.febys.databinding.FragmentResetCredentialBinding
 import com.android.febys.network.DataState
 import com.android.febys.ui.screens.auth.AuthViewModel
+import com.android.febys.ui.screens.dialog.ErrorDialog
+import com.android.febys.ui.screens.dialog.InfoDialog
 import com.android.febys.utils.Validator
 import com.android.febys.utils.goBack
 import com.android.febys.utils.showToast
@@ -56,10 +58,14 @@ class ResetCredentialFragment : BaseFragment() {
 
                 }
                 is DataState.Error -> {
-                    // todo navigate to error dialog
+                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
                 }
                 is DataState.Data -> {
-                    showToast(getString(R.string.toast_email_sent))
+                    InfoDialog(
+                        R.drawable.ic_email,
+                        getString(R.string.label_check_your_email),
+                        getString(R.string.label_email_sent)
+                    )
                 }
             }
         }

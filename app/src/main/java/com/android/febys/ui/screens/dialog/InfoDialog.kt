@@ -1,0 +1,50 @@
+package com.android.febys.ui.screens.dialog
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.annotation.DrawableRes
+import com.android.febys.base.BaseDialog
+import com.android.febys.databinding.DialogInfoBinding
+
+class InfoDialog(
+    @DrawableRes private val infoRes: Int,
+    private val infoTitle: String,
+    private val infoMsg: String
+) : BaseDialog() {
+
+    companion object {
+        const val TAG = "InfoDialog"
+    }
+
+    private lateinit var binding: DialogInfoBinding
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
+        binding = DialogInfoBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        updateUi()
+        uiListener()
+    }
+
+    private fun updateUi() {
+        binding.ivInfo.setImageResource(infoRes)
+        binding.tvInfoTitle.text = infoTitle
+        binding.tvInfoMsg.text = infoMsg
+    }
+
+    private fun uiListener() {
+        binding.ivClose.setOnClickListener {
+            dismiss()
+        }
+    }
+
+    override fun cancelable() = true
+}

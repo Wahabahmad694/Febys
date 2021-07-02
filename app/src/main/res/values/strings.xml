@@ -79,6 +79,13 @@
     <string name="label_your_wish_list_is_empty">Your wish list is empty</string>
     <string name="label_get_inspired">Get Inspired</string>
     <string name="label_empty_wish_list_slogan">But not for long! Tap ♡ to start saving you favorite pieces</string>
+    <string name="label_connection_error">Connection Error</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="okay">Okay</string>
+    <string name="label_retry">Retry</string>
+    <string name="label_try_again">Try Again</string>
+    <string name="label_no_internet">There\'s a problem with your network connection. Please check your connection</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_search">Search</string>
@@ -109,9 +116,7 @@
     <string name="google_web_client" translatable="false">555465482562-pnia6kqavdubphskpde9r1hols5i1qpu.apps.googleusercontent.com</string>
     <string name="facebook_app_id" translatable="false">513496399703774</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb513496399703774</string>
-    <string name="label_connection_error">Connection Error</string>
-    <string name="cancel">Cancel</string>
-    <string name="label_retry">Retry</string>
-    <string name="label_no_internet">There\'s a problem with your network connection. Please check your connection</string>
+    <string name="label_check_your_email">Check Your Email</string>
+    <string name="label_email_sent">We’ve sent an email to the provided address</string>
 
 </resources>

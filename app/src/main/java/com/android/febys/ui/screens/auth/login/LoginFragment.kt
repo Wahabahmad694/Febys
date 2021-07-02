@@ -13,6 +13,7 @@ import com.android.febys.enum.SocialLogin
 import com.android.febys.network.DataState
 import com.android.febys.ui.screens.auth.AuthFragment
 import com.android.febys.ui.screens.auth.AuthViewModel
+import com.android.febys.ui.screens.dialog.ErrorDialog
 import com.android.febys.utils.Validator
 import com.android.febys.utils.clearError
 import com.android.febys.utils.navigateTo
@@ -73,17 +74,13 @@ class LoginFragment : AuthFragment() {
 
         binding.ivGoogle.setOnClickListener {
             signInWithGoogle { token ->
-                token?.let {
-                    viewModel.socialLogin(token, SocialLogin.GOOGLE)
-                }
+                viewModel.socialLogin(token, SocialLogin.GOOGLE)
             }
         }
 
         binding.ivFacebook.setOnClickListener {
             signInWithFacebook { token ->
-                token?.let {
-                    viewModel.socialLogin(token, SocialLogin.FACEBOOK)
-                }
+                viewModel.socialLogin(token, SocialLogin.FACEBOOK)
             }
         }
     }
@@ -96,9 +93,7 @@ class LoginFragment : AuthFragment() {
 
                 }
                 is DataState.Error -> {
-                    // todo navigate to error dialog
-                    val navigateToErrorDialog = LoginFragmentDirections.actionToErrorDialog()
-                    navigateTo(navigateToErrorDialog)
+                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
                 }
                 is DataState.Data -> {
                     findNavController().popBackStack(R.id.loginFragment, true)

@@ -50,7 +50,7 @@ class OtpVerificationDialog : BaseDialog() {
 
                 }
                 is DataState.Error -> {
-                    // todo navigate to error dialog
+                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
                     binding.otpView.text?.clear()
                 }
                 is DataState.Data -> {

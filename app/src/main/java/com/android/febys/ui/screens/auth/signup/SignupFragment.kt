@@ -14,7 +14,11 @@ import com.android.febys.network.DataState
 import com.android.febys.network.requests.RequestSignup
 import com.android.febys.ui.screens.auth.AuthFragment
 import com.android.febys.ui.screens.auth.AuthViewModel
-import com.android.febys.utils.*
+import com.android.febys.ui.screens.dialog.ErrorDialog
+import com.android.febys.utils.Validator
+import com.android.febys.utils.clearError
+import com.android.febys.utils.goBack
+import com.android.febys.utils.navigateTo
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -108,19 +112,15 @@ class SignupFragment : AuthFragment() {
 
         binding.ivGoogle.setOnClickListener {
             signInWithGoogle { token ->
-                token?.let {
-                    viewModel.socialLogin(token, SocialLogin.GOOGLE)
-                    isSocialLogin = true
-                }
+                viewModel.socialLogin(token, SocialLogin.GOOGLE)
+                isSocialLogin = true
             }
         }
 
         binding.ivFacebook.setOnClickListener {
             signInWithFacebook { token ->
-                token?.let {
-                    viewModel.socialLogin(token, SocialLogin.FACEBOOK)
-                    isSocialLogin = true
-                }
+                viewModel.socialLogin(token, SocialLogin.FACEBOOK)
+                isSocialLogin = true
             }
         }
     }
@@ -132,7 +132,7 @@ class SignupFragment : AuthFragment() {
 
                 }
                 is DataState.Error -> {
-                    // todo navigate error dialog
+                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
                 }
                 is DataState.Data -> {
                     if (isSocialLogin) {

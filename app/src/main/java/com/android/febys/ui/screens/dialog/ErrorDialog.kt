@@ -4,14 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.navArgs
+import com.android.febys.R
 import com.android.febys.base.BaseDialog
 import com.android.febys.databinding.DialogErrorBinding
-import com.android.febys.utils.goBack
+import com.android.febys.network.DataState
 
-class ErrorDialog : BaseDialog() {
+class ErrorDialog<T>(
+    private val error: DataState.Error<T>
+) : BaseDialog() {
+
+    companion object {
+        const val TAG = "ErrorDialog"
+    }
+
     private lateinit var binding: DialogErrorBinding
-    private val args: ErrorDialogArgs by navArgs()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -22,14 +29,51 @@ class ErrorDialog : BaseDialog() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnCancel.setOnClickListener {
-            goBack()
+        when (error) {
+            is DataState.ApiError -> {
+                setupApiErrorDialog(error.message)
+            }
+            is DataState.ExceptionError -> {
+                setupExceptionDialog()
+            }
+            is DataState.NetworkError -> {
+                setupNetworkErrorDialog()
+            }
         }
 
-        binding.btnDismiss.setOnClickListener {
-            goBack()
+        uiListener()
+    }
+
+    private fun uiListener() {
+        binding.ivClose.setOnClickListener {
+            dismiss()
+        }
+
+        binding.btnOkay.setOnClickListener {
+            dismiss()
         }
     }
 
-    override fun cancelable() = args.isCancelable
+    private fun setupApiErrorDialog(message: String) {
+        binding.isNetworkError = false
+        binding.ivError.setImageResource(R.drawable.ic_error)
+        binding.tvErrorTitle.text = getString(R.string.label_try_again)
+        binding.tvErrorMsg.text = message
+    }
+
+    private fun setupExceptionDialog() {
+        binding.isNetworkError = false
+        binding.ivError.setImageResource(R.drawable.ic_error)
+        binding.tvErrorTitle.text = getString(R.string.label_try_again)
+        binding.tvErrorMsg.text = getString(R.string.error_something_went_wrong)
+    }
+
+    private fun setupNetworkErrorDialog() {
+        binding.isNetworkError = true
+        binding.ivError.setImageResource(R.drawable.ic_no_internet)
+        binding.tvErrorTitle.text = getString(R.string.label_connection_error)
+        binding.tvErrorMsg.text = getString(R.string.label_no_internet)
+    }
+
+    override fun cancelable() = true
 }

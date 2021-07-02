@@ -14,6 +14,7 @@ import com.android.febys.base.SliderFragment
 import com.android.febys.databinding.FragmentProductDetailBinding
 import com.android.febys.dto.ProductDetail
 import com.android.febys.network.DataState
+import com.android.febys.ui.screens.dialog.ErrorDialog
 import com.android.febys.utils.toggleVisibility
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -78,7 +79,7 @@ class ProductDetailFragment : SliderFragment() {
 
                 }
                 is DataState.Error -> {
-
+                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
                 }
                 is DataState.Data -> {
                     updateUi(it.data)
