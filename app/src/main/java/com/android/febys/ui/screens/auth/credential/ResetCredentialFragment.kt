@@ -65,7 +65,7 @@ class ResetCredentialFragment : BaseFragment() {
                         R.drawable.ic_email,
                         getString(R.string.label_check_your_email),
                         getString(R.string.label_email_sent)
-                    )
+                    ).show(childFragmentManager, InfoDialog.TAG)
                 }
             }
         }
