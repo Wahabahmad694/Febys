@@ -38,7 +38,7 @@ class OtpVerificationDialog : BaseDialog() {
             viewModel.verifyUser(otp)
         }
 
-        binding.btnSkip.setOnClickListener {
+        binding.ivClose.setOnClickListener {
             navigateToHomeScreen()
         }
     }

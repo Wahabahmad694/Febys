@@ -45,16 +45,11 @@ class LoginFragment : AuthFragment() {
         binding.etEmailAddress.addTextChangedListener {
             email = it.toString()
             binding.etEmailAddress.clearError()
-            if (email.isNotEmpty() && !Validator.isValidEmail(email)) {
-                binding.etEmailAddress.error = getString(R.string.error_enter_valid_email)
-            }
-
-            updateLoginButtonVisibility()
         }
 
         binding.etPassword.addTextChangedListener {
             password = it.toString()
-            updateLoginButtonVisibility()
+            binding.etPassword.clearError()
         }
 
         binding.tvGotoSignUp.setOnClickListener {
@@ -63,7 +58,9 @@ class LoginFragment : AuthFragment() {
         }
 
         binding.btnLogin.setOnClickListener {
-            viewModel.login(email, password)
+            if (isAllFieldsAreValid()) {
+                viewModel.login(email, password)
+            }
         }
 
         binding.tvForgotPassword.setOnClickListener {
@@ -102,17 +99,22 @@ class LoginFragment : AuthFragment() {
         }
     }
 
-    private fun updateLoginButtonVisibility() {
-        var enableButton = true
+    private fun isAllFieldsAreValid(): Boolean {
+        var isFieldsValid = true
 
-        if (!Validator.isValidEmail(email)) {
-            enableButton = false
+        if (email.isEmpty()) {
+            binding.etEmailAddress.error = getString(R.string.error_enter_email)
+            isFieldsValid = false
+        } else if (!Validator.isValidEmail(email)) {
+            binding.etEmailAddress.error = getString(R.string.error_enter_valid_email)
+            isFieldsValid = false
         }
 
         if (!Validator.isValidPassword(password)) {
-            enableButton = false
+            binding.etPassword.error = getString(R.string.error_enter_password)
+            isFieldsValid = false
         }
 
-        binding.btnLogin.isEnabled = enableButton
+        return isFieldsValid
     }
 }

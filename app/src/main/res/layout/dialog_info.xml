@@ -19,9 +19,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_close"
-            style="@style/ButtonTheme.Text"
-            android:layout_width="@dimen/_32dp"
-            android:layout_height="@dimen/_32dp"
+            android:layout_width="@dimen/_24dp"
+            android:layout_height="@dimen/_24dp"
             android:layout_marginTop="@dimen/_16dp"
             android:layout_marginEnd="@dimen/_16dp"
             android:src="@drawable/ic_close"

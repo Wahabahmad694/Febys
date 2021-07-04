@@ -20,10 +20,9 @@
             android:id="@+id/iv_close"
             android:layout_width="@dimen/_16dp"
             android:layout_height="@dimen/_16dp"
-            android:layout_marginTop="@dimen/_8dp"
+            android:layout_marginTop="@dimen/_16dp"
             android:layout_marginEnd="@dimen/_16dp"
             android:src="@drawable/ic_close"
-            android:scaleType="fitCenter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -84,6 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_16dp"
             android:layout_marginBottom="@dimen/_16dp"
+            android:minWidth="@dimen/_96sdp"
             android:text="@string/label_add_to_cart"
             android:textAppearance="@style/TextTheme.HelveticaNeue.TS14"
             app:layout_constraintBottom_toBottomOf="parent"

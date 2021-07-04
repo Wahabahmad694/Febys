@@ -46,13 +46,13 @@
     <string name="label_verification">Verification</string>
     <string name="label_otp_verification_slogan">We will send you a One Time OTP Code on your phone number</string>
     <string name="label_resend_otp">Didn\'t receive the verification OTP?</string>
-    <string name="label_resend">Resend</string>
+    <string name="label_resend">Resend again</string>
     <string name="label_skip_now">Skip Now</string>
     <string name="label_login">Log In</string>
-    <string name="label_already_have_an_account">Already have an account?</string>
+    <string name="label_already_have_an_account">Already have an E account?</string>
     <string name="label_login_slogan">Welcome back. Log in to continue.</string>
     <string name="label_forgot_password">Forgot Password?</string>
-    <string name="label_not_have_an_account">Don\'t have an account?</string>
+    <string name="label_not_have_an_account">Don\'t have an E account?</string>
     <string name="label_send_reset_password_link">Send Reset Password Link</string>
     <string name="label_forgot_credential_slogan">Please enter your email address to request a password reset.</string>
     <string name="label_forgot_credential">Forgot Password</string>

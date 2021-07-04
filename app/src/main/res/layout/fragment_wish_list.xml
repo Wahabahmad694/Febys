@@ -34,7 +34,7 @@
             style="@style/TextTheme.HelveticaNeue.TS32"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_16dp"
+            android:layout_marginStart="@dimen/_8dp"
             android:layout_marginTop="@dimen/_16dp"
             android:text="@{@string/wish_list_count(wishListCount)}"
             android:visibility="@{wishListCount > 0 ? View.VISIBLE : View.GONE, default = gone}"
