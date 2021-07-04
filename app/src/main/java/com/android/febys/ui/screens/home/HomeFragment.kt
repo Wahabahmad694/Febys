@@ -11,10 +11,10 @@ import androidx.lifecycle.LiveData
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.android.febys.R
-import com.android.febys.databinding.FragmentHomeBinding
-import com.android.febys.network.domain.models.Product
 import com.android.febys.base.SliderFragment
+import com.android.febys.databinding.FragmentHomeBinding
 import com.android.febys.network.DataState
+import com.android.febys.network.domain.models.Product
 import com.android.febys.network.response.Banner
 import com.android.febys.ui.screens.dialog.ErrorDialog
 import com.android.febys.utils.*
@@ -33,6 +33,21 @@ class HomeFragment : SliderFragment() {
     private val storeYouFollowAdapter = HomeStoresAdapter()
     private val under100DollarsItemAdapter = HomeProductsAdapter()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+
+        viewModel.fetchUniqueCategory()
+        viewModel.fetchAllBanner()
+        viewModel.fetchTodayDeals()
+        viewModel.fetchFeaturedCategories()
+        viewModel.fetchFeaturedCategoryProducts()
+        viewModel.fetchAllSeasonalOffers()
+        viewModel.fetchTrendingProducts()
+        viewModel.fetchStoresYouFollow()
+        viewModel.fetchUnder100DollarsItems()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -45,16 +60,6 @@ class HomeFragment : SliderFragment() {
 
         initUi()
         setupObserver()
-
-        viewModel.fetchUniqueCategory()
-        viewModel.fetchAllBanner()
-        viewModel.fetchTodayDeals()
-        viewModel.fetchFeaturedCategories()
-        viewModel.fetchFeaturedCategoryProducts()
-        viewModel.fetchAllSeasonalOffers()
-        viewModel.fetchTrendingProducts()
-        viewModel.fetchStoresYouFollow()
-        viewModel.fetchUnder100DollarsItems()
     }
 
     private fun initUi() {
@@ -123,7 +128,7 @@ class HomeFragment : SliderFragment() {
                     ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
                 }
                 is DataState.Data -> {
-                    val sliderImages = it.data
+                    val sliderImages = it.data.filter { banner -> banner.type == "headerImages" }
                     binding.imageSliderHome.adapter = HomeSliderPageAdapter(sliderImages, this)
                     binding.dotsIndicator.setViewPager2(binding.imageSliderHome)
                 }
