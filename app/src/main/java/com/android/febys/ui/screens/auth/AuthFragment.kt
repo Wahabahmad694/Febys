@@ -7,8 +7,6 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.android.febys.R
 import com.android.febys.base.BaseFragment
-import com.android.febys.network.DataState
-import com.android.febys.ui.screens.dialog.ErrorDialog
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -38,19 +36,22 @@ abstract class AuthFragment : BaseFragment() {
                     val account = task.getResult(ApiException::class.java)!!
                     googleSignInCallback?.invoke(account.idToken!!)
                     googleClient.signOut()
-                } catch (e: ApiException) {}
+                } catch (e: ApiException) {
+                }
             }
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        googleClient = GoogleSignIn.getClient(requireContext(), getGoogleSignInOptions())
+    }
+
+    private fun getGoogleSignInOptions(): GoogleSignInOptions {
+        return GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.google_web_client))
             .requestEmail()
             .build()
-
-        googleClient = GoogleSignIn.getClient(requireContext(), gso)
     }
 
     fun signInWithGoogle(callback: (idToken: String) -> Unit) {
