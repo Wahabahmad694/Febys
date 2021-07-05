@@ -1,4 +1,4 @@
-package com.android.febys.dto
+package com.android.febys.network.response
 
 import com.google.gson.annotations.SerializedName
 

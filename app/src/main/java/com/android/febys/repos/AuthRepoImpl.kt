@@ -2,7 +2,7 @@ package com.android.febys.repos
 
 import com.android.febys.BuildConfig
 import com.android.febys.dataSource.IUserDataSource
-import com.android.febys.dto.User
+import com.android.febys.network.response.User
 import com.android.febys.enum.SocialLogin
 import com.android.febys.network.AuthService
 import com.android.febys.network.DataState

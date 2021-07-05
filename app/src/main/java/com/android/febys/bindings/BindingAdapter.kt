@@ -1,7 +1,11 @@
 package com.android.febys.bindings
 
 import android.graphics.Paint
+import android.os.Build
+import android.text.Html
+import android.util.Base64
 import android.view.View
+import android.webkit.WebView
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
@@ -31,5 +35,24 @@ object BindingAdapter {
     @BindingAdapter("binding:is_visible")
     fun isVisible(view: View, isVisible: Boolean) {
         view.isVisible = isVisible
+    }
+
+    @JvmStatic
+    @BindingAdapter("binding:load_html")
+    fun loadHtml(webView: WebView, html: String) {
+        val encodedHtml = Base64.encodeToString(html.toByteArray(), Base64.NO_PADDING)
+        webView.loadData(encodedHtml, "text/html", "base64")
+    }
+
+    @JvmStatic
+    @BindingAdapter("binding:display_html")
+    fun displayHtml(textView: TextView, html: String?) {
+        if (html == null) return
+
+        textView.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Html.fromHtml(html, Html.FROM_HTML_MODE_COMPACT)
+        } else {
+            Html.fromHtml(html)
+        }
     }
 }

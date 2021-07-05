@@ -221,7 +221,7 @@ class HomeFragment : SliderFragment() {
     private fun makeChip(id: Int, text: String): Chip {
         val chip =
             layoutInflater.inflate(
-                R.layout.item_featured_category, binding.chipGroupFeaturedCategories, false
+                R.layout.layout_featured_category_chip, binding.chipGroupFeaturedCategories, false
             ) as Chip
 
         chip.id = id

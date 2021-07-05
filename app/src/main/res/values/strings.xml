@@ -66,10 +66,12 @@
     <string name="store_rating">(%1.1f) Ratings</string>
     <string name="label_product_availability">Product Availability</string>
     <string name="label_in_stock">In Stock</string>
+    <string name="label_out_stock">Out of Stock</string>
     <string name="label_product_will_be_fulfilled_by">Product Will Be Fulfilled By</string>
     <string name="label_vendor">Vendor</string>
     <string name="label_product_warranty">Product Warranty</string>
     <string name="label_yes">Yes</string>
+    <string name="label_no">No</string>
     <string name="label_duration">Duration</string>
     <string name="dummy_12_month_s">12 Month’s</string>
     <string name="label_product_return_and_refundable">Product Return &amp; Refundable</string>

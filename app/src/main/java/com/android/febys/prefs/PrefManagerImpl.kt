@@ -3,7 +3,7 @@ package com.android.febys.prefs
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import com.android.febys.dto.User
+import com.android.febys.network.response.User
 import com.google.gson.Gson
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
