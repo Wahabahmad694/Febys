@@ -4,12 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.android.febys.base.BaseViewModel
-import com.android.febys.network.domain.models.*
-import com.android.febys.network.response.Category
 import com.android.febys.network.DataState
-import com.android.febys.network.response.Banner
-import com.android.febys.network.response.SeasonalOffer
-import com.android.febys.network.response.UniqueCategory
+import com.android.febys.network.response.*
 import com.android.febys.repos.IHomeRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
@@ -35,10 +31,6 @@ class HomeViewModel @Inject constructor(
 
     private val _observeSeasonalOffers = MutableLiveData<DataState<List<SeasonalOffer>>>()
     val observeSeasonalOffers: LiveData<DataState<List<SeasonalOffer>>> = _observeSeasonalOffers
-
-    private val _observeFeaturedCategoryProducts = MutableLiveData<DataState<List<Product>>>()
-    val observeFeaturedCategoryProducts: LiveData<DataState<List<Product>>> =
-        _observeFeaturedCategoryProducts
 
     private val _observeTrendingProducts = MutableLiveData<DataState<List<Product>>>()
     val observeTrendingProducts: LiveData<DataState<List<Product>>> = _observeTrendingProducts
@@ -92,15 +84,6 @@ class HomeViewModel @Inject constructor(
             _observeSeasonalOffers.postValue(DataState.Loading())
             repo.fetchAllSeasonalOffers().collect {
                 _observeSeasonalOffers.postValue(it)
-            }
-        }
-    }
-
-    fun fetchFeaturedCategoryProducts() {
-        viewModelScope.launch {
-            _observeFeaturedCategoryProducts.postValue(DataState.Loading())
-            repo.fetchFeaturedCategoryProducts().collect {
-                _observeFeaturedCategoryProducts.postValue(it)
             }
         }
     }

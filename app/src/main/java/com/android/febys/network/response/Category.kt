@@ -11,6 +11,7 @@ data class Category(
     val logo: String,
     val enable: Int,
     val featured: Int,
+    val products: List<Product>,
     @SerializedName("created_at")
     val createdAt: String,
     @SerializedName("updated_at")
@@ -20,5 +21,16 @@ data class Category(
     @SerializedName("child_name")
     val childNames: String,
     @SerializedName("total_child")
-    val totalChild: Int
-)
+    val totalChild: Int,
+    val children: List<Category>
+) {
+    val isEnable
+        get() = enable == 1
+
+
+    val isFeatured
+        get() = featured == 1
+
+    val hasChild
+        get() = totalChild > 0
+}

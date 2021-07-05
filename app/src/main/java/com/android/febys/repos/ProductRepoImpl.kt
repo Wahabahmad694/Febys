@@ -4,7 +4,7 @@ import com.android.febys.R
 import com.android.febys.dto.ProductDetail
 import com.android.febys.network.DataState
 import com.android.febys.network.FebysBackendService
-import com.android.febys.network.domain.models.Product
+import com.android.febys.network.response.Product
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -46,52 +46,6 @@ class ProductRepoImpl @Inject constructor(service: FebysBackendService) : IProdu
 
     // this is dummy list
     private fun getProductList(): List<Product> {
-        return listOf(
-            Product(
-                1,
-                "res:///${R.drawable.ic_shoes}",
-                "Service Running Shoe",
-                "This is short description",
-                15.12,
-                14.18,
-                false
-            ),
-            Product(
-                2,
-                "res:///${R.drawable.ic_bag}",
-                "Bags",
-                "This is short description",
-                15.12,
-                14.18,
-                false
-            ),
-            Product(
-                3,
-                "res:///${R.drawable.ic_shoes}",
-                "Service Running Shoe",
-                "This is short description",
-                15.12,
-                14.18,
-                false
-            ),
-            Product(
-                4,
-                "res:///${R.drawable.ic_bag}",
-                "Bags",
-                "This is short description",
-                15.12,
-                14.18,
-                false
-            ),
-            Product(
-                5,
-                "res:///${R.drawable.ic_bag}",
-                "Bags",
-                "This is short description",
-                15.12,
-                14.18,
-                false
-            )
-        )
+        return listOf()
     }
 }

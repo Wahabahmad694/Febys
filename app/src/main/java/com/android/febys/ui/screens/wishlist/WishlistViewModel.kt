@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.android.febys.base.BaseViewModel
 import com.android.febys.network.DataState
-import com.android.febys.network.domain.models.Product
+import com.android.febys.network.response.Product
 import com.android.febys.repos.IProductRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect

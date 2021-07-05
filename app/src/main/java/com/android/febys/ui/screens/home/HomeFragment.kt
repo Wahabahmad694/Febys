@@ -9,15 +9,16 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import androidx.viewpager2.widget.ViewPager2
 import com.android.febys.R
 import com.android.febys.base.SliderFragment
 import com.android.febys.databinding.FragmentHomeBinding
 import com.android.febys.network.DataState
-import com.android.febys.network.domain.models.Product
 import com.android.febys.network.response.Banner
+import com.android.febys.network.response.Product
+import com.android.febys.network.response.SeasonalOffer
 import com.android.febys.ui.screens.dialog.ErrorDialog
-import com.android.febys.utils.*
+import com.android.febys.utils.applySpaceItemDecoration
+import com.android.febys.utils.getHorizontalScrollPosition
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -41,7 +42,6 @@ class HomeFragment : SliderFragment() {
         viewModel.fetchAllBanner()
         viewModel.fetchTodayDeals()
         viewModel.fetchFeaturedCategories()
-        viewModel.fetchFeaturedCategoryProducts()
         viewModel.fetchAllSeasonalOffers()
         viewModel.fetchTrendingProducts()
         viewModel.fetchStoresYouFollow()
@@ -156,15 +156,20 @@ class HomeFragment : SliderFragment() {
                         val chip = makeChip(category.id, category.name)
                         binding.chipGroupFeaturedCategories.addView(chip)
                     }
+
+                    binding.chipGroupFeaturedCategories.setOnCheckedChangeListener { _, chipId ->
+                        val products =
+                            featuredCategories.find { category -> category.id == chipId }?.products
+                        featuredCategoryProductsAdapter.submitList(products ?: emptyList())
+                    }
+
+                    // set auto select 1
+                    featuredCategories.firstOrNull()?.let { category ->
+                        binding.chipGroupFeaturedCategories.check(category.id)
+                    }
                 }
             }
         }
-
-        // featured category products
-        observeAndSubmitProductList(
-            featuredCategoryProductsAdapter,
-            viewModel.observeFeaturedCategoryProducts
-        )
 
         // seasonal offers
         viewModel.observeSeasonalOffers.observe(viewLifecycleOwner) {
@@ -176,13 +181,9 @@ class HomeFragment : SliderFragment() {
                     ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
                 }
                 is DataState.Data -> {
-                    binding.imageSliderHome.show()
-                    if (it.data.isNullOrEmpty()) return@observe
-                    val seasonalOffer = it.data[0]
-                    binding.tvSeasonalOffers.text = seasonalOffer.name
-                    val offer = seasonalOffer.offers[0]
-                    val image = offer.images[0]
-                    binding.ivBgSeasonalOffers.setImageURI(image)
+                    binding.sliderSeasonalOffer.adapter =
+                        HomeSeasonalOfferSliderPageAdapter(it.data, this)
+                    binding.sliderSeasonalOfferDotsIndicator.setViewPager2(binding.sliderSeasonalOffer)
                 }
             }
         }
@@ -248,7 +249,8 @@ class HomeFragment : SliderFragment() {
         }
     }
 
-    override fun getSlider(): ViewPager2 = binding.imageSliderHome
+    override fun getSlider() =
+        listOf(binding.imageSliderHome, binding.sliderSeasonalOffer)
 
     override fun getRotateInterval(): Long = 5000L
 
@@ -259,5 +261,14 @@ class HomeFragment : SliderFragment() {
 
         override fun createFragment(position: Int): Fragment =
             HomeSliderPageFragment.newInstance(banners[position])
+    }
+
+    private inner class HomeSeasonalOfferSliderPageAdapter(
+        val offers: List<SeasonalOffer>, fa: Fragment
+    ) : FragmentStateAdapter(fa) {
+        override fun getItemCount(): Int = offers.size
+
+        override fun createFragment(position: Int): Fragment =
+            HomeSeasonalOfferSliderPageFragment.newInstance(offers[position])
     }
 }

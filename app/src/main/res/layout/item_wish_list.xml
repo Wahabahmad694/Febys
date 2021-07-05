@@ -8,7 +8,7 @@
 
         <variable
             name="product"
-            type="com.android.febys.network.domain.models.Product" />
+            type="com.android.febys.network.response.Product" />
 
     </data>
 
@@ -37,7 +37,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_close"
-            binding:image_url="@{product.imgUrl}" />
+            binding:image_url="@{product.product_variants.get(0).images.get(0)}" />
 
         <TextView
             android:id="@+id/tv_product_name"
@@ -45,7 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_24dp"
-            android:text="@{product.productName}"
+            android:text="@{product.name}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_product"
@@ -71,7 +71,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="2"
-            android:text="@{`$` + product.productPrice}"
+            android:text="@{`$` + product.product_variants.get(0).price}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_product_short_description"

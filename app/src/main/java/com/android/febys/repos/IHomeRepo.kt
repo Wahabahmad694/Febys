@@ -1,7 +1,7 @@
 package com.android.febys.repos
 
 import com.android.febys.network.DataState
-import com.android.febys.network.domain.models.Product
+import com.android.febys.network.response.Product
 import com.android.febys.network.response.Banner
 import com.android.febys.network.response.UniqueCategory
 import com.android.febys.network.response.Category
@@ -18,8 +18,6 @@ interface IHomeRepo {
     fun fetchTodayDeals(dispatcher: CoroutineDispatcher = Dispatchers.IO): Flow<DataState<List<Product>>>
 
     fun fetchFeaturedCategories(dispatcher: CoroutineDispatcher = Dispatchers.IO): Flow<DataState<List<Category>>>
-
-    fun fetchFeaturedCategoryProducts(dispatcher: CoroutineDispatcher = Dispatchers.IO): Flow<DataState<List<Product>>>
 
     fun fetchAllSeasonalOffers(dispatcher: CoroutineDispatcher = Dispatchers.IO): Flow<DataState<List<SeasonalOffer>>>
 
