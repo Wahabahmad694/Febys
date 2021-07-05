@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="@dimen/_64dp"
-            app:actualImageScaleType="fitCenter"
+            app:actualImageScaleType="none"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             binding:image_url="@{imageUrl}" />

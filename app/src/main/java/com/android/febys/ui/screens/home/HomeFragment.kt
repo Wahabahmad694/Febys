@@ -163,6 +163,7 @@ class HomeFragment : SliderFragment() {
                         featuredCategoryProductsAdapter.submitList(products ?: emptyList())
                     }
 
+                    binding.chipGroupFeaturedCategories.isSingleSelection = true
                     // set auto select 1
                     featuredCategories.firstOrNull()?.let { category ->
                         binding.chipGroupFeaturedCategories.check(category.id)

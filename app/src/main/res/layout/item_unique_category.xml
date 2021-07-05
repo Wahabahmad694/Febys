@@ -18,9 +18,9 @@
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_item_unique_category"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            app:actualImageScaleType="centerCrop"
+            android:layout_width="@dimen/_64dp"
+            android:layout_height="@dimen/_64dp"
+            app:actualImageScaleType="none"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -29,10 +29,12 @@
 
         <TextView
             android:id="@+id/tv_product_name_unique_category"
-            style="@style/TextTheme.HelveticaNeue.TS14"
+            style="@style/TextTheme.HelveticaNeue.TS12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8dp"
+            android:ellipsize="end"
+            android:maxLines="2"
             android:text="@{item.name}"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="@id/iv_item_unique_category"

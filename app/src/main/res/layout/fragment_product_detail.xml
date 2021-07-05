@@ -947,7 +947,7 @@
                                 android:layout_width="56dp"
                                 android:layout_height="56dp"
                                 app:actualImageResource="@drawable/ic_store"
-                                app:actualImageScaleType="centerCrop"
+                                app:actualImageScaleType="none"
                                 app:roundAsCircle="true" />
 
                             <LinearLayout

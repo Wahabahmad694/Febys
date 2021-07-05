@@ -25,8 +25,7 @@
             android:layout_width="@dimen/_176sdp"
             android:layout_height="@dimen/_176sdp"
             android:background="@drawable/bg_grey"
-            android:padding="@dimen/_32dp"
-            app:actualImageScaleType="fitCenter"
+            app:actualImageScaleType="none"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -61,11 +60,12 @@
             style="@style/TextTheme.Arial.TS10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{`` + product.product_variants.get(0).promotionPrice}"
+            android:text="@{`$` + product.product_variants.get(0).promotionPrice}"
             app:layout_constraintBaseline_toBaselineOf="@id/tv_product_price"
             app:layout_constraintEnd_toStartOf="@id/tv_product_off_price_separator"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="@id/tv_product_name"
+            binding:is_visible="@{product.product_variants.get(0).hasPromotion}"
             binding:strike_through="@{true}"
             tools:text="$14" />
 
@@ -78,15 +78,16 @@
             android:text="@string/minus"
             app:layout_constraintBaseline_toBaselineOf="@id/tv_product_price"
             app:layout_constraintEnd_toStartOf="@id/tv_product_price"
-            app:layout_constraintStart_toEndOf="@id/tv_product_off_price" />
+            app:layout_constraintStart_toEndOf="@id/tv_product_off_price"
+            binding:is_visible="@{product.product_variants.get(0).hasPromotion}" />
 
         <TextView
             android:id="@+id/tv_product_price"
             style="@style/TextTheme.Arial.TS12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8dp"
-            android:text="@{`` + product.product_variants.get(0).price}"
+            android:layout_marginTop="@dimen/_2dp"
+            android:text="@{`$` + product.product_variants.get(0).price}"
             app:layout_constraintEnd_toEndOf="@id/tv_product_name"
             app:layout_constraintStart_toEndOf="@id/tv_product_off_price_separator"
             app:layout_constraintTop_toBottomOf="@id/tv_product_name"
