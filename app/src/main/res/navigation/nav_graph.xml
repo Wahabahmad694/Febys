@@ -45,17 +45,6 @@
             android:id="@+id/action_signupFragment_to_otpVerificationDialog"
             app:destination="@id/otpVerificationDialog" />
     </fragment>
-
-    <dialog
-        android:id="@+id/otpVerificationDialog"
-        android:name="com.android.febys.ui.screens.dialog.OtpVerificationDialog"
-        android:label="OtpVerificationDialog"
-        tools:layout="@layout/dialog_otp_verification">
-        <argument
-            android:name="isCancelable"
-            android:defaultValue="true"
-            app:argType="boolean" />
-    </dialog>
     <fragment
         android:id="@+id/resetCredentialFragment"
         android:name="com.android.febys.ui.screens.auth.credential.ResetCredentialFragment"
@@ -88,6 +77,20 @@
         tools:layout="@layout/fragment_account">
         <action
             android:id="@+id/action_accountFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
+
+    <dialog
+        android:id="@+id/otpVerificationDialog"
+        android:name="com.android.febys.ui.screens.dialog.OtpVerificationDialog"
+        android:label="OtpVerificationDialog"
+        tools:layout="@layout/dialog_otp_verification">
+        <argument
+            android:name="isCancelable"
+            android:defaultValue="true"
+            app:argType="boolean" />
+    </dialog>
 </navigation>

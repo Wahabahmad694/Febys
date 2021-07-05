@@ -10,8 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.android.febys.network.DataState
-import com.android.febys.network.ErrorMessage
 
 fun View.show() {
     visibility = View.VISIBLE
@@ -45,28 +43,6 @@ fun Activity.showToast(msg: String, length: Int = Toast.LENGTH_SHORT) {
 
 fun Fragment.showToast(msg: String, length: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(context, msg, length).show()
-}
-
-fun <T> Activity.getErrorMessage(e: DataState.Error<T>): String {
-    return when (e.errorMessage) {
-        is ErrorMessage.ErrorRes -> {
-            getString(e.errorMessage.resId)
-        }
-        is ErrorMessage.ErrorString -> {
-            e.errorMessage.message
-        }
-    }
-}
-
-fun <T> Fragment.getErrorMessage(e: DataState.Error<T>): String {
-    return when (e.errorMessage) {
-        is ErrorMessage.ErrorRes -> {
-            getString(e.errorMessage.resId)
-        }
-        is ErrorMessage.ErrorString -> {
-            e.errorMessage.message
-        }
-    }
 }
 
 fun Fragment.navigateTo(directions: NavDirections) = findNavController().navigate(directions)

@@ -8,7 +8,7 @@ import androidx.fragment.app.viewModels
 import com.android.febys.databinding.FragmentSearchBinding
 import com.android.febys.base.BaseFragment
 import com.android.febys.network.DataState
-import com.android.febys.utils.getErrorMessage
+import com.android.febys.ui.screens.dialog.ErrorDialog
 import com.android.febys.utils.showToast
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,8 +39,7 @@ class SearchFragment : BaseFragment() {
 
                 }
                 is DataState.Error -> {
-                    val error = getErrorMessage(it)
-                    showToast(error)
+                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
                 }
                 is DataState.Data -> {
                     updateTabs(it.data)

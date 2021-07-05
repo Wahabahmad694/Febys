@@ -1,5 +1,6 @@
 package com.android.febys.repos
 
+import com.android.febys.enum.SocialLogin
 import com.android.febys.network.DataState
 import com.android.febys.network.requests.RequestSignup
 import com.android.febys.network.response.ResponseLogin
@@ -29,6 +30,10 @@ interface IAuthRepo {
     ): Flow<DataState<Unit>>
 
     fun refreshToken(dispatcher: CoroutineDispatcher = Dispatchers.IO): Flow<DataState<ResponseRefreshToken>>
+
+    fun socialLogin(
+        token: String, socialLogin: SocialLogin, dispatcher: CoroutineDispatcher = Dispatchers.IO
+    ): Flow<DataState<ResponseLogin>>
 
     fun signOut()
 }

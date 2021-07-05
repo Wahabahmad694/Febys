@@ -2,7 +2,6 @@ package com.android.febys.ui.screens.wishlist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.febys.base.BaseViewModel
 import com.android.febys.network.DataState
@@ -21,7 +20,7 @@ class WishlistViewModel @Inject constructor(
     val observeWishlist: LiveData<DataState<List<Product>>> = _observeWishlist
 
     fun fetchWishList() = viewModelScope.launch {
-        _observeWishlist.postValue(DataState.loading())
+        _observeWishlist.postValue(DataState.Loading())
         repo.fetchWishList().collect {
             _observeWishlist.postValue(it)
         }

@@ -6,17 +6,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.android.febys.R
 import com.android.febys.databinding.FragmentSignupBinding
+import com.android.febys.enum.SocialLogin
 import com.android.febys.network.DataState
 import com.android.febys.network.requests.RequestSignup
-import com.android.febys.ui.screens.auth.AuthFragment
 import com.android.febys.ui.screens.auth.AuthViewModel
-import com.android.febys.utils.*
+import com.android.febys.ui.screens.auth.SocialMediaAuthFragment
+import com.android.febys.ui.screens.dialog.ErrorDialog
+import com.android.febys.utils.Validator
+import com.android.febys.utils.clearError
+import com.android.febys.utils.goBack
+import com.android.febys.utils.navigateTo
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SignupFragment : AuthFragment() {
+class SignupFragment : SocialMediaAuthFragment() {
     private lateinit var binding: FragmentSignupBinding
     private val viewModel: AuthViewModel by viewModels()
 
@@ -26,6 +32,8 @@ class SignupFragment : AuthFragment() {
     private var phone: String = ""
     private var password: String = ""
     private var confirmPassword: String = ""
+
+    private var isSocialLogin = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -42,63 +50,67 @@ class SignupFragment : AuthFragment() {
     }
 
     private fun uiListeners() {
-        binding.etFirstName.addTextChangedListener {
-            firstName = it.toString()
-            updateSignupButtonVisibility()
-        }
-
-        binding.etLastName.addTextChangedListener {
-            lastName = it.toString()
-            updateSignupButtonVisibility()
-        }
-
-        binding.etEmailAddress.addTextChangedListener {
-            email = it.toString()
-            binding.etEmailAddress.clearError()
-            if (email.isNotEmpty() && !Validator.isValidEmail(email)) {
-                binding.etEmailAddress.error = getString(R.string.error_enter_valid_email)
-            }
-
-            updateSignupButtonVisibility()
-        }
-
-        binding.etPhone.addTextChangedListener {
-            phone = it.toString()
-            binding.etPhone.clearError()
-            if (phone.isNotEmpty() && !Validator.isValidPhone(phone)) {
-                binding.etPhone.error = getString(R.string.error_enter_valid_phone)
-            }
-
-            updateSignupButtonVisibility()
-        }
-
-        binding.etPassword.addTextChangedListener {
-            password = it.toString()
-            updateSignupButtonVisibility()
-        }
-
-        binding.etConfirmPassword.addTextChangedListener {
-            confirmPassword = it.toString()
-            binding.etConfirmPassword.clearError()
-            if (confirmPassword != password) {
-                binding.etConfirmPassword.error =
-                    getString(R.string.error_confirm_password_not_match)
-            }
-
-            updateSignupButtonVisibility()
-        }
-
+        addTextChangeListenerOnFields()
 
         binding.ivBack.setOnClickListener {
             goBack()
         }
 
         binding.btnSignUp.setOnClickListener {
-            signup()
+            isSocialLogin = false
+            if (areAllFieldsValid()) {
+                signup()
+            }
         }
 
         binding.tvGotoLogin.setOnClickListener {
             goBack()
+        }
+
+        binding.ivGoogle.setOnClickListener {
+            signInWithGoogle { token ->
+                viewModel.socialLogin(token, SocialLogin.GOOGLE)
+                isSocialLogin = true
+            }
+        }
+
+        binding.ivFacebook.setOnClickListener {
+            signInWithFacebook { token ->
+                viewModel.socialLogin(token, SocialLogin.FACEBOOK)
+                isSocialLogin = true
+            }
+        }
+    }
+
+    private fun addTextChangeListenerOnFields() {
+        binding.etFirstName.addTextChangedListener {
+            firstName = it.toString()
+            binding.etFirstName.clearError()
+        }
+
+        binding.etLastName.addTextChangedListener {
+            lastName = it.toString()
+            binding.etLastName.clearError()
+        }
+
+        binding.etEmailAddress.addTextChangedListener {
+            email = it.toString()
+            binding.etEmailAddress.clearError()
+        }
+
+        binding.etPhone.addTextChangedListener {
+            phone = it.toString()
+            binding.etPhone.clearError()
+        }
+
+        binding.etPassword.addTextChangedListener {
+            password = it.toString()
+            binding.etPassword.clearError()
+        }
+
+        binding.etConfirmPassword.addTextChangedListener {
+            confirmPassword = it.toString()
+            binding.etConfirmPassword.clearError()
         }
     }
 
@@ -109,52 +121,78 @@ class SignupFragment : AuthFragment() {
 
                 }
                 is DataState.Error -> {
-                    val msg = getErrorMessage(it)
-                    showToast(msg)
+                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
                 }
                 is DataState.Data -> {
-                    navigateToOTPVerification()
+                    gotoNextScreen()
                 }
             }
         }
     }
 
+    private fun gotoNextScreen() {
+        if (isSocialLogin) {
+            findNavController().popBackStack(R.id.loginFragment, true)
+        } else {
+            navigateToOTPVerification()
+        }
+    }
+
     private fun signup() {
-        val requestSignup = RequestSignup(
-            firstName, lastName, email, phone, password
-        )
+        val requestSignup = createSignupRequest()
 
         viewModel.signup(requestSignup)
     }
 
-    private fun updateSignupButtonVisibility() {
-        var enableButton = true
+    private fun createSignupRequest(): RequestSignup {
+        return RequestSignup(
+            firstName, lastName, email, phone, password
+        )
+    }
+
+    private fun areAllFieldsValid(): Boolean {
+        var areAllFieldsValid = true
 
         if (!Validator.isValidName(firstName)) {
-            enableButton = false
+            binding.etFirstName.error = getString(R.string.error_enter_first_name)
+            areAllFieldsValid = false
         }
 
         if (!Validator.isValidName(lastName)) {
-            enableButton = false
+            binding.etLastName.error = getString(R.string.error_enter_last_name)
+            areAllFieldsValid = false
         }
 
-        if (!Validator.isValidEmail(email)) {
-            enableButton = false
+        if (email.isEmpty()) {
+            binding.etEmailAddress.error = getString(R.string.error_enter_email)
+            areAllFieldsValid = false
+        } else if (!Validator.isValidEmail(email)) {
+            binding.etEmailAddress.error = getString(R.string.error_enter_valid_email)
+            areAllFieldsValid = false
         }
 
-        if (!Validator.isValidPhone(phone)) {
-            enableButton = false
+        if (phone.isEmpty()) {
+            binding.etPhone.error = getString(R.string.error_enter_phone)
+            areAllFieldsValid = false
+        } else if (!Validator.isValidPhone(phone)) {
+            binding.etPhone.error = getString(R.string.error_enter_valid_phone)
+            areAllFieldsValid = false
         }
 
         if (!Validator.isValidPassword(password)) {
-            enableButton = false
+            binding.etPassword.error = getString(R.string.error_enter_password)
+            areAllFieldsValid = false
         }
 
-        if (confirmPassword.isEmpty() || confirmPassword != password) {
-            enableButton = false
+        if (confirmPassword.isEmpty()) {
+            binding.etConfirmPassword.error = getString(R.string.error_enter_confirm_password)
+            areAllFieldsValid = false
+        } else if (confirmPassword != password) {
+            binding.etConfirmPassword.error = getString(R.string.error_confirm_password_not_match)
+            areAllFieldsValid = false
         }
 
-        binding.btnSignUp.isEnabled = enableButton
+        return areAllFieldsValid
     }
 
     private fun navigateToOTPVerification() {

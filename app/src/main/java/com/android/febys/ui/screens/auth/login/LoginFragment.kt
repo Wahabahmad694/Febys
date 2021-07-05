@@ -9,14 +9,18 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.android.febys.R
 import com.android.febys.databinding.FragmentLoginBinding
+import com.android.febys.enum.SocialLogin
 import com.android.febys.network.DataState
-import com.android.febys.ui.screens.auth.AuthFragment
+import com.android.febys.ui.screens.auth.SocialMediaAuthFragment
 import com.android.febys.ui.screens.auth.AuthViewModel
-import com.android.febys.utils.*
+import com.android.febys.ui.screens.dialog.ErrorDialog
+import com.android.febys.utils.Validator
+import com.android.febys.utils.clearError
+import com.android.febys.utils.navigateTo
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LoginFragment : AuthFragment() {
+class LoginFragment : SocialMediaAuthFragment() {
     private lateinit var binding: FragmentLoginBinding
     private val viewModel: AuthViewModel by viewModels()
 
@@ -41,18 +45,12 @@ class LoginFragment : AuthFragment() {
         binding.etEmailAddress.addTextChangedListener {
             email = it.toString()
             binding.etEmailAddress.clearError()
-            if (email.isNotEmpty() && !Validator.isValidEmail(email)) {
-                binding.etEmailAddress.error = getString(R.string.error_enter_valid_email)
-            }
-
-            updateLoginButtonVisibility()
         }
 
         binding.etPassword.addTextChangedListener {
             password = it.toString()
-            updateLoginButtonVisibility()
+            binding.etPassword.clearError()
         }
-
 
         binding.tvGotoSignUp.setOnClickListener {
             val navigateToSignUp = LoginFragmentDirections.actionLoginFragmentToSignupFragment()
@@ -60,13 +58,27 @@ class LoginFragment : AuthFragment() {
         }
 
         binding.btnLogin.setOnClickListener {
-            viewModel.login(email, password)
+            if (areAllFieldsValid()) {
+                viewModel.login(email, password)
+            }
         }
 
         binding.tvForgotPassword.setOnClickListener {
             val navigateToResetCredential =
                 LoginFragmentDirections.actionLoginFragmentToResetCredentialFragment()
             navigateTo(navigateToResetCredential)
+        }
+
+        binding.ivGoogle.setOnClickListener {
+            signInWithGoogle { token ->
+                viewModel.socialLogin(token, SocialLogin.GOOGLE)
+            }
+        }
+
+        binding.ivFacebook.setOnClickListener {
+            signInWithFacebook { token ->
+                viewModel.socialLogin(token, SocialLogin.FACEBOOK)
+            }
         }
     }
 
@@ -78,8 +90,7 @@ class LoginFragment : AuthFragment() {
 
                 }
                 is DataState.Error -> {
-                    val msg = getErrorMessage(it)
-                    showToast(msg)
+                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
                 }
                 is DataState.Data -> {
                     findNavController().popBackStack(R.id.loginFragment, true)
@@ -88,17 +99,22 @@ class LoginFragment : AuthFragment() {
         }
     }
 
-    private fun updateLoginButtonVisibility() {
-        var enableButton = true
+    private fun areAllFieldsValid(): Boolean {
+        var areAllFieldsValid = true
 
-        if (!Validator.isValidEmail(email)) {
-            enableButton = false
+        if (email.isEmpty()) {
+            binding.etEmailAddress.error = getString(R.string.error_enter_email)
+            areAllFieldsValid = false
+        } else if (!Validator.isValidEmail(email)) {
+            binding.etEmailAddress.error = getString(R.string.error_enter_valid_email)
+            areAllFieldsValid = false
         }
 
         if (!Validator.isValidPassword(password)) {
-            enableButton = false
+            binding.etPassword.error = getString(R.string.error_enter_password)
+            areAllFieldsValid = false
         }
 
-        binding.btnLogin.isEnabled = enableButton
+        return areAllFieldsValid
     }
 }

@@ -31,4 +31,7 @@ interface AuthService {
     suspend fun refreshToken(
         @Url url: String, @FieldMap fields: Map<String, String>
     ): ApiResponse<ResponseRefreshToken>
+
+    @GET("v1/social/login")
+    suspend fun socialLogin(@QueryMap reqLogin: Map<String, String>): ApiResponse<ResponseLogin>
 }

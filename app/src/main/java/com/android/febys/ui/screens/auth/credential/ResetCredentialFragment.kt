@@ -10,8 +10,9 @@ import com.android.febys.base.BaseFragment
 import com.android.febys.databinding.FragmentResetCredentialBinding
 import com.android.febys.network.DataState
 import com.android.febys.ui.screens.auth.AuthViewModel
+import com.android.febys.ui.screens.dialog.ErrorDialog
+import com.android.febys.ui.screens.dialog.InfoDialog
 import com.android.febys.utils.Validator
-import com.android.febys.utils.getErrorMessage
 import com.android.febys.utils.goBack
 import com.android.febys.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -57,11 +58,14 @@ class ResetCredentialFragment : BaseFragment() {
 
                 }
                 is DataState.Error -> {
-                    val msg = getErrorMessage(it)
-                    showToast(msg)
+                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
                 }
                 is DataState.Data -> {
-                    showToast(getString(R.string.toast_email_sent))
+                    InfoDialog(
+                        R.drawable.ic_email,
+                        getString(R.string.label_check_your_email),
+                        getString(R.string.label_email_sent)
+                    ).show(childFragmentManager, InfoDialog.TAG)
                 }
             }
         }

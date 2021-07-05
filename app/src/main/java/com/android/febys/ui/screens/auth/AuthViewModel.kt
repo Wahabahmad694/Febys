@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.android.febys.base.BaseViewModel
+import com.android.febys.enum.SocialLogin
 import com.android.febys.network.DataState
 import com.android.febys.network.requests.RequestSignup
 import com.android.febys.network.response.ResponseLogin
@@ -39,28 +40,28 @@ class AuthViewModel @Inject constructor(
         _observeResetCredentialResponse
 
     fun signup(requestSignup: RequestSignup) = viewModelScope.launch {
-        _observeSignupResponse.postValue(DataState.loading())
+        _observeSignupResponse.postValue(DataState.Loading())
         repo.signup(requestSignup).collect {
             _observeSignupResponse.postValue(it)
         }
     }
 
     fun verifyUser(otp: String) = viewModelScope.launch {
-        _observeOtpResponse.postValue(DataState.loading())
+        _observeOtpResponse.postValue(DataState.Loading())
         repo.verifyUser(otp).collect {
             _observeOtpResponse.postValue(it)
         }
     }
 
     fun login(email: String, password: String) = viewModelScope.launch {
-        _observeLoginResponse.postValue(DataState.loading())
+        _observeLoginResponse.postValue(DataState.Loading())
         repo.login(email, password).collect {
             _observeLoginResponse.postValue(it)
         }
     }
 
     fun resetCredentials(email: String) = viewModelScope.launch {
-        _observeResetCredentialResponse.postValue(DataState.loading())
+        _observeResetCredentialResponse.postValue(DataState.Loading())
         repo.resetCredentials(email).collect {
             _observeResetCredentialResponse.postValue(it)
         }
@@ -75,5 +76,12 @@ class AuthViewModel @Inject constructor(
     fun signOut(onSignOut: () -> Unit) {
         repo.signOut()
         onSignOut.invoke()
+    }
+
+    fun socialLogin(token: String, socialLogin: SocialLogin) = viewModelScope.launch {
+        _observeLoginResponse.postValue(DataState.Loading())
+        repo.socialLogin(token, socialLogin).collect {
+            _observeLoginResponse.postValue(it)
+        }
     }
 }

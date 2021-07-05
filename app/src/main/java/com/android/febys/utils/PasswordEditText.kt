@@ -8,7 +8,6 @@ import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.widget.addTextChangedListener
 import com.android.febys.R
 import com.android.febys.databinding.PasswordEditTextBinding
 
@@ -54,6 +53,9 @@ class PasswordEditText : ConstraintLayout {
             }
 
             binding.btnPasswordToggle.setImageResource(resId)
+
+            // move cursor to the end of line
+            binding.etPassword.setSelection(binding.etPassword.text.toString().length)
         }
     }
 

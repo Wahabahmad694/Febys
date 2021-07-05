@@ -12,8 +12,6 @@ import com.android.febys.base.BaseDialog
 import com.android.febys.databinding.DialogOtpVerificationBinding
 import com.android.febys.network.DataState
 import com.android.febys.ui.screens.auth.AuthViewModel
-import com.android.febys.utils.getErrorMessage
-import com.android.febys.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -40,7 +38,7 @@ class OtpVerificationDialog : BaseDialog() {
             viewModel.verifyUser(otp)
         }
 
-        binding.btnSkip.setOnClickListener {
+        binding.ivClose.setOnClickListener {
             navigateToHomeScreen()
         }
     }
@@ -52,8 +50,7 @@ class OtpVerificationDialog : BaseDialog() {
 
                 }
                 is DataState.Error -> {
-                    val msg = getErrorMessage(it)
-                    showToast(msg)
+                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
                     binding.otpView.text?.clear()
                 }
                 is DataState.Data -> {

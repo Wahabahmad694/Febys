@@ -1,5 +1,7 @@
 package com.android.febys.network.adapter
 
+import com.android.febys.network.response.ErrorResponse
+import com.google.gson.Gson
 import retrofit2.Response
 
 /**
@@ -22,7 +24,29 @@ sealed class ApiResponse<out T> {
      * 2) ### Exception response e.g. network connection error
      */
     sealed class ApiFailureResponse<T> {
-        data class Error<T>(val response: Response<T>) : ApiResponse<T>()
+        data class Error<T>(private val response: Response<T>) : ApiResponse<T>() {
+            val message = parseResponse()
+
+            private fun parseResponse(): String {
+                return try {
+                    val errorResponse =
+                        Gson().fromJson(
+                            response.errorBody()?.charStream(),
+                            ErrorResponse::class.java
+                        )
+
+                    val errorMsg = if (!errorResponse.errors.isNullOrEmpty()) {
+                        errorResponse.errors[0].error
+                    } else {
+                        errorResponse.message
+                    }
+
+                    errorMsg ?: response.message() ?: ""
+                } catch (e: kotlin.Exception) {
+                    response.message() ?: ""
+                }
+            }
+        }
 
         data class Exception<T>(val exception: Throwable) : ApiResponse<T>() {
             val message: String? = exception.localizedMessage
