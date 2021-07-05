@@ -35,69 +35,69 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/iv_febys" />
 
-        <TextView
-            android:id="@+id/tv_unique_categories"
-            style="@style/TextTheme.HelveticaNeue.TS16"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_48dp"
-            android:layout_marginTop="@dimen/_16dp"
-            android:background="@color/grey"
-            android:gravity="center"
-            android:text="@string/label_unique_categories"
-            android:textAlignment="center"
-            app:layout_constraintTop_toBottomOf="@id/iv_febys" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_unique_categories"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_16dp"
-            android:clipToPadding="false"
-            android:orientation="horizontal"
-            android:paddingHorizontal="@dimen/_16dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@id/tv_unique_categories"
-            tools:listitem="@layout/item_unique_category" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_bg_scroll_unique_category"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_16dp"
-            android:src="@drawable/bg_scroll_home"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rv_unique_categories" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_ic_scroll_unique_category"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_scroll_home"
-            app:layout_constraintBottom_toBottomOf="@id/iv_bg_scroll_unique_category"
-            app:layout_constraintEnd_toEndOf="@id/iv_bg_scroll_unique_category"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@id/iv_bg_scroll_unique_category"
-            app:layout_constraintTop_toTopOf="@id/iv_bg_scroll_unique_category" />
-
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/_16dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_ic_scroll_unique_category">
+            app:layout_constraintTop_toBottomOf="@id/iv_febys">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_unique_categories"
+                    style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_48dp"
+                    android:layout_marginTop="@dimen/_16dp"
+                    android:background="@color/grey"
+                    android:gravity="center"
+                    android:text="@string/label_unique_categories"
+                    android:textAlignment="center"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_unique_categories"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_16dp"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="@dimen/_16dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/tv_unique_categories"
+                    tools:listitem="@layout/item_unique_category" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_bg_scroll_unique_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_16dp"
+                    android:src="@drawable/bg_scroll_home"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rv_unique_categories" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_ic_scroll_unique_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_scroll_home"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_bg_scroll_unique_category"
+                    app:layout_constraintEnd_toEndOf="@id/iv_bg_scroll_unique_category"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@id/iv_bg_scroll_unique_category"
+                    app:layout_constraintTop_toTopOf="@id/iv_bg_scroll_unique_category" />
 
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/image_slider_home"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginHorizontal="@dimen/_16dp"
+                    android:layout_marginTop="@dimen/_16dp"
                     app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@id/iv_ic_scroll_unique_category" />
 
                 <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
                     android:id="@+id/dots_indicator"
@@ -118,7 +118,7 @@
                 <!--region toady deals-->
                 <TextView
                     android:id="@+id/tv_today_deals"
-                    style="@style/TextTheme.HelveticaNeue.TS16"
+                    style="@style/TextTheme.HelveticaNeue.TS16.Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_16dp"
@@ -132,7 +132,7 @@
                     style="@style/TextTheme.Arial.TS12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8dp"
+                    android:layout_marginTop="@dimen/_2dp"
                     android:text="@string/label_today_deals_slogan"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -151,7 +151,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_shop_now_today_deals"
-                    style="@style/ButtonTheme.OutLine"
+                    style="@style/ButtonTheme.OutLine.Full"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_16dp"
@@ -163,7 +163,7 @@
                 <!--region featured categories-->
                 <TextView
                     android:id="@+id/tv_featured_categories"
-                    style="@style/TextTheme.HelveticaNeue.TS16"
+                    style="@style/TextTheme.HelveticaNeue.TS16.Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_16dp"
@@ -177,7 +177,7 @@
                     style="@style/TextTheme.Arial.TS12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8dp"
+                    android:layout_marginTop="@dimen/_2dp"
                     android:text="@string/label_featured_categories_slogan"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -215,7 +215,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_shop_now_featured_categories"
-                    style="@style/ButtonTheme.OutLine"
+                    style="@style/ButtonTheme.OutLine.Full"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_16dp"
@@ -225,73 +225,61 @@
                 <!--endregion featured categories-->
 
                 <!--region seasonal offers-->
-                <com.facebook.drawee.view.SimpleDraweeView
-                    android:id="@+id/iv_bg_seasonal_offers"
+                <TextView
+                    android:id="@+id/tv_seasonal_offers"
+                    style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_16dp"
+                    android:text="@string/label_seasonal_offers"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/btn_shop_now_featured_categories" />
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/slider_seasonal_offer"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginHorizontal="@dimen/_16dp"
-                    android:layout_marginTop="@dimen/_16dp"
-                    app:actualImageResource="@drawable/bg_seasonal_offers"
+                    android:layout_marginTop="@dimen/_2dp"
                     app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintTop_toBottomOf="@id/btn_shop_now_featured_categories" />
-
-                <TextView
-                    android:id="@+id/tv_seasonal_offers"
-                    style="@style/TextAppearance.MaterialComponents.Headline6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/label_seasonal_offers"
-                    android:textColor="@color/white"
-                    app:layout_constraintBottom_toTopOf="@id/tv_seasonal_offers_slogan"
-                    app:layout_constraintEnd_toEndOf="@id/iv_bg_seasonal_offers"
-                    app:layout_constraintStart_toStartOf="@id/iv_bg_seasonal_offers"
-                    app:layout_constraintTop_toTopOf="@id/iv_bg_seasonal_offers"
-                    app:layout_constraintVertical_chainStyle="packed" />
-
-                <TextView
-                    android:id="@+id/tv_seasonal_offers_slogan"
-                    style="@style/TextAppearance.MaterialComponents.Headline4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/label_seasonal_offers_slogan"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toTopOf="@id/tv_tap_to_explore_seasonal_offers"
-                    app:layout_constraintEnd_toEndOf="@id/iv_bg_seasonal_offers"
-                    app:layout_constraintStart_toStartOf="@id/iv_bg_seasonal_offers"
                     app:layout_constraintTop_toBottomOf="@id/tv_seasonal_offers" />
 
-                <TextView
-                    android:id="@+id/tv_tap_to_explore_seasonal_offers"
-                    style="@style/TextTheme.HelveticaNeue.TS16"
+                <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+                    android:id="@+id/slider_seasonal_offer_dots_indicator"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/label_tap_to_explore"
-                    android:textColor="@color/white"
-                    app:layout_constraintBottom_toBottomOf="@id/iv_bg_seasonal_offers"
-                    app:layout_constraintEnd_toEndOf="@id/iv_bg_seasonal_offers"
-                    app:layout_constraintStart_toStartOf="@id/iv_bg_seasonal_offers"
-                    app:layout_constraintTop_toBottomOf="@id/tv_seasonal_offers_slogan" />
+                    android:layout_marginBottom="@dimen/_24dp"
+                    app:dotsColor="@color/slider_dot_color"
+                    app:dotsCornerRadius="8dp"
+                    app:dotsSize="4dp"
+                    app:dotsSpacing="4dp"
+                    app:dotsWidthFactor="2.5"
+                    app:layout_constraintBottom_toBottomOf="@id/slider_seasonal_offer"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:progressMode="true"
+                    app:selectedDotColor="@color/slider_dot_selected_color" />
                 <!--endregion seasonal offers-->
 
                 <!--region trending products-->
                 <TextView
                     android:id="@+id/tv_trending_products"
-                    style="@style/TextTheme.HelveticaNeue.TS16"
+                    style="@style/TextTheme.HelveticaNeue.TS16.Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_16dp"
                     android:text="@string/label_trending_products"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/iv_bg_seasonal_offers" />
+                    app:layout_constraintTop_toBottomOf="@id/slider_seasonal_offer" />
 
                 <TextView
                     android:id="@+id/tv_trending_products_slogan"
                     style="@style/TextTheme.Arial.TS12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8dp"
+                    android:layout_marginTop="@dimen/_2dp"
                     android:text="@string/label_trending_products_slogan"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -310,7 +298,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_shop_now_trending_products"
-                    style="@style/ButtonTheme.OutLine"
+                    style="@style/ButtonTheme.OutLine.Full"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_16dp"
@@ -322,7 +310,7 @@
                 <!--region store you follow-->
                 <TextView
                     android:id="@+id/tv_store_you_follow"
-                    style="@style/TextTheme.HelveticaNeue.TS16"
+                    style="@style/TextTheme.HelveticaNeue.TS16.Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_16dp"
@@ -336,7 +324,7 @@
                     style="@style/TextTheme.Arial.TS12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8dp"
+                    android:layout_marginTop="@dimen/_2dp"
                     android:text="@string/label_store_you_follow_slogan"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -355,7 +343,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_shop_now_store_you_follow"
-                    style="@style/ButtonTheme.OutLine"
+                    style="@style/ButtonTheme.OutLine.Full"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_16dp"
@@ -390,7 +378,7 @@
 
                 <TextView
                     android:id="@+id/tv_same_day_delivery"
-                    style="@style/TextTheme.HelveticaNeue.TS16"
+                    style="@style/TextTheme.HelveticaNeue.TS16.Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_same_day_delivery"
@@ -418,7 +406,7 @@
                 <!--region under $100 items-->
                 <TextView
                     android:id="@+id/tv_label_under_100_dollars_items"
-                    style="@style/TextTheme.HelveticaNeue.TS16"
+                    style="@style/TextTheme.HelveticaNeue.TS16.Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_16dp"
@@ -432,7 +420,7 @@
                     style="@style/TextTheme.Arial.TS12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8dp"
+                    android:layout_marginTop="@dimen/_2dp"
                     android:text="@string/label_under_100_dollar_items_slogan"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -451,7 +439,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_shop_now_under_100_dollars_items"
-                    style="@style/ButtonTheme.OutLine"
+                    style="@style/ButtonTheme.OutLine.Full"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_16dp"

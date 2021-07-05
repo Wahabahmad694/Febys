@@ -9,7 +9,7 @@ import java.util.*
 abstract class SliderFragment : BaseFragment() {
     private val timer = Timer()
 
-    abstract fun getSlider(): ViewPager2
+    abstract fun getSlider(): List<ViewPager2>
     abstract fun getRotateInterval(): Long
 
     override fun onResume() {
@@ -18,16 +18,17 @@ abstract class SliderFragment : BaseFragment() {
         timer.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
                 lifecycleScope.launch(Dispatchers.Main) {
-                    val slider = getSlider()
-                    val totalIndex = slider.adapter?.itemCount?.minus(1) ?: -1
-                    val currentPageIndex = slider.currentItem
+                    getSlider().forEach { slider ->
+                        val totalIndex = slider.adapter?.itemCount?.minus(1) ?: -1
+                        val currentPageIndex = slider.currentItem
 
-                    if (totalIndex == 0) return@launch
+                        if (totalIndex == 0) return@launch
 
-                    if (currentPageIndex == totalIndex) {
-                        slider.currentItem = 0
-                    } else {
-                        slider.currentItem = currentPageIndex + 1
+                        if (currentPageIndex == totalIndex) {
+                            slider.currentItem = 0
+                        } else {
+                            slider.currentItem = currentPageIndex + 1
+                        }
                     }
                 }
             }

@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.android.febys.databinding.ItemProductHomeBinding
-import com.android.febys.network.domain.models.Product
+import com.android.febys.network.response.Product
 
 class HomeProductsAdapter :
     ListAdapter<Product, HomeProductsAdapter.ProductHomeViewHolder>(diffCallback) {
@@ -14,13 +14,11 @@ class HomeProductsAdapter :
         private val diffCallback = object : DiffUtil.ItemCallback<Product>() {
 
             override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean {
-                return oldItem == newItem
+                return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
-                return oldItem.productName == newItem.productName
-                        && oldItem.imgUrl == newItem.imgUrl
-                        && oldItem.productPrice == newItem.productPrice
+                return oldItem == newItem
             }
         }
     }
@@ -48,11 +46,10 @@ class HomeProductsAdapter :
             }
 
             binding.product = item
-            binding.isFav = item.isFav
+            binding.isFav = false
 
             binding.ivFav.setOnClickListener {
-                item.isFav = !item.isFav
-                binding.isFav = item.isFav
+                binding.isFav = !binding.isFav!!
             }
         }
     }

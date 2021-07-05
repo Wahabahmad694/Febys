@@ -107,7 +107,7 @@ class ProductDetailFragment : SliderFragment() {
         setImageResource(arrow)
     }
 
-    override fun getSlider() = binding.sliderProductImages
+    override fun getSlider() = listOf(binding.sliderProductImages)
 
     override fun getRotateInterval() = 5000L
 

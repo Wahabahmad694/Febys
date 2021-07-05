@@ -9,21 +9,33 @@
             name="imageUrl"
             type="String" />
 
+        <variable
+            name="seasonalOfferTitle"
+            type="String" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/grey">
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_seasonal_offers_title"
+            style="@style/TextTheme.Arial.TS12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{seasonalOfferTitle}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_margin="@dimen/_64dp"
+            android:layout_marginTop="@dimen/_16dp"
             app:actualImageScaleType="none"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_seasonal_offers_title"
             binding:image_url="@{imageUrl}" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
