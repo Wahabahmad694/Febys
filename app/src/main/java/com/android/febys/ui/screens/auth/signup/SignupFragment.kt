@@ -87,7 +87,7 @@ class SignupFragment : AuthFragment() {
 
         binding.btnSignUp.setOnClickListener {
             isSocialLogin = false
-            if (isAllFieldsValid()) {
+            if (areAllFieldsValid()) {
                 signup()
             }
         }
@@ -143,49 +143,49 @@ class SignupFragment : AuthFragment() {
         viewModel.signup(requestSignup)
     }
 
-    private fun isAllFieldsValid(): Boolean {
-        var isAllFieldsValid = true
+    private fun areAllFieldsValid(): Boolean {
+        var areAllFieldsValid = true
 
         if (!Validator.isValidName(firstName)) {
             binding.etFirstName.error = getString(R.string.error_enter_first_name)
-            isAllFieldsValid = false
+            areAllFieldsValid = false
         }
 
         if (!Validator.isValidName(lastName)) {
             binding.etLastName.error = getString(R.string.error_enter_last_name)
-            isAllFieldsValid = false
+            areAllFieldsValid = false
         }
 
         if (email.isEmpty()) {
             binding.etEmailAddress.error = getString(R.string.error_enter_email)
-            isAllFieldsValid = false
+            areAllFieldsValid = false
         } else if (!Validator.isValidEmail(email)) {
             binding.etEmailAddress.error = getString(R.string.error_enter_valid_email)
-            isAllFieldsValid = false
+            areAllFieldsValid = false
         }
 
         if (phone.isEmpty()) {
             binding.etPhone.error = getString(R.string.error_enter_phone)
-            isAllFieldsValid = false
+            areAllFieldsValid = false
         } else if (!Validator.isValidPhone(phone)) {
             binding.etPhone.error = getString(R.string.error_enter_valid_phone)
-            isAllFieldsValid = false
+            areAllFieldsValid = false
         }
 
         if (!Validator.isValidPassword(password)) {
             binding.etPassword.error = getString(R.string.error_enter_password)
-            isAllFieldsValid = false
+            areAllFieldsValid = false
         }
 
         if (confirmPassword.isEmpty()) {
             binding.etConfirmPassword.error = getString(R.string.error_enter_confirm_password)
-            isAllFieldsValid = false
+            areAllFieldsValid = false
         } else if (confirmPassword != password) {
             binding.etConfirmPassword.error = getString(R.string.error_confirm_password_not_match)
-            isAllFieldsValid = false
+            areAllFieldsValid = false
         }
 
-        return isAllFieldsValid
+        return areAllFieldsValid
     }
 
     private fun navigateToOTPVerification() {

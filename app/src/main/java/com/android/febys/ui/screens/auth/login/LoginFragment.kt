@@ -58,7 +58,7 @@ class LoginFragment : AuthFragment() {
         }
 
         binding.btnLogin.setOnClickListener {
-            if (isAllFieldsAreValid()) {
+            if (areAllFieldsValid()) {
                 viewModel.login(email, password)
             }
         }
@@ -99,22 +99,22 @@ class LoginFragment : AuthFragment() {
         }
     }
 
-    private fun isAllFieldsAreValid(): Boolean {
-        var isFieldsValid = true
+    private fun areAllFieldsValid(): Boolean {
+        var areAllFieldsValid = true
 
         if (email.isEmpty()) {
             binding.etEmailAddress.error = getString(R.string.error_enter_email)
-            isFieldsValid = false
+            areAllFieldsValid = false
         } else if (!Validator.isValidEmail(email)) {
             binding.etEmailAddress.error = getString(R.string.error_enter_valid_email)
-            isFieldsValid = false
+            areAllFieldsValid = false
         }
 
         if (!Validator.isValidPassword(password)) {
             binding.etPassword.error = getString(R.string.error_enter_password)
-            isFieldsValid = false
+            areAllFieldsValid = false
         }
 
-        return isFieldsValid
+        return areAllFieldsValid
     }
 }
