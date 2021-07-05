@@ -121,13 +121,17 @@ class SignupFragment : AuthFragment() {
                     ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
                 }
                 is DataState.Data -> {
-                    if (isSocialLogin) {
-                        findNavController().popBackStack(R.id.loginFragment, true)
-                    } else {
-                        navigateToOTPVerification()
-                    }
+                    gotoNextScreen()
                 }
             }
+        }
+    }
+
+    private fun gotoNextScreen() {
+        if (isSocialLogin) {
+            findNavController().popBackStack(R.id.loginFragment, true)
+        } else {
+            navigateToOTPVerification()
         }
     }
 
