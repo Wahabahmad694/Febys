@@ -17,7 +17,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 
-abstract class AuthFragment : BaseFragment() {
+abstract class SocialMediaAuthFragment : BaseFragment() {
     private lateinit var googleClient: GoogleSignInClient
 
     private var googleSignInCallback: ((token: String) -> Unit)? = null

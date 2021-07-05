@@ -11,7 +11,7 @@ import com.android.febys.R
 import com.android.febys.databinding.FragmentLoginBinding
 import com.android.febys.enum.SocialLogin
 import com.android.febys.network.DataState
-import com.android.febys.ui.screens.auth.AuthFragment
+import com.android.febys.ui.screens.auth.SocialMediaAuthFragment
 import com.android.febys.ui.screens.auth.AuthViewModel
 import com.android.febys.ui.screens.dialog.ErrorDialog
 import com.android.febys.utils.Validator
@@ -20,7 +20,7 @@ import com.android.febys.utils.navigateTo
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LoginFragment : AuthFragment() {
+class LoginFragment : SocialMediaAuthFragment() {
     private lateinit var binding: FragmentLoginBinding
     private val viewModel: AuthViewModel by viewModels()
 
