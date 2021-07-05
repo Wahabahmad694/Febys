@@ -4,13 +4,18 @@ import com.android.febys.R
 import com.android.febys.dto.ProductDetail
 import com.android.febys.network.DataState
 import com.android.febys.network.FebysBackendService
+import com.android.febys.network.adapter.onError
+import com.android.febys.network.adapter.onException
+import com.android.febys.network.adapter.onNetworkError
+import com.android.febys.network.adapter.onSuccess
 import com.android.febys.network.response.Product
+import com.android.febys.network.response.ResponseProductListing
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-class ProductRepoImpl @Inject constructor(service: FebysBackendService) : IProductRepo {
+class ProductRepoImpl @Inject constructor(val backendService: FebysBackendService) : IProductRepo {
     override fun fetchProductDetail(
         productId: String, dispatcher: CoroutineDispatcher
     ) = flow<DataState<ProductDetail>> {
@@ -41,11 +46,15 @@ class ProductRepoImpl @Inject constructor(service: FebysBackendService) : IProdu
     }.flowOn(dispatcher)
 
     override fun fetchWishList(dispatcher: CoroutineDispatcher) = flow<DataState<List<Product>>> {
-        emit(DataState.Data(getProductList()))
+        val req = mapOf("chunkSize" to 10, "pageNo" to 1)
+        // todo change this when api end point available
+        backendService.fetchTrendingProducts(req)
+            .onSuccess {
+                val products = data!!.getResponse<ResponseProductListing>().products
+                emit(DataState.Data(products))
+            }
+            .onError { emit(DataState.ApiError(message)) }
+            .onException { emit(DataState.ExceptionError()) }
+            .onNetworkError { emit(DataState.NetworkError()) }
     }.flowOn(dispatcher)
-
-    // this is dummy list
-    private fun getProductList(): List<Product> {
-        return listOf()
-    }
 }

@@ -118,7 +118,7 @@
                 <!--region toady deals-->
                 <TextView
                     android:id="@+id/tv_today_deals"
-                    style="@style/TextTheme.HelveticaNeue.TS16"
+                    style="@style/TextTheme.HelveticaNeue.TS16.Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_16dp"
@@ -151,7 +151,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_shop_now_today_deals"
-                    style="@style/ButtonTheme.OutLine"
+                    style="@style/ButtonTheme.OutLine.Full"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_16dp"
@@ -163,7 +163,7 @@
                 <!--region featured categories-->
                 <TextView
                     android:id="@+id/tv_featured_categories"
-                    style="@style/TextTheme.HelveticaNeue.TS16"
+                    style="@style/TextTheme.HelveticaNeue.TS16.Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_16dp"
@@ -215,7 +215,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_shop_now_featured_categories"
-                    style="@style/ButtonTheme.OutLine"
+                    style="@style/ButtonTheme.OutLine.Full"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_16dp"
@@ -227,7 +227,7 @@
                 <!--region seasonal offers-->
                 <TextView
                     android:id="@+id/tv_seasonal_offers"
-                    style="@style/TextTheme.HelveticaNeue.TS16"
+                    style="@style/TextTheme.HelveticaNeue.TS16.Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_16dp"
@@ -265,7 +265,7 @@
                 <!--region trending products-->
                 <TextView
                     android:id="@+id/tv_trending_products"
-                    style="@style/TextTheme.HelveticaNeue.TS16"
+                    style="@style/TextTheme.HelveticaNeue.TS16.Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_16dp"
@@ -298,7 +298,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_shop_now_trending_products"
-                    style="@style/ButtonTheme.OutLine"
+                    style="@style/ButtonTheme.OutLine.Full"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_16dp"
@@ -310,7 +310,7 @@
                 <!--region store you follow-->
                 <TextView
                     android:id="@+id/tv_store_you_follow"
-                    style="@style/TextTheme.HelveticaNeue.TS16"
+                    style="@style/TextTheme.HelveticaNeue.TS16.Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_16dp"
@@ -343,7 +343,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_shop_now_store_you_follow"
-                    style="@style/ButtonTheme.OutLine"
+                    style="@style/ButtonTheme.OutLine.Full"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_16dp"
@@ -378,7 +378,7 @@
 
                 <TextView
                     android:id="@+id/tv_same_day_delivery"
-                    style="@style/TextTheme.HelveticaNeue.TS16"
+                    style="@style/TextTheme.HelveticaNeue.TS16.Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_same_day_delivery"
@@ -406,7 +406,7 @@
                 <!--region under $100 items-->
                 <TextView
                     android:id="@+id/tv_label_under_100_dollars_items"
-                    style="@style/TextTheme.HelveticaNeue.TS16"
+                    style="@style/TextTheme.HelveticaNeue.TS16.Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_16dp"
@@ -439,7 +439,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_shop_now_under_100_dollars_items"
-                    style="@style/ButtonTheme.OutLine"
+                    style="@style/ButtonTheme.OutLine.Full"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_16dp"

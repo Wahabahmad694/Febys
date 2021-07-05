@@ -12,7 +12,6 @@ import com.android.febys.databinding.FragmentWishListBinding
 import com.android.febys.network.DataState
 import com.android.febys.ui.screens.dialog.ErrorDialog
 import com.android.febys.utils.goBack
-import com.android.febys.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
