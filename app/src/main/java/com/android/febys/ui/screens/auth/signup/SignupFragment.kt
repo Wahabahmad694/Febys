@@ -136,11 +136,15 @@ class SignupFragment : AuthFragment() {
     }
 
     private fun signup() {
-        val requestSignup = RequestSignup(
-            firstName, lastName, email, phone, password
-        )
+        val requestSignup = createSignupRequest()
 
         viewModel.signup(requestSignup)
+    }
+
+    private fun createSignupRequest(): RequestSignup {
+        return RequestSignup(
+            firstName, lastName, email, phone, password
+        )
     }
 
     private fun areAllFieldsValid(): Boolean {
