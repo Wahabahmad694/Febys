@@ -12,8 +12,8 @@ import com.android.febys.databinding.FragmentSignupBinding
 import com.android.febys.enum.SocialLogin
 import com.android.febys.network.DataState
 import com.android.febys.network.requests.RequestSignup
-import com.android.febys.ui.screens.auth.SocialMediaAuthFragment
 import com.android.febys.ui.screens.auth.AuthViewModel
+import com.android.febys.ui.screens.auth.SocialMediaAuthFragment
 import com.android.febys.ui.screens.dialog.ErrorDialog
 import com.android.febys.utils.Validator
 import com.android.febys.utils.clearError
@@ -50,36 +50,7 @@ class SignupFragment : SocialMediaAuthFragment() {
     }
 
     private fun uiListeners() {
-        binding.etFirstName.addTextChangedListener {
-            firstName = it.toString()
-            binding.etFirstName.clearError()
-        }
-
-        binding.etLastName.addTextChangedListener {
-            lastName = it.toString()
-            binding.etLastName.clearError()
-        }
-
-        binding.etEmailAddress.addTextChangedListener {
-            email = it.toString()
-            binding.etEmailAddress.clearError()
-        }
-
-        binding.etPhone.addTextChangedListener {
-            phone = it.toString()
-            binding.etPhone.clearError()
-        }
-
-        binding.etPassword.addTextChangedListener {
-            password = it.toString()
-            binding.etPassword.clearError()
-        }
-
-        binding.etConfirmPassword.addTextChangedListener {
-            confirmPassword = it.toString()
-            binding.etConfirmPassword.clearError()
-        }
-
+        addTextChangeListenerOnFields()
 
         binding.ivBack.setOnClickListener {
             goBack()
@@ -108,6 +79,38 @@ class SignupFragment : SocialMediaAuthFragment() {
                 viewModel.socialLogin(token, SocialLogin.FACEBOOK)
                 isSocialLogin = true
             }
+        }
+    }
+
+    private fun addTextChangeListenerOnFields() {
+        binding.etFirstName.addTextChangedListener {
+            firstName = it.toString()
+            binding.etFirstName.clearError()
+        }
+
+        binding.etLastName.addTextChangedListener {
+            lastName = it.toString()
+            binding.etLastName.clearError()
+        }
+
+        binding.etEmailAddress.addTextChangedListener {
+            email = it.toString()
+            binding.etEmailAddress.clearError()
+        }
+
+        binding.etPhone.addTextChangedListener {
+            phone = it.toString()
+            binding.etPhone.clearError()
+        }
+
+        binding.etPassword.addTextChangedListener {
+            password = it.toString()
+            binding.etPassword.clearError()
+        }
+
+        binding.etConfirmPassword.addTextChangedListener {
+            confirmPassword = it.toString()
+            binding.etConfirmPassword.clearError()
         }
     }
 
