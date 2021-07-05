@@ -11,7 +11,7 @@ import com.android.febys.R
 import com.android.febys.databinding.FragmentLoginBinding
 import com.android.febys.enum.SocialLogin
 import com.android.febys.network.DataState
-import com.android.febys.ui.screens.auth.AuthFragment
+import com.android.febys.ui.screens.auth.SocialMediaAuthFragment
 import com.android.febys.ui.screens.auth.AuthViewModel
 import com.android.febys.ui.screens.dialog.ErrorDialog
 import com.android.febys.utils.Validator
@@ -20,7 +20,7 @@ import com.android.febys.utils.navigateTo
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LoginFragment : AuthFragment() {
+class LoginFragment : SocialMediaAuthFragment() {
     private lateinit var binding: FragmentLoginBinding
     private val viewModel: AuthViewModel by viewModels()
 
@@ -58,7 +58,7 @@ class LoginFragment : AuthFragment() {
         }
 
         binding.btnLogin.setOnClickListener {
-            if (isAllFieldsAreValid()) {
+            if (areAllFieldsValid()) {
                 viewModel.login(email, password)
             }
         }
@@ -99,22 +99,22 @@ class LoginFragment : AuthFragment() {
         }
     }
 
-    private fun isAllFieldsAreValid(): Boolean {
-        var isFieldsValid = true
+    private fun areAllFieldsValid(): Boolean {
+        var areAllFieldsValid = true
 
         if (email.isEmpty()) {
             binding.etEmailAddress.error = getString(R.string.error_enter_email)
-            isFieldsValid = false
+            areAllFieldsValid = false
         } else if (!Validator.isValidEmail(email)) {
             binding.etEmailAddress.error = getString(R.string.error_enter_valid_email)
-            isFieldsValid = false
+            areAllFieldsValid = false
         }
 
         if (!Validator.isValidPassword(password)) {
             binding.etPassword.error = getString(R.string.error_enter_password)
-            isFieldsValid = false
+            areAllFieldsValid = false
         }
 
-        return isFieldsValid
+        return areAllFieldsValid
     }
 }
