@@ -27,18 +27,18 @@ sealed class ApiResponse<out T> {
         data class Error<T>(private val response: Response<T>) : ApiResponse<T>() {
             val message = parseResponse()
 
-            fun parseResponse(): String {
+            private fun parseResponse(): String {
                 return try {
-                    val errorRes =
+                    val errorResponse =
                         Gson().fromJson(
                             response.errorBody()?.charStream(),
                             ErrorResponse::class.java
                         )
 
-                    val errorMsg = if (!errorRes.errors.isNullOrEmpty()) {
-                        errorRes.errors[0].error
+                    val errorMsg = if (!errorResponse.errors.isNullOrEmpty()) {
+                        errorResponse.errors[0].error
                     } else {
-                        errorRes.message
+                        errorResponse.message
                     }
 
                     errorMsg ?: response.message() ?: ""
