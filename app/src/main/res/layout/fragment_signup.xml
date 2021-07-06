@@ -164,7 +164,7 @@
                     app:endIconMode="password_toggle"
                     app:layout_constraintTop_toBottomOf="@id/et_phone" />
 
-                <com.android.febys.utils.PasswordEditText
+                <com.hexagram.febys.utils.PasswordEditText
                     android:id="@+id/et_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -186,7 +186,7 @@
                     app:endIconMode="password_toggle"
                     app:layout_constraintTop_toBottomOf="@id/et_password" />
 
-                <com.android.febys.utils.PasswordEditText
+                <com.hexagram.febys.utils.PasswordEditText
                     android:id="@+id/et_confirm_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

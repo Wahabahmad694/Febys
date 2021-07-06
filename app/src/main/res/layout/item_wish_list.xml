@@ -8,7 +8,7 @@
 
         <variable
             name="product"
-            type="com.android.febys.network.response.Product" />
+            type="com.hexagram.febys.network.response.Product" />
 
     </data>
 

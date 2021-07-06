@@ -16,7 +16,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.android.febys"
+        applicationId "com.hexagram.febys"
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 1

@@ -86,7 +86,7 @@
                     android:text="@string/label_password"
                     app:layout_constraintTop_toBottomOf="@id/et_email_address" />
 
-                <com.android.febys.utils.PasswordEditText
+                <com.hexagram.febys.utils.PasswordEditText
                     android:id="@+id/et_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
