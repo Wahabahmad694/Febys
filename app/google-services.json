@@ -1,40 +1,48 @@
 {
   "project_info": {
-    "project_number": "555465482562",
-    "project_id": "febys-1624613123038",
-    "storage_bucket": "febys-1624613123038.appspot.com"
+    "project_number": "912540354085",
+    "project_id": "febys-319007",
+    "storage_bucket": "febys-319007.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:555465482562:android:0dbed9aa34dc01264468db",
+        "mobilesdk_app_id": "1:912540354085:android:00d87819be373a7c1261cc",
         "android_client_info": {
-          "package_name": "com.hexagram.febys"
+          "package_name": "com.hexagram.com"
         }
       },
       "oauth_client": [
         {
-          "client_id": "555465482562-pnia6kqavdubphskpde9r1hols5i1qpu.apps.googleusercontent.com",
+          "client_id": "912540354085-rd4rvcg6ju2uo676s8pvar143tgku19l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hexagram.com",
+            "certificate_hash": "ad872fbd8e55c47ebf99f4a8ac51fc98cbfca8cf"
+          }
+        },
+        {
+          "client_id": "912540354085-4u6he1g3h116kmo3f3irg662dtr5aplc.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC-0eK6s26uAuz6-I0A_pc-0HA6kDMOdo4"
+          "current_key": "AIzaSyDq8cb9ILXvICwtX-T754yDrOcw2dPJokE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "555465482562-pnia6kqavdubphskpde9r1hols5i1qpu.apps.googleusercontent.com",
+              "client_id": "912540354085-4u6he1g3h116kmo3f3irg662dtr5aplc.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "555465482562-qrjit97nqopu0mbpdd0cfelt715c84nu.apps.googleusercontent.com",
+              "client_id": "912540354085-24cpnf9p003flanmas9ndkmlbdek0bia.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.ios.febys"
+                "bundle_id": "com.hexagram.febys"
               }
             }
           ]

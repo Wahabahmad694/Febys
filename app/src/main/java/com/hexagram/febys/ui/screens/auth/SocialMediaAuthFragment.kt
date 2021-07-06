@@ -2,11 +2,10 @@ package com.hexagram.febys.ui.screens.auth
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import com.hexagram.febys.R
-import com.hexagram.febys.base.BaseFragment
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -16,6 +15,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.hexagram.febys.R
 
 abstract class SocialMediaAuthFragment : com.hexagram.febys.base.BaseFragment() {
     private lateinit var googleClient: GoogleSignInClient
@@ -37,9 +37,9 @@ abstract class SocialMediaAuthFragment : com.hexagram.febys.base.BaseFragment() 
                     googleSignInCallback?.invoke(account.idToken!!)
                     googleClient.signOut()
                 } catch (e: ApiException) {
+                    Log.e("SocialLogin", e.message, e)
                 }
             }
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -49,7 +49,7 @@ abstract class SocialMediaAuthFragment : com.hexagram.febys.base.BaseFragment() 
 
     private fun getGoogleSignInOptions(): GoogleSignInOptions {
         return GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.google_web_client))
+            .requestIdToken(getString(R.string.google_android_client))
             .requestEmail()
             .build()
     }
