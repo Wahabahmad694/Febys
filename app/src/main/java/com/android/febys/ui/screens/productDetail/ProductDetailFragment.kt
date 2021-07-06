@@ -12,8 +12,11 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.android.febys.R
 import com.android.febys.base.SliderFragment
 import com.android.febys.databinding.FragmentProductDetailBinding
-import com.android.febys.dto.ProductDetail
+import com.android.febys.databinding.LayoutProductDetailDescriptionHtmlBinding
+import com.android.febys.databinding.LayoutProductDetailDescriptionTitleBinding
 import com.android.febys.network.DataState
+import com.android.febys.network.response.Product
+import com.android.febys.network.response.ProductDescription
 import com.android.febys.ui.screens.dialog.ErrorDialog
 import com.android.febys.utils.toggleVisibility
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,7 +24,13 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ProductDetailFragment : SliderFragment() {
     private lateinit var binding: FragmentProductDetailBinding
-    private val viewModel: ProductDetailViewModel by viewModels()
+    private val productDetailViewModel: ProductDetailViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        productDetailViewModel.fetchProductDetail(78)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,8 +45,6 @@ class ProductDetailFragment : SliderFragment() {
 
         initUi()
         observersSetup()
-
-        viewModel.fetchProductDetail("abc")
     }
 
     private fun initUi() {
@@ -73,7 +80,7 @@ class ProductDetailFragment : SliderFragment() {
     }
 
     private fun observersSetup() {
-        viewModel.observeProductDetail.observe(viewLifecycleOwner) {
+        productDetailViewModel.observeProductDetail.observe(viewLifecycleOwner) {
             when (it) {
                 is DataState.Loading -> {
 
@@ -88,14 +95,37 @@ class ProductDetailFragment : SliderFragment() {
         }
     }
 
-    private fun updateUi(productDetail: ProductDetail) {
-        binding.productDetail = productDetail
-        setupProductImagesSlider(productDetail.images)
+    private fun updateUi(product: Product) {
+        binding.product = product
+        val images = mutableListOf<String>()
+        product.product_variants.forEach {
+            images.addAll(it.images)
+        }
+        setupProductImagesSlider(images)
+
+        setupProductDescription(product.descriptions)
     }
 
     private fun setupProductImagesSlider(images: List<String>) {
         binding.sliderProductImages.adapter = ProductSliderPageAdapter(images, this)
         binding.dotsIndicator.setViewPager2(binding.sliderProductImages)
+    }
+
+    private fun setupProductDescription(descriptions: List<ProductDescription>) {
+        descriptions.forEach {
+            val descriptionTitleBinding = LayoutProductDetailDescriptionTitleBinding.inflate(
+                layoutInflater, binding.containerProductDescription, false
+            )
+            descriptionTitleBinding.title = it.attribute
+
+            val descriptionContentBinding = LayoutProductDetailDescriptionHtmlBinding.inflate(
+                layoutInflater, binding.containerProductDescription, false
+            )
+            descriptionContentBinding.html = it.contentHTML
+
+            binding.containerProductDescription.addView(descriptionTitleBinding.root)
+            binding.containerProductDescription.addView(descriptionContentBinding.root)
+        }
     }
 
     private fun ImageView.updateArrowByVisibility(visibility: Boolean) {

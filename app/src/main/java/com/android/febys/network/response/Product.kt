@@ -8,7 +8,7 @@ data class Product constructor(
     @SerializedName("name")
     val name: String,
     @SerializedName("short_description")
-    val shortDescription: String,
+    val shortDescriptionHTML: String,
     @SerializedName("description")
     val descriptionHTML: String,
     @SerializedName("warranty")

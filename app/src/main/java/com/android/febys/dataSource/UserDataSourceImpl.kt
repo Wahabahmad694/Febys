@@ -1,6 +1,6 @@
 package com.android.febys.dataSource
 
-import com.android.febys.dto.User
+import com.android.febys.network.response.User
 import com.android.febys.prefs.IPrefManger
 import javax.inject.Inject
 

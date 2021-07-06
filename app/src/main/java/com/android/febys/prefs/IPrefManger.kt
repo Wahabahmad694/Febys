@@ -1,6 +1,6 @@
 package com.android.febys.prefs
 
-import com.android.febys.dto.User
+import com.android.febys.network.response.User
 
 interface IPrefManger {
     fun saveAccessToken(accessToken: String)

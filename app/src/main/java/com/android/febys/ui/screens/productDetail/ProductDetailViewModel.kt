@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.android.febys.base.BaseViewModel
-import com.android.febys.dto.ProductDetail
 import com.android.febys.network.DataState
+import com.android.febys.network.response.Product
 import com.android.febys.repos.IProductRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
@@ -14,14 +14,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProductDetailViewModel @Inject constructor(
-    private val repo: IProductRepo
+    private val productRepo: IProductRepo
 ) : BaseViewModel() {
-    private val _observeProductDetail = MutableLiveData<DataState<ProductDetail>>()
-    val observeProductDetail: LiveData<DataState<ProductDetail>> = _observeProductDetail
+    private val _observeProductDetail = MutableLiveData<DataState<Product>>()
+    val observeProductDetail: LiveData<DataState<Product>> = _observeProductDetail
 
-    fun fetchProductDetail(productId: String) = viewModelScope.launch {
+    fun fetchProductDetail(productId: Int) = viewModelScope.launch {
         _observeProductDetail.postValue(DataState.Loading())
-        repo.fetchProductDetail(productId).collect {
+        productRepo.fetchProductDetail(productId).collect {
             _observeProductDetail.postValue(it)
         }
     }
