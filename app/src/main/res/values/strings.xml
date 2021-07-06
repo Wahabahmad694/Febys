@@ -116,8 +116,8 @@
     <string name="label_sign_out">Sign Out</string>
 
     <string name="google_web_client" translatable="false">555465482562-pnia6kqavdubphskpde9r1hols5i1qpu.apps.googleusercontent.com</string>
-    <string name="facebook_app_id" translatable="false">513496399703774</string>
-    <string name="fb_login_protocol_scheme" translatable="false">fb513496399703774</string>
+    <string name="facebook_app_id" translatable="false">878271079567990</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb878271079567990</string>
     <string name="label_check_your_email">Check Your Email</string>
     <string name="label_email_sent">We’ve sent an email to the provided address</string>
 
