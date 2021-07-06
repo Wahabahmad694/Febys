@@ -49,7 +49,7 @@ abstract class SocialMediaAuthFragment : com.hexagram.febys.base.BaseFragment() 
 
     private fun getGoogleSignInOptions(): GoogleSignInOptions {
         return GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.google_android_client))
+            .requestIdToken(getString(R.string.google_web_client))
             .requestEmail()
             .build()
     }

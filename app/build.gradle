@@ -157,6 +157,12 @@ dependencies {
     def auth_version = "19.0.0"
     implementation "com.google.android.gms:play-services-auth:$auth_version"
 
+    // firebase
+    def firebase_version = "28.2.0"
+    implementation platform("com.google.firebase:firebase-bom:$firebase_version")
+    implementation 'com.google.firebase:firebase-auth-ktx'
+
+
     // facebook
     def facebook_version = "5.15.3"
     implementation "com.facebook.android:facebook-android-sdk:$facebook_version"
