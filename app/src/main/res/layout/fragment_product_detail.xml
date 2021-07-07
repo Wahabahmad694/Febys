@@ -8,7 +8,7 @@
 
         <variable
             name="product"
-            type="com.android.febys.network.response.Product" />
+            type="com.hexagram.febys.network.response.Product" />
 
     </data>
 
@@ -50,7 +50,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_product_name_appbar" />
 
-        <com.android.febys.utils.ScrollView
+        <com.hexagram.febys.utils.ScrollView
             android:id="@+id/scroll_view"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_0dp"
@@ -126,11 +126,11 @@
                     android:layout_marginTop="@dimen/_8dp"
                     android:ellipsize="end"
                     android:maxLines="2"
+                    android:text="@{product.shortDescriptionHTML}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_product_name"
-                    app:layout_constraintWidth_max="200dp"
-                    binding:display_html="@{product.shortDescriptionHTML}" />
+                    app:layout_constraintWidth_max="200dp" />
 
                 <TextView
                     android:id="@+id/tv_product_price"
@@ -839,7 +839,7 @@
 
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.android.febys.utils.ScrollView>
+        </com.hexagram.febys.utils.ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -8,7 +8,7 @@
 
         <variable
             name="product"
-            type="com.android.febys.network.response.Product" />
+            type="com.hexagram.febys.network.response.Product" />
 
     </data>
 
@@ -88,7 +88,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_16dp"
             android:layout_marginBottom="@dimen/_16dp"
-            android:minWidth="@dimen/_96sdp"
+            android:minWidth="@dimen/_95sdp"
             android:text="@string/label_add_to_cart"
             android:textAppearance="@style/TextTheme.HelveticaNeue.TS14"
             app:layout_constraintBottom_toBottomOf="parent"

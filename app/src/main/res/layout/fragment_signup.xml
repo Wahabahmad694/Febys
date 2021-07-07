@@ -36,7 +36,7 @@
                     style="@style/TextTheme.HelveticaNeue.TS32"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_24dp"
+                    android:layout_marginTop="@dimen/_32dp"
                     android:text="@string/label_sign_up"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -81,7 +81,7 @@
                     style="@style/TextTheme.Arial.TS16"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_24dp"
+                    android:layout_marginTop="@dimen/_32dp"
                     android:text="@string/label_last_name"
                     app:layout_constraintTop_toBottomOf="@id/et_first_name" />
 
@@ -107,7 +107,7 @@
                     style="@style/TextInputLayout.FilledBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_24dp"
+                    android:layout_marginTop="@dimen/_32dp"
                     android:text="@string/label_email_address"
                     app:layout_constraintTop_toBottomOf="@id/et_last_name" />
 
@@ -133,7 +133,7 @@
                     style="@style/TextTheme.Arial.TS16"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_24dp"
+                    android:layout_marginTop="@dimen/_32dp"
                     android:text="@string/label_phone"
                     app:layout_constraintTop_toBottomOf="@id/et_email_address" />
 
@@ -159,12 +159,12 @@
                     style="@style/TextTheme.Arial.TS16"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_24dp"
+                    android:layout_marginTop="@dimen/_32dp"
                     android:text="@string/label_password"
                     app:endIconMode="password_toggle"
                     app:layout_constraintTop_toBottomOf="@id/et_phone" />
 
-                <com.android.febys.utils.PasswordEditText
+                <com.hexagram.febys.utils.PasswordEditText
                     android:id="@+id/et_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -181,12 +181,12 @@
                     style="@style/TextTheme.Arial.TS16"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_24dp"
+                    android:layout_marginTop="@dimen/_32dp"
                     android:text="@string/label_confirm_password"
                     app:endIconMode="password_toggle"
                     app:layout_constraintTop_toBottomOf="@id/et_password" />
 
-                <com.android.febys.utils.PasswordEditText
+                <com.hexagram.febys.utils.PasswordEditText
                     android:id="@+id/et_confirm_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

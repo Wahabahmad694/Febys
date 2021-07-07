@@ -82,11 +82,11 @@
                     style="@style/TextTheme.Arial.TS16"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_24dp"
+                    android:layout_marginTop="@dimen/_32dp"
                     android:text="@string/label_password"
                     app:layout_constraintTop_toBottomOf="@id/et_email_address" />
 
-                <com.android.febys.utils.PasswordEditText
+                <com.hexagram.febys.utils.PasswordEditText
                     android:id="@+id/et_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
