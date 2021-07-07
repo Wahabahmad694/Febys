@@ -25,7 +25,7 @@
             android:layout_width="@dimen/_176sdp"
             android:layout_height="@dimen/_176sdp"
             android:background="@drawable/bg_grey"
-            app:actualImageScaleType="none"
+            app:actualImageScaleType="fitCenter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
