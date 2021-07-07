@@ -19,7 +19,7 @@ interface FebysBackendService {
     @GET("v1/categories/featured")
     suspend fun fetchFeaturedCategories(): ApiResponse<List<Category>>
 
-    @GET("v1/products/today-deals")
+    @GET("v1/products/trending")
     suspend fun fetchTrendingProducts(@QueryMap req: Map<String, Int>): ApiResponse<ResponseOfPagination>
 
     @GET("v1/products/under100")
