@@ -53,7 +53,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_32dp"
-            android:layout_marginTop="@dimen/_8dp"
+            android:layout_marginTop="@dimen/_8sdp"
             android:text="@string/label_email_sent"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
