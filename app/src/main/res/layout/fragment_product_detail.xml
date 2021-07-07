@@ -126,11 +126,11 @@
                     android:layout_marginTop="@dimen/_8dp"
                     android:ellipsize="end"
                     android:maxLines="2"
+                    android:text="@{product.shortDescriptionHTML}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_product_name"
-                    app:layout_constraintWidth_max="200dp"
-                    binding:display_html="@{product.shortDescriptionHTML}" />
+                    app:layout_constraintWidth_max="200dp" />
 
                 <TextView
                     android:id="@+id/tv_product_price"
