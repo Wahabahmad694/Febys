@@ -7,20 +7,12 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:912540354085:android:00d87819be373a7c1261cc",
+        "mobilesdk_app_id": "1:912540354085:android:31a16ded1bcbbf421261cc",
         "android_client_info": {
-          "package_name": "com.hexagram.com"
+          "package_name": "com.hexagram.febys"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "912540354085-rd4rvcg6ju2uo676s8pvar143tgku19l.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.hexagram.com",
-            "certificate_hash": "ad872fbd8e55c47ebf99f4a8ac51fc98cbfca8cf"
-          }
-        },
         {
           "client_id": "912540354085-4u6he1g3h116kmo3f3irg662dtr5aplc.apps.googleusercontent.com",
           "client_type": 3

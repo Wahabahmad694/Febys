@@ -23,7 +23,6 @@
 
     <style name="TextTheme.HelveticaNeue">
         <item name="fontFamily">@font/helvetica_neue</item>
-        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="TextTheme.HelveticaNeue.TS12">

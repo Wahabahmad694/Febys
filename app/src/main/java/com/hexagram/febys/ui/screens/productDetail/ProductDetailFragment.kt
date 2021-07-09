@@ -29,7 +29,7 @@ class ProductDetailFragment : com.hexagram.febys.base.SliderFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        productDetailViewModel.fetchProductDetail(19)
+        productDetailViewModel.fetchProductDetail(21)
     }
 
     override fun onCreateView(

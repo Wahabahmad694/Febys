@@ -13,16 +13,23 @@
         android:paddingHorizontal="@dimen/_16dp"
         tools:context=".ui.screens.search.SearchFragment">
 
+        <View
+            android:id="@+id/bg_top"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ImageView
             android:id="@+id/iv_febys"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8dp"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_febys"
+            android:src="@drawable/ic_febys_small"
+            app:layout_constraintBottom_toBottomOf="@id/bg_top"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/bg_top" />
 
         <ImageView
             android:id="@+id/iv_cart"
@@ -73,9 +80,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_16dp"
-            app:tabTextAppearance="@style/TextTheme.HelveticaNeue.TS12"
             app:layout_constraintTop_toBottomOf="@id/ll_search_container_search_fragment"
-            app:tabMode="scrollable" />
+            app:tabMode="scrollable"
+            app:tabTextAppearance="@style/TextTheme.HelveticaNeue.TS12" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/view_pager_search_fragment"

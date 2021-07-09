@@ -32,7 +32,7 @@
             android:layout_height="@dimen/_0dp"
             android:layout_marginHorizontal="@dimen/_16dp"
             android:layout_marginTop="@dimen/_24dp"
-            app:actualImageScaleType="none"
+            app:actualImageScaleType="fitCenter"
             app:layout_constraintDimensionRatio="16:9"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -40,34 +40,33 @@
             binding:image_url="@{product.product_variants.get(0).images.get(0)}" />
 
         <TextView
-            android:id="@+id/tv_product_name"
+            android:id="@+id/tv_product_brand"
             style="@style/TextTheme.HelveticaNeue.TS12.Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_24dp"
             android:paddingHorizontal="@dimen/_8dp"
+            android:text="Brand Name"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_product" />
+
+        <TextView
+            android:id="@+id/tv_product_name"
+            style="@style/TextTheme.Arial.TS12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:paddingHorizontal="@dimen/_8dp"
             android:text="@{product.name}"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_product"
-            tools:text="TCL" />
-
-        <TextView
-            android:id="@+id/tv_product_short_description"
-            style="@style/TextTheme.Arial.TS12"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:layout_marginTop="@dimen/_2dp"
-            android:paddingHorizontal="@dimen/_8dp"
-            android:text="This is short description"
-            android:textAlignment="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_product_name"
-            tools:text="TCL 32-inch 3-Series 720p Roku Smart TV..." />
+            app:layout_constraintTop_toBottomOf="@id/tv_product_brand"
+            tools:text="USB" />
 
         <TextView
             android:id="@+id/tv_product_price"
@@ -79,7 +78,7 @@
             android:text="@{`$` + product.product_variants.get(0).price}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_product_short_description"
+            app:layout_constraintTop_toBottomOf="@id/tv_product_name"
             tools:text="$149.88" />
 
         <com.google.android.material.button.MaterialButton
