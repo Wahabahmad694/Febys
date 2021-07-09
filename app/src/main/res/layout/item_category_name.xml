@@ -9,16 +9,18 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/_36sdp">
 
         <TextView
             android:id="@+id/tv_name_item_search_view_pager"
-            style="@style/TextAppearance.MaterialComponents.Body2"
+            style="@style/TextTheme.HelveticaNeue.TS12.Bold"
             android:layout_width="@dimen/_0dp"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:paddingTop="@dimen/_8dp"
             android:paddingBottom="@dimen/_8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/iv_right"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

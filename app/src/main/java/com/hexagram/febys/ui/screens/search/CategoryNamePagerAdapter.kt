@@ -1,16 +1,16 @@
 package com.hexagram.febys.ui.screens.search
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import com.hexagram.febys.databinding.ItemSearchViewPagerBinding
+import androidx.recyclerview.widget.RecyclerView
+import com.hexagram.febys.databinding.ItemCategoryNameBinding
 import com.hexagram.febys.network.response.Category
 
-class SearchViewPagerAdapter :
-    PagingDataAdapter<Category, SearchViewPagerAdapter.SearchViewPagerViewHolder>(diffCallback) {
+class CategoryNamePagerAdapter :
+    PagingDataAdapter<Category, CategoryNamePagerAdapter.CategorynamePagerViewHolder>(diffCallback) {
     companion object {
         private val diffCallback = object : DiffUtil.ItemCallback<Category>() {
 
@@ -26,21 +26,21 @@ class SearchViewPagerAdapter :
 
     var interaction: Interaction? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewPagerViewHolder {
-        return SearchViewPagerViewHolder(
-            ItemSearchViewPagerBinding.inflate(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategorynamePagerViewHolder {
+        return CategorynamePagerViewHolder(
+            ItemCategoryNameBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
         )
     }
 
-    override fun onBindViewHolder(holder: SearchViewPagerViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CategorynamePagerViewHolder, position: Int) {
         holder.bind(getItem(position) ?: return, position)
 
     }
 
-    inner class SearchViewPagerViewHolder(
-        private val binding: ItemSearchViewPagerBinding
+    inner class CategorynamePagerViewHolder(
+        private val binding: ItemCategoryNameBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Category, position: Int) {

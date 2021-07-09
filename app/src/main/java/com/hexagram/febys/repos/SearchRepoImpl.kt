@@ -19,16 +19,6 @@ import javax.inject.Inject
 class SearchRepoImpl @Inject constructor(
     private val service: FebysBackendService
 ) : ISearchRepo {
-
-    override fun fetchTabs(dispatcher: CoroutineDispatcher): Flow<DataState<List<String>>> {
-        return flow {
-            val list =
-                listOf("Categories", "Stores", "Vendor Stores", "Celebrity Market", "Promotions")
-
-            emit(DataState.Data(list))
-        }.flowOn(dispatcher)
-    }
-
     override fun fetchAllCategories(
         scope: CoroutineScope, dispatcher: CoroutineDispatcher
     ): Flow<PagingData<Category>> {

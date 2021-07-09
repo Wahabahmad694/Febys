@@ -59,7 +59,11 @@
         android:id="@+id/searchFragment"
         android:name="com.hexagram.febys.ui.screens.search.SearchFragment"
         android:label="SearchFragment"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_searchFragment_to_categoryNameFragment"
+            app:destination="@id/categoryNameFragment" />
+    </fragment>
     <fragment
         android:id="@+id/wishListFragment"
         android:name="com.hexagram.febys.ui.screens.wishlist.WishListFragment"
@@ -93,4 +97,19 @@
             android:defaultValue="true"
             app:argType="boolean" />
     </dialog>
+    <fragment
+        android:id="@+id/categoryNameFragment"
+        android:name="com.hexagram.febys.ui.screens.search.CategoryNameFragment"
+        android:label="CategoryNameFragment"
+        tools:layout="@layout/fragment_category_name">
+        <argument
+            android:name="category"
+            app:argType="com.hexagram.febys.network.response.Category" />
+        <argument
+            android:name="parentName"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_categoryNameFragment_self"
+            app:destination="@id/categoryNameFragment" />
+    </fragment>
 </navigation>

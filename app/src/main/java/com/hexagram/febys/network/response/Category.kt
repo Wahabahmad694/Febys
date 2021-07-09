@@ -1,6 +1,7 @@
 package com.hexagram.febys.network.response
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class Category(
     val id: Int,
@@ -23,7 +24,7 @@ data class Category(
     @SerializedName("total_child")
     val totalChild: Int,
     val children: List<Category>
-) {
+) : Serializable {
     val isEnable
         get() = enable == 1
 
