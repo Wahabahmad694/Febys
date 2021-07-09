@@ -18,6 +18,7 @@ object BindingAdapter {
     fun imageUrl(imageView: SimpleDraweeView, imageUrl: String?) {
         if (imageUrl.isNullOrEmpty()) return
         // todo add retry image, placeholder image or any other settings here
+        imageView.hierarchy.fadeDuration = 200
         imageView.setImageURI(imageUrl)
     }
 

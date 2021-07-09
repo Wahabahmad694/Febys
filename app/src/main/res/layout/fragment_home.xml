@@ -13,16 +13,23 @@
         android:orientation="vertical"
         tools:context=".ui.screens.home.HomeFragment">
 
+        <View
+            android:id="@+id/bg_top"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ImageView
             android:id="@+id/iv_febys"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8dp"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_febys"
+            android:src="@drawable/ic_febys_small"
+            app:layout_constraintBottom_toBottomOf="@id/bg_top"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/bg_top" />
 
         <ImageView
             android:id="@+id/iv_cart"
@@ -38,8 +45,9 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_16dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_febys">
+            app:layout_constraintTop_toBottomOf="@id/bg_top">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -50,7 +58,6 @@
                     style="@style/TextTheme.HelveticaNeue.TS16.Bold"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_48dp"
-                    android:layout_marginTop="@dimen/_16dp"
                     android:background="@color/grey"
                     android:gravity="center"
                     android:text="@string/label_unique_categories"
