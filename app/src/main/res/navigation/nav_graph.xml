@@ -71,7 +71,7 @@
         tools:layout="@layout/fragment_wish_list" />
     <fragment
         android:id="@+id/productDetailFragment"
-        android:name="com.hexagram.febys.ui.screens.productDetail.ProductDetailFragment"
+        android:name="com.hexagram.febys.ui.screens.product.detail.ProductDetailFragment"
         android:label="ProductDetailFragment"
         tools:layout="@layout/fragment_product_detail" />
     <fragment

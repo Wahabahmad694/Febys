@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioButton
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.hexagram.febys.R
-import com.hexagram.febys.base.SliderFragment
 import com.hexagram.febys.databinding.FragmentHomeBinding
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.response.Banner
@@ -19,7 +19,6 @@ import com.hexagram.febys.network.response.SeasonalOffer
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.utils.applySpaceItemDecoration
 import com.hexagram.febys.utils.getHorizontalScrollPosition
-import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -153,20 +152,19 @@ class HomeFragment : com.hexagram.febys.base.SliderFragment() {
                 is DataState.Data -> {
                     val featuredCategories = it.data
                     featuredCategories.forEach { category ->
-                        val chip = makeChip(category.id, category.name)
-                        binding.chipGroupFeaturedCategories.addView(chip)
+                        val radioButton = makeRadioButton(category.id, category.name)
+                        binding.radioGroupFeaturedCategories.addView(radioButton)
                     }
 
-                    binding.chipGroupFeaturedCategories.setOnCheckedChangeListener { _, chipId ->
+                    binding.radioGroupFeaturedCategories.setOnCheckedChangeListener { _, chipId ->
                         val products =
                             featuredCategories.find { category -> category.id == chipId }?.products
                         featuredCategoryProductsAdapter.submitList(products ?: emptyList())
                     }
 
-                    binding.chipGroupFeaturedCategories.isSingleSelection = true
                     // set auto select 1
                     featuredCategories.firstOrNull()?.let { category ->
-                        binding.chipGroupFeaturedCategories.check(category.id)
+                        binding.radioGroupFeaturedCategories.check(category.id)
                     }
                 }
             }
@@ -218,16 +216,16 @@ class HomeFragment : com.hexagram.febys.base.SliderFragment() {
         )
     }
 
-    private fun makeChip(id: Int, text: String): Chip {
-        val chip =
+    private fun makeRadioButton(id: Int, text: String): RadioButton {
+        val radioButton =
             layoutInflater.inflate(
-                R.layout.layout_featured_category_chip, binding.chipGroupFeaturedCategories, false
-            ) as Chip
+                R.layout.layout_chip_type_radio_btn, binding.radioGroupFeaturedCategories, false
+            ) as RadioButton
 
-        chip.id = id
-        chip.text = text
+        radioButton.id = id
+        radioButton.text = text
 
-        return chip
+        return radioButton
     }
 
     private fun observeAndSubmitProductList(

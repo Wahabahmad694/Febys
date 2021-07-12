@@ -1,4 +1,4 @@
-package com.hexagram.febys.ui.screens.productDetail
+package com.hexagram.febys.ui.screens.product.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.hexagram.febys.R
-import com.hexagram.febys.base.SliderFragment
 import com.hexagram.febys.databinding.FragmentProductDetailBinding
 import com.hexagram.febys.databinding.LayoutProductDetailDescriptionHtmlBinding
 import com.hexagram.febys.databinding.LayoutProductDetailDescriptionTitleBinding

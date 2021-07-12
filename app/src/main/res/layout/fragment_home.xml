@@ -197,12 +197,13 @@
                     android:scrollbars="none"
                     app:layout_constraintTop_toBottomOf="@id/tv_featured_categories_slogan">
 
-                    <com.google.android.material.chip.ChipGroup
-                        android:id="@+id/chip_group_featured_categories"
+                    <RadioGroup
+                        android:id="@+id/radio_group_featured_categories"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_16dp"
                         android:clipToPadding="false"
+                        android:orientation="horizontal"
                         android:paddingHorizontal="@dimen/_16dp"
                         app:singleLine="true"
                         app:singleSelection="true" />

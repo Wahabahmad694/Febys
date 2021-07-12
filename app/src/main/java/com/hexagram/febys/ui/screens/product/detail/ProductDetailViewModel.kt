@@ -1,4 +1,4 @@
-package com.hexagram.febys.ui.screens.productDetail
+package com.hexagram.febys.ui.screens.product.detail
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
