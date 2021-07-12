@@ -83,7 +83,7 @@ class CategoryNameFragment : BaseFragment() {
                 if (item.hasChild) {
                     openChild(item)
                 } else {
-                    openProductListing()
+                    openProductListing(item.name)
                 }
             }
         }
@@ -93,7 +93,7 @@ class CategoryNameFragment : BaseFragment() {
                 if (item.hasChild) {
                     openChild(item)
                 } else {
-                    openProductListing()
+                    openProductListing(item.name)
                 }
             }
         }
@@ -139,8 +139,9 @@ class CategoryNameFragment : BaseFragment() {
         navigateTo(navigateToCategoryName)
     }
 
-    private fun openProductListing() {
-        // todo navigate to product list
+    private fun openProductListing(name: String) {
+        val navigateToProductListing = CategoryNameFragmentDirections.actionToProductListing(name)
+        navigateTo(navigateToProductListing)
     }
 
     companion object {

@@ -1,4 +1,4 @@
-package com.hexagram.febys.ui.screens.wishlist
+package com.hexagram.febys.ui.screens.product.listing
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,9 +13,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class WishlistViewModel @Inject constructor(
+class ProductListingViewModel @Inject constructor(
     productRepo: IProductRepo
 ) : ProductViewModel(productRepo) {
+    // todo fetch product listing, following is just for ui testing purpose
     private val _observeWishlist = MutableLiveData<DataState<List<Product>>>()
     val observeWishlist: LiveData<DataState<List<Product>>> = _observeWishlist
 

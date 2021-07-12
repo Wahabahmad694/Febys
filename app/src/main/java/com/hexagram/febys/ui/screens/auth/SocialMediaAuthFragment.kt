@@ -16,8 +16,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.hexagram.febys.R
+import com.hexagram.febys.base.BaseFragment
 
-abstract class SocialMediaAuthFragment : com.hexagram.febys.base.BaseFragment() {
+abstract class SocialMediaAuthFragment : BaseFragment() {
     private lateinit var googleClient: GoogleSignInClient
 
     private var googleSignInCallback: ((token: String) -> Unit)? = null

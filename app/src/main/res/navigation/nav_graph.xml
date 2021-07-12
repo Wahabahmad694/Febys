@@ -5,6 +5,10 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/splashFragment">
 
+    <action
+        android:id="@+id/action_to_product_listing"
+        app:destination="@id/productListingFragment" />
+
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.hexagram.febys.ui.screens.splash.SplashFragment"
@@ -111,5 +115,14 @@
         <action
             android:id="@+id/action_categoryNameFragment_self"
             app:destination="@id/categoryNameFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/productListingFragment"
+        android:name="com.hexagram.febys.ui.screens.product.listing.ProductListingFragment"
+        android:label="ProductListingFragment"
+        tools:layout="@layout/fragment_product_listing">
+        <argument
+            android:name="productListTitle"
+            app:argType="string" />
     </fragment>
 </navigation>

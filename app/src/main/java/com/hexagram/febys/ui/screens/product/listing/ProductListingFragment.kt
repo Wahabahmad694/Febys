@@ -1,30 +1,32 @@
-package com.hexagram.febys.ui.screens.wishlist
+package com.hexagram.febys.ui.screens.product.listing
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import com.hexagram.febys.base.BaseFragment
-import com.hexagram.febys.databinding.FragmentWishListBinding
+import com.hexagram.febys.databinding.FragmentProductListingBinding
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
-import com.hexagram.febys.utils.goBack
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class WishListFragment : BaseFragment() {
-    private lateinit var binding: FragmentWishListBinding
-    private val viewModel: WishlistViewModel by viewModels()
+class ProductListingFragment : BaseFragment() {
+    private lateinit var binding: FragmentProductListingBinding
+    private val productListingViewModel: ProductListingViewModel by viewModels()
 
-    private val adapter = WishlistAdapter()
+    private val args: ProductListingFragmentArgs by navArgs()
+
+    private val productListingAdapter = ProductListingAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        binding = FragmentWishListBinding.inflate(inflater, container, false)
+        binding = FragmentProductListingBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -35,29 +37,30 @@ class WishListFragment : BaseFragment() {
         uiListeners()
         setupObserver()
 
-        if (isUserLoggedIn)
-            viewModel.fetchWishList()
-        else {
-            binding.wishListCount = 0
-        }
+        productListingViewModel.fetchWishList()
     }
 
     private fun initUi() {
-        binding.rvWishList.apply {
+        binding.productListingTitle = args.productListTitle
+
+        binding.rvProductList.apply {
             setHasFixedSize(true)
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL))
             layoutManager = GridLayoutManager(context, 2)
-            adapter = this@WishListFragment.adapter
+            adapter = this@ProductListingFragment.productListingAdapter
         }
     }
 
     private fun uiListeners() {
-        binding.btnGetInspired.setOnClickListener { goBack() }
+        binding.btnRefine.setOnClickListener {
+            // todo show refine screen
+        }
+
     }
 
     private fun setupObserver() {
-        viewModel.observeWishlist.observe(viewLifecycleOwner) {
+        productListingViewModel.observeWishlist.observe(viewLifecycleOwner) {
             when (it) {
                 is DataState.Loading -> {
 
@@ -66,9 +69,9 @@ class WishListFragment : BaseFragment() {
                     ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
                 }
                 is DataState.Data -> {
-                    val wishList = it.data
-                    binding.wishListCount = wishList.size
-                    adapter.submitList(wishList)
+                    val productList = it.data
+                    binding.productListingCount = productList.size
+                    productListingAdapter.submitList(productList)
                 }
             }
         }

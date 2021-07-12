@@ -6,7 +6,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
 
-abstract class SliderFragment : com.hexagram.febys.base.BaseFragment() {
+abstract class SliderFragment : BaseFragment() {
     private val timer = Timer()
 
     abstract fun getSlider(): List<ViewPager2>

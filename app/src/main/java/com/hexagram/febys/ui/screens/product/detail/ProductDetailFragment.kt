@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.hexagram.febys.R
+import com.hexagram.febys.base.SliderFragment
 import com.hexagram.febys.databinding.FragmentProductDetailBinding
 import com.hexagram.febys.databinding.LayoutProductDetailDescriptionHtmlBinding
 import com.hexagram.febys.databinding.LayoutProductDetailDescriptionTitleBinding
@@ -21,7 +22,7 @@ import com.hexagram.febys.utils.toggleVisibility
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ProductDetailFragment : com.hexagram.febys.base.SliderFragment() {
+class ProductDetailFragment : SliderFragment() {
     private lateinit var binding: FragmentProductDetailBinding
     private val productDetailViewModel: ProductDetailViewModel by viewModels()
 

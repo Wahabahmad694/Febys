@@ -12,7 +12,7 @@ import com.hexagram.febys.utils.navigateTo
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SplashFragment : com.hexagram.febys.base.BaseFragment() {
+class SplashFragment : BaseFragment() {
     private lateinit var binding: FragmentSplashBinding
     private val authViewModel: AuthViewModel by viewModels()
 

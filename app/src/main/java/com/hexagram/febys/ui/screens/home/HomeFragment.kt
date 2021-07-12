@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.hexagram.febys.R
+import com.hexagram.febys.base.SliderFragment
 import com.hexagram.febys.databinding.FragmentHomeBinding
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.response.Banner
@@ -22,7 +23,7 @@ import com.hexagram.febys.utils.getHorizontalScrollPosition
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeFragment : com.hexagram.febys.base.SliderFragment() {
+class HomeFragment : SliderFragment() {
     private lateinit var binding: FragmentHomeBinding
     private val viewModel: HomeViewModel by viewModels()
 

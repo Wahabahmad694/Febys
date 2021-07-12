@@ -120,5 +120,7 @@
     <string name="fb_login_protocol_scheme" translatable="false">fb878271079567990</string>
     <string name="label_check_your_email">Check Your Email</string>
     <string name="label_email_sent">We’ve sent an email to the provided address</string>
+    <string name="label_refine">Refine</string>
+    <string name="items_count">%1d Items</string>
 
 </resources>

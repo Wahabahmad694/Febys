@@ -10,7 +10,7 @@ import com.hexagram.febys.network.response.Banner
 
 private const val ARG_IMAGE = "imageArg"
 
-class HomeSliderPageFragment : com.hexagram.febys.base.BaseFragment() {
+class HomeSliderPageFragment : BaseFragment() {
     private lateinit var imageUrl: String
 
     private lateinit var binding: FragmentHomeSliderPageBinding

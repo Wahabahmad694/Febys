@@ -4,11 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentProductSliderPageBinding
 
 private const val ARG_IMAGE = "imageArg"
 
-class ProductSliderPageFragment : com.hexagram.febys.base.BaseFragment() {
+class ProductSliderPageFragment : BaseFragment() {
     private lateinit var imageUrl: String
 
     private lateinit var binding: FragmentProductSliderPageBinding

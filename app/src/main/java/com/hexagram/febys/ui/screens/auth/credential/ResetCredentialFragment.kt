@@ -18,7 +18,7 @@ import com.hexagram.febys.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ResetCredentialFragment : com.hexagram.febys.base.BaseFragment() {
+class ResetCredentialFragment : BaseFragment() {
     private lateinit var binding: FragmentResetCredentialBinding
     private val viewModel: AuthViewModel by viewModels()
 
