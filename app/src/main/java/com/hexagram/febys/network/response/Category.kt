@@ -28,7 +28,6 @@ data class Category(
     val isEnable
         get() = enable == 1
 
-
     val isFeatured
         get() = featured == 1
 
