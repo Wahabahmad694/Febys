@@ -15,18 +15,6 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(
     private val repo: ISearchRepo
 ) : com.hexagram.febys.base.BaseViewModel() {
-    private val _observeTabs = MutableLiveData<DataState<List<String>>>()
-    val observeTabs: LiveData<DataState<List<String>>> = _observeTabs
 
     fun fetchAllCategories() = repo.fetchAllCategories(viewModelScope)
-
-    fun fetchTabs() {
-        viewModelScope.launch {
-            _observeTabs.postValue(DataState.Loading())
-            repo.fetchTabs().collect {
-                _observeTabs.postValue(it)
-            }
-
-        }
-    }
 }

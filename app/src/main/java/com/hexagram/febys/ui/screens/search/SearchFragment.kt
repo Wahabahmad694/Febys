@@ -5,12 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import com.hexagram.febys.databinding.FragmentSearchBinding
-import com.hexagram.febys.base.BaseFragment
-import com.hexagram.febys.network.DataState
-import com.hexagram.febys.ui.screens.dialog.ErrorDialog
-import com.hexagram.febys.utils.showToast
 import com.google.android.material.tabs.TabLayoutMediator
+import com.hexagram.febys.R
+import com.hexagram.febys.databinding.FragmentSearchBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -28,33 +25,21 @@ class SearchFragment : com.hexagram.febys.base.BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setObserver()
-        viewModel.fetchTabs()
+        initUi()
     }
 
-    private fun setObserver() {
-        viewModel.observeTabs.observe(viewLifecycleOwner) {
-            when (it) {
-                is DataState.Loading -> {
-
-                }
-                is DataState.Error -> {
-                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
-                }
-                is DataState.Data -> {
-                    updateTabs(it.data)
-                }
-            }
-        }
+    private fun initUi() {
+        initMenus()
     }
 
-    private fun updateTabs(tabsList: List<String>) {
-        binding.viewPagerSearchFragment.adapter = SearchTabsAdapter(this, tabsList)
+    private fun initMenus() {
+        val menuList = resources.getStringArray(R.array.search_menus).toList()
+        binding.viewPagerSearchFragment.adapter = SearchTabsAdapter(this, menuList)
 
         TabLayoutMediator(
             binding.tabLayoutSearchFragment, binding.viewPagerSearchFragment
         ) { tab, position ->
-            tab.text = tabsList[position]
+            tab.text = menuList[position]
         }.attach()
     }
 }

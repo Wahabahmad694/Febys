@@ -9,6 +9,13 @@ class SearchTabsAdapter(fragment: Fragment, private val tabsList: List<String>) 
     override fun getItemCount(): Int = tabsList.size
 
     override fun createFragment(position: Int): Fragment {
-        return SearchViewPagerFragment.newInstance(tabsList[position], position)
+        return when (position) {
+            0 -> {
+                CategoryNameFragment.newInstance()
+            }
+            else -> {
+                CategoryNameFragment.newInstance()
+            }
+        }
     }
 }
