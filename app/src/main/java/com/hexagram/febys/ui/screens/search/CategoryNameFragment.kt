@@ -107,7 +107,7 @@ class CategoryNameFragment : BaseFragment() {
         binding.rvCategoryName.adapter = pagerAdapter
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.fetchAllCategories().collectLatest { pagingData ->
+            viewModel.allCategoryPagingData.collectLatest { pagingData ->
                 pagerAdapter.submitData(pagingData)
             }
         }
@@ -140,7 +140,9 @@ class CategoryNameFragment : BaseFragment() {
 
     private fun openProductListing(name: String) {
         val navigateToProductListing =
-            CategoryNameFragmentDirections.actionCategoryNameFragmentToCategoryProductListingFragment(name)
+            CategoryNameFragmentDirections.actionCategoryNameFragmentToCategoryProductListingFragment(
+                name
+            )
         navigateTo(navigateToProductListing)
     }
 

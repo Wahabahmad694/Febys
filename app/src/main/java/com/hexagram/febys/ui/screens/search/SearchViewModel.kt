@@ -11,5 +11,5 @@ class SearchViewModel @Inject constructor(
     private val repo: ISearchRepo
 ) : BaseViewModel() {
 
-    fun fetchAllCategories() = repo.fetchAllCategories(viewModelScope)
+    val allCategoryPagingData = repo.fetchAllCategories(viewModelScope)
 }
