@@ -7,7 +7,7 @@ import kotlinx.coroutines.launch
 import java.util.*
 
 abstract class SliderFragment : BaseFragment() {
-    private val timer = Timer()
+    private lateinit var timer: Timer
 
     abstract fun getSlider(): List<ViewPager2>
     abstract fun getRotateInterval(): Long
@@ -15,6 +15,7 @@ abstract class SliderFragment : BaseFragment() {
     override fun onResume() {
         super.onResume()
 
+        timer = Timer()
         timer.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
                 lifecycleScope.launch(Dispatchers.Main) {
@@ -35,8 +36,8 @@ abstract class SliderFragment : BaseFragment() {
         }, getRotateInterval(), getRotateInterval())
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onPause() {
+        super.onPause()
         timer.cancel()
     }
 

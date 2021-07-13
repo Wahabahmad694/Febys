@@ -51,8 +51,8 @@ class HomeFragment : SliderFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+        savedInstanceState?.let { binding.scrollViewHome.y = it.getFloat("scrollPosition", 0f) }
         return binding.root
     }
 
@@ -294,5 +294,10 @@ class HomeFragment : SliderFragment() {
 
         override fun createFragment(position: Int): Fragment =
             HomeSeasonalOfferSliderPageFragment.newInstance(offers[position])
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putFloat("scrollPosition", binding.scrollViewHome.y)
+        super.onSaveInstanceState(outState)
     }
 }
