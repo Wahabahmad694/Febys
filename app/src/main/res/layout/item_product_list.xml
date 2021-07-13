@@ -14,7 +14,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="@dimen/_264sdp">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_fav_toggle"
@@ -28,15 +28,14 @@
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_product"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_0dp"
+            android:layout_width="@dimen/_140sdp"
+            android:layout_height="@dimen/_128sdp"
             android:layout_marginHorizontal="@dimen/_16dp"
-            android:layout_marginTop="@dimen/_24dp"
+            android:layout_marginTop="@dimen/_25sdp"
             app:actualImageScaleType="fitCenter"
-            app:layout_constraintDimensionRatio="16:9"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_fav_toggle"
+            app:layout_constraintTop_toTopOf="parent"
             binding:image_url="@{product.product_variants.get(0).images.get(0)}" />
 
         <TextView
@@ -81,21 +80,12 @@
             app:layout_constraintTop_toBottomOf="@id/tv_product_name"
             tools:text="$149.88" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_add_to_cart"
-            style="@style/ButtonTheme.OutLine"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_16dp"
-            android:layout_marginBottom="@dimen/_16dp"
-            android:minWidth="@dimen/_95sdp"
-            android:text="@string/label_add_to_cart"
-            android:textAppearance="@style/TextTheme.HelveticaNeue.TS14"
-            android:visibility="invisible"
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_120sdp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_product_price" />
+            app:layout_constraintTop_toBottomOf="@id/iv_product"
+            app:layout_constraintVertical_bias="1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
