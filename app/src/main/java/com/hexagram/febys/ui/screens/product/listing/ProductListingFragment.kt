@@ -5,23 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentProductListingBinding
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
+import com.hexagram.febys.utils.goBack
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ProductListingFragment : BaseFragment() {
-    private lateinit var binding: FragmentProductListingBinding
-    private val productListingViewModel: ProductListingViewModel by viewModels()
+abstract class ProductListingFragment : BaseFragment() {
+    protected lateinit var binding: FragmentProductListingBinding
+    protected val productListingViewModel: ProductListingViewModel by viewModels()
 
-    private val args: ProductListingFragmentArgs by navArgs()
-
-    private val productListingAdapter = ProductListingAdapter()
+    protected val productListingAdapter = ProductListingAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -35,13 +33,10 @@ class ProductListingFragment : BaseFragment() {
 
         initUi()
         uiListeners()
-        setupObserver()
-
-        productListingViewModel.fetchWishList()
     }
 
     private fun initUi() {
-        binding.productListingTitle = args.productListTitle
+        binding.productListingTitle = getListingTitle()
 
         binding.rvProductList.apply {
             setHasFixedSize(true)
@@ -53,27 +48,15 @@ class ProductListingFragment : BaseFragment() {
     }
 
     private fun uiListeners() {
+        binding.ivBack.setOnClickListener {
+            goBack()
+        }
+
         binding.btnRefine.setOnClickListener {
             // todo show refine screen
         }
 
     }
 
-    private fun setupObserver() {
-        productListingViewModel.observeWishlist.observe(viewLifecycleOwner) {
-            when (it) {
-                is DataState.Loading -> {
-
-                }
-                is DataState.Error -> {
-                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
-                }
-                is DataState.Data -> {
-                    val productList = it.data
-                    binding.productListingCount = productList.size
-                    productListingAdapter.submitList(productList)
-                }
-            }
-        }
-    }
+    abstract fun getListingTitle(): String
 }

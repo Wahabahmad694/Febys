@@ -20,6 +20,7 @@ import com.hexagram.febys.network.response.SeasonalOffer
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.utils.applySpaceItemDecoration
 import com.hexagram.febys.utils.getHorizontalScrollPosition
+import com.hexagram.febys.utils.navigateTo
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -59,7 +60,31 @@ class HomeFragment : SliderFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initUi()
+        initUiListener()
         setupObserver()
+    }
+
+    private fun initUiListener() {
+        binding.btnShopNowTodayDeals.setOnClickListener {
+            val gotoTodayDealsListingFragment = HomeFragmentDirections
+                .actionHomeFragmentToTodayDealsListingFragment(getString(R.string.label_today_deals))
+
+            navigateTo(gotoTodayDealsListingFragment)
+        }
+
+        binding.btnShopNowTrendingProducts.setOnClickListener {
+            val gotoTodayDealsListingFragment = HomeFragmentDirections
+                .actionHomeFragmentToTrendingProductListingFragment(getString(R.string.label_trending_products))
+
+            navigateTo(gotoTodayDealsListingFragment)
+        }
+
+        binding.btnShopNowUnder100DollarsItems.setOnClickListener {
+            val gotoTodayDealsListingFragment = HomeFragmentDirections
+                .actionHomeFragmentToUnder100DollarsItemListingFragment(getString(R.string.label_under_100_dollar_items))
+
+            navigateTo(gotoTodayDealsListingFragment)
+        }
     }
 
     private fun initUi() {

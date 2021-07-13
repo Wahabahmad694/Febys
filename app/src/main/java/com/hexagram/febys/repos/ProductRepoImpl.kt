@@ -9,6 +9,7 @@ import com.hexagram.febys.network.adapter.onSuccess
 import com.hexagram.febys.network.response.Product
 import com.hexagram.febys.network.response.ResponseProductListing
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
@@ -40,4 +41,46 @@ class ProductRepoImpl @Inject constructor(
             .onException { emit(DataState.ExceptionError()) }
             .onNetworkError { emit(DataState.NetworkError()) }
     }.flowOn(dispatcher)
+
+    override fun fetchTodayDeals(dispatcher: CoroutineDispatcher): Flow<DataState<List<Product>>> {
+        return flow<DataState<List<Product>>> {
+            val req = mapOf("chunkSize" to 10, "pageNo" to 1)
+            backendService.fetchTodayDeals(req)
+                .onSuccess {
+                    val products = data!!.getResponse<ResponseProductListing>().products
+                    emit(DataState.Data(products))
+                }
+                .onError { emit(DataState.ApiError(message)) }
+                .onException { emit(DataState.ExceptionError()) }
+                .onNetworkError { emit(DataState.NetworkError()) }
+        }.flowOn(dispatcher)
+    }
+
+    override fun fetchTrendingProducts(dispatcher: CoroutineDispatcher): Flow<DataState<List<Product>>> {
+        return flow<DataState<List<Product>>> {
+            val req = mapOf("chunkSize" to 10, "pageNo" to 1)
+            backendService.fetchTrendingProducts(req)
+                .onSuccess {
+                    val products = data!!.getResponse<ResponseProductListing>().products
+                    emit(DataState.Data(products))
+                }
+                .onError { emit(DataState.ApiError(message)) }
+                .onException { emit(DataState.ExceptionError()) }
+                .onNetworkError { emit(DataState.NetworkError()) }
+        }.flowOn(dispatcher)
+    }
+
+    override fun fetchUnder100DollarsItems(dispatcher: CoroutineDispatcher): Flow<DataState<List<Product>>> {
+        return flow<DataState<List<Product>>> {
+            val req = mapOf("chunkSize" to 10, "pageNo" to 1)
+            backendService.fetchUnder100DollarsItems(req)
+                .onSuccess {
+                    val products = data!!.getResponse<ResponseProductListing>().products
+                    emit(DataState.Data(products))
+                }
+                .onError { emit(DataState.ApiError(message)) }
+                .onException { emit(DataState.ExceptionError()) }
+                .onNetworkError { emit(DataState.NetworkError()) }
+        }.flowOn(dispatcher)
+    }
 }

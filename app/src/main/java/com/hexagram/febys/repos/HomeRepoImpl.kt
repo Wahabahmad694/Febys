@@ -113,8 +113,4 @@ class HomeRepoImpl @Inject constructor(
                 .onNetworkError { emit(DataState.NetworkError()) }
         }.flowOn(dispatcher)
     }
-
-    private fun getProductList(): List<Product> {
-        return listOf()
-    }
 }

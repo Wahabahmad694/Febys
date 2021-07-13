@@ -16,14 +16,50 @@ import javax.inject.Inject
 class ProductListingViewModel @Inject constructor(
     productRepo: IProductRepo
 ) : ProductViewModel(productRepo) {
-    // todo fetch product listing, following is just for ui testing purpose
     private val _observeWishlist = MutableLiveData<DataState<List<Product>>>()
     val observeWishlist: LiveData<DataState<List<Product>>> = _observeWishlist
+
+    private val _observeTodayDeals = MutableLiveData<DataState<List<Product>>>()
+    val observeTodayDeals: LiveData<DataState<List<Product>>> = _observeTodayDeals
+
+    private val _observeTrendingProducts = MutableLiveData<DataState<List<Product>>>()
+    val observeTrendingProducts: LiveData<DataState<List<Product>>> = _observeTrendingProducts
+
+    private val _observeUnder100DollarsItems = MutableLiveData<DataState<List<Product>>>()
+    val observeUnder100DollarsItems: LiveData<DataState<List<Product>>> =
+        _observeUnder100DollarsItems
 
     fun fetchWishList() = viewModelScope.launch {
         _observeWishlist.postValue(DataState.Loading())
         productRepo.fetchWishList().collect {
             _observeWishlist.postValue(it)
+        }
+    }
+
+    fun fetchToadyDeals() {
+        viewModelScope.launch {
+            _observeTodayDeals.postValue(DataState.Loading())
+            productRepo.fetchTodayDeals().collect {
+                _observeTodayDeals.postValue(it)
+            }
+        }
+    }
+
+    fun fetchTrendingProducts() {
+        viewModelScope.launch {
+            _observeTrendingProducts.postValue(DataState.Loading())
+            productRepo.fetchTrendingProducts().collect {
+                _observeTrendingProducts.postValue(it)
+            }
+        }
+    }
+
+    fun fetchUnder100DollarsItems() {
+        viewModelScope.launch {
+            _observeUnder100DollarsItems.postValue(DataState.Loading())
+            productRepo.fetchUnder100DollarsItems().collect {
+                _observeUnder100DollarsItems.postValue(it)
+            }
         }
     }
 }
