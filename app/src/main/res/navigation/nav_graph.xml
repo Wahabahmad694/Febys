@@ -77,6 +77,9 @@
         <action
             android:id="@+id/action_searchFragment_to_categoryNameFragment"
             app:destination="@id/categoryNameFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_categoryProductListingFragment"
+            app:destination="@id/categoryProductListingFragment" />
     </fragment>
     <fragment
         android:id="@+id/wishListFragment"

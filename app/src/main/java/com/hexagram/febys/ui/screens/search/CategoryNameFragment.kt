@@ -139,10 +139,13 @@ class CategoryNameFragment : BaseFragment() {
     }
 
     private fun openProductListing(name: String) {
-        val navigateToProductListing =
-            CategoryNameFragmentDirections.actionCategoryNameFragmentToCategoryProductListingFragment(
-                name
-            )
+        val navigateToProductListing = if (isFirstPage) {
+            SearchFragmentDirections
+                .actionSearchFragmentToCategoryProductListingFragment(name)
+        } else {
+            CategoryNameFragmentDirections
+                .actionCategoryNameFragmentToCategoryProductListingFragment(name)
+        }
         navigateTo(navigateToProductListing)
     }
 
