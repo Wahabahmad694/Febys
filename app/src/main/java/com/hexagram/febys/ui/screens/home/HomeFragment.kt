@@ -38,7 +38,6 @@ class HomeFragment : SliderFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         viewModel.fetchUniqueCategory()
         viewModel.fetchAllBanner()
         viewModel.fetchTodayDeals()

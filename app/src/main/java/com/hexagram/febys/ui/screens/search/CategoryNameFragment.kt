@@ -132,7 +132,7 @@ class CategoryNameFragment : BaseFragment() {
                 )
             } else {
                 CategoryNameFragmentDirections.actionCategoryNameFragmentSelf(
-                    category, "${binding.tvCategoryName.text}/"
+                    category, "${binding.tvCategoryName.text} / "
                 )
             }
         navigateTo(navigateToCategoryName)
