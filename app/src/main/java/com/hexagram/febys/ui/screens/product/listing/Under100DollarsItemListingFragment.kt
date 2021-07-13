@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.navArgs
 import com.hexagram.febys.network.DataState
+import com.hexagram.febys.network.response.Product
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
+import com.hexagram.febys.utils.navigateTo
 
 class Under100DollarsItemListingFragment : ProductListingFragment() {
     private val args: Under100DollarsItemListingFragmentArgs by navArgs()
@@ -37,6 +39,12 @@ class Under100DollarsItemListingFragment : ProductListingFragment() {
                 }
             }
         }
+    }
+
+    override fun onProductClick(position: Int, item: Product) {
+        val gotoProductListing =
+            Under100DollarsItemListingFragmentDirections.actionToProductDetail(item.id)
+        navigateTo(gotoProductListing)
     }
 
     override fun getListingTitle(): String = args.productListTitle

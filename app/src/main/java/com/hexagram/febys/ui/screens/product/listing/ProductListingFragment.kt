@@ -9,8 +9,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentProductListingBinding
-import com.hexagram.febys.network.DataState
-import com.hexagram.febys.ui.screens.dialog.ErrorDialog
+import com.hexagram.febys.network.response.Product
 import com.hexagram.febys.utils.goBack
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -45,6 +44,12 @@ abstract class ProductListingFragment : BaseFragment() {
             layoutManager = GridLayoutManager(context, 2)
             adapter = this@ProductListingFragment.productListingAdapter
         }
+
+        productListingAdapter.interaction = object : ProductListingAdapter.Interaction {
+            override fun onItemSelected(position: Int, item: Product) {
+                onProductClick(position, item)
+            }
+        }
     }
 
     private fun uiListeners() {
@@ -59,4 +64,6 @@ abstract class ProductListingFragment : BaseFragment() {
     }
 
     abstract fun getListingTitle(): String
+
+    abstract fun onProductClick(position: Int, item: Product)
 }

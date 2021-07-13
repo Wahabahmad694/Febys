@@ -8,6 +8,7 @@ import android.widget.ImageView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.hexagram.febys.R
 import com.hexagram.febys.base.SliderFragment
@@ -25,6 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class ProductDetailFragment : SliderFragment() {
     private lateinit var binding: FragmentProductDetailBinding
     private val productDetailViewModel: ProductDetailViewModel by viewModels()
+    private val args: ProductDetailFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
