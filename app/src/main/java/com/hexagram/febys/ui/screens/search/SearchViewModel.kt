@@ -8,8 +8,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val repo: ISearchRepo
+    searchRepo: ISearchRepo
 ) : BaseViewModel() {
 
-    val allCategoryPagingData = repo.fetchAllCategories(viewModelScope)
+    val allCategoryPagingData = searchRepo.fetchAllCategories(viewModelScope)
 }

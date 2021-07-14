@@ -12,6 +12,8 @@ import com.hexagram.febys.databinding.FragmentWishListBinding
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.utils.goBack
+import com.hexagram.febys.utils.hideLoader
+import com.hexagram.febys.utils.showLoader
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -60,12 +62,14 @@ class WishListFragment : BaseFragment() {
         viewModel.observeWishlist.observe(viewLifecycleOwner) {
             when (it) {
                 is DataState.Loading -> {
-
+                    showLoader()
                 }
                 is DataState.Error -> {
+                    hideLoader()
                     ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
                 }
                 is DataState.Data -> {
+                    hideLoader()
                     val wishList = it.data
                     binding.wishListCount = wishList.size
                     adapter.submitList(wishList)

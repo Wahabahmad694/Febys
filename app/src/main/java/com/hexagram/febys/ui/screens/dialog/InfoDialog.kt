@@ -12,7 +12,7 @@ class InfoDialog(
     @DrawableRes private val infoRes: Int,
     private val infoTitle: String,
     private val infoMsg: String
-) : com.hexagram.febys.base.BaseDialog() {
+) : BaseDialog() {
 
     companion object {
         const val TAG = "InfoDialog"

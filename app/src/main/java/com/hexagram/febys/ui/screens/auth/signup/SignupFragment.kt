@@ -15,10 +15,7 @@ import com.hexagram.febys.network.requests.RequestSignup
 import com.hexagram.febys.ui.screens.auth.AuthViewModel
 import com.hexagram.febys.ui.screens.auth.SocialMediaAuthFragment
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
-import com.hexagram.febys.utils.Validator
-import com.hexagram.febys.utils.clearError
-import com.hexagram.febys.utils.goBack
-import com.hexagram.febys.utils.navigateTo
+import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -118,12 +115,14 @@ class SignupFragment : SocialMediaAuthFragment() {
         viewModel.observeSignupResponse.observe(viewLifecycleOwner) {
             when (it) {
                 is DataState.Loading -> {
-
+                    showLoader()
                 }
                 is DataState.Error -> {
+                    hideLoader()
                     ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
                 }
                 is DataState.Data -> {
+                    hideLoader()
                     gotoNextScreen()
                 }
             }

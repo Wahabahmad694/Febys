@@ -1,18 +1,11 @@
 package com.hexagram.febys.repos
 
 import com.hexagram.febys.R
-import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.FebysBackendService
 import com.hexagram.febys.network.FebysWebCustomizationService
-import com.hexagram.febys.network.adapter.onError
-import com.hexagram.febys.network.adapter.onException
-import com.hexagram.febys.network.adapter.onNetworkError
-import com.hexagram.febys.network.adapter.onSuccess
+import com.hexagram.febys.network.adapter.ApiResponse
 import com.hexagram.febys.network.response.*
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class HomeRepoImpl @Inject constructor(
@@ -20,97 +13,51 @@ class HomeRepoImpl @Inject constructor(
     private val backendService: FebysBackendService
 ) : IHomeRepo {
 
-    override fun fetchAllUniqueCategories(dispatcher: CoroutineDispatcher): Flow<DataState<List<UniqueCategory>>> {
-        return flow<DataState<List<UniqueCategory>>> {
-            webCustomizationService.fetchAllUniqueCategories()
-                .onSuccess { emit(DataState.Data(data!!)) }
-                .onError { emit(DataState.ApiError(message)) }
-                .onException { emit(DataState.ExceptionError()) }
-                .onNetworkError { emit(DataState.NetworkError()) }
-        }.flowOn(dispatcher)
+    override suspend fun fetchAllUniqueCategories(dispatcher: CoroutineDispatcher): List<UniqueCategory> {
+        val response = webCustomizationService.fetchAllUniqueCategories()
+        return (response as? ApiResponse.ApiSuccessResponse)?.data ?: emptyList()
     }
 
-    override fun fetchAllBanner(dispatcher: CoroutineDispatcher): Flow<DataState<List<Banner>>> {
-        return flow<DataState<List<Banner>>> {
-            webCustomizationService.fetchAllBanner()
-                .onSuccess { emit(DataState.Data(data!!)) }
-                .onError { emit(DataState.ApiError(message)) }
-                .onException { emit(DataState.ExceptionError()) }
-                .onNetworkError { emit(DataState.NetworkError()) }
-        }.flowOn(dispatcher)
+    override suspend fun fetchAllBanner(dispatcher: CoroutineDispatcher): List<Banner> {
+        val response = webCustomizationService.fetchAllBanner()
+        return (response as? ApiResponse.ApiSuccessResponse)?.data ?: emptyList()
     }
 
-    override fun fetchTodayDeals(dispatcher: CoroutineDispatcher): Flow<DataState<List<Product>>> {
-        return flow<DataState<List<Product>>> {
-            val req = mapOf("chunkSize" to 10, "pageNo" to 1)
-            backendService.fetchTodayDeals(req)
-                .onSuccess {
-                    val products = data!!.getResponse<ResponseProductListing>().products
-                    emit(DataState.Data(products))
-                }
-                .onError { emit(DataState.ApiError(message)) }
-                .onException { emit(DataState.ExceptionError()) }
-                .onNetworkError { emit(DataState.NetworkError()) }
-        }.flowOn(dispatcher)
+    override suspend fun fetchTodayDeals(dispatcher: CoroutineDispatcher): List<Product> {
+        val req = mapOf("chunkSize" to 10, "pageNo" to 1)
+        val response = backendService.fetchTodayDeals(req)
+        return (response as? ApiResponse.ApiSuccessResponse)?.data
+            ?.getResponse<ResponseProductListing>()?.products ?: emptyList()
     }
 
-    override fun fetchFeaturedCategories(dispatcher: CoroutineDispatcher): Flow<DataState<List<Category>>> {
-        return flow<DataState<List<Category>>> {
-            backendService.fetchFeaturedCategories()
-                .onSuccess {
-                    emit(DataState.Data(data!!))
-                }
-                .onError { emit(DataState.ApiError(message)) }
-                .onException { emit(DataState.ExceptionError()) }
-                .onNetworkError { emit(DataState.NetworkError()) }
-        }.flowOn(dispatcher)
+    override suspend fun fetchFeaturedCategories(dispatcher: CoroutineDispatcher): List<Category> {
+        val response = backendService.fetchFeaturedCategories()
+        return (response as? ApiResponse.ApiSuccessResponse)?.data ?: emptyList()
     }
 
-    override fun fetchAllSeasonalOffers(dispatcher: CoroutineDispatcher): Flow<DataState<List<SeasonalOffer>>> {
-        return flow<DataState<List<SeasonalOffer>>> {
-            webCustomizationService.fetchAllSeasonalOffers()
-                .onSuccess { emit(DataState.Data(data!!)) }
-                .onError { emit(DataState.ApiError(message)) }
-                .onException { emit(DataState.ExceptionError()) }
-                .onNetworkError { emit(DataState.NetworkError()) }
-        }.flowOn(dispatcher)
+    override suspend fun fetchAllSeasonalOffers(dispatcher: CoroutineDispatcher): List<SeasonalOffer> {
+        val response = webCustomizationService.fetchAllSeasonalOffers()
+        return (response as? ApiResponse.ApiSuccessResponse)?.data ?: emptyList()
     }
 
-    override fun fetchTrendingProducts(dispatcher: CoroutineDispatcher): Flow<DataState<List<Product>>> {
-        return flow<DataState<List<Product>>> {
-            val req = mapOf("chunkSize" to 10, "pageNo" to 1)
-            backendService.fetchTrendingProducts(req)
-                .onSuccess {
-                    val products = data!!.getResponse<ResponseProductListing>().products
-                    emit(DataState.Data(products))
-                }
-                .onError { emit(DataState.ApiError(message)) }
-                .onException { emit(DataState.ExceptionError()) }
-                .onNetworkError { emit(DataState.NetworkError()) }
-        }.flowOn(dispatcher)
+    override suspend fun fetchTrendingProducts(dispatcher: CoroutineDispatcher): List<Product> {
+        val req = mapOf("chunkSize" to 10, "pageNo" to 1)
+        val response = backendService.fetchTrendingProducts(req)
+        return (response as? ApiResponse.ApiSuccessResponse)?.data
+            ?.getResponse<ResponseProductListing>()?.products ?: emptyList()
     }
 
-    override fun fetchStoresYouFollow(dispatcher: CoroutineDispatcher): Flow<DataState<List<String>>> {
-        return flow {
-            val list = listOf(
-                "res:///${R.drawable.ic_shirt}",
-                "res:///${R.drawable.ic_shirt}"
-            )
-            emit(DataState.Data(list))
-        }.flowOn(dispatcher)
+    override suspend fun fetchStoresYouFollow(dispatcher: CoroutineDispatcher): List<String> {
+        return listOf(
+            "res:///${R.drawable.ic_shirt}",
+            "res:///${R.drawable.ic_shirt}"
+        )
     }
 
-    override fun fetchUnder100DollarsItems(dispatcher: CoroutineDispatcher): Flow<DataState<List<Product>>> {
-        return flow<DataState<List<Product>>> {
-            val req = mapOf("chunkSize" to 10, "pageNo" to 1)
-            backendService.fetchUnder100DollarsItems(req)
-                .onSuccess {
-                    val products = data!!.getResponse<ResponseProductListing>().products
-                    emit(DataState.Data(products))
-                }
-                .onError { emit(DataState.ApiError(message)) }
-                .onException { emit(DataState.ExceptionError()) }
-                .onNetworkError { emit(DataState.NetworkError()) }
-        }.flowOn(dispatcher)
+    override suspend fun fetchUnder100DollarsItems(dispatcher: CoroutineDispatcher): List<Product> {
+        val req = mapOf("chunkSize" to 10, "pageNo" to 1)
+        val response = backendService.fetchUnder100DollarsItems(req)
+        return (response as? ApiResponse.ApiSuccessResponse)?.data
+            ?.getResponse<ResponseProductListing>()?.products ?: emptyList()
     }
 }

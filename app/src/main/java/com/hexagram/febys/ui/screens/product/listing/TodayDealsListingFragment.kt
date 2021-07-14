@@ -6,7 +6,9 @@ import androidx.navigation.fragment.navArgs
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.response.Product
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
+import com.hexagram.febys.utils.hideLoader
 import com.hexagram.febys.utils.navigateTo
+import com.hexagram.febys.utils.showLoader
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,12 +27,14 @@ class TodayDealsListingFragment : ProductListingFragment() {
         productListingViewModel.observeTodayDeals.observe(viewLifecycleOwner) {
             when (it) {
                 is DataState.Loading -> {
-
+                    showLoader()
                 }
                 is DataState.Error -> {
+                    hideLoader()
                     ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
                 }
                 is DataState.Data -> {
+                    hideLoader()
                     val productList = it.data
                     binding.productListingCount = productList.size
                     productListingAdapter.submitList(productList)

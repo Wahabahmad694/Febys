@@ -11,7 +11,7 @@ import com.hexagram.febys.network.DataState
 
 class ErrorDialog<T>(
     private val error: DataState.Error<T>
-) : com.hexagram.febys.base.BaseDialog() {
+) : BaseDialog() {
 
     companion object {
         const val TAG = "ErrorDialog"

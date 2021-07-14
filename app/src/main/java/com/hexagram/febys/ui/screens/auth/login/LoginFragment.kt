@@ -11,12 +11,10 @@ import com.hexagram.febys.R
 import com.hexagram.febys.databinding.FragmentLoginBinding
 import com.hexagram.febys.enum.SocialLogin
 import com.hexagram.febys.network.DataState
-import com.hexagram.febys.ui.screens.auth.SocialMediaAuthFragment
 import com.hexagram.febys.ui.screens.auth.AuthViewModel
+import com.hexagram.febys.ui.screens.auth.SocialMediaAuthFragment
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
-import com.hexagram.febys.utils.Validator
-import com.hexagram.febys.utils.clearError
-import com.hexagram.febys.utils.navigateTo
+import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -87,12 +85,14 @@ class LoginFragment : SocialMediaAuthFragment() {
         viewModel.observeLoginResponse.observe(viewLifecycleOwner) {
             when (it) {
                 is DataState.Loading -> {
-
+                    showLoader()
                 }
                 is DataState.Error -> {
+                    hideLoader()
                     ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
                 }
                 is DataState.Data -> {
+                    hideLoader()
                     findNavController().popBackStack(R.id.loginFragment, true)
                 }
             }

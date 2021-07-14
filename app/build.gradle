@@ -135,8 +135,9 @@ dependencies {
     implementation "androidx.paging:paging-runtime-ktx:$paging_version"
 
     // image library
-    def fresco_version = "2.4.0"
+    def fresco_version = "2.5.0"
     implementation "com.facebook.fresco:fresco:$fresco_version"
+    implementation "com.facebook.fresco:animated-gif:$fresco_version"
 
     // image slider
     def image_slider_version = "1.4.0"

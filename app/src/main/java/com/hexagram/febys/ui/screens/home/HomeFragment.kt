@@ -8,26 +8,21 @@ import android.widget.RadioButton
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.LiveData
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.hexagram.febys.R
 import com.hexagram.febys.base.SliderFragment
 import com.hexagram.febys.databinding.FragmentHomeBinding
 import com.hexagram.febys.network.DataState
-import com.hexagram.febys.network.response.Banner
-import com.hexagram.febys.network.response.Product
-import com.hexagram.febys.network.response.SeasonalOffer
+import com.hexagram.febys.network.response.*
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
-import com.hexagram.febys.utils.applySpaceItemDecoration
-import com.hexagram.febys.utils.getHorizontalScrollPosition
-import com.hexagram.febys.utils.navigateTo
+import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HomeFragment : SliderFragment() {
     private lateinit var binding: FragmentHomeBinding
-    private val viewModel: HomeViewModel by viewModels()
+    private val viewModel: HomeViewModel by hiltNavGraphViewModels(R.id.nav_graph)
 
     private val uniqueCategoryAdapter = UniqueCategoryAdapter()
     private val todayDealsAdapter = HomeProductsAdapter()
@@ -41,14 +36,7 @@ class HomeFragment : SliderFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.fetchUniqueCategory()
-        viewModel.fetchAllBanner()
-        viewModel.fetchTodayDeals()
-        viewModel.fetchFeaturedCategories()
-        viewModel.fetchAllSeasonalOffers()
-        viewModel.fetchTrendingProducts()
-        viewModel.fetchStoresYouFollow()
-        viewModel.fetchUnder100DollarsItems()
+        viewModel.fetchHomeModel()
     }
 
     override fun onCreateView(
@@ -147,125 +135,87 @@ class HomeFragment : SliderFragment() {
     }
 
     private fun setupObserver() {
-        // unique category
-        viewModel.observeUniqueCategories.observe(viewLifecycleOwner) {
+        viewModel.observeHomeModel.observe(viewLifecycleOwner) {
             when (it) {
                 is DataState.Loading -> {
-
+                    showLoader()
                 }
                 is DataState.Error -> {
+                    hideLoader()
                     ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
                 }
                 is DataState.Data -> {
-                    val uniqueCategories = it.data
-                    uniqueCategoryAdapter.submitList(uniqueCategories)
+                    hideLoader()
+                    val homeModel = it.data
+
+                    setupUniqueCategory(homeModel.uniqueCategories)
+                    setupBanner(homeModel.banners)
+                    setupTodayDeals(homeModel.todayDeals)
+                    setupFeaturedCategories(homeModel.featuredCategories)
+                    setupSeasonalOffers(homeModel.seasonalOffers)
+                    setupTrendingProducts(homeModel.trendingProducts)
+                    setupStoreYouFollow(homeModel.storeYouFollow)
+                    setupUnder100DollarsItems(homeModel.under100DollarsItems)
                 }
             }
         }
+    }
 
-        // slider
-        viewModel.observeSliderImages.observe(viewLifecycleOwner) {
-            when (it) {
-                is DataState.Loading -> {
+    private fun setupTodayDeals(todayDeals: List<Product>) {
+        todayDealsAdapter.submitList(todayDeals)
+    }
 
-                }
-                is DataState.Error -> {
-                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
-                }
-                is DataState.Data -> {
-                    val sliderImages = it.data.filter { banner -> banner.type == "headerImages" }
-                    binding.imageSliderHome.adapter = HomeSliderPageAdapter(sliderImages, this)
-                    binding.dotsIndicator.setViewPager2(binding.imageSliderHome)
-                }
-            }
+    private fun setupFeaturedCategories(featuredCategories: List<Category>) {
+        featuredCategories.forEach { category ->
+            val radioButton = makeRadioButton(category.id, category.name)
+            binding.radioGroupFeaturedCategories.addView(radioButton)
         }
 
-        //today deals
-        observeAndSubmitProductList(
-            todayDealsAdapter,
-            viewModel.observeTodayDeals
-        )
+        binding.radioGroupFeaturedCategories.setOnCheckedChangeListener { _, id ->
+            val products =
+                featuredCategories.find { category -> category.id == id }?.products
+            featuredCategoryProductsAdapter.submitList(products ?: emptyList())
 
-        // featured categories
-        viewModel.observeFeaturedCategories.observe(viewLifecycleOwner) {
-            when (it) {
-                is DataState.Loading -> {
-
-                }
-                is DataState.Error -> {
-                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
-                }
-                is DataState.Data -> {
-                    val featuredCategories = it.data
-                    featuredCategories.forEach { category ->
-                        val radioButton = makeRadioButton(category.id, category.name)
-                        binding.radioGroupFeaturedCategories.addView(radioButton)
-                    }
-
-                    binding.radioGroupFeaturedCategories.setOnCheckedChangeListener { _, id ->
-                        val products =
-                            featuredCategories.find { category -> category.id == id }?.products
-                        featuredCategoryProductsAdapter.submitList(products ?: emptyList())
-
-                        lastCheckedCategoryId = id
-                    }
-
-                    // set auto select 1
-                    if (lastCheckedCategoryId != -1) {
-                        binding.radioGroupFeaturedCategories.check(lastCheckedCategoryId)
-                    } else {
-                        featuredCategories.firstOrNull()?.let { category ->
-                            binding.radioGroupFeaturedCategories.check(category.id)
-                        }
-                    }
-                }
-            }
+            lastCheckedCategoryId = id
         }
 
-        // seasonal offers
-        viewModel.observeSeasonalOffers.observe(viewLifecycleOwner) {
-            when (it) {
-                is DataState.Loading -> {
-
-                }
-                is DataState.Error -> {
-                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
-                }
-                is DataState.Data -> {
-                    binding.sliderSeasonalOffer.adapter =
-                        HomeSeasonalOfferSliderPageAdapter(it.data, this)
-                    binding.sliderSeasonalOfferDotsIndicator.setViewPager2(binding.sliderSeasonalOffer)
-                }
+        // set auto select 1
+        if (lastCheckedCategoryId != -1) {
+            binding.radioGroupFeaturedCategories.check(lastCheckedCategoryId)
+        } else {
+            featuredCategories.firstOrNull()?.let { category ->
+                binding.radioGroupFeaturedCategories.check(category.id)
             }
         }
+    }
 
-        // trending products
-        observeAndSubmitProductList(
-            trendingProductsAdapter,
-            viewModel.observeTrendingProducts
-        )
+    private fun setupUniqueCategory(uniqueCategories: List<UniqueCategory>) {
+        uniqueCategoryAdapter.submitList(uniqueCategories)
+    }
 
-        // store you follow
-        viewModel.observeStoreYouFollow.observe(viewLifecycleOwner) {
-            when (it) {
-                is DataState.Loading -> {
+    private fun setupBanner(banners: List<Banner>) {
+        val sliderImages =
+            banners.filter { banner -> banner.type == "headerImages" }
+        binding.imageSliderHome.adapter = HomeSliderPageAdapter(sliderImages, this)
+        binding.dotsIndicator.setViewPager2(binding.imageSliderHome)
+    }
 
-                }
-                is DataState.Error -> {
-                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
-                }
-                is DataState.Data -> {
-                    val storesList = it.data
-                    storeYouFollowAdapter.submitList(storesList)
-                }
-            }
-        }
+    private fun setupSeasonalOffers(seasonalOffers: List<SeasonalOffer>) {
+        binding.sliderSeasonalOffer.adapter =
+            HomeSeasonalOfferSliderPageAdapter(seasonalOffers, this)
+        binding.sliderSeasonalOfferDotsIndicator.setViewPager2(binding.sliderSeasonalOffer)
+    }
 
-        // under $100 items
-        observeAndSubmitProductList(
-            under100DollarsItemAdapter,
-            viewModel.observeUnder100DollarsItems
-        )
+    private fun setupTrendingProducts(trendingProducts: List<Product>) {
+        trendingProductsAdapter.submitList(trendingProducts)
+    }
+
+    private fun setupStoreYouFollow(storeYouFollow: List<String>) {
+        storeYouFollowAdapter.submitList(storeYouFollow)
+    }
+
+    private fun setupUnder100DollarsItems(under100DollarsItems: List<Product>) {
+        under100DollarsItemAdapter.submitList(under100DollarsItems)
     }
 
     private fun makeRadioButton(id: Int, text: String): RadioButton {
@@ -278,26 +228,6 @@ class HomeFragment : SliderFragment() {
         radioButton.text = text
 
         return radioButton
-    }
-
-    private fun observeAndSubmitProductList(
-        adapter: HomeProductsAdapter,
-        observable: LiveData<DataState<List<Product>>>
-    ) {
-        observable.observe(viewLifecycleOwner) {
-            when (it) {
-                is DataState.Loading -> {
-
-                }
-                is DataState.Error -> {
-                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
-                }
-                is DataState.Data -> {
-                    val products = it.data
-                    adapter.submitList(products)
-                }
-            }
-        }
     }
 
     override fun getSlider() =
