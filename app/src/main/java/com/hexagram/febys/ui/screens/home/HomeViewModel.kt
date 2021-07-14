@@ -20,9 +20,9 @@ class HomeViewModel @Inject constructor(
     private val _observeHomeModel = MutableLiveData<DataState<HomeModel>>()
     val observeHomeModel: LiveData<DataState<HomeModel>> = _observeHomeModel
 
-    fun fetchHomeModel() {
+    fun fetchHomeModel(isRefresh: Boolean = false) {
         viewModelScope.launch {
-            if (_observeHomeModel.value != null && _observeHomeModel.value is DataState.Data) {
+            if (!isRefresh && (_observeHomeModel.value != null && _observeHomeModel.value is DataState.Data)) {
                 return@launch
             }
             _observeHomeModel.postValue(DataState.Loading())
