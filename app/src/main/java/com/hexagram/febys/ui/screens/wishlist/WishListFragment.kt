@@ -15,7 +15,7 @@ import com.hexagram.febys.utils.goBack
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class WishListFragment : com.hexagram.febys.base.BaseFragment() {
+class WishListFragment : BaseFragment() {
     private lateinit var binding: FragmentWishListBinding
     private val viewModel: WishlistViewModel by viewModels()
 

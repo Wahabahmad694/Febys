@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -16,6 +15,7 @@ import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentCategoryNameBinding
 import com.hexagram.febys.network.response.Category
+import com.hexagram.febys.utils.goBack
 import com.hexagram.febys.utils.navigateTo
 import com.hexagram.febys.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -51,6 +51,7 @@ class CategoryNameFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initUi()
+        uiListeners()
     }
 
     private fun initUi() {
@@ -69,13 +70,11 @@ class CategoryNameFragment : BaseFragment() {
             binding.categoryName = "${args.parentName}${args.category.name}"
             setupCategorySimpleAdapter(args.category.children)
         }
-
-        uiListeners()
     }
 
     private fun uiListeners() {
         binding.ivBack.setOnClickListener {
-            findNavController().popBackStack()
+            goBack()
         }
 
         simpleAdapter.interaction = object : CategoryNameAdapter.Interaction {
@@ -83,7 +82,7 @@ class CategoryNameFragment : BaseFragment() {
                 if (item.hasChild) {
                     openChild(item)
                 } else {
-                    openProductListing()
+                    openProductListing(item.name)
                 }
             }
         }
@@ -93,7 +92,7 @@ class CategoryNameFragment : BaseFragment() {
                 if (item.hasChild) {
                     openChild(item)
                 } else {
-                    openProductListing()
+                    openProductListing(item.name)
                 }
             }
         }
@@ -108,7 +107,7 @@ class CategoryNameFragment : BaseFragment() {
         binding.rvCategoryName.adapter = pagerAdapter
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.fetchAllCategories().collectLatest { pagingData ->
+            viewModel.allCategoryPagingData.collectLatest { pagingData ->
                 pagerAdapter.submitData(pagingData)
             }
         }
@@ -133,14 +132,21 @@ class CategoryNameFragment : BaseFragment() {
                 )
             } else {
                 CategoryNameFragmentDirections.actionCategoryNameFragmentSelf(
-                    category, "${binding.tvCategoryName.text}/"
+                    category, "${binding.tvCategoryName.text} / "
                 )
             }
         navigateTo(navigateToCategoryName)
     }
 
-    private fun openProductListing() {
-        // todo navigate to product list
+    private fun openProductListing(name: String) {
+        val navigateToProductListing = if (isFirstPage) {
+            SearchFragmentDirections
+                .actionSearchFragmentToCategoryProductListingFragment(name)
+        } else {
+            CategoryNameFragmentDirections
+                .actionCategoryNameFragmentToCategoryProductListingFragment(name)
+        }
+        navigateTo(navigateToProductListing)
     }
 
     companion object {

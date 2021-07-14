@@ -14,19 +14,16 @@
          set following id to android:id="@+id/messageFragment"-->
     <item
         android:id="@+id/productDetailFragment"
-        android:enabled="true"
         android:icon="@drawable/ic_message_bottom_nav"
         android:title="@string/menu_message" />
 
     <item
         android:id="@+id/wishListFragment"
-        android:enabled="true"
         android:icon="@drawable/ic_un_fav"
         android:title="@string/menu_wishlist" />
 
     <item
         android:id="@+id/accountFragment"
-        android:enabled="true"
         android:icon="@drawable/ic_account_bottom_nav"
         android:title="@string/menu_account" />
 </menu>

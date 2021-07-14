@@ -14,4 +14,10 @@ interface IProductRepo {
     fun fetchWishList(
         dispatcher: CoroutineDispatcher = Dispatchers.IO
     ): Flow<DataState<List<Product>>>
+
+    fun fetchTodayDeals(dispatcher: CoroutineDispatcher = Dispatchers.IO): Flow<DataState<List<Product>>>
+
+    fun fetchTrendingProducts(dispatcher: CoroutineDispatcher = Dispatchers.IO): Flow<DataState<List<Product>>>
+
+    fun fetchUnder100DollarsItems(dispatcher: CoroutineDispatcher = Dispatchers.IO): Flow<DataState<List<Product>>>
 }

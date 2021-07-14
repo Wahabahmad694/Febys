@@ -3,6 +3,7 @@ package com.hexagram.febys.ui.screens.auth
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.hexagram.febys.base.BaseViewModel
 import com.hexagram.febys.enum.SocialLogin
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.requests.RequestSignup
@@ -19,7 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AuthViewModel @Inject constructor(
     private val repo: IAuthRepo
-) : com.hexagram.febys.base.BaseViewModel() {
+) : BaseViewModel() {
     private val _observeSignupResponse = MutableLiveData<DataState<ResponseSignup>>()
     val observeSignupResponse: LiveData<DataState<ResponseSignup>> = _observeSignupResponse
 

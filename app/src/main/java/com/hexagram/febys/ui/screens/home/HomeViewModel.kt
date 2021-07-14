@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val repo: IHomeRepo
-) : com.hexagram.febys.base.BaseViewModel() {
+) : BaseViewModel() {
     private val _observeUniqueCategories = MutableLiveData<DataState<List<UniqueCategory>>>()
     val observeUniqueCategories: LiveData<DataState<List<UniqueCategory>>> =
         _observeUniqueCategories

@@ -17,14 +17,23 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="@dimen/_176sdp"
+        android:layout_width="@dimen/_186sdp"
         android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/bg_image"
+            android:layout_width="@dimen/_186sdp"
+            android:layout_height="@dimen/_186sdp"
+            android:background="@drawable/bg_grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_product_image"
-            android:layout_width="@dimen/_176sdp"
-            android:layout_height="@dimen/_176sdp"
-            android:background="@drawable/bg_grey"
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_134sdp"
+            android:layout_marginTop="@dimen/_25sdp"
             app:actualImageScaleType="fitCenter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -34,13 +43,13 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_fav"
-            android:layout_width="@dimen/_24dp"
-            android:layout_height="@dimen/_24dp"
+            android:layout_width="@dimen/_16dp"
+            android:layout_height="@dimen/_16dp"
             android:layout_marginTop="@dimen/_16dp"
             android:layout_marginEnd="@dimen/_16dp"
             android:src="@{isFav ? @drawable/ic_fav: @drawable/ic_un_fav}"
-            app:layout_constraintEnd_toEndOf="@id/iv_product_image"
-            app:layout_constraintTop_toTopOf="@id/iv_product_image" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_product_name"
@@ -50,9 +59,7 @@
             android:layout_marginTop="@dimen/_16dp"
             android:text="@{product.name}"
             android:textAlignment="center"
-            app:layout_constraintEnd_toEndOf="@id/iv_product_image"
-            app:layout_constraintStart_toStartOf="@id/iv_product_image"
-            app:layout_constraintTop_toBottomOf="@id/iv_product_image"
+            app:layout_constraintTop_toBottomOf="@id/bg_image"
             tools:text="Ideas Running Shop" />
 
         <TextView

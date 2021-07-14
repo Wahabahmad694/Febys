@@ -5,11 +5,12 @@ import androidx.core.view.isVisible
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.hexagram.febys.R
+import com.hexagram.febys.base.BaseActivity
 import com.hexagram.febys.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : com.hexagram.febys.base.BaseActivity() {
+class MainActivity : BaseActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private val showBottomNavInDestinations =

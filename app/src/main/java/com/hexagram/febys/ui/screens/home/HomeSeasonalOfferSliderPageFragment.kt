@@ -11,7 +11,7 @@ import com.hexagram.febys.network.response.SeasonalOffer
 private const val ARG_IMAGE = "imageArg"
 private const val ARG_TITLE = "title"
 
-class HomeSeasonalOfferSliderPageFragment : com.hexagram.febys.base.BaseFragment() {
+class HomeSeasonalOfferSliderPageFragment : BaseFragment() {
     private lateinit var imageUrl: String
     private lateinit var title: String
 
