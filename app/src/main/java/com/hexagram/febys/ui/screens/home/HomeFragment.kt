@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
@@ -35,6 +36,8 @@ class HomeFragment : SliderFragment() {
     private val storeYouFollowAdapter = HomeStoresAdapter()
     private val under100DollarsItemAdapter = HomeProductsAdapter()
 
+    private var lastCheckedCategoryId = -1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -52,7 +55,14 @@ class HomeFragment : SliderFragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
-        savedInstanceState?.let { binding.scrollViewHome.y = it.getFloat("scrollPosition", 0f) }
+
+        savedInstanceState?.let {
+            binding.scrollViewHome.y = it.getFloat(KEY_HOME_SCROLL_POSITION, 0f)
+        }
+        savedInstanceState?.let {
+            lastCheckedCategoryId = it.getInt(KEY_LAST_CHECKED_FEATURED_CATEGORY_ID, -1)
+        }
+
         return binding.root
     }
 
@@ -61,29 +71,6 @@ class HomeFragment : SliderFragment() {
         initUi()
         initUiListener()
         setupObserver()
-    }
-
-    private fun initUiListener() {
-        binding.btnShopNowTodayDeals.setOnClickListener {
-            val gotoTodayDealsListingFragment = HomeFragmentDirections
-                .actionHomeFragmentToTodayDealsListingFragment(getString(R.string.label_today_deals))
-
-            navigateTo(gotoTodayDealsListingFragment)
-        }
-
-        binding.btnShopNowTrendingProducts.setOnClickListener {
-            val gotoTodayDealsListingFragment = HomeFragmentDirections
-                .actionHomeFragmentToTrendingProductListingFragment(getString(R.string.label_trending_products))
-
-            navigateTo(gotoTodayDealsListingFragment)
-        }
-
-        binding.btnShopNowUnder100DollarsItems.setOnClickListener {
-            val gotoTodayDealsListingFragment = HomeFragmentDirections
-                .actionHomeFragmentToUnder100DollarsItemListingFragment(getString(R.string.label_under_100_dollar_items))
-
-            navigateTo(gotoTodayDealsListingFragment)
-        }
     }
 
     private fun initUi() {
@@ -123,6 +110,40 @@ class HomeFragment : SliderFragment() {
         binding.rvUnder100DollarsItems.applySpaceItemDecoration(horizontalDimenRes = R.dimen._24dp)
         binding.rvUnder100DollarsItems.setHasFixedSize(true)
         binding.rvUnder100DollarsItems.adapter = under100DollarsItemAdapter
+    }
+
+    private fun initUiListener() {
+        binding.btnShopNowTodayDeals.setOnClickListener {
+            val gotoTodayDealsListingFragment = HomeFragmentDirections
+                .actionHomeFragmentToTodayDealsListingFragment(getString(R.string.label_today_deals))
+            navigateTo(gotoTodayDealsListingFragment)
+        }
+
+        binding.btnShopNowTrendingProducts.setOnClickListener {
+            val gotoTodayDealsListingFragment = HomeFragmentDirections
+                .actionHomeFragmentToTrendingProductListingFragment(getString(R.string.label_trending_products))
+            navigateTo(gotoTodayDealsListingFragment)
+        }
+
+        binding.btnShopNowUnder100DollarsItems.setOnClickListener {
+            val gotoTodayDealsListingFragment = HomeFragmentDirections
+                .actionHomeFragmentToUnder100DollarsItemListingFragment(getString(R.string.label_under_100_dollar_items))
+            navigateTo(gotoTodayDealsListingFragment)
+        }
+
+        binding.btnShopNowFeaturedCategories.setOnClickListener {
+            var categoryTitle = getString(R.string.label_featured_categories)
+            binding.radioGroupFeaturedCategories.children.forEach {
+                if (it.id == binding.radioGroupFeaturedCategories.checkedRadioButtonId) {
+                    categoryTitle = (it as RadioButton).text.toString()
+                    return@forEach
+                }
+            }
+
+            val gotoCategoryListing = HomeFragmentDirections
+                .actionHomeFragmentToCategoryProductListingFragment(categoryTitle)
+            navigateTo(gotoCategoryListing)
+        }
     }
 
     private fun setupObserver() {
@@ -181,15 +202,21 @@ class HomeFragment : SliderFragment() {
                         binding.radioGroupFeaturedCategories.addView(radioButton)
                     }
 
-                    binding.radioGroupFeaturedCategories.setOnCheckedChangeListener { _, chipId ->
+                    binding.radioGroupFeaturedCategories.setOnCheckedChangeListener { _, id ->
                         val products =
-                            featuredCategories.find { category -> category.id == chipId }?.products
+                            featuredCategories.find { category -> category.id == id }?.products
                         featuredCategoryProductsAdapter.submitList(products ?: emptyList())
+
+                        lastCheckedCategoryId = id
                     }
 
                     // set auto select 1
-                    featuredCategories.firstOrNull()?.let { category ->
-                        binding.radioGroupFeaturedCategories.check(category.id)
+                    if (lastCheckedCategoryId != -1) {
+                        binding.radioGroupFeaturedCategories.check(lastCheckedCategoryId)
+                    } else {
+                        featuredCategories.firstOrNull()?.let { category ->
+                            binding.radioGroupFeaturedCategories.check(category.id)
+                        }
                     }
                 }
             }
@@ -297,7 +324,13 @@ class HomeFragment : SliderFragment() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putFloat("scrollPosition", binding.scrollViewHome.y)
+        outState.putFloat(KEY_HOME_SCROLL_POSITION, binding.scrollViewHome.y)
+        outState.putInt(KEY_LAST_CHECKED_FEATURED_CATEGORY_ID, lastCheckedCategoryId)
         super.onSaveInstanceState(outState)
+    }
+
+    companion object {
+        const val KEY_HOME_SCROLL_POSITION = "scrollPosition"
+        const val KEY_LAST_CHECKED_FEATURED_CATEGORY_ID = "lastCheckedFeaturedCategoryId"
     }
 }
