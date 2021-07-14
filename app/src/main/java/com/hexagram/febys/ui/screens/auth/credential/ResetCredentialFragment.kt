@@ -12,9 +12,7 @@ import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.auth.AuthViewModel
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.ui.screens.dialog.InfoDialog
-import com.hexagram.febys.utils.Validator
-import com.hexagram.febys.utils.goBack
-import com.hexagram.febys.utils.showToast
+import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -55,12 +53,14 @@ class ResetCredentialFragment : BaseFragment() {
         viewModel.observeResetCredentialResponse.observe(viewLifecycleOwner) {
             when (it) {
                 is DataState.Loading -> {
-
+                    showLoader()
                 }
                 is DataState.Error -> {
+                    hideLoader()
                     ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
                 }
                 is DataState.Data -> {
+                    hideLoader()
                     InfoDialog(
                         R.drawable.ic_email,
                         getString(R.string.label_check_your_email),

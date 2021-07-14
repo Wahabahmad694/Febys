@@ -12,10 +12,12 @@ import com.hexagram.febys.base.BaseDialog
 import com.hexagram.febys.databinding.DialogOtpVerificationBinding
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.auth.AuthViewModel
+import com.hexagram.febys.utils.hideLoader
+import com.hexagram.febys.utils.showLoader
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class OtpVerificationDialog : com.hexagram.febys.base.BaseDialog() {
+class OtpVerificationDialog : BaseDialog() {
     private lateinit var binding: DialogOtpVerificationBinding
     private val viewModel: AuthViewModel by viewModels()
     private val args: OtpVerificationDialogArgs by navArgs()
@@ -47,13 +49,15 @@ class OtpVerificationDialog : com.hexagram.febys.base.BaseDialog() {
         viewModel.observeOtpResponse.observe(viewLifecycleOwner) {
             when (it) {
                 is DataState.Loading -> {
-
+                    showLoader()
                 }
                 is DataState.Error -> {
+                    hideLoader()
                     ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
                     binding.otpView.text?.clear()
                 }
                 is DataState.Data -> {
+                    hideLoader()
                     navigateToHomeScreen()
                 }
             }

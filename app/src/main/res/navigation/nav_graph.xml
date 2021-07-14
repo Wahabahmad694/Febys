@@ -68,6 +68,9 @@
         <action
             android:id="@+id/action_homeFragment_to_under100DollarsItemListingFragment"
             app:destination="@id/under100DollarsItemListingFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_categoryProductListingFragment"
+            app:destination="@id/categoryProductListingFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"

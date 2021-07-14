@@ -4,114 +4,49 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.hexagram.febys.base.BaseViewModel
+import com.hexagram.febys.models.view.HomeModel
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.response.*
 import com.hexagram.febys.repos.IHomeRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val repo: IHomeRepo
+    private val homeRepo: IHomeRepo
 ) : BaseViewModel() {
-    private val _observeUniqueCategories = MutableLiveData<DataState<List<UniqueCategory>>>()
-    val observeUniqueCategories: LiveData<DataState<List<UniqueCategory>>> =
-        _observeUniqueCategories
+    private val _observeHomeModel = MutableLiveData<DataState<HomeModel>>()
+    val observeHomeModel: LiveData<DataState<HomeModel>> = _observeHomeModel
 
-    private val _observeSliderImages = MutableLiveData<DataState<List<Banner>>>()
-    val observeSliderImages: LiveData<DataState<List<Banner>>> = _observeSliderImages
-
-    private val _observeTodayDeals = MutableLiveData<DataState<List<Product>>>()
-    val observeTodayDeals: LiveData<DataState<List<Product>>> = _observeTodayDeals
-
-    private val _observeFeaturedCategories = MutableLiveData<DataState<List<Category>>>()
-    val observeFeaturedCategories: LiveData<DataState<List<Category>>> = _observeFeaturedCategories
-
-    private val _observeSeasonalOffers = MutableLiveData<DataState<List<SeasonalOffer>>>()
-    val observeSeasonalOffers: LiveData<DataState<List<SeasonalOffer>>> = _observeSeasonalOffers
-
-    private val _observeTrendingProducts = MutableLiveData<DataState<List<Product>>>()
-    val observeTrendingProducts: LiveData<DataState<List<Product>>> = _observeTrendingProducts
-
-    private val _observeStoreYouFollow = MutableLiveData<DataState<List<String>>>()
-    val observeStoreYouFollow: LiveData<DataState<List<String>>> = _observeStoreYouFollow
-
-    private val _observeUnder100DollarsItems = MutableLiveData<DataState<List<Product>>>()
-    val observeUnder100DollarsItems: LiveData<DataState<List<Product>>> =
-        _observeUnder100DollarsItems
-
-
-    fun fetchAllBanner() {
+    fun fetchHomeModel(isRefresh: Boolean = false) {
         viewModelScope.launch {
-            _observeSliderImages.postValue(DataState.Loading())
-            repo.fetchAllBanner().collect {
-                _observeSliderImages.postValue(it)
+            if (!isRefresh && (_observeHomeModel.value != null && _observeHomeModel.value is DataState.Data)) {
+                return@launch
             }
-        }
-    }
+            _observeHomeModel.postValue(DataState.Loading())
+            val uniqueCategories = async { homeRepo.fetchAllUniqueCategories() }
+            val banners = async { homeRepo.fetchAllBanner() }
+            val todayDeals = async { homeRepo.fetchTodayDeals() }
+            val featuredCategories = async { homeRepo.fetchFeaturedCategories() }
+            val seasonalOffers = async { homeRepo.fetchAllSeasonalOffers() }
+            val trendingProducts = async { homeRepo.fetchTrendingProducts() }
+            val storeYouFollow = async { homeRepo.fetchStoresYouFollow() }
+            val under100DollarsItems = async { homeRepo.fetchUnder100DollarsItems() }
 
-    fun fetchUniqueCategory() {
-        viewModelScope.launch {
-            _observeUniqueCategories.postValue(DataState.Loading())
-            repo.fetchAllUniqueCategories().collect {
-                _observeUniqueCategories.postValue(it)
-            }
-        }
-    }
+            val homeModel = HomeModel(
+                uniqueCategories.await(),
+                banners.await(),
+                todayDeals.await(),
+                featuredCategories.await(),
+                seasonalOffers.await(),
+                trendingProducts.await(),
+                storeYouFollow.await(),
+                under100DollarsItems.await()
+            )
 
-    fun fetchTodayDeals() {
-        viewModelScope.launch {
-            _observeTodayDeals.postValue(DataState.Loading())
-            repo.fetchTodayDeals().collect {
-                _observeTodayDeals.postValue(it)
-            }
-        }
-    }
-
-    fun fetchFeaturedCategories() {
-        viewModelScope.launch {
-            _observeFeaturedCategories.postValue(DataState.Loading())
-            repo.fetchFeaturedCategories().collect {
-                _observeFeaturedCategories.postValue(it)
-            }
-        }
-    }
-
-    fun fetchAllSeasonalOffers() {
-        viewModelScope.launch {
-            _observeSeasonalOffers.postValue(DataState.Loading())
-            repo.fetchAllSeasonalOffers().collect {
-                _observeSeasonalOffers.postValue(it)
-            }
-        }
-    }
-
-    fun fetchTrendingProducts() {
-        viewModelScope.launch {
-            _observeTrendingProducts.postValue(DataState.Loading())
-            repo.fetchTrendingProducts().collect {
-                _observeTrendingProducts.postValue(it)
-            }
-        }
-    }
-
-    fun fetchStoresYouFollow() {
-        viewModelScope.launch {
-            _observeStoreYouFollow.postValue(DataState.Loading())
-            repo.fetchStoresYouFollow().collect {
-                _observeStoreYouFollow.postValue(it)
-            }
-        }
-    }
-
-    fun fetchUnder100DollarsItems() {
-        viewModelScope.launch {
-            _observeUnder100DollarsItems.postValue(DataState.Loading())
-            repo.fetchUnder100DollarsItems().collect {
-                _observeUnder100DollarsItems.postValue(it)
-            }
+            _observeHomeModel.postValue(DataState.Data(homeModel))
         }
     }
 

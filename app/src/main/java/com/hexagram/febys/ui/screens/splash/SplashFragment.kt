@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentSplashBinding
 import com.hexagram.febys.ui.screens.auth.AuthViewModel
@@ -35,6 +37,8 @@ class SplashFragment : BaseFragment() {
             val navigateToHome =
                 SplashFragmentDirections.actionSplashFragmentToHomeFragment()
             navigateTo(navigateToHome)
+
+            findNavController().graph.startDestination = R.id.homeFragment
         }
     }
 }

@@ -4,8 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
-import androidx.fragment.app.viewModels
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.paging.LoadState
@@ -15,9 +14,7 @@ import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentCategoryNameBinding
 import com.hexagram.febys.network.response.Category
-import com.hexagram.febys.utils.goBack
-import com.hexagram.febys.utils.navigateTo
-import com.hexagram.febys.utils.showToast
+import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -25,7 +22,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class CategoryNameFragment : BaseFragment() {
     private lateinit var binding: FragmentCategoryNameBinding
-    private val viewModel: SearchViewModel by viewModels()
+    private val searchViewModel: SearchViewModel by hiltNavGraphViewModels(R.id.nav_graph)
     private val args: CategoryNameFragmentArgs by navArgs()
 
     private var isFirstPage = false
@@ -107,7 +104,7 @@ class CategoryNameFragment : BaseFragment() {
         binding.rvCategoryName.adapter = pagerAdapter
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.allCategoryPagingData.collectLatest { pagingData ->
+            searchViewModel.allCategoryPagingData.collectLatest { pagingData ->
                 pagerAdapter.submitData(pagingData)
             }
         }
@@ -115,7 +112,11 @@ class CategoryNameFragment : BaseFragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             pagerAdapter.loadStateFlow.collectLatest {
                 val state = it.refresh
-                binding.progressBar.isVisible = state is LoadState.Loading
+                if (state is LoadState.Loading) {
+                    showLoader()
+                } else {
+                    hideLoader()
+                }
 
                 if (state is LoadState.Error) {
                     showToast(getString(R.string.error_something_went_wrong))

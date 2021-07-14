@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.hexagram.febys.base.BaseActivity
 
 fun View.show() {
     visibility = View.VISIBLE
@@ -48,6 +49,14 @@ fun Fragment.showToast(msg: String, length: Int = Toast.LENGTH_SHORT) {
 fun Fragment.navigateTo(directions: NavDirections) = findNavController().navigate(directions)
 
 fun Fragment.goBack() = findNavController().popBackStack()
+
+fun Fragment.showLoader() {
+    (activity as? BaseActivity)?.showLoader()
+}
+
+fun Fragment.hideLoader() {
+    (activity as? BaseActivity)?.hideLoader()
+}
 
 fun RecyclerView.applySpaceItemDecoration(
     @DimenRes verticalDimenRes: Int? = null,

@@ -16,66 +16,56 @@
 
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            binding:is_visible="@{showTopBar}">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_category_name"
-                style="@style/TextTheme.HelveticaNeue.TS16.Bold"
-                android:layout_width="0dp"
-                android:layout_height="?actionBarSize"
-                android:layout_marginHorizontal="@dimen/_8dp"
-                android:ellipsize="start"
-                android:gravity="center"
-                android:maxLines="1"
-                android:text="@{categoryName}"
-                android:textAlignment="center"
-                app:layout_constraintEnd_toStartOf="@id/iv_cart"
-                app:layout_constraintStart_toEndOf="@id/iv_back"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_16dp"
-                android:src="@drawable/ic_back"
-                app:layout_constraintBottom_toBottomOf="@id/tv_category_name"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_category_name" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_cart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_16dp"
-                android:src="@drawable/ic_cart"
-                app:layout_constraintBottom_toBottomOf="@id/tv_category_name"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_category_name" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ProgressBar
-                android:id="@+id/progress_bar"
-                style="?android:progressBarStyleSmall"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8dp"
-                android:indeterminate="true"
-                android:visibility="gone"
-                app:layout_constraintTop_toTopOf="parent" />
+                binding:is_visible="@{showTopBar}">
+
+                <TextView
+                    android:id="@+id/tv_category_name"
+                    style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+                    android:layout_width="0dp"
+                    android:layout_height="?actionBarSize"
+                    android:layout_marginHorizontal="@dimen/_8dp"
+                    android:ellipsize="start"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="@{categoryName}"
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toStartOf="@id/iv_cart"
+                    app:layout_constraintStart_toEndOf="@id/iv_back"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16dp"
+                    android:src="@drawable/ic_back"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_category_name"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_category_name" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_cart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_16dp"
+                    android:src="@drawable/ic_cart"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_category_name"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_category_name" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_category_name"
@@ -86,8 +76,8 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:context=".ui.screens.search.CategoryNameFragment"
                 tools:listitem="@layout/item_category_name" />
+        </LinearLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

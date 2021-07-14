@@ -6,7 +6,9 @@ import androidx.navigation.fragment.navArgs
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.response.Product
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
+import com.hexagram.febys.utils.hideLoader
 import com.hexagram.febys.utils.navigateTo
+import com.hexagram.febys.utils.showLoader
 
 class TrendingProductListingFragment : ProductListingFragment() {
     private val args: TrendingProductListingFragmentArgs by navArgs()
@@ -27,12 +29,14 @@ class TrendingProductListingFragment : ProductListingFragment() {
         productListingViewModel.observeTrendingProducts.observe(viewLifecycleOwner) {
             when (it) {
                 is DataState.Loading -> {
-
+                    showLoader()
                 }
                 is DataState.Error -> {
+                    hideLoader()
                     ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
                 }
                 is DataState.Data -> {
+                    hideLoader()
                     val productList = it.data
                     binding.productListingCount = productList.size
                     productListingAdapter.submitList(productList)
@@ -42,7 +46,8 @@ class TrendingProductListingFragment : ProductListingFragment() {
     }
 
     override fun onProductClick(position: Int, item: Product) {
-        val gotoProductListing = TrendingProductListingFragmentDirections.actionToProductDetail(item.id)
+        val gotoProductListing =
+            TrendingProductListingFragmentDirections.actionToProductDetail(item.id)
         navigateTo(gotoProductListing)
     }
 
