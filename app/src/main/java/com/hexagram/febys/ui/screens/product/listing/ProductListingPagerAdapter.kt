@@ -2,43 +2,45 @@ package com.hexagram.febys.ui.screens.product.listing
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.hexagram.febys.databinding.ItemProductListBinding
 import com.hexagram.febys.network.response.Product
 
-class ProductListingAdapter :
-    ListAdapter<Product, ProductListingAdapter.ProductListingViewHolder>(diffCallback) {
+class ProductListingPagerAdapter :
+    PagingDataAdapter<Product, ProductListingPagerAdapter.ProductPagerViewHolder>(diffCallback) {
     companion object {
         private val diffCallback = object : DiffUtil.ItemCallback<Product>() {
 
             override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean {
-                return oldItem.id == newItem.id
+                return oldItem == newItem
             }
 
             override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
-                return oldItem == newItem
+                return oldItem.id == newItem.id
             }
         }
     }
 
     var interaction: Interaction? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductListingViewHolder {
-        return ProductListingViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductPagerViewHolder {
+        return ProductPagerViewHolder(
             ItemProductListBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
         )
     }
 
-    override fun onBindViewHolder(holder: ProductListingViewHolder, position: Int) {
-        holder.bind(getItem(position), position)
+    override fun onBindViewHolder(holder: ProductPagerViewHolder, position: Int) {
+        holder.bind(getItem(position) ?: return, position)
+
     }
 
-    inner class ProductListingViewHolder(val binding: ItemProductListBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class ProductPagerViewHolder(
+        private val binding: ItemProductListBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Product, position: Int) {
             binding.root.setOnClickListener {

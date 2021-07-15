@@ -29,6 +29,8 @@ class ProductListingViewModel @Inject constructor(
     val observeUnder100DollarsItems: LiveData<DataState<List<Product>>> =
         _observeUnder100DollarsItems
 
+    val todayDealsListing = productRepo.fetchTodayDealsListing(viewModelScope)
+
     fun fetchWishList() = viewModelScope.launch {
         _observeWishlist.postValue(DataState.Loading())
         productRepo.fetchWishList().collect {

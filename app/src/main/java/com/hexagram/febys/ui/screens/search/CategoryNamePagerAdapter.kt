@@ -10,7 +10,7 @@ import com.hexagram.febys.databinding.ItemCategoryNameBinding
 import com.hexagram.febys.network.response.Category
 
 class CategoryNamePagerAdapter :
-    PagingDataAdapter<Category, CategoryNamePagerAdapter.CategorynamePagerViewHolder>(diffCallback) {
+    PagingDataAdapter<Category, CategoryNamePagerAdapter.CategoryNamePagerViewHolder>(diffCallback) {
     companion object {
         private val diffCallback = object : DiffUtil.ItemCallback<Category>() {
 
@@ -26,20 +26,20 @@ class CategoryNamePagerAdapter :
 
     var interaction: Interaction? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategorynamePagerViewHolder {
-        return CategorynamePagerViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryNamePagerViewHolder {
+        return CategoryNamePagerViewHolder(
             ItemCategoryNameBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
         )
     }
 
-    override fun onBindViewHolder(holder: CategorynamePagerViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CategoryNamePagerViewHolder, position: Int) {
         holder.bind(getItem(position) ?: return, position)
 
     }
 
-    inner class CategorynamePagerViewHolder(
+    inner class CategoryNamePagerViewHolder(
         private val binding: ItemCategoryNameBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
