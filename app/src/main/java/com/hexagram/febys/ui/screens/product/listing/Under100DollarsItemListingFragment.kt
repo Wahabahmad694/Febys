@@ -9,7 +9,7 @@ class Under100DollarsItemListingFragment : ProductListingFragment() {
 
     override fun getListingTitle(): String = args.productListTitle
 
-    override fun getProductPagingDate() = productListingViewModel.todayDealsListing
+    override fun getProductPagingDate() = productListingViewModel.under100DollarsItemsListing
 
     override fun onProductClick(position: Int, item: Product) {
         val gotoProductListing =

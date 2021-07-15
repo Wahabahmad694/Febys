@@ -15,6 +15,7 @@ import com.hexagram.febys.network.response.Product
 import com.hexagram.febys.network.response.ResponseProductListing
 import com.hexagram.febys.paginations.TodayDealsPagingSource
 import com.hexagram.febys.paginations.TrendingProductsPagingSource
+import com.hexagram.febys.paginations.Under100DollarsItemsPagingSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -50,20 +51,6 @@ class ProductRepoImpl @Inject constructor(
             .onNetworkError { emit(DataState.NetworkError()) }
     }.flowOn(dispatcher)
 
-    override fun fetchTodayDeals(dispatcher: CoroutineDispatcher): Flow<DataState<List<Product>>> {
-        return flow<DataState<List<Product>>> {
-            val req = mapOf("chunkSize" to 10, "pageNo" to 1)
-            backendService.fetchTodayDeals(req)
-                .onSuccess {
-                    val products = data!!.getResponse<ResponseProductListing>().products
-                    emit(DataState.Data(products))
-                }
-                .onError { emit(DataState.ApiError(message)) }
-                .onException { emit(DataState.ExceptionError()) }
-                .onNetworkError { emit(DataState.NetworkError()) }
-        }.flowOn(dispatcher)
-    }
-
     override fun fetchTodayDealsListing(
         scope: CoroutineScope,
         dispatcher: CoroutineDispatcher
@@ -75,20 +62,6 @@ class ProductRepoImpl @Inject constructor(
         }.flow
             .flowOn(dispatcher)
             .cachedIn(scope)
-    }
-
-    override fun fetchTrendingProducts(dispatcher: CoroutineDispatcher): Flow<DataState<List<Product>>> {
-        return flow<DataState<List<Product>>> {
-            val req = mapOf("chunkSize" to 10, "pageNo" to 1)
-            backendService.fetchTrendingProducts(req)
-                .onSuccess {
-                    val products = data!!.getResponse<ResponseProductListing>().products
-                    emit(DataState.Data(products))
-                }
-                .onError { emit(DataState.ApiError(message)) }
-                .onException { emit(DataState.ExceptionError()) }
-                .onNetworkError { emit(DataState.NetworkError()) }
-        }.flowOn(dispatcher)
     }
 
     override fun fetchTrendingProductsListing(
@@ -104,17 +77,16 @@ class ProductRepoImpl @Inject constructor(
             .cachedIn(scope)
     }
 
-    override fun fetchUnder100DollarsItems(dispatcher: CoroutineDispatcher): Flow<DataState<List<Product>>> {
-        return flow<DataState<List<Product>>> {
-            val req = mapOf("chunkSize" to 10, "pageNo" to 1)
-            backendService.fetchUnder100DollarsItems(req)
-                .onSuccess {
-                    val products = data!!.getResponse<ResponseProductListing>().products
-                    emit(DataState.Data(products))
-                }
-                .onError { emit(DataState.ApiError(message)) }
-                .onException { emit(DataState.ExceptionError()) }
-                .onNetworkError { emit(DataState.NetworkError()) }
-        }.flowOn(dispatcher)
+    override fun fetchUnder100DollarsItemsListing(
+        scope: CoroutineScope,
+        dispatcher: CoroutineDispatcher
+    ): Flow<PagingData<Product>> {
+        return Pager(
+            PagingConfig(pageSize = 10)
+        ) {
+            Under100DollarsItemsPagingSource(backendService, RequestOfPagination())
+        }.flow
+            .flowOn(dispatcher)
+            .cachedIn(scope)
     }
 }

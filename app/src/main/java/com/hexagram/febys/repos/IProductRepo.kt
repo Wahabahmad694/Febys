@@ -17,17 +17,15 @@ interface IProductRepo {
         dispatcher: CoroutineDispatcher = Dispatchers.IO
     ): Flow<DataState<List<Product>>>
 
-    fun fetchTodayDeals(dispatcher: CoroutineDispatcher = Dispatchers.IO): Flow<DataState<List<Product>>>
-
     fun fetchTodayDealsListing(
         scope: CoroutineScope, dispatcher: CoroutineDispatcher = Dispatchers.IO
     ): Flow<PagingData<Product>>
-
-    fun fetchTrendingProducts(dispatcher: CoroutineDispatcher = Dispatchers.IO): Flow<DataState<List<Product>>>
 
     fun fetchTrendingProductsListing(
         scope: CoroutineScope, dispatcher: CoroutineDispatcher = Dispatchers.IO
     ): Flow<PagingData<Product>>
 
-    fun fetchUnder100DollarsItems(dispatcher: CoroutineDispatcher = Dispatchers.IO): Flow<DataState<List<Product>>>
+    fun fetchUnder100DollarsItemsListing(
+        scope: CoroutineScope, dispatcher: CoroutineDispatcher = Dispatchers.IO
+    ): Flow<PagingData<Product>>
 }
