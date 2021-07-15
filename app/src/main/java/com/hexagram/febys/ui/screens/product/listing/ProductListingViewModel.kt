@@ -30,6 +30,7 @@ class ProductListingViewModel @Inject constructor(
         _observeUnder100DollarsItems
 
     val todayDealsListing = productRepo.fetchTodayDealsListing(viewModelScope)
+    val trendingProductsListing = productRepo.fetchTrendingProductsListing(viewModelScope)
 
     fun fetchWishList() = viewModelScope.launch {
         _observeWishlist.postValue(DataState.Loading())

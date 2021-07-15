@@ -25,5 +25,9 @@ interface IProductRepo {
 
     fun fetchTrendingProducts(dispatcher: CoroutineDispatcher = Dispatchers.IO): Flow<DataState<List<Product>>>
 
+    fun fetchTrendingProductsListing(
+        scope: CoroutineScope, dispatcher: CoroutineDispatcher = Dispatchers.IO
+    ): Flow<PagingData<Product>>
+
     fun fetchUnder100DollarsItems(dispatcher: CoroutineDispatcher = Dispatchers.IO): Flow<DataState<List<Product>>>
 }

@@ -14,6 +14,7 @@ import com.hexagram.febys.network.requests.RequestOfPagination
 import com.hexagram.febys.network.response.Product
 import com.hexagram.febys.network.response.ResponseProductListing
 import com.hexagram.febys.paginations.TodayDealsPagingSource
+import com.hexagram.febys.paginations.TrendingProductsPagingSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -88,6 +89,19 @@ class ProductRepoImpl @Inject constructor(
                 .onException { emit(DataState.ExceptionError()) }
                 .onNetworkError { emit(DataState.NetworkError()) }
         }.flowOn(dispatcher)
+    }
+
+    override fun fetchTrendingProductsListing(
+        scope: CoroutineScope,
+        dispatcher: CoroutineDispatcher
+    ): Flow<PagingData<Product>> {
+        return Pager(
+            PagingConfig(pageSize = 10)
+        ) {
+            TrendingProductsPagingSource(backendService, RequestOfPagination())
+        }.flow
+            .flowOn(dispatcher)
+            .cachedIn(scope)
     }
 
     override fun fetchUnder100DollarsItems(dispatcher: CoroutineDispatcher): Flow<DataState<List<Product>>> {
