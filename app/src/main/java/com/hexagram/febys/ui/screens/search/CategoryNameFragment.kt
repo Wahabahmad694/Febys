@@ -79,7 +79,7 @@ class CategoryNameFragment : BaseFragment() {
                 if (item.hasChild) {
                     openChild(item)
                 } else {
-                    openProductListing(item.name)
+                    openProductListing(item.name, item.id)
                 }
             }
         }
@@ -89,7 +89,7 @@ class CategoryNameFragment : BaseFragment() {
                 if (item.hasChild) {
                     openChild(item)
                 } else {
-                    openProductListing(item.name)
+                    openProductListing(item.name, item.id)
                 }
             }
         }
@@ -139,13 +139,15 @@ class CategoryNameFragment : BaseFragment() {
         navigateTo(navigateToCategoryName)
     }
 
-    private fun openProductListing(name: String) {
+    private fun openProductListing(categoryTitle: String, categoryId: Int) {
         val navigateToProductListing = if (isFirstPage) {
             SearchFragmentDirections
-                .actionSearchFragmentToCategoryProductListingFragment(name)
+                .actionSearchFragmentToCategoryProductListingFragment(categoryTitle, categoryId)
         } else {
             CategoryNameFragmentDirections
-                .actionCategoryNameFragmentToCategoryProductListingFragment(name)
+                .actionCategoryNameFragmentToCategoryProductListingFragment(
+                    categoryTitle, categoryId
+                )
         }
         navigateTo(navigateToProductListing)
     }

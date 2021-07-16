@@ -52,8 +52,7 @@ class ProductRepoImpl @Inject constructor(
     }.flowOn(dispatcher)
 
     override fun fetchTodayDealsListing(
-        scope: CoroutineScope,
-        dispatcher: CoroutineDispatcher
+        scope: CoroutineScope, dispatcher: CoroutineDispatcher
     ): Flow<PagingData<Product>> {
         return Pager(
             PagingConfig(pageSize = 10)
@@ -65,8 +64,7 @@ class ProductRepoImpl @Inject constructor(
     }
 
     override fun fetchTrendingProductsListing(
-        scope: CoroutineScope,
-        dispatcher: CoroutineDispatcher
+        scope: CoroutineScope, dispatcher: CoroutineDispatcher
     ): Flow<PagingData<Product>> {
         return Pager(
             PagingConfig(pageSize = 10)
@@ -78,13 +76,24 @@ class ProductRepoImpl @Inject constructor(
     }
 
     override fun fetchUnder100DollarsItemsListing(
-        scope: CoroutineScope,
-        dispatcher: CoroutineDispatcher
+        scope: CoroutineScope, dispatcher: CoroutineDispatcher
     ): Flow<PagingData<Product>> {
         return Pager(
             PagingConfig(pageSize = 10)
         ) {
             Under100DollarsItemsPagingSource(backendService, RequestOfPagination())
+        }.flow
+            .flowOn(dispatcher)
+            .cachedIn(scope)
+    }
+
+    override fun fetchCategoryProductsListing(
+        categoryId: Int, scope: CoroutineScope, dispatcher: CoroutineDispatcher
+    ): Flow<PagingData<Product>> {
+        return Pager(
+            PagingConfig(pageSize = 10)
+        ) {
+            TrendingProductsPagingSource(backendService, RequestOfPagination())
         }.flow
             .flowOn(dispatcher)
             .cachedIn(scope)

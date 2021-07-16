@@ -72,7 +72,7 @@
                 android:id="@+id/iv_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_16dp"
+                android:paddingStart="@dimen/_16dp"
                 android:src="@drawable/ic_back"
                 app:layout_constraintBottom_toBottomOf="@id/container_product_listing_title_and_count"
                 app:layout_constraintStart_toStartOf="parent"

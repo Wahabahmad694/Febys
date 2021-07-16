@@ -121,15 +121,16 @@ class HomeFragment : SliderFragment() {
 
         binding.btnShopNowFeaturedCategories.setOnClickListener {
             var categoryTitle = getString(R.string.label_featured_categories)
+            val categoryId = binding.radioGroupFeaturedCategories.checkedRadioButtonId
             binding.radioGroupFeaturedCategories.children.forEach {
-                if (it.id == binding.radioGroupFeaturedCategories.checkedRadioButtonId) {
+                if (it.id == categoryId) {
                     categoryTitle = (it as RadioButton).text.toString()
                     return@forEach
                 }
             }
 
             val gotoCategoryListing = HomeFragmentDirections
-                .actionHomeFragmentToCategoryProductListingFragment(categoryTitle)
+                .actionHomeFragmentToCategoryProductListingFragment(categoryTitle, categoryId)
             navigateTo(gotoCategoryListing)
         }
     }

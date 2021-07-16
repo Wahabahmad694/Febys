@@ -13,4 +13,7 @@ class ProductListingViewModel @Inject constructor(
     val todayDealsListing = productRepo.fetchTodayDealsListing(viewModelScope)
     val trendingProductsListing = productRepo.fetchTrendingProductsListing(viewModelScope)
     val under100DollarsItemsListing = productRepo.fetchUnder100DollarsItemsListing(viewModelScope)
+
+    fun categoryProductsListing(categoryId: Int) =
+        productRepo.fetchCategoryProductsListing(categoryId, viewModelScope)
 }

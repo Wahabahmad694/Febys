@@ -147,6 +147,9 @@
         <argument
             android:name="productListTitle"
             app:argType="string" />
+        <argument
+            android:name="categoryId"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/todayDealsListingFragment"

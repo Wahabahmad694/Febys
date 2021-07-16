@@ -28,4 +28,8 @@ interface IProductRepo {
     fun fetchUnder100DollarsItemsListing(
         scope: CoroutineScope, dispatcher: CoroutineDispatcher = Dispatchers.IO
     ): Flow<PagingData<Product>>
+
+    fun fetchCategoryProductsListing(
+        categoryId: Int, scope: CoroutineScope, dispatcher: CoroutineDispatcher = Dispatchers.IO
+    ): Flow<PagingData<Product>>
 }

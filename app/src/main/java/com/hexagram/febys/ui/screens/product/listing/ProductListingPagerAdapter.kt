@@ -38,6 +38,8 @@ class ProductListingPagerAdapter :
 
     }
 
+    fun totalSize() = itemCount
+
     inner class ProductPagerViewHolder(
         private val binding: ItemProductListBinding
     ) : RecyclerView.ViewHolder(binding.root) {
