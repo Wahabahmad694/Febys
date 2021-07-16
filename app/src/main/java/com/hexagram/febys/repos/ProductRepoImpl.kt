@@ -13,6 +13,7 @@ import com.hexagram.febys.network.adapter.onSuccess
 import com.hexagram.febys.network.requests.RequestOfPagination
 import com.hexagram.febys.network.response.Product
 import com.hexagram.febys.network.response.ResponseProductListing
+import com.hexagram.febys.paginations.CategoryProductsListingPagingSource
 import com.hexagram.febys.paginations.TodayDealsPagingSource
 import com.hexagram.febys.paginations.TrendingProductsPagingSource
 import com.hexagram.febys.paginations.Under100DollarsItemsPagingSource
@@ -93,7 +94,7 @@ class ProductRepoImpl @Inject constructor(
         return Pager(
             PagingConfig(pageSize = 10)
         ) {
-            TrendingProductsPagingSource(backendService, RequestOfPagination())
+            CategoryProductsListingPagingSource(backendService, categoryId, RequestOfPagination())
         }.flow
             .flowOn(dispatcher)
             .cachedIn(scope)

@@ -54,4 +54,7 @@ data class Product constructor(
 
     val tags
         get() = _tags.split(",").toList()
+
+    // has data only in paging api
+    var paginationInformation: PaginationInformation? = null
 }

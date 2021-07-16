@@ -28,7 +28,7 @@ abstract class ProductListingFragment : BaseFragment() {
     protected lateinit var binding: FragmentProductListingBinding
     protected val productListingViewModel: ProductListingViewModel by viewModels()
 
-    protected val productListingPagerAdapter = ProductListingPagerAdapter()
+    private val productListingPagerAdapter = ProductListingPagerAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
