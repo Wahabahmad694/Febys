@@ -13,33 +13,4 @@ interface IProductRepo {
     fun fetchProductDetail(
         productId: Int, dispatcher: CoroutineDispatcher = Dispatchers.IO
     ): Flow<DataState<Product>>
-
-    fun fetchWishList(
-        dispatcher: CoroutineDispatcher = Dispatchers.IO
-    ): Flow<DataState<List<Product>>>
-
-    fun fetchTodayDealsListing(
-        scope: CoroutineScope,
-        dispatcher: CoroutineDispatcher = Dispatchers.IO,
-        onProductListingResponse: ((ResponseProductListing) -> Unit)? = null
-    ): Flow<PagingData<Product>>
-
-    fun fetchTrendingProductsListing(
-        scope: CoroutineScope,
-        dispatcher: CoroutineDispatcher = Dispatchers.IO,
-        onProductListingResponse: ((ResponseProductListing) -> Unit)? = null
-    ): Flow<PagingData<Product>>
-
-    fun fetchUnder100DollarsItemsListing(
-        scope: CoroutineScope,
-        dispatcher: CoroutineDispatcher = Dispatchers.IO,
-        onProductListingResponse: ((ResponseProductListing) -> Unit)? = null
-    ): Flow<PagingData<Product>>
-
-    fun fetchCategoryProductsListing(
-        categoryId: Int,
-        scope: CoroutineScope,
-        dispatcher: CoroutineDispatcher = Dispatchers.IO,
-        onProductListingResponse: ((ResponseProductListing) -> Unit)? = null
-    ): Flow<PagingData<Product>>
 }
