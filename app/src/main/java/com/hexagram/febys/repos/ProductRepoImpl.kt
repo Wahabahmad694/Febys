@@ -53,36 +53,46 @@ class ProductRepoImpl @Inject constructor(
     }.flowOn(dispatcher)
 
     override fun fetchTodayDealsListing(
-        scope: CoroutineScope, dispatcher: CoroutineDispatcher
+        scope: CoroutineScope,
+        dispatcher: CoroutineDispatcher,
+        onProductListingResponse: ((ResponseProductListing) -> Unit)?
     ): Flow<PagingData<Product>> {
         return Pager(
             PagingConfig(pageSize = 10)
         ) {
-            TodayDealsPagingSource(backendService, RequestOfPagination())
+            TodayDealsPagingSource(backendService, RequestOfPagination(), onProductListingResponse)
         }.flow
             .flowOn(dispatcher)
             .cachedIn(scope)
     }
 
     override fun fetchTrendingProductsListing(
-        scope: CoroutineScope, dispatcher: CoroutineDispatcher
+        scope: CoroutineScope,
+        dispatcher: CoroutineDispatcher,
+        onProductListingResponse: ((ResponseProductListing) -> Unit)?
     ): Flow<PagingData<Product>> {
         return Pager(
             PagingConfig(pageSize = 10)
         ) {
-            TrendingProductsPagingSource(backendService, RequestOfPagination())
+            TrendingProductsPagingSource(
+                backendService, RequestOfPagination(), onProductListingResponse
+            )
         }.flow
             .flowOn(dispatcher)
             .cachedIn(scope)
     }
 
     override fun fetchUnder100DollarsItemsListing(
-        scope: CoroutineScope, dispatcher: CoroutineDispatcher
+        scope: CoroutineScope,
+        dispatcher: CoroutineDispatcher,
+        onProductListingResponse: ((ResponseProductListing) -> Unit)?
     ): Flow<PagingData<Product>> {
         return Pager(
             PagingConfig(pageSize = 10)
         ) {
-            Under100DollarsItemsPagingSource(backendService, RequestOfPagination())
+            Under100DollarsItemsPagingSource(
+                backendService, RequestOfPagination(), onProductListingResponse
+            )
         }.flow
             .flowOn(dispatcher)
             .cachedIn(scope)

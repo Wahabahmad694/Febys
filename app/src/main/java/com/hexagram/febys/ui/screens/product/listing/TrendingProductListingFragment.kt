@@ -9,7 +9,9 @@ class TrendingProductListingFragment : ProductListingFragment() {
 
     override fun getListingTitle(): String = args.productListTitle
 
-    override fun getProductPagingDate() = productListingViewModel.trendingProductsListing
+    override fun getProductPagingDate() = productListingViewModel.trendingProductsListing {
+        binding.productListingCount = it.totalRows
+    }
 
     override fun onProductClick(position: Int, item: Product) {
         val gotoProductListing =

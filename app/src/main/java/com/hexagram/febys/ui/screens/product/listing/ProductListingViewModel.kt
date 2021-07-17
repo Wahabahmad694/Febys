@@ -14,10 +14,49 @@ import javax.inject.Inject
 class ProductListingViewModel @Inject constructor(
     productRepo: IProductRepo
 ) : ProductViewModel(productRepo) {
-    val todayDealsListing = productRepo.fetchTodayDealsListing(viewModelScope)
-    val trendingProductsListing = productRepo.fetchTrendingProductsListing(viewModelScope)
-    val under100DollarsItemsListing = productRepo.fetchUnder100DollarsItemsListing(viewModelScope)
+    private var todayDealsListing: Flow<PagingData<Product>>? = null
+    private var trendingProductsListing: Flow<PagingData<Product>>? = null
+    private var under100DollarsItemsListing: Flow<PagingData<Product>>? = null
     private var categoryProductsListing: Flow<PagingData<Product>>? = null
+
+    fun todayDealsListing(
+        onProductListingResponse: ((ResponseProductListing) -> Unit)? = null
+    ): Flow<PagingData<Product>> {
+        if (todayDealsListing == null) {
+            todayDealsListing =
+                productRepo.fetchTodayDealsListing(
+                    viewModelScope, onProductListingResponse = onProductListingResponse
+                )
+        }
+
+        return todayDealsListing!!
+    }
+
+    fun trendingProductsListing(
+        onProductListingResponse: ((ResponseProductListing) -> Unit)? = null
+    ): Flow<PagingData<Product>> {
+        if (trendingProductsListing == null) {
+            trendingProductsListing =
+                productRepo.fetchTrendingProductsListing(
+                    viewModelScope, onProductListingResponse = onProductListingResponse
+                )
+        }
+
+        return trendingProductsListing!!
+    }
+
+    fun under100DollarsItemsListing(
+        onProductListingResponse: ((ResponseProductListing) -> Unit)? = null
+    ): Flow<PagingData<Product>> {
+        if (under100DollarsItemsListing == null) {
+            under100DollarsItemsListing =
+                productRepo.fetchUnder100DollarsItemsListing(
+                    viewModelScope, onProductListingResponse = onProductListingResponse
+                )
+        }
+
+        return under100DollarsItemsListing!!
+    }
 
     fun categoryProductsListing(
         categoryId: Int, onProductListingResponse: ((ResponseProductListing) -> Unit)? = null
