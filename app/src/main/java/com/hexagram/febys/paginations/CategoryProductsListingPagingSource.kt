@@ -10,8 +10,9 @@ import com.hexagram.febys.network.response.ResponseProductListing
 class CategoryProductsListingPagingSource constructor(
     private val service: FebysBackendService,
     private val categoryId: Int,
-    private val request: RequestOfPagination
-) : BasePagingSource<Int, Product>() {
+    private val request: RequestOfPagination,
+    onProductListingResponse: ((ResponseProductListing) -> Unit)? = null
+) : ProductListingPagingSource<Int, Product>(onProductListingResponse) {
     override fun getRefreshKey(state: PagingState<Int, Product>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             val anchorPage = state.closestPageToPosition(anchorPosition)
@@ -25,6 +26,7 @@ class CategoryProductsListingPagingSource constructor(
         return when (val response = service.fetchCategoryProducts(categoryId, req)) {
             is ApiResponse.ApiSuccessResponse -> {
                 val categoryProductsResponse = response.data!!.getResponse<ResponseProductListing>()
+                onProductListingResponse?.invoke(categoryProductsResponse)
                 val (prevKey, nextKey) = getPagingKeys(categoryProductsResponse.paginationInformation)
                 LoadResult.Page(categoryProductsResponse.products, prevKey, nextKey)
             }

@@ -10,7 +10,9 @@ class CategoryProductListingFragment : ProductListingFragment() {
     override fun getListingTitle(): String = args.productListTitle
 
     override fun getProductPagingDate() =
-        productListingViewModel.categoryProductsListing(args.categoryId)
+        productListingViewModel.categoryProductsListing(args.categoryId) {
+            binding.productListingCount = it.paginationInformation.totalRows
+        }
 
     override fun onProductClick(position: Int, item: Product) {
         val gotoProductListing =

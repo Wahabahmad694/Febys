@@ -3,6 +3,7 @@ package com.hexagram.febys.repos
 import androidx.paging.PagingData
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.response.Product
+import com.hexagram.febys.network.response.ResponseProductListing
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -30,6 +31,9 @@ interface IProductRepo {
     ): Flow<PagingData<Product>>
 
     fun fetchCategoryProductsListing(
-        categoryId: Int, scope: CoroutineScope, dispatcher: CoroutineDispatcher = Dispatchers.IO
+        categoryId: Int,
+        scope: CoroutineScope,
+        dispatcher: CoroutineDispatcher = Dispatchers.IO,
+        onProductListingResponse: ((ResponseProductListing) -> Unit)? = null
     ): Flow<PagingData<Product>>
 }
