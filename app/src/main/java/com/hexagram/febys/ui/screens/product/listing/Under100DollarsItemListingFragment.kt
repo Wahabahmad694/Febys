@@ -10,7 +10,7 @@ class Under100DollarsItemListingFragment : ProductListingFragment() {
     override fun getListingTitle(): String = args.productListTitle
 
     override fun getProductPagingDate() = productListingViewModel.under100DollarsItemsListing {
-        binding.productListingCount = it.totalRows
+        setProductItemCount(it.totalRows)
     }
 
     override fun onProductClick(position: Int, item: Product) {

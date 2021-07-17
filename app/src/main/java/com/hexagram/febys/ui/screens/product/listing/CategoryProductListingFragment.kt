@@ -11,7 +11,7 @@ class CategoryProductListingFragment : ProductListingFragment() {
 
     override fun getProductPagingDate() =
         productListingViewModel.categoryProductsListing(args.categoryId) {
-            binding.productListingCount = it.totalRows
+            setProductItemCount(it.totalRows)
         }
 
     override fun onProductClick(position: Int, item: Product) {

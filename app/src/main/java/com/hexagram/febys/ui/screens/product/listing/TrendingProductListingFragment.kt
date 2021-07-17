@@ -10,7 +10,7 @@ class TrendingProductListingFragment : ProductListingFragment() {
     override fun getListingTitle(): String = args.productListTitle
 
     override fun getProductPagingDate() = productListingViewModel.trendingProductsListing {
-        binding.productListingCount = it.totalRows
+        setProductItemCount(it.totalRows)
     }
 
     override fun onProductClick(position: Int, item: Product) {

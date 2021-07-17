@@ -99,6 +99,15 @@ abstract class ProductListingFragment : BaseFragment() {
 
     }
 
+    fun setProductItemCount(count: Int) {
+        binding.tvProductListingCount.text =
+            if (count == 0) {
+                resources.getString(R.string.label_no_item)
+            } else {
+                resources.getQuantityString(R.plurals.items_count, count, count)
+            }
+    }
+
     abstract fun getListingTitle(): String
 
     abstract fun getProductPagingDate(): Flow<PagingData<Product>>
