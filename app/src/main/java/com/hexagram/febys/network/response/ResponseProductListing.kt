@@ -7,6 +7,6 @@ data class ResponseProductListing(
     val totalRows: Int,
     @SerializedName("products")
     val products: List<Product>,
-    @SerializedName("pagination_information")
+    @SerializedName("pagination_info")
     val paginationInformation: PaginationInformation
 )

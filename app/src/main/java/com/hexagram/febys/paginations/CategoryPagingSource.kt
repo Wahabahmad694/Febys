@@ -1,17 +1,16 @@
 package com.hexagram.febys.paginations
 
-import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.hexagram.febys.network.requests.RequestAllCategories
+import com.hexagram.febys.network.FebysBackendService
+import com.hexagram.febys.network.adapter.ApiResponse
+import com.hexagram.febys.network.requests.RequestOfPagination
 import com.hexagram.febys.network.response.Category
 import com.hexagram.febys.network.response.ResponseAllCategories
-import com.hexagram.febys.network.FebysBackendService
-import com.google.gson.Gson
 
 class CategoryPagingSource constructor(
     private val service: FebysBackendService,
-    private val request: RequestAllCategories
-) : PagingSource<Int, Category>() {
+    private val request: RequestOfPagination
+) : BasePagingSource<Int, Category>() {
     override fun getRefreshKey(state: PagingState<Int, Category>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             val anchorPage = state.closestPageToPosition(anchorPosition)
@@ -20,37 +19,20 @@ class CategoryPagingSource constructor(
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Category> {
-        return try {
-            request.pageNo = params.key ?: 1
-            val req = mapOf("listing" to request)
-            val response = service.fetchAllCategories(req)
-            val responseAllCategories =
-                Gson().fromJson(response["listing"], ResponseAllCategories::class.java)
-
-            val nextPageNo = if (
-                responseAllCategories.paginationInformation.pageNo <
-                responseAllCategories.paginationInformation.totalPages
-            ) {
-                responseAllCategories.paginationInformation.pageNo + 1
-            } else {
-                null
+        request.pageNo = params.key ?: 1
+        val req = mapOf("listing" to request)
+        return when (val response = service.fetchAllCategories(req)) {
+            is ApiResponse.ApiSuccessResponse -> {
+                val allCategories = response.data!!.getResponse<ResponseAllCategories>()
+                val (prevKey, nextKey) = getPagingKeys(allCategories.paginationInformation)
+                LoadResult.Page(allCategories.categories, prevKey, nextKey)
             }
-
-            val previousPageNo = if (
-                responseAllCategories.paginationInformation.pageNo == 1
-            ) {
-                null
-            } else {
-                responseAllCategories.paginationInformation.pageNo - 1
+            is ApiResponse.ApiFailureResponse.Error -> {
+                LoadResult.Error(Exception(response.message))
             }
-
-            LoadResult.Page(
-                data = responseAllCategories.categories,
-                prevKey = previousPageNo,
-                nextKey = nextPageNo
-            )
-        } catch (e: Exception) {
-            LoadResult.Error(e)
+            is ApiResponse.ApiFailureResponse.Exception -> {
+                LoadResult.Error(Exception(response.exception))
+            }
         }
     }
 }

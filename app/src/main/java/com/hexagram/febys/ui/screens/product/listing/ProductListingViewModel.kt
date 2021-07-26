@@ -1,65 +1,73 @@
 package com.hexagram.febys.ui.screens.product.listing
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.hexagram.febys.network.DataState
+import androidx.paging.PagingData
 import com.hexagram.febys.network.response.Product
-import com.hexagram.febys.repos.IProductRepo
+import com.hexagram.febys.network.response.ResponseProductListing
+import com.hexagram.febys.repos.IProductListingRepo
 import com.hexagram.febys.ui.screens.product.ProductViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @HiltViewModel
 class ProductListingViewModel @Inject constructor(
-    productRepo: IProductRepo
-) : ProductViewModel(productRepo) {
-    private val _observeWishlist = MutableLiveData<DataState<List<Product>>>()
-    val observeWishlist: LiveData<DataState<List<Product>>> = _observeWishlist
+    private val productListingRepo: IProductListingRepo
+) : ProductViewModel(productListingRepo) {
+    private var todayDealsListing: Flow<PagingData<Product>>? = null
+    private var trendingProductsListing: Flow<PagingData<Product>>? = null
+    private var under100DollarsItemsListing: Flow<PagingData<Product>>? = null
+    private var categoryProductsListing: Flow<PagingData<Product>>? = null
 
-    private val _observeTodayDeals = MutableLiveData<DataState<List<Product>>>()
-    val observeTodayDeals: LiveData<DataState<List<Product>>> = _observeTodayDeals
-
-    private val _observeTrendingProducts = MutableLiveData<DataState<List<Product>>>()
-    val observeTrendingProducts: LiveData<DataState<List<Product>>> = _observeTrendingProducts
-
-    private val _observeUnder100DollarsItems = MutableLiveData<DataState<List<Product>>>()
-    val observeUnder100DollarsItems: LiveData<DataState<List<Product>>> =
-        _observeUnder100DollarsItems
-
-    fun fetchWishList() = viewModelScope.launch {
-        _observeWishlist.postValue(DataState.Loading())
-        productRepo.fetchWishList().collect {
-            _observeWishlist.postValue(it)
+    fun todayDealsListing(
+        onProductListingResponse: ((ResponseProductListing) -> Unit)? = null
+    ): Flow<PagingData<Product>> {
+        if (todayDealsListing == null) {
+            todayDealsListing =
+                productListingRepo.fetchTodayDealsListing(
+                    viewModelScope, onProductListingResponse = onProductListingResponse
+                )
         }
+
+        return todayDealsListing!!
     }
 
-    fun fetchToadyDeals() {
-        viewModelScope.launch {
-            _observeTodayDeals.postValue(DataState.Loading())
-            productRepo.fetchTodayDeals().collect {
-                _observeTodayDeals.postValue(it)
-            }
+    fun trendingProductsListing(
+        onProductListingResponse: ((ResponseProductListing) -> Unit)? = null
+    ): Flow<PagingData<Product>> {
+        if (trendingProductsListing == null) {
+            trendingProductsListing =
+                productListingRepo.fetchTrendingProductsListing(
+                    viewModelScope, onProductListingResponse = onProductListingResponse
+                )
         }
+
+        return trendingProductsListing!!
     }
 
-    fun fetchTrendingProducts() {
-        viewModelScope.launch {
-            _observeTrendingProducts.postValue(DataState.Loading())
-            productRepo.fetchTrendingProducts().collect {
-                _observeTrendingProducts.postValue(it)
-            }
+    fun under100DollarsItemsListing(
+        onProductListingResponse: ((ResponseProductListing) -> Unit)? = null
+    ): Flow<PagingData<Product>> {
+        if (under100DollarsItemsListing == null) {
+            under100DollarsItemsListing =
+                productListingRepo.fetchUnder100DollarsItemsListing(
+                    viewModelScope, onProductListingResponse = onProductListingResponse
+                )
         }
+
+        return under100DollarsItemsListing!!
     }
 
-    fun fetchUnder100DollarsItems() {
-        viewModelScope.launch {
-            _observeUnder100DollarsItems.postValue(DataState.Loading())
-            productRepo.fetchUnder100DollarsItems().collect {
-                _observeUnder100DollarsItems.postValue(it)
-            }
+    fun categoryProductsListing(
+        categoryId: Int, onProductListingResponse: ((ResponseProductListing) -> Unit)? = null
+    ): Flow<PagingData<Product>> {
+        if (categoryProductsListing == null) {
+            categoryProductsListing =
+                productListingRepo.fetchCategoryProductsListing(
+                    categoryId, viewModelScope, onProductListingResponse = onProductListingResponse
+                )
         }
+
+        return categoryProductsListing!!
     }
 }
