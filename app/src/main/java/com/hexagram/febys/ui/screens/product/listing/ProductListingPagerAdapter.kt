@@ -35,7 +35,6 @@ class ProductListingPagerAdapter :
 
     override fun onBindViewHolder(holder: ProductPagerViewHolder, position: Int) {
         holder.bind(getItem(position) ?: return, position)
-
     }
 
     fun totalSize() = itemCount

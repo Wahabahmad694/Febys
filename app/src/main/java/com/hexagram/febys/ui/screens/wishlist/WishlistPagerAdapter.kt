@@ -2,22 +2,23 @@ package com.hexagram.febys.ui.screens.wishlist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.hexagram.febys.databinding.ItemWishListBinding
 import com.hexagram.febys.network.response.Product
 
-class WishlistAdapter : ListAdapter<Product, WishlistAdapter.WishlistViewHolder>(diffCallback) {
+class WishlistPagerAdapter :
+    PagingDataAdapter<Product, WishlistPagerAdapter.WishlistViewHolder>(diffCallback) {
     companion object {
         private val diffCallback = object : DiffUtil.ItemCallback<Product>() {
 
             override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean {
-                return oldItem.id == newItem.id
+                return oldItem == newItem
             }
 
             override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
-                return oldItem == newItem
+                return oldItem.id == newItem.id
             }
         }
     }
@@ -33,7 +34,7 @@ class WishlistAdapter : ListAdapter<Product, WishlistAdapter.WishlistViewHolder>
     }
 
     override fun onBindViewHolder(holder: WishlistViewHolder, position: Int) {
-        holder.bind(getItem(position), position)
+        holder.bind(getItem(position) ?: return, position)
     }
 
     inner class WishlistViewHolder(val binding: ItemWishListBinding) :

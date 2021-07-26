@@ -30,4 +30,9 @@ interface FebysBackendService {
 
     @GET("v1/products/{productId}")
     suspend fun fetchProduct(@Path("productId") productId: Int): ApiResponse<ResponseProduct>
+
+    @GET("v1/wish-list")
+    suspend fun fetchWishlist(
+        @Header("Authorization") authToken: String, @QueryMap req: Map<String, Int>
+    ): ApiResponse<ResponseOfPagination>
 }

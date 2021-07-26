@@ -5,23 +5,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
+import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentWishListBinding
-import com.hexagram.febys.network.DataState
-import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.utils.goBack
 import com.hexagram.febys.utils.hideLoader
 import com.hexagram.febys.utils.showLoader
+import com.hexagram.febys.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class WishListFragment : BaseFragment() {
     private lateinit var binding: FragmentWishListBinding
     private val viewModel: WishlistViewModel by viewModels()
 
-    private val adapter = WishlistAdapter()
+    private val wishlistPagerAdapter = WishlistPagerAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -35,22 +39,20 @@ class WishListFragment : BaseFragment() {
 
         initUi()
         uiListeners()
-        setupObserver()
 
         if (isUserLoggedIn)
-            viewModel.fetchWishList()
-        else {
-            binding.wishListCount = 0
-        }
+            setupWishlistPagerAdapter()
     }
 
     private fun initUi() {
+        binding.wishListCount = 0
+
         binding.rvWishList.apply {
             setHasFixedSize(true)
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL))
             layoutManager = GridLayoutManager(context, 2)
-            adapter = this@WishListFragment.adapter
+            adapter = this@WishListFragment.wishlistPagerAdapter
         }
     }
 
@@ -58,21 +60,28 @@ class WishListFragment : BaseFragment() {
         binding.btnGetInspired.setOnClickListener { goBack() }
     }
 
-    private fun setupObserver() {
-        viewModel.observeWishlist.observe(viewLifecycleOwner) {
-            when (it) {
-                is DataState.Loading -> {
+    private fun setupWishlistPagerAdapter() {
+        binding.rvWishList.adapter = wishlistPagerAdapter
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.fetchWishList {
+                binding.wishListCount = it.totalRows
+            }.collectLatest { pagingData ->
+                wishlistPagerAdapter.submitData(pagingData)
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            wishlistPagerAdapter.loadStateFlow.collectLatest {
+                val state = it.refresh
+                if (state is LoadState.Loading) {
                     showLoader()
-                }
-                is DataState.Error -> {
+                } else {
                     hideLoader()
-                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
                 }
-                is DataState.Data -> {
-                    hideLoader()
-                    val wishList = it.data
-                    binding.wishListCount = wishList.size
-                    adapter.submitList(wishList)
+
+                if (state is LoadState.Error) {
+                    showToast(getString(R.string.error_something_went_wrong))
                 }
             }
         }
