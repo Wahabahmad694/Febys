@@ -28,7 +28,6 @@ class WishListFragment : BaseFragment() {
     private val wishlistViewModel: WishlistViewModel by viewModels()
 
     private val wishlistPagerAdapter = WishlistPagerAdapter()
-    private var removeCount = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -69,7 +68,7 @@ class WishListFragment : BaseFragment() {
 
             override fun removeFav(variantId: Int) {
                 wishlistViewModel.toggleFav(variantId)
-                removeCount++
+                binding.wishListCount = binding.wishListCount?.minus(1) ?: 0
                 updateWishList()
             }
         }
@@ -100,9 +99,8 @@ class WishListFragment : BaseFragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             val fav = wishlistViewModel.getFav()
             wishlistViewModel.fetchWishList {
-                binding.wishListCount = it.totalRows - removeCount
+                binding.wishListCount = it.totalRows
             }.collectLatest { pagingData ->
-
                 val list = pagingData.filter {
                     val variantId = it.product_variants[0].id
                     variantId in fav
