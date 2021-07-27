@@ -17,9 +17,9 @@ import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class ProductListingImpl @Inject constructor(
-    private val pref: IPrefManger,
-    private val backendService: FebysBackendService
-) : ProductRepoImpl(backendService), IProductListingRepo {
+    pref: IPrefManger,
+    backendService: FebysBackendService
+) : ProductRepoImpl(pref, backendService), IProductListingRepo {
     override fun fetchTodayDealsListing(
         scope: CoroutineScope,
         dispatcher: CoroutineDispatcher,

@@ -2,19 +2,18 @@ package com.hexagram.febys.repos
 
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.FebysBackendService
-import com.hexagram.febys.network.adapter.onError
-import com.hexagram.febys.network.adapter.onException
-import com.hexagram.febys.network.adapter.onNetworkError
-import com.hexagram.febys.network.adapter.onSuccess
+import com.hexagram.febys.network.adapter.*
+import com.hexagram.febys.network.requests.RequestToggleFav
 import com.hexagram.febys.network.response.Product
-import com.hexagram.febys.network.response.ResponseProductListing
+import com.hexagram.febys.prefs.IPrefManger
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 open class ProductRepoImpl @Inject constructor(
-    private val backendService: FebysBackendService
+    val pref: IPrefManger,
+    val backendService: FebysBackendService
 ) : IProductRepo {
     override fun fetchProductDetail(
         productId: Int, dispatcher: CoroutineDispatcher
@@ -27,4 +26,22 @@ open class ProductRepoImpl @Inject constructor(
             .onException { emit(DataState.ExceptionError()) }
             .onNetworkError { emit(DataState.NetworkError()) }
     }.flowOn(dispatcher)
+
+    override suspend fun toggleFav(variantId: Int) {
+        val addToFav = pref.toggleFav(variantId)
+        val authToken = pref.getAccessToken()
+        val req = RequestToggleFav(setOf(variantId))
+        val response = if (addToFav) {
+            backendService.addToWishList(authToken, req)
+        } else {
+            backendService.removeFromWishList(authToken, req)
+        }
+
+        if (response is ApiResponse.ApiSuccessResponse) {
+            val fav = response.data!!.variantIds.toMutableSet()
+            pref.saveFav(fav)
+        }
+    }
+
+    override fun getFav(): MutableSet<Int> = pref.getFav()
 }

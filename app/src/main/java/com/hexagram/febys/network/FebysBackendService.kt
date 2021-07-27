@@ -2,9 +2,11 @@ package com.hexagram.febys.network
 
 import com.hexagram.febys.network.adapter.ApiResponse
 import com.hexagram.febys.network.requests.RequestOfPagination
+import com.hexagram.febys.network.requests.RequestToggleFav
 import com.hexagram.febys.network.response.Category
 import com.hexagram.febys.network.response.ResponseOfPagination
 import com.hexagram.febys.network.response.ResponseProduct
+import com.hexagram.febys.network.response.ResponseToggleFav
 import retrofit2.http.*
 
 interface FebysBackendService {
@@ -35,4 +37,14 @@ interface FebysBackendService {
     suspend fun fetchWishlist(
         @Header("Authorization") authToken: String, @QueryMap req: Map<String, Int>
     ): ApiResponse<ResponseOfPagination>
+
+    @POST("v1/wish-list")
+    suspend fun addToWishList(
+        @Header("Authorization") authToken: String, @Body req: RequestToggleFav
+    ): ApiResponse<ResponseToggleFav>
+
+    @HTTP(method = "DELETE", path = "v1/wish-list", hasBody = true)
+    suspend fun removeFromWishList(
+        @Header("Authorization") authToken: String, @Body req: RequestToggleFav
+    ): ApiResponse<ResponseToggleFav>
 }

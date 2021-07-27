@@ -13,4 +13,8 @@ interface IProductRepo {
     fun fetchProductDetail(
         productId: Int, dispatcher: CoroutineDispatcher = Dispatchers.IO
     ): Flow<DataState<Product>>
+
+    suspend fun toggleFav(variantId: Int)
+
+    fun getFav(): MutableSet<Int>
 }

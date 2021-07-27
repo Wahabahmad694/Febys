@@ -1,17 +1,12 @@
 package com.hexagram.febys.repos
 
-import com.hexagram.febys.BuildConfig
 import com.hexagram.febys.dataSource.IUserDataSource
-import com.hexagram.febys.network.response.User
 import com.hexagram.febys.enum.SocialLogin
 import com.hexagram.febys.network.AuthService
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.adapter.*
 import com.hexagram.febys.network.requests.RequestSignup
-import com.hexagram.febys.network.response.ResponseLogin
-import com.hexagram.febys.network.response.ResponseOtpVerification
-import com.hexagram.febys.network.response.ResponseRefreshToken
-import com.hexagram.febys.network.response.ResponseSignup
+import com.hexagram.febys.network.response.*
 import com.hexagram.febys.prefs.IPrefManger
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -155,6 +150,7 @@ class AuthRepoImpl @Inject constructor(
     }
 
     override fun signOut() {
+        pref.clearFav()
         userDataSource.clearUserState()
         userDataSource.clearUserData()
     }

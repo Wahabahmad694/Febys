@@ -3,16 +3,20 @@ package com.hexagram.febys.prefs
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import com.hexagram.febys.network.response.User
 import com.google.gson.Gson
+import com.hexagram.febys.network.response.User
+import com.hexagram.febys.utils.Utils
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-class PrefManagerImpl @Inject constructor(@ApplicationContext context: Context) : IPrefManger {
+class PrefManagerImpl @Inject constructor(
+    @ApplicationContext context: Context
+) : IPrefManger {
     companion object {
         private const val KEY_USER = "user"
         private const val KEY_ACCESS_TOKEN = "accessToken"
         private const val KEY_REFRESH_TOKEN = "refreshToken"
+        private const val KEY_FAV = "fav"
     }
 
     private val pref: SharedPreferences by lazy {
@@ -56,6 +60,38 @@ class PrefManagerImpl @Inject constructor(@ApplicationContext context: Context) 
 
     override fun clearRefreshToken() {
         removeString(KEY_REFRESH_TOKEN)
+    }
+
+    override fun toggleFav(variantId: Int): Boolean {
+        var favSetAsString = getString(KEY_FAV, "")
+        val set = Utils.jsonToSetOfInt(favSetAsString)
+
+        val addToFav = variantId !in set
+
+        if (addToFav) {
+            set.add(variantId)
+        } else {
+            set.remove(variantId)
+        }
+
+        favSetAsString = Utils.jsonFromSetOfInt(set)
+        saveString(KEY_FAV, favSetAsString)
+
+        return addToFav
+    }
+
+    override fun getFav(): MutableSet<Int> {
+        val favSetAsString = getString(KEY_FAV, "")
+        return Utils.jsonToSetOfInt(favSetAsString)
+    }
+
+    override fun saveFav(set: MutableSet<Int>) {
+        val favSetAsString = Utils.jsonFromSetOfInt(set)
+        saveString(KEY_FAV, favSetAsString)
+    }
+
+    override fun clearFav() {
+        removeString(KEY_FAV)
     }
 
     private fun saveString(key: String, value: String) {

@@ -10,6 +10,7 @@ import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
 import com.hexagram.febys.base.SliderFragment
 import com.hexagram.febys.databinding.FragmentHomeBinding
@@ -22,7 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class HomeFragment : SliderFragment() {
     private lateinit var binding: FragmentHomeBinding
-    private val viewModel: HomeViewModel by hiltNavGraphViewModels(R.id.nav_graph)
+    private val homeViewModel: HomeViewModel by hiltNavGraphViewModels(R.id.nav_graph)
 
     private val uniqueCategoryAdapter = UniqueCategoryAdapter()
     private val todayDealsAdapter = HomeProductsAdapter()
@@ -36,7 +37,7 @@ class HomeFragment : SliderFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.fetchHomeModel()
+        homeViewModel.fetchHomeModel()
     }
 
     override fun onCreateView(
@@ -133,10 +134,41 @@ class HomeFragment : SliderFragment() {
                 .actionHomeFragmentToCategoryProductListingFragment(categoryTitle, categoryId)
             navigateTo(gotoCategoryListing)
         }
+
+        fun updateFav() {
+            val fav = homeViewModel.getFav()
+            todayDealsAdapter.submitFav(fav)
+            featuredCategoryProductsAdapter.submitFav(fav)
+            trendingProductsAdapter.submitFav(fav)
+            under100DollarsItemAdapter.submitFav(fav)
+        }
+
+        updateFav()
+
+        val homeProductAdapterInteraction = object : HomeProductsAdapter.Interaction {
+            override fun onItemSelected(position: Int, item: Product) {
+                // todo navigate to product detail
+            }
+
+            override fun onFavToggleClick(variantId: Int) {
+                if (isUserLoggedIn) {
+                    homeViewModel.toggleFav(variantId)
+                    updateFav()
+                } else {
+                    val navigateToLogin = NavGraphDirections.actionToLoginFragment()
+                    navigateTo(navigateToLogin)
+                }
+            }
+        }
+
+        todayDealsAdapter.interaction = homeProductAdapterInteraction
+        featuredCategoryProductsAdapter.interaction = homeProductAdapterInteraction
+        trendingProductsAdapter.interaction = homeProductAdapterInteraction
+        under100DollarsItemAdapter.interaction = homeProductAdapterInteraction
     }
 
     private fun setupObserver() {
-        viewModel.observeHomeModel.observe(viewLifecycleOwner) {
+        homeViewModel.observeHomeModel.observe(viewLifecycleOwner) {
             when (it) {
                 is DataState.Loading -> {
                     showLoader()

@@ -35,7 +35,7 @@ class UserDataSourceImpl @Inject constructor(
         pref.clearUser()
     }
 
-    override fun clearUserState(){
+    override fun clearUserState() {
         pref.clearAccessToken()
         pref.clearRefreshToken()
     }
