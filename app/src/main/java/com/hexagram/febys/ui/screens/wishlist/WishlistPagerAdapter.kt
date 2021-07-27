@@ -45,11 +45,17 @@ class WishlistPagerAdapter :
                 interaction?.onItemSelected(position, item)
             }
 
+            binding.ivClose.setOnClickListener {
+                val variantId = item.product_variants[0].id
+                interaction?.removeFav(variantId)
+            }
+
             binding.product = item
         }
     }
 
     interface Interaction {
         fun onItemSelected(position: Int, item: Product)
+        fun removeFav(variantId: Int)
     }
 }
