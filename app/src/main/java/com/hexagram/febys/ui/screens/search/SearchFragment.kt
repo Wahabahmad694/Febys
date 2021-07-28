@@ -13,6 +13,8 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentSearchBinding
+import com.hexagram.febys.utils.navigateTo
+import com.hexagram.febys.utils.onSearch
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,6 +33,7 @@ class SearchFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initUi()
+        uiListeners()
     }
 
     private fun initUi() {
@@ -80,5 +83,24 @@ class SearchFragment : BaseFragment() {
             }
         })
         // endregion bold text on selected tab
+    }
+
+    private fun uiListeners() {
+        fun onSearchClick() {
+            val query = binding.etSearch.text.toString()
+            if (query.isNotEmpty()) {
+                doSearch(query)
+            }
+        }
+
+        binding.ivSearch.setOnClickListener { onSearchClick() }
+
+        binding.etSearch.onSearch { onSearchClick() }
+    }
+
+    private fun doSearch(query: String) {
+        val gotoSearch =
+            SearchFragmentDirections.actionSearchFragmentToSearchProductListingFragment(query)
+        navigateTo(gotoSearch)
     }
 }

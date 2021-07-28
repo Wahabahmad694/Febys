@@ -9,6 +9,14 @@
         android:id="@+id/action_to_product_detail"
         app:destination="@id/productDetailFragment" />
 
+    <action
+        android:id="@+id/action_to_loginFragment"
+        app:destination="@id/loginFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_right" />
+
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.hexagram.febys.ui.screens.splash.SplashFragment"
@@ -107,6 +115,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_searchFragment_to_searchProductListingFragment"
+            app:destination="@id/searchProductListingFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/wishListFragment"
@@ -126,15 +141,7 @@
         android:id="@+id/accountFragment"
         android:name="com.hexagram.febys.ui.screens.account.AccountFragment"
         android:label="AccountFragment"
-        tools:layout="@layout/fragment_account">
-        <action
-            android:id="@+id/action_accountFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right" />
-    </fragment>
+        tools:layout="@layout/fragment_account" />
 
     <dialog
         android:id="@+id/otpVerificationDialog"
@@ -209,6 +216,15 @@
         tools:layout="@layout/fragment_product_listing">
         <argument
             android:name="productListTitle"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchProductListingFragment"
+        android:name="com.hexagram.febys.ui.screens.product.listing.SearchProductListingFragment"
+        android:label="SearchProductListingFragment"
+        tools:layout="@layout/fragment_product_listing">
+        <argument
+            android:name="query"
             app:argType="string" />
     </fragment>
 </navigation>

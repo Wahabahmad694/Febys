@@ -38,11 +38,8 @@ class AccountFragment : BaseFragment() {
 
     private fun uiListeners() {
         binding.btnSignIn.setOnClickListener {
-            authViewModel.signOut {
-                val navigateToLogin =
-                    AccountFragmentDirections.actionAccountFragmentToLoginFragment()
-                navigateTo(navigateToLogin)
-            }
+            val navigateToLogin = AccountFragmentDirections.actionToLoginFragment()
+            navigateTo(navigateToLogin)
         }
 
         binding.btnSignOut.setOnClickListener {

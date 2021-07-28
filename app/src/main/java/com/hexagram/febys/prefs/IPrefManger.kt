@@ -20,4 +20,12 @@ interface IPrefManger {
     fun clearAccessToken()
 
     fun clearRefreshToken()
+
+    fun toggleFav(variantId: Int): Boolean
+
+    fun getFav(): MutableSet<Int>
+
+    fun saveFav(set: MutableSet<Int>)
+
+    fun clearFav()
 }

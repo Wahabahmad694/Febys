@@ -10,14 +10,12 @@ import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
+import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentProductListingBinding
 import com.hexagram.febys.network.response.Product
-import com.hexagram.febys.utils.goBack
-import com.hexagram.febys.utils.hideLoader
-import com.hexagram.febys.utils.showLoader
-import com.hexagram.febys.utils.showToast
+import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
@@ -47,6 +45,8 @@ abstract class ProductListingFragment : BaseFragment() {
 
     private fun setupPagerAdapter() {
         binding.rvProductList.adapter = productListingPagerAdapter
+        val fav = productListingViewModel.getFav()
+        productListingPagerAdapter.submitFav(fav)
 
         viewLifecycleOwner.lifecycleScope.launch {
             getProductPagingDate().collectLatest { pagingData ->
@@ -80,12 +80,6 @@ abstract class ProductListingFragment : BaseFragment() {
             layoutManager = GridLayoutManager(context, 2)
             adapter = this@ProductListingFragment.productListingPagerAdapter
         }
-
-        productListingPagerAdapter.interaction = object : ProductListingPagerAdapter.Interaction {
-            override fun onItemSelected(position: Int, item: Product) {
-                onProductClick(position, item)
-            }
-        }
     }
 
     private fun uiListeners() {
@@ -97,6 +91,22 @@ abstract class ProductListingFragment : BaseFragment() {
             // todo show refine screen
         }
 
+        productListingPagerAdapter.interaction = object : ProductListingPagerAdapter.Interaction {
+            override fun onItemSelected(position: Int, item: Product) {
+                onProductClick(position, item)
+            }
+
+            override fun toggleFavIfUserLoggedIn(variantId: Int): Boolean {
+                return isUserLoggedIn.also {
+                    if (it) {
+                        productListingViewModel.toggleFav(variantId)
+                    } else {
+                        val navigateToLogin = NavGraphDirections.actionToLoginFragment()
+                        navigateTo(navigateToLogin)
+                    }
+                }
+            }
+        }
     }
 
     fun setProductItemCount(count: Int) {

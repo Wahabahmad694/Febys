@@ -24,6 +24,7 @@ class ProductListingPagerAdapter :
     }
 
     var interaction: Interaction? = null
+    private var fav = mutableSetOf<Int>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductPagerViewHolder {
         return ProductPagerViewHolder(
@@ -35,10 +36,13 @@ class ProductListingPagerAdapter :
 
     override fun onBindViewHolder(holder: ProductPagerViewHolder, position: Int) {
         holder.bind(getItem(position) ?: return, position)
-
     }
 
     fun totalSize() = itemCount
+
+    fun submitFav(fav: MutableSet<Int>) {
+        this.fav = fav
+    }
 
     inner class ProductPagerViewHolder(
         private val binding: ItemProductListBinding
@@ -49,11 +53,28 @@ class ProductListingPagerAdapter :
                 interaction?.onItemSelected(position, item)
             }
 
+            val variantId = item.product_variants[0].id
+
+            binding.isFav = variantId in fav
+
+            binding.ivFavToggle.setOnClickListener {
+                val isUserLoggedIn = interaction?.toggleFavIfUserLoggedIn(variantId) ?: false
+                if (!isUserLoggedIn) return@setOnClickListener
+
+                if (variantId in fav) {
+                    fav.remove(variantId)
+                } else {
+                    fav.add(variantId)
+                }
+                notifyItemChanged(position)
+            }
+
             binding.product = item
         }
     }
 
     interface Interaction {
         fun onItemSelected(position: Int, item: Product)
+        fun toggleFavIfUserLoggedIn(variantId: Int): Boolean
     }
 }

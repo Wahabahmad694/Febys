@@ -24,6 +24,7 @@ class HomeProductsAdapter :
     }
 
     var interaction: Interaction? = null
+    private var fav = mutableSetOf<Int>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductHomeViewHolder {
         return ProductHomeViewHolder(
@@ -37,6 +38,11 @@ class HomeProductsAdapter :
         holder.bind(getItem(position), position)
     }
 
+    fun submitFav(fav: MutableSet<Int>) {
+        this.fav = fav
+        notifyDataSetChanged()
+    }
+
     inner class ProductHomeViewHolder(val binding: ItemProductHomeBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -48,13 +54,18 @@ class HomeProductsAdapter :
             binding.product = item
             binding.isFav = false
 
+            val variantId = item.product_variants[0].id
+
+            binding.isFav = variantId in fav
+
             binding.ivFav.setOnClickListener {
-                binding.isFav = !binding.isFav!!
+                interaction?.onFavToggleClick(variantId)
             }
         }
     }
 
     interface Interaction {
         fun onItemSelected(position: Int, item: Product)
+        fun onFavToggleClick(variantId: Int)
     }
 }
