@@ -4,6 +4,7 @@ import com.hexagram.febys.dataSource.IUserDataSource
 import com.hexagram.febys.enum.SocialLogin
 import com.hexagram.febys.network.AuthService
 import com.hexagram.febys.network.DataState
+import com.hexagram.febys.network.FebysBackendService
 import com.hexagram.febys.network.adapter.*
 import com.hexagram.febys.network.requests.RequestSignup
 import com.hexagram.febys.network.response.*
@@ -16,7 +17,8 @@ import java.util.*
 import javax.inject.Inject
 
 class AuthRepoImpl @Inject constructor(
-    private val service: AuthService,
+    private val authService: AuthService,
+    private val backendService: FebysBackendService,
     private val pref: IPrefManger,
     private val userDataSource: IUserDataSource
 ) : IAuthRepo {
@@ -25,7 +27,7 @@ class AuthRepoImpl @Inject constructor(
         signupReq: RequestSignup, dispatcher: CoroutineDispatcher
     ): Flow<DataState<ResponseSignup>> {
         return flow<DataState<ResponseSignup>> {
-            service.signup(signupReq)
+            authService.signup(signupReq)
                 .onSuccess {
                     data!!.apply {
                         saveUserAndToken(user)
@@ -44,7 +46,7 @@ class AuthRepoImpl @Inject constructor(
         return flow<DataState<ResponseOtpVerification>> {
             val authToken = pref.getAccessToken()
             val verificationReq = mapOf("otp" to otp)
-            service.verifyUser(authToken, verificationReq)
+            authService.verifyUser(authToken, verificationReq)
                 .onSuccess {
                     data!!.apply {
                         saveUserAndToken(user)
@@ -62,9 +64,10 @@ class AuthRepoImpl @Inject constructor(
     ): Flow<DataState<ResponseLogin>> {
         return flow<DataState<ResponseLogin>> {
             val loginReq = mapOf("email" to email, "password" to password)
-            service.login(loginReq).onSuccess {
+            authService.login(loginReq).onSuccess {
                 data!!.apply {
                     saveUserAndToken(user)
+                    fetchWishListIds()
                     emit(DataState.Data(data))
                 }
             }
@@ -79,7 +82,7 @@ class AuthRepoImpl @Inject constructor(
     ): Flow<DataState<Unit>> {
         return flow<DataState<Unit>> {
             val resetCredentialReq = mapOf("email" to email)
-            service.resetCredentials(resetCredentialReq)
+            authService.resetCredentials(resetCredentialReq)
                 .onSuccess { emit(DataState.Data(Unit)) }
                 .onError { emit(DataState.ApiError(message)) }
                 .onException { emit(DataState.ExceptionError()) }
@@ -104,11 +107,12 @@ class AuthRepoImpl @Inject constructor(
             val url =
                 "https://auth.qa.febys.com/auth/realms/febys-consumers/protocol/openid-connect/token"
 
-            service.refreshToken(url, fields)
+            authService.refreshToken(url, fields)
                 .onSuccess {
                     data!!.apply {
                         userDataSource.saveAccessToken(accessToken)
                         userDataSource.saveRefreshToken(this.refreshToken)
+                        fetchWishListIds()
                         emit(DataState.Data(this))
                     }
                 }
@@ -131,9 +135,10 @@ class AuthRepoImpl @Inject constructor(
                 "client" to "android"
             )
 
-            service.socialLogin(socialLoginReq).onSuccess {
+            authService.socialLogin(socialLoginReq).onSuccess {
                 data!!.apply {
                     saveUserAndToken(user)
+                    fetchWishListIds()
                     emit(DataState.Data(this))
                 }
             }
@@ -147,6 +152,15 @@ class AuthRepoImpl @Inject constructor(
         userDataSource.saveUser(user)
         userDataSource.saveAccessToken(user.accessToken ?: "")
         userDataSource.saveRefreshToken(user.refreshToken ?: "")
+    }
+
+    private suspend fun fetchWishListIds() {
+        val authToken = pref.getAccessToken()
+        val response = backendService.fetchWishlistIds(authToken)
+        if (response is ApiResponse.ApiSuccessResponse) {
+            val fav = response.data!!.variantIds
+            pref.saveFav(fav.toMutableSet())
+        }
     }
 
     override fun signOut() {

@@ -47,4 +47,9 @@ interface FebysBackendService {
     suspend fun removeFromWishList(
         @Header("Authorization") authToken: String, @Body req: RequestToggleFav
     ): ApiResponse<ResponseToggleFav>
+
+    @GET("v1/wish-list/variant-ids")
+    suspend fun fetchWishlistIds(
+        @Header("Authorization") authToken: String
+    ): ApiResponse<ResponseToggleFav>
 }
