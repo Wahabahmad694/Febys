@@ -29,5 +29,5 @@ abstract class RepositoryModule {
 
     @Singleton
     @Binds
-    abstract fun bindProductListingRepo(repo: ProductListingImpl): IProductListingRepo
+    abstract fun bindProductListingRepo(repo: ProductListingRepoImpl): IProductListingRepo
 }
