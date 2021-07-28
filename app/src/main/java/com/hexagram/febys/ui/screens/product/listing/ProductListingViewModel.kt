@@ -18,6 +18,7 @@ class ProductListingViewModel @Inject constructor(
     private var trendingProductsListing: Flow<PagingData<Product>>? = null
     private var under100DollarsItemsListing: Flow<PagingData<Product>>? = null
     private var categoryProductsListing: Flow<PagingData<Product>>? = null
+    private var searchProductsListing: Flow<PagingData<Product>>? = null
 
     fun todayDealsListing(
         onProductListingResponse: ((ResponseProductListing) -> Unit)? = null
@@ -69,5 +70,18 @@ class ProductListingViewModel @Inject constructor(
         }
 
         return categoryProductsListing!!
+    }
+
+    fun searchProductsListing(
+        query: String, onProductListingResponse: ((ResponseProductListing) -> Unit)? = null
+    ): Flow<PagingData<Product>> {
+        if (searchProductsListing == null) {
+            searchProductsListing =
+                productListingRepo.searchProductListing(
+                    query, viewModelScope, onProductListingResponse = onProductListingResponse
+                )
+        }
+
+        return searchProductsListing!!
     }
 }

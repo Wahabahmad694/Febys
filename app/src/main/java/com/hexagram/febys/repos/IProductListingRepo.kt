@@ -34,6 +34,13 @@ interface IProductListingRepo : IProductRepo {
         onProductListingResponse: ((ResponseProductListing) -> Unit)? = null
     ): Flow<PagingData<Product>>
 
+    fun searchProductListing(
+        query: String,
+        scope: CoroutineScope,
+        dispatcher: CoroutineDispatcher = Dispatchers.IO,
+        onProductListingResponse: ((ResponseProductListing) -> Unit)?
+    ): Flow<PagingData<Product>>
+
     fun fetchWishList(
         scope: CoroutineScope,
         dispatcher: CoroutineDispatcher = Dispatchers.IO,

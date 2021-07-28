@@ -2,9 +2,12 @@ package com.hexagram.febys.utils
 
 import android.app.Activity
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.DimenRes
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
@@ -42,8 +45,12 @@ fun Activity.showToast(msg: String, length: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(this, msg, length).show()
 }
 
+fun Activity.hideKeyboard() {
+    WindowInsetsControllerCompat(window, window.decorView).hide(WindowInsetsCompat.Type.ime())
+}
+
 fun Fragment.showToast(msg: String, length: Int = Toast.LENGTH_SHORT) {
-    Toast.makeText(context, msg, length).show()
+    activity?.showToast(msg, length)
 }
 
 fun Fragment.navigateTo(directions: NavDirections) = findNavController().navigate(directions)
@@ -56,6 +63,10 @@ fun Fragment.showLoader() {
 
 fun Fragment.hideLoader() {
     (activity as? BaseActivity)?.hideLoader()
+}
+
+fun Fragment.hideKeyboard() {
+    activity?.hideKeyboard()
 }
 
 fun RecyclerView.applySpaceItemDecoration(
@@ -78,4 +89,15 @@ fun RecyclerView.applySpaceItemDecoration(
 
 fun EditText.clearError() {
     error = null
+}
+
+fun EditText.onSearch(callback: () -> Unit) {
+    setOnEditorActionListener { _, actionId, _ ->
+        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+            clearFocus()
+            callback.invoke()
+            return@setOnEditorActionListener true
+        }
+        false
+    }
 }

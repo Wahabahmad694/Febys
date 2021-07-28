@@ -30,6 +30,11 @@ interface FebysBackendService {
     @GET("v1/products/under100")
     suspend fun fetchUnder100DollarsItems(@QueryMap req: Map<String, Int>): ApiResponse<ResponseOfPagination>
 
+    @GET("v1/products")
+    suspend fun searchProducts(
+        @Query("search") query: String, @QueryMap req: Map<String, Int>
+    ): ApiResponse<ResponseOfPagination>
+
     @GET("v1/products/{productId}")
     suspend fun fetchProduct(@Path("productId") productId: Int): ApiResponse<ResponseProduct>
 

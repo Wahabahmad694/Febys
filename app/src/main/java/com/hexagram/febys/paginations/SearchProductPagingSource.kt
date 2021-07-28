@@ -7,8 +7,8 @@ import com.hexagram.febys.network.requests.RequestOfPagination
 import com.hexagram.febys.network.response.Product
 import com.hexagram.febys.network.response.ResponseProductListing
 
-class CategoryProductsListingPagingSource constructor(
-    private val categoryId: Int,
+class SearchProductPagingSource constructor(
+    private val query: String,
     private val service: FebysBackendService,
     private val request: RequestOfPagination,
     onProductListingResponse: ((ResponseProductListing) -> Unit)? = null
@@ -22,13 +22,14 @@ class CategoryProductsListingPagingSource constructor(
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Product> {
         request.pageNo = params.key ?: 1
-        val req = mapOf("chunkSize" to request.chunkSize, "pageNo" to request.pageNo)
-        return when (val response = service.fetchCategoryProducts(categoryId, req)) {
+        val req =
+            mapOf("chunkSize" to request.chunkSize, "pageNo" to request.pageNo)
+        return when (val response = service.searchProducts(query, req)) {
             is ApiResponse.ApiSuccessResponse -> {
-                val categoryProductsResponse = response.data!!.getResponse<ResponseProductListing>()
-                onProductListingResponse?.invoke(categoryProductsResponse)
-                val (prevKey, nextKey) = getPagingKeys(categoryProductsResponse.paginationInformation)
-                LoadResult.Page(categoryProductsResponse.products, prevKey, nextKey)
+                val searchProductResponse = response.data!!.getResponse<ResponseProductListing>()
+                onProductListingResponse?.invoke(searchProductResponse)
+                val (prevKey, nextKey) = getPagingKeys(searchProductResponse.paginationInformation)
+                LoadResult.Page(searchProductResponse.products, prevKey, nextKey)
             }
             is ApiResponse.ApiFailureResponse.Error -> {
                 LoadResult.Error(Exception(response.message))

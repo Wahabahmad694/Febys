@@ -61,6 +61,7 @@
                 android:autofillHints="@null"
                 android:background="@null"
                 android:hint="@string/hint_search"
+                android:imeOptions="actionSearch"
                 android:inputType="text"
                 android:singleLine="true"
                 android:textAppearance="@style/TextTheme.HelveticaNeue.TS14"

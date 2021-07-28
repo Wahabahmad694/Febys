@@ -115,6 +115,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_searchFragment_to_searchProductListingFragment"
+            app:destination="@id/searchProductListingFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/wishListFragment"
@@ -209,6 +216,15 @@
         tools:layout="@layout/fragment_product_listing">
         <argument
             android:name="productListTitle"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchProductListingFragment"
+        android:name="com.hexagram.febys.ui.screens.product.listing.SearchProductListingFragment"
+        android:label="SearchProductListingFragment"
+        tools:layout="@layout/fragment_product_listing">
+        <argument
+            android:name="query"
             app:argType="string" />
     </fragment>
 </navigation>

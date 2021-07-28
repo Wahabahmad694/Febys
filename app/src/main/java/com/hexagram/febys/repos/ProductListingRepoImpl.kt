@@ -76,7 +76,24 @@ class ProductListingRepoImpl @Inject constructor(
             PagingConfig(pageSize = 10)
         ) {
             CategoryProductsListingPagingSource(
-                backendService, categoryId, RequestOfPagination(), onProductListingResponse
+                categoryId, backendService, RequestOfPagination(), onProductListingResponse
+            )
+        }.flow
+            .flowOn(dispatcher)
+            .cachedIn(scope)
+    }
+
+    override fun searchProductListing(
+        query: String,
+        scope: CoroutineScope,
+        dispatcher: CoroutineDispatcher,
+        onProductListingResponse: ((ResponseProductListing) -> Unit)?
+    ): Flow<PagingData<Product>> {
+        return Pager(
+            PagingConfig(pageSize = 10)
+        ) {
+            SearchProductPagingSource(
+                query, backendService, RequestOfPagination(), onProductListingResponse
             )
         }.flow
             .flowOn(dispatcher)
