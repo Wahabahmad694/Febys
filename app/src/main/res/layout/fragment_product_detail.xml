@@ -10,602 +10,757 @@
             name="product"
             type="com.hexagram.febys.network.response.Product" />
 
+        <variable
+            name="variant"
+            type="com.hexagram.febys.network.response.ProductVariant" />
+
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.screens.product.detail.ProductDetailFragment">
 
-        <TextView
-            android:id="@+id/tv_product_brand_appbar"
-            style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            android:background="@color/grey"
-            android:gravity="center"
-            android:paddingHorizontal="@dimen/_32dp"
-            android:text="@{product.name}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_16dp"
-            android:src="@drawable/ic_back"
-            app:layout_constraintBottom_toBottomOf="@id/tv_product_brand_appbar"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_product_brand_appbar" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_cart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_16dp"
-            android:src="@drawable/ic_cart"
-            app:layout_constraintBottom_toBottomOf="@id/tv_product_brand_appbar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_product_brand_appbar" />
-
-        <com.hexagram.febys.utils.ScrollView
-            android:id="@+id/scroll_view"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_0dp"
-            android:fillViewport="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_product_brand_appbar">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <!--       todo update when brand implemented in backend-->
+            <TextView
+                android:id="@+id/tv_product_brand_appbar"
+                style="@style/TextTheme.HelveticaNeue.TS16.Bold"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="?actionBarSize"
+                android:background="@color/grey"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/_32dp"
+                android:text="TCL"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/slider_product_images"
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_16dp"
+                android:src="@drawable/ic_back"
+                app:layout_constraintBottom_toBottomOf="@id/tv_product_brand_appbar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_product_brand_appbar" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_cart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_16dp"
+                android:src="@drawable/ic_cart"
+                app:layout_constraintBottom_toBottomOf="@id/tv_product_brand_appbar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_product_brand_appbar" />
+
+            <com.hexagram.febys.utils.ScrollView
+                android:id="@+id/scroll_view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_0dp"
+                android:fillViewport="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_product_brand_appbar">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_320sdp"
-                    android:background="@drawable/bg_grey_fill"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_height="wrap_content">
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/iv_product_fav"
-                    android:layout_width="@dimen/_19sdp"
-                    android:layout_height="@dimen/_19sdp"
-                    android:layout_marginTop="@dimen/_16dp"
-                    android:layout_marginEnd="@dimen/_16dp"
-                    android:src="@drawable/ic_un_fav"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/slider_product_images" />
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/slider_product_images"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_320sdp"
+                        android:background="@drawable/bg_grey_fill"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/iv_product_share"
-                    android:layout_width="@dimen/_19sdp"
-                    android:layout_height="@dimen/_19sdp"
-                    android:layout_marginTop="@dimen/_24dp"
-                    android:layout_marginEnd="@dimen/_16dp"
-                    android:src="@drawable/ic_product_share"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/iv_product_fav" />
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_product_fav"
+                        android:layout_width="@dimen/_19sdp"
+                        android:layout_height="@dimen/_19sdp"
+                        android:layout_marginTop="@dimen/_16dp"
+                        android:layout_marginEnd="@dimen/_16dp"
+                        android:src="@drawable/ic_un_fav"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/slider_product_images" />
 
-                <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
-                    android:id="@+id/dots_indicator"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_24dp"
-                    app:dotsColor="@color/slider_dot_color"
-                    app:dotsCornerRadius="8dp"
-                    app:dotsSize="4dp"
-                    app:dotsSpacing="4dp"
-                    app:dotsWidthFactor="2.5"
-                    app:layout_constraintBottom_toBottomOf="@id/slider_product_images"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:progressMode="true"
-                    app:selectedDotColor="@color/slider_dot_selected_color" />
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_product_share"
+                        android:layout_width="@dimen/_19sdp"
+                        android:layout_height="@dimen/_19sdp"
+                        android:layout_marginTop="@dimen/_24dp"
+                        android:layout_marginEnd="@dimen/_16dp"
+                        android:src="@drawable/ic_product_share"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/iv_product_fav" />
 
-                <TextView
-                    android:id="@+id/tv_product_brand"
-                    style="@style/TextTheme.HelveticaNeue.TS14.Bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_16dp"
-                    android:layout_marginTop="@dimen/_16dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/slider_product_images" />
-
-                <TextView
-                    android:id="@+id/tv_product_name"
-                    style="@style/TextTheme.Arial.TS14"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_marginHorizontal="@dimen/_16dp"
-                    android:layout_marginTop="@dimen/_8dp"
-                    android:ellipsize="end"
-                    android:maxLines="2"
-                    android:text="@{product.name}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_product_brand"
-                    app:layout_constraintWidth_max="200dp" />
-
-                <TextView
-                    android:id="@+id/tv_product_price"
-                    style="@style/TextTheme.Arial.TS14"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8dp"
-                    android:text="@{`$` + product.product_variants.get(0).price}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_product_name" />
-
-                <com.facebook.drawee.view.SimpleDraweeView
-                    android:id="@+id/iv_product_verified_logo"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/_24dp"
-                    android:layout_marginTop="@dimen/_8dp"
-                    app:actualImageResource="@id/iv_product_verified_logo"
-                    app:actualImageScaleType="fitCenter"
-                    app:layout_constraintDimensionRatio="7:1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_product_price" />
-
-                <LinearLayout
-                    android:id="@+id/container_product_size"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_16dp"
-                    android:background="@drawable/bg_border_blackish"
-                    android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/iv_product_verified_logo">
-
-                    <TextView
-                        android:id="@+id/tv_product_size"
-                        style="@style/TextTheme.Arial.TS14"
-                        android:layout_width="0dp"
-                        android:layout_height="48dp"
-                        android:layout_marginStart="@dimen/_16dp"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:text="@string/label_size"
-                        app:layout_constraintEnd_toStartOf="@id/iv_size_arrow"
+                    <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+                        android:id="@+id/dots_indicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_24dp"
+                        app:dotsColor="@color/slider_dot_color"
+                        app:dotsCornerRadius="8dp"
+                        app:dotsSize="4dp"
+                        app:dotsSpacing="4dp"
+                        app:dotsWidthFactor="2.5"
+                        app:layout_constraintBottom_toBottomOf="@id/slider_product_images"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/iv_product_verified_logo" />
+                        app:progressMode="true"
+                        app:selectedDotColor="@color/slider_dot_selected_color" />
 
-                    <View
-                        android:layout_width="@dimen/_1dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/black" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/iv_size_arrow"
+                    <!--       todo update when brand implemented in backend-->
+                    <TextView
+                        android:id="@+id/tv_product_brand"
+                        style="@style/TextTheme.HelveticaNeue.TS14.Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:padding="@dimen/_16dp"
-                        android:src="@drawable/ic_arrow_down" />
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/tv_add_protection"
-                    style="@style/TextTheme.HelveticaNeue.TS16.Bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_32dp"
-                    android:text="@string/label_add_protection"
-                    app:layout_constraintStart_toStartOf="@id/container_product_size"
-                    app:layout_constraintTop_toBottomOf="@id/container_product_size" />
-
-                <RadioGroup
-                    android:id="@+id/rg_add_protection"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_16dp"
-                    android:layout_marginTop="@dimen/_32dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_add_protection">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_border_dark_grey"
-                        android:orientation="horizontal"
-                        android:paddingHorizontal="@dimen/_16dp">
-
-                        <RadioButton
-                            android:id="@+id/rb_add_four_year_protection"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-
-                        <TextView
-                            android:id="@+id/tv_add_four_year_protection"
-                            style="@style/TextTheme.Arial.TS16"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="4-Year Protection for $16.64" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_16dp"
                         android:layout_marginTop="@dimen/_16dp"
-                        android:background="@drawable/bg_border_dark_grey"
-                        android:orientation="horizontal"
-                        android:paddingHorizontal="@dimen/_16dp">
-
-                        <RadioButton
-                            android:id="@+id/rb_add_three_year_protection"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-
-                        <TextView
-                            android:id="@+id/tv_add_three_year_protection"
-                            style="@style/TextTheme.Arial.TS16"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="3-Year Protection for $15.64" />
-                    </LinearLayout>
-                </RadioGroup>
-
-                <TextView
-                    android:id="@+id/tv_add_delivery_address"
-                    style="@style/TextTheme.HelveticaNeue.TS16.Bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_32dp"
-                    android:text="@string/label_add_delivery_address"
-                    app:layout_constraintStart_toStartOf="@id/container_product_size"
-                    app:layout_constraintTop_toBottomOf="@id/rg_add_protection" />
-
-                <LinearLayout
-                    android:id="@+id/ll_container_payment_offers"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_16dp"
-                    android:layout_marginTop="@dimen/_32dp"
-                    android:background="@drawable/bg_grey_fill"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical"
-                    android:paddingHorizontal="@dimen/_16dp"
-                    android:paddingVertical="@dimen/_24dp"
-                    app:layout_constraintTop_toBottomOf="@id/tv_add_delivery_address">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical">
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_mobile_payment" />
-
-                        <TextView
-                            android:id="@+id/tv_mobile_payment_offer"
-                            style="@style/TextTheme.Arial.TS14"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/_16dp"
-                            android:layout_weight="1"
-                            android:text="@string/label_mobile_payment_offer" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_16dp"
-                        android:gravity="center_vertical">
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_buy_the_exchange" />
-
-                        <TextView
-                            android:id="@+id/tv_buy_the_exchange_offer"
-                            style="@style/TextTheme.Arial.TS14"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/_16dp"
-                            android:layout_weight="1"
-                            android:text="@string/label_buy_the_exchange_offer" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_16dp"
-                        android:gravity="center_vertical">
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_credit_card" />
-
-                        <TextView
-                            android:id="@+id/tv_credit_card_payment_offer"
-                            style="@style/TextTheme.Arial.TS14"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/_16dp"
-                            android:layout_weight="1"
-                            android:text="@string/label_credit_card_payment_offer" />
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/ll_container_add_delivery_address"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_16dp"
-                    android:layout_marginTop="@dimen/_24dp"
-                    android:background="@drawable/bg_border_dark_grey"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/_16dp"
-                    app:layout_constraintTop_toBottomOf="@id/ll_container_payment_offers">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/iv_add_delivery_address"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_location" />
+                        android:text="TCL"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/slider_product_images" />
 
                     <TextView
-                        android:id="@+id/tv_delivery_address"
+                        android:id="@+id/tv_product_name"
                         style="@style/TextTheme.Arial.TS14"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/_16dp"
-                        android:layout_weight="1"
-                        android:text="@string/label_enter_delivery_address" />
+                        android:layout_marginTop="@dimen/_8dp"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:maxLines="2"
+                        android:text="@{product.name}"
+                        android:textAlignment="center"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_product_brand"
+                        app:layout_constraintWidth_max="200dp" />
 
                     <TextView
-                        android:id="@+id/tv_check_delivery_address"
-                        style="@style/TextTheme.Arial.TS14.Bold"
+                        android:id="@+id/tv_product_off_price"
+                        style="@style/TextTheme.Arial.TS10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/label_check" />
+                        android:text="@{`$` + variant.price}"
+                        app:layout_constraintBaseline_toBaselineOf="@id/tv_product_price"
+                        app:layout_constraintEnd_toStartOf="@id/tv_product_off_price_separator"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="@id/tv_product_name"
+                        binding:is_visible="@{variant.hasPromotion}"
+                        binding:strike_through="@{true}"
+                        tools:text="$14" />
 
-                </LinearLayout>
+                    <TextView
+                        android:id="@+id/tv_product_off_price_separator"
+                        style="@style/TextTheme.Arial.TS12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_2sdp"
+                        android:text="@string/minus"
+                        app:layout_constraintBaseline_toBaselineOf="@id/tv_product_price"
+                        app:layout_constraintEnd_toStartOf="@id/tv_product_price"
+                        app:layout_constraintStart_toEndOf="@id/tv_product_off_price"
+                        binding:is_visible="@{variant.hasPromotion}" />
 
-                <TextView
-                    android:id="@+id/tv_delivery_info"
-                    style="@style/TextTheme.Arial.TS14"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_16dp"
-                    android:layout_marginTop="@dimen/_24dp"
-                    android:text="@string/label_add_delivery_address_info"
-                    app:layout_constraintTop_toBottomOf="@id/ll_container_add_delivery_address" />
+                    <TextView
+                        android:id="@+id/tv_product_price"
+                        style="@style/TextTheme.Arial.TS12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2dp"
+                        android:text="@{variant.hasPromotion ? `$` + variant.promotionPrice : `$` + variant.price}"
+                        app:layout_constraintEnd_toEndOf="@id/tv_product_name"
+                        app:layout_constraintStart_toEndOf="@id/tv_product_off_price_separator"
+                        app:layout_constraintTop_toBottomOf="@id/tv_product_name"
+                        tools:text="$14" />
 
-                <LinearLayout
-                    android:id="@+id/container_product_detail_information"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_16dp"
-                    android:layout_marginTop="@dimen/_32dp"
-                    android:orientation="vertical"
-                    app:layout_constraintTop_toBottomOf="@id/tv_delivery_info">
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1dp"
-                        android:background="@color/dark_grey" />
-
-                    <LinearLayout
-                        android:id="@+id/product_description_toggle"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_48dp"
-                        android:gravity="center_vertical">
-
-                        <TextView
-                            android:id="@+id/label_description"
-                            style="@style/TextTheme.HelveticaNeue.TS14.Bold"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/label_description" />
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/iv_description_arrow"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_arrow_down" />
-
-                    </LinearLayout>
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/iv_product_verified_logo"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_24dp"
+                        android:layout_marginTop="@dimen/_8dp"
+                        app:actualImageResource="@drawable/ic_product_verified_logo"
+                        app:actualImageScaleType="fitCenter"
+                        app:layout_constraintDimensionRatio="7:1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_product_price" />
 
                     <LinearLayout
-                        android:id="@+id/container_product_description"
+                        android:id="@+id/container_product_size"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:visibility="gone">
+                        android:layout_marginHorizontal="@dimen/_16dp"
+                        android:layout_marginTop="@dimen/_24dp"
+                        android:background="@drawable/bg_border_blackish"
+                        android:orientation="horizontal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/iv_product_verified_logo">
 
                         <TextView
-                            android:id="@+id/product_long_description"
+                            android:id="@+id/tv_product_size"
                             style="@style/TextTheme.Arial.TS14"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_24dp"
-                            binding:display_html="@{product.descriptionHTML}" />
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1dp"
-                        android:background="@color/dark_grey" />
-
-                    <LinearLayout
-                        android:id="@+id/product_manufacture_toggle"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_48dp"
-                        android:gravity="center_vertical">
-
-                        <TextView
-                            android:id="@+id/label_manufacture"
-                            style="@style/TextTheme.HelveticaNeue.TS14.Bold"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="48dp"
+                            android:layout_marginStart="@dimen/_16dp"
                             android:layout_weight="1"
-                            android:text="@string/label_manufacture" />
+                            android:gravity="center_vertical"
+                            app:layout_constraintEnd_toStartOf="@id/iv_size_arrow"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/iv_product_verified_logo"
+                            tools:text="@string/label_size" />
+
+                        <View
+                            android:layout_width="@dimen/_1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/black" />
 
                         <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/iv_manufacture_arrow"
+                            android:id="@+id/iv_size_arrow"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:padding="@dimen/_16dp"
                             android:src="@drawable/ic_arrow_down" />
-
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/container_product_manufacture"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/tv_add_protection"
+                        style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_24dp"
-                        android:orientation="vertical"
-                        android:visibility="gone">
+                        android:layout_marginTop="@dimen/_32dp"
+                        android:text="@string/label_add_protection"
+                        app:layout_constraintStart_toStartOf="@id/container_product_size"
+                        app:layout_constraintTop_toBottomOf="@id/container_product_size" />
 
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1dp"
-                        android:background="@color/dark_grey" />
-
-                    <LinearLayout
-                        android:id="@+id/product_reviews_toggle"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_48dp"
-                        android:gravity="center_vertical">
-
-                        <TextView
-                            android:id="@+id/label_reviews"
-                            style="@style/TextTheme.HelveticaNeue.TS14.Bold"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/label_reviews" />
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/iv_reviews_arrow"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_arrow_down" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/container_product_reviews"
-                        android:layout_width="match_parent"
+                    <RadioGroup
+                        android:id="@+id/rg_add_protection"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_24dp"
-                        android:orientation="vertical"
-                        android:visibility="gone">
-
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1dp"
-                        android:background="@color/dark_grey" />
-
-                    <LinearLayout
-                        android:id="@+id/product_q_nd_a_toggle"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_48dp"
-                        android:gravity="center_vertical">
-
-                        <TextView
-                            android:id="@+id/label_q_and_a"
-                            style="@style/TextTheme.HelveticaNeue.TS14.Bold"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/label_q_and_a" />
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/iv_q_and_a_arrow"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_arrow_down" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/container_product_q_nd_a"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_24dp"
-                        android:orientation="vertical"
-                        android:visibility="gone">
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1dp"
-                        android:background="@color/dark_grey" />
-
-                    <LinearLayout
-                        android:id="@+id/product_shipping_fee_toggle"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_48dp"
-                        android:gravity="center_vertical">
-
-                        <TextView
-                            android:id="@+id/label_shipping_fee"
-                            style="@style/TextTheme.HelveticaNeue.TS14.Bold"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/label_shipping_fee" />
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/iv_shipping_fee_arrow"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_arrow_down" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/container_product_shipping_fee"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_24dp"
-                        android:orientation="vertical"
-                        android:visibility="gone">
+                        android:layout_marginHorizontal="@dimen/_16dp"
+                        android:layout_marginTop="@dimen/_32dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_add_protection">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingVertical="@dimen/_8dp">
+                            android:background="@drawable/bg_border_dark_grey"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="@dimen/_16dp">
+
+                            <RadioButton
+                                android:id="@+id/rb_add_four_year_protection"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
 
                             <TextView
+                                android:id="@+id/tv_add_four_year_protection"
+                                style="@style/TextTheme.Arial.TS16"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="4-Year Protection for $16.64" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_16dp"
+                            android:background="@drawable/bg_border_dark_grey"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="@dimen/_16dp">
+
+                            <RadioButton
+                                android:id="@+id/rb_add_three_year_protection"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <TextView
+                                android:id="@+id/tv_add_three_year_protection"
+                                style="@style/TextTheme.Arial.TS16"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="3-Year Protection for $15.64" />
+                        </LinearLayout>
+                    </RadioGroup>
+
+                    <TextView
+                        android:id="@+id/tv_add_delivery_address"
+                        style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_32dp"
+                        android:text="@string/label_add_delivery_address"
+                        app:layout_constraintStart_toStartOf="@id/container_product_size"
+                        app:layout_constraintTop_toBottomOf="@id/rg_add_protection" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_container_payment_offers"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_16dp"
+                        android:layout_marginTop="@dimen/_32dp"
+                        android:background="@drawable/bg_grey_fill"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="@dimen/_16dp"
+                        android:paddingVertical="@dimen/_24dp"
+                        app:layout_constraintTop_toBottomOf="@id/tv_add_delivery_address">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_mobile_payment" />
+
+                            <TextView
+                                android:id="@+id/tv_mobile_payment_offer"
+                                style="@style/TextTheme.Arial.TS14"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_16dp"
+                                android:layout_weight="1"
+                                android:text="@string/label_mobile_payment_offer" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_16dp"
+                            android:gravity="center_vertical">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_buy_the_exchange" />
+
+                            <TextView
+                                android:id="@+id/tv_buy_the_exchange_offer"
+                                style="@style/TextTheme.Arial.TS14"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_16dp"
+                                android:layout_weight="1"
+                                android:text="@string/label_buy_the_exchange_offer" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_16dp"
+                            android:gravity="center_vertical">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_credit_card" />
+
+                            <TextView
+                                android:id="@+id/tv_credit_card_payment_offer"
+                                style="@style/TextTheme.Arial.TS14"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_16dp"
+                                android:layout_weight="1"
+                                android:text="@string/label_credit_card_payment_offer" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_container_add_delivery_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_16dp"
+                        android:layout_marginTop="@dimen/_24dp"
+                        android:background="@drawable/bg_border_dark_grey"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/_16dp"
+                        app:layout_constraintTop_toBottomOf="@id/ll_container_payment_offers">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/iv_add_delivery_address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_location" />
+
+                        <TextView
+                            android:id="@+id/tv_delivery_address"
+                            style="@style/TextTheme.Arial.TS14"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/_16dp"
+                            android:layout_weight="1"
+                            android:text="@string/label_enter_delivery_address" />
+
+                        <TextView
+                            android:id="@+id/tv_check_delivery_address"
+                            style="@style/TextTheme.Arial.TS14.Bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/label_check" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_delivery_info"
+                        style="@style/TextTheme.Arial.TS14"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_16dp"
+                        android:layout_marginTop="@dimen/_24dp"
+                        android:text="@string/label_add_delivery_address_info"
+                        app:layout_constraintTop_toBottomOf="@id/ll_container_add_delivery_address" />
+
+                    <LinearLayout
+                        android:id="@+id/container_product_detail_information"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_16dp"
+                        android:layout_marginTop="@dimen/_32dp"
+                        android:orientation="vertical"
+                        app:layout_constraintTop_toBottomOf="@id/tv_delivery_info">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1dp"
+                            android:background="@color/dark_grey" />
+
+                        <LinearLayout
+                            android:id="@+id/product_description_toggle"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_48dp"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:id="@+id/label_description"
                                 style="@style/TextTheme.HelveticaNeue.TS14.Bold"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="@string/label_product_availability" />
+                                android:text="@string/label_description" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/iv_description_arrow"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_arrow_down" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/container_product_description"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:id="@+id/product_long_description"
+                                style="@style/TextTheme.Arial.TS14"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_24dp"
+                                binding:display_html="@{product.descriptionHTML}" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1dp"
+                            android:background="@color/dark_grey" />
+
+                        <LinearLayout
+                            android:id="@+id/product_manufacture_toggle"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_48dp"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:id="@+id/label_manufacture"
+                                style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/label_manufacture" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/iv_manufacture_arrow"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_arrow_down" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/container_product_manufacture"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_24dp"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1dp"
+                            android:background="@color/dark_grey" />
+
+                        <LinearLayout
+                            android:id="@+id/product_reviews_toggle"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_48dp"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:id="@+id/label_reviews"
+                                style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/label_reviews" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/iv_reviews_arrow"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_arrow_down" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/container_product_reviews"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_24dp"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1dp"
+                            android:background="@color/dark_grey" />
+
+                        <LinearLayout
+                            android:id="@+id/product_q_nd_a_toggle"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_48dp"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:id="@+id/label_q_and_a"
+                                style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/label_q_and_a" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/iv_q_and_a_arrow"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_arrow_down" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/container_product_q_nd_a"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_24dp"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1dp"
+                            android:background="@color/dark_grey" />
+
+                        <LinearLayout
+                            android:id="@+id/product_shipping_fee_toggle"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_48dp"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:id="@+id/label_shipping_fee"
+                                style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/label_shipping_fee" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/iv_shipping_fee_arrow"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_arrow_down" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/container_product_shipping_fee"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_24dp"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingVertical="@dimen/_8dp">
+
+                                <TextView
+                                    style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/label_product_availability" />
+
+                                <com.google.android.material.chip.Chip
+                                    android:id="@+id/chip_product_is_in_stock"
+                                    style="@style/ChipTheme.Choice"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:checked="true"
+                                    android:text="@{variant.available ? @string/label_in_stock : @string/label_out_stock}"
+                                    app:chipBackgroundColor="@color/grey"
+                                    app:chipStrokeColor="@color/grey" />
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_1dp"
+                                android:background="@color/dark_grey" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingVertical="@dimen/_8dp">
+
+                                <TextView
+                                    style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/label_product_will_be_fulfilled_by" />
+
+                                <TextView
+                                    style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@{product.fulfillment}" />
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_1dp"
+                                android:background="@color/dark_grey" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:paddingVertical="@dimen/_8dp">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="@string/label_product_warranty" />
+
+                                    <TextView
+                                        style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@{product.warranty ? @string/label_yes : @string/label_no}" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_8dp">
+
+                                    <TextView
+                                        style="@style/TextTheme.Arial.TS14"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="@string/label_duration" />
+
+                                    <TextView
+                                        style="@style/TextTheme.Arial.TS14"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@{product.warrantyDuration}" />
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_1dp"
+                                android:background="@color/dark_grey" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingVertical="@dimen/_8dp">
+
+                                <TextView
+                                    style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/label_product_return_and_refundable" />
+
+                                <TextView
+                                    style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@{product.productReturnRefundable ? @string/label_yes : @string/label_no}" />
+
+                            </LinearLayout>
 
                             <com.google.android.material.chip.Chip
-                                android:id="@+id/chip_product_is_in_stock"
                                 style="@style/ChipTheme.Choice"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_8dp"
                                 android:checked="true"
-                                android:text="@{product.product_variants.get(0).available ? @string/label_in_stock : @string/label_out_stock}"
+                                android:text="@string/label_return_and_refund_policy"
                                 app:chipBackgroundColor="@color/grey"
                                 app:chipStrokeColor="@color/grey" />
 
@@ -616,229 +771,127 @@
                             android:layout_height="@dimen/_1dp"
                             android:background="@color/dark_grey" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingVertical="@dimen/_8dp">
-
-                            <TextView
-                                style="@style/TextTheme.HelveticaNeue.TS14.Bold"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="@string/label_product_will_be_fulfilled_by" />
-
-                            <TextView
-                                style="@style/TextTheme.HelveticaNeue.TS14.Bold"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@{product.fulfillment}" />
-
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_1dp"
-                            android:background="@color/dark_grey" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:paddingVertical="@dimen/_8dp">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-
-                                <TextView
-                                    style="@style/TextTheme.HelveticaNeue.TS14.Bold"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:text="@string/label_product_warranty" />
-
-                                <TextView
-                                    style="@style/TextTheme.HelveticaNeue.TS14.Bold"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@{product.warranty ? @string/label_yes : @string/label_no}" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_8dp">
-
-                                <TextView
-                                    style="@style/TextTheme.Arial.TS14"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:text="@string/label_duration" />
-
-                                <TextView
-                                    style="@style/TextTheme.Arial.TS14"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@{product.warrantyDuration}" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_1dp"
-                            android:background="@color/dark_grey" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingVertical="@dimen/_8dp">
-
-                            <TextView
-                                style="@style/TextTheme.HelveticaNeue.TS14.Bold"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="@string/label_product_return_and_refundable" />
-
-                            <TextView
-                                style="@style/TextTheme.HelveticaNeue.TS14.Bold"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@{product.productReturnRefundable ? @string/label_yes : @string/label_no}" />
-
-                        </LinearLayout>
-
-                        <com.google.android.material.chip.Chip
-                            style="@style/ChipTheme.Choice"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_8dp"
-                            android:checked="true"
-                            android:text="@string/label_return_and_refund_policy"
-                            app:chipBackgroundColor="@color/grey"
-                            app:chipStrokeColor="@color/grey" />
-
                     </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1dp"
-                        android:background="@color/dark_grey" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/container_store_information"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    app:layout_constraintTop_toBottomOf="@id/container_product_detail_information">
-
-                    <TextView
-                        android:id="@+id/label_store_information"
-                        style="@style/TextTheme.HelveticaNeue.TS16.Bold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginVertical="@dimen/_32dp"
-                        android:text="@string/label_store_information" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1dp"
-                        android:background="@color/dark_grey" />
 
                     <LinearLayout
+                        android:id="@+id/container_store_information"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        app:layout_constraintTop_toBottomOf="@id/container_product_detail_information">
+
+                        <TextView
+                            android:id="@+id/label_store_information"
+                            style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="@dimen/_32dp"
+                            android:text="@string/label_store_information" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1dp"
+                            android:background="@color/dark_grey" />
 
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/_16dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
                             android:orientation="horizontal">
 
-                            <com.facebook.drawee.view.SimpleDraweeView
-                                android:id="@+id/iv_stores_image"
-                                android:layout_width="56dp"
-                                android:layout_height="56dp"
-                                app:actualImageResource="@drawable/ic_store"
-                                app:actualImageScaleType="centerCrop"
-                                app:roundAsCircle="true" />
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/_16dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <com.facebook.drawee.view.SimpleDraweeView
+                                    android:id="@+id/iv_stores_image"
+                                    android:layout_width="56dp"
+                                    android:layout_height="56dp"
+                                    app:actualImageResource="@drawable/ic_store"
+                                    app:actualImageScaleType="centerCrop"
+                                    app:roundAsCircle="true" />
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="@dimen/_8dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/tv_store_name"
+                                        style="@style/TextTheme.Arial.TS14"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Deal-Train" />
+
+                                    <TextView
+                                        android:id="@+id/label_official"
+                                        style="@style/TextTheme.Arial.TS12"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/label_official"
+                                        android:textColor="@color/red" />
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="@dimen/_1dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/dark_grey" />
 
                             <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/_8dp"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_margin="@dimen/_16dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
                                 android:orientation="vertical">
 
+                                <androidx.appcompat.widget.AppCompatRatingBar
+                                    android:id="@+id/store_rating_bar"
+                                    style="?ratingBarStyleSmall"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:numStars="5"
+                                    android:progress="50" />
+
                                 <TextView
-                                    android:id="@+id/tv_store_name"
+                                    android:id="@+id/tv_store_rating"
                                     style="@style/TextTheme.Arial.TS14"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Deal-Train" />
+                                    android:text="@{@string/store_rating(2.5)}" />
 
-                                <TextView
-                                    android:id="@+id/label_official"
-                                    style="@style/TextTheme.Arial.TS12"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/label_official"
-                                    android:textColor="@color/red" />
                             </LinearLayout>
+
 
                         </LinearLayout>
 
                         <View
-                            android:layout_width="@dimen/_1dp"
-                            android:layout_height="match_parent"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1dp"
                             android:background="@color/dark_grey" />
 
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_margin="@dimen/_16dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <androidx.appcompat.widget.AppCompatRatingBar
-                                android:id="@+id/store_rating_bar"
-                                style="?ratingBarStyleSmall"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:numStars="5"
-                                android:progress="50" />
-
-                            <TextView
-                                android:id="@+id/tv_store_rating"
-                                style="@style/TextTheme.Arial.TS14"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@{@string/store_rating(2.5)}" />
-
-                        </LinearLayout>
-
-
                     </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.hexagram.febys.utils.ScrollView>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1dp"
-                        android:background="@color/dark_grey" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                </LinearLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.hexagram.febys.utils.ScrollView>
+        <View
+            android:id="@+id/bg_dim"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?color_dim" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <include
+            android:id="@+id/bottom_sheet_sizes"
+            layout="@layout/bottom_sheet_product_sizes" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

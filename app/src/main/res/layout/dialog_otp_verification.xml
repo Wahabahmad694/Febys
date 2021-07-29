@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="@dimen/_277sdp"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_white_rounded_corner"
+        android:background="@drawable/bg_bottom_sheet"
         tools:context=".ui.screens.dialog.OtpVerificationDialog">
 
         <androidx.appcompat.widget.AppCompatImageView
