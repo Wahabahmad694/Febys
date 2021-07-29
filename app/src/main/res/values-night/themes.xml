@@ -109,6 +109,7 @@
     <style name="ButtonTheme.OutLine" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:textAppearance">@style/TextTheme.HelveticaNeue.TS14</item>
         <item name="strokeColor">@color/white</item>
+        <item name="backgroundTint">@color/selector_outlined_button_night</item>
     </style>
 
     <style name="ButtonTheme.OutLine.Full">

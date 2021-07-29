@@ -94,6 +94,9 @@
     <string name="label_email_sent">We’ve sent an email to the provided address</string>
     <string name="label_refine">Refine</string>
     <string name="label_no_item">No Item</string>
+    <string name="label_add_to_cart">Add to Cart</string>
+    <string name="label_sign_out">Sign Out</string>
+    <string name="label_pay_now">Pay Now</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_search">Search</string>
@@ -118,8 +121,6 @@
     <string name="error_enter_valid_phone">Please Enter Valid Phone No</string>
 
     <string name="toast_email_sent">Email Sent</string>
-    <string name="label_add_to_cart">Add to Cart</string>
-    <string name="label_sign_out">Sign Out</string>
 
     <string name="google_web_client" translatable="false">912540354085-4u6he1g3h116kmo3f3irg662dtr5aplc.apps.googleusercontent.com</string>
     <string name="facebook_app_id" translatable="false">878271079567990</string>

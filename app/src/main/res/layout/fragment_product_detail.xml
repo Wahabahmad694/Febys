@@ -638,6 +638,37 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.hexagram.febys.utils.ScrollView>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_18sdp"
+                android:layout_marginBottom="@dimen/_14sdp"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_pay_now"
+                    style="@style/ButtonTheme.Contained"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:maxWidth="@dimen/_146sdp"
+                    android:text="@string/label_pay_now" />
+
+                <View
+                    android:layout_width="@dimen/_4sdp"
+                    android:layout_height="match_parent" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_add_to_cart"
+                    style="@style/ButtonTheme.OutLine.Full"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:minHeight="@dimen/_64dp"
+                    android:maxWidth="@dimen/_146sdp"
+                    android:text="@string/label_add_to_cart" />
+            </LinearLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <View
