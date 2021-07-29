@@ -110,10 +110,12 @@ class ProductDetailFragment : SliderFragment() {
             binding.scrollView.scrollToDescendant(binding.containerProductQNdA)
         }
 
-        binding.productShippingFeeToggle.setOnClickListener {
-            binding.containerProductShippingFee.toggleVisibility()
-            binding.ivShippingFeeArrow.updateArrowByVisibility(binding.containerProductShippingFee.isVisible)
-            binding.scrollView.scrollToDescendant(binding.containerProductShippingFee)
+        binding.containerProductShippingInfo.productShippingFeeToggle.setOnClickListener {
+            binding.containerProductShippingInfo.containerProductShippingFee.toggleVisibility()
+            binding.containerProductShippingInfo.ivShippingFeeArrow.updateArrowByVisibility(
+                binding.containerProductShippingInfo.containerProductShippingFee.isVisible
+            )
+            binding.scrollView.scrollToDescendant(binding.containerProductShippingInfo.containerProductShippingFee)
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
@@ -125,16 +127,12 @@ class ProductDetailFragment : SliderFragment() {
             goBack()
         }
 
-        sizesBottomSheet.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-                val isClosed = newState == BottomSheetBehavior.STATE_HIDDEN
-                if (isClosed && binding.bgDim.isVisible) {
-                    binding.bgDim.fadeVisibility(false, 200)
-                }
+        sizesBottomSheet.onStateChange { state ->
+            val isClosed = state == BottomSheetBehavior.STATE_HIDDEN
+            if (isClosed && binding.bgDim.isVisible) {
+                binding.bgDim.fadeVisibility(false, 200)
             }
-
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {}  // do nothing
-        })
+        }
     }
 
     private fun observersSetup() {
@@ -161,16 +159,25 @@ class ProductDetailFragment : SliderFragment() {
         val variant = product.product_variants.first { it.isDefault }
         val variantPosition = product.product_variants.indexOf(variant)
         productSizesAdapter.updateSelectedVariant(variantPosition)
-
         productSizesAdapter.submitList(product.product_variants)
+        updateVariant(variant)
 
         val shortDescription = ProductDescription(
             0, product.shortDescriptionHTML, getString(R.string.label_description)
         )
         updateProductDescription(shortDescription)
         updateProductDescription(product.descriptions)
+    }
 
-        updateVariant(variant)
+    private fun updateVariant(variant: ProductVariant) {
+        binding.variant = variant
+        setupProductImagesSlider(variant.images)
+
+        val isFav = productDetailViewModel.isFavProduct(variant.id)
+        updateFavIcon(isFav)
+
+        val size = variant.variant_attributes.first { it.name.lowercase() == "size" }.value
+        updateSize(size)
     }
 
     private fun updateProductDescription(description: ProductDescription) {
@@ -195,17 +202,6 @@ class ProductDetailFragment : SliderFragment() {
         descriptions.forEach {
             updateProductDescription(it)
         }
-    }
-
-    private fun updateVariant(variant: ProductVariant) {
-        binding.variant = variant
-        setupProductImagesSlider(variant.images)
-
-        val isFav = productDetailViewModel.isFavProduct(variant.id)
-        updateFavIcon(isFav)
-
-        val size = variant.variant_attributes.first { it.name.lowercase() == "size" }.value
-        updateSize(size)
     }
 
     private fun setupProductImagesSlider(images: List<String>) {

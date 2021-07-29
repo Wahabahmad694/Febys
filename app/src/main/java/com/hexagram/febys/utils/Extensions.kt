@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.Fade
 import androidx.transition.Transition
 import androidx.transition.TransitionManager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.hexagram.febys.base.BaseActivity
 
 fun View.show() {
@@ -112,4 +113,14 @@ fun EditText.onSearch(callback: () -> Unit) {
         }
         false
     }
+}
+
+fun <T : View> BottomSheetBehavior<T>.onStateChange(callback: (state: Int) -> Unit) {
+    addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+        override fun onStateChanged(bottomSheet: View, newState: Int) {
+            callback(newState)
+        }
+
+        override fun onSlide(bottomSheet: View, slideOffset: Float) {}  // do nothing
+    })
 }
