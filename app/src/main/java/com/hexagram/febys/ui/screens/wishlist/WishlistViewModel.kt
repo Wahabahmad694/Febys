@@ -1,5 +1,7 @@
 package com.hexagram.febys.ui.screens.wishlist
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import com.hexagram.febys.network.response.Product
@@ -15,12 +17,17 @@ class WishlistViewModel @Inject constructor(
     private val productListingRepo: IProductListingRepo
 ) : ProductViewModel(productListingRepo) {
 
+    private val _observeWishlistCount = MutableLiveData(0)
+    val observeWishlistCount: LiveData<Int> = _observeWishlistCount
+
     private var wishlistProductListing: Flow<PagingData<Product>>? = null
+
+    private var localFavCount = getFav().size
 
     fun fetchWishList(
         onProductListingResponse: ((ResponseProductListing) -> Unit)? = null
     ): Flow<PagingData<Product>> {
-        if (wishlistProductListing == null) {
+        if (wishlistProductListing == null || getFav().size > localFavCount) {
             wishlistProductListing =
                 productListingRepo.fetchWishList(
                     viewModelScope, onProductListingResponse = onProductListingResponse
@@ -28,5 +35,15 @@ class WishlistViewModel @Inject constructor(
         }
 
         return wishlistProductListing!!
+    }
+
+    fun decreaseWishlistCount() {
+        _observeWishlistCount.postValue(
+            _observeWishlistCount.value?.minus(-1) ?: 0
+        )
+    }
+
+    fun updateWishlistCount(count: Int) {
+        _observeWishlistCount.postValue(count)
     }
 }

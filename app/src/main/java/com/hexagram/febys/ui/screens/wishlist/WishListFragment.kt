@@ -10,14 +10,12 @@ import androidx.paging.LoadState
 import androidx.paging.filter
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
+import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentWishListBinding
 import com.hexagram.febys.network.response.Product
-import com.hexagram.febys.utils.goBack
-import com.hexagram.febys.utils.hideLoader
-import com.hexagram.febys.utils.showLoader
-import com.hexagram.febys.utils.showToast
+import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -41,14 +39,19 @@ class WishListFragment : BaseFragment() {
 
         initUi()
         uiListeners()
+        setObserver()
 
         if (isUserLoggedIn)
             setupWishlistPagerAdapter()
     }
 
-    private fun initUi() {
-        binding.wishListCount = 0
+    private fun setObserver() {
+        wishlistViewModel.observeWishlistCount.observe(viewLifecycleOwner) {
+            binding.wishListCount = it
+        }
+    }
 
+    private fun initUi() {
         binding.rvWishList.apply {
             setHasFixedSize(true)
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
@@ -63,12 +66,13 @@ class WishListFragment : BaseFragment() {
 
         wishlistPagerAdapter.interaction = object : WishlistPagerAdapter.Interaction {
             override fun onItemSelected(position: Int, item: Product) {
-                // todo open product detail
+                val gotoProductDetail = NavGraphDirections.actionToProductDetail(item.id)
+                navigateTo(gotoProductDetail)
             }
 
             override fun removeFav(variantId: Int) {
                 wishlistViewModel.toggleFav(variantId)
-                binding.wishListCount = binding.wishListCount?.minus(1) ?: 0
+                wishlistViewModel.decreaseWishlistCount()
                 updateWishList()
             }
         }
@@ -99,10 +103,10 @@ class WishListFragment : BaseFragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             val fav = wishlistViewModel.getFav()
             wishlistViewModel.fetchWishList {
-                binding.wishListCount = it.totalRows
+                wishlistViewModel.updateWishlistCount(it.totalRows)
             }.collectLatest { pagingData ->
                 val list = pagingData.filter {
-                    val variantId = it.product_variants[0].id
+                    val variantId = it.product_variants?.get(0)?.id ?: -1
                     variantId in fav
                 }
 
