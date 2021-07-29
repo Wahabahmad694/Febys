@@ -39,7 +39,7 @@ class ProductDetailFragment : SliderFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        productDetailViewModel.fetchProductDetail(19)
+        productDetailViewModel.fetchProductDetail(args.productId)
     }
 
     override fun onCreateView(
