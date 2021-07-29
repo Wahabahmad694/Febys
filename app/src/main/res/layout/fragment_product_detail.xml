@@ -437,84 +437,11 @@
                         android:orientation="vertical"
                         app:layout_constraintTop_toBottomOf="@id/tv_delivery_info">
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_1dp"
-                            android:background="@color/dark_grey" />
-
                         <LinearLayout
-                            android:id="@+id/product_description_toggle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_48dp"
-                            android:gravity="center_vertical">
-
-                            <TextView
-                                android:id="@+id/label_description"
-                                style="@style/TextTheme.HelveticaNeue.TS14.Bold"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="@string/label_description" />
-
-                            <androidx.appcompat.widget.AppCompatImageView
-                                android:id="@+id/iv_description_arrow"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_arrow_down" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/container_product_description"
+                            android:id="@+id/container_product_descriptions"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:visibility="gone">
-
-                            <TextView
-                                android:id="@+id/product_long_description"
-                                style="@style/TextTheme.Arial.TS14"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_24dp"
-                                binding:display_html="@{product.descriptionHTML}" />
-
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_1dp"
-                            android:background="@color/dark_grey" />
-
-                        <LinearLayout
-                            android:id="@+id/product_manufacture_toggle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_48dp"
-                            android:gravity="center_vertical">
-
-                            <TextView
-                                android:id="@+id/label_manufacture"
-                                style="@style/TextTheme.HelveticaNeue.TS14.Bold"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="@string/label_manufacture" />
-
-                            <androidx.appcompat.widget.AppCompatImageView
-                                android:id="@+id/iv_manufacture_arrow"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_arrow_down" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/container_product_manufacture"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_24dp"
-                            android:orientation="vertical"
-                            android:visibility="gone" />
+                            android:orientation="vertical" />
 
                         <View
                             android:layout_width="match_parent"
@@ -868,7 +795,6 @@
                                     android:text="@{@string/store_rating(2.5)}" />
 
                             </LinearLayout>
-
 
                         </LinearLayout>
 

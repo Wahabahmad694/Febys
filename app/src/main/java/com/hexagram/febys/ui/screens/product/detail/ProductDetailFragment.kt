@@ -18,8 +18,7 @@ import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
 import com.hexagram.febys.base.SliderFragment
 import com.hexagram.febys.databinding.FragmentProductDetailBinding
-import com.hexagram.febys.databinding.LayoutProductDetailDescriptionHtmlBinding
-import com.hexagram.febys.databinding.LayoutProductDetailDescriptionTitleBinding
+import com.hexagram.febys.databinding.LayoutProductDescriptionBinding
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.response.Product
 import com.hexagram.febys.network.response.ProductDescription
@@ -99,18 +98,6 @@ class ProductDetailFragment : SliderFragment() {
             closeSizesBottomSheet()
         }
 
-        binding.productDescriptionToggle.setOnClickListener {
-            binding.containerProductDescription.toggleVisibility()
-            binding.ivDescriptionArrow.updateArrowByVisibility(binding.containerProductDescription.isVisible)
-            binding.scrollView.scrollToDescendant(binding.containerProductDescription)
-        }
-
-        binding.productManufactureToggle.setOnClickListener {
-            binding.containerProductManufacture.toggleVisibility()
-            binding.ivManufactureArrow.updateArrowByVisibility(binding.containerProductManufacture.isVisible)
-            binding.scrollView.scrollToDescendant(binding.containerProductManufacture)
-        }
-
         binding.productReviewsToggle.setOnClickListener {
             binding.containerProductReviews.toggleVisibility()
             binding.ivReviewsArrow.updateArrowByVisibility(binding.containerProductReviews.isVisible)
@@ -177,43 +164,36 @@ class ProductDetailFragment : SliderFragment() {
 
         productSizesAdapter.submitList(product.product_variants)
 
-        val technicalDescription =
-            product.descriptions.firstOrNull { it.attribute.lowercase().contains("technical") }
-        updateTechnicalDescription(technicalDescription)
-
-        val manufactureDescription =
-            product.descriptions.firstOrNull { it.attribute.lowercase().contains("manufacturer") }
-        updateProductManufacture(manufactureDescription)
+        val shortDescription = ProductDescription(
+            0, product.shortDescriptionHTML, getString(R.string.label_description)
+        )
+        updateProductDescription(shortDescription)
+        updateProductDescription(product.descriptions)
 
         updateVariant(variant)
     }
 
-    private fun updateTechnicalDescription(technicalDescription: ProductDescription?) {
-        technicalDescription?.let {
-            val descriptionTitleBinding = LayoutProductDetailDescriptionTitleBinding.inflate(
-                layoutInflater, binding.containerProductDescription, false
-            )
-            descriptionTitleBinding.title = it.attribute
+    private fun updateProductDescription(description: ProductDescription) {
+        val productDescriptionsBinding = LayoutProductDescriptionBinding.inflate(
+            layoutInflater, binding.containerProductDescriptions, false
+        )
 
-            val descriptionContentBinding = LayoutProductDetailDescriptionHtmlBinding.inflate(
-                layoutInflater, binding.containerProductDescription, false
-            )
-            descriptionContentBinding.html = it.contentHTML
+        productDescriptionsBinding.description = description
 
-            binding.containerProductDescription.addView(descriptionTitleBinding.root)
-            binding.containerProductDescription.addView(descriptionContentBinding.root)
+        productDescriptionsBinding.productDescriptionToggle.setOnClickListener {
+            productDescriptionsBinding.containerProductDescription.toggleVisibility()
+            productDescriptionsBinding.ivDescriptionArrow.updateArrowByVisibility(
+                productDescriptionsBinding.containerProductDescription.isVisible
+            )
+            binding.scrollView.scrollToDescendant(productDescriptionsBinding.containerProductDescription)
         }
+
+        binding.containerProductDescriptions.addView(productDescriptionsBinding.root)
     }
 
-    private fun updateProductManufacture(manufactureDescription: ProductDescription?) {
-        binding.productManufactureToggle.isVisible = manufactureDescription != null
-
-        manufactureDescription?.let {
-            val descriptionContentBinding = LayoutProductDetailDescriptionHtmlBinding.inflate(
-                layoutInflater, binding.containerProductManufacture, false
-            )
-            descriptionContentBinding.html = it.contentHTML
-            binding.containerProductManufacture.addView(descriptionContentBinding.root)
+    private fun updateProductDescription(descriptions: List<ProductDescription>) {
+        descriptions.forEach {
+            updateProductDescription(it)
         }
     }
 
