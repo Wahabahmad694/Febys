@@ -405,6 +405,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_8dp"
+                    android:backgroundTint="@android:color/transparent"
                     android:text="@string/label_shop_now"
                     android:textColor="@color/white"
                     app:layout_constraintEnd_toEndOf="@id/iv_bg_same_day_delivery"
