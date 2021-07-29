@@ -887,13 +887,11 @@
             android:id="@+id/bg_dim"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="?color_dim"
-            android:visibility="gone" />
+            android:background="?color_dim" />
 
         <include
             android:id="@+id/bottom_sheet_sizes"
-            layout="@layout/bottom_sheet_product_sizes"
-            android:visibility="gone" />
+            layout="@layout/bottom_sheet_product_sizes" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
