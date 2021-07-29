@@ -35,7 +35,6 @@ class ProductDetailFragment : SliderFragment() {
     private val args: ProductDetailFragmentArgs by navArgs()
 
     private val productSizesAdapter = ProductSizesAdapter()
-
     private val sizesBottomSheet get() = BottomSheetBehavior.from(binding.bottomSheetSizes.root)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -145,12 +144,9 @@ class ProductDetailFragment : SliderFragment() {
                 if (isClosed && binding.bgDim.isVisible) {
                     binding.bgDim.fadeVisibility(false, 200)
                 }
-
             }
 
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                // do nothing
-            }
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {}  // do nothing
         })
     }
 
@@ -181,36 +177,19 @@ class ProductDetailFragment : SliderFragment() {
 
         productSizesAdapter.submitList(product.product_variants)
 
+        val technicalDescription =
+            product.descriptions.firstOrNull { it.attribute.lowercase().contains("technical") }
+        updateTechnicalDescription(technicalDescription)
+
+        val manufactureDescription =
+            product.descriptions.firstOrNull { it.attribute.lowercase().contains("manufacturer") }
+        updateProductManufacture(manufactureDescription)
+
         updateVariant(variant)
-        setupProductDescription(product.descriptions)
     }
 
-    private fun updateVariant(variant: ProductVariant) {
-        binding.variant = variant
-        setupProductImagesSlider(variant.images)
-
-        val isFav = productDetailViewModel.isFavProduct(variant.id)
-        updateFavIcon(isFav)
-
-        val size = variant.variant_attributes.first { it.name.lowercase() == "size" }.value
-        updateSize(size)
-    }
-
-    private fun updateSize(size: String) {
-        binding.tvProductSize.text = getString(R.string.size, size)
-    }
-
-    private fun updateFavIcon(isFav: Boolean) {
-        binding.ivProductFav.setImageResource(if (isFav) R.drawable.ic_fav else R.drawable.ic_un_fav)
-    }
-
-    private fun setupProductImagesSlider(images: List<String>) {
-        binding.sliderProductImages.adapter = ProductSliderPageAdapter(images, this)
-        binding.dotsIndicator.setViewPager2(binding.sliderProductImages)
-    }
-
-    private fun setupProductDescription(descriptions: List<ProductDescription>) {
-        descriptions.forEach {
+    private fun updateTechnicalDescription(technicalDescription: ProductDescription?) {
+        technicalDescription?.let {
             val descriptionTitleBinding = LayoutProductDetailDescriptionTitleBinding.inflate(
                 layoutInflater, binding.containerProductDescription, false
             )
@@ -224,6 +203,42 @@ class ProductDetailFragment : SliderFragment() {
             binding.containerProductDescription.addView(descriptionTitleBinding.root)
             binding.containerProductDescription.addView(descriptionContentBinding.root)
         }
+    }
+
+    private fun updateProductManufacture(manufactureDescription: ProductDescription?) {
+        binding.productManufactureToggle.isVisible = manufactureDescription != null
+
+        manufactureDescription?.let {
+            val descriptionContentBinding = LayoutProductDetailDescriptionHtmlBinding.inflate(
+                layoutInflater, binding.containerProductManufacture, false
+            )
+            descriptionContentBinding.html = it.contentHTML
+            binding.containerProductManufacture.addView(descriptionContentBinding.root)
+        }
+    }
+
+    private fun updateVariant(variant: ProductVariant) {
+        binding.variant = variant
+        setupProductImagesSlider(variant.images)
+
+        val isFav = productDetailViewModel.isFavProduct(variant.id)
+        updateFavIcon(isFav)
+
+        val size = variant.variant_attributes.first { it.name.lowercase() == "size" }.value
+        updateSize(size)
+    }
+
+    private fun setupProductImagesSlider(images: List<String>) {
+        binding.sliderProductImages.adapter = ProductSliderPageAdapter(images, this)
+        binding.dotsIndicator.setViewPager2(binding.sliderProductImages)
+    }
+
+    private fun updateFavIcon(isFav: Boolean) {
+        binding.ivProductFav.setImageResource(if (isFav) R.drawable.ic_fav else R.drawable.ic_un_fav)
+    }
+
+    private fun updateSize(size: String) {
+        binding.tvProductSize.text = getString(R.string.size, size)
     }
 
     private fun ImageView.updateArrowByVisibility(visibility: Boolean) {

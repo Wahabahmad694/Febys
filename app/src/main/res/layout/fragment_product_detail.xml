@@ -514,9 +514,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_24dp"
                             android:orientation="vertical"
-                            android:visibility="gone">
-
-                        </LinearLayout>
+                            android:visibility="gone" />
 
                         <View
                             android:layout_width="match_parent"
@@ -710,7 +708,8 @@
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/_8dp">
+                                    android:layout_marginTop="@dimen/_8dp"
+                                    binding:is_visible="@{product.warranty}">
 
                                     <TextView
                                         style="@style/TextTheme.Arial.TS14"
@@ -762,7 +761,8 @@
                                 android:checked="true"
                                 android:text="@string/label_return_and_refund_policy"
                                 app:chipBackgroundColor="@color/grey"
-                                app:chipStrokeColor="@color/grey" />
+                                app:chipStrokeColor="@color/grey"
+                                binding:is_visible="@{product.productReturnRefundable}" />
 
                         </LinearLayout>
 
@@ -887,11 +887,13 @@
             android:id="@+id/bg_dim"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="?color_dim" />
+            android:background="?color_dim"
+            android:visibility="gone" />
 
         <include
             android:id="@+id/bottom_sheet_sizes"
-            layout="@layout/bottom_sheet_product_sizes" />
+            layout="@layout/bottom_sheet_product_sizes"
+            android:visibility="gone" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
