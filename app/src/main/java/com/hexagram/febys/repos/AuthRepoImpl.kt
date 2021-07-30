@@ -87,11 +87,11 @@ class AuthRepoImpl @Inject constructor(
         }.flowOn(dispatcher)
     }
 
-    override fun refreshToken(dispatcher: CoroutineDispatcher): Flow<DataState<ResponseRefreshToken>> {
-        return flow<DataState<ResponseRefreshToken>> {
+    override fun refreshToken(dispatcher: CoroutineDispatcher): Flow<DataState<Unit>> {
+        return flow<DataState<Unit>> {
             val refreshToken = userDataSource.getRefreshToken()
             if (refreshToken.isEmpty()) {
-                emit(DataState.ApiError(""))
+                emit(DataState.Data(Unit))
                 return@flow
             }
 
@@ -110,12 +110,13 @@ class AuthRepoImpl @Inject constructor(
                         userDataSource.saveAccessToken(accessToken)
                         userDataSource.saveRefreshToken(this.refreshToken)
                         fetchWishListIds()
-                        emit(DataState.Data(this))
+                        emit(DataState.Data(Unit))
                     }
                 }
                 .onError {
                     signOut()
-                    emit(DataState.ApiError(message))
+                    // for go to home screen, no need to display error msg
+                    emit(DataState.Data(Unit))
                 }
                 .onException { emit(DataState.ExceptionError()) }
                 .onNetworkError { emit(DataState.NetworkError()) }

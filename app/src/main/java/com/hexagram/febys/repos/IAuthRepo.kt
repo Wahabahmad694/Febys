@@ -29,7 +29,7 @@ interface IAuthRepo {
         email: String, dispatcher: CoroutineDispatcher = Dispatchers.IO
     ): Flow<DataState<Unit>>
 
-    fun refreshToken(dispatcher: CoroutineDispatcher = Dispatchers.IO): Flow<DataState<ResponseRefreshToken>>
+    fun refreshToken(dispatcher: CoroutineDispatcher = Dispatchers.IO): Flow<DataState<Unit>>
 
     fun socialLogin(
         token: String, socialLogin: SocialLogin, dispatcher: CoroutineDispatcher = Dispatchers.IO

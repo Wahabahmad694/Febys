@@ -9,7 +9,6 @@ import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.requests.RequestSignup
 import com.hexagram.febys.network.response.ResponseLogin
 import com.hexagram.febys.network.response.ResponseOtpVerification
-import com.hexagram.febys.network.response.ResponseRefreshToken
 import com.hexagram.febys.network.response.ResponseSignup
 import com.hexagram.febys.repos.IAuthRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,9 +29,8 @@ class AuthViewModel @Inject constructor(
     private val _observeLoginResponse = MutableLiveData<DataState<ResponseLogin>>()
     val observeLoginResponse: LiveData<DataState<ResponseLogin>> = _observeLoginResponse
 
-    private val _observeRefreshTokenResponse = MutableLiveData<DataState<ResponseRefreshToken>>()
-    val observeRefreshTokenResponse: LiveData<DataState<ResponseRefreshToken>> =
-        _observeRefreshTokenResponse
+    private val _observeRefreshTokenResponse = MutableLiveData<DataState<Unit>>()
+    val observeRefreshTokenResponse: LiveData<DataState<Unit>> = _observeRefreshTokenResponse
 
     private val _observeResetCredentialResponse =
         MutableLiveData<DataState<Unit>>()
