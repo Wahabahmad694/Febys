@@ -106,7 +106,7 @@ class WishListFragment : BaseFragment() {
                 wishlistViewModel.updateWishlistCount(it.totalRows)
             }.collectLatest { pagingData ->
                 val list = pagingData.filter {
-                    val variantId = it.product_variants.get(0).id
+                    val variantId = it.product_variants[0].id
                     variantId in fav
                 }
 
