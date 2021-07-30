@@ -133,6 +133,10 @@ class ProductDetailFragment : SliderFragment() {
                 binding.bgDim.fadeVisibility(false, 200)
             }
         }
+
+        binding.ivBack.setOnClickListener {
+            goBack()
+        }
     }
 
     private fun observersSetup() {
