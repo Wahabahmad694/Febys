@@ -14,7 +14,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="@dimen/_250sdp"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_bottom_sheet"
+        android:background="@drawable/bg_white_rounded_corner"
         tools:context=".ui.screens.dialog.InfoDialog">
 
         <androidx.appcompat.widget.AppCompatImageView
