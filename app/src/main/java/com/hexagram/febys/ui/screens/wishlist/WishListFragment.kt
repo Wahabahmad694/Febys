@@ -39,16 +39,9 @@ class WishListFragment : BaseFragment() {
 
         initUi()
         uiListeners()
-        setObserver()
 
         if (isUserLoggedIn)
             setupWishlistPagerAdapter()
-    }
-
-    private fun setObserver() {
-        wishlistViewModel.observeWishlistCount.observe(viewLifecycleOwner) {
-            binding.wishListCount = it
-        }
     }
 
     private fun initUi() {
@@ -72,7 +65,6 @@ class WishListFragment : BaseFragment() {
 
             override fun removeFav(variantId: Int) {
                 wishlistViewModel.toggleFav(variantId)
-                wishlistViewModel.decreaseWishlistCount()
                 updateWishList()
             }
         }
@@ -102,9 +94,8 @@ class WishListFragment : BaseFragment() {
     private fun updateWishList() {
         viewLifecycleOwner.lifecycleScope.launch {
             val fav = wishlistViewModel.getFav()
-            wishlistViewModel.fetchWishList {
-                wishlistViewModel.updateWishlistCount(it.totalRows)
-            }.collectLatest { pagingData ->
+            binding.wishListCount = fav.size
+            wishlistViewModel.fetchWishList().collectLatest { pagingData ->
                 val list = pagingData.filter {
                     val variantId = it.product_variants[0].id
                     variantId in fav

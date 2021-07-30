@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="variantName"
+            type="String" />
     </data>
 
     <LinearLayout
@@ -30,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_39sdp"
-            android:text="@string/label_select_size"
+            android:text="@{@string/label_select_variant(variantName)}"
             android:textAlignment="center" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -39,7 +42,7 @@
             android:layout_marginTop="@dimen/_18sdp">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_product_sizes"
+                android:id="@+id/rv_product_variant"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -48,7 +51,7 @@
                 app:layout_constraintHeight_min="@dimen/_100sdp"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:itemCount="2"
-                tools:listitem="@layout/item_product_size" />
+                tools:listitem="@layout/item_product_variant" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>

@@ -48,10 +48,7 @@ class AuthRepoImpl @Inject constructor(
             val verificationReq = mapOf("otp" to otp)
             authService.verifyUser(authToken, verificationReq)
                 .onSuccess {
-                    data!!.apply {
-                        saveUserAndToken(user)
-                        emit(DataState.Data(this))
-                    }
+                    emit(DataState.Data(data!!))
                 }
                 .onError { emit(DataState.ApiError(message)) }
                 .onException { emit(DataState.ExceptionError()) }

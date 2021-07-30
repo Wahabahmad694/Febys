@@ -33,8 +33,8 @@ class ProductDetailFragment : SliderFragment() {
     private val productDetailViewModel: ProductDetailViewModel by viewModels()
     private val args: ProductDetailFragmentArgs by navArgs()
 
-    private val productSizesAdapter = ProductSizesAdapter()
-    private val sizesBottomSheet get() = BottomSheetBehavior.from(binding.bottomSheetSizes.root)
+    private val productvariantAdapter = ProductVariantAdapter()
+    private val variantBottomSheet get() = BottomSheetBehavior.from(binding.bottomSheetVariant.root)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,15 +59,15 @@ class ProductDetailFragment : SliderFragment() {
     }
 
     private fun initUi() {
-        closeSizesBottomSheet()
+        closeVariantBottomSheet()
 
-        productSizesAdapter.interaction = {
+        productvariantAdapter.interaction = {
             updateVariant(it)
         }
 
-        binding.bottomSheetSizes.rvProductSizes.apply {
+        binding.bottomSheetVariant.rvProductVariant.apply {
             setHasFixedSize(true)
-            adapter = productSizesAdapter
+            adapter = productvariantAdapter
             addItemDecoration(
                 DividerItemDecoration(context, (layoutManager as LinearLayoutManager).orientation)
             )
@@ -88,14 +88,14 @@ class ProductDetailFragment : SliderFragment() {
             }
         }
 
-        binding.containerProductSize.setOnClickListener {
+        binding.containerProductVariant.setOnClickListener {
             binding.variant?.let {
-                showSizesBottomSheet()
+                showVariantBottomSheet()
             }
         }
 
-        binding.bottomSheetSizes.btnClose.setOnClickListener {
-            closeSizesBottomSheet()
+        binding.bottomSheetVariant.btnClose.setOnClickListener {
+            closeVariantBottomSheet()
         }
 
         binding.productReviewsToggle.setOnClickListener {
@@ -119,19 +119,23 @@ class ProductDetailFragment : SliderFragment() {
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            if (sizesBottomSheet.state != BottomSheetBehavior.STATE_HIDDEN) {
-                closeSizesBottomSheet()
+            if (variantBottomSheet.state != BottomSheetBehavior.STATE_HIDDEN) {
+                closeVariantBottomSheet()
                 return@addCallback
             }
 
             goBack()
         }
 
-        sizesBottomSheet.onStateChange { state ->
+        variantBottomSheet.onStateChange { state ->
             val isClosed = state == BottomSheetBehavior.STATE_HIDDEN
             if (isClosed && binding.bgDim.isVisible) {
                 binding.bgDim.fadeVisibility(false, 200)
             }
+        }
+
+        binding.bgDim.setOnClickListener {
+            // do nothing, just add to avoid click on views that are behind of bg dim when bg dim is visible
         }
 
         binding.ivBack.setOnClickListener {
@@ -162,8 +166,8 @@ class ProductDetailFragment : SliderFragment() {
 
         val variant = product.product_variants.first { it.isDefault }
         val variantPosition = product.product_variants.indexOf(variant)
-        productSizesAdapter.updateSelectedVariant(variantPosition)
-        productSizesAdapter.submitList(product.product_variants)
+        productvariantAdapter.updateSelectedVariant(variantPosition)
+        productvariantAdapter.submitList(product.product_variants)
         updateVariant(variant)
 
         val shortDescription = ProductDescription(
@@ -180,8 +184,8 @@ class ProductDetailFragment : SliderFragment() {
         val isFav = productDetailViewModel.isFavProduct(variant.id)
         updateFavIcon(isFav)
 
-        val size = variant.variant_attributes.first { it.name.lowercase() == "size" }.value
-        updateSize(size)
+        val variantAttribute = variant.variant_attributes.first()
+        updateVariantSelectedText(variantAttribute.name, variantAttribute.value)
     }
 
     private fun updateProductDescription(description: ProductDescription) {
@@ -217,8 +221,9 @@ class ProductDetailFragment : SliderFragment() {
         binding.ivProductFav.setImageResource(if (isFav) R.drawable.ic_fav else R.drawable.ic_un_fav)
     }
 
-    private fun updateSize(size: String) {
-        binding.tvProductSize.text = getString(R.string.size, size)
+    private fun updateVariantSelectedText(variantName: String, variantValue: String) {
+        binding.tvProductVariant.text =
+            getString(R.string.variant_selected, variantName, variantValue)
     }
 
     private fun ImageView.updateArrowByVisibility(visibility: Boolean) {
@@ -230,14 +235,14 @@ class ProductDetailFragment : SliderFragment() {
         setImageResource(arrow)
     }
 
-    private fun showSizesBottomSheet() {
+    private fun showVariantBottomSheet() {
         binding.bgDim.fadeVisibility(true)
-        sizesBottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
+        variantBottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
     }
 
-    private fun closeSizesBottomSheet() {
+    private fun closeVariantBottomSheet() {
         binding.bgDim.fadeVisibility(false)
-        sizesBottomSheet.state = BottomSheetBehavior.STATE_HIDDEN
+        variantBottomSheet.state = BottomSheetBehavior.STATE_HIDDEN
     }
 
     override fun getSlider() = listOf(binding.sliderProductImages)
