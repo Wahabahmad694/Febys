@@ -22,7 +22,7 @@
     <string name="label_buy_the_exchange_offer">Get up to $99.99 off on exchange <b>Buy with Exchange</b></string>
     <string name="label_credit_card_payment_offer">Bank Offer Extra 5% Off With Axis Bank Buzz Credit Card <b>T&amp;C</b></string>
     <string name="label_add_delivery_address">Add Delivery Address</string>
-    <string name="label_enter_delivery_address">Enter Delivery Address</string>
+    <string name="label_enter_delivery_city">Enter Delivery City</string>
     <string name="label_check">Check</string>
     <string name="label_add_delivery_address_info">Usually delivered and installed in 7–9 days Enter pin code for exact delivery dates charges</string>
     <string name="label_description">Description</string>

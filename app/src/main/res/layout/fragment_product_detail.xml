@@ -63,7 +63,9 @@
                 android:id="@+id/scroll_view"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_0dp"
+                android:clipToPadding="false"
                 android:fillViewport="true"
+                android:paddingBottom="@dimen/_65sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_product_brand_appbar">
 
@@ -405,12 +407,12 @@
                             style="@style/TextTheme.Arial.TS14"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/_16dp"
+                            android:layout_marginHorizontal="@dimen/_10sdp"
                             android:layout_weight="1"
-                            android:text="@string/label_enter_delivery_address" />
+                            android:text="@string/label_enter_delivery_city" />
 
                         <TextView
-                            android:id="@+id/tv_check_delivery_address"
+                            android:id="@+id/tv_check_delivery_city"
                             style="@style/TextTheme.Arial.TS14.Bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
