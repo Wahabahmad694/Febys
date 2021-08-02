@@ -19,6 +19,7 @@ node ('android-node') {
         checkout scm
 
         sh 'git rev-parse --short HEAD > commit-id'
+        
         env.COMMIT_ID = readFile('commit-id').trim()
         env.PROJECT_NAME = (env.JOB_NAME.tokenize('/') as String[])[0]
         env.SONAR_KEY = (env.WORKSPACE.tokenize('/') as String[]).last()
