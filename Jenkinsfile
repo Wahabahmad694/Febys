@@ -139,7 +139,7 @@ void distributeApp(String buildPath) {
             sh "firebase appdistribution:distribute ${buildPath} --app \$appId --token \$firebaseToken --debug"
         }
     }
-    else {yahuda
+    else {
         /*withCredentials([
             string(credentialsId: 'generateOneFromTeamForRelease', variable: 'firebaseToken'),
             string(credentialsId: 'yahudaFirebaseProjectReleaseAppIdDevOps', variable: 'appId')
