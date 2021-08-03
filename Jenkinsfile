@@ -115,7 +115,7 @@ void setupBuildCredentials() {
 void setupDebugCredentials() {
     withCredentials([
         file(credentialsId: 'androidDevOpsKeystore', variable: 'debugKeystore'),
-        file(credentialsId: 'devOpsAndroidKeystoreProperties', variable: 'keystoreProperties')
+        file(credentialsId: 'devOpsAndroidKeystoreProperties', variable: 'keystoreProperties'),
         file(credentialsId: 'febysCredentials', variable: 'febysQaCredentials')
     ]) {
         sh 'mkdir -p app/keystore/'
