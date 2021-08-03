@@ -19,7 +19,7 @@ node ('android-node') {
         checkout scm
 
         sh 'git rev-parse --short HEAD > commit-id'
-        
+
         env.COMMIT_ID = readFile('commit-id').trim()
         env.PROJECT_NAME = (env.JOB_NAME.tokenize('/') as String[])[0]
         env.SONAR_KEY = (env.WORKSPACE.tokenize('/') as String[]).last()
@@ -29,7 +29,7 @@ node ('android-node') {
         env.FIREBASE_BUILD_URL = "https://appdistribution.firebase.dev/i/f41ba9bb0b9577dc"
         env.GIT_AUTHOR = sh (script: 'git log -1 --pretty=%cn ${GIT_COMMIT}', returnStdout: true).trim()
         env.GIT_COMMIT_MSG = sh (script: 'git log -1 --pretty=%B ${GIT_COMMIT}', returnStdout: true).trim()
-        postMattermostReport("started")
+     //   postMattermostReport("started")
 
         sh 'printenv'
 
@@ -92,9 +92,11 @@ node ('android-node') {
         currentBuild.result = "FAILURE"
     } finally {
         if (currentBuild.result == "FAILURE") {
-            postMattermostReport("failed")
+            echo "done"
+  //          postMattermostReport("failed")
         }else{
-            postMattermostReport("success")
+            echo "done"
+ //           postMattermostReport("success")
         }
     }
 }
@@ -114,10 +116,12 @@ void setupDebugCredentials() {
     withCredentials([
         file(credentialsId: 'androidDevOpsKeystore', variable: 'debugKeystore'),
         file(credentialsId: 'devOpsAndroidKeystoreProperties', variable: 'keystoreProperties')
+        file(credentialsId: 'febysCredentials', variable: 'febysQaCredentials')
     ]) {
         sh 'mkdir -p app/keystore/'
         sh 'cp \$debugKeystore app/keystore/devops.keystore'
         sh 'cp \$keystoreProperties app/keystore/keystore_debug.properties'
+        sh 'cp \$febysQaCredentials credentials.properties'
     }
 }
 
