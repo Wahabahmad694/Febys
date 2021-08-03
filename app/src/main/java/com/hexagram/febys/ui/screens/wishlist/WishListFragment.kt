@@ -59,7 +59,8 @@ class WishListFragment : BaseFragment() {
 
         wishlistPagerAdapter.interaction = object : WishlistPagerAdapter.Interaction {
             override fun onItemSelected(position: Int, item: Product) {
-                val gotoProductDetail = NavGraphDirections.actionToProductDetail(item.id)
+                val variantId = item.product_variants[0].id
+                val gotoProductDetail = NavGraphDirections.actionToProductDetail(item.id, variantId)
                 navigateTo(gotoProductDetail)
             }
 

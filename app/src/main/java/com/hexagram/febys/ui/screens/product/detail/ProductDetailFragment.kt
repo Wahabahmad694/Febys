@@ -33,7 +33,7 @@ class ProductDetailFragment : SliderFragment() {
     private val productDetailViewModel: ProductDetailViewModel by viewModels()
     private val args: ProductDetailFragmentArgs by navArgs()
 
-    private val productvariantAdapter = ProductVariantAdapter()
+    private val productVariantAdapter = ProductVariantAdapter()
     private val variantBottomSheet get() = BottomSheetBehavior.from(binding.bottomSheetVariant.root)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,13 +61,14 @@ class ProductDetailFragment : SliderFragment() {
     private fun initUi() {
         closeVariantBottomSheet()
 
-        productvariantAdapter.interaction = {
+        productVariantAdapter.interaction = {
             updateVariant(it)
+            closeVariantBottomSheet()
         }
 
         binding.bottomSheetVariant.rvProductVariant.apply {
             setHasFixedSize(true)
-            adapter = productvariantAdapter
+            adapter = productVariantAdapter
             addItemDecoration(
                 DividerItemDecoration(context, (layoutManager as LinearLayoutManager).orientation)
             )
@@ -164,10 +165,12 @@ class ProductDetailFragment : SliderFragment() {
     private fun updateUi(product: Product) {
         binding.product = product
 
-        val variant = product.product_variants.first { it.isDefault }
+        val variant =
+            product.product_variants.firstOrNull { it.id == args.variantId }
+                ?: product.product_variants.first { it.isDefault }
         val variantPosition = product.product_variants.indexOf(variant)
-        productvariantAdapter.updateSelectedVariant(variantPosition)
-        productvariantAdapter.submitList(product.product_variants)
+        productVariantAdapter.updateSelectedVariant(variantPosition)
+        productVariantAdapter.submitList(product.product_variants)
         updateVariant(variant)
 
         val shortDescription = ProductDescription(
