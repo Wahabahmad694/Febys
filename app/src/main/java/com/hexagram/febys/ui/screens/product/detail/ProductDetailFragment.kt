@@ -174,7 +174,7 @@ class ProductDetailFragment : SliderFragment() {
         updateVariant(variant)
 
         val shortDescription = ProductDescription(
-            0, product.shortDescriptionHTML, getString(R.string.label_description)
+            0, product.descriptionHTML, getString(R.string.label_description)
         )
         updateProductDescription(shortDescription)
         updateProductDescription(product.descriptions)
