@@ -18,4 +18,6 @@ open class ProductViewModel @Inject constructor(
     }
 
     fun getFav(): MutableSet<Int> = productRepo.getFav()
+
+    fun isFavProduct(variantId: Int) = variantId in getFav()
 }

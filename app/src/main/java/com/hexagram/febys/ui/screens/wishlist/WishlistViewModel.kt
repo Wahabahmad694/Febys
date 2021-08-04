@@ -16,11 +16,15 @@ class WishlistViewModel @Inject constructor(
 ) : ProductViewModel(productListingRepo) {
 
     private var wishlistProductListing: Flow<PagingData<Product>>? = null
+    private var currentFav = mutableSetOf<Int>()
 
     fun fetchWishList(
         onProductListingResponse: ((ResponseProductListing) -> Unit)? = null
     ): Flow<PagingData<Product>> {
-        if (wishlistProductListing == null) {
+        val latestFav = getFav()
+        if (wishlistProductListing == null || latestFav != currentFav) {
+            currentFav = latestFav
+
             wishlistProductListing =
                 productListingRepo.fetchWishList(
                     viewModelScope, onProductListingResponse = onProductListingResponse

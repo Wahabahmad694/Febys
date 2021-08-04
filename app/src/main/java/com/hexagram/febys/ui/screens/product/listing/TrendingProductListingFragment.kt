@@ -12,10 +12,4 @@ class TrendingProductListingFragment : ProductListingFragment() {
     override fun getProductPagingDate() = productListingViewModel.trendingProductsListing {
         setProductItemCount(it.totalRows)
     }
-
-    override fun onProductClick(position: Int, item: Product) {
-        val gotoProductListing =
-            TrendingProductListingFragmentDirections.actionToProductDetail(item.id)
-        navigateTo(gotoProductListing)
-    }
 }

@@ -22,7 +22,7 @@
     <string name="label_buy_the_exchange_offer">Get up to $99.99 off on exchange <b>Buy with Exchange</b></string>
     <string name="label_credit_card_payment_offer">Bank Offer Extra 5% Off With Axis Bank Buzz Credit Card <b>T&amp;C</b></string>
     <string name="label_add_delivery_address">Add Delivery Address</string>
-    <string name="label_enter_delivery_address">Enter Delivery Address</string>
+    <string name="label_enter_delivery_city">Enter Delivery City</string>
     <string name="label_check">Check</string>
     <string name="label_add_delivery_address_info">Usually delivered and installed in 7–9 days Enter pin code for exact delivery dates charges</string>
     <string name="label_description">Description</string>
@@ -33,6 +33,9 @@
     <string name="label_product_model_number">Product Model Number</string>
     <string name="label_special_features">Special Features</string>
     <string name="label_size">Size</string>
+    <string name="label_variant">Variant</string>
+    <string name="label_select_variant">Select %1s</string>
+    <string name="variant_selected">%1s %2s</string>
     <string name="label_protection">%1d-Year Protection for $%2d</string>
     <string name="label_sign_up">Sign Up</string>
     <string name="label_sign_up_slogan">Create an account to FEBYS to get all features.</string>
@@ -92,6 +95,9 @@
     <string name="label_email_sent">We’ve sent an email to the provided address</string>
     <string name="label_refine">Refine</string>
     <string name="label_no_item">No Item</string>
+    <string name="label_add_to_cart">Add to Cart</string>
+    <string name="label_sign_out">Sign Out</string>
+    <string name="label_pay_now">Pay Now</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_search">Search</string>
@@ -116,8 +122,6 @@
     <string name="error_enter_valid_phone">Please Enter Valid Phone No</string>
 
     <string name="toast_email_sent">Email Sent</string>
-    <string name="label_add_to_cart">Add to Cart</string>
-    <string name="label_sign_out">Sign Out</string>
 
     <string name="google_web_client" translatable="false">912540354085-4u6he1g3h116kmo3f3irg662dtr5aplc.apps.googleusercontent.com</string>
     <string name="facebook_app_id" translatable="false">878271079567990</string>

@@ -17,9 +17,9 @@ class MainActivity : BaseActivity() {
         listOf(
             R.id.homeFragment,
             R.id.searchFragment,
+            R.id.messageFragment,
             R.id.wishListFragment,
-            R.id.accountFragment,
-            R.id.productDetailFragment /* todo remove this destination once flow implemented */
+            R.id.accountFragment
         )
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -10,10 +10,8 @@
         android:icon="@drawable/ic_search_bottom_nav"
         android:title="@string/menu_search" />
 
-    <!-- todo remove following temporarily id, just add for the verify product detail implementation
-         set following id to android:id="@+id/messageFragment"-->
     <item
-        android:id="@+id/productDetailFragment"
+        android:id="@+id/messageFragment"
         android:icon="@drawable/ic_message_bottom_nav"
         android:title="@string/menu_message" />
 

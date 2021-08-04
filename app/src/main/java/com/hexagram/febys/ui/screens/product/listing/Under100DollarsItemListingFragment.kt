@@ -12,10 +12,4 @@ class Under100DollarsItemListingFragment : ProductListingFragment() {
     override fun getProductPagingDate() = productListingViewModel.under100DollarsItemsListing {
         setProductItemCount(it.totalRows)
     }
-
-    override fun onProductClick(position: Int, item: Product) {
-        val gotoProductListing =
-            Under100DollarsItemListingFragmentDirections.actionToProductDetail(item.id)
-        navigateTo(gotoProductListing)
-    }
 }

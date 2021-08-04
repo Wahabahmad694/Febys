@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:binding="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="description"
+            type="com.hexagram.febys.network.response.ProductDescription" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1dp"
+            android:background="@color/dark_grey" />
+
+        <LinearLayout
+            android:id="@+id/product_description_toggle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_48dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/label_description"
+                style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@{description.attribute}"
+                tools:text="@string/label_manufacture" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_description_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_down" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/container_product_description"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_24dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <WebView
+                android:id="@+id/web_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                binding:load_html="@{description.contentHTML}" />
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

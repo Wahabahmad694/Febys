@@ -43,6 +43,7 @@ data class ProductVariant(
     val created_at: String,
     @SerializedName("updated_at")
     val updated_at: String,
+    @SerializedName("variant_attributes", alternate = ["attributes"])
     val variant_attributes: List<ProductVariantAttributes>
 ) {
     val isAvailable

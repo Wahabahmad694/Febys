@@ -14,10 +14,4 @@ class SearchProductListingFragment : ProductListingFragment() {
         productListingViewModel.searchProductsListing(args.query) {
             setProductItemCount(it.totalRows)
         }
-
-    override fun onProductClick(position: Int, item: Product) {
-        val gotoProductListing =
-            NavGraphDirections.actionToProductDetail(item.id)
-        navigateTo(gotoProductListing)
-    }
 }

@@ -93,7 +93,8 @@ abstract class ProductListingFragment : BaseFragment() {
 
         productListingPagerAdapter.interaction = object : ProductListingPagerAdapter.Interaction {
             override fun onItemSelected(position: Int, item: Product) {
-                onProductClick(position, item)
+                val gotoProductDetail = NavGraphDirections.actionToProductDetail(item.id)
+                navigateTo(gotoProductDetail)
             }
 
             override fun toggleFavIfUserLoggedIn(variantId: Int): Boolean {
@@ -121,6 +122,4 @@ abstract class ProductListingFragment : BaseFragment() {
     abstract fun getListingTitle(): String
 
     abstract fun getProductPagingDate(): Flow<PagingData<Product>>
-
-    abstract fun onProductClick(position: Int, item: Product)
 }

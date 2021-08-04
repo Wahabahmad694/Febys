@@ -14,9 +14,4 @@ class TodayDealsListingFragment : ProductListingFragment() {
     override fun getProductPagingDate() = productListingViewModel.todayDealsListing {
         setProductItemCount(it.totalRows)
     }
-
-    override fun onProductClick(position: Int, item: Product) {
-        val gotoProductListing = TodayDealsListingFragmentDirections.actionToProductDetail(item.id)
-        navigateTo(gotoProductListing)
-    }
 }
