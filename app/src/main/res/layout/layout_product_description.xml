@@ -55,7 +55,6 @@
                 android:id="@+id/web_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_24dp"
                 binding:load_html="@{description.contentHTML}" />
         </LinearLayout>
 

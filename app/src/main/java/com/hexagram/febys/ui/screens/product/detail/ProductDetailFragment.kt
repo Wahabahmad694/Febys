@@ -167,7 +167,7 @@ class ProductDetailFragment : SliderFragment() {
 
         val variant =
             product.product_variants.firstOrNull { it.id == args.variantId }
-                ?: product.product_variants.first { it.isDefault }
+                ?: product.product_variants[0]
         val variantPosition = product.product_variants.indexOf(variant)
         productVariantAdapter.updateSelectedVariant(variantPosition)
         productVariantAdapter.submitList(product.product_variants)
