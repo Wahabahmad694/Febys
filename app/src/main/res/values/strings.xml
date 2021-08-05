@@ -36,6 +36,7 @@
     <string name="label_variant">Variant</string>
     <string name="label_select_variant">Select %1s</string>
     <string name="variant_selected">%1s %2s</string>
+    <string name="only_one_variant">This product has only one variant</string>
     <string name="label_protection">%1d-Year Protection for $%2d</string>
     <string name="label_sign_up">Sign Up</string>
     <string name="label_sign_up_slogan">Create an account to FEBYS to get all features.</string>

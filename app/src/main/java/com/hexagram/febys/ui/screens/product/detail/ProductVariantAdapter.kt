@@ -24,8 +24,8 @@ class ProductVariantAdapter : RecyclerView.Adapter<ProductVariantAdapter.Product
                 updateSelectedVariant(position)
             }
 
-            val size = variant.variant_attributes.first().value
-            binding.tvVariant.text = size
+            val variantValue = variant.variant_attributes?.first()?.value ?: ""
+            binding.tvVariant.text = variantValue
 
             val style = if (position == selectedVariant) R.style.TextTheme_HelveticaNeue_TS14_Bold
             else R.style.TextTheme_HelveticaNeue_TS14_Grey

@@ -187,8 +187,12 @@ class ProductDetailFragment : SliderFragment() {
         val isFav = productDetailViewModel.isFavProduct(variant.id)
         updateFavIcon(isFav)
 
-        val variantAttribute = variant.variant_attributes.first()
-        updateVariantSelectedText(variantAttribute.name, variantAttribute.value)
+        variant.variant_attributes?.firstOrNull()?.let {
+            updateVariantSelectedText(it.name, it.value)
+        } ?: let {
+            binding.tvProductVariant.text = getString(R.string.only_one_variant)
+            binding.containerProductVariant.setOnClickListener(null)
+        }
     }
 
     private fun updateProductDescription(description: ProductDescription) {
