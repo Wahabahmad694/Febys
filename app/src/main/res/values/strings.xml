@@ -123,9 +123,4 @@
     <string name="error_enter_valid_phone">Please Enter Valid Phone No</string>
 
     <string name="toast_email_sent">Email Sent</string>
-
-    <string name="google_web_client" translatable="false">912540354085-4u6he1g3h116kmo3f3irg662dtr5aplc.apps.googleusercontent.com</string>
-    <string name="facebook_app_id" translatable="false">878271079567990</string>
-    <string name="fb_login_protocol_scheme" translatable="false">fb878271079567990</string>
-
 </resources>

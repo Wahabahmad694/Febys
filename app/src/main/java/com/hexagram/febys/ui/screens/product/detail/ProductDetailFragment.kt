@@ -33,8 +33,10 @@ class ProductDetailFragment : SliderFragment() {
     private val productDetailViewModel: ProductDetailViewModel by viewModels()
     private val args: ProductDetailFragmentArgs by navArgs()
 
-    private val productVariantAdapter = ProductVariantAdapter()
-    private val variantBottomSheet get() = BottomSheetBehavior.from(binding.bottomSheetVariant.root)
+    private val productVariantFirstAttrAdapter = ProductVariantAdapter()
+    private val productVariantSecondAttrAdapter = ProductVariantAdapter()
+    private val variantFirstAttrBottomSheet get() = BottomSheetBehavior.from(binding.bottomSheetVariantFirstAttr.root)
+    private val variantSecondAttrBottomSheet get() = BottomSheetBehavior.from(binding.bottomSheetVariantSecondAttr.root)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,16 +61,20 @@ class ProductDetailFragment : SliderFragment() {
     }
 
     private fun initUi() {
-        closeVariantBottomSheet()
+        closeVariantBottomSheet(variantFirstAttrBottomSheet)
+        closeVariantBottomSheet(variantSecondAttrBottomSheet)
 
-        productVariantAdapter.interaction = {
-            updateVariant(it)
-            closeVariantBottomSheet()
+        binding.bottomSheetVariantFirstAttr.rvProductVariant.apply {
+            setHasFixedSize(true)
+            adapter = productVariantFirstAttrAdapter
+            addItemDecoration(
+                DividerItemDecoration(context, (layoutManager as LinearLayoutManager).orientation)
+            )
         }
 
-        binding.bottomSheetVariant.rvProductVariant.apply {
+        binding.bottomSheetVariantSecondAttr.rvProductVariant.apply {
             setHasFixedSize(true)
-            adapter = productVariantAdapter
+            adapter = productVariantSecondAttrAdapter
             addItemDecoration(
                 DividerItemDecoration(context, (layoutManager as LinearLayoutManager).orientation)
             )
@@ -89,14 +95,55 @@ class ProductDetailFragment : SliderFragment() {
             }
         }
 
-        binding.containerProductVariant.setOnClickListener {
+        binding.containerProductVariantFirstAttr.setOnClickListener {
             binding.variant?.let {
-                showVariantBottomSheet()
+                showVariantBottomSheet(variantFirstAttrBottomSheet)
             }
         }
 
-        binding.bottomSheetVariant.btnClose.setOnClickListener {
-            closeVariantBottomSheet()
+        binding.containerProductVariantSecondAttr.setOnClickListener {
+            binding.variant?.let {
+                showVariantBottomSheet(variantSecondAttrBottomSheet)
+            }
+        }
+
+        binding.bottomSheetVariantFirstAttr.btnClose.setOnClickListener {
+            closeVariantBottomSheet(variantFirstAttrBottomSheet)
+        }
+
+        binding.bottomSheetVariantSecondAttr.btnClose.setOnClickListener {
+            closeVariantBottomSheet(variantSecondAttrBottomSheet)
+        }
+
+        productVariantFirstAttrAdapter.interaction = { selectedFirstAttr ->
+            binding.product?.let { product ->
+                productDetailViewModel.selectedFirstAttr = selectedFirstAttr
+
+                val secondAttrList =
+                    productDetailViewModel.getSecondAttrList(selectedFirstAttr, product)
+
+                val variant = if (secondAttrList.isEmpty()) {
+                    productDetailViewModel.getVariantByFirstAttr(product)
+                } else {
+                    productVariantSecondAttrAdapter
+                        .submitList(secondAttrList.first(), secondAttrList)
+
+                    productDetailViewModel.selectedSecondAttr = secondAttrList.first()
+                    productDetailViewModel.getVariantBySecondAttr(product)
+                }
+
+                variant?.let { updateVariant(it) }
+            }
+            closeVariantBottomSheet(variantFirstAttrBottomSheet)
+        }
+
+        productVariantSecondAttrAdapter.interaction = { selectedSecondAttr ->
+            binding.product?.let { product ->
+                productDetailViewModel.selectedSecondAttr = selectedSecondAttr
+                val variant = productDetailViewModel.getVariantBySecondAttr(product)
+                variant?.let { updateVariant(it) }
+            }
+            closeVariantBottomSheet(variantSecondAttrBottomSheet)
         }
 
         binding.productReviewsToggle.setOnClickListener {
@@ -120,15 +167,27 @@ class ProductDetailFragment : SliderFragment() {
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            if (variantBottomSheet.state != BottomSheetBehavior.STATE_HIDDEN) {
-                closeVariantBottomSheet()
+            if (variantFirstAttrBottomSheet.state != BottomSheetBehavior.STATE_HIDDEN) {
+                closeVariantBottomSheet(variantFirstAttrBottomSheet)
+                return@addCallback
+            }
+
+            if (variantSecondAttrBottomSheet.state != BottomSheetBehavior.STATE_HIDDEN) {
+                closeVariantBottomSheet(variantSecondAttrBottomSheet)
                 return@addCallback
             }
 
             goBack()
         }
 
-        variantBottomSheet.onStateChange { state ->
+        variantFirstAttrBottomSheet.onStateChange { state ->
+            val isClosed = state == BottomSheetBehavior.STATE_HIDDEN
+            if (isClosed && binding.bgDim.isVisible) {
+                binding.bgDim.fadeVisibility(false, 200)
+            }
+        }
+
+        variantSecondAttrBottomSheet.onStateChange { state ->
             val isClosed = state == BottomSheetBehavior.STATE_HIDDEN
             if (isClosed && binding.bgDim.isVisible) {
                 binding.bgDim.fadeVisibility(false, 200)
@@ -168,9 +227,27 @@ class ProductDetailFragment : SliderFragment() {
         val variant =
             product.product_variants.firstOrNull { it.id == args.variantId }
                 ?: product.product_variants[0]
-        val variantPosition = product.product_variants.indexOf(variant)
-        productVariantAdapter.updateSelectedVariant(variantPosition)
-        productVariantAdapter.submitList(product.product_variants)
+
+        variant.getFirstVariantAttr()?.value?.let { selectedFirstAttr ->
+            productDetailViewModel.selectedFirstAttr = selectedFirstAttr
+
+            val firstAttrList = productDetailViewModel.getFirstAttrList(product)
+
+            productVariantFirstAttrAdapter
+                .submitList(selectedFirstAttr, firstAttrList)
+
+            variant.getSecondVariantAttr()?.value?.let { selectedSecondAttr ->
+                productDetailViewModel.selectedSecondAttr = selectedSecondAttr
+
+                val secondAttrList =
+                    productDetailViewModel.getSecondAttrList(selectedFirstAttr, product)
+
+                productVariantSecondAttrAdapter.submitList(
+                    selectedSecondAttr, secondAttrList
+                )
+            }
+
+        }
         updateVariant(variant)
 
         val shortDescription = ProductDescription(
@@ -187,12 +264,25 @@ class ProductDetailFragment : SliderFragment() {
         val isFav = productDetailViewModel.isFavProduct(variant.id)
         updateFavIcon(isFav)
 
-        variant.variant_attributes?.firstOrNull()?.let {
-            updateVariantSelectedText(it.name, it.value)
-        } ?: let {
-            binding.tvProductVariant.text = getString(R.string.only_one_variant)
-            binding.containerProductVariant.setOnClickListener(null)
+        val firstVariantAttr = variant.getFirstVariantAttr()
+        firstVariantAttr?.let {
+            updateVariantFirstAttrSelectedText(it.name, it.value)
         }
+
+        if (firstVariantAttr == null) updateOnlyOneVariant()
+
+        val secondVariantAttr = variant.getSecondVariantAttr()
+        secondVariantAttr?.let {
+            updateVariantSecondAttrSelectedText(it.name, it.value)
+        }
+
+        binding.containerProductVariantSecondAttr.isVisible = secondVariantAttr != null
+    }
+
+    private fun updateOnlyOneVariant() {
+        binding.tvProductVariantFirstAttr.text = getString(R.string.only_one_variant)
+        binding.containerProductVariantFirstAttr.setOnClickListener(null)
+        binding.containerProductVariantSecondAttr.isVisible = false
     }
 
     private fun updateProductDescription(description: ProductDescription) {
@@ -210,7 +300,7 @@ class ProductDetailFragment : SliderFragment() {
             binding.scrollView.scrollToDescendant(productDescriptionsBinding.containerProductDescription)
         }
 
-        binding.containerProductDescriptions.addView(productDescriptionsBinding.root)
+        addView(binding.containerProductDescriptions, productDescriptionsBinding.root)
     }
 
     private fun updateProductDescription(descriptions: List<ProductDescription>) {
@@ -228,8 +318,15 @@ class ProductDetailFragment : SliderFragment() {
         binding.ivProductFav.setImageResource(if (isFav) R.drawable.ic_fav else R.drawable.ic_un_fav)
     }
 
-    private fun updateVariantSelectedText(variantName: String, variantValue: String) {
-        binding.tvProductVariant.text =
+    private fun updateVariantFirstAttrSelectedText(variantName: String, variantValue: String) {
+        binding.firstAttrName = variantName
+        binding.tvProductVariantFirstAttr.text =
+            getString(R.string.variant_selected, variantName, variantValue)
+    }
+
+    private fun updateVariantSecondAttrSelectedText(variantName: String, variantValue: String) {
+        binding.secondAttrName = variantName
+        binding.tvProductVariantSecondAttr.text =
             getString(R.string.variant_selected, variantName, variantValue)
     }
 
@@ -242,15 +339,17 @@ class ProductDetailFragment : SliderFragment() {
         setImageResource(arrow)
     }
 
-    private fun showVariantBottomSheet() {
+    private fun showVariantBottomSheet(bottomSheet: BottomSheetBehavior<View>) {
         binding.bgDim.fadeVisibility(true)
-        variantBottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
+        bottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
     }
 
-    private fun closeVariantBottomSheet() {
+    private fun closeVariantBottomSheet(bottomSheet: BottomSheetBehavior<View>) {
         binding.bgDim.fadeVisibility(false)
-        variantBottomSheet.state = BottomSheetBehavior.STATE_HIDDEN
+        bottomSheet.state = BottomSheetBehavior.STATE_HIDDEN
     }
+
+    private fun addView(parent: ViewGroup, view: View) = parent.addView(view)
 
     override fun getSlider() = listOf(binding.sliderProductImages)
 

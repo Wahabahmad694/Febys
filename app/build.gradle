@@ -7,10 +7,6 @@ plugins {
     id 'androidx.navigation.safeargs.kotlin'
 }
 
-def credentials = rootProject.file("credentials.properties")
-def credentialsProperties = new Properties()
-credentialsProperties.load(new FileInputStream(credentials))
-
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -31,18 +27,14 @@ android {
 
     signingConfigs {
         debug {
-            def keystorePropertiesFile = rootProject.file("keystore/keystore_debug.properties")
-            def keystoreProperties = new Properties()
-            keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+            def keystoreProperties = getKeystore("debug")
             storeFile rootProject.file(keystoreProperties['storeFile'])
             storePassword keystoreProperties['storePassword']
             keyAlias keystoreProperties['keyAlias']
             keyPassword keystoreProperties['keyPassword']
         }
         release {
-            def keystorePropertiesFile = rootProject.file("keystore/keystore_debug.properties")
-            def keystoreProperties = new Properties()
-            keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+            def keystoreProperties = getKeystore("release")
             storeFile rootProject.file(keystoreProperties['storeFile'])
             storePassword keystoreProperties['storePassword']
             keyAlias keystoreProperties['keyAlias']
@@ -52,18 +44,39 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField("String", "backendBaseUrl", credentialsProperties['BASE_URL_BACKEND_DEBUG'])
-            buildConfigField("String", "webCustomizationBaseUrl", credentialsProperties['BASE_URL_WEB_CUSTOMIZATION_DEBUG'])
+            def endpointsProperties = getEndPoints("debug")
+            def credentialsProperties = getCredentials("debug")
+            buildConfigField("String", "backendBaseUrl", endpointsProperties['BASE_URL_BACKEND'])
+            buildConfigField("String", "webCustomizationBaseUrl", endpointsProperties['BASE_URL_WEB_CUSTOMIZATION'])
             buildConfigField("String", "keycloakClientId", credentialsProperties['KEYCLOAK_CLIENT_ID'])
             buildConfigField("String", "keycloakClientSecret", credentialsProperties['KEYCLOAK_CLIENT_SECRET'])
+            resValue "string", "google_web_client", credentialsProperties['GOOGLE_WEB_CLIENT']
+            resValue "string", "facebook_app_id", credentialsProperties['FACEBOOK_APP_ID']
+            resValue "string", "fb_login_protocol_scheme", credentialsProperties['FACEBOOK_LOGIN_PROTOCOL_SCHEME']
+        }
+        staging {
+            def endpointsProperties = getEndPoints("staging")
+            def credentialsProperties = getCredentials("staging")
+            buildConfigField("String", "backendBaseUrl", endpointsProperties['BASE_URL_BACKEND'])
+            buildConfigField("String", "webCustomizationBaseUrl", endpointsProperties['BASE_URL_WEB_CUSTOMIZATION'])
+            buildConfigField("String", "keycloakClientId", credentialsProperties['KEYCLOAK_CLIENT_ID'])
+            buildConfigField("String", "keycloakClientSecret", credentialsProperties['KEYCLOAK_CLIENT_SECRET'])
+            resValue "string", "google_web_client", credentialsProperties['GOOGLE_WEB_CLIENT']
+            resValue "string", "facebook_app_id", credentialsProperties['FACEBOOK_APP_ID']
+            resValue "string", "fb_login_protocol_scheme", credentialsProperties['FACEBOOK_LOGIN_PROTOCOL_SCHEME']
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField("String", "backendBaseUrl", credentialsProperties['BASE_URL_BACKEND_RELEASE'])
-            buildConfigField("String", "webCustomizationBaseUrl", credentialsProperties['BASE_URL_WEB_CUSTOMIZATION_RELEASE'])
+            def endpointsProperties = getEndPoints("release")
+            def credentialsProperties = getCredentials("release")
+            buildConfigField("String", "backendBaseUrl", endpointsProperties['BASE_URL_BACKEND'])
+            buildConfigField("String", "webCustomizationBaseUrl", endpointsProperties['BASE_URL_WEB_CUSTOMIZATION'])
             buildConfigField("String", "keycloakClientId", credentialsProperties['KEYCLOAK_CLIENT_ID'])
             buildConfigField("String", "keycloakClientSecret", credentialsProperties['KEYCLOAK_CLIENT_SECRET'])
+            resValue "string", "google_web_client", credentialsProperties['GOOGLE_WEB_CLIENT']
+            resValue "string", "facebook_app_id", credentialsProperties['FACEBOOK_APP_ID']
+            resValue "string", "fb_login_protocol_scheme", credentialsProperties['FACEBOOK_LOGIN_PROTOCOL_SCHEME']
         }
     }
     compileOptions {
@@ -188,4 +201,25 @@ dependencies {
     // facebook
     def facebook_version = "5.15.3"
     implementation "com.facebook.android:facebook-android-sdk:$facebook_version"
+}
+
+def getCredentials(String config) {
+    def credentials = rootProject.file("properties/$config/credentials.properties")
+    def credentialsProperties = new Properties()
+    credentialsProperties.load(new FileInputStream(credentials))
+    return credentialsProperties
+}
+
+def getKeystore(String config) {
+    def keystore = rootProject.file("keystore/${config}.properties")
+    def keystoreProperties = new Properties()
+    keystoreProperties.load(new FileInputStream(keystore))
+    return keystoreProperties
+}
+
+def getEndPoints(String config) {
+    def endpoints = rootProject.file("properties/$config/endpoints.properties")
+    def endpointsProperties = new Properties()
+    endpointsProperties.load(new FileInputStream(endpoints))
+    return endpointsProperties
 }

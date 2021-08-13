@@ -14,6 +14,14 @@
             name="variant"
             type="com.hexagram.febys.network.response.ProductVariant" />
 
+        <variable
+            name="firstAttrName"
+            type="String" />
+
+        <variable
+            name="secondAttrName"
+            type="String" />
+
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -197,7 +205,7 @@
                         app:layout_constraintTop_toBottomOf="@id/tv_product_price" />
 
                     <LinearLayout
-                        android:id="@+id/container_product_variant"
+                        android:id="@+id/container_product_variant_first_attr"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/_16dp"
@@ -209,16 +217,13 @@
                         app:layout_constraintTop_toBottomOf="@id/iv_product_verified_logo">
 
                         <TextView
-                            android:id="@+id/tv_product_variant"
+                            android:id="@+id/tv_product_variant_first_attr"
                             style="@style/TextTheme.Arial.TS14"
                             android:layout_width="0dp"
                             android:layout_height="48dp"
                             android:layout_marginStart="@dimen/_16dp"
                             android:layout_weight="1"
                             android:gravity="center_vertical"
-                            app:layout_constraintEnd_toStartOf="@id/iv_variant_arrow"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/iv_product_verified_logo"
                             tools:text="@string/label_variant" />
 
                         <View
@@ -227,7 +232,41 @@
                             android:background="@color/black" />
 
                         <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/iv_variant_arrow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:padding="@dimen/_16dp"
+                            android:src="@drawable/ic_arrow_down" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/container_product_variant_second_attr"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_16dp"
+                        android:layout_marginTop="@dimen/_24dp"
+                        android:background="@drawable/bg_border_blackish"
+                        android:orientation="horizontal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/container_product_variant_first_attr">
+
+                        <TextView
+                            android:id="@+id/tv_product_variant_second_attr"
+                            style="@style/TextTheme.Arial.TS14"
+                            android:layout_width="0dp"
+                            android:layout_height="48dp"
+                            android:layout_marginStart="@dimen/_16dp"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            tools:text="@string/label_variant" />
+
+                        <View
+                            android:layout_width="@dimen/_1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/black" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -242,8 +281,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_32dp"
                         android:text="@string/label_add_protection"
-                        app:layout_constraintStart_toStartOf="@id/container_product_variant"
-                        app:layout_constraintTop_toBottomOf="@id/container_product_variant" />
+                        app:layout_constraintStart_toStartOf="@id/container_product_variant_first_attr"
+                        app:layout_constraintTop_toBottomOf="@id/container_product_variant_second_attr" />
 
                     <RadioGroup
                         android:id="@+id/rg_add_protection"
@@ -304,7 +343,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_32dp"
                         android:text="@string/label_add_delivery_address"
-                        app:layout_constraintStart_toStartOf="@id/container_product_variant"
+                        app:layout_constraintStart_toStartOf="@id/container_product_variant_first_attr"
                         app:layout_constraintTop_toBottomOf="@id/rg_add_protection" />
 
                     <LinearLayout
@@ -680,9 +719,14 @@
             android:background="?color_dim" />
 
         <include
-            android:id="@+id/bottom_sheet_variant"
+            android:id="@+id/bottom_sheet_variant_first_attr"
             layout="@layout/bottom_sheet_product_variant"
-            app:variantName="@{variant.variant_attributes.get(0).name}" />
+            app:variantName="@{firstAttrName}" />
+
+        <include
+            android:id="@+id/bottom_sheet_variant_second_attr"
+            layout="@layout/bottom_sheet_product_variant"
+            app:variantName="@{secondAttrName}" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
