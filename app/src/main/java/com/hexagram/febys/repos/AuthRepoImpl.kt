@@ -1,5 +1,6 @@
 package com.hexagram.febys.repos
 
+import com.hexagram.febys.BuildConfig
 import com.hexagram.febys.dataSource.IUserDataSource
 import com.hexagram.febys.enum.SocialLogin
 import com.hexagram.febys.network.AuthService
@@ -97,9 +98,9 @@ class AuthRepoImpl @Inject constructor(
 
             val fields = mapOf(
                 "grant_type" to "refresh_token",
-                "client_id" to com.hexagram.febys.BuildConfig.keycloakClientId,
+                "client_id" to BuildConfig.keycloakClientId,
                 "refresh_token" to refreshToken,
-                "client_secret" to com.hexagram.febys.BuildConfig.keycloakClientSecret
+                "client_secret" to BuildConfig.keycloakClientSecret
             )
             val url =
                 "https://auth.qa.febys.com/auth/realms/febys-consumers/protocol/openid-connect/token"

@@ -31,9 +31,8 @@
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_product_image"
-            android:layout_width="@dimen/_150sdp"
-            android:layout_height="@dimen/_134sdp"
-            android:layout_marginTop="@dimen/_25sdp"
+            android:layout_width="@dimen/_186sdp"
+            android:layout_height="@dimen/_186sdp"
             app:actualImageScaleType="fitCenter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -1,8 +1,6 @@
 package com.hexagram.febys.bindings
 
 import android.graphics.Paint
-import android.os.Build
-import android.text.Html
 import android.util.Base64
 import android.view.View
 import android.webkit.WebView
