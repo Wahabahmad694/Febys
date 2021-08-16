@@ -180,7 +180,7 @@ void postMattermostReport(String build_flag){
         mattermostSend (
             color: "#00f514",
             channel: "qa-deployments",
-            message: """@ayeshajaved Febys android build successfully deployed. 
+            message: """@ayeshajaved Febys android build successfully deployed.
             Firebase Build URL: ${env.FIREBASE_BUILD_URL}"""
         )
     }
