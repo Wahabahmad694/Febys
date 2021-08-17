@@ -31,7 +31,7 @@ class ProductDetailViewModel @Inject constructor(
     }
 
     fun getFirstAttrList(product: Product): List<String> {
-        return product.product_variants
+        return product.productVariants
             .filter { it.getFirstVariantAttr()?.value != null }
             .map { it.getFirstVariantAttr()!!.value }
             .toSet()
@@ -39,7 +39,7 @@ class ProductDetailViewModel @Inject constructor(
     }
 
     fun getSecondAttrList(selectedFirstAttr: String, product: Product): List<String> {
-        return product.product_variants
+        return product.productVariants
             .filter {
                 it.getSecondVariantAttr()?.value != null && it.getFirstVariantAttr()?.value == selectedFirstAttr
             }
@@ -49,13 +49,13 @@ class ProductDetailViewModel @Inject constructor(
     }
 
     fun getVariantByFirstAttr(product: Product): ProductVariant? {
-        return product.product_variants.firstOrNull {
+        return product.productVariants.firstOrNull {
             it.getFirstVariantAttr()?.value == selectedFirstAttr
         }
     }
 
     fun getVariantBySecondAttr(product: Product): ProductVariant? {
-        return product.product_variants.firstOrNull {
+        return product.productVariants.firstOrNull {
             it.getFirstVariantAttr()?.value == selectedFirstAttr
                     && it.getSecondVariantAttr()?.value == selectedSecondAttr
         }
