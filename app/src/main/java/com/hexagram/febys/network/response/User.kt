@@ -14,13 +14,13 @@ data class User @JvmOverloads constructor(
     @SerializedName("phone_number")
     val phoneNo: String,
     @SerializedName("keycloak_id")
-    val keycloak_id: String,
+    val keycloakId: String,
     @SerializedName("created_at")
-    val created_at: String,
+    val createdAt: String,
     @SerializedName("updated_at")
-    val updated_at: String,
+    val updatedAt: String,
     @SerializedName("is_verified")
-    val is_verified: Int,
+    val isVerified: Int,
     @SerializedName("access_token")
     val accessToken: String? = null,
     @SerializedName("refresh_token")

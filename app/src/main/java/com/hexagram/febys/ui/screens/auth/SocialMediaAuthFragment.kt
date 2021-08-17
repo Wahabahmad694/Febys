@@ -73,9 +73,13 @@ abstract class SocialMediaAuthFragment : BaseFragment() {
                     }
                 }
 
-                override fun onCancel() {}
+                override fun onCancel() {
+                    Log.e("SocialLogin", "onCancel")
+                }
 
-                override fun onError(exception: FacebookException) {}
+                override fun onError(exception: FacebookException) {
+                    Log.e("SocialLogin", exception.message, exception)
+                }
             })
 
         LoginManager.getInstance().logIn(this, mutableListOf())

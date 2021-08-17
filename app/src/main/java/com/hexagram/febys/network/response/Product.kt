@@ -18,7 +18,7 @@ data class Product constructor(
     @SerializedName("product_return_refundable")
     val _productReturnRefundable: Int,
     @SerializedName("product_return_refundable_policy")
-    val product_return_refundable_policy: String,
+    val productReturnRefundablePolicy: String,
     @SerializedName("deliver")
     val delivery: String,
     @SerializedName("tags")
@@ -38,7 +38,7 @@ data class Product constructor(
     @SerializedName("descriptions")
     val descriptions: List<ProductDescription>,
     @SerializedName("variants")
-    val product_variants: List<ProductVariant>,
+    val productVariants: List<ProductVariant>,
 ) {
     val warranty
         get() = _warranty == 1

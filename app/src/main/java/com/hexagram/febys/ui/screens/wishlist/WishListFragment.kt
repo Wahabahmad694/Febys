@@ -59,7 +59,7 @@ class WishListFragment : BaseFragment() {
 
         wishlistPagerAdapter.interaction = object : WishlistPagerAdapter.Interaction {
             override fun onItemSelected(position: Int, item: Product) {
-                val variantId = item.product_variants[0].id
+                val variantId = item.productVariants[0].id
                 val gotoProductDetail = NavGraphDirections.actionToProductDetail(item.id, variantId)
                 navigateTo(gotoProductDetail)
             }
@@ -98,7 +98,7 @@ class WishListFragment : BaseFragment() {
             binding.wishListCount = fav.size
             wishlistViewModel.fetchWishList().collectLatest { pagingData ->
                 val list = pagingData.filter {
-                    val variantId = it.product_variants[0].id
+                    val variantId = it.productVariants[0].id
                     variantId in fav
                 }
 
