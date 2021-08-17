@@ -140,7 +140,7 @@ void distributeApp(String buildPath) {
             string(credentialsId: 'devOpsFirebaseToken', variable: 'firebaseToken'),
             string(credentialsId: 'febys-qa-app-id', variable: 'appId')
         ]) {
-            sh "firebase appdistribution:distribute ${buildPath} --app \$appId --token \$firebaseToken --debug"
+            sh "firebase appdistribution:distribute ${buildPath} --app \$appId --token \$firebaseToken  --debug"
         }
     }
     else {
