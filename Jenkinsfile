@@ -26,10 +26,10 @@ node ('android-node') {
         env.IMAGE_TAG = "synavoshub/${env.PROJECT_NAME}:${commit_id}"
         env.PATH = "${env.PATH}:${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin"
         env.BUILD_TAG = "${env.PROJECT_NAME}-${commit_id}"
-        env.FIREBASE_BUILD_URL = "https://appdistribution.firebase.dev/i/f41ba9bb0b9577dc"
+        env.FIREBASE_BUILD_URL = "https://appdistribution.firebase.dev/i/a6fd955b346e3c78"
         env.GIT_AUTHOR = sh (script: 'git log -1 --pretty=%cn ${GIT_COMMIT}', returnStdout: true).trim()
         env.GIT_COMMIT_MSG = sh (script: 'git log -1 --pretty=%B ${GIT_COMMIT}', returnStdout: true).trim()
-     //   postMattermostReport("started")
+        postMattermostReport("started")
 
         sh 'printenv'
 
@@ -92,11 +92,9 @@ node ('android-node') {
         currentBuild.result = "FAILURE"
     } finally {
         if (currentBuild.result == "FAILURE") {
-            echo "done"
-  //          postMattermostReport("failed")
+            postMattermostReport("failed")
         }else{
-            echo "done"
- //           postMattermostReport("success")
+           postMattermostReport("success")
         }
     }
 }
@@ -140,7 +138,7 @@ void distributeApp(String buildPath) {
             string(credentialsId: 'devOpsFirebaseToken', variable: 'firebaseToken'),
             string(credentialsId: 'febys-qa-app-id', variable: 'appId')
         ]) {
-            sh "firebase appdistribution:distribute ${buildPath} --app \$appId --token \$firebaseToken  --debug"
+            sh "firebase appdistribution:distribute ${buildPath} --app \$appId --token \$firebaseToken --group febys-qa --debug"
         }
     }
     else {
@@ -177,6 +175,14 @@ void postMattermostReport(String build_flag){
         )
     }
     else if (env.BRANCH_NAME ==  "develop"){
+        mattermostSend (
+            color: "#00f514",
+            message: """Build Success:
+            Author: ${env.GIT_AUTHOR}
+            Commit Message: ${env.GIT_COMMIT_MSG}
+            Repository Name: ${env.JOB_NAME}
+            Build : ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Link to build>)"""
+        )
         mattermostSend (
             color: "#00f514",
             channel: "qa-deployments",
