@@ -54,7 +54,7 @@ class HomeProductsAdapter :
             binding.product = item
             binding.isFav = false
 
-            val variantId = item.product_variants[0].id
+            val variantId = item.productVariants[0].id
 
             binding.isFav = variantId in fav
 

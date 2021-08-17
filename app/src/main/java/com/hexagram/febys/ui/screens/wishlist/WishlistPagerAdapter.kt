@@ -46,7 +46,7 @@ class WishlistPagerAdapter :
             }
 
             binding.ivClose.setOnClickListener {
-                val variantId = item.product_variants[0].id
+                val variantId = item.productVariants[0].id
                 interaction?.removeFav(variantId)
             }
 
