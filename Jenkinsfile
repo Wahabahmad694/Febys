@@ -16,6 +16,8 @@ node ('android-node') {
 
     stage('Checkout Repository') {
 
+        cleanWs()
+        
         checkout scm
 
         sh 'git rev-parse --short HEAD > commit-id'
@@ -138,7 +140,7 @@ void distributeApp(String buildPath) {
             string(credentialsId: 'devOpsFirebaseToken', variable: 'firebaseToken'),
             string(credentialsId: 'febys-qa-app-id', variable: 'appId')
         ]) {
-            sh "firebase appdistribution:distribute ${buildPath} --app \$appId --token \$firebaseToken --group febys-qa --debug"
+            sh "firebase appdistribution:distribute ${buildPath} --app \$appId --token \$firebaseToken --groups febys-qa --release-notes-file release-notes.txt --debug"
         }
     }
     else {
