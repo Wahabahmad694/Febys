@@ -15,7 +15,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Febys"
         tools:targetApi="n">
-        <activity android:name=".ui.MainActivity">
+        <activity
+            android:name=".ui.MainActivity"
+            android:exported="true"
+            android:permission="">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,7 +36,9 @@
             android:value="@string/facebook_app_id" />
 
         <activity
-            android:name="com.facebook.CustomTabActivity">
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true"
+            android:permission="">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
