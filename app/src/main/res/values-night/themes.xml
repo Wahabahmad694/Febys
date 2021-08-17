@@ -15,6 +15,8 @@
 
         <item name="otpViewStyle">@style/OtpWidget.OtpView</item>
         <item name="android:listDivider">@color/dark_grey</item>
+
+        <item name="color_dim">@color/white_transparent_80</item>
     </style>
 
     <style name="TextTheme">
@@ -107,6 +109,7 @@
     <style name="ButtonTheme.OutLine" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:textAppearance">@style/TextTheme.HelveticaNeue.TS14</item>
         <item name="strokeColor">@color/white</item>
+        <item name="backgroundTint">@color/selector_outlined_button_night</item>
     </style>
 
     <style name="ButtonTheme.OutLine.Full">

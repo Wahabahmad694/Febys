@@ -9,9 +9,12 @@ import androidx.navigation.fragment.findNavController
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentSplashBinding
+import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.auth.AuthViewModel
+import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.utils.navigateTo
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.system.exitProcess
 
 @AndroidEntryPoint
 class SplashFragment : BaseFragment() {
@@ -34,11 +37,25 @@ class SplashFragment : BaseFragment() {
 
     private fun setupObservers() {
         authViewModel.observeRefreshTokenResponse.observe(viewLifecycleOwner) {
-            val navigateToHome =
-                SplashFragmentDirections.actionSplashFragmentToHomeFragment()
-            navigateTo(navigateToHome)
+            when (it) {
+                is DataState.Error -> {
+                    val closeAppCallback = { closeApp() }
+                    ErrorDialog(
+                        it, onOkayClick = closeAppCallback, onCloseClick = closeAppCallback
+                    ).show(childFragmentManager, ErrorDialog.TAG)
+                }
+                else -> {
+                    val navigateToHome =
+                        SplashFragmentDirections.actionSplashFragmentToHomeFragment()
+                    navigateTo(navigateToHome)
 
-            findNavController().graph.startDestination = R.id.homeFragment
+                    findNavController().graph.startDestination = R.id.homeFragment
+                }
+            }
         }
+    }
+
+    private fun closeApp() {
+        exitProcess(0)
     }
 }

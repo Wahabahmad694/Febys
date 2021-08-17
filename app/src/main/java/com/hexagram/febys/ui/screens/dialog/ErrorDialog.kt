@@ -10,7 +10,9 @@ import com.hexagram.febys.databinding.DialogErrorBinding
 import com.hexagram.febys.network.DataState
 
 class ErrorDialog<T>(
-    private val error: DataState.Error<T>
+    private val error: DataState.Error<T>,
+    private val onOkayClick: (() -> Unit)? = null,
+    private val onCloseClick: (() -> Unit)? = null
 ) : BaseDialog() {
 
     companion object {
@@ -46,10 +48,12 @@ class ErrorDialog<T>(
 
     private fun uiListener() {
         binding.ivClose.setOnClickListener {
+            onCloseClick?.invoke()
             dismiss()
         }
 
         binding.btnOkay.setOnClickListener {
+            onOkayClick?.invoke()
             dismiss()
         }
     }
@@ -75,5 +79,5 @@ class ErrorDialog<T>(
         binding.tvErrorMsg.text = getString(R.string.label_no_internet)
     }
 
-    override fun cancelable() = true
+    override fun cancelable() = false
 }

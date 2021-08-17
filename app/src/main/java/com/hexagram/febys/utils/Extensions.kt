@@ -2,6 +2,7 @@ package com.hexagram.febys.utils
 
 import android.app.Activity
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
@@ -13,6 +14,10 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.Fade
+import androidx.transition.Transition
+import androidx.transition.TransitionManager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.hexagram.febys.base.BaseActivity
 
 fun View.show() {
@@ -29,6 +34,14 @@ fun View.invisible() {
 
 fun View.toggleVisibility() {
     isVisible = !isVisible
+}
+
+fun View.fadeVisibility(isVisible: Boolean, duration: Long = 400) {
+    val transition: Transition = Fade()
+    transition.duration = duration
+    transition.addTarget(this)
+    TransitionManager.beginDelayedTransition(this.parent as ViewGroup, transition)
+    this.isVisible = isVisible
 }
 
 /**
@@ -100,4 +113,14 @@ fun EditText.onSearch(callback: () -> Unit) {
         }
         false
     }
+}
+
+fun <T : View> BottomSheetBehavior<T>.onStateChange(callback: (state: Int) -> Unit) {
+    addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+        override fun onStateChanged(bottomSheet: View, newState: Int) {
+            callback(newState)
+        }
+
+        override fun onSlide(bottomSheet: View, slideOffset: Float) {}  // do nothing
+    })
 }

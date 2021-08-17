@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.response.Product
+import com.hexagram.febys.network.response.ProductVariant
 import com.hexagram.febys.repos.IProductRepo
 import com.hexagram.febys.ui.screens.product.ProductViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,6 +17,8 @@ import javax.inject.Inject
 class ProductDetailViewModel @Inject constructor(
     productRepo: IProductRepo
 ) : ProductViewModel(productRepo) {
+    var selectedFirstAttr = ""
+    var selectedSecondAttr = ""
 
     private val _observeProductDetail = MutableLiveData<DataState<Product>>()
     val observeProductDetail: LiveData<DataState<Product>> = _observeProductDetail
@@ -24,6 +27,37 @@ class ProductDetailViewModel @Inject constructor(
         _observeProductDetail.postValue(DataState.Loading())
         productRepo.fetchProductDetail(productId).collect {
             _observeProductDetail.postValue(it)
+        }
+    }
+
+    fun getFirstAttrList(product: Product): List<String> {
+        return product.product_variants
+            .filter { it.getFirstVariantAttr()?.value != null }
+            .map { it.getFirstVariantAttr()!!.value }
+            .toSet()
+            .toList()
+    }
+
+    fun getSecondAttrList(selectedFirstAttr: String, product: Product): List<String> {
+        return product.product_variants
+            .filter {
+                it.getSecondVariantAttr()?.value != null && it.getFirstVariantAttr()?.value == selectedFirstAttr
+            }
+            .map { it.getSecondVariantAttr()!!.value }
+            .toSet()
+            .toList()
+    }
+
+    fun getVariantByFirstAttr(product: Product): ProductVariant? {
+        return product.product_variants.firstOrNull {
+            it.getFirstVariantAttr()?.value == selectedFirstAttr
+        }
+    }
+
+    fun getVariantBySecondAttr(product: Product): ProductVariant? {
+        return product.product_variants.firstOrNull {
+            it.getFirstVariantAttr()?.value == selectedFirstAttr
+                    && it.getSecondVariantAttr()?.value == selectedSecondAttr
         }
     }
 }

@@ -43,7 +43,8 @@ data class ProductVariant(
     val created_at: String,
     @SerializedName("updated_at")
     val updated_at: String,
-    val variant_attributes: List<ProductVariantAttributes>
+    @SerializedName("variant_attributes", alternate = ["attributes"])
+    val variant_attributes: List<ProductVariantAttributes>?
 ) {
     val isAvailable
         get() = _availability == 1
@@ -56,5 +57,15 @@ data class ProductVariant(
 
     val hasPromotion
         get() = _hasPromotion == 1
+
+    fun getFirstVariantAttr(): ProductVariantAttributes? {
+        if (variant_attributes.isNullOrEmpty()) return null
+        return variant_attributes.sortedBy { it.id }[0]
+    }
+
+    fun getSecondVariantAttr(): ProductVariantAttributes? {
+        if (variant_attributes.isNullOrEmpty() || variant_attributes.size < 2) return null
+        return variant_attributes.sortedBy { it.id }[1]
+    }
 }
 

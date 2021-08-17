@@ -1,5 +1,6 @@
 package com.hexagram.febys.repos
 
+import com.hexagram.febys.BuildConfig
 import com.hexagram.febys.dataSource.IUserDataSource
 import com.hexagram.febys.enum.SocialLogin
 import com.hexagram.febys.network.AuthService
@@ -48,10 +49,7 @@ class AuthRepoImpl @Inject constructor(
             val verificationReq = mapOf("otp" to otp)
             authService.verifyUser(authToken, verificationReq)
                 .onSuccess {
-                    data!!.apply {
-                        saveUserAndToken(user)
-                        emit(DataState.Data(this))
-                    }
+                    emit(DataState.Data(data!!))
                 }
                 .onError { emit(DataState.ApiError(message)) }
                 .onException { emit(DataState.ExceptionError()) }
@@ -90,19 +88,19 @@ class AuthRepoImpl @Inject constructor(
         }.flowOn(dispatcher)
     }
 
-    override fun refreshToken(dispatcher: CoroutineDispatcher): Flow<DataState<ResponseRefreshToken>> {
-        return flow<DataState<ResponseRefreshToken>> {
+    override fun refreshToken(dispatcher: CoroutineDispatcher): Flow<DataState<Unit>> {
+        return flow<DataState<Unit>> {
             val refreshToken = userDataSource.getRefreshToken()
             if (refreshToken.isEmpty()) {
-                emit(DataState.ApiError(""))
+                emit(DataState.Data(Unit))
                 return@flow
             }
 
             val fields = mapOf(
                 "grant_type" to "refresh_token",
-                "client_id" to com.hexagram.febys.BuildConfig.keycloakClientId,
+                "client_id" to BuildConfig.keycloakClientId,
                 "refresh_token" to refreshToken,
-                "client_secret" to com.hexagram.febys.BuildConfig.keycloakClientSecret
+                "client_secret" to BuildConfig.keycloakClientSecret
             )
             val url =
                 "https://auth.qa.febys.com/auth/realms/febys-consumers/protocol/openid-connect/token"
@@ -113,12 +111,13 @@ class AuthRepoImpl @Inject constructor(
                         userDataSource.saveAccessToken(accessToken)
                         userDataSource.saveRefreshToken(this.refreshToken)
                         fetchWishListIds()
-                        emit(DataState.Data(this))
+                        emit(DataState.Data(Unit))
                     }
                 }
                 .onError {
                     signOut()
-                    emit(DataState.ApiError(message))
+                    // for go to home screen, no need to display error msg
+                    emit(DataState.Data(Unit))
                 }
                 .onException { emit(DataState.ExceptionError()) }
                 .onNetworkError { emit(DataState.NetworkError()) }

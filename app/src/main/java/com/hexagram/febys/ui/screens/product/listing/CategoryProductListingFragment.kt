@@ -13,10 +13,4 @@ class CategoryProductListingFragment : ProductListingFragment() {
         productListingViewModel.categoryProductsListing(args.categoryId) {
             setProductItemCount(it.totalRows)
         }
-
-    override fun onProductClick(position: Int, item: Product) {
-        val gotoProductListing =
-            CategoryProductListingFragmentDirections.actionToProductDetail(item.id)
-        navigateTo(gotoProductListing)
-    }
 }
