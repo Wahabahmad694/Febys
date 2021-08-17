@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "912540354085",
+    "project_id": "febys-319007",
+    "storage_bucket": "febys-319007.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:912540354085:android:7bdcb04977136d4f1261cc",
+        "android_client_info": {
+          "package_name": "com.hexagram.febys"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "912540354085-rkosqv4g3vugc3lcinb7c6087r0vuepn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hexagram.febys",
+            "certificate_hash": "0db314d4a2ad502a65aabb7b0f9f43506f978240"
+          }
+        },
+        {
+          "client_id": "912540354085-4u6he1g3h116kmo3f3irg662dtr5aplc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDq8cb9ILXvICwtX-T754yDrOcw2dPJokE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "912540354085-4u6he1g3h116kmo3f3irg662dtr5aplc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "912540354085-24cpnf9p003flanmas9ndkmlbdek0bia.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hexagram.febys"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

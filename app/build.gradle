@@ -32,7 +32,7 @@ android {
             keyPassword keystoreProperties['keyPassword']
         }
         release {
-            def keystoreProperties = getKeystore("release")
+            def keystoreProperties = getKeystore("debug")
             storeFile rootProject.file(keystoreProperties['storeFile'])
             storePassword keystoreProperties['storePassword']
             keyAlias keystoreProperties['keyAlias']
@@ -42,8 +42,8 @@ android {
 
     buildTypes {
         debug {
-            def endpointsProperties = getEndPoints("debug")
-            def credentialsProperties = getCredentials("debug")
+            def endpointsProperties = getBuildProperties()
+            def credentialsProperties = getCredentials()
             buildConfigField("String", "backendBaseUrl", endpointsProperties['BASE_URL_BACKEND'])
             buildConfigField("String", "webCustomizationBaseUrl", endpointsProperties['BASE_URL_WEB_CUSTOMIZATION'])
             buildConfigField("String", "keycloakClientId", credentialsProperties['KEYCLOAK_CLIENT_ID'])
@@ -53,8 +53,8 @@ android {
             resValue "string", "fb_login_protocol_scheme", credentialsProperties['FACEBOOK_LOGIN_PROTOCOL_SCHEME']
         }
         staging {
-            def endpointsProperties = getEndPoints("staging")
-            def credentialsProperties = getCredentials("staging")
+            def endpointsProperties = getBuildProperties()
+            def credentialsProperties = getCredentials()
             buildConfigField("String", "backendBaseUrl", endpointsProperties['BASE_URL_BACKEND'])
             buildConfigField("String", "webCustomizationBaseUrl", endpointsProperties['BASE_URL_WEB_CUSTOMIZATION'])
             buildConfigField("String", "keycloakClientId", credentialsProperties['KEYCLOAK_CLIENT_ID'])
@@ -63,11 +63,28 @@ android {
             resValue "string", "facebook_app_id", credentialsProperties['FACEBOOK_APP_ID']
             resValue "string", "fb_login_protocol_scheme", credentialsProperties['FACEBOOK_LOGIN_PROTOCOL_SCHEME']
         }
+        qa {
+            initWith debug
+
+            def endpointsProperties = getBuildProperties()
+            def credentialsProperties = getCredentials()
+            buildConfigField("String", "backendBaseUrl", endpointsProperties['QA_BASE_URL_BACKEND'])
+            buildConfigField("String", "webCustomizationBaseUrl", endpointsProperties['QA_BASE_URL_WEB_CUSTOMIZATION'])
+            buildConfigField("String", "keycloakClientId", credentialsProperties['KEYCLOAK_CLIENT_ID'])
+            buildConfigField("String", "keycloakClientSecret", credentialsProperties['KEYCLOAK_CLIENT_SECRET'])
+            resValue "string", "google_web_client", credentialsProperties['GOOGLE_WEB_CLIENT']
+            resValue "string", "facebook_app_id", credentialsProperties['FACEBOOK_APP_ID']
+            resValue "string", "fb_login_protocol_scheme", credentialsProperties['FACEBOOK_LOGIN_PROTOCOL_SCHEME']
+
+            applicationIdSuffix ".qa"
+
+            matchingFallbacks = ['debug', 'release']
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            def endpointsProperties = getEndPoints("release")
-            def credentialsProperties = getCredentials("release")
+            def endpointsProperties = getBuildProperties()
+            def credentialsProperties = getCredentials()
             buildConfigField("String", "backendBaseUrl", endpointsProperties['BASE_URL_BACKEND'])
             buildConfigField("String", "webCustomizationBaseUrl", endpointsProperties['BASE_URL_WEB_CUSTOMIZATION'])
             buildConfigField("String", "keycloakClientId", credentialsProperties['KEYCLOAK_CLIENT_ID'])
@@ -174,22 +191,22 @@ dependencies {
     implementation "com.facebook.android:facebook-android-sdk:$facebook_version"
 }
 
-def getCredentials(String config) {
-    def credentials = rootProject.file("properties/$config/credentials.properties")
+def getCredentials() {
+    def credentials = rootProject.file("credentials.properties")
     def credentialsProperties = new Properties()
     credentialsProperties.load(new FileInputStream(credentials))
     return credentialsProperties
 }
 
 def getKeystore(String config) {
-    def keystore = rootProject.file("keystore/${config}.properties")
+    def keystore = rootProject.file("app/keystore/${config}.properties")
     def keystoreProperties = new Properties()
     keystoreProperties.load(new FileInputStream(keystore))
     return keystoreProperties
 }
 
-def getEndPoints(String config) {
-    def endpoints = rootProject.file("properties/$config/endpoints.properties")
+def getBuildProperties() {
+    def endpoints = rootProject.file("build.properties")
     def endpointsProperties = new Properties()
     endpointsProperties.load(new FileInputStream(endpoints))
     return endpointsProperties
