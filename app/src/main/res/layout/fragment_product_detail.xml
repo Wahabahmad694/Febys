@@ -66,6 +66,19 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tv_product_brand_appbar" />
 
+            <TextView
+                android:id="@+id/tv_cart_count"
+                style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_4sdp"
+                android:contentDescription="@string/app_name"
+                app:layout_constraintBottom_toBottomOf="@id/iv_cart"
+                app:layout_constraintEnd_toStartOf="@id/iv_cart"
+                app:layout_constraintTop_toTopOf="@id/iv_cart"
+                app:layout_constraintVertical_bias="0.8"
+                tools:text="2" />
+
             <com.hexagram.febys.utils.ScrollView
                 android:id="@+id/scroll_view"
                 android:layout_width="match_parent"

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -368,6 +369,8 @@ class ProductDetailFragment : SliderFragment() {
     override fun getSlider() = listOf(binding.sliderProductImages)
 
     override fun getRotateInterval() = 5000L
+
+    override fun getTvCartCount(): TextView = binding.tvCartCount
 
     private inner class ProductSliderPageAdapter(
         val images: List<String>, fa: Fragment

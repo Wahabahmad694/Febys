@@ -103,4 +103,6 @@ class SearchFragment : BaseFragment() {
             SearchFragmentDirections.actionSearchFragmentToSearchProductListingFragment(query)
         navigateTo(gotoSearch)
     }
+
+    override fun getTvCartCount(): TextView = binding.tvCartCount
 }

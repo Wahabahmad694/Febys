@@ -5,8 +5,6 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class CartDTO(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
     val vendorId: Int,
     val vendorName: String,
     val vendorStoreName: String,
@@ -21,6 +19,7 @@ data class CartDTO(
     val _isProductComplete: Int,
     val productCreatedAt: String,
     val productUpdatedAt: String,
+    @PrimaryKey(autoGenerate = true)
     val variantId: Int,
     val variantPrice: Double,
     val variantCurrencyCode: String,

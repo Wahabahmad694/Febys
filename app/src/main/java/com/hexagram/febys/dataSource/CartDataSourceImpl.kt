@@ -1,5 +1,6 @@
 package com.hexagram.febys.dataSource
 
+import androidx.lifecycle.LiveData
 import com.hexagram.febys.db.dao.CartDao
 import com.hexagram.febys.models.db.CartDTO
 import com.hexagram.febys.network.domain.util.CartMapper
@@ -23,4 +24,7 @@ class CartDataSourceImpl @Inject constructor(
         cartDao.clear()
     }
 
+    override fun observeCartCount(): LiveData<Int?> {
+        return cartDao.observeCartCount()
+    }
 }

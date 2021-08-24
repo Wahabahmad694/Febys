@@ -32,7 +32,7 @@
                 android:gravity="center"
                 android:minHeight="?actionBarSize"
                 android:orientation="vertical"
-                app:layout_constraintEnd_toStartOf="@id/iv_cart"
+                app:layout_constraintEnd_toStartOf="@id/tv_cart_count"
                 app:layout_constraintStart_toEndOf="@id/iv_back"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -81,6 +81,19 @@
                 app:layout_constraintBottom_toBottomOf="@id/container_product_listing_title_and_count"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/container_product_listing_title_and_count" />
+
+            <TextView
+                android:id="@+id/tv_cart_count"
+                style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_4sdp"
+                android:contentDescription="@string/app_name"
+                app:layout_constraintBottom_toBottomOf="@id/iv_cart"
+                app:layout_constraintEnd_toStartOf="@id/iv_cart"
+                app:layout_constraintTop_toTopOf="@id/iv_cart"
+                app:layout_constraintVertical_bias="0.8"
+                tools:text="2" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
         <!--endregion top bar-->
