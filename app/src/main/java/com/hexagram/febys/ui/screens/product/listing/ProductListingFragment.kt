@@ -88,7 +88,7 @@ abstract class ProductListingFragment : BaseFragment() {
         }
 
         binding.btnRefine.setOnClickListener {
-            // todo show refine screen
+
         }
 
         productListingPagerAdapter.interaction = object : ProductListingPagerAdapter.Interaction {

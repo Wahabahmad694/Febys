@@ -1,6 +1,7 @@
 package com.hexagram.febys.repos
 
 import com.hexagram.febys.BuildConfig
+import com.hexagram.febys.dataSource.ICartDataSource
 import com.hexagram.febys.dataSource.IUserDataSource
 import com.hexagram.febys.enum.SocialLogin
 import com.hexagram.febys.network.AuthService
@@ -21,7 +22,8 @@ class AuthRepoImpl @Inject constructor(
     private val authService: AuthService,
     private val backendService: FebysBackendService,
     private val pref: IPrefManger,
-    private val userDataSource: IUserDataSource
+    private val userDataSource: IUserDataSource,
+    private val cartDataSource: ICartDataSource
 ) : IAuthRepo {
 
     override fun signup(
@@ -65,7 +67,7 @@ class AuthRepoImpl @Inject constructor(
             authService.login(loginReq).onSuccess {
                 data!!.apply {
                     saveUserAndToken(user)
-                    fetchWishListIds()
+                    fetchUserDataOnLogin()
                     emit(DataState.Data(data))
                 }
             }
@@ -110,7 +112,7 @@ class AuthRepoImpl @Inject constructor(
                     data!!.apply {
                         userDataSource.saveAccessToken(accessToken)
                         userDataSource.saveRefreshToken(this.refreshToken)
-                        fetchWishListIds()
+                        fetchUserDataOnLogin()
                         emit(DataState.Data(Unit))
                     }
                 }
@@ -137,7 +139,7 @@ class AuthRepoImpl @Inject constructor(
             authService.socialLogin(socialLoginReq).onSuccess {
                 data!!.apply {
                     saveUserAndToken(user)
-                    fetchWishListIds()
+                    fetchUserDataOnLogin()
                     emit(DataState.Data(this))
                 }
             }
@@ -153,6 +155,20 @@ class AuthRepoImpl @Inject constructor(
         userDataSource.saveRefreshToken(user.refreshToken ?: "")
     }
 
+    private suspend fun fetchUserDataOnLogin() {
+        fetchWishListIds()
+        fetchCart()
+    }
+
+    private suspend fun fetchCart() {
+        val authToken = pref.getAccessToken()
+        val response = backendService.fetchCart(authToken)
+        if (response is ApiResponse.ApiSuccessResponse) {
+            val cart = response.data!!
+            cartDataSource.insertCart(cart)
+        }
+    }
+
     private suspend fun fetchWishListIds() {
         val authToken = pref.getAccessToken()
         val response = backendService.fetchWishlistIds(authToken)
@@ -164,6 +180,7 @@ class AuthRepoImpl @Inject constructor(
 
     override fun signOut() {
         pref.clearFav()
+        cartDataSource.clear()
         userDataSource.clearUserState()
         userDataSource.clearUserData()
     }

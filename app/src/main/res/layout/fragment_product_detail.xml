@@ -33,7 +33,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <!--       todo update when brand implemented in backend-->
             <TextView
                 android:id="@+id/tv_product_brand_appbar"
                 style="@style/TextTheme.HelveticaNeue.TS16.Bold"
@@ -124,7 +123,6 @@
                         app:progressMode="true"
                         app:selectedDotColor="@color/slider_dot_selected_color" />
 
-                    <!--       todo update when brand implemented in backend-->
                     <TextView
                         android:id="@+id/tv_product_brand"
                         style="@style/TextTheme.HelveticaNeue.TS14.Bold"

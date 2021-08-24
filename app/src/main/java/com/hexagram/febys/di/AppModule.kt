@@ -15,10 +15,10 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class AppModule {
-    companion object{
+    companion object {
         @Singleton
         @Provides
-        fun provideFebysApp(@ApplicationContext context: Context): com.hexagram.febys.FebysApp = context as com.hexagram.febys.FebysApp
+        fun provideFebysApp(@ApplicationContext context: Context): FebysApp = context as FebysApp
     }
 
     @Singleton

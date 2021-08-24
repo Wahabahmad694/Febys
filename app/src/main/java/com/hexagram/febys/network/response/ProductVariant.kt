@@ -30,13 +30,13 @@ data class ProductVariant(
     @SerializedName("enabled")
     val _enabled: Int,
     @SerializedName("has_promotion")
-    val _hasPromotion: Int,
+    val _hasPromotion: Int?,
     @SerializedName("promotion_start_date")
-    val promotionStartDate: String,
+    val promotionStartDate: String?,
     @SerializedName("promotion_end_date")
-    val promotionEndDate: String,
+    val promotionEndDate: String?,
     @SerializedName("promotion_price")
-    val promotionPrice: String,
+    val promotionPrice: String?,
     @SerializedName("percentage_off")
     val percentageOff: String,
     @SerializedName("created_at")

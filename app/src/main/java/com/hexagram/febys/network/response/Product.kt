@@ -19,7 +19,7 @@ data class Product constructor(
     val _productReturnRefundable: Int,
     @SerializedName("product_return_refundable_policy")
     val productReturnRefundablePolicy: String,
-    @SerializedName("deliver")
+    @SerializedName("delivery")
     val delivery: String,
     @SerializedName("tags")
     val _tags: String,
