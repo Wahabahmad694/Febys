@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
@@ -88,7 +89,7 @@ abstract class ProductListingFragment : BaseFragment() {
         }
 
         binding.btnRefine.setOnClickListener {
-            // todo show refine screen
+
         }
 
         productListingPagerAdapter.interaction = object : ProductListingPagerAdapter.Interaction {
@@ -118,6 +119,9 @@ abstract class ProductListingFragment : BaseFragment() {
                 resources.getQuantityString(R.plurals.items_count, count, count)
             }
     }
+
+    override fun getTvCartCount(): TextView = binding.tvCartCount
+    override fun getIvCart(): View = binding.ivCart
 
     abstract fun getListingTitle(): String
 

@@ -1,5 +1,6 @@
 package com.hexagram.febys.network
 
+import com.hexagram.febys.network.response.Cart
 import com.hexagram.febys.network.adapter.ApiResponse
 import com.hexagram.febys.network.requests.RequestOfPagination
 import com.hexagram.febys.network.requests.RequestToggleFav
@@ -57,4 +58,9 @@ interface FebysBackendService {
     suspend fun fetchWishlistIds(
         @Header("Authorization") authToken: String
     ): ApiResponse<ResponseToggleFav>
+
+    @GET("v1/cart")
+    suspend fun fetchCart(
+        @Header("Authorization") authToken: String
+    ): ApiResponse<Cart>
 }

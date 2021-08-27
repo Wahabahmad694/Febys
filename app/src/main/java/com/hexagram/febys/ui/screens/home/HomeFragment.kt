@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
@@ -268,6 +269,9 @@ class HomeFragment : SliderFragment() {
         listOf(binding.imageSliderHome, binding.sliderSeasonalOffer)
 
     override fun getRotateInterval(): Long = 5000L
+
+    override fun getTvCartCount(): TextView = binding.tvCartCount
+    override fun getIvCart(): View = binding.ivCart
 
     private inner class HomeSliderPageAdapter(
         val banners: List<Banner>, fa: Fragment

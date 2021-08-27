@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.screens.cart.CartFragment">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_close"
+            android:layout_width="@dimen/_16dp"
+            android:layout_height="@dimen/_16dp"
+            android:layout_marginStart="@dimen/_16dp"
+            android:layout_marginTop="@dimen/_16dp"
+            android:src="@drawable/ic_close"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/label_shopping_cart"
+            style="@style/TextTheme.HelveticaNeue.TS32.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:text="@string/label_shopping_cart"
+            app:layout_constraintStart_toStartOf="@id/iv_close"
+            app:layout_constraintTop_toBottomOf="@id/iv_close" />
+
+        <TextView
+            android:id="@+id/tv_cart_count"
+            style="@style/TextTheme.HelveticaNeue.TS32.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_28sdp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            app:layout_constraintBaseline_toBaselineOf="@id/label_shopping_cart"
+            app:layout_constraintStart_toEndOf="@id/label_shopping_cart" />
+
+        <TextView
+            android:id="@+id/label_subtotal"
+            style="@style/TextTheme.Arial.TS14.Grey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:text="@string/label_subtotal"
+            app:layout_constraintStart_toStartOf="@id/iv_close"
+            app:layout_constraintTop_toBottomOf="@id/label_shopping_cart" />
+
+        <TextView
+            android:id="@+id/tv_subtotal_amount"
+            style="@style/TextTheme.Arial.TS14.Grey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_4sdp"
+            app:layout_constraintBaseline_toBaselineOf="@id/label_subtotal"
+            app:layout_constraintStart_toEndOf="@id/label_subtotal"
+            tools:text="$2,677" />
+
+        <TextView
+            android:id="@+id/label_shipping"
+            style="@style/TextTheme.Arial.TS14.Grey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_shipping"
+            app:layout_constraintStart_toStartOf="@id/iv_close"
+            app:layout_constraintTop_toBottomOf="@id/label_subtotal" />
+
+        <TextView
+            android:id="@+id/tv_shipping_amount"
+            style="@style/TextTheme.Arial.TS14.Grey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_4sdp"
+            app:layout_constraintBaseline_toBaselineOf="@id/label_shipping"
+            app:layout_constraintStart_toEndOf="@id/label_shipping"
+            tools:text="$32" />
+
+        <TextView
+            android:id="@+id/tv_total_amount"
+            style="@style/TextTheme.HelveticaNeue.TS32.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_16sdp"
+            app:layout_constraintBottom_toBottomOf="@id/label_shipping"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/label_subtotal"
+            tools:text="$2,732" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_cart"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_0dp"
+            android:layout_marginTop="@dimen/_24sdp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_shipping"
+            tools:listitem="@layout/item_cart" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

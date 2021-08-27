@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
@@ -151,6 +152,9 @@ class CategoryNameFragment : BaseFragment() {
         }
         navigateTo(navigateToProductListing)
     }
+
+    override fun getTvCartCount(): TextView = binding.tvCartCount
+    override fun getIvCart(): View = binding.ivCart
 
     companion object {
         private const val KEY_FIRST_PAGE = "keyFirstPage"

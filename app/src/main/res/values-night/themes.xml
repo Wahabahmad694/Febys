@@ -79,6 +79,10 @@
         <item name="android:textSize">@dimen/_14sp</item>
     </style>
 
+    <style name="TextTheme.Arial.TS14.Grey">
+        <item name="android:textColor">@color/text_grey</item>
+    </style>
+
     <style name="TextTheme.Arial.TS14.Bold">
         <item name="android:textSize">@dimen/_14sp</item>
         <item name="android:textStyle">bold</item>

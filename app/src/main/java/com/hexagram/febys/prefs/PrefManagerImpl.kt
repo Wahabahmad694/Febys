@@ -63,21 +63,31 @@ class PrefManagerImpl @Inject constructor(
     }
 
     override fun toggleFav(variantId: Int): Boolean {
-        var favSetAsString = getString(KEY_FAV, "")
-        val set = Utils.jsonToSetOfInt(favSetAsString)
-
+        val set = getFav()
         val addToFav = variantId !in set
+        if (addToFav) set.add(variantId) else set.remove(variantId)
+        saveFav(set)
+        return addToFav
+    }
 
+    override fun addToFav(variantId: Int): Boolean {
+        val set = getFav()
+        val addToFav = !set.contains(variantId)
         if (addToFav) {
             set.add(variantId)
-        } else {
-            set.remove(variantId)
+            saveFav(set)
         }
-
-        favSetAsString = Utils.jsonFromSetOfInt(set)
-        saveString(KEY_FAV, favSetAsString)
-
         return addToFav
+    }
+
+    override fun removeFromFav(variantId: Int): Boolean {
+        val set = getFav()
+        val removeFromFav = set.contains(variantId)
+        if (removeFromFav) {
+            set.remove(variantId)
+            saveFav(set)
+        }
+        return removeFromFav
     }
 
     override fun getFav(): MutableSet<Int> {

@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:binding="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="cart"
+            type="com.hexagram.febys.models.db.CartDTO" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container_vendor_detail"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_44sdp"
+            android:background="@color/grey">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/vendor_img"
+                android:layout_width="@dimen/_28sdp"
+                android:layout_height="@dimen/_28sdp"
+                android:layout_marginStart="@dimen/_16sdp"
+                app:actualImageResource="@drawable/ic_store"
+                app:actualImageScaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:roundAsCircle="true" />
+
+            <TextView
+                android:id="@+id/vendor_name"
+                style="@style/TextTheme.Arial.TS14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:text="@{cart.vendorStoreName}"
+                app:layout_constraintBottom_toTopOf="@id/vendor_slogan"
+                app:layout_constraintStart_toEndOf="@id/vendor_img"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="Deal-Train" />
+
+            <TextView
+                android:id="@+id/vendor_slogan"
+                style="@style/TextTheme.Arial.TS12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{cart.vendorIndividualType}"
+                android:textColor="@color/red"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/vendor_name"
+                app:layout_constraintTop_toBottomOf="@id/vendor_name"
+                tools:text="Official" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container_product_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_remove"
+                android:layout_width="@dimen/_12sdp"
+                android:layout_height="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_24sdp"
+                android:layout_marginEnd="@dimen/_16dp"
+                android:src="@drawable/ic_close"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/iv_product"
+                android:layout_width="@dimen/_84sdp"
+                android:layout_height="@dimen/_72sdp"
+                android:layout_marginHorizontal="@dimen/_16dp"
+                android:layout_marginTop="@dimen/_18sdp"
+                app:actualImageScaleType="fitCenter"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                binding:image_url="@{cart.variantImages.get(0)}" />
+
+            <TextView
+                android:id="@+id/tv_product_name"
+                style="@style/TextTheme.Arial.TS14"
+                android:layout_width="@dimen/_0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_16dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="@{cart.productName}"
+                app:layout_constraintEnd_toStartOf="@id/iv_remove"
+                app:layout_constraintStart_toEndOf="@id/iv_product"
+                app:layout_constraintTop_toTopOf="@id/iv_remove"
+                tools:text="TCL 32-inch 3-Series 720p Roku Smart TV  (2018 Model)" />
+
+            <TextView
+                android:id="@+id/label_item_id"
+                style="@style/TextTheme.Arial.TS14.Grey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8dp"
+                android:text="@string/label_item_id"
+                app:layout_constraintStart_toStartOf="@id/tv_product_name"
+                app:layout_constraintTop_toBottomOf="@id/tv_product_name" />
+
+            <TextView
+                android:id="@+id/tv_item_id"
+                style="@style/TextTheme.Arial.TS14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_4sdp"
+                android:layout_marginTop="@dimen/_16dp"
+                android:text="@{`` + cart.variantId}"
+                app:layout_constraintBaseline_toBaselineOf="@id/label_item_id"
+                app:layout_constraintStart_toEndOf="@id/label_item_id"
+                tools:text="123" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_minus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_minus"
+                app:layout_constraintBottom_toBottomOf="@id/tv_quantity"
+                app:layout_constraintStart_toStartOf="@id/label_item_id"
+                app:layout_constraintTop_toTopOf="@id/tv_quantity" />
+
+            <TextView
+                android:id="@+id/tv_quantity"
+                android:layout_width="@dimen/_64sdp"
+                android:layout_height="@dimen/_24sdp"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_12dp"
+                android:background="@drawable/bg_border_dark_grey"
+                android:gravity="center"
+                android:text="@{`` + cart.quantity}"
+                android:textAlignment="center"
+                app:layout_constraintStart_toEndOf="@id/iv_minus"
+                app:layout_constraintTop_toBottomOf="@id/label_item_id"
+                tools:text="5" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:src="@drawable/ic_add"
+                app:layout_constraintBottom_toBottomOf="@id/tv_quantity"
+                app:layout_constraintStart_toEndOf="@id/tv_quantity"
+                app:layout_constraintTop_toTopOf="@id/tv_quantity" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_move_to_wishlist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:src="@drawable/ic_un_fav"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_quantity" />
+
+            <TextView
+                android:id="@+id/tv_move_to_wishlist"
+                style="@style/TextTheme.Arial.TS14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:text="@string/label_move_to_wishlist"
+                app:layout_constraintBottom_toBottomOf="@id/iv_move_to_wishlist"
+                app:layout_constraintStart_toEndOf="@id/iv_move_to_wishlist"
+                app:layout_constraintTop_toTopOf="@id/iv_move_to_wishlist" />
+
+            <TextView
+                android:id="@+id/tv_price"
+                style="@style/TextTheme.Arial.TS14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                app:layout_constraintBaseline_toBaselineOf="@id/tv_move_to_wishlist"
+                app:layout_constraintEnd_toEndOf="@id/iv_remove"
+                tools:text="$158.00" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginTop="@dimen/_28sdp"
+                android:background="@color/grey"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_move_to_wishlist" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+</layout>

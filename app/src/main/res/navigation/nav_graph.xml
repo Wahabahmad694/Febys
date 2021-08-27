@@ -21,6 +21,14 @@
         app:popEnterAnim="@anim/slide_in_right"
         app:popExitAnim="@anim/slide_out_right" />
 
+    <action
+        android:id="@+id/action_to_cartFragment"
+        app:destination="@id/cartFragment"
+        app:enterAnim="@anim/cart_open_in"
+        app:exitAnim="@anim/cart_open_out"
+        app:popEnterAnim="@anim/cart_close_in"
+        app:popExitAnim="@anim/cart_close_out" />
+
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.hexagram.febys.ui.screens.splash.SplashFragment"
@@ -235,4 +243,8 @@
             android:name="query"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/cartFragment"
+        android:name="com.hexagram.febys.ui.screens.cart.CartFragment"
+        android:label="CartFragment" />
 </navigation>

@@ -1,11 +1,8 @@
 package com.hexagram.febys.repos
 
-import androidx.paging.PagingData
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.response.Product
-import com.hexagram.febys.network.response.ResponseProductListing
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 
@@ -17,4 +14,8 @@ interface IProductRepo {
     suspend fun toggleFav(variantId: Int)
 
     fun getFav(): MutableSet<Int>
+
+    suspend fun addToFav(variantId: Int, dispatcher: CoroutineDispatcher = Dispatchers.IO)
+
+    suspend fun removeFromFav(variantId: Int, dispatcher: CoroutineDispatcher = Dispatchers.IO)
 }

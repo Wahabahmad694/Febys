@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -23,6 +24,7 @@ import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.response.Product
 import com.hexagram.febys.network.response.ProductDescription
 import com.hexagram.febys.network.response.ProductVariant
+import com.hexagram.febys.ui.screens.cart.CartViewModel
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,6 +33,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class ProductDetailFragment : SliderFragment() {
     private lateinit var binding: FragmentProductDetailBinding
     private val productDetailViewModel: ProductDetailViewModel by viewModels()
+    private val cartViewModel: CartViewModel by viewModels()
     private val args: ProductDetailFragmentArgs by navArgs()
 
     private val productVariantFirstAttrAdapter = ProductVariantAdapter()
@@ -164,6 +167,14 @@ class ProductDetailFragment : SliderFragment() {
             // do nothing, just add to avoid click on views that are behind of bg dim when bg dim is visible
         }
 
+        binding.btnAddToCart.setOnClickListener {
+            val product = binding.product
+            val variantId = binding.variant?.id
+            if (product != null && variantId != null) {
+                cartViewModel.addToCart(product, variantId)
+            }
+        }
+
         binding.ivBack.setOnClickListener {
             goBack()
         }
@@ -191,8 +202,7 @@ class ProductDetailFragment : SliderFragment() {
     private fun toggleFavAndUpdateIcon() {
         val variantId = binding.variant?.id ?: return
         productDetailViewModel.toggleFav(variantId)
-        val isFav = productDetailViewModel.isFavProduct(variantId)
-        updateFavIcon(isFav)
+        updateFavIcon(variantId)
     }
 
     private fun onBottomSheetStateChange(state: Int) {
@@ -260,8 +270,7 @@ class ProductDetailFragment : SliderFragment() {
         binding.variant = variant
         setupProductImagesSlider(variant.images)
 
-        val isFav = productDetailViewModel.isFavProduct(variant.id)
-        updateFavIcon(isFav)
+        updateFavIcon(variant.id)
 
         val firstVariantAttr = variant.getFirstVariantAttr()
         firstVariantAttr?.let {
@@ -313,7 +322,8 @@ class ProductDetailFragment : SliderFragment() {
         binding.dotsIndicator.setViewPager2(binding.sliderProductImages)
     }
 
-    private fun updateFavIcon(isFav: Boolean) {
+    private fun updateFavIcon(variantId: Int) {
+        val isFav = productDetailViewModel.isFavProduct(variantId)
         binding.ivProductFav.setImageResource(if (isFav) R.drawable.ic_fav else R.drawable.ic_un_fav)
     }
 
@@ -363,11 +373,19 @@ class ProductDetailFragment : SliderFragment() {
         goBack()
     }
 
+    override fun onStart() {
+        super.onStart()
+        updateFavIcon(binding.variant?.id ?: return)
+    }
+
     private fun addView(parent: ViewGroup, view: View) = parent.addView(view)
 
     override fun getSlider() = listOf(binding.sliderProductImages)
 
     override fun getRotateInterval() = 5000L
+
+    override fun getTvCartCount(): TextView = binding.tvCartCount
+    override fun getIvCart(): View = binding.ivCart
 
     private inner class ProductSliderPageAdapter(
         val images: List<String>, fa: Fragment

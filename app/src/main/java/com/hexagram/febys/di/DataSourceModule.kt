@@ -1,5 +1,7 @@
 package com.hexagram.febys.di
 
+import com.hexagram.febys.dataSource.CartDataSourceImpl
+import com.hexagram.febys.dataSource.ICartDataSource
 import com.hexagram.febys.dataSource.IUserDataSource
 import com.hexagram.febys.dataSource.UserDataSourceImpl
 import dagger.Binds
@@ -14,4 +16,8 @@ abstract class DataSourceModule {
     @Binds
     @Singleton
     abstract fun provideUserDataSource(userDataSource: UserDataSourceImpl): IUserDataSource
+
+    @Binds
+    @Singleton
+    abstract fun provideCartDataSource(cartDataSource: CartDataSourceImpl): ICartDataSource
 }

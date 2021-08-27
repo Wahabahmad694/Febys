@@ -124,3 +124,7 @@ fun <T : View> BottomSheetBehavior<T>.onStateChange(callback: (state: Int) -> Un
         override fun onSlide(bottomSheet: View, slideOffset: Float) {}  // do nothing
     })
 }
+
+fun Double.toFixedDecimal(decimalCount: Int): String {
+    return String.format("%.${decimalCount}f", this)
+}
