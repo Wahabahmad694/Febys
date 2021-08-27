@@ -17,6 +17,14 @@ open class ProductViewModel @Inject constructor(
         productRepo.toggleFav(variantId)
     }
 
+    fun addToFav(variantId: Int) = viewModelScope.launch {
+        productRepo.addToFav(variantId)
+    }
+
+    fun removeFromFav(variantId: Int) = viewModelScope.launch {
+        productRepo.removeFromFav(variantId)
+    }
+
     fun getFav(): MutableSet<Int> = productRepo.getFav()
 
     fun isFavProduct(variantId: Int) = variantId in getFav()

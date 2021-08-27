@@ -27,4 +27,24 @@ class CartDataSourceImpl @Inject constructor(
     override fun observeCartCount(): LiveData<Int?> {
         return cartDao.observeCartCount()
     }
+
+    override fun observeCart(): LiveData<List<CartDTO>> {
+        return cartDao.observeCart()
+    }
+
+    override fun updateCartItem(cartDTO: CartDTO) {
+        cartDao.update(cartDTO)
+    }
+
+    override fun removeFromCart(cartDTO: CartDTO) {
+        cartDao.delete(cartDTO)
+    }
+
+    override fun getCartItem(variantId: Int): CartDTO? {
+        return cartDao.getCartItem(variantId)
+    }
+
+    override fun addCartItem(cartDTO: CartDTO) {
+        cartDao.insert(cartDTO)
+    }
 }

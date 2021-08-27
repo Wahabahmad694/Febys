@@ -271,6 +271,7 @@ class HomeFragment : SliderFragment() {
     override fun getRotateInterval(): Long = 5000L
 
     override fun getTvCartCount(): TextView = binding.tvCartCount
+    override fun getIvCart(): View = binding.ivCart
 
     private inner class HomeSliderPageAdapter(
         val banners: List<Banner>, fa: Fragment

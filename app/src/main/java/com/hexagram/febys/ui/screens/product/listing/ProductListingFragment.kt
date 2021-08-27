@@ -121,6 +121,7 @@ abstract class ProductListingFragment : BaseFragment() {
     }
 
     override fun getTvCartCount(): TextView = binding.tvCartCount
+    override fun getIvCart(): View = binding.ivCart
 
     abstract fun getListingTitle(): String
 

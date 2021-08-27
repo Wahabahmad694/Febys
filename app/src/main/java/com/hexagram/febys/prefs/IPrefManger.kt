@@ -23,6 +23,10 @@ interface IPrefManger {
 
     fun toggleFav(variantId: Int): Boolean
 
+    fun addToFav(variantId: Int): Boolean
+
+    fun removeFromFav(variantId: Int): Boolean
+
     fun getFav(): MutableSet<Int>
 
     fun saveFav(set: MutableSet<Int>)

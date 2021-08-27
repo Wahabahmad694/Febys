@@ -154,6 +154,7 @@ class CategoryNameFragment : BaseFragment() {
     }
 
     override fun getTvCartCount(): TextView = binding.tvCartCount
+    override fun getIvCart(): View = binding.ivCart
 
     companion object {
         private const val KEY_FIRST_PAGE = "keyFirstPage"

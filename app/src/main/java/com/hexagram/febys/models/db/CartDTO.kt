@@ -2,14 +2,18 @@ package com.hexagram.febys.models.db
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.hexagram.febys.network.response.Product
+import com.hexagram.febys.network.response.ProductVariant
+import com.hexagram.febys.network.response.Vendor
 
 @Entity
-data class CartDTO(
+data class CartDTO constructor(
     val vendorId: Int,
     val vendorName: String,
     val vendorStoreName: String,
     val vendorEmail: String,
     val vendorPhoneNo: String,
+    val vendorImage: String,
     val vendorIndividualType: String,
     val productId: Int,
     val productName: String,
@@ -32,7 +36,7 @@ data class CartDTO(
     val promotionPrice: String?,
     val variantCreatedAt: String,
     val variantUpdatedAt: String,
-    val quantity: Int
+    var quantity: Int
 ) {
     val isProductComplete
         get() = _isProductComplete == 1
@@ -48,4 +52,41 @@ data class CartDTO(
 
     val hasVariantPromotion
         get() = _hasVariantPromotion == 1
+
+    companion object {
+        fun fromVendorProductVariant(
+            vendor: Vendor? = null, product: Product, variant: ProductVariant, quantity: Int = 1
+        ): CartDTO {
+            return CartDTO(
+                vendorId = vendor?.id ?: 19,
+                vendorName = vendor?.name ?: "ABC",
+                vendorStoreName = vendor?.storeName ?: "XYZ",
+                vendorEmail = vendor?.email ?: "abc@xyz.com",
+                vendorPhoneNo = vendor?.phoneNo ?: "00123456789",
+                vendorImage = "",
+                vendorIndividualType = vendor?.individualVendorType ?: "Official",
+                productId = product.id,
+                productName = product.name,
+                productDelivery = product.delivery,
+                _productTags = product._tags,
+                productFulfillment = product.fulfillment,
+                _isProductComplete = product._IsComplete,
+                productCreatedAt = product.createdAt,
+                productUpdatedAt = product.updatedAt,
+                variantId = variant.id,
+                variantPrice = variant.price,
+                variantCurrencyCode = variant.currencyCode,
+                variantImages = variant.images,
+                _variantAvailability = variant._availability,
+                _defaultVariant = variant._default,
+                _hasVariantPromotion = variant._hasPromotion,
+                promotionStartDate = variant.promotionStartDate,
+                promotionEndDate = variant.promotionEndDate,
+                promotionPrice = variant.promotionPrice,
+                variantCreatedAt = variant.createdAt,
+                variantUpdatedAt = variant.updatedAt,
+                quantity = quantity
+            )
+        }
+    }
 }

@@ -30,4 +30,8 @@ abstract class RepositoryModule {
     @Singleton
     @Binds
     abstract fun bindProductListingRepo(repo: ProductListingRepoImpl): IProductListingRepo
+
+    @Singleton
+    @Binds
+    abstract fun bindCartRepo(repo: CartRepoImpl): ICartRepo
 }
