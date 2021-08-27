@@ -84,6 +84,11 @@
     <string name="label_add_to_cart">Add to Cart</string>
     <string name="label_sign_out">Sign Out</string>
     <string name="label_pay_now">Pay Now</string>
+    <string name="label_shopping_cart">Shopping Cart</string>
+    <string name="label_subtotal">Subtotal</string>
+    <string name="label_shipping">Shipping</string>
+    <string name="label_item_id">Item ID:</string>
+    <string name="label_move_to_wishlist">Move to wishlist</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_search">Search</string>
@@ -105,12 +110,5 @@
     <string name="error_confirm_password_not_match">Password doesn\'t match</string>
     <string name="error_enter_phone">Please Enter Phone No</string>
     <string name="error_enter_valid_phone">Please Enter Valid Phone No</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="label_shopping_cart">Shopping Cart</string>
-    <string name="label_subtotal">Subtotal</string>
-    <string name="label_shipping">Shipping</string>
-    <string name="label_item_id">Item ID:</string>
-    <string name="label_move_to_wishlist">Move to wishlist</string>
 
 </resources>
