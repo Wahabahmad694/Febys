@@ -60,13 +60,13 @@ data class CartDTO constructor(
             vendor: Vendor? = null, product: Product, variant: ProductVariant, quantity: Int = 1
         ): CartDTO {
             return CartDTO(
-                vendorId = vendor?.id ?: 19,
-                vendorName = vendor?.name ?: "ABC",
-                vendorStoreName = vendor?.storeName ?: "XYZ",
-                vendorEmail = vendor?.email ?: "abc@xyz.com",
-                vendorPhoneNo = vendor?.phoneNo ?: "00123456789",
+                vendorId = vendor?.id ?: 21,
+                vendorName = vendor?.name ?: "Daniyal",
+                vendorStoreName = vendor?.storeName ?: "Al-buraq",
+                vendorEmail = vendor?.email ?: "Daniyal@gmail.com",
+                vendorPhoneNo = vendor?.phoneNo ?: "90078601",
                 vendorImage = "",
-                vendorIndividualType = vendor?.individualVendorType ?: "Official",
+                vendorIndividualType = vendor?.individualVendorType ?: "B2B2C",
                 productId = product.id,
                 productName = product.name,
                 productDelivery = product.delivery,

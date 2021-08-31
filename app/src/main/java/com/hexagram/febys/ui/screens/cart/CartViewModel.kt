@@ -1,12 +1,14 @@
 package com.hexagram.febys.ui.screens.cart
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewModelScope
 import com.hexagram.febys.models.db.CartDTO
 import com.hexagram.febys.network.response.Product
 import com.hexagram.febys.repos.ICartRepo
 import com.hexagram.febys.repos.IProductRepo
 import com.hexagram.febys.ui.screens.product.ProductViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -17,9 +19,13 @@ class CartViewModel @Inject constructor(
 
     fun observeCart(): LiveData<List<CartDTO>> = cartRepo.observeCart()
 
-    fun updateCartItem(cartDTO: CartDTO) = cartRepo.updateCartItem(cartDTO)
+    fun updateCartItem(cartDTO: CartDTO) = viewModelScope.launch {
+        cartRepo.updateCartItem(cartDTO)
+    }
 
-    fun removeFromCart(cartDTO: CartDTO) = cartRepo.removeFromCart(cartDTO)
+    fun removeFromCart(cartDTO: CartDTO) = viewModelScope.launch {
+        cartRepo.removeFromCart(cartDTO)
+    }
 
     fun addToCart(product: Product, variantId: Int) {
         val existingCartDTO = cartRepo.getCartItem(variantId)
@@ -33,7 +39,9 @@ class CartViewModel @Inject constructor(
         }
     }
 
-    private fun addToCart(cartDTO: CartDTO) = cartRepo.addCartItem(cartDTO)
+    private fun addToCart(cartDTO: CartDTO) = viewModelScope.launch {
+        cartRepo.addCartItem(cartDTO)
+    }
 
     fun sortListForCart(list: List<CartDTO>?): List<CartDTO>? {
         if (list == null) return list

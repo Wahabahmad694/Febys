@@ -47,4 +47,13 @@ class CartDataSourceImpl @Inject constructor(
     override fun addCartItem(cartDTO: CartDTO) {
         cartDao.insert(cartDTO)
     }
+
+    override fun mergeCart(cart: Cart) {
+        val listOfCartDTO = cartMapper.mapFromDomainModel(cart)
+        cartDao.insertAndIgnoreIfAlreadyExist(listOfCartDTO)
+    }
+
+    override fun getCart() = cartDao.getCart()
+
+    override fun getCartForPush() = cartDao.getCartForPush()
 }

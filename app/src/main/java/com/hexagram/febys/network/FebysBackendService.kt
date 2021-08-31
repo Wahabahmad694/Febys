@@ -1,13 +1,10 @@
 package com.hexagram.febys.network
 
-import com.hexagram.febys.network.response.Cart
 import com.hexagram.febys.network.adapter.ApiResponse
 import com.hexagram.febys.network.requests.RequestOfPagination
+import com.hexagram.febys.network.requests.RequestPushCart
 import com.hexagram.febys.network.requests.RequestToggleFav
-import com.hexagram.febys.network.response.Category
-import com.hexagram.febys.network.response.ResponseOfPagination
-import com.hexagram.febys.network.response.ResponseProduct
-import com.hexagram.febys.network.response.ResponseToggleFav
+import com.hexagram.febys.network.response.*
 import retrofit2.http.*
 
 interface FebysBackendService {
@@ -62,5 +59,11 @@ interface FebysBackendService {
     @GET("v1/cart")
     suspend fun fetchCart(
         @Header("Authorization") authToken: String
+    ): ApiResponse<Cart>
+
+    @POST("v1/cart")
+    suspend fun pushCart(
+        @Header("Authorization") authToken: String,
+        @Body req: RequestPushCart
     ): ApiResponse<Cart>
 }

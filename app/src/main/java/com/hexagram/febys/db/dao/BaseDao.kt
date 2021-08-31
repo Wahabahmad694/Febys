@@ -8,17 +8,23 @@ interface BaseDao<T> {
     fun insert(obj: T)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(obj: List<T>)
+    fun insert(list: List<T>)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertAndIgnoreIfAlreadyExist(obj: T)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertAndIgnoreIfAlreadyExist(list: List<T>)
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun update(obj: T)
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    fun update(obj: List<T>)
+    fun update(list: List<T>)
 
     @Delete
     fun delete(obj: T)
 
     @Delete
-    fun delete(obj: List<T>)
+    fun delete(list: List<T>)
 }
