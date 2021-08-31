@@ -24,6 +24,8 @@ class CartAdapter : ListAdapter<CartDTO, CartAdapter.CartViewHolder>(DIFF_UTIL) 
         }
     }
 
+
+    private var fav = mutableSetOf<Int>()
     var interaction: Interaction? = null
     var showHeader = false
 
@@ -58,18 +60,6 @@ class CartAdapter : ListAdapter<CartDTO, CartAdapter.CartViewHolder>(DIFF_UTIL) 
                     }
                 }
 
-                ivMoveToWishlist.setOnClickListener {
-                    val movedToWishlist = interaction?.moveToWishlist(cartDTO) ?: false
-                    if (movedToWishlist)
-                        removeCartItemAndNotifyNext(cartDTO)
-                }
-
-                tvMoveToWishlist.setOnClickListener {
-                    val movedToWishlist = interaction?.moveToWishlist(cartDTO) ?: false
-                    if (movedToWishlist)
-                        removeCartItemAndNotifyNext(cartDTO)
-                }
-
                 ivRemove.setOnClickListener {
                     removeCartItemAndNotifyNext(cartDTO)
                 }
@@ -77,8 +67,39 @@ class CartAdapter : ListAdapter<CartDTO, CartAdapter.CartViewHolder>(DIFF_UTIL) 
                 ivProduct.setOnClickListener {
                     interaction?.openProductDetail(cartDTO)
                 }
+
+                val isFav = cartDTO.variantId in fav
+                if (isFav) {
+                    ivFavToggle.setImageResource(R.drawable.ic_fav)
+                    tvFav.setText(R.string.label_remove_from_wishlist)
+                } else {
+                    ivFavToggle.setImageResource(R.drawable.ic_un_fav)
+                    tvFav.setText(R.string.label_add_to_wishlist)
+                }
+
+                ivFavToggle.setOnClickListener {
+                    toggleFav(cartDTO)
+                }
+
+                binding.tvFav.setOnClickListener {
+                    toggleFav(cartDTO)
+                }
             }
             binding.executePendingBindings()
+        }
+
+        private fun toggleFav(cartDTO: CartDTO) {
+            val isUserLoggedIn =
+                interaction?.toggleFavIfUserLoggedIn(cartDTO.variantId) ?: false
+            if (!isUserLoggedIn) return
+
+            if (cartDTO.variantId in fav) {
+                fav.remove(cartDTO.variantId)
+            } else {
+                fav.add(cartDTO.variantId)
+            }
+            val position = currentList.indexOf(cartDTO)
+            notifyItemChanged(position)
         }
 
         private fun removeCartItemAndNotifyNext(cartDTO: CartDTO) {
@@ -106,6 +127,10 @@ class CartAdapter : ListAdapter<CartDTO, CartAdapter.CartViewHolder>(DIFF_UTIL) 
         super.submitList(list)
     }
 
+    fun submitFav(fav: MutableSet<Int>) {
+        this.fav = fav
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
         return CartViewHolder(
             ItemCartBinding.inflate(
@@ -120,7 +145,7 @@ class CartAdapter : ListAdapter<CartDTO, CartAdapter.CartViewHolder>(DIFF_UTIL) 
 
     interface Interaction {
         fun updateCartItem(cartDTO: CartDTO)
-        fun moveToWishlist(cartDTO: CartDTO): Boolean
+        fun toggleFavIfUserLoggedIn(variantId: Int): Boolean
         fun removeFromCart(cartDTO: CartDTO)
         fun openProductDetail(cartDTO: CartDTO)
     }

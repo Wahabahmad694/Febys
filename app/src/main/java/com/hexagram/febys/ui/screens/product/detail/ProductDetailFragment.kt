@@ -233,9 +233,9 @@ class ProductDetailFragment : SliderFragment() {
     private fun updateUi(product: Product) {
         binding.product = product
 
-        val variant =
-            product.productVariants.firstOrNull { it.id == args.variantId }
-                ?: product.productVariants[0]
+        val variant = productDetailViewModel.selectedVariant
+            ?: product.productVariants.firstOrNull { it.id == args.variantId }
+            ?: product.productVariants[0]
 
         variant.getFirstVariantAttr()?.value?.let { selectedFirstAttr ->
             productDetailViewModel.selectedFirstAttr = selectedFirstAttr
@@ -268,6 +268,8 @@ class ProductDetailFragment : SliderFragment() {
 
     private fun updateVariant(variant: ProductVariant) {
         binding.variant = variant
+        productDetailViewModel.selectedVariant = variant
+
         setupProductImagesSlider(variant.images)
 
         updateFavIcon(variant.id)

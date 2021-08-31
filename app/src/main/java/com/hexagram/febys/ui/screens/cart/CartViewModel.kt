@@ -34,4 +34,18 @@ class CartViewModel @Inject constructor(
     }
 
     private fun addToCart(cartDTO: CartDTO) = cartRepo.addCartItem(cartDTO)
+
+    fun sortListForCart(list: List<CartDTO>?): List<CartDTO>? {
+        if (list == null) return list
+
+        val sortedList = mutableListOf<CartDTO>()
+        val vendorIds = list.map { it.vendorId }.toSet()
+
+        vendorIds.forEach { vendorId ->
+            val groupByVendor = list.filter { it.vendorId == vendorId }
+            sortedList.addAll(groupByVendor.sortedByDescending { it.createdAt })
+        }
+
+        return sortedList
+    }
 }

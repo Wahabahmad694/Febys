@@ -5,6 +5,7 @@ import androidx.room.PrimaryKey
 import com.hexagram.febys.network.response.Product
 import com.hexagram.febys.network.response.ProductVariant
 import com.hexagram.febys.network.response.Vendor
+import java.util.*
 
 @Entity
 data class CartDTO constructor(
@@ -36,7 +37,8 @@ data class CartDTO constructor(
     val promotionPrice: String?,
     val variantCreatedAt: String,
     val variantUpdatedAt: String,
-    var quantity: Int
+    var quantity: Int,
+    var createdAt: Date
 ) {
     val isProductComplete
         get() = _isProductComplete == 1
@@ -85,7 +87,8 @@ data class CartDTO constructor(
                 promotionPrice = variant.promotionPrice,
                 variantCreatedAt = variant.createdAt,
                 variantUpdatedAt = variant.updatedAt,
-                quantity = quantity
+                quantity = quantity,
+                createdAt = Date()
             )
         }
     }

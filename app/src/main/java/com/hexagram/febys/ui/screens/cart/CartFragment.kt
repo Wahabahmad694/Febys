@@ -39,6 +39,8 @@ class CartFragment : BaseFragment() {
     private fun initUi() {
         binding.rvCart.setHasFixedSize(true)
         binding.rvCart.adapter = cartAdapter
+
+        updateFav()
     }
 
     private fun uiListener() {
@@ -51,15 +53,15 @@ class CartFragment : BaseFragment() {
                 cartViewModel.updateCartItem(cartDTO)
             }
 
-            override fun moveToWishlist(cartDTO: CartDTO): Boolean {
-                if (isUserLoggedIn) {
-                    cartViewModel.addToFav(cartDTO.variantId)
-                } else {
-                    val navigateToLogin = NavGraphDirections.actionToLoginFragment()
-                    navigateTo(navigateToLogin)
+            override fun toggleFavIfUserLoggedIn(variantId: Int): Boolean {
+                return isUserLoggedIn.also {
+                    if (it) {
+                        cartViewModel.toggleFav(variantId)
+                    } else {
+                        val navigateToLogin = NavGraphDirections.actionToLoginFragment()
+                        navigateTo(navigateToLogin)
+                    }
                 }
-
-                return isUserLoggedIn
             }
 
             override fun removeFromCart(cartDTO: CartDTO) {
@@ -74,10 +76,16 @@ class CartFragment : BaseFragment() {
         }
     }
 
+    private fun updateFav() {
+        val fav = cartViewModel.getFav()
+        cartAdapter.submitFav(fav)
+    }
+
     private fun setupObserver() {
         cartViewModel.observeCart().observe(viewLifecycleOwner) {
-            cartAdapter.submitList(it)
-            calculateAndUpdatePrices(it)
+            val sortedListForCart = cartViewModel.sortListForCart(it)
+            cartAdapter.submitList(sortedListForCart)
+            calculateAndUpdatePrices(sortedListForCart)
         }
     }
 

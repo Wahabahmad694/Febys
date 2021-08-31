@@ -18,4 +18,8 @@ class CartRepoImpl @Inject constructor(
     override fun getCartItem(variantId: Int) = cartDataSource.getCartItem(variantId)
 
     override fun addCartItem(cartDTO: CartDTO) = cartDataSource.addCartItem(cartDTO)
+
+    private fun syncCart() {
+        // todo sync cart with backend
+    }
 }

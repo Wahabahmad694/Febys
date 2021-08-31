@@ -13,7 +13,7 @@ interface CartDao : BaseDao<CartDTO> {
     @Query("Select Sum(quantity) from CartDTO")
     fun observeCartCount(): LiveData<Int?>
 
-    @Query("Select * From CartDTO Order By vendorId ASC")
+    @Query("Select * From CartDTO Order By createdAt DESC")
     fun observeCart(): LiveData<List<CartDTO>>
 
     @Query("Select * From CartDTO Where variantId = :variantId")

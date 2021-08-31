@@ -2,6 +2,7 @@ package com.hexagram.febys.network.domain.util
 
 import com.hexagram.febys.models.db.CartDTO
 import com.hexagram.febys.network.response.*
+import java.util.*
 import javax.inject.Inject
 
 class CartMapper @Inject constructor() : DomainMapper<List<CartDTO>, Cart?> {
@@ -95,7 +96,8 @@ class CartMapper @Inject constructor() : DomainMapper<List<CartDTO>, Cart?> {
                     promotionPrice = cartProductVariant.promotionPrice,
                     variantCreatedAt = cartProductVariant.createdAt,
                     variantUpdatedAt = cartProductVariant.updatedAt,
-                    quantity = cartItem.quantity
+                    quantity = cartItem.quantity,
+                    createdAt = Date()
                 )
                 list.add(cartDTO)
             }

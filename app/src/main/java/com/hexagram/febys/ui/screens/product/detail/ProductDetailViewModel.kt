@@ -17,6 +17,7 @@ import javax.inject.Inject
 class ProductDetailViewModel @Inject constructor(
     productRepo: IProductRepo
 ) : ProductViewModel(productRepo) {
+    var selectedVariant: ProductVariant? = null
     var selectedFirstAttr = ""
     var selectedSecondAttr = ""
 
