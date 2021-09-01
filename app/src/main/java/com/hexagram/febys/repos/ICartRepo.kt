@@ -6,11 +6,17 @@ import com.hexagram.febys.models.db.CartDTO
 interface ICartRepo {
     fun observeCart(): LiveData<List<CartDTO>>
 
-    fun updateCartItem(cartDTO: CartDTO)
+    suspend fun updateCartItem(cartDTO: CartDTO)
 
-    fun removeFromCart(cartDTO: CartDTO)
+    suspend fun removeFromCart(cartDTO: CartDTO)
 
     fun getCartItem(variantId: Int): CartDTO?
 
-    fun addCartItem(cartDTO: CartDTO)
+    suspend fun addCartItem(cartDTO: CartDTO)
+
+    fun clearCart()
+
+    suspend fun pullAndPushCart()
+
+    suspend fun refreshCart()
 }

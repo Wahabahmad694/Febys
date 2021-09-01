@@ -1,7 +1,6 @@
 package com.hexagram.febys.repos
 
 import com.hexagram.febys.BuildConfig
-import com.hexagram.febys.dataSource.ICartDataSource
 import com.hexagram.febys.dataSource.IUserDataSource
 import com.hexagram.febys.enum.SocialLogin
 import com.hexagram.febys.network.AuthService
@@ -23,7 +22,7 @@ class AuthRepoImpl @Inject constructor(
     private val backendService: FebysBackendService,
     private val pref: IPrefManger,
     private val userDataSource: IUserDataSource,
-    private val cartDataSource: ICartDataSource
+    private val cartRepo: ICartRepo
 ) : IAuthRepo {
 
     override fun signup(
@@ -161,12 +160,7 @@ class AuthRepoImpl @Inject constructor(
     }
 
     private suspend fun fetchCart() {
-        val authToken = pref.getAccessToken()
-        val response = backendService.fetchCart(authToken)
-        if (response is ApiResponse.ApiSuccessResponse) {
-            val cart = response.data!!
-            cartDataSource.insertCart(cart)
-        }
+        cartRepo.pullAndPushCart()
     }
 
     private suspend fun fetchWishListIds() {
@@ -180,7 +174,7 @@ class AuthRepoImpl @Inject constructor(
 
     override fun signOut() {
         pref.clearFav()
-        cartDataSource.clear()
+        cartRepo.clearCart()
         userDataSource.clearUserState()
         userDataSource.clearUserData()
     }

@@ -47,4 +47,33 @@ class CartDataSourceImpl @Inject constructor(
     override fun addCartItem(cartDTO: CartDTO) {
         cartDao.insert(cartDTO)
     }
+
+    override fun mergeCart(cart: Cart) {
+        val listOfCartDTO = cartMapper.mapFromDomainModel(cart)
+        cartDao.insertAndIgnoreIfAlreadyExist(listOfCartDTO)
+    }
+
+    override fun updateCart(cart: Cart) {
+        val listOfCartDTO = cartMapper.mapFromDomainModel(cart)
+        val dbCart = cartDao.getCart()
+        listOfCartDTO.forEach { cartItem ->
+            val dbCartItem =
+                dbCart.firstOrNull { dbCartItem -> cartItem.variantId == dbCartItem.variantId }
+            if (dbCartItem != null) {
+                updateCartItemIfChange(dbCartItem, cartItem)
+            } else {
+                addCartItem(cartItem)
+            }
+        }
+    }
+
+    private fun updateCartItemIfChange(dbCartItem: CartDTO, cartItem: CartDTO) {
+        if (dbCartItem.hasVariantPromotion != cartItem.hasVariantPromotion) {
+            cartDao.update(cartItem)
+        }
+    }
+
+    override fun getCart() = cartDao.getCart()
+
+    override fun getCartForPush() = cartDao.getCartForPush()
 }

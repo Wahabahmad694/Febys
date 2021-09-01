@@ -55,7 +55,7 @@ abstract class BaseFragment : Fragment() {
         }
     }
 
-    fun navigateToCart() {
+    private fun navigateToCart() {
         val navigateToCart = NavGraphDirections.actionToCartFragment()
         navigateTo(navigateToCart)
     }

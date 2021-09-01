@@ -88,7 +88,8 @@
     <string name="label_subtotal">Subtotal</string>
     <string name="label_shipping">Shipping</string>
     <string name="label_item_id">Item ID:</string>
-    <string name="label_move_to_wishlist">Move to wishlist</string>
+    <string name="label_remove_from_wishlist">Remove from wishlist</string>
+    <string name="label_add_to_wishlist">Add to wishlist</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_search">Search</string>

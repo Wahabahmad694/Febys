@@ -17,6 +17,7 @@ import javax.inject.Inject
 class ProductDetailViewModel @Inject constructor(
     productRepo: IProductRepo
 ) : ProductViewModel(productRepo) {
+    var selectedVariant: ProductVariant? = null
     var selectedFirstAttr = ""
     var selectedSecondAttr = ""
 
@@ -32,20 +33,24 @@ class ProductDetailViewModel @Inject constructor(
 
     fun getFirstAttrList(product: Product): List<String> {
         return product.productVariants
+            .asSequence()
             .filter { it.getFirstVariantAttr()?.value != null }
             .map { it.getFirstVariantAttr()!!.value }
             .toSet()
             .toList()
+            .sortedBy { it }
     }
 
     fun getSecondAttrList(selectedFirstAttr: String, product: Product): List<String> {
         return product.productVariants
+            .asSequence()
             .filter {
                 it.getSecondVariantAttr()?.value != null && it.getFirstVariantAttr()?.value == selectedFirstAttr
             }
             .map { it.getSecondVariantAttr()!!.value }
             .toSet()
             .toList()
+            .sortedBy { it }
     }
 
     fun getVariantByFirstAttr(product: Product): ProductVariant? {

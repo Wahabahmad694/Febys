@@ -5,6 +5,7 @@ import androidx.room.PrimaryKey
 import com.hexagram.febys.network.response.Product
 import com.hexagram.febys.network.response.ProductVariant
 import com.hexagram.febys.network.response.Vendor
+import java.util.*
 
 @Entity
 data class CartDTO constructor(
@@ -36,7 +37,8 @@ data class CartDTO constructor(
     val promotionPrice: String?,
     val variantCreatedAt: String,
     val variantUpdatedAt: String,
-    var quantity: Int
+    var quantity: Int,
+    var createdAt: Date
 ) {
     val isProductComplete
         get() = _isProductComplete == 1
@@ -51,20 +53,20 @@ data class CartDTO constructor(
         get() = _defaultVariant == 1
 
     val hasVariantPromotion
-        get() = _hasVariantPromotion == 1
+        get() = _hasVariantPromotion == 1 || promotionPrice != null
 
     companion object {
         fun fromVendorProductVariant(
             vendor: Vendor? = null, product: Product, variant: ProductVariant, quantity: Int = 1
         ): CartDTO {
             return CartDTO(
-                vendorId = vendor?.id ?: 19,
-                vendorName = vendor?.name ?: "ABC",
-                vendorStoreName = vendor?.storeName ?: "XYZ",
-                vendorEmail = vendor?.email ?: "abc@xyz.com",
-                vendorPhoneNo = vendor?.phoneNo ?: "00123456789",
+                vendorId = vendor?.id ?: 21,
+                vendorName = vendor?.name ?: "Daniyal",
+                vendorStoreName = vendor?.storeName ?: "Al-buraq",
+                vendorEmail = vendor?.email ?: "Daniyal@gmail.com",
+                vendorPhoneNo = vendor?.phoneNo ?: "90078601",
                 vendorImage = "",
-                vendorIndividualType = vendor?.individualVendorType ?: "Official",
+                vendorIndividualType = vendor?.individualVendorType ?: "B2B2C",
                 productId = product.id,
                 productName = product.name,
                 productDelivery = product.delivery,
@@ -85,7 +87,8 @@ data class CartDTO constructor(
                 promotionPrice = variant.promotionPrice,
                 variantCreatedAt = variant.createdAt,
                 variantUpdatedAt = variant.updatedAt,
-                quantity = quantity
+                quantity = quantity,
+                createdAt = Date()
             )
         }
     }
