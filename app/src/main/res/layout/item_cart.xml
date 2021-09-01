@@ -179,14 +179,39 @@
                 app:layout_constraintTop_toTopOf="@id/iv_fav_toggle" />
 
             <TextView
-                android:id="@+id/tv_price"
-                style="@style/TextTheme.Arial.TS14"
+                android:id="@+id/tv_product_off_price"
+                style="@style/TextTheme.Arial.TS10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_2sdp"
+                android:text="@{`$` + cart.variantPrice}"
+                app:layout_constraintBaseline_toBaselineOf="@id/tv_product_price"
+                app:layout_constraintEnd_toStartOf="@id/tv_product_off_price_separator"
+                binding:is_visible="@{cart.hasVariantPromotion}"
+                binding:strike_through="@{true}"
+                tools:text="$14" />
+
+            <TextView
+                android:id="@+id/tv_product_off_price_separator"
+                style="@style/TextTheme.Arial.TS12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_2sdp"
+                android:text="@string/minus"
+                app:layout_constraintBaseline_toBaselineOf="@id/tv_product_price"
+                app:layout_constraintEnd_toStartOf="@id/tv_product_price"
+                binding:is_visible="@{cart.hasVariantPromotion}" />
+
+            <TextView
+                android:id="@+id/tv_product_price"
+                style="@style/TextTheme.Arial.TS12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_2dp"
+                android:text="@{cart.hasVariantPromotion ? `$` + cart.promotionPrice : `$` + cart.variantPrice}"
                 app:layout_constraintBaseline_toBaselineOf="@id/tv_fav"
                 app:layout_constraintEnd_toEndOf="@id/iv_remove"
-                tools:text="$158.00" />
+                tools:text="$14" />
 
             <View
                 android:layout_width="match_parent"

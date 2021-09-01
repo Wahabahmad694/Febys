@@ -36,14 +36,20 @@ class CartRepoImpl @Inject constructor(
     }
 
     private suspend fun pushCart() {
-        val cart: List<VariantAndQuantityCart> = cartDataSource.getCartForPush()
         val authToken = pref.getAccessToken()
+        if (authToken.isEmpty()) return
+        val cart: List<VariantAndQuantityCart> = cartDataSource.getCartForPush()
         val requestPushCart = RequestPushCart(cart)
-        backendService.pushCart(authToken, requestPushCart)
+        val response = backendService.pushCart(authToken, requestPushCart)
+        if (response is ApiResponse.ApiSuccessResponse) {
+            val updatedCart = response.data!!
+            cartDataSource.mergeCart(updatedCart)
+        }
     }
 
     private suspend fun pullCart() {
         val authToken = pref.getAccessToken()
+        if (authToken.isEmpty()) return
         val response = backendService.fetchCart(authToken)
         if (response is ApiResponse.ApiSuccessResponse) {
             val cart = response.data!!

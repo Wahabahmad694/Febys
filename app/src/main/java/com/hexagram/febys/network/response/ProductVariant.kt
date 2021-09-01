@@ -60,12 +60,12 @@ data class ProductVariant(
 
     fun getFirstVariantAttr(): ProductVariantAttributes? {
         if (variantAttributes.isNullOrEmpty()) return null
-        return variantAttributes.sortedBy { it.id }[0]
+        return variantAttributes.sortedBy { it.name }[0]
     }
 
     fun getSecondVariantAttr(): ProductVariantAttributes? {
         if (variantAttributes.isNullOrEmpty() || variantAttributes.size < 2) return null
-        return variantAttributes.sortedBy { it.id }[1]
+        return variantAttributes.sortedBy { it.name }[1]
     }
 }
 

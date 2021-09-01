@@ -37,11 +37,6 @@ class CartAdapter : ListAdapter<CartDTO, CartAdapter.CartViewHolder>(DIFF_UTIL) 
             binding.apply {
                 cart = cartDTO
 
-                val totalAmount = (cartDTO.promotionPrice?.toDouble()
-                    ?: cartDTO.variantPrice).times(cartDTO.quantity)
-                val formattedAmount = totalAmount.toFixedDecimal(2)
-                tvPrice.text = root.context.getString(R.string.variant_price, formattedAmount)
-
                 containerVendorDetail.isVisible =
                     showHeader || !isVendorAlreadyDisplayed(cartDTO)
                 showHeader = false

@@ -53,7 +53,7 @@ data class CartDTO constructor(
         get() = _defaultVariant == 1
 
     val hasVariantPromotion
-        get() = _hasVariantPromotion == 1
+        get() = _hasVariantPromotion == 1 || promotionPrice != null
 
     companion object {
         fun fromVendorProductVariant(
