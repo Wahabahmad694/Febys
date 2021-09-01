@@ -53,7 +53,7 @@ class CartRepoImpl @Inject constructor(
         val response = backendService.fetchCart(authToken)
         if (response is ApiResponse.ApiSuccessResponse) {
             val cart = response.data!!
-            cartDataSource.mergeCart(cart)
+            cartDataSource.updateCart(cart)
         }
     }
 
