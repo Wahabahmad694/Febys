@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hexagram.febys.R
 import com.hexagram.febys.databinding.ItemCartBinding
 import com.hexagram.febys.models.db.CartDTO
-import com.hexagram.febys.utils.toFixedDecimal
 
 class CartAdapter : ListAdapter<CartDTO, CartAdapter.CartViewHolder>(DIFF_UTIL) {
     companion object {
@@ -19,7 +18,10 @@ class CartAdapter : ListAdapter<CartDTO, CartAdapter.CartViewHolder>(DIFF_UTIL) 
             }
 
             override fun areContentsTheSame(oldItem: CartDTO, newItem: CartDTO): Boolean {
-                return oldItem.variantId == newItem.variantId && oldItem.quantity == newItem.quantity
+                return oldItem.variantId == newItem.variantId
+                        && oldItem.quantity == newItem.quantity
+                        && oldItem.promotionPrice == newItem.promotionPrice
+                        && oldItem.variantPrice == newItem.variantPrice
             }
         }
     }

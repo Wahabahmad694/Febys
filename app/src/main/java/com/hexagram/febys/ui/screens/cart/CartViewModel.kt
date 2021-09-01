@@ -56,4 +56,6 @@ class CartViewModel @Inject constructor(
 
         return sortedList
     }
+
+    fun refreshCart() = viewModelScope.launch { cartRepo.refreshCart() }
 }

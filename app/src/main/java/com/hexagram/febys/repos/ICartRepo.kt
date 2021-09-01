@@ -17,4 +17,6 @@ interface ICartRepo {
     fun clearCart()
 
     suspend fun pullAndPushCart()
+
+    suspend fun refreshCart()
 }

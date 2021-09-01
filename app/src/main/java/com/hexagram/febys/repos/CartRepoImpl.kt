@@ -43,7 +43,7 @@ class CartRepoImpl @Inject constructor(
         val response = backendService.pushCart(authToken, requestPushCart)
         if (response is ApiResponse.ApiSuccessResponse) {
             val updatedCart = response.data!!
-            cartDataSource.mergeCart(updatedCart)
+            cartDataSource.updateCart(updatedCart)
         }
     }
 
@@ -61,6 +61,8 @@ class CartRepoImpl @Inject constructor(
         pullCart()
         pushCart()
     }
+
+    override suspend fun refreshCart() = pushCart()
 
     override fun clearCart() {
         cartDataSource.clear()

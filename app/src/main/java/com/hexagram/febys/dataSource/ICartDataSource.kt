@@ -26,6 +26,8 @@ interface ICartDataSource {
 
     fun mergeCart(cart: Cart)
 
+    fun updateCart(cart: Cart)
+
     fun getCart(): List<CartDTO>
 
     fun getCartForPush(): List<VariantAndQuantityCart>
