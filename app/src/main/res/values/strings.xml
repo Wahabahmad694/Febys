@@ -111,5 +111,6 @@
     <string name="error_confirm_password_not_match">Password doesn\'t match</string>
     <string name="error_enter_phone">Please Enter Phone No</string>
     <string name="error_enter_valid_phone">Please Enter Valid Phone No</string>
+    <string name="label_proceed_to_checkout">Proceed to checkout</string>
 
 </resources>
