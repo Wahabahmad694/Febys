@@ -150,48 +150,46 @@ class SignupFragment : SocialMediaAuthFragment() {
     }
 
     private fun areAllFieldsValid(): Boolean {
-        var areAllFieldsValid = true
-
         if (!Validator.isValidName(firstName)) {
-            binding.etFirstName.error = getString(R.string.error_enter_first_name)
-            areAllFieldsValid = false
+            showErrorDialog(getString(R.string.error_enter_first_name))
+            return false
         }
 
         if (!Validator.isValidName(lastName)) {
-            binding.etLastName.error = getString(R.string.error_enter_last_name)
-            areAllFieldsValid = false
+            showErrorDialog(getString(R.string.error_enter_last_name))
+            return false
         }
 
         if (email.isEmpty()) {
-            binding.etEmailAddress.error = getString(R.string.error_enter_email)
-            areAllFieldsValid = false
+            showErrorDialog(getString(R.string.error_enter_email))
+            return false
         } else if (!Validator.isValidEmail(email)) {
-            binding.etEmailAddress.error = getString(R.string.error_enter_valid_email)
-            areAllFieldsValid = false
+            showErrorDialog(getString(R.string.error_enter_valid_email))
+            return false
         }
 
         if (phone.isEmpty()) {
-            binding.etPhone.error = getString(R.string.error_enter_phone)
-            areAllFieldsValid = false
+            showErrorDialog(getString(R.string.error_enter_phone))
+            return false
         } else if (!Validator.isValidPhone(phone)) {
-            binding.etPhone.error = getString(R.string.error_enter_valid_phone)
-            areAllFieldsValid = false
+            showErrorDialog(getString(R.string.error_enter_valid_phone))
+            return false
         }
 
         if (!Validator.isValidPassword(password)) {
-            binding.etPassword.error = getString(R.string.error_enter_password)
-            areAllFieldsValid = false
+            showErrorDialog(getString(R.string.error_enter_password))
+            return false
         }
 
         if (confirmPassword.isEmpty()) {
-            binding.etConfirmPassword.error = getString(R.string.error_enter_confirm_password)
-            areAllFieldsValid = false
+            showErrorDialog(getString(R.string.error_enter_confirm_password))
+            return false
         } else if (confirmPassword != password) {
-            binding.etConfirmPassword.error = getString(R.string.error_confirm_password_not_match)
-            areAllFieldsValid = false
+            showErrorDialog(getString(R.string.error_confirm_password_not_match))
+            return false
         }
 
-        return areAllFieldsValid
+        return true
     }
 
     private fun navigateToOTPVerification() {

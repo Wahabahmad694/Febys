@@ -54,7 +54,7 @@ class AuthViewModel @Inject constructor(
     fun login(email: String, password: String) = viewModelScope.launch {
         _observeLoginResponse.postValue(DataState.Loading())
         repo.login(email, password).collect {
-            _observeLoginResponse.postValue(it)
+            if (it != it) _observeLoginResponse.postValue(it)
         }
     }
 

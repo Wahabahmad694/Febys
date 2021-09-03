@@ -8,7 +8,6 @@ import android.widget.RadioButton
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.children
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -197,14 +196,38 @@ class HomeFragment : SliderFragment() {
         }
     }
 
+    private fun setupUniqueCategory(uniqueCategories: List<UniqueCategory>) {
+        uniqueCategoryAdapter.submitList(uniqueCategories)
+
+        val isVisible = uniqueCategories.isNotEmpty()
+        isVisible.applyToViews(
+            binding.ivIcScrollUniqueCategory,
+            binding.ivBgScrollUniqueCategory,
+            binding.tvUniqueCategories,
+            binding.rvUniqueCategories
+        )
+    }
+
+    private fun setupBanner(banners: List<Banner>) {
+        val sliderImages =
+            banners.filter { banner -> banner.type == "headerImages" }
+        binding.imageSliderHome.adapter = HomeSliderPageAdapter(sliderImages, this)
+        binding.dotsIndicator.setViewPager2(binding.imageSliderHome)
+
+        val isVisible = sliderImages.isNotEmpty()
+        isVisible.applyToViews(binding.imageSliderHome, binding.dotsIndicator)
+    }
+
     private fun setupTodayDeals(todayDeals: List<Product>) {
         todayDealsAdapter.submitList(todayDeals)
 
         val isVisible = todayDeals.isNotEmpty()
-        binding.tvTodayDeals.isVisible = isVisible
-        binding.tvTodayDealsSlogan.isVisible = isVisible
-        binding.rvTodayDeals.isVisible = isVisible
-        binding.btnShopNowTodayDeals.isVisible = isVisible
+        isVisible.applyToViews(
+            binding.tvTodayDeals,
+            binding.tvTodayDealsSlogan,
+            binding.rvTodayDeals,
+            binding.btnShopNowTodayDeals
+        )
     }
 
     private fun setupFeaturedCategories(featuredCategories: List<Category>) {
@@ -233,31 +256,12 @@ class HomeFragment : SliderFragment() {
         }
 
         val isVisible = binding.radioGroupFeaturedCategories.childCount > 0
-        binding.tvFeaturedCategories.isVisible = isVisible
-        binding.tvFeaturedCategoriesSlogan.isVisible = isVisible
-        binding.rvFeaturedCategoryProducts.isVisible = isVisible
-        binding.btnShopNowFeaturedCategories.isVisible = isVisible
-    }
-
-    private fun setupUniqueCategory(uniqueCategories: List<UniqueCategory>) {
-        uniqueCategoryAdapter.submitList(uniqueCategories)
-
-        val isVisible = uniqueCategories.isNotEmpty()
-        binding.ivIcScrollUniqueCategory.isVisible = isVisible
-        binding.ivBgScrollUniqueCategory.isVisible = isVisible
-        binding.tvUniqueCategories.isVisible = isVisible
-        binding.rvUniqueCategories.isVisible = isVisible
-    }
-
-    private fun setupBanner(banners: List<Banner>) {
-        val sliderImages =
-            banners.filter { banner -> banner.type == "headerImages" }
-        binding.imageSliderHome.adapter = HomeSliderPageAdapter(sliderImages, this)
-        binding.dotsIndicator.setViewPager2(binding.imageSliderHome)
-
-        val isVisible = sliderImages.isNotEmpty()
-        binding.imageSliderHome.isVisible = isVisible
-        binding.dotsIndicator.isVisible = isVisible
+        isVisible.applyToViews(
+            binding.tvFeaturedCategories,
+            binding.tvFeaturedCategoriesSlogan,
+            binding.rvFeaturedCategoryProducts,
+            binding.btnShopNowFeaturedCategories
+        )
     }
 
     private fun setupSeasonalOffers(seasonalOffers: List<SeasonalOffer>) {
@@ -266,39 +270,47 @@ class HomeFragment : SliderFragment() {
         binding.sliderSeasonalOfferDotsIndicator.setViewPager2(binding.sliderSeasonalOffer)
 
         val isVisible = seasonalOffers.isNotEmpty()
-        binding.tvSeasonalOffers.isVisible = isVisible
-        binding.sliderSeasonalOffer.isVisible = isVisible
-        binding.sliderSeasonalOfferDotsIndicator.isVisible = isVisible
+        isVisible.applyToViews(
+            binding.tvSeasonalOffers,
+            binding.sliderSeasonalOffer,
+            binding.sliderSeasonalOfferDotsIndicator
+        )
     }
 
     private fun setupTrendingProducts(trendingProducts: List<Product>) {
         trendingProductsAdapter.submitList(trendingProducts)
 
         val isVisible = trendingProducts.isNotEmpty()
-        binding.tvTrendingProducts.isVisible = isVisible
-        binding.tvTrendingProductsSlogan.isVisible = isVisible
-        binding.rvTrendingProducts.isVisible = isVisible
-        binding.btnShopNowTrendingProducts.isVisible = isVisible
+        isVisible.applyToViews(
+            binding.tvTrendingProducts,
+            binding.tvTrendingProductsSlogan,
+            binding.rvTrendingProducts,
+            binding.btnShopNowTrendingProducts
+        )
     }
 
     private fun setupStoreYouFollow(storeYouFollow: List<String>) {
         storeYouFollowAdapter.submitList(storeYouFollow)
 
         val isVisible = storeYouFollow.isNotEmpty()
-        binding.tvStoreYouFollow.isVisible = isVisible
-        binding.tvStoreYouFollowSlogan.isVisible = isVisible
-        binding.rvStoreYouFollow.isVisible = isVisible
-        binding.btnShopNowStoreYouFollow.isVisible = isVisible
+        isVisible.applyToViews(
+            binding.tvStoreYouFollow,
+            binding.tvStoreYouFollowSlogan,
+            binding.rvStoreYouFollow,
+            binding.btnShopNowStoreYouFollow
+        )
     }
 
     private fun setupUnder100DollarsItems(under100DollarsItems: List<Product>) {
         under100DollarsItemAdapter.submitList(under100DollarsItems)
 
         val isVisible = under100DollarsItems.isNotEmpty()
-        binding.tvLabelUnder100DollarsItems.isVisible = isVisible
-        binding.tvLabelUnder100DollarsItemsSlogan.isVisible = isVisible
-        binding.rvUnder100DollarsItems.isVisible = isVisible
-        binding.btnShopNowUnder100DollarsItems.isVisible = isVisible
+        isVisible.applyToViews(
+            binding.tvLabelUnder100DollarsItems,
+            binding.tvLabelUnder100DollarsItemsSlogan,
+            binding.rvUnder100DollarsItems,
+            binding.btnShopNowUnder100DollarsItems
+        )
     }
 
     private fun makeRadioButton(id: Int, text: String): RadioButton {

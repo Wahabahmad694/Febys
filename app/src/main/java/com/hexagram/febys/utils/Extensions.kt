@@ -19,6 +19,8 @@ import androidx.transition.Transition
 import androidx.transition.TransitionManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.hexagram.febys.base.BaseActivity
+import com.hexagram.febys.network.DataState
+import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 
 fun View.show() {
     visibility = View.VISIBLE
@@ -44,8 +46,12 @@ fun View.fadeVisibility(isVisible: Boolean, duration: Long = 400) {
     this.isVisible = isVisible
 }
 
+fun Boolean.applyToViews( vararg views: View) {
+    views.forEach { view -> view.isVisible = this }
+}
+
 /**
- * Scroll position range 0 to 1
+ * return scroll position range 0 to 1
  */
 fun RecyclerView.getHorizontalScrollPosition(): Float {
     val offset = computeHorizontalScrollOffset()
@@ -80,6 +86,18 @@ fun Fragment.hideLoader() {
 
 fun Fragment.hideKeyboard() {
     activity?.hideKeyboard()
+}
+
+fun Fragment.hideViews(vararg views: View) {
+    views.forEach { view -> view.hide() }
+}
+
+fun Fragment.showViews(vararg views: View) {
+    views.forEach { view -> view.show() }
+}
+
+fun Fragment.showErrorDialog(msg: String) {
+    ErrorDialog<String>(DataState.ApiError(msg)).show(childFragmentManager, ErrorDialog.TAG)
 }
 
 fun RecyclerView.applySpaceItemDecoration(

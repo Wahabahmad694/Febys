@@ -100,21 +100,19 @@ class LoginFragment : SocialMediaAuthFragment() {
     }
 
     private fun areAllFieldsValid(): Boolean {
-        var areAllFieldsValid = true
-
         if (email.isEmpty()) {
-            binding.etEmailAddress.error = getString(R.string.error_enter_email)
-            areAllFieldsValid = false
+            showErrorDialog(getString(R.string.error_enter_email))
+            return false
         } else if (!Validator.isValidEmail(email)) {
-            binding.etEmailAddress.error = getString(R.string.error_enter_valid_email)
-            areAllFieldsValid = false
+            showErrorDialog(getString(R.string.error_enter_valid_email))
+            return false
         }
 
         if (!Validator.isValidPassword(password)) {
-            binding.etPassword.error = getString(R.string.error_enter_password)
-            areAllFieldsValid = false
+            showErrorDialog(getString(R.string.error_enter_password))
+            return false
         }
 
-        return areAllFieldsValid
+        return true
     }
 }
