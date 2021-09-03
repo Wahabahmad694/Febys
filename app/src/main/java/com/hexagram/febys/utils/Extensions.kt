@@ -11,6 +11,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -46,7 +47,7 @@ fun View.fadeVisibility(isVisible: Boolean, duration: Long = 400) {
     this.isVisible = isVisible
 }
 
-fun Boolean.applyToViews( vararg views: View) {
+fun Boolean.applyToViews(vararg views: View) {
     views.forEach { view -> view.isVisible = this }
 }
 
@@ -145,4 +146,10 @@ fun <T : View> BottomSheetBehavior<T>.onStateChange(callback: (state: Int) -> Un
 
 fun Double.toFixedDecimal(decimalCount: Int): String {
     return String.format("%.${decimalCount}f", this)
+}
+
+fun <T> MutableLiveData<T>.update(incoming: T) {
+    if (value != incoming) {
+        postValue(value)
+    }
 }
