@@ -55,6 +55,12 @@ data class CartDTO constructor(
     val hasVariantPromotion
         get() = _hasVariantPromotion == 1 || promotionPrice != null
 
+    val variantPriceByQuantity
+        get() = variantPrice.times(quantity)
+
+    val promotionPriceByQuantity
+        get() = promotionPrice?.toDouble()?.times(quantity) ?: 0.0
+
     companion object {
         fun fromVendorProductVariant(
             vendor: Vendor? = null, product: Product, variant: ProductVariant, quantity: Int = 1

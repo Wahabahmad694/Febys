@@ -39,7 +39,7 @@ class CartFragment : BaseFragment() {
     }
 
     private fun initUi() {
-        binding.rvCart.setHasFixedSize(true)
+        binding.rvCart.isNestedScrollingEnabled = false
         binding.rvCart.adapter = cartAdapter
 
         updateFav()
@@ -75,6 +75,10 @@ class CartFragment : BaseFragment() {
                     NavGraphDirections.actionToProductDetail(cartDTO.productId, cartDTO.variantId)
                 navigateTo(navigateToProductDetail)
             }
+        }
+
+        binding.containerApplyVoucher.btnApplyVoucher.setOnClickListener {
+            // do apply voucher once backend ready
         }
     }
 
