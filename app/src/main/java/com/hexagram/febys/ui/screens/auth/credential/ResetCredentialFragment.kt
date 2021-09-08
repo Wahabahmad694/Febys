@@ -42,7 +42,7 @@ class ResetCredentialFragment : BaseFragment() {
         binding.btnSendResetCredentialLink.setOnClickListener {
             val email = binding.etEmailAddress.text.toString()
             if (!Validator.isValidEmail(email)) {
-                showToast(getString(R.string.error_enter_valid_email))
+                showErrorDialog(getString(R.string.error_enter_valid_email))
                 return@setOnClickListener
             }
             viewModel.resetCredentials(email)

@@ -94,15 +94,47 @@
             app:layout_constraintTop_toTopOf="@id/label_subtotal"
             tools:text="$2,732" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_cart"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="@dimen/_0dp"
             android:layout_marginTop="@dimen/_24sdp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:paddingBottom="@dimen/_72sdp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/label_shipping"
-            tools:listitem="@layout/item_cart" />
+            app:layout_constraintTop_toBottomOf="@id/label_shipping">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_cart"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_cart" />
+
+                <include
+                    android:id="@+id/container_apply_voucher"
+                    layout="@layout/layout_apply_voucher_code"/>
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_proceed_to_checkout"
+            style="@style/ButtonTheme.Contained"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_14sdp"
+            android:text="@string/label_proceed_to_checkout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginHorizontal="@dimen/_17sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_max="@dimen/_298sdp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -47,7 +47,6 @@ class CategoryNameAdapter :
             }
 
             binding.tvNameItemSearchViewPager.text = item.name
-            binding.ivRight.isVisible = item.hasChild
         }
     }
 

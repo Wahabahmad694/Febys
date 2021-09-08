@@ -292,6 +292,7 @@ class ProductDetailFragment : SliderFragment() {
     private fun updateOnlyOneVariant() {
         binding.tvProductVariantFirstAttr.text = getString(R.string.only_one_variant)
         binding.containerProductVariantFirstAttr.setOnClickListener(null)
+        binding.containerProductVariantFirstAttr.isVisible = false
         binding.containerProductVariantSecondAttr.isVisible = false
     }
 

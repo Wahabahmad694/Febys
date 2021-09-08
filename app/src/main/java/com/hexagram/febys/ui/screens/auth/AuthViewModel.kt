@@ -11,6 +11,7 @@ import com.hexagram.febys.network.response.ResponseLogin
 import com.hexagram.febys.network.response.ResponseOtpVerification
 import com.hexagram.febys.network.response.ResponseSignup
 import com.hexagram.febys.repos.IAuthRepo
+import com.hexagram.febys.utils.update
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -54,7 +55,7 @@ class AuthViewModel @Inject constructor(
     fun login(email: String, password: String) = viewModelScope.launch {
         _observeLoginResponse.postValue(DataState.Loading())
         repo.login(email, password).collect {
-            _observeLoginResponse.postValue(it)
+            _observeLoginResponse.update(it)
         }
     }
 
