@@ -1,6 +1,7 @@
 package com.hexagram.febys.utils
 
 import android.app.Activity
+import android.os.Looper
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
@@ -146,10 +147,4 @@ fun <T : View> BottomSheetBehavior<T>.onStateChange(callback: (state: Int) -> Un
 
 fun Double.toFixedDecimal(decimalCount: Int): String {
     return String.format("%.${decimalCount}f", this)
-}
-
-fun <T> MutableLiveData<T>.update(incoming: T) {
-    if (value != incoming) {
-        postValue(value)
-    }
 }

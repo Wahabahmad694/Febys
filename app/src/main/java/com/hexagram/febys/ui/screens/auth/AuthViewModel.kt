@@ -11,7 +11,7 @@ import com.hexagram.febys.network.response.ResponseLogin
 import com.hexagram.febys.network.response.ResponseOtpVerification
 import com.hexagram.febys.network.response.ResponseSignup
 import com.hexagram.febys.repos.IAuthRepo
-import com.hexagram.febys.utils.update
+import com.hexagram.febys.utils.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -27,8 +27,8 @@ class AuthViewModel @Inject constructor(
     private val _observeOtpResponse = MutableLiveData<DataState<ResponseOtpVerification>>()
     val observeOtpResponse: LiveData<DataState<ResponseOtpVerification>> = _observeOtpResponse
 
-    private val _observeLoginResponse = MutableLiveData<DataState<ResponseLogin>>()
-    val observeLoginResponse: LiveData<DataState<ResponseLogin>> = _observeLoginResponse
+    private val _observeLoginResponse = MutableLiveData<Event<DataState<ResponseLogin>>>()
+    val observeLoginResponse: LiveData<Event<DataState<ResponseLogin>>> = _observeLoginResponse
 
     private val _observeRefreshTokenResponse = MutableLiveData<DataState<Unit>>()
     val observeRefreshTokenResponse: LiveData<DataState<Unit>> = _observeRefreshTokenResponse
@@ -53,9 +53,9 @@ class AuthViewModel @Inject constructor(
     }
 
     fun login(email: String, password: String) = viewModelScope.launch {
-        _observeLoginResponse.postValue(DataState.Loading())
+        _observeLoginResponse.postValue(Event(DataState.Loading()))
         repo.login(email, password).collect {
-            _observeLoginResponse.update(it)
+            _observeLoginResponse.postValue(Event(it))
         }
     }
 
@@ -78,9 +78,9 @@ class AuthViewModel @Inject constructor(
     }
 
     fun socialLogin(token: String, socialLogin: SocialLogin) = viewModelScope.launch {
-        _observeLoginResponse.postValue(DataState.Loading())
+        _observeLoginResponse.postValue(Event(DataState.Loading()))
         repo.socialLogin(token, socialLogin).collect {
-            _observeLoginResponse.postValue(it)
+            _observeLoginResponse.postValue(Event((it)))
         }
     }
 }
