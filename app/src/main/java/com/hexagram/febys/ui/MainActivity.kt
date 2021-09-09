@@ -16,9 +16,8 @@ class MainActivity : BaseActivity() {
     private val showBottomNavInDestinations =
         listOf(
             R.id.homeFragment,
-            R.id.searchFragment,
             R.id.messageFragment,
-            R.id.wishListFragment,
+            R.id.searchFragment,
             R.id.accountFragment
         )
 

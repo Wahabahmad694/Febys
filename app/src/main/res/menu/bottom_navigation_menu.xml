@@ -6,22 +6,22 @@
         android:title="@string/menu_home" />
 
     <item
-        android:id="@+id/searchFragment"
-        android:icon="@drawable/ic_search_bottom_nav"
-        android:title="@string/menu_search" />
-
-    <item
         android:id="@+id/messageFragment"
         android:icon="@drawable/ic_message_bottom_nav"
         android:title="@string/menu_message" />
 
     <item
-        android:id="@+id/wishListFragment"
-        android:icon="@drawable/ic_un_fav"
-        android:title="@string/menu_wishlist" />
+        android:id="@+id/searchFragment"
+        android:icon="@drawable/ic_search_bottom_nav"
+        android:title="@string/menu_search" />
 
     <item
         android:id="@+id/accountFragment"
         android:icon="@drawable/ic_account_bottom_nav"
         android:title="@string/menu_account" />
+
+    <item
+        android:id="@+id/menuFragment"
+        android:icon="@drawable/ic_menu_bottom_nav"
+        android:title="@string/menu_menu" />
 </menu>

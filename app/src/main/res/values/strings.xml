@@ -114,5 +114,6 @@
     <string name="label_proceed_to_checkout">Proceed to checkout</string>
     <string name="label_apply">Apply</string>
     <string name="label_enter_voucher_code">Enter Voucher Code</string>
+    <string name="menu_menu">Menu</string>
 
 </resources>
