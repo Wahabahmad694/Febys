@@ -13,26 +13,15 @@
         tools:context=".ui.screens.splash.SplashFragment">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_198sdp"
+            android:layout_height="@dimen/_54sdp"
             android:contentDescription="@string/app_name"
-            android:padding="@dimen/_16dp"
-            android:src="@drawable/ic_febys"
+            android:src="@drawable/febys_splash"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            style="@style/TextTheme.HelveticaNeue.TS14"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_64dp"
-            android:letterSpacing="0.5"
-            android:text="@string/label_loading"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.35" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
