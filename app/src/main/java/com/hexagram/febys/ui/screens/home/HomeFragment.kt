@@ -211,7 +211,7 @@ class HomeFragment : SliderFragment() {
     private fun setupBanner(banners: List<Banner>) {
         val sliderImages =
             banners.filter { banner -> banner.type == "headerImages" }
-        binding.imageSliderHome.adapter = HomeSliderPageAdapter(sliderImages, this)
+        binding.imageSliderHome.adapter = PagerAdapter(sliderImages, this)
         binding.dotsIndicator.setViewPager2(binding.imageSliderHome)
 
         val isVisible = sliderImages.isNotEmpty()
@@ -265,8 +265,7 @@ class HomeFragment : SliderFragment() {
     }
 
     private fun setupSeasonalOffers(seasonalOffers: List<SeasonalOffer>) {
-        binding.sliderSeasonalOffer.adapter =
-            HomeSeasonalOfferSliderPageAdapter(seasonalOffers, this)
+        binding.sliderSeasonalOffer.adapter = PagerAdapter(seasonalOffers, this)
         binding.sliderSeasonalOfferDotsIndicator.setViewPager2(binding.sliderSeasonalOffer)
 
         val isVisible = seasonalOffers.isNotEmpty()
@@ -333,22 +332,19 @@ class HomeFragment : SliderFragment() {
     override fun getTvCartCount(): TextView = binding.tvCartCount
     override fun getIvCart(): View = binding.ivCart
 
-    private inner class HomeSliderPageAdapter(
-        val banners: List<Banner>, fa: Fragment
+    private inner class PagerAdapter<out T>(
+        val list: List<T>, fa: Fragment
     ) : FragmentStateAdapter(fa) {
-        override fun getItemCount(): Int = banners.size
+        override fun getItemCount(): Int = list.size
 
-        override fun createFragment(position: Int): Fragment =
-            HomeSliderPageFragment.newInstance(banners[position])
-    }
-
-    private inner class HomeSeasonalOfferSliderPageAdapter(
-        val offers: List<SeasonalOffer>, fa: Fragment
-    ) : FragmentStateAdapter(fa) {
-        override fun getItemCount(): Int = offers.size
-
-        override fun createFragment(position: Int): Fragment =
-            HomeSeasonalOfferSliderPageFragment.newInstance(offers[position])
+        override fun createFragment(position: Int): Fragment {
+            val item = list[position]
+            return if (item is Banner) {
+                HomeSliderPageFragment.newInstance(item)
+            } else {
+                HomeSeasonalOfferSliderPageFragment.newInstance(item as SeasonalOffer)
+            }
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
