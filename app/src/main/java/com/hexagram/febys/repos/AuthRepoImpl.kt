@@ -178,4 +178,8 @@ class AuthRepoImpl @Inject constructor(
         userDataSource.clearUserState()
         userDataSource.clearUserData()
     }
+
+    override fun getUser(): User? {
+        return userDataSource.getUser()
+    }
 }

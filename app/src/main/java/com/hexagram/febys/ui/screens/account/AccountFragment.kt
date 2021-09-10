@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentAccountBinding
+import com.hexagram.febys.network.response.User
 import com.hexagram.febys.ui.screens.auth.AuthViewModel
 import com.hexagram.febys.utils.navigateTo
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,12 +32,6 @@ class AccountFragment : BaseFragment() {
         setupObserver()
     }
 
-    private fun setupObserver() {
-        observesUserLoggedIn.observe(viewLifecycleOwner) {
-            binding.isUserLoggedIn = it
-        }
-    }
-
     private fun uiListeners() {
         binding.btnSignIn.setOnClickListener {
             val navigateToLogin = AccountFragmentDirections.actionToLoginFragment()
@@ -48,4 +44,19 @@ class AccountFragment : BaseFragment() {
             }
         }
     }
+
+    private fun setupObserver() {
+        observesUserLoggedIn.observe(viewLifecycleOwner) {
+            val user = authViewModel.getUser()
+            updateUserUi(user)
+        }
+    }
+
+    private fun updateUserUi(user: User?) {
+        binding.isUserLoggedIn = isUserLoggedIn
+        binding.userName.text = user?.firstName ?: getString(R.string.app_name)
+    }
+
+    override fun getIvCart() = binding.ivCart
+    override fun getTvCartCount() = binding.tvCartCount
 }

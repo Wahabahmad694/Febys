@@ -500,7 +500,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_1dp"
-                            android:background="@color/dark_grey" />
+                            android:background="@color/grey_e1e5e8" />
 
                         <LinearLayout
                             android:id="@+id/product_reviews_toggle"
@@ -538,7 +538,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_1dp"
-                            android:background="@color/dark_grey" />
+                            android:background="@color/grey_e1e5e8" />
 
                         <LinearLayout
                             android:id="@+id/product_q_nd_a_toggle"
@@ -581,7 +581,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_1dp"
-                            android:background="@color/dark_grey" />
+                            android:background="@color/grey_e1e5e8" />
 
                     </LinearLayout>
 
@@ -604,7 +604,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_1dp"
-                            android:background="@color/dark_grey" />
+                            android:background="@color/grey_e1e5e8" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -654,7 +654,7 @@
                             <View
                                 android:layout_width="@dimen/_1dp"
                                 android:layout_height="match_parent"
-                                android:background="@color/dark_grey" />
+                                android:background="@color/grey_e1e5e8" />
 
                             <LinearLayout
                                 android:layout_width="0dp"
@@ -686,7 +686,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_1dp"
-                            android:background="@color/dark_grey" />
+                            android:background="@color/grey_e1e5e8" />
 
                     </LinearLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>

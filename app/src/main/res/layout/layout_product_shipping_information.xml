@@ -23,7 +23,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1dp"
-            android:background="@color/dark_grey" />
+            android:background="@color/grey_e1e5e8" />
 
         <LinearLayout
             android:id="@+id/product_shipping_fee_toggle"
@@ -82,7 +82,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_1dp"
-                android:background="@color/dark_grey" />
+                android:background="@color/grey_e1e5e8" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -107,7 +107,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_1dp"
-                android:background="@color/dark_grey" />
+                android:background="@color/grey_e1e5e8" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -160,7 +160,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_1dp"
-                android:background="@color/dark_grey" />
+                android:background="@color/grey_e1e5e8" />
 
             <LinearLayout
                 android:layout_width="match_parent"
