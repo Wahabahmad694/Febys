@@ -43,6 +43,18 @@ class AccountFragment : BaseFragment() {
                 super.signOut()
             }
         }
+
+        binding.orders.wishlist.setOnClickListener {
+            val navigateToWishlist =
+                AccountFragmentDirections.actionAccountFragmentToWishListFragment()
+            navigateTo(navigateToWishlist)
+        }
+
+        binding.settings.shippingAddress.setOnClickListener {
+            val shippingAddress =
+                AccountFragmentDirections.actionAccountFragmentToShippingFragment()
+            navigateTo(shippingAddress)
+        }
     }
 
     private fun setupObserver() {
