@@ -157,7 +157,14 @@
         android:id="@+id/accountFragment"
         android:name="com.hexagram.febys.ui.screens.account.AccountFragment"
         android:label="AccountFragment"
-        tools:layout="@layout/fragment_account" />
+        tools:layout="@layout/fragment_account">
+        <action
+            android:id="@+id/action_accountFragment_to_wishListFragment"
+            app:destination="@id/wishListFragment" />
+        <action
+            android:id="@+id/action_accountFragment_to_shippingFragment"
+            app:destination="@id/shippingAddressFragment" />
+    </fragment>
 
     <dialog
         android:id="@+id/otpVerificationDialog"
@@ -246,5 +253,11 @@
     <fragment
         android:id="@+id/cartFragment"
         android:name="com.hexagram.febys.ui.screens.cart.CartFragment"
-        android:label="CartFragment" />
+        android:label="CartFragment"
+        tools:layout="@layout/fragment_cart" />
+    <fragment
+        android:id="@+id/shippingAddressFragment"
+        android:name="com.hexagram.febys.ui.screens.shipping.address.ShippingFragment"
+        android:label="ShippingFragmentAddress"
+        tools:layout="@layout/fragment_shipping_address" />
 </navigation>

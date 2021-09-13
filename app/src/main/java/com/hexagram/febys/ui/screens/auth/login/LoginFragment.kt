@@ -83,13 +83,14 @@ class LoginFragment : SocialMediaAuthFragment() {
 
     private fun setupObserver() {
         viewModel.observeLoginResponse.observe(viewLifecycleOwner) {
-            when (it) {
+            val response = it.getContentIfNotHandled() ?: return@observe
+            when (response) {
                 is DataState.Loading -> {
                     showLoader()
                 }
                 is DataState.Error -> {
                     hideLoader()
-                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
+                    ErrorDialog(response).show(childFragmentManager, ErrorDialog.TAG)
                 }
                 is DataState.Data -> {
                     hideLoader()

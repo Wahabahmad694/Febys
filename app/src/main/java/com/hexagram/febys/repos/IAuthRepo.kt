@@ -3,10 +3,7 @@ package com.hexagram.febys.repos
 import com.hexagram.febys.enum.SocialLogin
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.requests.RequestSignup
-import com.hexagram.febys.network.response.ResponseLogin
-import com.hexagram.febys.network.response.ResponseOtpVerification
-import com.hexagram.febys.network.response.ResponseRefreshToken
-import com.hexagram.febys.network.response.ResponseSignup
+import com.hexagram.febys.network.response.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -36,4 +33,6 @@ interface IAuthRepo {
     ): Flow<DataState<ResponseLogin>>
 
     fun signOut()
+
+    fun getUser(): User?
 }

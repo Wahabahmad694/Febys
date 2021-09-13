@@ -17,29 +17,117 @@
         android:layout_height="match_parent"
         tools:context=".ui.screens.account.AccountFragment">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_sign_out"
-            style="@style/ButtonTheme.Contained"
+        <TextView
+            android:id="@+id/user_name"
+            style="@style/TextTheme.HelveticaNeue.TS32.Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_sign_out"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="@dimen/_16dp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_cart"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            binding:is_visible="@{isUserLoggedIn}" />
+            app:layout_constraintTop_toTopOf="@id/iv_cart"
+            tools:text="Hillary" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_sign_in"
-            style="@style/ButtonTheme.Contained"
+        <ImageView
+            android:id="@+id/iv_cart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_login"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="@dimen/_24sdp"
+            android:layout_marginEnd="@dimen/_16dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_cart"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            binding:is_visible="@{!isUserLoggedIn}" />
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_cart_count"
+            style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_4sdp"
+            android:contentDescription="@string/app_name"
+            app:layout_constraintBottom_toBottomOf="@id/iv_cart"
+            app:layout_constraintEnd_toStartOf="@id/iv_cart"
+            app:layout_constraintTop_toTopOf="@id/iv_cart"
+            app:layout_constraintVertical_bias="0.8"
+            tools:text="2" />
+
+        <com.hexagram.febys.utils.ScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_22sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_cart">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include
+                    android:id="@+id/orders"
+                    layout="@layout/layout_order_menu" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_32sdp" />
+
+                <include
+                    android:id="@+id/location"
+                    layout="@layout/layout_my_location_menu" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_32sdp" />
+
+                <include
+                    android:id="@+id/settings"
+                    layout="@layout/layout_settings_menu" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_32sdp" />
+
+                <include
+                    android:id="@+id/support"
+                    layout="@layout/layout_support_menu" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_27sdp"
+                    android:layout_marginBottom="@dimen/_16dp">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_sign_out"
+                        style="@style/ButtonTheme.OutLine"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_sign_out"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        binding:is_visible="@{isUserLoggedIn}" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_sign_in"
+                        style="@style/ButtonTheme.OutLine"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_login"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        binding:is_visible="@{!isUserLoggedIn}" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+        </com.hexagram.febys.utils.ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
