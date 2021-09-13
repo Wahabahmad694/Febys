@@ -134,5 +134,6 @@
     <string name="label_vouchers">Vouchers</string>
     <string name="label_shipping_address">Shipping Address</string>
     <string name="label_notifications">Notifications</string>
+    <string name="label_me">Me</string>
 
 </resources>
