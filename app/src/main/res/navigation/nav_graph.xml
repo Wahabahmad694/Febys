@@ -45,6 +45,10 @@
         android:name="com.hexagram.febys.ui.screens.auth.login.LoginFragment"
         android:label="LoginFragment"
         tools:layout="@layout/fragment_login">
+        <argument
+            android:name="isOpenFromSignup"
+            android:defaultValue="false"
+            app:argType="boolean" />
         <action
             android:id="@+id/action_loginFragment_to_signupFragment"
             app:destination="@id/signupFragment"
@@ -65,6 +69,10 @@
         android:name="com.hexagram.febys.ui.screens.auth.signup.SignupFragment"
         android:label="SignupFragment"
         tools:layout="@layout/fragment_signup">
+        <argument
+            android:name="isOpenFromLogin"
+            android:defaultValue="true"
+            app:argType="boolean" />
         <action
             android:id="@+id/action_signupFragment_to_otpVerificationDialog"
             app:destination="@id/otpVerificationDialog" />
@@ -164,6 +172,13 @@
         <action
             android:id="@+id/action_accountFragment_to_shippingFragment"
             app:destination="@id/shippingAddressFragment" />
+        <action
+            android:id="@+id/action_accountFragment_to_signupFragment"
+            app:destination="@id/signupFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <dialog
@@ -171,6 +186,9 @@
         android:name="com.hexagram.febys.ui.screens.dialog.OtpVerificationDialog"
         android:label="OtpVerificationDialog"
         tools:layout="@layout/dialog_otp_verification">
+        <argument
+            android:name="popUpTo"
+            app:argType="integer" />
         <argument
             android:name="isCancelable"
             android:defaultValue="true"

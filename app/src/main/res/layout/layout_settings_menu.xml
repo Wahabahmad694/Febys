@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:binding="http://schemas.android.com/tools">
 
     <data>
+
+        <variable
+            name="isUserLoggedIn"
+            type="Boolean" />
 
     </data>
 
@@ -38,12 +43,14 @@
             android:layout_height="@dimen/_32sdp"
             android:gravity="center_vertical"
             android:text="@string/label_account_settings"
-            app:drawableEndCompat="@drawable/ic_right" />
+            app:drawableEndCompat="@drawable/ic_right"
+            binding:is_visible="@{isUserLoggedIn}" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"
-            android:background="@color/grey_e1e5e8" />
+            android:background="@color/grey_e1e5e8"
+            binding:is_visible="@{isUserLoggedIn}" />
 
         <TextView
             android:id="@+id/vouchers"
@@ -52,12 +59,14 @@
             android:layout_height="@dimen/_32sdp"
             android:gravity="center_vertical"
             android:text="@string/label_vouchers"
-            app:drawableEndCompat="@drawable/ic_right" />
+            app:drawableEndCompat="@drawable/ic_right"
+            binding:is_visible="@{isUserLoggedIn}" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"
-            android:background="@color/grey_e1e5e8" />
+            android:background="@color/grey_e1e5e8"
+            binding:is_visible="@{isUserLoggedIn}" />
 
         <TextView
             android:id="@+id/shipping_address"
@@ -66,12 +75,14 @@
             android:layout_height="@dimen/_32sdp"
             android:gravity="center_vertical"
             android:text="@string/label_shipping_address"
-            app:drawableEndCompat="@drawable/ic_right" />
+            app:drawableEndCompat="@drawable/ic_right"
+            binding:is_visible="@{isUserLoggedIn}" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"
-            android:background="@color/grey_e1e5e8" />
+            android:background="@color/grey_e1e5e8"
+            binding:is_visible="@{isUserLoggedIn}" />
 
     </LinearLayout>
 </layout>

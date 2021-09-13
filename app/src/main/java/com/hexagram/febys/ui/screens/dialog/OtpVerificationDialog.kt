@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseDialog
 import com.hexagram.febys.databinding.DialogOtpVerificationBinding
 import com.hexagram.febys.network.DataState
@@ -65,7 +64,7 @@ class OtpVerificationDialog : BaseDialog() {
     }
 
     private fun navigateToHomeScreen() {
-        findNavController().popBackStack(R.id.loginFragment, true)
+        findNavController().popBackStack(args.popUpTo, true)
     }
 
     override fun cancelable() = args.isCancelable

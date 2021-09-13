@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.hexagram.febys.R
 import com.hexagram.febys.databinding.FragmentLoginBinding
 import com.hexagram.febys.enum.SocialLogin
@@ -21,6 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class LoginFragment : SocialMediaAuthFragment() {
     private lateinit var binding: FragmentLoginBinding
     private val viewModel: AuthViewModel by viewModels()
+    private val args: LoginFragmentArgs by navArgs()
 
     private var email = ""
     private var password = ""
@@ -51,6 +53,11 @@ class LoginFragment : SocialMediaAuthFragment() {
         }
 
         binding.tvGotoSignUp.setOnClickListener {
+            if (args.isOpenFromSignup) {
+                goBack()
+                return@setOnClickListener
+            }
+
             val navigateToSignUp = LoginFragmentDirections.actionLoginFragmentToSignupFragment()
             navigateTo(navigateToSignUp)
         }
@@ -94,10 +101,17 @@ class LoginFragment : SocialMediaAuthFragment() {
                 }
                 is DataState.Data -> {
                     hideLoader()
-                    findNavController().popBackStack(R.id.loginFragment, true)
+                    gotoNextScreen()
                 }
             }
         }
+    }
+
+    private fun gotoNextScreen() {
+        val popUpTo =
+            if (args.isOpenFromSignup) R.id.signupFragment else R.id.loginFragment
+
+        findNavController().popBackStack(popUpTo, true)
     }
 
     private fun areAllFieldsValid(): Boolean {
