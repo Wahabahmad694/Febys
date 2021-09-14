@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="address"
+            type="com.hexagram.febys.models.view.ShippingAddress" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_18sdp">
+
+        <TextView
+            android:id="@+id/user_name"
+            style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{address.firstName}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Hillary" />
+
+        <TextView
+            android:id="@+id/address_label"
+            style="@style/TextTheme.Arial.TS12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:background="@color/grey_e1e5e8"
+            android:paddingHorizontal="@dimen/_6sdp"
+            android:paddingVertical="@dimen/_1sdp"
+            android:text="@{address.addressLabel}"
+            app:layout_constraintStart_toEndOf="@id/user_name"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Home" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@{address.isDefault ? @drawable/ic_circle_fill : @drawable/ic_circle}"
+            app:layout_constraintBottom_toBottomOf="@id/address_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/address_label"
+            tools:src="@drawable/ic_circle_fill" />
+
+        <TextView
+            android:id="@+id/tv_shipping_address"
+            style="@style/TextTheme.Arial.TS14"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{address.fullAddress}"
+            app:layout_constraintTop_toBottomOf="@id/address_label"
+            tools:text="Virtual Incubator, Busy Internet,\nAccra-north\n23321,\nGhana" />
+
+        <LinearLayout
+            android:id="@+id/edit_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="@id/user_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_shipping_address">
+
+            <TextView
+                style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_edit" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_6sdp"
+                android:src="@drawable/ic_edit" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/_18sdp"
+            android:background="@color/grey_e1e5e8"
+            app:layout_constraintTop_toBottomOf="@id/edit_address" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
