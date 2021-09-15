@@ -40,12 +40,4 @@ object FakeApiService {
         delay(1000)
         return ApiResponse.ApiSuccessResponse(Response.success(addresses))
     }
-
-    suspend fun fetchFollowingVendor(): List<VendorListing.FollowingVendor> {
-        delay(500)
-        return listOf(
-            VendorListing.FollowingVendor(1, "Deal-Train", "Official", 2.5f, "", true),
-            VendorListing.FollowingVendor(2, "Deal-Train", "Official", 2.5f, "", true)
-        )
-    }
 }
