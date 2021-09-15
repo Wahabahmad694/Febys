@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:binding="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="isFollowing"
+            type="Boolean" />
+
+        <variable
+            name="showFollowBtn"
+            type="Boolean" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_75sdp"
+        android:background="@color/grey">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/vendor_img"
+            android:layout_width="@dimen/_42sdp"
+            android:layout_height="@dimen/_42sdp"
+            android:layout_marginStart="@dimen/_14sdp"
+            app:actualImageResource="@drawable/ic_store"
+            app:actualImageScaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:roundAsCircle="true" />
+
+        <TextView
+            android:id="@+id/vendor_name"
+            style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:gravity="center_vertical"
+            app:layout_constraintBottom_toTopOf="@id/vendor_type"
+            app:layout_constraintEnd_toStartOf="@id/btn_toggle_follow"
+            app:layout_constraintStart_toEndOf="@id/vendor_img"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="Deal-Train" />
+
+        <TextView
+            android:id="@+id/vendor_type"
+            style="@style/TextTheme.Arial.TS12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/red"
+            app:layout_constraintBottom_toTopOf="@id/store_rating_bar"
+            app:layout_constraintStart_toStartOf="@id/vendor_name"
+            app:layout_constraintTop_toBottomOf="@id/vendor_name"
+            tools:text="Official" />
+
+        <androidx.appcompat.widget.AppCompatRatingBar
+            android:id="@+id/store_rating_bar"
+            style="?ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:progress="50"
+            android:layout_marginTop="@dimen/_4sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/vendor_name"
+            app:layout_constraintTop_toBottomOf="@id/vendor_type" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_toggle_follow"
+            style="@style/ButtonTheme.OutLine"
+            android:layout_width="@dimen/_75sdp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:text="@{isFollowing ? @string/label_following : @string/label_follow}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            binding:is_visible="@{showFollowBtn}" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/_12sdp"
+            android:layout_height="@dimen/_12sdp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:src="@drawable/ic_arrow_forward"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            binding:is_visible="@{!showFollowBtn}" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -2,6 +2,7 @@ package com.hexagram.febys.ui.screens.search
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.hexagram.febys.ui.screens.vendor.VendorListingFragment
 
 class SearchTabsAdapter(fragment: Fragment, private val tabsList: List<String>) :
     FragmentStateAdapter(fragment) {
@@ -9,6 +10,13 @@ class SearchTabsAdapter(fragment: Fragment, private val tabsList: List<String>) 
     override fun getItemCount(): Int = tabsList.size
 
     override fun createFragment(position: Int): Fragment {
-        return CategoryNameFragment.newInstance()
+        return when (position) {
+            2 -> {
+                VendorListingFragment.newInstance()
+            }
+            else -> {
+                CategoryNameFragment.newInstance()
+            }
+        }
     }
 }

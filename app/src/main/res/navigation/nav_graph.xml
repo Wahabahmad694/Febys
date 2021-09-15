@@ -286,4 +286,9 @@
         android:name="com.hexagram.febys.ui.screens.shipping.address.ShippingFragment"
         android:label="ShippingFragmentAddress"
         tools:layout="@layout/fragment_shipping_address" />
+    <fragment
+        android:id="@+id/vendorListingFragment"
+        android:name="com.hexagram.febys.ui.screens.vendor.VendorListingFragment"
+        android:label="VendorListingFragment"
+        tools:layout="@layout/fragment_vendor_listing"/>
 </navigation>

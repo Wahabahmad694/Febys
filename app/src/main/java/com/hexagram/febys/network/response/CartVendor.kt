@@ -2,7 +2,7 @@ package com.hexagram.febys.network.response
 
 import com.google.gson.annotations.SerializedName
 
-data class Vendor(
+data class CartVendor(
     val id: Int,
     val name: String,
     @SerializedName("store_name")

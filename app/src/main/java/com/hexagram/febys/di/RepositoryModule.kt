@@ -38,4 +38,8 @@ abstract class RepositoryModule {
     @Singleton
     @Binds
     abstract fun bindShippingAddressRepo(repo: ShippingAddressRepoImpl): IShippingAddressRepo
+
+    @Singleton
+    @Binds
+    abstract fun bindVendorRepo(repo: VendorRepoImpl): IVendorRepo
 }

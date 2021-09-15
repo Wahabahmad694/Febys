@@ -42,14 +42,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:text="@{cart.vendorStoreName}"
-                app:layout_constraintBottom_toTopOf="@id/vendor_slogan"
+                app:layout_constraintBottom_toTopOf="@id/vendor_type"
                 app:layout_constraintStart_toEndOf="@id/vendor_img"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="packed"
                 tools:text="Deal-Train" />
 
             <TextView
-                android:id="@+id/vendor_slogan"
+                android:id="@+id/vendor_type"
                 style="@style/TextTheme.Arial.TS12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
