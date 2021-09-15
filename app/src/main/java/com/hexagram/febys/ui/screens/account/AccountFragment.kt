@@ -33,9 +33,15 @@ class AccountFragment : BaseFragment() {
     }
 
     private fun uiListeners() {
-        binding.btnSignIn.setOnClickListener {
+        binding.btnLogin.setOnClickListener {
             val navigateToLogin = AccountFragmentDirections.actionToLoginFragment()
             navigateTo(navigateToLogin)
+        }
+
+        binding.btnCreateAccount.setOnClickListener {
+            val navigateToSignup =
+                AccountFragmentDirections.actionAccountFragmentToSignupFragment(false)
+            navigateTo(navigateToSignup)
         }
 
         binding.btnSignOut.setOnClickListener {
@@ -66,7 +72,7 @@ class AccountFragment : BaseFragment() {
 
     private fun updateUserUi(user: User?) {
         binding.isUserLoggedIn = isUserLoggedIn
-        binding.userName.text = user?.firstName ?: getString(R.string.app_name)
+        binding.userName.text = user?.firstName ?: getString(R.string.label_me)
     }
 
     override fun getIvCart() = binding.ivCart

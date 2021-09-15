@@ -67,7 +67,55 @@
 
                 <include
                     android:id="@+id/orders"
-                    layout="@layout/layout_order_menu" />
+                    layout="@layout/layout_order_menu"
+                    binding:is_visible="@{isUserLoggedIn}" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/_16dp"
+                    binding:is_visible="@{!isUserLoggedIn}"
+                    tools:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/label_create_account_slogan"
+                        style="@style/TextTheme.Arial.TS14"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_create_account_slogan"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_18sdp"
+                        app:layout_constraintTop_toBottomOf="@id/label_create_account_slogan">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_create_account"
+                            style="@style/ButtonTheme.OutLine.Full"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:maxWidth="@dimen/_146sdp"
+                            android:minHeight="@dimen/_64dp"
+                            android:text="@string/label_create_account" />
+
+                        <View
+                            android:layout_width="@dimen/_4sdp"
+                            android:layout_height="match_parent" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_login"
+                            style="@style/ButtonTheme.Contained"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:maxWidth="@dimen/_146sdp"
+                            android:text="@string/label_login" />
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <View
                     android:layout_width="match_parent"
@@ -83,7 +131,8 @@
 
                 <include
                     android:id="@+id/settings"
-                    layout="@layout/layout_settings_menu" />
+                    layout="@layout/layout_settings_menu"
+                    app:isUserLoggedIn="@{isUserLoggedIn}" />
 
                 <View
                     android:layout_width="match_parent"
@@ -110,18 +159,6 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         binding:is_visible="@{isUserLoggedIn}" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_sign_in"
-                        style="@style/ButtonTheme.OutLine"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/label_login"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        binding:is_visible="@{!isUserLoggedIn}" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

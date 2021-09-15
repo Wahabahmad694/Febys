@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
 import com.hexagram.febys.databinding.FragmentSignupBinding
 import com.hexagram.febys.enum.SocialLogin
@@ -22,6 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class SignupFragment : SocialMediaAuthFragment() {
     private lateinit var binding: FragmentSignupBinding
     private val viewModel: AuthViewModel by viewModels()
+    private val args: SignupFragmentArgs by navArgs()
 
     private var firstName: String = ""
     private var lastName: String = ""
@@ -61,7 +64,13 @@ class SignupFragment : SocialMediaAuthFragment() {
         }
 
         binding.tvGotoLogin.setOnClickListener {
-            goBack()
+            if (args.isOpenFromLogin) {
+                goBack()
+                return@setOnClickListener
+            }
+
+            val gotoLogin = NavGraphDirections.actionToLoginFragment(true)
+            navigateTo(gotoLogin)
         }
 
         binding.ivGoogle.setOnClickListener {
@@ -127,19 +136,37 @@ class SignupFragment : SocialMediaAuthFragment() {
                 }
             }
         }
+
+        viewModel.observeLoginResponse.observe(viewLifecycleOwner) {
+            val response = it.getContentIfNotHandled() ?: return@observe
+            when (response) {
+                is DataState.Loading -> {
+                    showLoader()
+                }
+                is DataState.Error -> {
+                    hideLoader()
+                    ErrorDialog(response).show(childFragmentManager, ErrorDialog.TAG)
+                }
+                is DataState.Data -> {
+                    hideLoader()
+                    gotoNextScreen()
+                }
+            }
+        }
     }
 
     private fun gotoNextScreen() {
+        val popUpTo = if (args.isOpenFromLogin) R.id.loginFragment else R.id.signupFragment
+
         if (isSocialLogin) {
-            findNavController().popBackStack(R.id.loginFragment, true)
+            findNavController().popBackStack(popUpTo, true)
         } else {
-            navigateToOTPVerification()
+            navigateToOTPVerification(popUpTo)
         }
     }
 
     private fun signup() {
         val requestSignup = createSignupRequest()
-
         viewModel.signup(requestSignup)
     }
 
@@ -192,9 +219,9 @@ class SignupFragment : SocialMediaAuthFragment() {
         return true
     }
 
-    private fun navigateToOTPVerification() {
+    private fun navigateToOTPVerification(popUpTo: Int) {
         val navigateToOtpVerification =
-            SignupFragmentDirections.actionSignupFragmentToOtpVerificationDialog(false)
+            SignupFragmentDirections.actionSignupFragmentToOtpVerificationDialog(popUpTo, false)
         navigateTo(navigateToOtpVerification)
     }
 }

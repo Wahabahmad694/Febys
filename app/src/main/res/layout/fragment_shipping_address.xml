@@ -34,6 +34,36 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/label_shipping_address" />
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_8sdp"
+            android:src="@drawable/ic_add"
+            app:layout_constraintBottom_toBottomOf="@id/label_add_new_shipping_address"
+            app:layout_constraintEnd_toEndOf="@id/label_add_new_shipping_address"
+            app:layout_constraintTop_toTopOf="@id/label_add_new_shipping_address" />
+
+        <TextView
+            android:id="@+id/label_add_new_shipping_address"
+            style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_31sdp"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:background="@drawable/bg_border_dark_grey"
+            android:gravity="center"
+            android:text="@string/label_add_shipping_address"
+            app:layout_constraintTop_toBottomOf="@id/label_shipping_address" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_shipping_address"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_0dp"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_add_new_shipping_address"
+            tools:listitem="@layout/item_shipping_address" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
