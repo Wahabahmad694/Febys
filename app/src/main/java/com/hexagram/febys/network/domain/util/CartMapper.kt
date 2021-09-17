@@ -46,7 +46,7 @@ class CartMapper @Inject constructor() : DomainMapper<List<CartDTO>, Cart?> {
             }
             val vendorAmount = cartItems.sumOf { it.product.productVariant.price * it.quantity }
 
-            Vendor(
+            CartVendor(
                 cartDTO.vendorId,
                 cartDTO.vendorName,
                 cartDTO.vendorStoreName,
@@ -58,13 +58,13 @@ class CartMapper @Inject constructor() : DomainMapper<List<CartDTO>, Cart?> {
             )
         }
 
-        val cartInfo = CartInfo(orderAmount = orderAmount, vendors = vendors)
+        val cartInfo = CartInfo(orderAmount = orderAmount, cartVendors = vendors)
         return Cart(cartInfo)
     }
 
     override fun mapFromDomainModel(domainModel: Cart?): List<CartDTO> {
         val list = mutableListOf<CartDTO>()
-        domainModel?.info?.vendors?.forEach { vendor ->
+        domainModel?.info?.cartVendors?.forEach { vendor ->
             vendor.items.forEach { cartItem ->
                 val cartProduct = cartItem.product
                 val cartProductVariant = cartProduct.productVariant

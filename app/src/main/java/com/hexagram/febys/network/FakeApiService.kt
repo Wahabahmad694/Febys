@@ -1,6 +1,7 @@
 package com.hexagram.febys.network
 
 import com.hexagram.febys.models.view.ShippingAddress
+import com.hexagram.febys.models.view.VendorListing
 import com.hexagram.febys.network.adapter.ApiResponse
 import kotlinx.coroutines.delay
 import retrofit2.Response

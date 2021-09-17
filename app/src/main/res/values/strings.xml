@@ -135,6 +135,9 @@
     <string name="label_shipping_address">Shipping Address</string>
     <string name="label_notifications">Notifications</string>
     <string name="label_me">Me</string>
+    <string name="label_explore_stores">Explore Stores</string>
+    <string name="label_following">Following</string>
+    <string name="label_follow">Follow</string>
     <string name="label_create_account_slogan">Create an account to FEBYS to get all features.</string>
     <string name="label_create_account">Create Account</string>
     <string name="label_add_shipping_address">Add new address</string>

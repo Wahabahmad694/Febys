@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.hexagram.febys.network.response.Product
 import com.hexagram.febys.network.response.ProductVariant
-import com.hexagram.febys.network.response.Vendor
+import com.hexagram.febys.network.response.CartVendor
 import java.util.*
 
 @Entity
@@ -63,16 +63,16 @@ data class CartDTO constructor(
 
     companion object {
         fun fromVendorProductVariant(
-            vendor: Vendor? = null, product: Product, variant: ProductVariant, quantity: Int = 1
+            cartVendor: CartVendor? = null, product: Product, variant: ProductVariant, quantity: Int = 1
         ): CartDTO {
             return CartDTO(
-                vendorId = vendor?.id ?: 21,
-                vendorName = vendor?.name ?: "Daniyal",
-                vendorStoreName = vendor?.storeName ?: "Al-buraq",
-                vendorEmail = vendor?.email ?: "Daniyal@gmail.com",
-                vendorPhoneNo = vendor?.phoneNo ?: "90078601",
+                vendorId = cartVendor?.id ?: 21,
+                vendorName = cartVendor?.name ?: "Daniyal",
+                vendorStoreName = cartVendor?.storeName ?: "Al-buraq",
+                vendorEmail = cartVendor?.email ?: "Daniyal@gmail.com",
+                vendorPhoneNo = cartVendor?.phoneNo ?: "90078601",
                 vendorImage = "",
-                vendorIndividualType = vendor?.individualVendorType ?: "B2B2C",
+                vendorIndividualType = cartVendor?.individualVendorType ?: "B2B2C",
                 productId = product.id,
                 productName = product.name,
                 productDelivery = product.delivery,
