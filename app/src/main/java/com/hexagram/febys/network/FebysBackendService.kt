@@ -70,6 +70,12 @@ interface FebysBackendService {
     @GET("v1/users/vendors-listing")
     suspend fun fetchVendors(@QueryMap req: Map<String, Int>): ApiResponse<ResponseOfPagination>
 
+    @GET("v1/users/celebrities-listing")
+    suspend fun fetchCelebrities(@QueryMap req: Map<String, Int>): ApiResponse<ResponseOfPagination>
+
     @GET("v1/consumers/followed-vendors")
     suspend fun fetchFollowingVendors(@Header("Authorization") authToken: String): ApiResponse<ResponseVendorListing>
+
+    @GET("v1/consumers/followed-celebrities")
+    suspend fun fetchFollowingCelebrities(@Header("Authorization") authToken: String): ApiResponse<ResponseVendorListing>
 }

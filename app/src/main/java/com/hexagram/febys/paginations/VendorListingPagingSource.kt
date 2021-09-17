@@ -11,6 +11,7 @@ import com.hexagram.febys.network.response.ResponseVendorListing
 class VendorListingPagingSource constructor(
     private val authKey: String,
     private val service: FebysBackendService,
+    private val isCelebrity: Boolean,
     private val request: RequestOfPagination
 ) : BasePagingSource<Int, VendorListing>() {
     private var fetchFollowingVendor = true
@@ -26,23 +27,29 @@ class VendorListingPagingSource constructor(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, VendorListing> {
         request.pageNo = params.key ?: 1
         val req = mapOf("chunkSize" to request.chunkSize, "pageNo" to request.pageNo)
-        return when (val response = service.fetchVendors(req)) {
+
+        return when (val response =
+            if (isCelebrity) service.fetchCelebrities(req) else service.fetchVendors(req)) {
             is ApiResponse.ApiSuccessResponse -> {
                 val vendorListing = mutableListOf<VendorListing>()
                 val vendorListingResponse = response.data!!.getResponse<ResponseVendorListing>()
 
-                if (addHeader) {
-                    addHeader = false
-                    val exploreVendorHeader =
-                        VendorListing.VendorListingHeader(R.string.label_explore_stores)
-                    vendorListing.add(0, exploreVendorHeader)
+                if (vendorListingResponse.vendors.isNotEmpty()) {
+                    if (addHeader) {
+                        addHeader = false
+                        val headerRes =
+                            if (isCelebrity) R.string.label_explore_markets else R.string.label_explore_stores
+                        val exploreVendorHeader = VendorListing.VendorListingHeader(headerRes)
+                        vendorListing.add(0, exploreVendorHeader)
+                    }
+                    vendorListing.addAll(vendorListingResponse.vendors)
                 }
-                vendorListing.addAll(vendorListingResponse.vendors)
 
                 if (fetchFollowingVendor) {
                     fetchFollowingVendor = false
-                    val followingVendorHeader =
-                        VendorListing.VendorListingHeader(R.string.label_store_you_follow)
+                    val headerRes =
+                        if (isCelebrity) R.string.label_market_you_follow else R.string.label_store_you_follow
+                    val followingVendorHeader = VendorListing.VendorListingHeader(headerRes)
                     val followingVendors = fetchFollowingVendors(authKey)
 
                     if (followingVendors.isNotEmpty()) {
@@ -66,7 +73,10 @@ class VendorListingPagingSource constructor(
     private suspend fun fetchFollowingVendors(authKey: String): List<VendorListing.FollowingVendor> {
         if (authKey.isEmpty()) return emptyList()
 
-        val followingVendorsResponse = service.fetchFollowingVendors(authKey)
+        val followingVendorsResponse =
+            if (isCelebrity) service.fetchFollowingCelebrities(authKey)
+            else service.fetchFollowingVendors(authKey)
+
         return if (followingVendorsResponse is ApiResponse.ApiSuccessResponse) {
             VendorListing.FollowingVendor.fromVendors(followingVendorsResponse.data!!.vendors)
         } else {

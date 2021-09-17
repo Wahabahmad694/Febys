@@ -5,11 +5,12 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.hexagram.febys.bindings.BindingAdapter
 import com.hexagram.febys.databinding.ItemVendorStoreBinding
 import com.hexagram.febys.databinding.ItemVendorStoreHeadingBinding
 import com.hexagram.febys.models.view.VendorListing
 
-class VendorListingAdapter :
+class VendorListingAdapter(private val isCelebrity: Boolean) :
     PagingDataAdapter<VendorListing, RecyclerView.ViewHolder>(diffCallback) {
 
     companion object {
@@ -73,9 +74,14 @@ class VendorListingAdapter :
 
         fun bind(item: VendorListing.Vendor) {
             binding.apply {
-                vendorName.text = item.vendorName
-                vendorType.text = item.vendorType
+                isCelebrity = this@VendorListingAdapter.isCelebrity
+
+                vendorName.text = item.name
+                vendorType.text = item.role
+                preferredVendorOrShopName.text = item.preferredVendorOrShopName
+                storeRatingBar.max = 100
                 storeRatingBar.progress = item.vendorRating
+                BindingAdapter.imageUrl(vendorImg, item.businessLogo)
 
                 showFollowBtn = item is VendorListing.FollowingVendor
                 isFollowing = (item as? VendorListing.FollowingVendor)?.isFollow ?: false

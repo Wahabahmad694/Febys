@@ -20,14 +20,28 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class VendorListingFragment : BaseFragment() {
+    private var isCelebrity = false
+
     companion object {
+        private const val KEY_IS_CELEBRITY = "keyIsCelebrity"
+
         @JvmStatic
-        fun newInstance() = VendorListingFragment()
+        fun newInstance(isCelebrity: Boolean = false) = VendorListingFragment().apply {
+            arguments = Bundle().apply {
+                putBoolean(KEY_IS_CELEBRITY, isCelebrity)
+            }
+        }
     }
 
     private lateinit var binding: FragmentVendorListingBinding
     private val vendorViewModel: VendorViewModel by viewModels()
-    private val vendorListingAdapter = VendorListingAdapter()
+    private lateinit var vendorListingAdapter : VendorListingAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        isCelebrity = arguments?.getBoolean(KEY_IS_CELEBRITY) ?: false
+        vendorListingAdapter = VendorListingAdapter(isCelebrity)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -50,7 +64,7 @@ class VendorListingFragment : BaseFragment() {
 
     private fun setObserver() {
         viewLifecycleOwner.lifecycleScope.launch {
-            vendorViewModel.allCategoryPagingData.collectLatest { pagingData ->
+            vendorViewModel.fetchVendors(isCelebrity).collectLatest { pagingData ->
                 vendorListingAdapter.submitData(pagingData)
             }
         }

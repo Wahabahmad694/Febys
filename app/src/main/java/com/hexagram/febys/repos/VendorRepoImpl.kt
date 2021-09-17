@@ -20,13 +20,13 @@ class VendorRepoImpl @Inject constructor(
     private val pref: IPrefManger
 ) : IVendorRepo {
     override fun fetchVendors(
-        scope: CoroutineScope, dispatcher: CoroutineDispatcher
+        isCelebrity: Boolean, scope: CoroutineScope, dispatcher: CoroutineDispatcher
     ): Flow<PagingData<VendorListing>> {
         return Pager(
             PagingConfig(pageSize = 10)
         ) {
             val authKey = pref.getAccessToken()
-            VendorListingPagingSource(authKey, service, RequestOfPagination())
+            VendorListingPagingSource(authKey, service, isCelebrity, RequestOfPagination())
         }.flow
             .flowOn(dispatcher)
             .cachedIn(scope)
