@@ -30,4 +30,8 @@ class ShippingAddressRepoImpl @Inject constructor(
             .onException { emit(DataState.ExceptionError()) }
             .onNetworkError { emit(DataState.NetworkError()) }
     }.flowOn(dispatcher)
+
+    override suspend fun setAsDefault(id: Int) {
+        FakeApiService.setAsDefault(id)
+    }
 }

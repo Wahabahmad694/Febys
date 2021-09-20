@@ -11,7 +11,7 @@ data class ShippingAddress constructor(
     val city: String,
     val postalCode: String,
     val phoneNo: String,
-    val isDefault: Boolean
+    var isDefault: Boolean
 ) {
     fun fullAddress(): String {
         return "$addressLine1,\n$city,\n$postalCode,\n$region"

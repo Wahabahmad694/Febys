@@ -1,7 +1,6 @@
 package com.hexagram.febys.network
 
 import com.hexagram.febys.models.view.ShippingAddress
-import com.hexagram.febys.models.view.VendorListing
 import com.hexagram.febys.network.adapter.ApiResponse
 import kotlinx.coroutines.delay
 import retrofit2.Response
@@ -39,5 +38,15 @@ object FakeApiService {
     suspend fun fetchShippingAddress(authToken: String): ApiResponse<List<ShippingAddress>> {
         delay(1000)
         return ApiResponse.ApiSuccessResponse(Response.success(addresses))
+    }
+
+    suspend fun setAsDefault(id: Int) {
+        delay(100)
+        val defaultIndex = addresses.indexOfFirst { it.isDefault }
+        if (defaultIndex != -1) {
+            addresses[defaultIndex].isDefault = false
+        }
+
+        addresses.firstOrNull { it.id == id }?.isDefault = true
     }
 }

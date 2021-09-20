@@ -10,4 +10,6 @@ interface IShippingAddressRepo {
     suspend fun fetchShippingAddressRepo(
         dispatcher: CoroutineDispatcher = Dispatchers.IO
     ): Flow<DataState<List<ShippingAddress>>>
+
+    suspend fun setAsDefault(id: Int)
 }

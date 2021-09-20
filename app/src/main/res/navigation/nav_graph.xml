@@ -283,7 +283,7 @@
         tools:layout="@layout/fragment_cart" />
     <fragment
         android:id="@+id/shippingAddressFragment"
-        android:name="com.hexagram.febys.ui.screens.shipping.address.ShippingFragment"
+        android:name="com.hexagram.febys.ui.screens.shipping.address.ShippingAddressFragment"
         android:label="ShippingFragmentAddress"
         tools:layout="@layout/fragment_shipping_address" />
     <fragment

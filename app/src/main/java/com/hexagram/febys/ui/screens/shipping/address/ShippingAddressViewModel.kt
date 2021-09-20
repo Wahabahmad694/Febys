@@ -29,4 +29,8 @@ class ShippingAddressViewModel @Inject constructor(
             _shippingAddresses.postValue(it)
         }
     }
+
+    fun setAsDefault(id: Int) = viewModelScope.launch {
+        shippingRepo.setAsDefault(id)
+    }
 }

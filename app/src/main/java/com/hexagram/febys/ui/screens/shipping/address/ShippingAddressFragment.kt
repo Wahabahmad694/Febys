@@ -16,7 +16,7 @@ import com.hexagram.febys.utils.showLoader
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ShippingFragment : BaseFragment() {
+class ShippingAddressFragment : BaseFragment() {
     private lateinit var binding: FragmentShippingAddressBinding
     private val shippingAddressViewModel: ShippingAddressViewModel by viewModels()
     private val shippingAddressAdapter = ShippingAddressAdapter()
@@ -42,6 +42,10 @@ class ShippingFragment : BaseFragment() {
 
     private fun uiListener() {
         binding.ivBack.setOnClickListener { goBack() }
+
+        shippingAddressAdapter.setAsDefault = { id ->
+            shippingAddressViewModel.setAsDefault(id)
+        }
     }
 
     private fun setObservers() {
