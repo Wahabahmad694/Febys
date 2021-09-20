@@ -6,7 +6,7 @@ import com.hexagram.febys.models.view.VendorListing
 data class ResponseVendorListing(
     @SerializedName("total_rows")
     val totalRows: Int,
-    @SerializedName("vendors")
+    @SerializedName("vendors", alternate = ["celebrities"])
     val vendors: List<VendorListing.Vendor>,
     @SerializedName("pagination_info")
     val paginationInformation: PaginationInformation

@@ -14,6 +14,9 @@ class SearchTabsAdapter(fragment: Fragment, private val tabsList: List<String>) 
             2 -> {
                 VendorListingFragment.newInstance()
             }
+            3 -> {
+                VendorListingFragment.newInstance(true)
+            }
             else -> {
                 CategoryNameFragment.newInstance()
             }

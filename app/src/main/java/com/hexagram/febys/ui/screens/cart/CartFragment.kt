@@ -95,19 +95,21 @@ class CartFragment : BaseFragment() {
         }
     }
 
-    private fun calculateAndUpdatePrices(cart: List<CartDTO>?) {
-        val totalPrice: Double = cart?.sumOf {
+    private fun calculateAndUpdatePrices(cart: List<CartDTO>?, shippingCost: Double = 100.0) {
+        val itemsTotal: Double = cart?.sumOf {
             (it.promotionPrice?.toDouble() ?: it.variantPrice).times(it.quantity)
         } ?: 0.0
 
-        binding.tvTotalAmount.text =
-            getString(R.string.variant_price, totalPrice.toFixedDecimal(2))
-
         binding.tvSubtotalAmount.text =
-            getString(R.string.variant_price, totalPrice.toFixedDecimal(2))
+            getString(R.string.variant_price, itemsTotal.toFixedDecimal(2))
 
         binding.tvShippingAmount.text =
-            getString(R.string.variant_price, "0.00")
+            getString(R.string.variant_price, shippingCost.toFixedDecimal(2))
+
+        val totalPrice = itemsTotal.plus(shippingCost)
+        
+        binding.tvTotalAmount.text =
+            getString(R.string.variant_price, totalPrice.toFixedDecimal(2))
     }
 
     override fun getTvCartCount() = binding.tvCartCount

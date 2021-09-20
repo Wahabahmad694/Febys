@@ -5,11 +5,12 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.hexagram.febys.bindings.BindingAdapter
 import com.hexagram.febys.databinding.ItemVendorStoreBinding
 import com.hexagram.febys.databinding.ItemVendorStoreHeadingBinding
 import com.hexagram.febys.models.view.VendorListing
 
-class VendorListingAdapter :
+class VendorListingAdapter(private val isCelebrity: Boolean) :
     PagingDataAdapter<VendorListing, RecyclerView.ViewHolder>(diffCallback) {
 
     companion object {
@@ -30,13 +31,16 @@ class VendorListingAdapter :
         private const val VIEW_TYPE_VENDOR = 2
     }
 
+    var followVendor: ((vendor: Int) -> Unit)? = null
+    var unFollowVendor: ((vendor: Int) -> Unit)? = null
+
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val item = getItem(position)) {
             is VendorListing.VendorListingHeader -> {
                 (holder as HeaderViewHolder).bind(item)
             }
             is VendorListing.Vendor -> {
-                (holder as VendorViewHolder).bind(item)
+                (holder as VendorViewHolder).bind(item, position)
             }
         }
     }
@@ -71,14 +75,33 @@ class VendorListingAdapter :
         private val binding: ItemVendorStoreBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: VendorListing.Vendor) {
+        fun bind(item: VendorListing.Vendor, position: Int) {
             binding.apply {
-                vendorName.text = item.vendorName
-                vendorType.text = item.vendorType
+                isCelebrity = this@VendorListingAdapter.isCelebrity
+
+                vendorName.text = item.name
+                vendorType.text = item.role
+                preferredVendorOrShopName.text = item.preferredVendorOrShopName
+                storeRatingBar.max = 100
                 storeRatingBar.progress = item.vendorRating
+
+                val imageUrl =
+                    if (this@VendorListingAdapter.isCelebrity) item.profileImage else item.businessLogo
+                BindingAdapter.imageUrl(vendorImg, imageUrl)
 
                 showFollowBtn = item is VendorListing.FollowingVendor
                 isFollowing = (item as? VendorListing.FollowingVendor)?.isFollow ?: false
+
+                btnToggleFollow.setOnClickListener {
+                    if (isFollowing == null) return@setOnClickListener
+
+                    isFollowing = !isFollowing!!
+                    (item as? VendorListing.FollowingVendor)?.isFollow = isFollowing!!
+                    notifyItemChanged(position)
+
+                    if (isFollowing!!)
+                        followVendor?.invoke(item.id) else unFollowVendor?.invoke(item.id)
+                }
             }
         }
     }

@@ -7,28 +7,51 @@ sealed class VendorListing {
     data class VendorListingHeader(@StringRes val title: Int) : VendorListing()
 
     open class Vendor @JvmOverloads constructor(
+        @SerializedName("id")
         val id: Int,
         @SerializedName("name")
-        val vendorName: String,
+        val name: String,
+        @SerializedName("email")
+        val email: String,
+        @SerializedName("preferred_vendor_or_shop_name")
+        val preferredVendorOrShopName: String,
         @SerializedName("role")
-        val _vendorType: String,
-        @SerializedName("rating")
-        val _vendorRating: Float = 2.5f,
+        val _role: String,
+        @SerializedName("profileImage")
+        val profileImage: String?,
         @SerializedName("business_logo")
-        val img: String
+        val businessLogo: String,
+        @SerializedName("business_address")
+        val businessAddress: String,
+        @SerializedName("rating")
+        val _vendorRating: Float = 2.5f
     ) : VendorListing() {
-        val vendorType get() = _vendorType.substringBefore(" ")
+        val role get() = _role.substringBefore(" ")
         val vendorRating get() = _vendorRating.times(20).toInt()
     }
 
     class FollowingVendor @JvmOverloads constructor(
         id: Int,
-        vendorName: String,
-        _vendorType: String,
-        vendorRating: Float = 2.5f,
-        img: String,
-        val isFollow: Boolean = true
-    ) : VendorListing.Vendor(id, vendorName, _vendorType, vendorRating, img) {
+        name: String,
+        email: String,
+        preferredVendorOrShopName: String,
+        _role: String,
+        profileImage: String?,
+        businessLogo: String,
+        businessAddress: String,
+        _vendorRating: Float = 2.5f,
+        var isFollow: Boolean = true
+    ) : VendorListing.Vendor(
+        id,
+        name,
+        email,
+        preferredVendorOrShopName,
+        _role,
+        profileImage,
+        businessLogo,
+        businessAddress,
+        _vendorRating
+    ) {
 
         companion object {
             fun fromVendors(vendors: List<Vendor>): List<FollowingVendor> {
@@ -43,10 +66,14 @@ sealed class VendorListing {
             fun fromVendor(vendor: Vendor): FollowingVendor {
                 return FollowingVendor(
                     vendor.id,
-                    vendor.vendorName,
-                    vendor._vendorType,
-                    vendor._vendorRating,
-                    vendor.img,
+                    vendor.name,
+                    vendor.email,
+                    vendor.preferredVendorOrShopName,
+                    vendor._role,
+                    vendor.profileImage,
+                    vendor.businessLogo,
+                    vendor.businessAddress,
+                    vendor._vendorRating
                 )
             }
         }
