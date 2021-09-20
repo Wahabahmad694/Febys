@@ -27,36 +27,15 @@ class VendorListingPagingSource constructor(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, VendorListing> {
         request.pageNo = params.key ?: 1
         val req = mapOf("chunkSize" to request.chunkSize, "pageNo" to request.pageNo)
-
-        return when (val response =
-            if (isCelebrity) service.fetchCelebrities(req) else service.fetchVendors(req)) {
+        val response = if (isCelebrity) service.fetchCelebrities(req) else service.fetchVendors(req)
+        return when (response) {
             is ApiResponse.ApiSuccessResponse -> {
                 val vendorListing = mutableListOf<VendorListing>()
                 val vendorListingResponse = response.data!!.getResponse<ResponseVendorListing>()
+                val vendors = vendorListingResponse.vendors
 
-                if (vendorListingResponse.vendors.isNotEmpty()) {
-                    if (addHeader) {
-                        addHeader = false
-                        val headerRes =
-                            if (isCelebrity) R.string.label_explore_markets else R.string.label_explore_stores
-                        val exploreVendorHeader = VendorListing.VendorListingHeader(headerRes)
-                        vendorListing.add(0, exploreVendorHeader)
-                    }
-                    vendorListing.addAll(vendorListingResponse.vendors)
-                }
-
-                if (fetchFollowingVendor) {
-                    fetchFollowingVendor = false
-                    val headerRes =
-                        if (isCelebrity) R.string.label_market_you_follow else R.string.label_store_you_follow
-                    val followingVendorHeader = VendorListing.VendorListingHeader(headerRes)
-                    val followingVendors = fetchFollowingVendors(authKey)
-
-                    if (followingVendors.isNotEmpty()) {
-                        vendorListing.addAll(0, followingVendors)
-                        vendorListing.add(0, followingVendorHeader)
-                    }
-                }
+                addHeaderIfNecessary(vendorListing, vendors)
+                fetchAndAddFollowingVendor(vendorListing)
 
                 val (prevKey, nextKey) = getPagingKeys(vendorListingResponse.paginationInformation)
                 LoadResult.Page(vendorListing, prevKey, nextKey)
@@ -68,6 +47,44 @@ class VendorListingPagingSource constructor(
                 LoadResult.Error(Exception(response.exception))
             }
         }
+    }
+
+    private fun addHeaderIfNecessary(
+        vendorListing: MutableList<VendorListing>, vendors: List<VendorListing.Vendor>
+    ) {
+        if (vendors.isEmpty()) return
+
+        if (addHeader) {
+            addHeader = false
+            val headerRes = getUnfollowedHeaderStringRes()
+            val exploreVendorHeader = VendorListing.VendorListingHeader(headerRes)
+            vendorListing.add(0, exploreVendorHeader)
+        }
+
+        vendorListing.addAll(vendors)
+    }
+
+    private fun getUnfollowedHeaderStringRes(): Int {
+        return if (isCelebrity) R.string.label_explore_markets else R.string.label_explore_stores
+    }
+
+    private suspend fun fetchAndAddFollowingVendor(vendorListing: MutableList<VendorListing>) {
+        if (!fetchFollowingVendor) return
+
+        fetchFollowingVendor = false
+
+        val headerRes = getFollowingVendorHeaderStringRes()
+        val followingVendorHeader = VendorListing.VendorListingHeader(headerRes)
+
+        val followingVendors = fetchFollowingVendors(authKey)
+        if (followingVendors.isNotEmpty()) {
+            vendorListing.addAll(0, followingVendors)
+            vendorListing.add(0, followingVendorHeader)
+        }
+    }
+
+    private fun getFollowingVendorHeaderStringRes(): Int {
+        return if (isCelebrity) R.string.label_market_you_follow else R.string.label_store_you_follow
     }
 
     private suspend fun fetchFollowingVendors(authKey: String): List<VendorListing.FollowingVendor> {

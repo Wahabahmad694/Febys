@@ -2,8 +2,6 @@ package com.hexagram.febys.models.view
 
 import androidx.annotation.StringRes
 import com.google.gson.annotations.SerializedName
-import kotlin.random.Random
-import kotlin.random.nextInt
 
 sealed class VendorListing {
     data class VendorListingHeader(@StringRes val title: Int) : VendorListing()
