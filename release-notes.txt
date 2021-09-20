@@ -1,1 +1,4 @@
-Added Release notes by DevOps
+1. Vendor Listing
+2. Celebrity Listing
+3. Follow & unfollow vendors and celebrity
+4. Dummy shipping cost $100 in cart
