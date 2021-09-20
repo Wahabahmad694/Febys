@@ -35,7 +35,7 @@ class VendorListingFragment : BaseFragment() {
 
     private lateinit var binding: FragmentVendorListingBinding
     private val vendorViewModel: VendorViewModel by viewModels()
-    private lateinit var vendorListingAdapter : VendorListingAdapter
+    private lateinit var vendorListingAdapter: VendorListingAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,12 +54,21 @@ class VendorListingFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initUi()
+        uiListener()
         setObserver()
     }
 
     private fun initUi() {
         binding.rvVendors.applySpaceItemDecoration(verticalDimenRes = R.dimen._12sdp)
         binding.rvVendors.adapter = vendorListingAdapter
+    }
+
+    private fun uiListener() {
+        vendorListingAdapter.followVendor =
+            { vendorId -> vendorViewModel.followVendor(vendorId) }
+
+        vendorListingAdapter.unFollowVendor =
+            { vendorId -> vendorViewModel.unFollowVendor(vendorId) }
     }
 
     private fun setObserver() {

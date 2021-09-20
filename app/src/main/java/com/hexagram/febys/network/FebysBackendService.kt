@@ -78,4 +78,14 @@ interface FebysBackendService {
 
     @GET("v1/consumers/followed-celebrities")
     suspend fun fetchFollowingCelebrities(@Header("Authorization") authToken: String): ApiResponse<ResponseVendorListing>
+
+    @POST("v1/consumers/follow-user")
+    suspend fun followVendor(
+        @Header("Authorization") authKey: String, @Body req: Map<String, Int>
+    ): ApiResponse<Unit>
+
+    @POST("v1/consumers/unFollow-user")
+    suspend fun unFollowVendor(
+        @Header("Authorization") authKey: String, @Body req: Map<String, Int>
+    ): ApiResponse<Unit>
 }

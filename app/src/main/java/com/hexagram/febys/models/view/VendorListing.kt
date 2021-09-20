@@ -42,7 +42,7 @@ sealed class VendorListing {
         businessLogo: String,
         businessAddress: String,
         _vendorRating: Float = 2.5f,
-        val isFollow: Boolean = true
+        var isFollow: Boolean = true
     ) : VendorListing.Vendor(
         id,
         name,

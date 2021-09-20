@@ -13,4 +13,7 @@ interface IVendorRepo {
         scope: CoroutineScope,
         dispatcher: CoroutineDispatcher = Dispatchers.IO
     ): Flow<PagingData<VendorListing>>
+
+    suspend fun followVendor(vendorId: Int)
+    suspend fun unFollowVendor(vendorId: Int)
 }

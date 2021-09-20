@@ -7,6 +7,7 @@ import com.hexagram.febys.models.view.VendorListing
 import com.hexagram.febys.repos.IVendorRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,4 +24,10 @@ class VendorViewModel @Inject constructor(
 
         return allCategoryPagingData!!
     }
+
+    fun followVendor(vendorId: Int) =
+        viewModelScope.launch { vendorRepo.followVendor(vendorId) }
+
+    fun unFollowVendor(vendorId: Int) =
+        viewModelScope.launch { vendorRepo.unFollowVendor(vendorId) }
 }
