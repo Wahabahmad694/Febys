@@ -34,4 +34,30 @@ class ShippingAddressRepoImpl @Inject constructor(
     override suspend fun setAsDefault(id: Int) {
         FakeApiService.setAsDefault(id)
     }
+
+    override suspend fun updateShippingAddress(
+        shippingAddress: ShippingAddress, dispatcher: CoroutineDispatcher
+    ): Flow<DataState<Unit>> = flow<DataState<Unit>> {
+        val authToken = pref.getAccessToken()
+        val response = FakeApiService.updateShippingAddress(authToken, shippingAddress)
+        response.onSuccess {
+            emit(DataState.Data(Unit))
+        }
+            .onError { emit(DataState.ApiError(message)) }
+            .onException { emit(DataState.ExceptionError()) }
+            .onNetworkError { emit(DataState.NetworkError()) }
+    }.flowOn(dispatcher)
+
+    override suspend fun addShippingAddress(
+        shippingAddress: ShippingAddress, dispatcher: CoroutineDispatcher
+    ): Flow<DataState<Unit>> = flow<DataState<Unit>> {
+        val authToken = pref.getAccessToken()
+        val response = FakeApiService.addShippingAddress(authToken, shippingAddress)
+        response.onSuccess {
+            emit(DataState.Data(Unit))
+        }
+            .onError { emit(DataState.ApiError(message)) }
+            .onException { emit(DataState.ExceptionError()) }
+            .onNetworkError { emit(DataState.NetworkError()) }
+    }.flowOn(dispatcher)
 }

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentShippingAddressBinding
@@ -71,6 +72,15 @@ class ShippingAddressFragment : BaseFragment() {
                     hideLoader()
                     updateUi(it.data)
                 }
+            }
+        }
+
+        setFragmentResultListener(AddEditShippingAddressFragment.ARG_IS_ADD_OR_UPDATE) { _, bundle ->
+            val isAddOrUpdate =
+                bundle.getBoolean(AddEditShippingAddressFragment.ARG_IS_ADD_OR_UPDATE, false)
+
+            if (isAddOrUpdate) {
+                shippingAddressViewModel.refreshShippingAddresses()
             }
         }
     }

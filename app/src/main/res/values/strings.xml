@@ -27,6 +27,7 @@
     <string name="label_description">Description</string>
     <string name="label_variant">Variant</string>
     <string name="label_select_variant">Select %1s</string>
+    <string name="label_title">%1s</string>
     <string name="variant_selected">%1$s %2$s</string>
     <string name="variant_price">$%1s</string>
     <string name="only_one_variant">This product has only one variant</string>
@@ -156,5 +157,11 @@
     <string name="label_postal_code">Postal Code</string>
     <string name="label_set_as_default_shipping_address">Set as default shipping address</string>
     <string name="label_save_and_continue">Save and continue</string>
+    <string name="error_enter_valid_postal_code">Please enter valid postal code</string>
+    <string name="error_enter_valid_state">Please enter valid state</string>
+    <string name="error_enter_valid_city">Please enter valid city</string>
+    <string name="error_enter_valid_address">Please enter valid address</string>
+    <string name="label_select_address_label">Select Address Label</string>
+    <string name="label_select_region">Select State</string>
 
 </resources>

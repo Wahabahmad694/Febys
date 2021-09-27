@@ -7,403 +7,425 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.screens.shipping.address.AddEditShippingAddressFragment">
 
-        <com.hexagram.febys.utils.ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:paddingBottom="@dimen/_72sdp">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.hexagram.febys.utils.ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/label_shipping_address"
-                    style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="?actionBarSize"
-                    android:gravity="center"
-                    android:paddingHorizontal="@dimen/_32dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="@string/label_shipping_address" />
+                    android:layout_height="match_parent">
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/iv_back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/_16dp"
-                    android:src="@drawable/ic_back"
-                    app:layout_constraintBottom_toBottomOf="@id/label_shipping_address"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/label_shipping_address" />
+                    <TextView
+                        android:id="@+id/label_shipping_address"
+                        style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+                        android:layout_width="match_parent"
+                        android:layout_height="?actionBarSize"
+                        android:gravity="center"
+                        android:paddingHorizontal="@dimen/_32dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="@string/label_shipping_address" />
 
-                <LinearLayout
-                    android:id="@+id/container_address_label"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_18sdp"
-                    android:orientation="vertical"
-                    android:paddingHorizontal="@dimen/_16sdp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/iv_back">
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_16dp"
+                        android:src="@drawable/ic_back"
+                        app:layout_constraintBottom_toBottomOf="@id/label_shipping_address"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/label_shipping_address" />
 
                     <LinearLayout
+                        android:id="@+id/container_address_label"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                        android:layout_marginTop="@dimen/_18sdp"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="@dimen/_16sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/iv_back">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/label_address_label"
+                                style="@style/TextTheme.Arial.TS16"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/label_address_label" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/office_label_arrow"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_arrow_down" />
+
+                        </LinearLayout>
 
                         <TextView
-                            android:id="@+id/label_address_label"
+                            android:id="@+id/tv_address_label"
                             style="@style/TextTheme.Arial.TS16"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/label_address_label" />
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="2dp"
+                            tools:text="Office" />
 
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/office_label_arrow"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_arrow_down" />
-
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:background="@color/grey_e1e5e8" />
                     </LinearLayout>
 
                     <TextView
-                        android:id="@+id/tv_address_label"
+                        android:id="@+id/label_first_name"
                         style="@style/TextTheme.Arial.TS16"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="2dp"
-                        tools:text="Office" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_32sdp"
+                        android:text="@string/label_first_name"
+                        app:layout_constraintTop_toBottomOf="@id/container_address_label" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/et_first_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_16sdp"
+                        android:background="@null"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPersonName"
+                        android:paddingVertical="@dimen/_8dp"
+                        android:textAppearance="@style/TextTheme.Arial.TS16"
+                        app:layout_constraintTop_toBottomOf="@id/label_first_name" />
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="@dimen/_8sdp"
-                        android:background="@color/grey_e1e5e8" />
-                </LinearLayout>
+                        android:layout_height="@dimen/_1dp"
+                        android:layout_marginHorizontal="@dimen/_16sdp"
+                        android:background="@color/grey_e1e5e8"
+                        app:layout_constraintTop_toBottomOf="@id/et_first_name" />
 
-                <TextView
-                    android:id="@+id/label_first_name"
-                    style="@style/TextTheme.Arial.TS16"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_32sdp"
-                    android:text="@string/label_first_name"
-                    app:layout_constraintTop_toBottomOf="@id/container_address_label" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/et_first_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_16sdp"
-                    android:background="@null"
-                    android:imeOptions="actionNext"
-                    android:inputType="textEmailAddress"
-                    android:paddingVertical="@dimen/_8dp"
-                    android:textAppearance="@style/TextTheme.Arial.TS16"
-                    app:layout_constraintTop_toBottomOf="@id/label_first_name" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1dp"
-                    android:layout_marginHorizontal="@dimen/_16sdp"
-                    android:background="@color/grey_e1e5e8"
-                    app:layout_constraintTop_toBottomOf="@id/et_first_name" />
-
-                <TextView
-                    android:id="@+id/label_last_name"
-                    style="@style/TextTheme.Arial.TS16"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_32sdp"
-                    android:text="@string/label_last_name"
-                    app:layout_constraintTop_toBottomOf="@id/et_first_name" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/et_last_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_16sdp"
-                    android:background="@null"
-                    android:imeOptions="actionNext"
-                    android:inputType="textEmailAddress"
-                    android:paddingVertical="@dimen/_8dp"
-                    android:textAppearance="@style/TextTheme.Arial.TS16"
-                    app:layout_constraintTop_toBottomOf="@id/label_last_name" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1dp"
-                    android:layout_marginHorizontal="@dimen/_16sdp"
-                    android:background="@color/grey_e1e5e8"
-                    app:layout_constraintTop_toBottomOf="@id/et_last_name" />
-
-                <LinearLayout
-                    android:id="@+id/container_region"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_32sdp"
-                    android:orientation="vertical"
-                    android:paddingHorizontal="@dimen/_16sdp"
-                    app:layout_constraintTop_toBottomOf="@id/et_last_name">
-
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/label_last_name"
+                        style="@style/TextTheme.Arial.TS16"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                        android:layout_marginHorizontal="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_32sdp"
+                        android:text="@string/label_last_name"
+                        app:layout_constraintTop_toBottomOf="@id/et_first_name" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/et_last_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_16sdp"
+                        android:background="@null"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPersonName"
+                        android:paddingVertical="@dimen/_8dp"
+                        android:textAppearance="@style/TextTheme.Arial.TS16"
+                        app:layout_constraintTop_toBottomOf="@id/label_last_name" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1dp"
+                        android:layout_marginHorizontal="@dimen/_16sdp"
+                        android:background="@color/grey_e1e5e8"
+                        app:layout_constraintTop_toBottomOf="@id/et_last_name" />
+
+                    <LinearLayout
+                        android:id="@+id/container_region"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_32sdp"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="@dimen/_16sdp"
+                        app:layout_constraintTop_toBottomOf="@id/et_last_name">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/label_destination_or_region"
+                                style="@style/TextTheme.Arial.TS16"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/label_destination_or_region" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/region_arrow"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_arrow_down" />
+
+                        </LinearLayout>
 
                         <TextView
-                            android:id="@+id/label_destination_or_region"
+                            android:id="@+id/tv_region"
                             style="@style/TextTheme.Arial.TS16"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/label_destination_or_region" />
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="2dp"
+                            tools:text="Ghana" />
 
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/region_arrow"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_arrow_down" />
-
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:background="@color/grey_e1e5e8" />
                     </LinearLayout>
 
                     <TextView
-                        android:id="@+id/tv_region"
+                        android:id="@+id/label_address_line_1"
                         style="@style/TextTheme.Arial.TS16"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="2dp"
-                        tools:text="Ghana" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_32sdp"
+                        android:text="@string/label_address_line_1"
+                        app:layout_constraintTop_toBottomOf="@id/container_region" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/et_address_line_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_16sdp"
+                        android:background="@null"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPostalAddress"
+                        android:paddingVertical="@dimen/_8dp"
+                        android:textAppearance="@style/TextTheme.Arial.TS16"
+                        app:layout_constraintTop_toBottomOf="@id/label_address_line_1" />
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="@dimen/_1dp"
+                        android:layout_marginHorizontal="@dimen/_16sdp"
+                        android:background="@color/grey_e1e5e8"
+                        app:layout_constraintTop_toBottomOf="@id/et_address_line_1" />
+
+                    <TextView
+                        android:id="@+id/label_address_line_2"
+                        style="@style/TextTheme.Arial.TS16.Grey"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_32sdp"
+                        android:text="@string/label_address_line_2"
+                        app:layout_constraintTop_toBottomOf="@id/et_address_line_1" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/et_address_line_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_16sdp"
+                        android:background="@null"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPostalAddress"
+                        android:paddingVertical="@dimen/_8dp"
+                        android:textAppearance="@style/TextTheme.Arial.TS16"
+                        app:layout_constraintTop_toBottomOf="@id/label_address_line_2" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1dp"
+                        android:layout_marginHorizontal="@dimen/_16sdp"
+                        android:background="@color/grey_e1e5e8"
+                        app:layout_constraintTop_toBottomOf="@id/et_address_line_2" />
+
+                    <TextView
+                        android:id="@+id/label_city"
+                        style="@style/TextTheme.Arial.TS16"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_32sdp"
+                        android:text="@string/label_city"
+                        app:layout_constraintTop_toBottomOf="@id/et_address_line_2" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/et_city"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_16sdp"
+                        android:background="@null"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPostalAddress"
+                        android:paddingVertical="@dimen/_8dp"
+                        android:textAppearance="@style/TextTheme.Arial.TS16"
+                        app:layout_constraintTop_toBottomOf="@id/label_city" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1dp"
+                        android:layout_marginHorizontal="@dimen/_16sdp"
+                        android:background="@color/grey_e1e5e8"
+                        app:layout_constraintTop_toBottomOf="@id/et_city" />
+
+                    <TextView
+                        android:id="@+id/label_state"
+                        style="@style/TextTheme.Arial.TS16.Grey"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_32sdp"
+                        android:text="@string/label_state_optional"
+                        app:layout_constraintTop_toBottomOf="@id/et_city" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/et_state"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_16sdp"
+                        android:background="@null"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPostalAddress"
+                        android:paddingVertical="@dimen/_8dp"
+                        android:textAppearance="@style/TextTheme.Arial.TS16"
+                        app:layout_constraintTop_toBottomOf="@id/label_state" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1dp"
+                        android:layout_marginHorizontal="@dimen/_16sdp"
+                        android:background="@color/grey_e1e5e8"
+                        app:layout_constraintTop_toBottomOf="@id/et_state" />
+
+                    <TextView
+                        android:id="@+id/label_postal_code"
+                        style="@style/TextTheme.Arial.TS16"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_32sdp"
+                        android:text="@string/label_postal_code"
+                        app:layout_constraintTop_toBottomOf="@id/et_state" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/et_postal_code"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_16sdp"
+                        android:background="@null"
+                        android:imeOptions="actionNext"
+                        android:inputType="numberSigned"
+                        android:paddingVertical="@dimen/_8dp"
+                        android:textAppearance="@style/TextTheme.Arial.TS16"
+                        app:layout_constraintTop_toBottomOf="@id/label_postal_code" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1dp"
+                        android:layout_marginHorizontal="@dimen/_16sdp"
+                        android:background="@color/grey_e1e5e8"
+                        app:layout_constraintTop_toBottomOf="@id/et_postal_code" />
+
+                    <TextView
+                        android:id="@+id/label_phone"
+                        style="@style/TextTheme.Arial.TS16"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_32sdp"
+                        android:text="@string/label_phone"
+                        app:layout_constraintTop_toBottomOf="@id/et_postal_code" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/et_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_16sdp"
+                        android:background="@null"
+                        android:imeOptions="actionDone"
+                        android:inputType="phone"
+                        android:paddingVertical="@dimen/_8dp"
+                        android:textAppearance="@style/TextTheme.Arial.TS16"
+                        app:layout_constraintTop_toBottomOf="@id/label_phone" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1dp"
+                        android:layout_marginHorizontal="@dimen/_16sdp"
+                        android:background="@color/grey_e1e5e8"
+                        app:layout_constraintTop_toBottomOf="@id/et_phone" />
+
+                    <TextView
+                        android:id="@+id/label_phone_info"
+                        style="@style/TextTheme.Arial.TS14.Grey"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_16sdp"
                         android:layout_marginTop="@dimen/_8sdp"
-                        android:background="@color/grey_e1e5e8" />
-                </LinearLayout>
+                        android:text="@string/label_phone_info_shipping_address"
+                        app:layout_constraintTop_toBottomOf="@id/et_phone" />
 
-                <TextView
-                    android:id="@+id/label_address_line_1"
-                    style="@style/TextTheme.Arial.TS16"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_32sdp"
-                    android:text="@string/label_address_line_1"
-                    app:layout_constraintTop_toBottomOf="@id/container_region" />
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/switch_set_as_default"
+                        style="@style/TextTheme.Arial.TS16"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_32sdp"
+                        android:layout_marginHorizontal="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_18sdp"
+                        android:gravity="center_vertical"
+                        android:text="@string/label_set_as_default_shipping_address"
+                        app:layout_constraintTop_toBottomOf="@id/label_phone_info" />
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/et_address_line_1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_16sdp"
-                    android:background="@null"
-                    android:imeOptions="actionNext"
-                    android:inputType="textEmailAddress"
-                    android:paddingVertical="@dimen/_8dp"
-                    android:textAppearance="@style/TextTheme.Arial.TS16"
-                    app:layout_constraintTop_toBottomOf="@id/label_address_line_1" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_save"
+                        style="@style/ButtonTheme.Contained"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_17sdp"
+                        android:layout_marginTop="@dimen/_32sdp"
+                        android:layout_marginBottom="@dimen/_14sdp"
+                        android:text="@string/label_save_and_continue"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/switch_set_as_default"
+                        app:layout_constraintWidth_max="@dimen/_298sdp" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.hexagram.febys.utils.ScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1dp"
-                    android:layout_marginHorizontal="@dimen/_16sdp"
-                    android:background="@color/grey_e1e5e8"
-                    app:layout_constraintTop_toBottomOf="@id/et_address_line_1" />
+        <View
+            android:id="@+id/bg_dim"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?color_dim" />
 
-                <TextView
-                    android:id="@+id/label_address_line_2"
-                    style="@style/TextTheme.Arial.TS16.Grey"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_32sdp"
-                    android:text="@string/label_address_line_2"
-                    app:layout_constraintTop_toBottomOf="@id/et_address_line_1" />
+        <include
+            android:id="@+id/bottom_sheet_address_labels"
+            layout="@layout/bottom_sheet_list_of_selection"
+            app:title="@{@string/label_select_address_label}" />
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/et_address_line_2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_16sdp"
-                    android:background="@null"
-                    android:imeOptions="actionNext"
-                    android:inputType="textEmailAddress"
-                    android:paddingVertical="@dimen/_8dp"
-                    android:textAppearance="@style/TextTheme.Arial.TS16"
-                    app:layout_constraintTop_toBottomOf="@id/label_address_line_2" />
+        <include
+            android:id="@+id/bottom_sheet_region"
+            layout="@layout/bottom_sheet_list_of_selection"
+            app:title="@{@string/label_select_region}" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1dp"
-                    android:layout_marginHorizontal="@dimen/_16sdp"
-                    android:background="@color/grey_e1e5e8"
-                    app:layout_constraintTop_toBottomOf="@id/et_address_line_2" />
-
-                <TextView
-                    android:id="@+id/label_city"
-                    style="@style/TextTheme.Arial.TS16"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_32sdp"
-                    android:text="@string/label_city"
-                    app:layout_constraintTop_toBottomOf="@id/et_address_line_2" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/et_city"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_16sdp"
-                    android:background="@null"
-                    android:imeOptions="actionNext"
-                    android:inputType="textEmailAddress"
-                    android:paddingVertical="@dimen/_8dp"
-                    android:textAppearance="@style/TextTheme.Arial.TS16"
-                    app:layout_constraintTop_toBottomOf="@id/label_city" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1dp"
-                    android:layout_marginHorizontal="@dimen/_16sdp"
-                    android:background="@color/grey_e1e5e8"
-                    app:layout_constraintTop_toBottomOf="@id/et_city" />
-
-                <TextView
-                    android:id="@+id/label_state"
-                    style="@style/TextTheme.Arial.TS16.Grey"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_32sdp"
-                    android:text="@string/label_state_optional"
-                    app:layout_constraintTop_toBottomOf="@id/et_city" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/et_state"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_16sdp"
-                    android:background="@null"
-                    android:imeOptions="actionNext"
-                    android:inputType="textEmailAddress"
-                    android:paddingVertical="@dimen/_8dp"
-                    android:textAppearance="@style/TextTheme.Arial.TS16"
-                    app:layout_constraintTop_toBottomOf="@id/label_state" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1dp"
-                    android:layout_marginHorizontal="@dimen/_16sdp"
-                    android:background="@color/grey_e1e5e8"
-                    app:layout_constraintTop_toBottomOf="@id/et_state" />
-
-                <TextView
-                    android:id="@+id/label_postal_code"
-                    style="@style/TextTheme.Arial.TS16"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_32sdp"
-                    android:text="@string/label_postal_code"
-                    app:layout_constraintTop_toBottomOf="@id/et_state" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/et_postal_code"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_16sdp"
-                    android:background="@null"
-                    android:imeOptions="actionNext"
-                    android:inputType="textEmailAddress"
-                    android:paddingVertical="@dimen/_8dp"
-                    android:textAppearance="@style/TextTheme.Arial.TS16"
-                    app:layout_constraintTop_toBottomOf="@id/label_postal_code" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1dp"
-                    android:layout_marginHorizontal="@dimen/_16sdp"
-                    android:background="@color/grey_e1e5e8"
-                    app:layout_constraintTop_toBottomOf="@id/et_postal_code" />
-
-                <TextView
-                    android:id="@+id/label_phone"
-                    style="@style/TextTheme.Arial.TS16"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_32sdp"
-                    android:text="@string/label_phone"
-                    app:layout_constraintTop_toBottomOf="@id/et_postal_code" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/et_phone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_16sdp"
-                    android:background="@null"
-                    android:imeOptions="actionNext"
-                    android:inputType="textEmailAddress"
-                    android:paddingVertical="@dimen/_8dp"
-                    android:textAppearance="@style/TextTheme.Arial.TS16"
-                    app:layout_constraintTop_toBottomOf="@id/label_phone" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1dp"
-                    android:layout_marginHorizontal="@dimen/_16sdp"
-                    android:background="@color/grey_e1e5e8"
-                    app:layout_constraintTop_toBottomOf="@id/et_phone" />
-
-                <TextView
-                    android:id="@+id/label_phone_info"
-                    style="@style/TextTheme.Arial.TS14.Grey"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:text="@string/label_phone_info_shipping_address"
-                    app:layout_constraintTop_toBottomOf="@id/et_phone" />
-
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/switch_set_as_default"
-                    style="@style/TextTheme.Arial.TS16"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_32sdp"
-                    android:layout_marginHorizontal="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_18sdp"
-                    android:gravity="center_vertical"
-                    android:text="@string/label_set_as_default_shipping_address"
-                    app:layout_constraintTop_toBottomOf="@id/label_phone_info" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.hexagram.febys.utils.ScrollView>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_save"
-            style="@style/ButtonTheme.Contained"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_17sdp"
-            android:layout_marginBottom="@dimen/_14sdp"
-            android:text="@string/label_save_and_continue"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintWidth_max="@dimen/_298sdp" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

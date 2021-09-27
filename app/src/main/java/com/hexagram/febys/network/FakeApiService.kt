@@ -18,7 +18,7 @@ object FakeApiService {
             "Airport Res, Area",
             "Ghana",
             "233321",
-            "",
+            "03331234567",
             true
         ),
         ShippingAddress(
@@ -32,7 +32,7 @@ object FakeApiService {
             "Airport Res, Area",
             "Ghana",
             "233321",
-            "",
+            "03001234567",
             false
         )
     )
@@ -44,11 +44,31 @@ object FakeApiService {
 
     suspend fun setAsDefault(id: Int) {
         delay(100)
-        val defaultIndex = addresses.indexOfFirst { it.isDefault }
-        if (defaultIndex != -1) {
-            addresses[defaultIndex].isDefault = false
-        }
-
+        addresses.forEach { it.isDefault = false }
         addresses.firstOrNull { it.id == id }?.isDefault = true
+    }
+
+    suspend fun updateShippingAddress(
+        authToken: String, shippingAddress: ShippingAddress
+    ): ApiResponse<Unit> {
+        delay(100)
+        val index = addresses.indexOfFirst { it.id == shippingAddress.id }
+        if (index != -1) {
+            addresses.removeAt(index)
+            addresses.add(index, shippingAddress)
+            if (shippingAddress.isDefault) {
+                setAsDefault(shippingAddress.id)
+            }
+        }
+        return ApiResponse.ApiSuccessResponse(Response.success(Unit))
+    }
+
+    suspend fun addShippingAddress(
+        authToken: String, shippingAddress: ShippingAddress
+    ): ApiResponse<Unit> {
+        delay(100)
+        addresses.add(shippingAddress)
+        if (shippingAddress.isDefault) setAsDefault(shippingAddress.id)
+        return ApiResponse.ApiSuccessResponse(Response.success(Unit))
     }
 }
