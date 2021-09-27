@@ -6,15 +6,16 @@ import kotlinx.coroutines.delay
 import retrofit2.Response
 
 object FakeApiService {
-    private val addresses = mutableListOf<ShippingAddress>(
+    private val addresses = mutableListOf(
         ShippingAddress(
             1,
             "Hillary",
-            "Africa",
+            "Widanama",
             "Home",
             "Ghana",
             "Virtual Incubator, Busy Internet",
             null,
+            "Airport Res, Area",
             "Ghana",
             "233321",
             "",
@@ -23,11 +24,12 @@ object FakeApiService {
         ShippingAddress(
             2,
             "Hillary",
-            "Africa",
+            "Widanama",
             "Office",
             "Ghana",
             "No. 18 Third Close, Airport Res Area",
             null,
+            "Airport Res, Area",
             "Ghana",
             "233321",
             "",

@@ -12,6 +12,7 @@ import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.utils.goBack
 import com.hexagram.febys.utils.hideLoader
+import com.hexagram.febys.utils.navigateTo
 import com.hexagram.febys.utils.showLoader
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -46,6 +47,14 @@ class ShippingAddressFragment : BaseFragment() {
         shippingAddressAdapter.setAsDefault = { id ->
             shippingAddressViewModel.setAsDefault(id)
         }
+
+        shippingAddressAdapter.editShippingAddress = { shippingAddress ->
+            gotoAddEditShippingAddress(shippingAddress)
+        }
+
+        binding.labelAddNewShippingAddress.setOnClickListener {
+            gotoAddEditShippingAddress()
+        }
     }
 
     private fun setObservers() {
@@ -72,5 +81,15 @@ class ShippingAddressFragment : BaseFragment() {
         }
 
         shippingAddressAdapter.submitList(addresses)
+    }
+
+
+    private fun gotoAddEditShippingAddress(shippingAddress: ShippingAddress? = null) {
+        val forceSetAsDefault = shippingAddressAdapter.itemCount == 0
+        val gotoAddEditShippingAddress = ShippingAddressFragmentDirections
+            .actionShippingAddressFragmentToAddEditShippingAddressFragment(
+                shippingAddress, forceSetAsDefault
+            )
+        navigateTo(gotoAddEditShippingAddress)
     }
 }

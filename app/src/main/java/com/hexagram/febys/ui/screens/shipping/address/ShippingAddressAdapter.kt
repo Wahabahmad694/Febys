@@ -27,6 +27,7 @@ class ShippingAddressAdapter :
     }
 
     var setAsDefault: ((id: Int) -> Unit)? = null
+    var editShippingAddress: ((shippingAddress: ShippingAddress) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShippingAddressViewHolder {
         return ShippingAddressViewHolder(
@@ -64,6 +65,10 @@ class ShippingAddressAdapter :
                 if (!shippingAddress.isDefault) {
                     setAsDefault(shippingAddress, position)
                 }
+            }
+
+            binding.editAddress.setOnClickListener {
+                editShippingAddress?.invoke(shippingAddress)
             }
         }
     }
