@@ -168,6 +168,10 @@ class AddEditShippingAddressFragment : Fragment() {
         regionBottomSheet.onStateChange { state ->
             onBottomSheetStateChange(state)
         }
+
+        binding.bgDim.setOnClickListener {
+            // do nothing, just add to avoid click on views that are behind of bg dim when bg dim is visible
+        }
     }
 
     private fun setObserver() {
