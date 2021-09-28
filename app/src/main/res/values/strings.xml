@@ -27,6 +27,7 @@
     <string name="label_description">Description</string>
     <string name="label_variant">Variant</string>
     <string name="label_select_variant">Select %1s</string>
+    <string name="label_title">%1s</string>
     <string name="variant_selected">%1$s %2$s</string>
     <string name="variant_price">$%1s</string>
     <string name="only_one_variant">This product has only one variant</string>
@@ -39,6 +40,7 @@
     <string name="label_password">Password</string>
     <string name="label_confirm_password">Confirm Password</string>
     <string name="label_phone">Phone</string>
+    <string name="label_phone_info_shipping_address">We will only contact you by phone if there is a problem with your order</string>
     <string name="label_verification">Verification</string>
     <string name="label_otp_verification_slogan">We will send you a One Time OTP Code on your phone number</string>
     <string name="label_resend_otp">Didn\'t receive the verification OTP?</string>
@@ -134,6 +136,8 @@
     <string name="label_account_settings">Account Settings</string>
     <string name="label_vouchers">Vouchers</string>
     <string name="label_shipping_address">Shipping Address</string>
+    <string name="label_new_shipping_address">New Shipping Address</string>
+    <string name="label_edit_shipping_address">Edit Shipping Address</string>
     <string name="label_notifications">Notifications</string>
     <string name="label_me">Me</string>
     <string name="label_explore_stores">Explore Stores</string>
@@ -144,5 +148,20 @@
     <string name="label_create_account">Create Account</string>
     <string name="label_add_shipping_address">Add new address</string>
     <string name="label_edit">Edit</string>
+    <string name="label_address_label">Address Label</string>
+    <string name="label_destination_or_region">Destination/Region</string>
+    <string name="label_address_line_1">Address Line 1</string>
+    <string name="label_address_line_2">Address Line 2 (Optional)</string>
+    <string name="label_city">City</string>
+    <string name="label_state_optional">State (Optional)</string>
+    <string name="label_postal_code">Postal Code</string>
+    <string name="label_set_as_default_shipping_address">Set as default shipping address</string>
+    <string name="label_save_and_continue">Save and continue</string>
+    <string name="error_enter_valid_postal_code">Please enter valid postal code</string>
+    <string name="error_enter_valid_state">Please enter valid state</string>
+    <string name="error_enter_valid_city">Please enter valid city</string>
+    <string name="error_enter_valid_address">Please enter valid address</string>
+    <string name="label_select_address_label">Select Address Label</string>
+    <string name="label_select_region">Select State</string>
 
 </resources>

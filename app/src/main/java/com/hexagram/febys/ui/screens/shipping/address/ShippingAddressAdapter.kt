@@ -26,6 +26,9 @@ class ShippingAddressAdapter :
         }
     }
 
+    var setAsDefault: ((id: Int) -> Unit)? = null
+    var editShippingAddress: ((shippingAddress: ShippingAddress) -> Unit)? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShippingAddressViewHolder {
         return ShippingAddressViewHolder(
             ItemShippingAddressBinding.inflate(
@@ -38,6 +41,18 @@ class ShippingAddressAdapter :
         holder.bind(getItem(position), position)
     }
 
+    private fun setAsDefault(shippingAddress: ShippingAddress, position: Int) {
+        val defaultIndex = currentList.indexOfFirst { it.isDefault }
+        if (defaultIndex != -1) {
+            currentList[defaultIndex].isDefault = false
+            notifyItemChanged(defaultIndex)
+        }
+
+        currentList[position].isDefault = true
+        notifyItemChanged(position)
+
+        setAsDefault?.invoke(shippingAddress.id)
+    }
 
     inner class ShippingAddressViewHolder(
         private val binding: ItemShippingAddressBinding
@@ -45,6 +60,16 @@ class ShippingAddressAdapter :
 
         fun bind(shippingAddress: ShippingAddress, position: Int) {
             binding.address = shippingAddress
+
+            binding.setAsDefault.setOnClickListener {
+                if (!shippingAddress.isDefault) {
+                    setAsDefault(shippingAddress, position)
+                }
+            }
+
+            binding.editAddress.setOnClickListener {
+                editShippingAddress?.invoke(shippingAddress)
+            }
         }
     }
 }

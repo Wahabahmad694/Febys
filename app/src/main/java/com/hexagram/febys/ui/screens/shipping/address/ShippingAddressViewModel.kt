@@ -19,14 +19,35 @@ class ShippingAddressViewModel @Inject constructor(
     private val _shippingAddresses = MutableLiveData<DataState<List<ShippingAddress>>>()
     val shippingAddresses: LiveData<DataState<List<ShippingAddress>>> = _shippingAddresses
 
+    private val _addUpdateShippingAddress = MutableLiveData<DataState<Unit>>()
+    val addUpdateShippingAddress: LiveData<DataState<Unit>> = _addUpdateShippingAddress
+
     init {
         refreshShippingAddresses()
     }
 
-    private fun refreshShippingAddresses() = viewModelScope.launch {
+    fun refreshShippingAddresses() = viewModelScope.launch {
         _shippingAddresses.postValue(DataState.Loading())
         shippingRepo.fetchShippingAddressRepo().collect {
             _shippingAddresses.postValue(it)
+        }
+    }
+
+    fun setAsDefault(id: Int) = viewModelScope.launch {
+        shippingRepo.setAsDefault(id)
+    }
+
+    fun updateShippingAddress(shippingAddress: ShippingAddress) = viewModelScope.launch {
+        _addUpdateShippingAddress.postValue(DataState.Loading())
+        shippingRepo.updateShippingAddress(shippingAddress).collect {
+            _addUpdateShippingAddress.postValue(it)
+        }
+    }
+
+    fun addShippingAddress(shippingAddress: ShippingAddress) = viewModelScope.launch {
+        _addUpdateShippingAddress.postValue(DataState.Loading())
+        shippingRepo.addShippingAddress(shippingAddress).collect {
+            _addUpdateShippingAddress.postValue(it)
         }
     }
 }

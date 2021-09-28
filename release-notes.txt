@@ -1,4 +1,3 @@
-1. Vendor Listing
-2. Celebrity Listing
-3. Follow & unfollow vendors and celebrity
-4. Dummy shipping cost $100 in cart
+1. shipping address listing
+2. add shipping address
+3. edit shipping address

@@ -12,4 +12,13 @@ object Validator {
     fun isValidName(name: String): Boolean = name.isNotEmpty()
 
     fun isValidPassword(password: String): Boolean = password.isNotEmpty()
+
+    fun isValidAddress(address: String): Boolean = address.isNotEmpty() && address.length > 6
+
+    fun isValidCity(city: String): Boolean = city.isNotEmpty() && city.length > 3
+
+    fun isValidState(state: String): Boolean = state.isNotEmpty() && state.length > 3
+
+    fun isValidPostalCode(postalCode: String): Boolean =
+        postalCode.isNotEmpty() && postalCode.length >= 4
 }

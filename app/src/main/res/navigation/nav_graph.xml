@@ -283,12 +283,34 @@
         tools:layout="@layout/fragment_cart" />
     <fragment
         android:id="@+id/shippingAddressFragment"
-        android:name="com.hexagram.febys.ui.screens.shipping.address.ShippingFragment"
+        android:name="com.hexagram.febys.ui.screens.shipping.address.ShippingAddressFragment"
         android:label="ShippingFragmentAddress"
-        tools:layout="@layout/fragment_shipping_address" />
+        tools:layout="@layout/fragment_shipping_address">
+        <action
+            android:id="@+id/action_shippingAddressFragment_to_addEditShippingAddressFragment"
+            app:destination="@id/addEditShippingAddressFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
     <fragment
         android:id="@+id/vendorListingFragment"
         android:name="com.hexagram.febys.ui.screens.vendor.VendorListingFragment"
         android:label="VendorListingFragment"
-        tools:layout="@layout/fragment_vendor_listing"/>
+        tools:layout="@layout/fragment_vendor_listing" />
+    <fragment
+        android:id="@+id/addEditShippingAddressFragment"
+        android:name="com.hexagram.febys.ui.screens.shipping.address.AddEditShippingAddressFragment"
+        android:label="AddEditShippingAddressFragment"
+        tools:layout="@layout/fragment_add_edit_shipping_address">
+        <argument
+            android:name="shippingAddress"
+            android:defaultValue="@null"
+            app:argType="com.hexagram.febys.models.view.ShippingAddress"
+            app:nullable="true" />
+        <argument
+            android:name="forceSetAsDefault"
+            app:argType="boolean" />
+    </fragment>
 </navigation>
