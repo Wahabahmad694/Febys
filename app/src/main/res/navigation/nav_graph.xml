@@ -325,5 +325,13 @@
         android:id="@+id/checkoutFragment"
         android:name="com.hexagram.febys.ui.screens.checkout.CheckoutFragment"
         android:label="CheckoutFragment"
-        tools:layout="@layout/fragment_checkout" />
+        tools:layout="@layout/fragment_checkout">
+        <action
+            android:id="@+id/action_checkoutFragment_to_shippingAddressFragment"
+            app:destination="@id/shippingAddressFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
 </navigation>

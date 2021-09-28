@@ -26,7 +26,7 @@ import kotlin.random.Random
 @AndroidEntryPoint
 class AddEditShippingAddressFragment : Fragment() {
     companion object {
-        const val ARG_IS_ADD_OR_UPDATE = "isAddOrUpdate"
+        const val REQ_KEY_IS_ADD_OR_UPDATE = "isAddOrUpdate"
     }
 
     private lateinit var binding: FragmentAddEditShippingAddressBinding
@@ -186,7 +186,7 @@ class AddEditShippingAddressFragment : Fragment() {
                 }
                 is DataState.Data -> {
                     hideLoader()
-                    setFragmentResult(ARG_IS_ADD_OR_UPDATE, bundleOf(ARG_IS_ADD_OR_UPDATE to true))
+                    setFragmentResult(REQ_KEY_IS_ADD_OR_UPDATE, bundleOf(REQ_KEY_IS_ADD_OR_UPDATE to true))
                     goBack()
                 }
             }

@@ -42,4 +42,8 @@ abstract class RepositoryModule {
     @Singleton
     @Binds
     abstract fun bindVendorRepo(repo: VendorRepoImpl): IVendorRepo
+
+    @Singleton
+    @Binds
+    abstract fun bindCheckoutRepo(repo: CheckoutRepoImpl): ICheckoutRepo
 }

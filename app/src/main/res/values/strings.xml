@@ -164,5 +164,7 @@
     <string name="label_select_address_label">Select Address Label</string>
     <string name="label_select_region">Select State</string>
     <string name="label_checkout">Checkout</string>
+    <string name="msg_for_no_shipping_address">Please add shipping address before placing the order</string>
+    <string name="msg_for_change_shipping_address">if you change the shipping address that will be effected on shipping cost.</string>
 
 </resources>

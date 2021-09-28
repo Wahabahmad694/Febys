@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CartViewModel @Inject constructor(
+open class CartViewModel @Inject constructor(
     private val cartRepo: ICartRepo,
     productRepo: IProductRepo
 ) : ProductViewModel(productRepo) {
