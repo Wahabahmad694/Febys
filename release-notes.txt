@@ -1,3 +1,1 @@
-1. shipping address listing
-2. add shipping address
-3. edit shipping address
+1. navigate shopping cart to proceed checkout
