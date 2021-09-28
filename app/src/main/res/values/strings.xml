@@ -163,5 +163,6 @@
     <string name="error_enter_valid_address">Please enter valid address</string>
     <string name="label_select_address_label">Select Address Label</string>
     <string name="label_select_region">Select State</string>
+    <string name="label_checkout">Checkout</string>
 
 </resources>

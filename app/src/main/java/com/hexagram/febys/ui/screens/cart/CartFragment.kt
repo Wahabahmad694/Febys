@@ -50,6 +50,10 @@ class CartFragment : BaseFragment() {
             goBack()
         }
 
+        binding.btnProceedToCheckout.setOnClickListener {
+            gotoCheckout()
+        }
+
         cartAdapter.interaction = object : CartAdapter.Interaction {
             override fun updateCartItem(cartDTO: CartDTO) {
                 cartViewModel.updateCartItem(cartDTO)
@@ -82,6 +86,11 @@ class CartFragment : BaseFragment() {
         }
     }
 
+    private fun gotoCheckout() {
+        val gotoCheckout = CartFragmentDirections.actionCartFragmentToCheckoutFragment()
+        navigateTo(gotoCheckout)
+    }
+
     private fun updateFav() {
         val fav = cartViewModel.getFav()
         cartAdapter.submitFav(fav)
@@ -107,7 +116,7 @@ class CartFragment : BaseFragment() {
             getString(R.string.variant_price, shippingCost.toFixedDecimal(2))
 
         val totalPrice = itemsTotal.plus(shippingCost)
-        
+
         binding.tvTotalAmount.text =
             getString(R.string.variant_price, totalPrice.toFixedDecimal(2))
     }
