@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/_10sdp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_product_name_with_quantity"
+            style="@style/TextTheme.Arial.TS14.Grey"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:text="TCL 32-inch 3-Series ..." />
+
+        <TextView
+            android:id="@+id/tv_total_price"
+            style="@style/TextTheme.Arial.TS14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="$158.00" />
+
+    </LinearLayout>
+</layout>

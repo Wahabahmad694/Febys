@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_42sdp"
         android:layout_marginHorizontal="@dimen/_17sdp"
-        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginVertical="@dimen/_16sdp"
         android:background="@drawable/bg_border_dark_grey"
         android:gravity="center_vertical"
         android:maxWidth="@dimen/_298sdp">

@@ -4,21 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentCheckoutBinding
+import com.hexagram.febys.databinding.LayoutOrderSummaryProductBinding
 import com.hexagram.febys.models.db.CartDTO
-import com.hexagram.febys.models.view.CheckoutModel
 import com.hexagram.febys.models.view.PaymentMethod
 import com.hexagram.febys.models.view.ShippingAddress
 import com.hexagram.febys.ui.screens.cart.CartAdapter
 import com.hexagram.febys.ui.screens.dialog.InfoDialog
-import com.hexagram.febys.ui.screens.shipping.address.ShippingAddressFragment
 import com.hexagram.febys.utils.goBack
 import com.hexagram.febys.utils.navigateTo
+import com.hexagram.febys.utils.toFixedDecimal
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -94,30 +93,67 @@ class CheckoutFragment : BaseFragment() {
         checkoutViewModel.observeCart().observe(viewLifecycleOwner) {
             val sortedListForCart = checkoutViewModel.sortListForCart(it)
             cartAdapter.submitList(sortedListForCart)
-            calculateAndUpdatePrices(sortedListForCart)
+            createOrderSummary(sortedListForCart)
+
+            if (sortedListForCart.isNullOrEmpty()) goBack()
         }
     }
 
-    private fun calculateAndUpdatePrices(cart: List<CartDTO>?, shippingCost: Double = 100.0) {
-        val itemsTotal: Double = cart?.sumOf {
-            (it.promotionPrice?.toDouble() ?: it.variantPrice).times(it.quantity)
+    private fun createOrderSummary(cart: List<CartDTO>?) {
+        binding.containerOrderSummary.containerOrderSummaryProducts.removeAllViews()
+
+        updateOrderSummaryQuantity(cart?.size ?: 0)
+
+        cart?.forEach {
+            val price = if (it.hasVariantPromotion)
+                it.promotionPrice?.toDouble() ?: 0.0
+            else
+                it.variantPrice
+
+            addProductToOrderSummary(it.productName, it.quantity, price)
+        }
+
+        val subtotal: Double = cart?.sumOf {
+            (if (it.hasVariantPromotion) it.promotionPrice?.toDouble() ?: 0.0 else it.variantPrice)
+                .times(it.quantity)
         } ?: 0.0
 
-//        binding.tvSubtotalAmount.text =
-//            getString(R.string.variant_price, itemsTotal.toFixedDecimal(2))
-
-//        binding.tvShippingAmount.text =
-//            getString(R.string.variant_price, shippingCost.toFixedDecimal(2))
-
-        val totalPrice = itemsTotal.plus(shippingCost)
-
-//        binding.tvTotalAmount.text =
-//            getString(R.string.variant_price, totalPrice.toFixedDecimal(2))
+        addProductToOrderSummary(getString(R.string.label_subtotal), 1, subtotal)
+        addProductToOrderSummary(getString(R.string.label_vat), 1, 10.0)
+        addProductToOrderSummary(getString(R.string.label_shipping_fee), 1, 100.0)
+        calculateAndUpdateTotalAmount(subtotal)
     }
 
-    private fun updateUi(checkoutModel: CheckoutModel) {
-        updateShippingAddressUi(checkoutModel.shippingAddress)
-        updatePaymentMethod(checkoutModel.paymentMethod)
+    private fun addProductToOrderSummary(productName: String, quantity: Int, price: Double) {
+        val productSummary = LayoutOrderSummaryProductBinding.inflate(
+            layoutInflater,
+            binding.containerOrderSummary.containerOrderSummaryProducts,
+            false
+        )
+
+        val productNameWithQuantity = if (quantity > 1) "$productName x $quantity" else productName
+        productSummary.tvProductNameWithQuantity.text = productNameWithQuantity
+
+        val total = price.times(quantity).toFixedDecimal(2)
+        productSummary.tvTotalPrice.text = getString(R.string.price_with_dollar_sign, total)
+        binding.containerOrderSummary.containerOrderSummaryProducts.addView(productSummary.root)
+    }
+
+    private fun updateOrderSummaryQuantity(quantity: Int) {
+        binding.containerOrderSummary.labelOrderSummary.text =
+            getString(R.string.label_order_summary_with_quantity, quantity)
+    }
+
+    private fun calculateAndUpdateTotalAmount(
+        subtotal: Double, vat: Double = 10.0, shippingCost: Double = 100.0
+    ) {
+        val totalPrice = subtotal.plus(shippingCost).plus(vat)
+        val totalAmountAsString =
+            getString(R.string.price_with_dollar_sign, totalPrice.toFixedDecimal(2))
+
+        binding.tvTotalAmount.text = totalAmountAsString
+        binding.containerOrderSummary.tvTotalPrice.text = totalAmountAsString
+
     }
 
     private fun updateShippingAddressUi(shippingAddress: ShippingAddress?) {

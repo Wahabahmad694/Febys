@@ -38,13 +38,13 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_0dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:paddingBottom="@dimen/_72sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/container_bottom_bar"
             app:layout_constraintTop_toBottomOf="@id/iv_back">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/_16sdp"
                 android:orientation="vertical">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -134,7 +134,6 @@
                         tools:text="RavePay" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -156,30 +155,67 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_cart"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:itemCount="2"
                     android:layout_marginTop="@dimen/_14sdp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    tools:itemCount="1"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_cart" />
 
                 <include
                     android:id="@+id/container_apply_voucher"
-                    layout="@layout/layout_apply_voucher_code"/>
+                    layout="@layout/layout_apply_voucher_code" />
+
+                <include
+                    android:id="@+id/container_order_summary"
+                    layout="@layout/layout_order_summary" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_place_order"
-            style="@style/ButtonTheme.Contained"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_14sdp"
-            android:text="@string/label_place_order"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginHorizontal="@dimen/_17sdp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container_bottom_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_120sdp"
+            android:elevation="16dp"
+            android:background="@color/white"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintWidth_max="@dimen/_298sdp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <TextView
+                android:id="@+id/tv_total_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                style="@style/TextTheme.HelveticaNeue.TS18"
+                android:layout_marginVertical="@dimen/_24sdp"
+                app:layout_constraintBaseline_toBaselineOf="@id/label_total_amount"
+                app:layout_constraintEnd_toEndOf="@id/btn_place_order"
+                tools:text="$3333.00" />
+
+            <TextView
+                android:id="@+id/label_total_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextTheme.Arial.TS14.Grey"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="@id/btn_place_order"
+                app:layout_constraintBottom_toTopOf="@id/btn_place_order"
+                android:text="@string/label_total_amount" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_place_order"
+                style="@style/ButtonTheme.Contained"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_14sdp"
+                android:text="@string/label_place_order"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginHorizontal="@dimen/_17sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintWidth_max="@dimen/_298sdp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
