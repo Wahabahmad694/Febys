@@ -10,7 +10,8 @@ import com.hexagram.febys.R
 import com.hexagram.febys.databinding.ItemCartBinding
 import com.hexagram.febys.models.db.CartDTO
 
-class CartAdapter : ListAdapter<CartDTO, CartAdapter.CartViewHolder>(DIFF_UTIL) {
+class CartAdapter(private val isInCheckout: Boolean = false) :
+    ListAdapter<CartDTO, CartAdapter.CartViewHolder>(DIFF_UTIL) {
     companion object {
         private val DIFF_UTIL = object : DiffUtil.ItemCallback<CartDTO>() {
             override fun areItemsTheSame(oldItem: CartDTO, newItem: CartDTO): Boolean {
@@ -38,6 +39,7 @@ class CartAdapter : ListAdapter<CartDTO, CartAdapter.CartViewHolder>(DIFF_UTIL) 
         fun bind(cartDTO: CartDTO) {
             binding.apply {
                 cart = cartDTO
+                isInCheckout = this@CartAdapter.isInCheckout
 
                 containerVendorDetail.isVisible =
                     showHeader || !isVendorAlreadyDisplayed(cartDTO)

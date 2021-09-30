@@ -34,56 +34,152 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/label_checkout" />
 
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="vertical"
+            android:layout_height="@dimen/_0dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:paddingBottom="@dimen/_72sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_back">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/container_shipping_address"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_18sdp"
-                android:layout_marginTop="@dimen/_18sdp">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/container_shipping_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_18sdp">
+
+                    <TextView
+                        android:id="@+id/label_shipping_address"
+                        style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_shipping_address"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/_11sdp"
+                        android:layout_height="@dimen/_11sdp"
+                        android:src="@drawable/ic_arrow_forward"
+                        app:layout_constraintBottom_toBottomOf="@id/label_shipping_address"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/label_shipping_address" />
+
+                    <TextView
+                        android:id="@+id/tv_shipping_address"
+                        style="@style/TextTheme.Arial.TS14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        app:layout_constraintStart_toStartOf="@id/label_shipping_address"
+                        app:layout_constraintTop_toBottomOf="@id/label_shipping_address"
+                        tools:text="Virtual Incubator, Busy Internet, Accra-north\n23321, Ghana" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_14sdp"
+                    android:background="@color/grey_e1e5e8" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/container_payment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_18sdp">
+
+                    <TextView
+                        android:id="@+id/label_payment"
+                        style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_payment"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/_11sdp"
+                        android:layout_height="@dimen/_11sdp"
+                        android:src="@drawable/ic_arrow_forward"
+                        app:layout_constraintBottom_toBottomOf="@id/label_payment"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/label_payment" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ic_payment"
+                        android:layout_width="@dimen/_18sdp"
+                        android:layout_height="@dimen/_13sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:src="@drawable/ic_payment"
+                        app:layout_constraintStart_toStartOf="@id/label_payment"
+                        app:layout_constraintTop_toBottomOf="@id/label_payment" />
+
+                    <TextView
+                        android:id="@+id/tv_payment"
+                        style="@style/TextTheme.Arial.TS14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        app:layout_constraintBottom_toBottomOf="@id/ic_payment"
+                        app:layout_constraintStart_toEndOf="@id/ic_payment"
+                        app:layout_constraintTop_toTopOf="@id/ic_payment"
+                        tools:text="RavePay" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_14sdp"
+                    android:background="@color/grey_e1e5e8" />
 
                 <TextView
-                    android:id="@+id/label_shipping_address"
+                    android:id="@+id/label_order"
                     style="@style/TextTheme.HelveticaNeue.TS16.Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/label_shipping_address"
+                    android:layout_marginStart="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_18sdp"
+                    android:text="@string/label_orders"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="@dimen/_11sdp"
-                    android:layout_height="@dimen/_11sdp"
-                    android:src="@drawable/ic_arrow_forward"
-                    app:layout_constraintBottom_toBottomOf="@id/label_shipping_address"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/label_shipping_address" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_cart"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/_14sdp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    tools:itemCount="1"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_cart" />
 
-                <TextView
-                    android:id="@+id/tv_shipping_address"
-                    style="@style/TextTheme.Arial.TS14"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    app:layout_constraintStart_toStartOf="@id/label_shipping_address"
-                    app:layout_constraintTop_toBottomOf="@id/label_shipping_address"
-                    tools:text="Virtual Incubator, Busy Internet, Accra-north\n23321, Ghana" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                <include
+                    android:id="@+id/container_apply_voucher"
+                    layout="@layout/layout_apply_voucher_code"/>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginHorizontal="@dimen/_18sdp"
-                android:layout_marginTop="@dimen/_14sdp"
-                android:background="@color/grey_e1e5e8" />
-        </LinearLayout>
-
-
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_place_order"
+            style="@style/ButtonTheme.Contained"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_14sdp"
+            android:text="@string/label_place_order"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginHorizontal="@dimen/_17sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_max="@dimen/_298sdp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

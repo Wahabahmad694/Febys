@@ -9,14 +9,20 @@ import com.hexagram.febys.network.adapter.onNetworkError
 import com.hexagram.febys.network.adapter.onSuccess
 import com.hexagram.febys.prefs.IPrefManger
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ShippingAddressRepoImpl @Inject constructor(
     private val pref: IPrefManger
 ) : IShippingAddressRepo {
+
+    init {
+        GlobalScope.launch { setAsDefault(1) }
+    }
 
     override suspend fun fetchShippingAddressRepo(
         dispatcher: CoroutineDispatcher
@@ -32,7 +38,8 @@ class ShippingAddressRepoImpl @Inject constructor(
     }.flowOn(dispatcher)
 
     override suspend fun setAsDefault(id: Int) {
-        FakeApiService.setAsDefault(id)
+        val shippingAddress = FakeApiService.setAsDefault(id)
+        shippingAddress?.let { saveDefaultShippingAddress(it) }
     }
 
     override suspend fun updateShippingAddress(
@@ -40,9 +47,13 @@ class ShippingAddressRepoImpl @Inject constructor(
     ): Flow<DataState<Unit>> = flow<DataState<Unit>> {
         val authToken = pref.getAccessToken()
         val response = FakeApiService.updateShippingAddress(authToken, shippingAddress)
-        response.onSuccess {
-            emit(DataState.Data(Unit))
-        }
+        response
+            .onSuccess {
+                emit(DataState.Data(Unit))
+                if (shippingAddress.isDefault) {
+                    saveDefaultShippingAddress(shippingAddress)
+                }
+            }
             .onError { emit(DataState.ApiError(message)) }
             .onException { emit(DataState.ExceptionError()) }
             .onNetworkError { emit(DataState.NetworkError()) }
@@ -53,11 +64,19 @@ class ShippingAddressRepoImpl @Inject constructor(
     ): Flow<DataState<Unit>> = flow<DataState<Unit>> {
         val authToken = pref.getAccessToken()
         val response = FakeApiService.addShippingAddress(authToken, shippingAddress)
-        response.onSuccess {
-            emit(DataState.Data(Unit))
-        }
+        response
+            .onSuccess {
+                emit(DataState.Data(Unit))
+                if (shippingAddress.isDefault) {
+                    saveDefaultShippingAddress(shippingAddress)
+                }
+            }
             .onError { emit(DataState.ApiError(message)) }
             .onException { emit(DataState.ExceptionError()) }
             .onNetworkError { emit(DataState.NetworkError()) }
     }.flowOn(dispatcher)
+
+    private fun saveDefaultShippingAddress(shippingAddress: ShippingAddress) {
+        pref.saveDefaultShippingAddress(shippingAddress)
+    }
 }

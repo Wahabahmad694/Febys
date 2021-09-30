@@ -42,10 +42,12 @@ object FakeApiService {
         return ApiResponse.ApiSuccessResponse(Response.success(addresses))
     }
 
-    suspend fun setAsDefault(id: Int) {
+    suspend fun setAsDefault(id: Int): ShippingAddress? {
         delay(100)
         addresses.forEach { it.isDefault = false }
-        addresses.firstOrNull { it.id == id }?.isDefault = true
+        val shippingAddress = addresses.firstOrNull { it.id == id }
+        shippingAddress?.isDefault = true
+        return shippingAddress
     }
 
     suspend fun updateShippingAddress(

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.google.gson.Gson
+import com.hexagram.febys.models.view.ShippingAddress
 import com.hexagram.febys.network.response.User
 import com.hexagram.febys.utils.Utils
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -17,6 +18,7 @@ class PrefManagerImpl @Inject constructor(
         private const val KEY_ACCESS_TOKEN = "accessToken"
         private const val KEY_REFRESH_TOKEN = "refreshToken"
         private const val KEY_FAV = "fav"
+        private const val KEY_DEF_SHIPPING_ADDRESS = "defShippingAddress"
     }
 
     private val pref: SharedPreferences by lazy {
@@ -102,6 +104,17 @@ class PrefManagerImpl @Inject constructor(
 
     override fun clearFav() {
         removeString(KEY_FAV)
+    }
+
+    override fun getDefaultShippingAddress(): ShippingAddress? {
+        val shippingAddressAsString = getString(KEY_DEF_SHIPPING_ADDRESS, "")
+        if (shippingAddressAsString.isEmpty()) return null
+        return Utils.jsonToShippingAddress(shippingAddressAsString)
+    }
+
+    override fun saveDefaultShippingAddress(shippingAddress: ShippingAddress) {
+        val shippingAddressAsString = Utils.jsonFromShippingAddress(shippingAddress)
+        saveString(KEY_DEF_SHIPPING_ADDRESS, shippingAddressAsString)
     }
 
     private fun saveString(key: String, value: String) {
