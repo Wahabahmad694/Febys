@@ -5,13 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.DrawableRes
+import androidx.core.view.isVisible
 import com.hexagram.febys.base.BaseDialog
 import com.hexagram.febys.databinding.DialogInfoBinding
 
 class InfoDialog(
     @DrawableRes private val infoRes: Int,
     private val infoTitle: String,
-    private val infoMsg: String
+    private val infoMsg: String,
+    private val okayCallback: (() -> Unit)? = null
 ) : BaseDialog() {
 
     companion object {
@@ -38,10 +40,16 @@ class InfoDialog(
         binding.ivInfo.setImageResource(infoRes)
         binding.tvInfoTitle.text = infoTitle
         binding.tvInfoMsg.text = infoMsg
+        binding.btnOkay.isVisible = okayCallback != null
     }
 
     private fun uiListener() {
         binding.ivClose.setOnClickListener {
+            dismiss()
+        }
+
+        binding.btnOkay.setOnClickListener {
+            okayCallback?.invoke()
             dismiss()
         }
     }

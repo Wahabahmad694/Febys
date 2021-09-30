@@ -54,6 +54,10 @@ class ShippingAddressAdapter :
         setAsDefault?.invoke(shippingAddress.id)
     }
 
+    fun getDefaultShippingAddress(): ShippingAddress? {
+        return currentList.firstOrNull { it.isDefault }
+    }
+
     inner class ShippingAddressViewHolder(
         private val binding: ItemShippingAddressBinding
     ) : RecyclerView.ViewHolder(binding.root) {

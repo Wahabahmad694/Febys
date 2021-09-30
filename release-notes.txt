@@ -1,1 +1,1 @@
-1. navigate shopping cart to proceed checkout
+1. change shipping address on checkout screen

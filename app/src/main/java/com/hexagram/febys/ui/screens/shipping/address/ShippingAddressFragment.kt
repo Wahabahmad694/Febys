@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import com.hexagram.febys.base.BaseFragment
@@ -19,6 +21,10 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ShippingAddressFragment : BaseFragment() {
+    companion object {
+        const val REQ_KEY_DEFAULT_SHIPPING_ADDRESS = "reqKeyDefaultShippingAddress"
+    }
+
     private lateinit var binding: FragmentShippingAddressBinding
     private val shippingAddressViewModel: ShippingAddressViewModel by viewModels()
     private val shippingAddressAdapter = ShippingAddressAdapter()
@@ -56,6 +62,15 @@ class ShippingAddressFragment : BaseFragment() {
         binding.labelAddNewShippingAddress.setOnClickListener {
             gotoAddEditShippingAddress()
         }
+
+        binding.btnSave.setOnClickListener {
+            val defaultShippingAddress = shippingAddressAdapter.getDefaultShippingAddress()
+            setFragmentResult(
+                REQ_KEY_DEFAULT_SHIPPING_ADDRESS,
+                bundleOf(REQ_KEY_DEFAULT_SHIPPING_ADDRESS to defaultShippingAddress)
+            )
+            goBack()
+        }
     }
 
     private fun setObservers() {
@@ -75,9 +90,9 @@ class ShippingAddressFragment : BaseFragment() {
             }
         }
 
-        setFragmentResultListener(AddEditShippingAddressFragment.ARG_IS_ADD_OR_UPDATE) { _, bundle ->
+        setFragmentResultListener(AddEditShippingAddressFragment.REQ_KEY_IS_ADD_OR_UPDATE) { _, bundle ->
             val isAddOrUpdate =
-                bundle.getBoolean(AddEditShippingAddressFragment.ARG_IS_ADD_OR_UPDATE, false)
+                bundle.getBoolean(AddEditShippingAddressFragment.REQ_KEY_IS_ADD_OR_UPDATE, false)
 
             if (isAddOrUpdate) {
                 shippingAddressViewModel.refreshShippingAddresses()
