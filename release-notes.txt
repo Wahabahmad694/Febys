@@ -1,1 +1,5 @@
-1. change shipping address on checkout screen
+1. check out screen
+2. Add/Edit Delivery Address
+3. Change Default Delivery Address
+4. Waring dialog on change of delivery address
+5. checkout success screen
