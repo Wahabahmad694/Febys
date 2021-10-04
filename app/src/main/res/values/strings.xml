@@ -175,5 +175,8 @@
     <string name="label_total_amount">Totoal Amount</string>
     <string name="label_order_summary_with_quantity">Order Summary (%1d)</string>
     <string name="label_vat">Vat %</string>
+    <string name="msg_thank_you_for_purchase">Thank You For Your Purchase</string>
+    <string name="msg_success_order">Your Order has been placed! We will email you on order confirmation with details and tracking number once your order has been successfully processed</string>
+    <string name="label_order_id">Order ID:</string>
 
 </resources>

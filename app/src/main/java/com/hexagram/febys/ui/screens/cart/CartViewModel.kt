@@ -8,6 +8,7 @@ import com.hexagram.febys.repos.ICartRepo
 import com.hexagram.febys.repos.IProductRepo
 import com.hexagram.febys.ui.screens.product.ProductViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -58,4 +59,6 @@ open class CartViewModel @Inject constructor(
     }
 
     fun refreshCart() = viewModelScope.launch { cartRepo.refreshCart() }
+
+    fun clearCart() = viewModelScope.launch(Dispatchers.IO) { cartRepo.clearCart() }
 }

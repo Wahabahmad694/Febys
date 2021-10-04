@@ -61,6 +61,10 @@ class CheckoutFragment : BaseFragment() {
             showChangeShippingAddressWarningDialog()
         }
 
+        binding.btnPlaceOrder.setOnClickListener {
+            doPayment()
+        }
+
         cartAdapter.interaction = object : CartAdapter.Interaction {
             override fun updateCartItem(cartDTO: CartDTO) {
                 checkoutViewModel.updateCartItem(cartDTO)
@@ -184,5 +188,16 @@ class CheckoutFragment : BaseFragment() {
         val gotoShippingAddress =
             CheckoutFragmentDirections.actionCheckoutFragmentToShippingAddressFragment()
         navigateTo(gotoShippingAddress)
+    }
+
+    private fun doPayment() {
+        checkoutViewModel.clearCart()
+        gotoCheckoutSuccessScreen("FT133659380093")
+    }
+
+    private fun gotoCheckoutSuccessScreen(orderId: String) {
+        val destination = CheckoutFragmentDirections
+            .actionCheckoutFragmentToCheckoutSuccessFragment(orderId)
+        navigateTo(destination)
     }
 }
