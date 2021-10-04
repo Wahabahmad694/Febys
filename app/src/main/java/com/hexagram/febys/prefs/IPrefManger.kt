@@ -1,5 +1,6 @@
 package com.hexagram.febys.prefs
 
+import com.hexagram.febys.models.view.ShippingAddress
 import com.hexagram.febys.network.response.User
 
 interface IPrefManger {
@@ -32,4 +33,8 @@ interface IPrefManger {
     fun saveFav(set: MutableSet<Int>)
 
     fun clearFav()
+
+    fun getDefaultShippingAddress(): ShippingAddress?
+
+    fun saveDefaultShippingAddress(shippingAddress: ShippingAddress)
 }

@@ -2,6 +2,7 @@ package com.hexagram.febys.utils
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.hexagram.febys.models.view.ShippingAddress
 
 object Utils {
     fun jsonToSetOfInt(json: String): MutableSet<Int> {
@@ -16,5 +17,13 @@ object Utils {
     fun jsonFromSetOfInt(set: MutableSet<Int>): String {
         val typeToken = object : TypeToken<MutableSet<Int>>() {}.type
         return Gson().toJson(set, typeToken)
+    }
+
+    fun jsonFromShippingAddress(obj: ShippingAddress): String {
+        return Gson().toJson(obj)
+    }
+
+    fun jsonToShippingAddress(json: String): ShippingAddress {
+        return Gson().fromJson(json, ShippingAddress::class.java)
     }
 }

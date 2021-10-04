@@ -333,5 +333,23 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_checkoutFragment_to_checkoutSuccessFragment"
+            app:destination="@id/checkoutSuccessFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/cartFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/checkoutSuccessFragment"
+        android:name="com.hexagram.febys.ui.screens.checkout.CheckoutSuccessFragment"
+        android:label="CheckoutSuccessFragment"
+        tools:layout="@layout/fragment_checkout_success">
+        <argument
+            android:name="orderId"
+            app:argType="string"/>
     </fragment>
 </navigation>

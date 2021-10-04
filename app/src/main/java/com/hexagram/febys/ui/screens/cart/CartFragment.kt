@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
@@ -100,11 +101,16 @@ class CartFragment : BaseFragment() {
         cartViewModel.observeCart().observe(viewLifecycleOwner) {
             val sortedListForCart = cartViewModel.sortListForCart(it)
             cartAdapter.submitList(sortedListForCart)
-            calculateAndUpdatePrices(sortedListForCart)
+            updateUi(sortedListForCart)
+            updateGotoCheckoutBtnVisibility(!sortedListForCart.isNullOrEmpty())
         }
     }
 
-    private fun calculateAndUpdatePrices(cart: List<CartDTO>?, shippingCost: Double = 100.0) {
+    private fun updateGotoCheckoutBtnVisibility(isVisible: Boolean) {
+        binding.btnProceedToCheckout.isVisible = isVisible
+    }
+
+    private fun updateUi(cart: List<CartDTO>?, shippingCost: Double = 100.0) {
         val itemsTotal: Double = cart?.sumOf {
             (it.promotionPrice?.toDouble() ?: it.variantPrice).times(it.quantity)
         } ?: 0.0
