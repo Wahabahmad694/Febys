@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @HiltViewModel
-class ProductListingViewModel @Inject constructor(
+open class ProductListingViewModel @Inject constructor(
     private val productListingRepo: IProductListingRepo
 ) : ProductViewModel(productListingRepo) {
     private var todayDealsListing: Flow<PagingData<Product>>? = null
@@ -19,6 +19,7 @@ class ProductListingViewModel @Inject constructor(
     private var under100DollarsItemsListing: Flow<PagingData<Product>>? = null
     private var categoryProductsListing: Flow<PagingData<Product>>? = null
     private var searchProductsListing: Flow<PagingData<Product>>? = null
+    private var vendorProductsListing: Flow<PagingData<Product>>? = null
 
     fun todayDealsListing(
         onProductListingResponse: ((ResponseProductListing) -> Unit)? = null
@@ -83,5 +84,18 @@ class ProductListingViewModel @Inject constructor(
         }
 
         return searchProductsListing!!
+    }
+
+    fun vendorProductListing(
+        vendorId: Int, onProductListingResponse: ((ResponseProductListing) -> Unit)? = null
+    ): Flow<PagingData<Product>> {
+        if (vendorProductsListing == null) {
+            vendorProductsListing =
+                productListingRepo.fetchUnder100DollarsItemsListing(
+                    viewModelScope, onProductListingResponse = onProductListingResponse
+                )
+        }
+
+        return vendorProductsListing!!
     }
 }

@@ -10,10 +10,8 @@ import androidx.paging.LoadState
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentVendorListingBinding
-import com.hexagram.febys.utils.applySpaceItemDecoration
-import com.hexagram.febys.utils.hideLoader
-import com.hexagram.febys.utils.showLoader
-import com.hexagram.febys.utils.showToast
+import com.hexagram.febys.ui.screens.search.SearchFragmentDirections
+import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -69,6 +67,9 @@ class VendorListingFragment : BaseFragment() {
 
         vendorListingAdapter.unFollowVendor =
             { vendorId -> vendorViewModel.unFollowVendor(vendorId) }
+
+        vendorListingAdapter.gotoCelebrityDetail =
+            { vendorId -> gotoCelebrityDetail(vendorId) }
     }
 
     private fun setObserver() {
@@ -92,5 +93,12 @@ class VendorListingFragment : BaseFragment() {
                 }
             }
         }
+    }
+
+
+    private fun gotoCelebrityDetail(vendorId: Int) {
+        val direction = SearchFragmentDirections
+            .actionSearchFragmentToCelebrityDetailFragment(vendorId)
+        navigateTo(direction)
     }
 }
