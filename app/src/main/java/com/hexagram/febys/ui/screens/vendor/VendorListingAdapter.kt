@@ -33,7 +33,8 @@ class VendorListingAdapter(private val isCelebrity: Boolean) :
 
     var followVendor: ((vendor: Int) -> Unit)? = null
     var unFollowVendor: ((vendor: Int) -> Unit)? = null
-    var gotoCelebrityDetail: ((vendor: Int) -> Unit)? = null
+    var gotoCelebrityDetail: ((vendor: VendorListing.Vendor) -> Unit)? = null
+    var gotoVendorDetail: ((vendor: VendorListing.Vendor) -> Unit)? = null
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val item = getItem(position)) {
@@ -83,7 +84,7 @@ class VendorListingAdapter(private val isCelebrity: Boolean) :
                 isCelebrity = this@VendorListingAdapter.isCelebrity
 
                 root.setOnClickListener {
-                    gotoDetailPage(item.id)
+                    gotoDetailPage(item)
                 }
 
                 vendorName.text = item.name
@@ -112,9 +113,11 @@ class VendorListingAdapter(private val isCelebrity: Boolean) :
             }
         }
 
-        private fun gotoDetailPage(id: Int) {
+        private fun gotoDetailPage(vendor: VendorListing.Vendor) {
             if (isCelebrity) {
-                gotoCelebrityDetail?.invoke(id)
+                gotoCelebrityDetail?.invoke(vendor)
+            } else {
+                gotoVendorDetail?.invoke(vendor)
             }
         }
     }

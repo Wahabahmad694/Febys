@@ -122,12 +122,12 @@
         android:label="SearchFragment"
         tools:layout="@layout/fragment_search">
         <action
-        android:id="@+id/action_searchFragment_to_celebrityDetailFragment"
-        app:destination="@id/celebrityDetailFragment"
-        app:enterAnim="@anim/slide_in_left"
-        app:exitAnim="@anim/slide_out_left"
-        app:popEnterAnim="@anim/slide_in_right"
-        app:popExitAnim="@anim/slide_out_right" />
+            android:id="@+id/action_searchFragment_to_celebrityDetailFragment"
+            app:destination="@id/celebrityDetailFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_searchFragment_to_categoryNameFragment"
             app:destination="@id/categoryNameFragment"
@@ -145,6 +145,13 @@
         <action
             android:id="@+id/action_searchFragment_to_searchProductListingFragment"
             app:destination="@id/searchProductListingFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_searchFragment_to_productListingByVendorFragment"
+            app:destination="@id/productListingByVendorFragment"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
@@ -317,7 +324,7 @@
         app:exitAnim="@anim/slide_out_left"
         app:popEnterAnim="@anim/slide_in_right"
         app:popExitAnim="@anim/slide_out_right"
-        tools:layout="@layout/fragment_vendor_listing"></fragment>
+        tools:layout="@layout/fragment_vendor_listing" />
     <fragment
         android:id="@+id/addEditShippingAddressFragment"
         android:name="com.hexagram.febys.ui.screens.shipping.address.AddEditShippingAddressFragment"
@@ -368,6 +375,36 @@
         android:name="com.hexagram.febys.ui.screens.vendor.CelebrityDetailFragment"
         android:label="CelebrityDetailFragment"
         tools:layout="@layout/fragment_celebrity_detail">
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/productListingByVendorFragment"
+        android:name="com.hexagram.febys.ui.screens.vendor.ProductListingByVendorFragment"
+        android:label="ProductListingByVendorFragment"
+        tools:layout="@layout/fragment_product_listing_by_vendor">
+        <argument
+            android:name="id"
+            app:argType="integer" />
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="type"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_productListingByVendorFragment_to_vendorDetailFragment"
+            app:destination="@id/vendorDetailFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/vendorDetailFragment"
+        android:name="com.hexagram.febys.ui.screens.vendor.VendorDetailFragment"
+        android:label="VendorDetailFragment">
         <argument
             android:name="id"
             app:argType="integer" />

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.screens.vendor.ProductListingByVendorFragment">
+
+        <!--region top bar-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container_top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/container_product_listing_title_and_count"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_8dp"
+                android:gravity="center"
+                android:minHeight="?actionBarSize"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toStartOf="@id/tv_cart_count"
+                app:layout_constraintStart_toEndOf="@id/iv_back"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tv_vendor_type"
+                    style="@style/TextTheme.Arial.TS12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/_4sdp"
+                    android:ellipsize="start"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:textAlignment="center"
+                    android:textColor="@color/red"
+                    tools:text="Television" />
+
+                <TextView
+                    android:id="@+id/tv_vendor_name"
+                    style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/_4sdp"
+                    android:ellipsize="start"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:textAlignment="center"
+                    app:drawableEndCompat="@drawable/ic_info"
+                    tools:text="Gucci For Men" />
+
+                <TextView
+                    android:id="@+id/tv_product_listing_count"
+                    style="@style/TextTheme.HelveticaNeue.TS12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="start"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:textAlignment="center"
+                    tools:text="7230 Items" />
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/_16dp"
+                android:paddingEnd="0dp"
+                android:src="@drawable/ic_back"
+                app:layout_constraintBottom_toBottomOf="@id/container_product_listing_title_and_count"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/container_product_listing_title_and_count" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_cart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_16dp"
+                android:src="@drawable/ic_cart"
+                app:layout_constraintBottom_toBottomOf="@id/container_product_listing_title_and_count"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/container_product_listing_title_and_count" />
+
+            <TextView
+                android:id="@+id/tv_cart_count"
+                style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_4sdp"
+                android:contentDescription="@string/app_name"
+                app:layout_constraintBottom_toBottomOf="@id/iv_cart"
+                app:layout_constraintEnd_toStartOf="@id/iv_cart"
+                app:layout_constraintTop_toTopOf="@id/iv_cart"
+                app:layout_constraintVertical_bias="0.8"
+                tools:text="2" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <!--endregion top bar-->
+
+        <!--region filter-->
+        <LinearLayout
+            android:id="@+id/container_filter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/btn_refine"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_26sdp"
+                android:layout_marginStart="@dimen/_18sdp"
+                android:background="@drawable/bg_border_dark_grey"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/_8sdp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/_9sdp"
+                    android:layout_height="@dimen/_10sdp"
+                    android:src="@drawable/ic_refine" />
+
+                <TextView
+                    android:id="@+id/label_refine"
+                    style="@style/TextTheme.HelveticaNeue.TS12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:ellipsize="start"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="@string/label_refine"
+                    android:textAlignment="center" />
+
+            </LinearLayout>
+
+            <HorizontalScrollView
+                android:id="@+id/scroll_view_filters"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_6sdp"
+                android:scrollbars="none"
+                app:layout_constraintTop_toBottomOf="@id/tv_featured_categories_slogan">
+
+                <RadioGroup
+                    android:id="@+id/radio_group_filters"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    app:singleLine="true"
+                    app:singleSelection="true" />
+
+            </HorizontalScrollView>
+
+        </LinearLayout>
+        <!--endregion filter-->
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_product_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_14sdp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:paddingTop="@dimen/_16dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
+            tools:itemCount="10"
+            tools:listitem="@layout/item_product_list" />
+    </LinearLayout>
+</layout>
