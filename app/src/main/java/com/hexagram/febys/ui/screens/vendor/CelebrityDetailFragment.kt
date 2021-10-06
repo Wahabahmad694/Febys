@@ -4,7 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.view.setPadding
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
@@ -15,7 +18,11 @@ import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentCelebrityDetailBinding
+import com.hexagram.febys.models.view.SocialLink
+import com.hexagram.febys.models.view.VendorDetail
+import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.response.Product
+import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.ui.screens.product.listing.ProductListingPagerAdapter
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,6 +36,12 @@ class CelebrityDetailFragment : BaseFragment() {
     private val args: CelebrityDetailFragmentArgs by navArgs()
 
     private val productListingPagerAdapter = ProductListingPagerAdapter()
+    private val endorsementAdapter = EndorsementAdapter()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        celebrityViewModel.fetchVendorDetail(args.id)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -53,6 +66,12 @@ class CelebrityDetailFragment : BaseFragment() {
             layoutManager = GridLayoutManager(context, 2)
             adapter = this@CelebrityDetailFragment.productListingPagerAdapter
         }
+
+        binding.rvMyEndorsements.apply {
+            setHasFixedSize(true)
+            applySpaceItemDecoration(horizontalDimenRes = R.dimen._24dp)
+            adapter = endorsementAdapter
+        }
     }
 
     private fun uiListener() {
@@ -62,6 +81,22 @@ class CelebrityDetailFragment : BaseFragment() {
 
         binding.btnRefine.setOnClickListener {
             // goto filter screen
+        }
+
+        binding.btnToggleFollow.setOnClickListener {
+            if (!isUserLoggedIn) {
+                val gotoLogin = NavGraphDirections.actionToLoginFragment()
+                navigateTo(gotoLogin)
+                return@setOnClickListener
+            }
+
+            if (binding.isFollowing == null) return@setOnClickListener
+            binding.isFollowing = !binding.isFollowing!!
+
+            if (binding.isFollowing!!)
+                celebrityViewModel.followVendor(args.id)
+            else
+                celebrityViewModel.unFollowVendor(args.id)
         }
 
         productListingPagerAdapter.interaction = object : ProductListingPagerAdapter.Interaction {
@@ -85,6 +120,54 @@ class CelebrityDetailFragment : BaseFragment() {
 
     private fun setObserver() {
         setupPagerAdapter()
+
+        celebrityViewModel.observerVendorDetail.observe(viewLifecycleOwner) {
+            when (it) {
+                is DataState.Loading -> {
+                    showLoader()
+                }
+                is DataState.Error -> {
+                    hideLoader()
+                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
+                }
+                is DataState.Data -> {
+                    hideLoader()
+                    updateUi(it.data)
+                }
+            }
+        }
+    }
+
+    private fun updateUi(vendorDetail: VendorDetail) {
+        binding.apply {
+            profileImg.load(vendorDetail.profileImage)
+            headerImg.load(vendorDetail.headerImage)
+            tvProductListingTitle.text = vendorDetail.name
+            name.text = vendorDetail.name
+            type.text = vendorDetail.type
+            address.text = vendorDetail.address
+            addSocialLinks(vendorDetail.socialLinks)
+            endorsementAdapter.submitList(vendorDetail.endorsements)
+
+            binding.isFollowing = vendorDetail.isFollow
+        }
+    }
+
+    private fun addSocialLinks(socialLinks: List<SocialLink>) {
+        binding.containerSocialMediaFollow.removeAllViews()
+        socialLinks.forEach { socialLink ->
+            val imageView = ImageView(context)
+            val layoutParam = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            imageView.setBackgroundResource(R.drawable.bg_social_link)
+            imageView.setImageResource(socialLink.image)
+            imageView.setPadding(16)
+            imageView.setOnClickListener {
+                Utils.openLink(it.context, socialLink.link)
+            }
+            binding.containerSocialMediaFollow.addView(imageView, layoutParam)
+        }
     }
 
     private fun setupPagerAdapter() {
@@ -103,11 +186,6 @@ class CelebrityDetailFragment : BaseFragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             productListingPagerAdapter.loadStateFlow.collectLatest {
                 val state = it.refresh
-                if (state is LoadState.Loading) {
-                    showLoader()
-                } else {
-                    hideLoader()
-                }
 
                 if (state is LoadState.Error) {
                     showToast(getString(R.string.error_something_went_wrong))
@@ -116,7 +194,7 @@ class CelebrityDetailFragment : BaseFragment() {
         }
     }
 
-    fun setProductItemCount(count: Int) {
+    private fun setProductItemCount(count: Int) {
         binding.tvProductListingCount.text =
             if (count == 0) {
                 resources.getString(R.string.label_no_item)

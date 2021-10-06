@@ -8,15 +8,14 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import com.facebook.drawee.view.SimpleDraweeView
+import com.hexagram.febys.utils.load
 
 object BindingAdapter {
 
     @JvmStatic
     @BindingAdapter("binding:image_url")
     fun imageUrl(imageView: SimpleDraweeView, imageUrl: String?) {
-        if (imageUrl.isNullOrEmpty()) return
-        imageView.hierarchy.fadeDuration = 200
-        imageView.setImageURI(imageUrl)
+        imageView.load(imageUrl)
     }
 
     @JvmStatic

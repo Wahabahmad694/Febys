@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="isFollowing"
+            type="Boolean" />
+
     </data>
 
     <LinearLayout
@@ -287,26 +291,20 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <com.hexagram.febys.utils.ScrollView
+                    <LinearLayout
+                        android:id="@+id/container_social_media_follow"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1">
-
-                        <LinearLayout
-                            android:id="@+id/container_social_media_follow"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal" />
-
-                    </com.hexagram.febys.utils.ScrollView>
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal" />
 
                     <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_toggle_follow"
                         style="@style/ButtonTheme.OutLine"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:text="@string/label_follow" />
+                        android:text="@{isFollowing ? @string/label_following : @string/label_follow}" />
                 </LinearLayout>
 
                 <TextView
@@ -314,10 +312,10 @@
                     style="@style/TextTheme.HelveticaNeue.TS16.Bold"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_34sdp"
+                    android:layout_marginTop="@dimen/_24sdp"
+                    android:background="@color/grey_e1e5e8"
                     android:gravity="center_vertical"
                     android:paddingHorizontal="@dimen/_16sdp"
-                    android:background="@color/grey_e1e5e8"
-                    android:layout_marginTop="@dimen/_24sdp"
                     android:text="@string/label_my_endorsements" />
 
                 <androidx.recyclerview.widget.RecyclerView

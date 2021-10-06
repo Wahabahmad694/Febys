@@ -4,9 +4,14 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.hexagram.febys.models.view.VendorDetail
 import com.hexagram.febys.models.view.VendorListing
+import com.hexagram.febys.network.DataState
+import com.hexagram.febys.network.FakeApiService
 import com.hexagram.febys.network.FebysBackendService
-import com.hexagram.febys.network.adapter.ApiResponse
+import com.hexagram.febys.network.adapter.onError
+import com.hexagram.febys.network.adapter.onException
+import com.hexagram.febys.network.adapter.onNetworkError
 import com.hexagram.febys.network.adapter.onSuccess
 import com.hexagram.febys.network.requests.RequestOfPagination
 import com.hexagram.febys.paginations.VendorListingPagingSource
@@ -14,6 +19,7 @@ import com.hexagram.febys.prefs.IPrefManger
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
@@ -52,6 +58,18 @@ class VendorRepoImpl @Inject constructor(
             // do nothing
         }
     }
+
+    override fun fetchVendorDetail(
+        vendorId: Int, dispatcher: CoroutineDispatcher
+    ): Flow<DataState<VendorDetail>> = flow<DataState<VendorDetail>> {
+        val response = FakeApiService.fetchVendorDetail(vendorId)
+        response.onSuccess {
+            emit(DataState.Data(data!!))
+        }
+            .onError { emit(DataState.ApiError(message)) }
+            .onException { emit(DataState.ExceptionError()) }
+            .onNetworkError { emit(DataState.NetworkError()) }
+    }.flowOn(dispatcher)
 
     private fun buildFollowUnfollowReq(vendorId: Int): Map<String, Int> {
         return mapOf("user_id" to vendorId)
