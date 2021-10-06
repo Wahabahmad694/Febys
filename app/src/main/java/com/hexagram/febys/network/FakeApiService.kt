@@ -87,6 +87,7 @@ object FakeApiService {
         return VendorDetail(
             23,
             "Gwyneth Paltrow",
+            "Enter the romantic, eclectic and free-spirited world of Gucci at Febys.",
             "res:///${R.drawable.temp_celebrity_header}",
             "res:///${R.drawable.temp_celebrity_profile_img}",
             "Beauty Store",

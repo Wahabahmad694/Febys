@@ -4,10 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.view.setPadding
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
@@ -116,6 +114,15 @@ class CelebrityDetailFragment : BaseFragment() {
                 }
             }
         }
+
+        binding.rvMyEndorsements.setOnScrollChangeListener { _, _, _, _, _ ->
+            val horizontalScrollPosition =
+                binding.rvMyEndorsements.getHorizontalScrollPosition()
+            val param =
+                (binding.ivIcScrollBar.layoutParams as ConstraintLayout.LayoutParams)
+            param.horizontalBias = horizontalScrollPosition
+            binding.ivIcScrollBar.layoutParams = param
+        }
     }
 
     private fun setObserver() {
@@ -154,20 +161,7 @@ class CelebrityDetailFragment : BaseFragment() {
     }
 
     private fun addSocialLinks(socialLinks: List<SocialLink>) {
-        binding.containerSocialMediaFollow.removeAllViews()
-        socialLinks.forEach { socialLink ->
-            val imageView = ImageView(context)
-            val layoutParam = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-            imageView.setBackgroundResource(R.drawable.bg_social_link)
-            imageView.setImageResource(socialLink.image)
-            imageView.setPadding(16)
-            imageView.setOnClickListener {
-                Utils.openLink(it.context, socialLink.link)
-            }
-            binding.containerSocialMediaFollow.addView(imageView, layoutParam)
-        }
+        SocialLink.addAllTo(socialLinks, binding.containerSocialMediaFollow)
     }
 
     private fun setupPagerAdapter() {

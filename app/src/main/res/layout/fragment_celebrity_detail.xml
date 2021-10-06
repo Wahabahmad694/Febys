@@ -158,6 +158,7 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_16sdp"
             android:layout_weight="1">
 
             <LinearLayout
@@ -169,8 +170,7 @@
                 <!--region detail-->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_16sdp">
+                    android:layout_height="wrap_content">
 
                     <com.facebook.drawee.view.SimpleDraweeView
                         android:id="@+id/header_img"
@@ -326,13 +326,40 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:itemCount="6"
                     tools:listitem="@layout/item_my_endorsements" />
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/_16dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_bg_scroll_bar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/bg_scroll_home"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_ic_scroll_bar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_scroll_home"
+                        app:layout_constraintBottom_toBottomOf="@id/iv_bg_scroll_bar"
+                        app:layout_constraintEnd_toEndOf="@id/iv_bg_scroll_bar"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="@id/iv_bg_scroll_bar"
+                        app:layout_constraintTop_toTopOf="@id/iv_bg_scroll_bar" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
                 <!--endregion detail-->
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_product_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_14sdp"
                     android:clipToPadding="false"
                     android:paddingTop="@dimen/_16dp"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"

@@ -66,6 +66,10 @@ class ProductListingByVendorFragment : BaseFragment() {
             // goto filter screen
         }
 
+        binding.tvVendorName.setOnClickListener {
+            gotoVendorDetail(args.id)
+        }
+
         productListingPagerAdapter.interaction = object : ProductListingPagerAdapter.Interaction {
             override fun onItemSelected(position: Int, item: Product) {
                 val gotoProductDetail = NavGraphDirections.actionToProductDetail(item.id)
@@ -126,4 +130,13 @@ class ProductListingByVendorFragment : BaseFragment() {
                 resources.getQuantityString(R.plurals.items_count, count, count)
             }
     }
+
+    private fun gotoVendorDetail(vendorId: Int) {
+        val direction = ProductListingByVendorFragmentDirections
+            .actionProductListingByVendorFragmentToVendorDetailFragment(vendorId)
+        navigateTo(direction)
+    }
+
+    override fun getTvCartCount() = binding.tvCartCount
+    override fun getIvCart() = binding.ivCart
 }

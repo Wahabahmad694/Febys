@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="isFollowing"
+            type="Boolean" />
+
     </data>
 
     <LinearLayout
@@ -13,158 +17,181 @@
         android:orientation="vertical"
         tools:context=".ui.screens.vendor.VendorDetailFragment">
 
-        <!--region top bar-->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/container_top_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:id="@+id/container_product_listing_title_and_count"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_8dp"
-                android:gravity="center"
-                android:minHeight="?actionBarSize"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toStartOf="@id/tv_cart_count"
-                app:layout_constraintStart_toEndOf="@id/iv_back"
-                app:layout_constraintTop_toTopOf="parent">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_close"
+            android:layout_width="@dimen/_16dp"
+            android:layout_height="@dimen/_16dp"
+            android:layout_marginStart="@dimen/_16dp"
+            android:layout_marginTop="@dimen/_16dp"
+            android:src="@drawable/ic_close" />
 
-                <TextView
-                    android:id="@+id/tv_product_listing_title"
-                    style="@style/TextTheme.HelveticaNeue.TS16.Bold"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="start"
-                    android:gravity="center"
-                    android:maxLines="1"
-                    android:textAlignment="center"
-                    tools:text="Television" />
-
-                <TextView
-                    android:id="@+id/tv_product_listing_count"
-                    style="@style/TextTheme.HelveticaNeue.TS12"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="start"
-                    android:gravity="center"
-                    android:maxLines="1"
-                    android:textAlignment="center"
-                    tools:text="7230 Items" />
-
-            </LinearLayout>
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingStart="@dimen/_16dp"
-                android:paddingEnd="0dp"
-                android:src="@drawable/ic_back"
-                app:layout_constraintBottom_toBottomOf="@id/container_product_listing_title_and_count"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/container_product_listing_title_and_count" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_cart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_16dp"
-                android:src="@drawable/ic_cart"
-                app:layout_constraintBottom_toBottomOf="@id/container_product_listing_title_and_count"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/container_product_listing_title_and_count" />
-
-            <TextView
-                android:id="@+id/tv_cart_count"
-                style="@style/TextTheme.HelveticaNeue.TS16.Bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_4sdp"
-                android:contentDescription="@string/app_name"
-                app:layout_constraintBottom_toBottomOf="@id/iv_cart"
-                app:layout_constraintEnd_toStartOf="@id/iv_cart"
-                app:layout_constraintTop_toTopOf="@id/iv_cart"
-                app:layout_constraintVertical_bias="0.8"
-                tools:text="2" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-        <!--endregion top bar-->
-
-        <!--region filter-->
-        <LinearLayout
-            android:id="@+id/container_filter"
+        <TextView
+            android:id="@+id/title"
+            style="@style/TextTheme.HelveticaNeue.TS32.Bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_18sdp"
+            tools:text="Gucci For Men" />
+
+        <TextView
+            android:id="@+id/slogan"
+            style="@style/TextTheme.Arial.TS14"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_18sdp"
+            tools:text="Enter the romantic, eclectic and free-spirited world of Gucci at Febys." />
+
+        <!--region detail-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16sdp">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/header_img"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_172sdp"
+                android:layout_marginHorizontal="@dimen/_16sdp"
+                app:actualImageScaleType="fitCenter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_max="@dimen/_300sdp" />
+
+            <LinearLayout
+                android:layout_width="@dimen/_0dp"
+                android:layout_height="@dimen/_70sdp"
+                android:layout_marginTop="@dimen/_24sdp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="@id/header_img"
+                app:layout_constraintStart_toStartOf="@id/header_img"
+                app:layout_constraintTop_toBottomOf="@id/header_img">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1dp"
+                    android:background="@color/grey_e1e5e8" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/profile_img"
+                        android:layout_width="@dimen/_48sdp"
+                        android:layout_height="@dimen/_48sdp"
+                        app:actualImageScaleType="fitCenter"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintWidth_max="@dimen/_300sdp"
+                        app:roundAsCircle="true" />
+
+                    <TextView
+                        android:id="@+id/vendor_name"
+                        style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_8sdp"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        app:layout_constraintBottom_toTopOf="@id/type"
+                        app:layout_constraintEnd_toEndOf="@id/separator_50"
+                        app:layout_constraintStart_toEndOf="@id/profile_img"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        tools:text="Gwyneth Paltrow" />
+
+                    <TextView
+                        android:id="@+id/type"
+                        style="@style/TextTheme.Arial.TS14"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_8sdp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textColor="@color/red"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/separator_50"
+                        app:layout_constraintStart_toEndOf="@id/profile_img"
+                        app:layout_constraintTop_toBottomOf="@id/vendor_name"
+                        tools:text="Official" />
+
+                    <View
+                        android:id="@+id/separator_50"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/grey_e1e5e8"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/address"
+                        style="@style/TextTheme.Arial.TS14"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_12sdp"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/separator_50"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Ground Floor, Senya Terazzo Building, Behind..." />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1dp"
+                    android:background="@color/grey_e1e5e8" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/label_where_to_find_me"
+            style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_24sdp"
+            android:text="@string/label_where_to_find_me" />
+
+        <LinearLayout
+            android:id="@+id/container_follow_me"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_36sdp"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_18sdp"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <LinearLayout
-                android:id="@+id/btn_refine"
+                android:id="@+id/container_social_media_follow"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_toggle_follow"
+                style="@style/ButtonTheme.OutLine"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/_26sdp"
-                android:layout_marginStart="@dimen/_18sdp"
-                android:background="@drawable/bg_border_dark_grey"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingHorizontal="@dimen/_8sdp">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="@dimen/_9sdp"
-                    android:layout_height="@dimen/_10sdp"
-                    android:src="@drawable/ic_refine" />
-
-                <TextView
-                    android:id="@+id/label_refine"
-                    style="@style/TextTheme.HelveticaNeue.TS12"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_3sdp"
-                    android:ellipsize="start"
-                    android:gravity="center"
-                    android:maxLines="1"
-                    android:text="@string/label_refine"
-                    android:textAlignment="center" />
-
-            </LinearLayout>
-
-            <HorizontalScrollView
-                android:id="@+id/scroll_view_filters"
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_6sdp"
-                android:scrollbars="none"
-                app:layout_constraintTop_toBottomOf="@id/tv_featured_categories_slogan">
-
-                <RadioGroup
-                    android:id="@+id/radio_group_filters"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clipToPadding="false"
-                    android:orientation="horizontal"
-                    app:singleLine="true"
-                    app:singleSelection="true" />
-
-            </HorizontalScrollView>
-
+                android:text="@{isFollowing ? @string/label_following : @string/label_follow}" />
         </LinearLayout>
-        <!--endregion filter-->
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_product_list"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="@dimen/_14sdp"
-            android:layout_weight="1"
-            android:clipToPadding="false"
-            android:paddingTop="@dimen/_16dp"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/label_wish_list"
-            app:spanCount="2"
-            tools:itemCount="10"
-            tools:listitem="@layout/item_product_list" />
+            android:layout_height="@dimen/_1dp"
+            android:background="@color/grey_e1e5e8"
+            android:layout_marginTop="@dimen/_18sdp"/>
+        <!--endregion detail-->
 
     </LinearLayout>
 </layout>
