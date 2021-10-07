@@ -129,18 +129,52 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />
 
+                    <LinearLayout
+                        android:id="@+id/container_rating"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_12dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toTopOf="@id/address"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/separator_50"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_chainStyle="packed">
+
+                        <androidx.appcompat.widget.AppCompatRatingBar
+                            android:id="@+id/store_rating_bar"
+                            style="?ratingBarStyleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:numStars="5"
+                            android:progress="50" />
+
+                        <TextView
+                            android:id="@+id/tv_store_rating"
+                            style="@style/TextTheme.Arial.TS12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_4sdp"
+                            android:text="@{@string/store_rating(2.5)}"
+                            tools:text="(2.5) ratings" />
+
+                    </LinearLayout>
+
                     <TextView
                         android:id="@+id/address"
                         style="@style/TextTheme.Arial.TS14"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/_12sdp"
+                        android:layout_marginTop="@dimen/_4sdp"
                         android:ellipsize="end"
-                        android:maxLines="2"
+                        android:maxLines="1"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/separator_50"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/container_rating"
                         tools:text="Ground Floor, Senya Terazzo Building, Behind..." />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -189,8 +223,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1dp"
-            android:background="@color/grey_e1e5e8"
-            android:layout_marginTop="@dimen/_18sdp"/>
+            android:layout_marginTop="@dimen/_18sdp"
+            android:background="@color/grey_e1e5e8" />
         <!--endregion detail-->
 
     </LinearLayout>
