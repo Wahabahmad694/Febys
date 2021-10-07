@@ -33,6 +33,8 @@ class VendorListingAdapter(private val isCelebrity: Boolean) :
 
     var followVendor: ((vendor: Int) -> Unit)? = null
     var unFollowVendor: ((vendor: Int) -> Unit)? = null
+    var gotoCelebrityDetail: ((vendor: VendorListing.Vendor) -> Unit)? = null
+    var gotoVendorDetail: ((vendor: VendorListing.Vendor) -> Unit)? = null
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val item = getItem(position)) {
@@ -46,7 +48,7 @@ class VendorListingAdapter(private val isCelebrity: Boolean) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when (viewType) {
+        val viewHolder = when (viewType) {
             VIEW_TYPE_HEADER -> {
                 HeaderViewHolder(
                     ItemVendorStoreHeadingBinding.inflate(
@@ -62,6 +64,8 @@ class VendorListingAdapter(private val isCelebrity: Boolean) :
                 )
             }
         }
+
+        return viewHolder
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -78,6 +82,10 @@ class VendorListingAdapter(private val isCelebrity: Boolean) :
         fun bind(item: VendorListing.Vendor, position: Int) {
             binding.apply {
                 isCelebrity = this@VendorListingAdapter.isCelebrity
+
+                root.setOnClickListener {
+                    gotoDetailPage(item)
+                }
 
                 vendorName.text = item.name
                 vendorType.text = item.role
@@ -102,6 +110,14 @@ class VendorListingAdapter(private val isCelebrity: Boolean) :
                     if (isFollowing!!)
                         followVendor?.invoke(item.id) else unFollowVendor?.invoke(item.id)
                 }
+            }
+        }
+
+        private fun gotoDetailPage(vendor: VendorListing.Vendor) {
+            if (isCelebrity) {
+                gotoCelebrityDetail?.invoke(vendor)
+            } else {
+                gotoVendorDetail?.invoke(vendor)
             }
         }
     }

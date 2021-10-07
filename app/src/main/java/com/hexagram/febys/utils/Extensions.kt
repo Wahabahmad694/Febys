@@ -1,7 +1,6 @@
 package com.hexagram.febys.utils
 
 import android.app.Activity
-import android.os.Looper
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
@@ -12,13 +11,13 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.Fade
 import androidx.transition.Transition
 import androidx.transition.TransitionManager
+import com.facebook.drawee.view.SimpleDraweeView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.hexagram.febys.base.BaseActivity
 import com.hexagram.febys.network.DataState
@@ -147,4 +146,10 @@ fun <T : View> BottomSheetBehavior<T>.onStateChange(callback: (state: Int) -> Un
 
 fun Double.toFixedDecimal(decimalCount: Int): String {
     return String.format("%.${decimalCount}f", this)
+}
+
+fun SimpleDraweeView.load(imageUrl: String?) {
+    if (imageUrl.isNullOrEmpty()) return
+    hierarchy.fadeDuration = 200
+    setImageURI(imageUrl)
 }

@@ -1,6 +1,10 @@
 package com.hexagram.febys.network
 
+import com.hexagram.febys.R
+import com.hexagram.febys.models.view.Endorsement
 import com.hexagram.febys.models.view.ShippingAddress
+import com.hexagram.febys.models.view.SocialLink
+import com.hexagram.febys.models.view.VendorDetail
 import com.hexagram.febys.network.adapter.ApiResponse
 import kotlinx.coroutines.delay
 import retrofit2.Response
@@ -72,5 +76,38 @@ object FakeApiService {
         addresses.add(shippingAddress)
         if (shippingAddress.isDefault) setAsDefault(shippingAddress.id)
         return ApiResponse.ApiSuccessResponse(Response.success(Unit))
+    }
+
+    suspend fun fetchVendorDetail(vendorId: Int): ApiResponse<VendorDetail> {
+        delay(100)
+        return ApiResponse.ApiSuccessResponse(Response.success(getVendorDetail()))
+    }
+
+    private fun getVendorDetail(): VendorDetail {
+        return VendorDetail(
+            23,
+            "Gwyneth Paltrow",
+            "Enter the romantic, eclectic and free-spirited world of Gucci at Febys.",
+            "res:///${R.drawable.temp_celebrity_header}",
+            "res:///${R.drawable.temp_celebrity_profile_img}",
+            "Beauty Store",
+            "Ground Floor, Senya Terazzo Building, Behind...",
+            false,
+            listOf(SocialLink(R.drawable.ic_social_link_fb, "https://www.facebook.com")),
+            listOf(
+                Endorsement(
+                    1, "Edward A Kuffour",
+                    "res:///${R.drawable.temp_celebrity_profile_img}"
+                ),
+                Endorsement(
+                    2, "Edward A Kuffour",
+                    "res:///${R.drawable.temp_celebrity_profile_img}"
+                ),
+                Endorsement(
+                    3, "Edward A Kuffour",
+                    "res:///${R.drawable.temp_celebrity_profile_img}"
+                )
+            )
+        )
     }
 }

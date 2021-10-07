@@ -178,5 +178,7 @@
     <string name="msg_thank_you_for_purchase">Thank You For Your Purchase</string>
     <string name="msg_success_order">Your Order has been placed! We will email you on order confirmation with details and tracking number once your order has been successfully processed</string>
     <string name="label_order_id">Order ID:</string>
+    <string name="label_where_to_find_me">Where to find me</string>
+    <string name="label_my_endorsements">My Endorsements</string>
 
 </resources>

@@ -1,5 +1,3 @@
-1. check out screen
-2. Add/Edit Delivery Address
-3. Change Default Delivery Address
-4. Waring dialog on change of delivery address
-5. checkout success screen
+1. celebrity detail
+2. product listing of vendor
+3. Vendor Detail (bottom section (about store, shipping, reviews etc) are not covered yet)
