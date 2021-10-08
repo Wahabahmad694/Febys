@@ -18,7 +18,8 @@ class MainActivity : BaseActivity() {
             R.id.homeFragment,
             R.id.messageFragment,
             R.id.searchFragment,
-            R.id.accountFragment
+            R.id.accountFragment,
+            R.id.menuFragment
         )
 
     override fun onCreate(savedInstanceState: Bundle?) {

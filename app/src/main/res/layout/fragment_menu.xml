@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/_16sdp"
+        tools:context=".ui.screens.menu.MenuFragment">
+
+        <TextView
+            style="@style/TextTheme.HelveticaNeue.TS32.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_32sdp"
+            android:gravity="center_vertical"
+            android:text="@string/menu_menu" />
+
+        <TextView
+            style="@style/TextTheme.HelveticaNeue.TS12.Bold"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_32sdp"
+            android:layout_marginTop="@dimen/_18sdp"
+            android:gravity="center_vertical"
+            android:text="@string/label_discount_mall"
+            app:drawableEndCompat="@drawable/ic_right" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1dp"
+            android:background="@color/grey_e1e5e8" />
+
+        <TextView
+            style="@style/TextTheme.HelveticaNeue.TS12.Bold"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_32sdp"
+            android:gravity="center_vertical"
+            android:text="@string/label_pawn_shop"
+            app:drawableEndCompat="@drawable/ic_right" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1dp"
+            android:background="@color/grey_e1e5e8" />
+
+        <TextView
+            style="@style/TextTheme.HelveticaNeue.TS12.Bold"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_32sdp"
+            android:gravity="center_vertical"
+            android:text="@string/label_made_in_ghana"
+            app:drawableEndCompat="@drawable/ic_right" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1dp"
+            android:background="@color/grey_e1e5e8" />
+
+        <TextView
+            style="@style/TextTheme.HelveticaNeue.TS12.Bold"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_32sdp"
+            android:gravity="center_vertical"
+            android:text="@string/label_african_market"
+            app:drawableEndCompat="@drawable/ic_right" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1dp"
+            android:background="@color/grey_e1e5e8" />
+    </LinearLayout>
+</layout>
