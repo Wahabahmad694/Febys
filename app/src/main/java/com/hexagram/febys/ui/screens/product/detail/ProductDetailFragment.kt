@@ -91,8 +91,7 @@ class ProductDetailFragment : SliderFragment() {
             if (isUserLoggedIn) {
                 toggleFavAndUpdateIcon()
             } else {
-                val gotoLogin = NavGraphDirections.actionToLoginFragment()
-                navigateTo(gotoLogin)
+                gotoLogin()
             }
         }
 
@@ -180,6 +179,14 @@ class ProductDetailFragment : SliderFragment() {
         binding.ivBack.setOnClickListener {
             goBack()
         }
+
+        binding.seeMoreQAndA.setOnClickListener {
+            gotoQAThreads()
+        }
+
+        binding.btnAskAboutProduct.setOnClickListener {
+            askQuestion()
+        }
     }
 
     private fun updateVariantByFirstAttr(firstAttr: String, product: Product) {
@@ -230,6 +237,22 @@ class ProductDetailFragment : SliderFragment() {
                 }
             }
         }
+
+        productDetailViewModel.observeAskQuestion.observe(viewLifecycleOwner) {
+            when (it) {
+                is DataState.Loading -> {
+                    showLoader()
+                }
+                is DataState.Error -> {
+                    hideLoader()
+                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
+                }
+                is DataState.Data -> {
+                    hideLoader()
+                    addQuestionAnswersToLayout(it.data, 0)
+                }
+            }
+        }
     }
 
     private fun updateUi(product: Product) {
@@ -270,7 +293,7 @@ class ProductDetailFragment : SliderFragment() {
         updateQuestionAnswersThread(product.questionAnswersThread)
     }
 
-    private fun updateQuestionAnswersThread(questionAnswersThread: List<QuestionAnswersThread>) {
+    private fun updateQuestionAnswersThread(questionAnswersThread: MutableList<QuestionAnswersThread>) {
         if (questionAnswersThread.isEmpty()) return
 
         addQuestionAnswersToLayout(questionAnswersThread[0])
@@ -279,7 +302,7 @@ class ProductDetailFragment : SliderFragment() {
         }
     }
 
-    private fun addQuestionAnswersToLayout(thread: QuestionAnswersThread) {
+    private fun addQuestionAnswersToLayout(thread: QuestionAnswersThread, position: Int = -1) {
         val parent = binding.containerQAndAThread
         val layoutQuestionAnswersThread = ItemQuestionAnswersThreadBinding
             .inflate(layoutInflater, parent, false)
@@ -311,7 +334,7 @@ class ProductDetailFragment : SliderFragment() {
             answersAdapter.submitList(thread.answers)
         }
 
-        addView(parent, layoutQuestionAnswersThread.root)
+        addView(parent, layoutQuestionAnswersThread.root, position)
     }
 
     private fun updateVariant(variant: ProductVariant) {
@@ -422,6 +445,31 @@ class ProductDetailFragment : SliderFragment() {
         }
 
         goBack()
+    }
+
+
+    private fun askQuestion() {
+        if (!isUserLoggedIn) {
+            gotoLogin()
+            return
+        }
+        val question = binding.etAskAboutProduct.text.toString()
+
+        if (question.isEmpty()) return
+
+        productDetailViewModel.askQuestion(args.productId, question)
+        binding.etAskAboutProduct.text = null
+    }
+
+    private fun gotoQAThreads() {
+        val action =
+            ProductDetailFragmentDirections.actionProductDetailFragmentToQAThreadsFragment()
+        navigateTo(action)
+    }
+
+    private fun gotoLogin() {
+        val gotoLogin = NavGraphDirections.actionToLoginFragment()
+        navigateTo(gotoLogin)
     }
 
     override fun onStart() {

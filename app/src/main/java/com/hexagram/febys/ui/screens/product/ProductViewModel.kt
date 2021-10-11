@@ -12,7 +12,6 @@ open class ProductViewModel @Inject constructor(
     val productRepo: IProductRepo
 ) : BaseViewModel() {
 
-
     fun toggleFav(variantId: Int) = viewModelScope.launch {
         productRepo.toggleFav(variantId)
     }

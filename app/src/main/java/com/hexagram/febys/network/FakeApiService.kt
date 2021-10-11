@@ -173,22 +173,30 @@ object FakeApiService {
         )
     )
 
-    fun fetchQuestionAnswersThread(): List<QuestionAnswersThread> {
+    fun fetchQuestionAnswersThread(): MutableList<QuestionAnswersThread> {
         return questionAnswersThread
     }
 
-    suspend fun postQuestion(question: Thread): ApiResponse<Unit> {
+    suspend fun postQuestion(
+        authToken: String, productId: Int, question: String
+    ): ApiResponse.ApiSuccessResponse<QuestionAnswersThread> {
         delay(100)
-        questionAnswersThread.add(
-            QuestionAnswersThread(
-                "" + questionAnswersThread.size + 1,
+        val question = QuestionAnswersThread(
+            "" + questionAnswersThread.size + 1,
+            Thread(
+                (questionAnswersThread.size + 100).toString(),
+                "1",
+                "Houd",
                 question,
-                mutableListOf(), // answer
-                mutableSetOf(), // up vote
-                mutableSetOf()  // down vote
-            )
+                "Consumer",
+                "2021-11-04T20:39:02.785Z"
+            ),
+            mutableListOf(), // answer
+            mutableSetOf(), // up vote
+            mutableSetOf()  // down vote
         )
-        return ApiResponse.ApiSuccessResponse(Response.success(Unit))
+        questionAnswersThread.add(question)
+        return ApiResponse.ApiSuccessResponse(Response.success(question))
     }
 
     suspend fun editQuestion(threadId: String, question: String): ApiResponse<Unit> {

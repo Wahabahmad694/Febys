@@ -3,6 +3,7 @@ package com.hexagram.febys.ui.screens.product.detail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.hexagram.febys.models.view.QuestionAnswersThread
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.response.Product
 import com.hexagram.febys.network.response.ProductVariant
@@ -23,6 +24,9 @@ class ProductDetailViewModel @Inject constructor(
 
     private val _observeProductDetail = MutableLiveData<DataState<Product>>()
     val observeProductDetail: LiveData<DataState<Product>> = _observeProductDetail
+
+    private val _observeAskQuestion = MutableLiveData<DataState<QuestionAnswersThread>>()
+    val observeAskQuestion: LiveData<DataState<QuestionAnswersThread>> = _observeAskQuestion
 
     fun fetchProductDetail(productId: Int) = viewModelScope.launch {
         _observeProductDetail.postValue(DataState.Loading())
@@ -59,6 +63,13 @@ class ProductDetailViewModel @Inject constructor(
         return product.productVariants.firstOrNull {
             it.getFirstVariantAttr()?.value == selectedFirstAttr
                     && it.getSecondVariantAttr()?.value == selectedSecondAttr
+        }
+    }
+
+    fun askQuestion(productId: Int, question: String) = viewModelScope.launch {
+        _observeAskQuestion.postValue(DataState.Loading())
+        productRepo.askQuestion(productId, question).collect {
+            _observeAskQuestion.postValue(it)
         }
     }
 }

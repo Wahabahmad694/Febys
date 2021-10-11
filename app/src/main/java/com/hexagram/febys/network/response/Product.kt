@@ -42,7 +42,7 @@ data class Product @JvmOverloads constructor(
     @SerializedName("variants")
     val productVariants: List<ProductVariant>,
 ) {
-    val questionAnswersThread: List<QuestionAnswersThread>
+    val questionAnswersThread: MutableList<QuestionAnswersThread>
     get() = FakeApiService.fetchQuestionAnswersThread()
 
     val warranty
