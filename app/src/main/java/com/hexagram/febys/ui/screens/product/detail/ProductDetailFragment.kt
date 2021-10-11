@@ -19,7 +19,9 @@ import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
 import com.hexagram.febys.base.SliderFragment
 import com.hexagram.febys.databinding.FragmentProductDetailBinding
+import com.hexagram.febys.databinding.ItemQuestionAnswersThreadBinding
 import com.hexagram.febys.databinding.LayoutProductDescriptionBinding
+import com.hexagram.febys.models.view.QuestionAnswersThread
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.response.Product
 import com.hexagram.febys.network.response.ProductDescription
@@ -264,6 +266,52 @@ class ProductDetailFragment : SliderFragment() {
         )
         updateProductDescription(shortDescription)
         updateProductDescription(product.descriptions)
+
+        updateQuestionAnswersThread(product.questionAnswersThread)
+    }
+
+    private fun updateQuestionAnswersThread(questionAnswersThread: List<QuestionAnswersThread>) {
+        if (questionAnswersThread.isEmpty()) return
+
+        addQuestionAnswersToLayout(questionAnswersThread[0])
+        if (questionAnswersThread.size >= 2) {
+            addQuestionAnswersToLayout(questionAnswersThread[1])
+        }
+    }
+
+    private fun addQuestionAnswersToLayout(thread: QuestionAnswersThread) {
+        val parent = binding.containerQAndAThread
+        val layoutQuestionAnswersThread = ItemQuestionAnswersThreadBinding
+            .inflate(layoutInflater, parent, false)
+        layoutQuestionAnswersThread.apply {
+            this.question.text = thread.question.message
+            voteUp.text = thread.upVotes.size.toString()
+            voteDown.text = thread.downVotes.size.toString()
+
+            edit.setOnClickListener {
+                // todo move to edit question screen
+            }
+
+            delete.setOnClickListener {
+                // todo remove thread
+            }
+
+            reply.setOnClickListener {
+                // todo move to reply screen
+            }
+
+            val answersAdapter = AnswersAdapter()
+            rvAnswers.adapter = answersAdapter
+            rvAnswers.addItemDecoration(
+                DividerItemDecoration(
+                    context,
+                    (rvAnswers.layoutManager as LinearLayoutManager).orientation
+                )
+            )
+            answersAdapter.submitList(thread.answers)
+        }
+
+        addView(parent, layoutQuestionAnswersThread.root)
     }
 
     private fun updateVariant(variant: ProductVariant) {
@@ -381,7 +429,9 @@ class ProductDetailFragment : SliderFragment() {
         updateFavIcon(binding.variant?.id ?: return)
     }
 
-    private fun addView(parent: ViewGroup, view: View) = parent.addView(view)
+    private fun addView(parent: ViewGroup, view: View, position: Int = -1) {
+        if (position == -1) parent.addView(view) else parent.addView(view, position)
+    }
 
     override fun getSlider() = listOf(binding.sliderProductImages)
 

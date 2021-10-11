@@ -139,12 +139,42 @@ object FakeApiService {
             ),
             mutableSetOf("1", "2"),
             mutableSetOf("3", "4")
+        ),
+        QuestionAnswersThread(
+            "2",
+            Thread(
+                "3",
+                "1",
+                "Houd",
+                "What is quality of this product",
+                "Consumer",
+                "2021-10-04T21:39:02.785Z"
+            ),
+            mutableListOf(
+                Thread(
+                    "4",
+                    "2",
+                    "Daniyal",
+                    "Quality is A+",
+                    "Vendor",
+                    "2021-10-04T22:45:02.785Z"
+                ),
+                Thread(
+                    "5",
+                    "1",
+                    "Houd",
+                    "Thank you",
+                    "Consumer",
+                    "2021-10-04T23:48:02.785Z"
+                ),
+            ),
+            mutableSetOf("1", "2"),
+            mutableSetOf("3", "4")
         )
     )
 
-    suspend fun fetchQuestionAnswersThread(): ApiResponse<List<QuestionAnswersThread>> {
-        delay(100)
-        return ApiResponse.ApiSuccessResponse(Response.success(questionAnswersThread))
+    fun fetchQuestionAnswersThread(): List<QuestionAnswersThread> {
+        return questionAnswersThread
     }
 
     suspend fun postQuestion(question: Thread): ApiResponse<Unit> {

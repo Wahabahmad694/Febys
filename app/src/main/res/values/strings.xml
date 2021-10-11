@@ -59,6 +59,7 @@
     <string name="label_shipping_fee_and_returns"><![CDATA[Shipping Fee & Returns]]></string>
     <string name="label_shipping_fee">Shipping Fee</string>
     <string name="label_q_and_a"><![CDATA[Q&As]]></string>
+    <string name="label_customer_q_and_a"><![CDATA[Customer Questions & Answers]]></string>
     <string name="label_reviews">Reviews</string>
     <string name="label_store_information">Store Information</string>
     <string name="label_official">Official</string>
@@ -184,5 +185,11 @@
     <string name="label_african_market">African Market</string>
     <string name="label_made_in_ghana">Made in Ghana</string>
     <string name="label_pawn_shop">Pawn Shop</string>
+    <string name="label_delete">Delete</string>
+    <string name="label_reply">Reply</string>
+    <string name="label_by">By</string>
+    <string name="label_see_more">See More</string>
+    <string name="label_ask_about_product">Ask about the product.</string>
+    <string name="label_ask">Ask</string>
 
 </resources>
