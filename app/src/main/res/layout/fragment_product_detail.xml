@@ -592,6 +592,7 @@
                                 android:text="@string/label_see_more" />
 
                             <LinearLayout
+                                android:id="@+id/container_ask_about_product"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_42sdp"
                                 android:layout_marginVertical="@dimen/_17sdp"

@@ -69,7 +69,7 @@
                 style="@style/TextTheme.HelveticaNeue.TS14.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginHorizontal="@dimen/_12sdp"
                 android:drawablePadding="@dimen/_4sdp"
                 android:text="@string/label_delete"
                 app:drawableEndCompat="@drawable/ic_delete" />
@@ -79,7 +79,6 @@
                 style="@style/TextTheme.HelveticaNeue.TS14.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_12sdp"
                 android:drawablePadding="@dimen/_4sdp"
                 android:text="@string/label_reply"
                 app:drawableEndCompat="@drawable/ic_reply" />

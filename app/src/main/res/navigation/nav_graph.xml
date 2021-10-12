@@ -425,5 +425,13 @@
         android:id="@+id/QAThreadsFragment"
         android:name="com.hexagram.febys.ui.screens.product.detail.QAThreadsFragment"
         android:label="QAThreadsFragment"
-        tools:layout="@layout/fragment_q_a_threads" />
+        tools:layout="@layout/fragment_q_a_threads">
+        <argument
+            android:name="userId"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="threads"
+            app:argType="com.hexagram.febys.models.view.QuestionAnswersThread[]" />
+    </dialog>
 </navigation>

@@ -1,47 +1,22 @@
 package com.hexagram.febys.ui.screens.product.detail
 
-import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import androidx.navigation.fragment.navArgs
+import com.hexagram.febys.base.BaseBottomSheet
 import com.hexagram.febys.databinding.FragmentQAThreadsBinding
-import com.hexagram.febys.network.FakeApiService
 import com.hexagram.febys.utils.goBack
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class QAThreadsFragment : BottomSheetDialogFragment() {
+class QAThreadsFragment : BaseBottomSheet() {
     private lateinit var binding: FragmentQAThreadsBinding
+    private val args: QAThreadsFragmentArgs by navArgs()
 
     private val qaThreadsAdapter = QAThreadsAdapter()
-
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialog = BottomSheetDialog(requireContext(), theme)
-        dialog.setOnShowListener {
-
-            val bottomSheetDialog = it as BottomSheetDialog
-            val parentLayout =
-                bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
-            parentLayout?.let { pl ->
-                val behaviour = BottomSheetBehavior.from(pl)
-                setupFullHeight(pl)
-                behaviour.state = BottomSheetBehavior.STATE_EXPANDED
-            }
-        }
-        return dialog
-    }
-
-    private fun setupFullHeight(bottomSheet: View) {
-        val layoutParams = bottomSheet.layoutParams
-        layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT
-        bottomSheet.layoutParams = layoutParams
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -59,10 +34,13 @@ class QAThreadsFragment : BottomSheetDialogFragment() {
 
     private fun initUi() {
         binding.rvQAThreads.adapter = qaThreadsAdapter
-        qaThreadsAdapter.submitList(FakeApiService.fetchQuestionAnswersThread())
+        qaThreadsAdapter.userId = args.userId
+        qaThreadsAdapter.submitList(args.threads.toMutableList())
     }
 
     private fun uiListeners() {
         binding.ivBack.setOnClickListener { goBack() }
     }
+
+    override fun fullScreen() = true
 }

@@ -69,6 +69,8 @@ class ProductDetailFragment : SliderFragment() {
         closeVariantBottomSheet(variantFirstAttrBottomSheet)
         closeVariantBottomSheet(variantSecondAttrBottomSheet)
 
+        binding.containerAskAboutProduct.isVisible = isUserLoggedIn
+
         binding.bottomSheetVariantFirstAttr.rvProductVariant.apply {
             setHasFixedSize(true)
             adapter = productVariantFirstAttrAdapter
@@ -181,7 +183,8 @@ class ProductDetailFragment : SliderFragment() {
         }
 
         binding.seeMoreQAndA.setOnClickListener {
-            gotoQAThreads()
+            val threads = binding.product?.questionAnswersThread
+            if (!threads.isNullOrEmpty()) gotoQAThreads(threads.toTypedArray())
         }
 
         binding.btnAskAboutProduct.setOnClickListener {
@@ -307,6 +310,7 @@ class ProductDetailFragment : SliderFragment() {
         val layoutQuestionAnswersThread = ItemQuestionAnswersThreadBinding
             .inflate(layoutInflater, parent, false)
         layoutQuestionAnswersThread.apply {
+            root.tag = thread.id
             this.question.text = thread.question.message
             voteUp.text = thread.upVotes.size.toString()
             voteDown.text = thread.downVotes.size.toString()
@@ -332,8 +336,11 @@ class ProductDetailFragment : SliderFragment() {
                 )
             )
             answersAdapter.submitList(thread.answers)
-        }
 
+            edit.isVisible = isUserLoggedIn && user?.id.toString() == thread.question.senderId
+            delete.isVisible = isUserLoggedIn && user?.id.toString() == thread.question.senderId
+            reply.isVisible = isUserLoggedIn
+        }
         addView(parent, layoutQuestionAnswersThread.root, position)
     }
 
@@ -447,7 +454,6 @@ class ProductDetailFragment : SliderFragment() {
         goBack()
     }
 
-
     private fun askQuestion() {
         if (!isUserLoggedIn) {
             gotoLogin()
@@ -461,9 +467,10 @@ class ProductDetailFragment : SliderFragment() {
         binding.etAskAboutProduct.text = null
     }
 
-    private fun gotoQAThreads() {
-        val action =
-            ProductDetailFragmentDirections.actionProductDetailFragmentToQAThreadsFragment()
+    private fun gotoQAThreads(threads: Array<QuestionAnswersThread>) {
+        val userId = user?.id?.toString()
+        val action = ProductDetailFragmentDirections
+            .actionProductDetailFragmentToQAThreadsFragment(userId, threads)
         navigateTo(action)
     }
 

@@ -2,6 +2,7 @@ package com.hexagram.febys.ui.screens.product.detail
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -9,6 +10,7 @@ import com.hexagram.febys.databinding.ItemQuestionAnswersThreadBinding
 import com.hexagram.febys.models.view.QuestionAnswersThread
 
 class QAThreadsAdapter : RecyclerView.Adapter<QAThreadsAdapter.QAThreadsVH>() {
+    var userId: String? = null
     private var answers = mutableListOf<QuestionAnswersThread>()
 
     inner class QAThreadsVH(
@@ -18,6 +20,11 @@ class QAThreadsAdapter : RecyclerView.Adapter<QAThreadsAdapter.QAThreadsVH>() {
             question.text = item.question.message
             voteUp.text = item.upVotes.size.toString()
             voteDown.text = item.downVotes.size.toString()
+
+            edit.isVisible = userId != null && userId == item.question.senderId
+            delete.isVisible = userId != null && userId == item.question.senderId
+            reply.isVisible = userId != null
+
             rvAnswers.adapter = AnswersAdapter().also { it.submitList(item.answers) }
             rvAnswers.addItemDecoration(
                 DividerItemDecoration(
