@@ -409,4 +409,9 @@
             android:name="id"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/menuFragment"
+        android:name="com.hexagram.febys.ui.screens.menu.MenuFragment"
+        android:label="MenuFragment"
+        tools:layout="@layout/fragment_menu" />
 </navigation>

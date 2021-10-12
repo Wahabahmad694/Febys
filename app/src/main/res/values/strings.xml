@@ -180,5 +180,9 @@
     <string name="label_order_id">Order ID:</string>
     <string name="label_where_to_find_me">Where to find me</string>
     <string name="label_my_endorsements">My Endorsements</string>
+    <string name="label_discount_mall">Discount Mall</string>
+    <string name="label_african_market">African Market</string>
+    <string name="label_made_in_ghana">Made in Ghana</string>
+    <string name="label_pawn_shop">Pawn Shop</string>
 
 </resources>
