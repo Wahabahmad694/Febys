@@ -1,6 +1,8 @@
 package com.hexagram.febys.repos
 
+import com.hexagram.febys.models.view.QuestionAnswersThread
 import com.hexagram.febys.network.DataState
+import com.hexagram.febys.network.FakeApiService
 import com.hexagram.febys.network.FebysBackendService
 import com.hexagram.febys.network.adapter.*
 import com.hexagram.febys.network.requests.RequestToggleFav
@@ -74,4 +76,17 @@ open class ProductRepoImpl @Inject constructor(
             pref.saveFav(fav)
         }
     }
+
+    override suspend fun askQuestion(
+        productId: Int, question: String, dispatcher: CoroutineDispatcher
+    ) = flow<DataState<QuestionAnswersThread>> {
+        val authToken = pref.getAccessToken()
+        FakeApiService.postQuestion(authToken, productId, question)
+            .onSuccess {
+                emit(DataState.Data(data!!))
+            }
+            .onError { emit(DataState.ApiError(message)) }
+            .onException { emit(DataState.ExceptionError()) }
+            .onNetworkError { emit(DataState.NetworkError()) }
+    }.flowOn(dispatcher)
 }

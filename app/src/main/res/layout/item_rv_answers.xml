@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_12sdp">
+
+        <TextView
+            android:id="@+id/answer"
+            style="@style/TextTheme.Arial.TS14"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="2 HDMI Input, 1 Component Video Input, RF In (Satellite Input), 1 USB Input, 1 Composite In (AV), Ethernet and 1 Digital Audio Out (Optical). Hope this helps" />
+
+        <TextView
+            android:id="@+id/label_by"
+            style="@style/TextTheme.Arial.TS14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:text="@string/label_by"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/answer" />
+
+        <TextView
+            android:id="@+id/name"
+            style="@style/TextTheme.Arial.TS14.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_4sdp"
+            app:layout_constraintBaseline_toBaselineOf="@id/label_by"
+            app:layout_constraintStart_toEndOf="@id/label_by"
+            tools:text="gary16605" />
+
+        <TextView
+            android:id="@+id/date"
+            style="@style/TextTheme.Arial.TS14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            app:layout_constraintStart_toStartOf="@id/label_by"
+            app:layout_constraintTop_toBottomOf="@id/label_by"
+            tools:text="June 17, 2018" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

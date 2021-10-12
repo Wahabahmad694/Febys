@@ -1,8 +1,10 @@
 package com.hexagram.febys.network.response
 
 import com.google.gson.annotations.SerializedName
+import com.hexagram.febys.models.view.QuestionAnswersThread
+import com.hexagram.febys.network.FakeApiService
 
-data class Product constructor(
+data class Product @JvmOverloads constructor(
     @SerializedName("id")
     val id: Int,
     @SerializedName("name")
@@ -40,6 +42,9 @@ data class Product constructor(
     @SerializedName("variants")
     val productVariants: List<ProductVariant>,
 ) {
+    val questionAnswersThread: MutableList<QuestionAnswersThread>
+    get() = FakeApiService.fetchQuestionAnswersThread()
+
     val warranty
         get() = _warranty == 1
 

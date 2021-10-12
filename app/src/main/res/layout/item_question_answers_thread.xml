@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:gravity="start"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/question"
+                style="@style/TextTheme.Arial.TS14.Bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:layout_weight="1"
+                tools:text="What are the inputs/outputs" />
+
+            <TextView
+                android:id="@+id/vote_up"
+                style="@style/TextTheme.Arial.TS14.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/_2sdp"
+                app:drawableStartCompat="@drawable/ic_vote_up"
+                tools:text="120" />
+
+            <TextView
+                android:id="@+id/vote_down"
+                style="@style/TextTheme.Arial.TS14.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:drawablePadding="@dimen/_2sdp"
+                app:drawableStartCompat="@drawable/ic_vote_down"
+                tools:text="120" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/edit"
+                style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/_4sdp"
+                android:text="@string/label_edit"
+                app:drawableEndCompat="@drawable/ic_edit" />
+
+            <TextView
+                android:id="@+id/delete"
+                style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:drawablePadding="@dimen/_4sdp"
+                android:text="@string/label_delete"
+                app:drawableEndCompat="@drawable/ic_delete" />
+
+            <TextView
+                android:id="@+id/reply"
+                style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/_4sdp"
+                android:text="@string/label_reply"
+                app:drawableEndCompat="@drawable/ic_reply" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_answers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="1"
+            tools:listitem="@layout/item_rv_answers" />
+
+    </LinearLayout>
+</layout>

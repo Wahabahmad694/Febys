@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.dataSource.ICartDataSource
 import com.hexagram.febys.dataSource.IUserDataSource
+import com.hexagram.febys.network.response.User
 import com.hexagram.febys.utils.navigateTo
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -23,6 +24,9 @@ abstract class BaseFragment : Fragment() {
 
     val isUserLoggedIn: Boolean
         get() = userDataSource.getUser() != null
+
+    val user: User?
+        get() = userDataSource.getUser()
 
     private val _observeUserLoggedIn = MutableLiveData(false)
     val observesUserLoggedIn = _observeUserLoggedIn
