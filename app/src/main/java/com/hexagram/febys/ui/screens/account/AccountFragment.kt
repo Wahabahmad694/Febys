@@ -61,6 +61,11 @@ class AccountFragment : BaseFragment() {
                 AccountFragmentDirections.actionAccountFragmentToShippingFragment()
             navigateTo(shippingAddress)
         }
+
+        binding.settings.vouchers.setOnClickListener {
+            val gotoVouchers = AccountFragmentDirections.actionAccountFragmentToVouchersFragment()
+            navigateTo(gotoVouchers)
+        }
     }
 
     private fun setupObserver() {

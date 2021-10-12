@@ -22,6 +22,7 @@ android {
 
     buildFeatures {
         dataBinding true
+        viewBinding true
     }
 
     signingConfigs {
@@ -111,6 +112,7 @@ android {
 }
 
 dependencies {
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
     def ktx_version = "1.6.0"
     implementation "androidx.core:core-ktx:$ktx_version"
 

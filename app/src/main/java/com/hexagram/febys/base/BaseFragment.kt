@@ -70,5 +70,4 @@ abstract class BaseFragment : Fragment() {
 
     open fun getTvCartCount(): TextView? = null
     open fun getIvCart(): View? = null
-
 }

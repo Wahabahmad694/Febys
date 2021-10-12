@@ -208,6 +208,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_accountFragment_to_vouchersFragment"
+            app:destination="@id/vouchersFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <dialog
@@ -434,4 +441,9 @@
             android:name="threads"
             app:argType="com.hexagram.febys.models.view.QuestionAnswersThread[]" />
     </dialog>
+    <fragment
+        android:id="@+id/vouchersFragment"
+        android:name="com.hexagram.febys.ui.screens.vouchers.VouchersFragment"
+        android:label="VouchersFragment"
+        tools:layout="@layout/fragment_vouchers" />
 </navigation>
