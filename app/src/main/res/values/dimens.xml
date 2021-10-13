@@ -19,4 +19,5 @@
     <dimen name="_16sp">@dimen/_13ssp</dimen>
     <dimen name="_18sp">@dimen/_14ssp</dimen>
     <dimen name="_32sp">@dimen/_26ssp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 </resources>

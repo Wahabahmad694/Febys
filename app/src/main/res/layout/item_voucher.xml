@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_165sdp"
+        android:layout_marginHorizontal="@dimen/_8sdp"
+        android:layout_marginVertical="@dimen/_4sdp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/_8sdp"
+        app:cardElevation="@dimen/_4sdp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/background"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:actualImageScaleType="none"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:roundedCornerRadius="@dimen/_8sdp" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_22sdp"
+                android:src="@drawable/ic_febys_small"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/container_voucher_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_22sdp"
+                android:layout_marginTop="@dimen/_19sdp"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/logo">
+
+                <TextView
+                    android:id="@+id/label_voucher_type"
+                    style="@style/TextTheme.HelveticaNeue.TS14.Grey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_voucher_type" />
+
+                <TextView
+                    android:id="@+id/voucher_type"
+                    style="@style/TextTheme.HelveticaNeue.TS16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Refundable" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/container_voucher_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_19sdp"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="@id/container_voucher_type"
+                app:layout_constraintTop_toBottomOf="@id/container_voucher_type">
+
+                <TextView
+                    android:id="@+id/label_voucher_code"
+                    style="@style/TextTheme.HelveticaNeue.TS14.Grey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_voucher_code" />
+
+                <TextView
+                    android:id="@+id/voucher_code"
+                    style="@style/TextTheme.HelveticaNeue.TS16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="WCLN2445KJ" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/container_voucher_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_22sdp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@id/container_voucher_type"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/container_voucher_type">
+
+                <TextView
+                    android:id="@+id/label_voucher_amount"
+                    style="@style/TextTheme.HelveticaNeue.TS14.Grey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_voucher_amount" />
+
+                <TextView
+                    android:id="@+id/voucher_amount"
+                    style="@style/TextTheme.HelveticaNeue.TS16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="$600.50" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/container_expiration_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@id/container_voucher_code"
+                app:layout_constraintEnd_toEndOf="@id/container_voucher_amount"
+                app:layout_constraintStart_toStartOf="@id/container_voucher_amount"
+                app:layout_constraintTop_toTopOf="@id/container_voucher_code">
+
+                <TextView
+                    android:id="@+id/label_expiration_date"
+                    style="@style/TextTheme.HelveticaNeue.TS14.Grey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_expiration_date" />
+
+                <TextView
+                    android:id="@+id/voucher_expiration_date"
+                    style="@style/TextTheme.HelveticaNeue.TS16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="May 28, 2021" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>
