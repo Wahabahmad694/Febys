@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.google.gson.Gson
+import com.hexagram.febys.models.view.PaymentMethod
 import com.hexagram.febys.models.view.ShippingAddress
 import com.hexagram.febys.network.response.User
 import com.hexagram.febys.utils.Utils
@@ -19,6 +20,7 @@ class PrefManagerImpl @Inject constructor(
         private const val KEY_REFRESH_TOKEN = "refreshToken"
         private const val KEY_FAV = "fav"
         private const val KEY_DEF_SHIPPING_ADDRESS = "defShippingAddress"
+        private const val KEY_DEF_PAYMENT_METHOD = "defPaymentMethod"
     }
 
     private val pref: SharedPreferences by lazy {
@@ -115,6 +117,17 @@ class PrefManagerImpl @Inject constructor(
     override fun saveDefaultShippingAddress(shippingAddress: ShippingAddress) {
         val shippingAddressAsString = Utils.jsonFromShippingAddress(shippingAddress)
         saveString(KEY_DEF_SHIPPING_ADDRESS, shippingAddressAsString)
+    }
+
+    override fun getDefaultPaymentMethod(): PaymentMethod? {
+        val paymentMethodAsString = getString(KEY_DEF_PAYMENT_METHOD, "")
+        if (paymentMethodAsString.isEmpty()) return null
+        return Utils.jsonToPaymentMethod(paymentMethodAsString)
+    }
+
+    override fun saveDefaultPaymentMethod(paymentMethod: PaymentMethod) {
+        val paymentMethodAsString = Utils.jsonFromPaymentMethod(paymentMethod)
+        saveString(KEY_DEF_PAYMENT_METHOD, paymentMethodAsString)
     }
 
     private fun saveString(key: String, value: String) {

@@ -38,7 +38,7 @@ class ShippingAddressRepoImpl @Inject constructor(
     }.flowOn(dispatcher)
 
     override suspend fun setAsDefault(id: Int) {
-        val shippingAddress = FakeApiService.setAsDefault(id)
+        val shippingAddress = FakeApiService.setAsDefaultShippingAddress(id)
         shippingAddress?.let { saveDefaultShippingAddress(it) }
     }
 

@@ -15,9 +15,7 @@ import com.hexagram.febys.models.view.PaymentMethod
 import com.hexagram.febys.models.view.ShippingAddress
 import com.hexagram.febys.ui.screens.cart.CartAdapter
 import com.hexagram.febys.ui.screens.dialog.InfoDialog
-import com.hexagram.febys.utils.goBack
-import com.hexagram.febys.utils.navigateTo
-import com.hexagram.febys.utils.toFixedDecimal
+import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -59,6 +57,12 @@ class CheckoutFragment : BaseFragment() {
 
         binding.containerShippingAddress.setOnClickListener {
             showChangeShippingAddressWarningDialog()
+        }
+
+        binding.containerPayment.setOnClickListener {
+            val gotoPaymentMethod =
+                CheckoutFragmentDirections.actionCheckoutFragmentToPaymentMethodsFragment()
+            navigateTo(gotoPaymentMethod)
         }
 
         binding.btnPlaceOrder.setOnClickListener {
@@ -166,8 +170,14 @@ class CheckoutFragment : BaseFragment() {
     }
 
     private fun updatePaymentMethod(paymentMethod: PaymentMethod?) {
-        binding.tvPayment.text =
-            paymentMethod?.name ?: getString(R.string.msg_for_no_payment)
+        if (paymentMethod != null) {
+            binding.tvPayment.text = paymentMethod.name
+            binding.icPayment.show()
+            binding.icPayment.setImageResource(paymentMethod.img)
+        } else {
+            binding.tvPayment.text = getString(R.string.msg_for_no_payment)
+            binding.icPayment.invisible()
+        }
     }
 
     private fun showChangeShippingAddressWarningDialog() {

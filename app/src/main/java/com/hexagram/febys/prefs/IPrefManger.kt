@@ -1,5 +1,6 @@
 package com.hexagram.febys.prefs
 
+import com.hexagram.febys.models.view.PaymentMethod
 import com.hexagram.febys.models.view.ShippingAddress
 import com.hexagram.febys.network.response.User
 
@@ -37,4 +38,8 @@ interface IPrefManger {
     fun getDefaultShippingAddress(): ShippingAddress?
 
     fun saveDefaultShippingAddress(shippingAddress: ShippingAddress)
+
+    fun getDefaultPaymentMethod(): PaymentMethod?
+
+    fun saveDefaultPaymentMethod(paymentMethod: PaymentMethod)
 }
