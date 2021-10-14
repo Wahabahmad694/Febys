@@ -14,6 +14,6 @@ class CheckoutRepoImpl @Inject constructor(
     }
 
     override fun getDefaultPaymentMethod(): PaymentMethod? {
-        return PaymentMethod(1, "RavePay")
+        return pref.getDefaultPaymentMethod()
     }
 }

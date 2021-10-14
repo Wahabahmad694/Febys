@@ -195,5 +195,6 @@
     <string name="label_see_more">See More</string>
     <string name="label_ask_about_product">Ask about the product.</string>
     <string name="label_ask">Ask</string>
+    <string name="label_payment_method">Payment Method</string>
 
 </resources>

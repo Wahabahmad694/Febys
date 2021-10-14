@@ -43,7 +43,7 @@ object FakeApiService {
         return ApiResponse.ApiSuccessResponse(Response.success(addresses))
     }
 
-    suspend fun setAsDefault(id: Int): ShippingAddress? {
+    suspend fun setAsDefaultShippingAddress(id: Int): ShippingAddress? {
         delay(100)
         addresses.forEach { it.isDefault = false }
         val shippingAddress = addresses.firstOrNull { it.id == id }
@@ -60,7 +60,7 @@ object FakeApiService {
             addresses.removeAt(index)
             addresses.add(index, shippingAddress)
             if (shippingAddress.isDefault) {
-                setAsDefault(shippingAddress.id)
+                setAsDefaultShippingAddress(shippingAddress.id)
             }
         }
         return ApiResponse.ApiSuccessResponse(Response.success(Unit))
@@ -71,7 +71,7 @@ object FakeApiService {
     ): ApiResponse<Unit> {
         delay(100)
         addresses.add(shippingAddress)
-        if (shippingAddress.isDefault) setAsDefault(shippingAddress.id)
+        if (shippingAddress.isDefault) setAsDefaultShippingAddress(shippingAddress.id)
         return ApiResponse.ApiSuccessResponse(Response.success(Unit))
     }
 
@@ -178,7 +178,7 @@ object FakeApiService {
     }
 
     suspend fun postQuestion(
-        authToken: String, productId: Int, question: String
+        authToken: String, productId: Int, msg: String
     ): ApiResponse.ApiSuccessResponse<QuestionAnswersThread> {
         delay(100)
         val question = QuestionAnswersThread(
@@ -187,7 +187,7 @@ object FakeApiService {
                 (questionAnswersThread.size + 100).toString(),
                 "1",
                 "Houd",
-                question,
+                msg,
                 "Consumer",
                 "2021-11-04T20:39:02.785Z"
             ),
@@ -242,5 +242,25 @@ object FakeApiService {
             Voucher(2, "Refund", "WCLN4444KJ", "May 29, 2021", 200.50)
         )
         return ApiResponse.ApiSuccessResponse(Response.success(list))
+    }
+
+    private val paymentMethods = mutableListOf(
+        PaymentMethod(1, "RavePay", R.drawable.ic_rave_pay, true),
+        PaymentMethod(2, "Mobile Money", R.drawable.ic_mobile_money, false),
+        PaymentMethod(3, "Paypal", R.drawable.ic_paypal, false),
+        PaymentMethod(4, "Cash on delivery", R.drawable.ic_cash_on_delivery, false)
+    )
+
+    suspend fun fetchPaymentMethods(): ApiResponse<List<PaymentMethod>> {
+        delay(100)
+        return ApiResponse.ApiSuccessResponse(Response.success(paymentMethods))
+    }
+
+    suspend fun setAsDefaultPaymentMethod(id: Int): PaymentMethod? {
+        delay(100)
+        paymentMethods.forEach { it.isDefault = false }
+        val paymentMethod = paymentMethods.firstOrNull { it.id == id }
+        paymentMethod?.isDefault = true
+        return paymentMethod
     }
 }
