@@ -12,7 +12,7 @@ data class Category(
     val logo: String,
     val enable: Int,
     val featured: Int,
-    val products: List<Product>,
+    val oldProducts: List<OldProduct>,
     @SerializedName("created_at")
     val createdAt: String,
     @SerializedName("updated_at")

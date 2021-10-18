@@ -8,7 +8,7 @@
 
         <variable
             name="item"
-            type="com.hexagram.febys.network.response.UniqueCategory" />
+            type="com.hexagram.febys.models.api.category.UniqueCategory" />
 
     </data>
 
@@ -25,7 +25,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:roundAsCircle="true"
-            binding:image_url="@{item.images[0]}" />
+            binding:image_url="@{item.image[0]}" />
 
         <TextView
             android:id="@+id/tv_product_name_unique_category"

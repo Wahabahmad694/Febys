@@ -19,7 +19,7 @@ import com.hexagram.febys.databinding.FragmentCelebrityDetailBinding
 import com.hexagram.febys.models.view.SocialLink
 import com.hexagram.febys.models.view.VendorDetail
 import com.hexagram.febys.network.DataState
-import com.hexagram.febys.network.response.Product
+import com.hexagram.febys.network.response.OldProduct
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.ui.screens.product.listing.ProductListingPagerAdapter
 import com.hexagram.febys.utils.*
@@ -98,7 +98,7 @@ class CelebrityDetailFragment : BaseFragment() {
         }
 
         productListingPagerAdapter.interaction = object : ProductListingPagerAdapter.Interaction {
-            override fun onItemSelected(position: Int, item: Product) {
+            override fun onItemSelected(position: Int, item: OldProduct) {
                 val gotoProductDetail = NavGraphDirections.actionToProductDetail(item.id)
                 navigateTo(gotoProductDetail)
             }
@@ -106,7 +106,7 @@ class CelebrityDetailFragment : BaseFragment() {
             override fun toggleFavIfUserLoggedIn(variantId: Int): Boolean {
                 return isUserLoggedIn.also {
                     if (it) {
-                        celebrityViewModel.toggleFav(variantId)
+                        celebrityViewModel.toggleFav(/*newChange variantId*/ "")
                     } else {
                         val navigateToLogin = NavGraphDirections.actionToLoginFragment()
                         navigateTo(navigateToLogin)
@@ -167,7 +167,7 @@ class CelebrityDetailFragment : BaseFragment() {
     private fun setupPagerAdapter() {
         binding.rvProductList.adapter = productListingPagerAdapter
         val fav = celebrityViewModel.getFav()
-        productListingPagerAdapter.submitFav(fav)
+        productListingPagerAdapter.submitFav(/*newChange fav*/ mutableSetOf())
 
         viewLifecycleOwner.lifecycleScope.launch {
             celebrityViewModel.vendorProductListing(args.id) {

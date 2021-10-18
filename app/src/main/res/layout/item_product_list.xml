@@ -12,7 +12,7 @@
 
         <variable
             name="product"
-            type="com.hexagram.febys.network.response.Product" />
+            type="com.hexagram.febys.network.response.OldProduct" />
 
     </data>
 

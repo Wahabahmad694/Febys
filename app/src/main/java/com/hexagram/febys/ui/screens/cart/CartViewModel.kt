@@ -3,7 +3,7 @@ package com.hexagram.febys.ui.screens.cart
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.hexagram.febys.models.db.CartDTO
-import com.hexagram.febys.network.response.Product
+import com.hexagram.febys.network.response.OldProduct
 import com.hexagram.febys.repos.ICartRepo
 import com.hexagram.febys.repos.IProductRepo
 import com.hexagram.febys.ui.screens.product.ProductViewModel
@@ -28,14 +28,14 @@ open class CartViewModel @Inject constructor(
         cartRepo.removeFromCart(cartDTO)
     }
 
-    fun addToCart(product: Product, variantId: Int) {
+    fun addToCart(oldProduct: OldProduct, variantId: Int) {
         val existingCartDTO = cartRepo.getCartItem(variantId)
         if (existingCartDTO != null) {
             existingCartDTO.quantity += 1
             updateCartItem(existingCartDTO)
         } else {
-            val variant = product.productVariants.first { it.id == variantId }
-            val cartDTO = CartDTO.fromVendorProductVariant(product = product, variant = variant)
+            val variant = oldProduct.productVariants.first { it.id == variantId }
+            val cartDTO = CartDTO.fromVendorProductVariant(oldProduct = oldProduct, variant = variant)
             addToCart(cartDTO)
         }
     }

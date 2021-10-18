@@ -3,7 +3,7 @@ package com.hexagram.febys.paginations
 import com.hexagram.febys.network.FebysBackendService
 import com.hexagram.febys.network.adapter.ApiResponse
 import com.hexagram.febys.network.requests.RequestOfPagination
-import com.hexagram.febys.network.response.Product
+import com.hexagram.febys.network.response.OldProduct
 import com.hexagram.febys.network.response.ResponseProductListing
 
 class SearchProductPagingSource constructor(
@@ -13,7 +13,7 @@ class SearchProductPagingSource constructor(
     onProductListingResponse: ((ResponseProductListing) -> Unit)? = null
 ) : ProductListingPagingSource(onProductListingResponse) {
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Product> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, OldProduct> {
         request.pageNo = params.key ?: 1
         val req =
             mapOf("chunkSize" to request.chunkSize, "pageNo" to request.pageNo)
@@ -22,7 +22,7 @@ class SearchProductPagingSource constructor(
                 val searchProductResponse = response.data!!.getResponse<ResponseProductListing>()
                 onProductListingResponse?.invoke(searchProductResponse)
                 val (prevKey, nextKey) = getPagingKeys(searchProductResponse.paginationInformation)
-                LoadResult.Page(searchProductResponse.products, prevKey, nextKey)
+                LoadResult.Page(searchProductResponse.oldProducts, prevKey, nextKey)
             }
             is ApiResponse.ApiFailureResponse.Error -> {
                 LoadResult.Error(Exception(response.message))

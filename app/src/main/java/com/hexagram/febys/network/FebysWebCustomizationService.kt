@@ -1,14 +1,14 @@
 package com.hexagram.febys.network
 
+import com.hexagram.febys.models.api.banners.Banner
+import com.hexagram.febys.models.api.category.UniqueCategory
 import com.hexagram.febys.network.adapter.ApiResponse
-import com.hexagram.febys.network.response.Banner
 import com.hexagram.febys.network.response.SeasonalOffer
-import com.hexagram.febys.network.response.UniqueCategory
 import retrofit2.http.GET
 
 interface FebysWebCustomizationService {
 
-    @GET("v1/unique-category/mobile")
+    @GET("v1/unique-category")
     suspend fun fetchAllUniqueCategories(): ApiResponse<List<UniqueCategory>>
 
     @GET("v1/banner/mobile")

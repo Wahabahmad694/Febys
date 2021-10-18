@@ -6,7 +6,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.hexagram.febys.network.FebysBackendService
 import com.hexagram.febys.network.requests.RequestOfPagination
-import com.hexagram.febys.network.response.Product
+import com.hexagram.febys.network.response.OldProduct
 import com.hexagram.febys.network.response.ResponseProductListing
 import com.hexagram.febys.paginations.*
 import com.hexagram.febys.prefs.IPrefManger
@@ -24,7 +24,7 @@ class ProductListingRepoImpl @Inject constructor(
         scope: CoroutineScope,
         dispatcher: CoroutineDispatcher,
         onProductListingResponse: ((ResponseProductListing) -> Unit)?
-    ): Flow<PagingData<Product>> {
+    ): Flow<PagingData<OldProduct>> {
         return Pager(
             PagingConfig(pageSize = 10)
         ) {
@@ -38,7 +38,7 @@ class ProductListingRepoImpl @Inject constructor(
         scope: CoroutineScope,
         dispatcher: CoroutineDispatcher,
         onProductListingResponse: ((ResponseProductListing) -> Unit)?
-    ): Flow<PagingData<Product>> {
+    ): Flow<PagingData<OldProduct>> {
         return Pager(
             PagingConfig(pageSize = 10)
         ) {
@@ -54,7 +54,7 @@ class ProductListingRepoImpl @Inject constructor(
         scope: CoroutineScope,
         dispatcher: CoroutineDispatcher,
         onProductListingResponse: ((ResponseProductListing) -> Unit)?
-    ): Flow<PagingData<Product>> {
+    ): Flow<PagingData<OldProduct>> {
         return Pager(
             PagingConfig(pageSize = 10)
         ) {
@@ -71,7 +71,7 @@ class ProductListingRepoImpl @Inject constructor(
         scope: CoroutineScope,
         dispatcher: CoroutineDispatcher,
         onProductListingResponse: ((ResponseProductListing) -> Unit)?
-    ): Flow<PagingData<Product>> {
+    ): Flow<PagingData<OldProduct>> {
         return Pager(
             PagingConfig(pageSize = 10)
         ) {
@@ -88,7 +88,7 @@ class ProductListingRepoImpl @Inject constructor(
         scope: CoroutineScope,
         dispatcher: CoroutineDispatcher,
         onProductListingResponse: ((ResponseProductListing) -> Unit)?
-    ): Flow<PagingData<Product>> {
+    ): Flow<PagingData<OldProduct>> {
         return Pager(
             PagingConfig(pageSize = 10)
         ) {
@@ -104,7 +104,7 @@ class ProductListingRepoImpl @Inject constructor(
         scope: CoroutineScope,
         dispatcher: CoroutineDispatcher,
         onProductListingResponse: ((ResponseProductListing) -> Unit)?
-    ): Flow<PagingData<Product>> {
+    ): Flow<PagingData<OldProduct>> {
         return Pager(
             PagingConfig(pageSize = 10)
         ) {

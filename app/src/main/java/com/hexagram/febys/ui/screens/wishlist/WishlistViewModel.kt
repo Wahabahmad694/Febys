@@ -2,7 +2,7 @@ package com.hexagram.febys.ui.screens.wishlist
 
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
-import com.hexagram.febys.network.response.Product
+import com.hexagram.febys.network.response.OldProduct
 import com.hexagram.febys.network.response.ResponseProductListing
 import com.hexagram.febys.repos.IProductListingRepo
 import com.hexagram.febys.ui.screens.product.ProductViewModel
@@ -15,22 +15,22 @@ class WishlistViewModel @Inject constructor(
     private val productListingRepo: IProductListingRepo
 ) : ProductViewModel(productListingRepo) {
 
-    private var wishlistProductListing: Flow<PagingData<Product>>? = null
-    private var currentFav = mutableSetOf<Int>()
+    private var wishlistOldProductListing: Flow<PagingData<OldProduct>>? = null
+    private var currentFav = mutableSetOf<String>()
 
     fun fetchWishList(
         onProductListingResponse: ((ResponseProductListing) -> Unit)? = null
-    ): Flow<PagingData<Product>> {
+    ): Flow<PagingData<OldProduct>> {
         val latestFav = getFav()
-        if (wishlistProductListing == null || latestFav != currentFav) {
+        if (wishlistOldProductListing == null || latestFav != currentFav) {
             currentFav = latestFav
 
-            wishlistProductListing =
+            wishlistOldProductListing =
                 productListingRepo.fetchWishList(
                     viewModelScope, onProductListingResponse = onProductListingResponse
                 )
         }
 
-        return wishlistProductListing!!
+        return wishlistOldProductListing!!
     }
 }

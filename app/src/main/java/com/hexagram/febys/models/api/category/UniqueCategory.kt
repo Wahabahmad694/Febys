@@ -1,4 +1,4 @@
-package com.hexagram.febys.models.api.cateogry
+package com.hexagram.febys.models.api.category
 
 import android.os.Parcelable
 

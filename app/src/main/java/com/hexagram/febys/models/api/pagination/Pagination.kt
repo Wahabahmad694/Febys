@@ -1,9 +1,10 @@
 package com.hexagram.febys.models.api.pagination
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import com.google.gson.Gson
+import com.google.gson.JsonObject
 
-@Parcelize
 data class Pagination(
-    val listing : PagingListing
-): Parcelable
+    val listing: JsonObject
+){
+    inline fun <reified T> getResponse(): T = Gson().fromJson(listing, T::class.java)
+}

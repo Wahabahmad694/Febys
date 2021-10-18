@@ -2,7 +2,7 @@ package com.hexagram.febys.models.db
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.hexagram.febys.network.response.Product
+import com.hexagram.febys.network.response.OldProduct
 import com.hexagram.febys.network.response.ProductVariant
 import com.hexagram.febys.network.response.CartVendor
 import java.util.*
@@ -63,7 +63,7 @@ data class CartDTO constructor(
 
     companion object {
         fun fromVendorProductVariant(
-            cartVendor: CartVendor? = null, product: Product, variant: ProductVariant, quantity: Int = 1
+            cartVendor: CartVendor? = null, oldProduct: OldProduct, variant: ProductVariant, quantity: Int = 1
         ): CartDTO {
             return CartDTO(
                 vendorId = cartVendor?.id ?: 21,
@@ -73,14 +73,14 @@ data class CartDTO constructor(
                 vendorPhoneNo = cartVendor?.phoneNo ?: "90078601",
                 vendorImage = "",
                 vendorIndividualType = cartVendor?.individualVendorType ?: "B2B2C",
-                productId = product.id,
-                productName = product.name,
-                productDelivery = product.delivery,
-                _productTags = product._tags,
-                productFulfillment = product.fulfillment,
-                _isProductComplete = product._IsComplete,
-                productCreatedAt = product.createdAt,
-                productUpdatedAt = product.updatedAt,
+                productId = oldProduct.id,
+                productName = oldProduct.name,
+                productDelivery = oldProduct.delivery,
+                _productTags = oldProduct._tags,
+                productFulfillment = oldProduct.fulfillment,
+                _isProductComplete = oldProduct._IsComplete,
+                productCreatedAt = oldProduct.createdAt,
+                productUpdatedAt = oldProduct.updatedAt,
                 variantId = variant.id,
                 variantPrice = variant.price,
                 variantCurrencyCode = variant.currencyCode,

@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentHomeSliderPageBinding
-import com.hexagram.febys.network.response.Banner
+import com.hexagram.febys.models.api.banners.Banner
 
 private const val ARG_IMAGE = "imageArg"
 
@@ -37,7 +37,7 @@ class HomeSliderPageFragment : BaseFragment() {
         @JvmStatic
         fun newInstance(banner: Banner) =
             HomeSliderPageFragment().apply {
-                arguments = Bundle().apply { putString(ARG_IMAGE, banner.images[0]) }
+                arguments = Bundle().apply { putString(ARG_IMAGE, banner.image[0]) }
             }
     }
 }

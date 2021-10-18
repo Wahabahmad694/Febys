@@ -1,8 +1,6 @@
 package com.hexagram.febys.ui.screens.product.listing
 
 import androidx.navigation.fragment.navArgs
-import com.hexagram.febys.network.response.Product
-import com.hexagram.febys.utils.navigateTo
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

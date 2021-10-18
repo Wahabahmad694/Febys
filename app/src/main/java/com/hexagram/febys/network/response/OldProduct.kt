@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import com.hexagram.febys.models.view.QuestionAnswersThread
 import com.hexagram.febys.network.FakeApiService
 
-data class Product @JvmOverloads constructor(
+data class OldProduct @JvmOverloads constructor(
     @SerializedName("id")
     val id: Int,
     @SerializedName("name")

@@ -1,9 +1,6 @@
 package com.hexagram.febys.ui.screens.product.listing
 
 import androidx.navigation.fragment.navArgs
-import com.hexagram.febys.NavGraphDirections
-import com.hexagram.febys.network.response.Product
-import com.hexagram.febys.utils.navigateTo
 
 class SearchProductListingFragment : ProductListingFragment() {
     private val args: SearchProductListingFragmentArgs by navArgs()

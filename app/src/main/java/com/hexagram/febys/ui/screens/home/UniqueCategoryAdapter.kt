@@ -1,12 +1,12 @@
 package com.hexagram.febys.ui.screens.home
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.hexagram.febys.databinding.ItemUniqueCategoryBinding
-import com.hexagram.febys.network.response.UniqueCategory
+import com.hexagram.febys.models.api.category.UniqueCategory
 
 class UniqueCategoryAdapter :
     ListAdapter<UniqueCategory, UniqueCategoryAdapter.UniqueCategoryViewHolder>(diffCallback) {
@@ -22,7 +22,7 @@ class UniqueCategoryAdapter :
             override fun areContentsTheSame(
                 oldItem: UniqueCategory, newItem: UniqueCategory
             ): Boolean {
-                return oldItem.id == newItem.id
+                return oldItem._id == newItem._id
             }
         }
     }

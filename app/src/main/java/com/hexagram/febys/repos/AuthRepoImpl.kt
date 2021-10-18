@@ -167,7 +167,7 @@ class AuthRepoImpl @Inject constructor(
         val authToken = pref.getAccessToken()
         val response = backendService.fetchWishlistIds(authToken)
         if (response is ApiResponse.ApiSuccessResponse) {
-            val fav = response.data!!.variantIds
+            val fav = response.data!!.skuIds
             pref.saveFav(fav.toMutableSet())
         }
     }

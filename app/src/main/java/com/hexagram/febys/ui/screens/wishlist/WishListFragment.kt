@@ -14,7 +14,7 @@ import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentWishListBinding
-import com.hexagram.febys.network.response.Product
+import com.hexagram.febys.network.response.OldProduct
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -58,14 +58,14 @@ class WishListFragment : BaseFragment() {
         binding.btnGetInspired.setOnClickListener { goBack() }
 
         wishlistPagerAdapter.interaction = object : WishlistPagerAdapter.Interaction {
-            override fun onItemSelected(position: Int, item: Product) {
+            override fun onItemSelected(position: Int, item: OldProduct) {
                 val variantId = item.productVariants[0].id
                 val gotoProductDetail = NavGraphDirections.actionToProductDetail(item.id, variantId)
                 navigateTo(gotoProductDetail)
             }
 
             override fun removeFav(variantId: Int) {
-                wishlistViewModel.toggleFav(variantId)
+                wishlistViewModel.toggleFav(/*newChange variantId*/ "")
                 updateWishList()
             }
         }
@@ -99,7 +99,7 @@ class WishListFragment : BaseFragment() {
             wishlistViewModel.fetchWishList().collectLatest { pagingData ->
                 val list = pagingData.filter {
                     val variantId = it.productVariants[0].id
-                    variantId in fav
+                    /*newChange variantId in fav*/ true
                 }
 
                 wishlistPagerAdapter.submitData(list)

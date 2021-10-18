@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.hexagram.febys.models.view.QuestionAnswersThread
 import com.hexagram.febys.network.DataState
-import com.hexagram.febys.network.response.Product
+import com.hexagram.febys.network.response.OldProduct
 import com.hexagram.febys.network.response.ProductVariant
 import com.hexagram.febys.repos.IProductRepo
 import com.hexagram.febys.ui.screens.product.ProductViewModel
@@ -22,8 +22,8 @@ class ProductDetailViewModel @Inject constructor(
     var selectedFirstAttr = ""
     var selectedSecondAttr = ""
 
-    private val _observeProductDetail = MutableLiveData<DataState<Product>>()
-    val observeProductDetail: LiveData<DataState<Product>> = _observeProductDetail
+    private val _observeProductDetail = MutableLiveData<DataState<OldProduct>>()
+    val observeOldProductDetail: LiveData<DataState<OldProduct>> = _observeProductDetail
 
     private val _observeAskQuestion = MutableLiveData<DataState<QuestionAnswersThread>>()
     val observeAskQuestion: LiveData<DataState<QuestionAnswersThread>> = _observeAskQuestion
@@ -35,16 +35,16 @@ class ProductDetailViewModel @Inject constructor(
         }
     }
 
-    fun getFirstAttrList(product: Product): List<String> {
-        return product.productVariants
+    fun getFirstAttrList(oldProduct: OldProduct): List<String> {
+        return oldProduct.productVariants
             .filter { it.getFirstVariantAttr()?.value != null }
             .map { it.getFirstVariantAttr()!!.value }
             .toSet()
             .toList()
     }
 
-    fun getSecondAttrList(selectedFirstAttr: String, product: Product): List<String> {
-        return product.productVariants
+    fun getSecondAttrList(selectedFirstAttr: String, oldProduct: OldProduct): List<String> {
+        return oldProduct.productVariants
             .filter {
                 it.getSecondVariantAttr()?.value != null && it.getFirstVariantAttr()?.value == selectedFirstAttr
             }
@@ -53,14 +53,14 @@ class ProductDetailViewModel @Inject constructor(
             .toList()
     }
 
-    fun getVariantByFirstAttr(product: Product): ProductVariant? {
-        return product.productVariants.firstOrNull {
+    fun getVariantByFirstAttr(oldProduct: OldProduct): ProductVariant? {
+        return oldProduct.productVariants.firstOrNull {
             it.getFirstVariantAttr()?.value == selectedFirstAttr
         }
     }
 
-    fun getVariantBySecondAttr(product: Product): ProductVariant? {
-        return product.productVariants.firstOrNull {
+    fun getVariantBySecondAttr(oldProduct: OldProduct): ProductVariant? {
+        return oldProduct.productVariants.firstOrNull {
             it.getFirstVariantAttr()?.value == selectedFirstAttr
                     && it.getSecondVariantAttr()?.value == selectedSecondAttr
         }

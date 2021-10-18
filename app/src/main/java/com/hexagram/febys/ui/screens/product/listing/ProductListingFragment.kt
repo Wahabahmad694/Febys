@@ -15,7 +15,7 @@ import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentProductListingBinding
-import com.hexagram.febys.network.response.Product
+import com.hexagram.febys.network.response.OldProduct
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.Flow
@@ -47,7 +47,7 @@ abstract class ProductListingFragment : BaseFragment() {
     private fun setupPagerAdapter() {
         binding.rvProductList.adapter = productListingPagerAdapter
         val fav = productListingViewModel.getFav()
-        productListingPagerAdapter.submitFav(fav)
+        productListingPagerAdapter.submitFav(/*newChange fav*/ mutableSetOf())
 
         viewLifecycleOwner.lifecycleScope.launch {
             getProductPagingDate().collectLatest { pagingData ->
@@ -93,7 +93,7 @@ abstract class ProductListingFragment : BaseFragment() {
         }
 
         productListingPagerAdapter.interaction = object : ProductListingPagerAdapter.Interaction {
-            override fun onItemSelected(position: Int, item: Product) {
+            override fun onItemSelected(position: Int, item: OldProduct) {
                 val gotoProductDetail = NavGraphDirections.actionToProductDetail(item.id)
                 navigateTo(gotoProductDetail)
             }
@@ -101,7 +101,7 @@ abstract class ProductListingFragment : BaseFragment() {
             override fun toggleFavIfUserLoggedIn(variantId: Int): Boolean {
                 return isUserLoggedIn.also {
                     if (it) {
-                        productListingViewModel.toggleFav(variantId)
+                        productListingViewModel.toggleFav(/*newChange variantId*/ "")
                     } else {
                         val navigateToLogin = NavGraphDirections.actionToLoginFragment()
                         navigateTo(navigateToLogin)
@@ -125,5 +125,5 @@ abstract class ProductListingFragment : BaseFragment() {
 
     abstract fun getListingTitle(): String
 
-    abstract fun getProductPagingDate(): Flow<PagingData<Product>>
+    abstract fun getProductPagingDate(): Flow<PagingData<OldProduct>>
 }

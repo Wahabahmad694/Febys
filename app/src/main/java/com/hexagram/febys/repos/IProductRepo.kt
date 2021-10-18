@@ -2,7 +2,7 @@ package com.hexagram.febys.repos
 
 import com.hexagram.febys.models.view.QuestionAnswersThread
 import com.hexagram.febys.network.DataState
-import com.hexagram.febys.network.response.Product
+import com.hexagram.febys.network.response.OldProduct
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -10,15 +10,15 @@ import kotlinx.coroutines.flow.Flow
 interface IProductRepo {
     fun fetchProductDetail(
         productId: Int, dispatcher: CoroutineDispatcher = Dispatchers.IO
-    ): Flow<DataState<Product>>
+    ): Flow<DataState<OldProduct>>
 
-    suspend fun toggleFav(variantId: Int)
+    suspend fun toggleFav(skuId: String)
 
-    fun getFav(): MutableSet<Int>
+    fun getFav(): MutableSet<String>
 
-    suspend fun addToFav(variantId: Int, dispatcher: CoroutineDispatcher = Dispatchers.IO)
+    suspend fun addToFav(skuId: String, dispatcher: CoroutineDispatcher = Dispatchers.IO)
 
-    suspend fun removeFromFav(variantId: Int, dispatcher: CoroutineDispatcher = Dispatchers.IO)
+    suspend fun removeFromFav(skuId: String, dispatcher: CoroutineDispatcher = Dispatchers.IO)
 
     suspend fun askQuestion(
         productId: Int, question: String, dispatcher: CoroutineDispatcher = Dispatchers.IO

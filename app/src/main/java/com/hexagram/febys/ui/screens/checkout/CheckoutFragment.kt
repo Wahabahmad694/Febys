@@ -74,10 +74,10 @@ class CheckoutFragment : BaseFragment() {
                 checkoutViewModel.updateCartItem(cartDTO)
             }
 
-            override fun toggleFavIfUserLoggedIn(variantId: Int): Boolean {
+            override fun toggleFavIfUserLoggedIn(skuId: String): Boolean {
                 return isUserLoggedIn.also {
                     if (it) {
-                        checkoutViewModel.toggleFav(variantId)
+                        checkoutViewModel.toggleFav(skuId)
                     } else {
                         val navigateToLogin = NavGraphDirections.actionToLoginFragment()
                         navigateTo(navigateToLogin)

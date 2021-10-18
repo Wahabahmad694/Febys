@@ -4,25 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.hexagram.febys.models.view.PaymentMethod
 import com.hexagram.febys.models.view.ShippingAddress
 
 object Utils {
-    fun jsonToSetOfInt(json: String): MutableSet<Int> {
-        return if (json.isEmpty()) {
-            mutableSetOf()
-        } else {
-            val typeToken = object : TypeToken<MutableSet<Int>>() {}.type
-            Gson().fromJson(json, typeToken)
-        }
-    }
-
-    fun jsonFromSetOfInt(set: MutableSet<Int>): String {
-        val typeToken = object : TypeToken<MutableSet<Int>>() {}.type
-        return Gson().toJson(set, typeToken)
-    }
-
     fun jsonFromShippingAddress(obj: ShippingAddress): String {
         return Gson().toJson(obj)
     }

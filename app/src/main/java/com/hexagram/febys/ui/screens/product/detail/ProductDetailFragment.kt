@@ -23,7 +23,7 @@ import com.hexagram.febys.databinding.ItemQuestionAnswersThreadBinding
 import com.hexagram.febys.databinding.LayoutProductDescriptionBinding
 import com.hexagram.febys.models.view.QuestionAnswersThread
 import com.hexagram.febys.network.DataState
-import com.hexagram.febys.network.response.Product
+import com.hexagram.febys.network.response.OldProduct
 import com.hexagram.febys.network.response.ProductDescription
 import com.hexagram.febys.network.response.ProductVariant
 import com.hexagram.febys.ui.screens.cart.CartViewModel
@@ -192,20 +192,20 @@ class ProductDetailFragment : SliderFragment() {
         }
     }
 
-    private fun updateVariantByFirstAttr(firstAttr: String, product: Product) {
+    private fun updateVariantByFirstAttr(firstAttr: String, oldProduct: OldProduct) {
         productDetailViewModel.selectedFirstAttr = firstAttr
 
         val secondAttrList =
-            productDetailViewModel.getSecondAttrList(firstAttr, product)
+            productDetailViewModel.getSecondAttrList(firstAttr, oldProduct)
 
         val variant = if (secondAttrList.isEmpty()) {
-            productDetailViewModel.getVariantByFirstAttr(product)
+            productDetailViewModel.getVariantByFirstAttr(oldProduct)
         } else {
             productVariantSecondAttrAdapter
                 .submitList(secondAttrList.first(), secondAttrList)
 
             productDetailViewModel.selectedSecondAttr = secondAttrList.first()
-            productDetailViewModel.getVariantBySecondAttr(product)
+            productDetailViewModel.getVariantBySecondAttr(oldProduct)
         }
 
         variant?.let { updateVariant(it) }
@@ -213,7 +213,7 @@ class ProductDetailFragment : SliderFragment() {
 
     private fun toggleFavAndUpdateIcon() {
         val variantId = binding.variant?.id ?: return
-        productDetailViewModel.toggleFav(variantId)
+        productDetailViewModel.toggleFav(/*newChange variantId*/ "")
         updateFavIcon(variantId)
     }
 
@@ -225,7 +225,7 @@ class ProductDetailFragment : SliderFragment() {
     }
 
     private fun observersSetup() {
-        productDetailViewModel.observeProductDetail.observe(viewLifecycleOwner) {
+        productDetailViewModel.observeOldProductDetail.observe(viewLifecycleOwner) {
             when (it) {
                 is DataState.Loading -> {
                     showLoader()
@@ -258,17 +258,17 @@ class ProductDetailFragment : SliderFragment() {
         }
     }
 
-    private fun updateUi(product: Product) {
-        binding.product = product
+    private fun updateUi(oldProduct: OldProduct) {
+        binding.product = oldProduct
 
         val variant = productDetailViewModel.selectedVariant
-            ?: product.productVariants.firstOrNull { it.id == args.variantId }
-            ?: product.productVariants[0]
+            ?: oldProduct.productVariants.firstOrNull { it.id == args.variantId }
+            ?: oldProduct.productVariants[0]
 
         variant.getFirstVariantAttr()?.value?.let { selectedFirstAttr ->
             productDetailViewModel.selectedFirstAttr = selectedFirstAttr
 
-            val firstAttrList = productDetailViewModel.getFirstAttrList(product)
+            val firstAttrList = productDetailViewModel.getFirstAttrList(oldProduct)
 
             productVariantFirstAttrAdapter
                 .submitList(selectedFirstAttr, firstAttrList)
@@ -277,7 +277,7 @@ class ProductDetailFragment : SliderFragment() {
                 productDetailViewModel.selectedSecondAttr = selectedSecondAttr
 
                 val secondAttrList =
-                    productDetailViewModel.getSecondAttrList(selectedFirstAttr, product)
+                    productDetailViewModel.getSecondAttrList(selectedFirstAttr, oldProduct)
 
                 productVariantSecondAttrAdapter.submitList(
                     selectedSecondAttr, secondAttrList
@@ -288,12 +288,12 @@ class ProductDetailFragment : SliderFragment() {
         updateVariant(variant)
 
         val shortDescription = ProductDescription(
-            0, product.descriptionHTML, getString(R.string.label_description)
+            0, oldProduct.descriptionHTML, getString(R.string.label_description)
         )
         updateProductDescription(shortDescription)
-        updateProductDescription(product.descriptions)
+        updateProductDescription(oldProduct.descriptions)
 
-        updateQuestionAnswersThread(product.questionAnswersThread)
+        updateQuestionAnswersThread(oldProduct.questionAnswersThread)
     }
 
     private fun updateQuestionAnswersThread(questionAnswersThread: MutableList<QuestionAnswersThread>) {
@@ -404,7 +404,7 @@ class ProductDetailFragment : SliderFragment() {
     }
 
     private fun updateFavIcon(variantId: Int) {
-        val isFav = productDetailViewModel.isFavProduct(variantId)
+        val isFav = productDetailViewModel.isFavProduct(/*newChange variantId*/ "")
         binding.ivProductFav.setImageResource(if (isFav) R.drawable.ic_fav else R.drawable.ic_un_fav)
     }
 

@@ -3,7 +3,7 @@ package com.hexagram.febys.paginations
 import com.hexagram.febys.network.FebysBackendService
 import com.hexagram.febys.network.adapter.ApiResponse
 import com.hexagram.febys.network.requests.RequestOfPagination
-import com.hexagram.febys.network.response.Product
+import com.hexagram.febys.network.response.OldProduct
 import com.hexagram.febys.network.response.ResponseProductListing
 
 class TodayDealsPagingSource constructor(
@@ -12,7 +12,7 @@ class TodayDealsPagingSource constructor(
     onProductListingResponse: ((ResponseProductListing) -> Unit)? = null
 ) : ProductListingPagingSource(onProductListingResponse) {
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Product> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, OldProduct> {
         request.pageNo = params.key ?: 1
         val req = mapOf("chunkSize" to request.chunkSize, "pageNo" to request.pageNo)
         return when (val response = service.fetchTodayDeals(req)) {
@@ -20,7 +20,7 @@ class TodayDealsPagingSource constructor(
                 val todayDealsResponse = response.data!!.getResponse<ResponseProductListing>()
                 onProductListingResponse?.invoke(todayDealsResponse)
                 val (prevKey, nextKey) = getPagingKeys(todayDealsResponse.paginationInformation)
-                LoadResult.Page(todayDealsResponse.products, prevKey, nextKey)
+                LoadResult.Page(todayDealsResponse.oldProducts, prevKey, nextKey)
             }
             is ApiResponse.ApiFailureResponse.Error -> {
                 LoadResult.Error(Exception(response.message))
