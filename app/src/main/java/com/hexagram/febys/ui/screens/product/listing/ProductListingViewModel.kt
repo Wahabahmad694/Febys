@@ -2,8 +2,8 @@ package com.hexagram.febys.ui.screens.product.listing
 
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
-import com.hexagram.febys.network.response.OldProduct
-import com.hexagram.febys.network.response.ResponseProductListing
+import com.hexagram.febys.models.api.product.Product
+import com.hexagram.febys.models.api.product.ProductPagingListing
 import com.hexagram.febys.repos.IProductListingRepo
 import com.hexagram.febys.ui.screens.product.ProductViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,16 +14,16 @@ import javax.inject.Inject
 open class ProductListingViewModel @Inject constructor(
     private val productListingRepo: IProductListingRepo
 ) : ProductViewModel(productListingRepo) {
-    private var todayDealsListing: Flow<PagingData<OldProduct>>? = null
-    private var trendingProductsListing: Flow<PagingData<OldProduct>>? = null
-    private var under100DollarsItemsListing: Flow<PagingData<OldProduct>>? = null
-    private var categoryProductsListing: Flow<PagingData<OldProduct>>? = null
-    private var searchProductsListing: Flow<PagingData<OldProduct>>? = null
-    private var vendorProductsListing: Flow<PagingData<OldProduct>>? = null
+    private var todayDealsListing: Flow<PagingData<Product>>? = null
+    private var trendingProductsListing: Flow<PagingData<Product>>? = null
+    private var under100DollarsItemsListing: Flow<PagingData<Product>>? = null
+    private var categoryProductsListing: Flow<PagingData<Product>>? = null
+    private var searchProductsListing: Flow<PagingData<Product>>? = null
+    private var vendorProductsListing: Flow<PagingData<Product>>? = null
 
     fun todayDealsListing(
-        onProductListingResponse: ((ResponseProductListing) -> Unit)? = null
-    ): Flow<PagingData<OldProduct>> {
+        onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
+    ): Flow<PagingData<Product>> {
         if (todayDealsListing == null) {
             todayDealsListing =
                 productListingRepo.fetchTodayDealsListing(
@@ -35,8 +35,8 @@ open class ProductListingViewModel @Inject constructor(
     }
 
     fun trendingProductsListing(
-        onProductListingResponse: ((ResponseProductListing) -> Unit)? = null
-    ): Flow<PagingData<OldProduct>> {
+        onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
+    ): Flow<PagingData<Product>> {
         if (trendingProductsListing == null) {
             trendingProductsListing =
                 productListingRepo.fetchTrendingProductsListing(
@@ -48,8 +48,8 @@ open class ProductListingViewModel @Inject constructor(
     }
 
     fun under100DollarsItemsListing(
-        onProductListingResponse: ((ResponseProductListing) -> Unit)? = null
-    ): Flow<PagingData<OldProduct>> {
+        onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
+    ): Flow<PagingData<Product>> {
         if (under100DollarsItemsListing == null) {
             under100DollarsItemsListing =
                 productListingRepo.fetchUnder100DollarsItemsListing(
@@ -61,8 +61,8 @@ open class ProductListingViewModel @Inject constructor(
     }
 
     fun categoryProductsListing(
-        categoryId: Int, onProductListingResponse: ((ResponseProductListing) -> Unit)? = null
-    ): Flow<PagingData<OldProduct>> {
+        categoryId: Int, onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
+    ): Flow<PagingData<Product>> {
         if (categoryProductsListing == null) {
             categoryProductsListing =
                 productListingRepo.fetchCategoryProductsListing(
@@ -74,8 +74,8 @@ open class ProductListingViewModel @Inject constructor(
     }
 
     fun searchProductsListing(
-        query: String, onProductListingResponse: ((ResponseProductListing) -> Unit)? = null
-    ): Flow<PagingData<OldProduct>> {
+        query: String, onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
+    ): Flow<PagingData<Product>> {
         if (searchProductsListing == null) {
             searchProductsListing =
                 productListingRepo.searchProductListing(
@@ -87,8 +87,8 @@ open class ProductListingViewModel @Inject constructor(
     }
 
     fun vendorProductListing(
-        vendorId: Int, onProductListingResponse: ((ResponseProductListing) -> Unit)? = null
-    ): Flow<PagingData<OldProduct>> {
+        vendorId: Int, onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
+    ): Flow<PagingData<Product>> {
         if (vendorProductsListing == null) {
             vendorProductsListing =
                 productListingRepo.fetchUnder100DollarsItemsListing(

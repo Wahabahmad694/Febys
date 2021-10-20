@@ -6,8 +6,7 @@ import com.hexagram.febys.models.api.category.UniqueCategory
 import com.hexagram.febys.models.api.product.FeaturedCategory
 import com.hexagram.febys.models.api.product.Product
 import com.hexagram.febys.models.api.product.ProductPagingListing
-import com.hexagram.febys.models.api.product.Trending
-import com.hexagram.febys.models.api.request.ProductListingRequest
+import com.hexagram.febys.models.api.request.PagingListRequest
 import com.hexagram.febys.network.FebysBackendService
 import com.hexagram.febys.network.FebysWebCustomizationService
 import com.hexagram.febys.network.adapter.ApiResponse
@@ -31,7 +30,10 @@ class HomeRepoImpl @Inject constructor(
     }
 
     override suspend fun fetchTodayDeals(dispatcher: CoroutineDispatcher): List<Product> {
-        val response = backendService.fetchTodayDeals(ProductListingRequest())
+        val pagingListRequest = PagingListRequest()
+        val response = backendService.fetchTodayDeals(
+            pagingListRequest.createQueryMap(), pagingListRequest
+        )
         return (response as? ApiResponse.ApiSuccessResponse)
             ?.data?.getResponse<ProductPagingListing>()?.products ?: emptyList()
     }
@@ -47,22 +49,19 @@ class HomeRepoImpl @Inject constructor(
     }
 
     override suspend fun fetchTrendingProductsByUnits(dispatcher: CoroutineDispatcher): List<Product> {
-        val response = backendService.fetchTrendingProductsByUnits()
-        return getListOfProductFromTrendings(response)
+        val pagingListRequest = PagingListRequest()
+        val response = backendService.fetchTrendingProductsByUnits(
+            pagingListRequest.createQueryMap()
+        )
+        return (response as? ApiResponse.ApiSuccessResponse)?.data?.getAllProducts() ?: emptyList()
     }
 
     override suspend fun fetchTrendingProductsBySale(dispatcher: CoroutineDispatcher): List<Product> {
-        val response = backendService.fetchTrendingProductsBySale()
-        return getListOfProductFromTrendings(response)
-    }
-
-    private fun getListOfProductFromTrendings(response: ApiResponse<Trending>): MutableList<Product> {
-        val list = mutableListOf<Product>()
-        val topPerformers = (response as? ApiResponse.ApiSuccessResponse)?.data?.topPerformers
-        topPerformers?.forEach {
-            list.addAll(it.product)
-        }
-        return list
+        val pagingListRequest = PagingListRequest()
+        val response = backendService.fetchTrendingProductsBySale(
+            pagingListRequest.createQueryMap()
+        )
+        return (response as? ApiResponse.ApiSuccessResponse)?.data?.getAllProducts() ?: emptyList()
     }
 
     override suspend fun fetchStoresYouFollow(dispatcher: CoroutineDispatcher): List<String> {
@@ -73,7 +72,10 @@ class HomeRepoImpl @Inject constructor(
     }
 
     override suspend fun fetchUnder100DollarsItems(dispatcher: CoroutineDispatcher): List<Product> {
-        val response = backendService.fetchUnder100DollarsItems()
+        val pagingListRequest = PagingListRequest()
+        val response = backendService.fetchUnder100DollarsItems(
+            pagingListRequest.createQueryMap(), pagingListRequest
+        )
         return (response as? ApiResponse.ApiSuccessResponse)
             ?.data?.getResponse<ProductPagingListing>()?.products ?: emptyList()
     }

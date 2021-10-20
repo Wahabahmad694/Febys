@@ -16,10 +16,10 @@ import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentCelebrityDetailBinding
+import com.hexagram.febys.models.api.product.Product
 import com.hexagram.febys.models.view.SocialLink
 import com.hexagram.febys.models.view.VendorDetail
 import com.hexagram.febys.network.DataState
-import com.hexagram.febys.network.response.OldProduct
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.ui.screens.product.listing.ProductListingPagerAdapter
 import com.hexagram.febys.utils.*
@@ -98,15 +98,15 @@ class CelebrityDetailFragment : BaseFragment() {
         }
 
         productListingPagerAdapter.interaction = object : ProductListingPagerAdapter.Interaction {
-            override fun onItemSelected(position: Int, item: OldProduct) {
-                val gotoProductDetail = NavGraphDirections.actionToProductDetail(item.id)
-                navigateTo(gotoProductDetail)
+            override fun onItemSelected(position: Int, item: Product) {
+                /*newChanges val gotoProductDetail = NavGraphDirections.actionToProductDetail(item.id)
+                navigateTo(gotoProductDetail)*/
             }
 
-            override fun toggleFavIfUserLoggedIn(variantId: Int): Boolean {
+            override fun toggleFavIfUserLoggedIn(skuId: String): Boolean {
                 return isUserLoggedIn.also {
                     if (it) {
-                        celebrityViewModel.toggleFav(/*newChange variantId*/ "")
+                        celebrityViewModel.toggleFav(skuId)
                     } else {
                         val navigateToLogin = NavGraphDirections.actionToLoginFragment()
                         navigateTo(navigateToLogin)
@@ -167,7 +167,7 @@ class CelebrityDetailFragment : BaseFragment() {
     private fun setupPagerAdapter() {
         binding.rvProductList.adapter = productListingPagerAdapter
         val fav = celebrityViewModel.getFav()
-        productListingPagerAdapter.submitFav(/*newChange fav*/ mutableSetOf())
+        productListingPagerAdapter.submitFav(fav)
 
         viewLifecycleOwner.lifecycleScope.launch {
             celebrityViewModel.vendorProductListing(args.id) {

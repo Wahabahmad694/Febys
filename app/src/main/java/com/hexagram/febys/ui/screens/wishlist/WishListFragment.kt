@@ -10,11 +10,10 @@ import androidx.paging.LoadState
 import androidx.paging.filter
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
-import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentWishListBinding
-import com.hexagram.febys.network.response.OldProduct
+import com.hexagram.febys.models.api.product.Product
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -58,14 +57,14 @@ class WishListFragment : BaseFragment() {
         binding.btnGetInspired.setOnClickListener { goBack() }
 
         wishlistPagerAdapter.interaction = object : WishlistPagerAdapter.Interaction {
-            override fun onItemSelected(position: Int, item: OldProduct) {
-                val variantId = item.productVariants[0].id
+            override fun onItemSelected(position: Int, item: Product) {
+                /*newChanges val variantId = item.variants[0]._id
                 val gotoProductDetail = NavGraphDirections.actionToProductDetail(item.id, variantId)
-                navigateTo(gotoProductDetail)
+                navigateTo(gotoProductDetail)*/
             }
 
-            override fun removeFav(variantId: Int) {
-                wishlistViewModel.toggleFav(/*newChange variantId*/ "")
+            override fun removeFav(skuId: String) {
+                wishlistViewModel.toggleFav(skuId)
                 updateWishList()
             }
         }
@@ -98,8 +97,8 @@ class WishListFragment : BaseFragment() {
             binding.wishListCount = fav.size
             wishlistViewModel.fetchWishList().collectLatest { pagingData ->
                 val list = pagingData.filter {
-                    val variantId = it.productVariants[0].id
-                    /*newChange variantId in fav*/ true
+                    val skuId = it.variants[0].skuId
+                    skuId in fav
                 }
 
                 wishlistPagerAdapter.submitData(list)

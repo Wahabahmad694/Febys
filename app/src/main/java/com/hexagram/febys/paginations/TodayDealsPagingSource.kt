@@ -1,26 +1,26 @@
 package com.hexagram.febys.paginations
 
+import com.hexagram.febys.models.api.product.Product
+import com.hexagram.febys.models.api.product.ProductPagingListing
+import com.hexagram.febys.models.api.request.PagingListRequest
 import com.hexagram.febys.network.FebysBackendService
 import com.hexagram.febys.network.adapter.ApiResponse
-import com.hexagram.febys.network.requests.RequestOfPagination
-import com.hexagram.febys.network.response.OldProduct
-import com.hexagram.febys.network.response.ResponseProductListing
 
 class TodayDealsPagingSource constructor(
     private val service: FebysBackendService,
-    private val request: RequestOfPagination,
-    onProductListingResponse: ((ResponseProductListing) -> Unit)? = null
+    private val request: PagingListRequest,
+    onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
 ) : ProductListingPagingSource(onProductListingResponse) {
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, OldProduct> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Product> {
         request.pageNo = params.key ?: 1
-        val req = mapOf("chunkSize" to request.chunkSize, "pageNo" to request.pageNo)
-        return when (val response = service.fetchTodayDeals(req)) {
+        val queryMap = request.createQueryMap()
+        return when (val response = service.fetchTodayDeals(queryMap, request)) {
             is ApiResponse.ApiSuccessResponse -> {
-                val todayDealsResponse = response.data!!.getResponse<ResponseProductListing>()
+                val todayDealsResponse = response.data!!.getResponse<ProductPagingListing>()
                 onProductListingResponse?.invoke(todayDealsResponse)
-                val (prevKey, nextKey) = getPagingKeys(todayDealsResponse.paginationInformation)
-                LoadResult.Page(todayDealsResponse.oldProducts, prevKey, nextKey)
+                val (prevKey, nextKey) = getPagingKeys(todayDealsResponse.pagingInfo)
+                LoadResult.Page(todayDealsResponse.products, prevKey, nextKey)
             }
             is ApiResponse.ApiFailureResponse.Error -> {
                 LoadResult.Error(Exception(response.message))

@@ -4,6 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.hexagram.febys.models.api.request.PagingListRequest
 import com.hexagram.febys.models.view.VendorDetail
 import com.hexagram.febys.models.view.VendorListing
 import com.hexagram.febys.network.DataState
@@ -13,7 +14,6 @@ import com.hexagram.febys.network.adapter.onError
 import com.hexagram.febys.network.adapter.onException
 import com.hexagram.febys.network.adapter.onNetworkError
 import com.hexagram.febys.network.adapter.onSuccess
-import com.hexagram.febys.network.requests.RequestOfPagination
 import com.hexagram.febys.paginations.VendorListingPagingSource
 import com.hexagram.febys.prefs.IPrefManger
 import kotlinx.coroutines.CoroutineDispatcher
@@ -34,7 +34,7 @@ class VendorRepoImpl @Inject constructor(
             PagingConfig(pageSize = 10)
         ) {
             val authKey = getAuthKey()
-            VendorListingPagingSource(authKey, service, isCelebrity, RequestOfPagination())
+            VendorListingPagingSource(authKey, service, isCelebrity, PagingListRequest())
         }.flow
             .flowOn(dispatcher)
             .cachedIn(scope)
@@ -47,7 +47,6 @@ class VendorRepoImpl @Inject constructor(
         response.onSuccess {
             // do nothing
         }
-
     }
 
     override suspend fun unFollowVendor(vendorId: Int) {

@@ -1,6 +1,6 @@
 package com.hexagram.febys.repos
 
-import com.hexagram.febys.models.api.product.FavSkuIds
+import com.hexagram.febys.models.api.wishlist.FavSkuIds
 import com.hexagram.febys.models.view.QuestionAnswersThread
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.FakeApiService

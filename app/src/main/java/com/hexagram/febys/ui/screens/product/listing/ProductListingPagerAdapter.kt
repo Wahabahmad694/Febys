@@ -6,25 +6,25 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.hexagram.febys.databinding.ItemProductListBinding
-import com.hexagram.febys.network.response.OldProduct
+import com.hexagram.febys.models.api.product.Product
 
 class ProductListingPagerAdapter :
-    PagingDataAdapter<OldProduct, ProductListingPagerAdapter.ProductPagerViewHolder>(diffCallback) {
+    PagingDataAdapter<Product, ProductListingPagerAdapter.ProductPagerViewHolder>(diffCallback) {
     companion object {
-        private val diffCallback = object : DiffUtil.ItemCallback<OldProduct>() {
+        private val diffCallback = object : DiffUtil.ItemCallback<Product>() {
 
-            override fun areItemsTheSame(oldItem: OldProduct, newItem: OldProduct): Boolean {
+            override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean {
                 return oldItem == newItem
             }
 
-            override fun areContentsTheSame(oldItem: OldProduct, newItem: OldProduct): Boolean {
-                return oldItem.id == newItem.id
+            override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
+                return oldItem._id == newItem._id
             }
         }
     }
 
     var interaction: Interaction? = null
-    private var fav = mutableSetOf<Int>()
+    private var fav = mutableSetOf<String>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductPagerViewHolder {
         return ProductPagerViewHolder(
@@ -40,7 +40,7 @@ class ProductListingPagerAdapter :
 
     fun totalSize() = itemCount
 
-    fun submitFav(fav: MutableSet<Int>) {
+    fun submitFav(fav: MutableSet<String>) {
         this.fav = fav
     }
 
@@ -48,23 +48,23 @@ class ProductListingPagerAdapter :
         private val binding: ItemProductListBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: OldProduct, position: Int) {
+        fun bind(item: Product, position: Int) {
             binding.root.setOnClickListener {
                 interaction?.onItemSelected(position, item)
             }
 
-            val variantId = item.productVariants[0].id
+            val skuId = item.variants[0].skuId
 
-            binding.isFav = variantId in fav
+            binding.isFav = skuId in fav
 
             binding.ivFavToggle.setOnClickListener {
-                val isUserLoggedIn = interaction?.toggleFavIfUserLoggedIn(variantId) ?: false
+                val isUserLoggedIn = interaction?.toggleFavIfUserLoggedIn(skuId) ?: false
                 if (!isUserLoggedIn) return@setOnClickListener
 
-                if (variantId in fav) {
-                    fav.remove(variantId)
+                if (skuId in fav) {
+                    fav.remove(skuId)
                 } else {
-                    fav.add(variantId)
+                    fav.add(skuId)
                 }
                 notifyItemChanged(position)
             }
@@ -74,7 +74,7 @@ class ProductListingPagerAdapter :
     }
 
     interface Interaction {
-        fun onItemSelected(position: Int, item: OldProduct)
-        fun toggleFavIfUserLoggedIn(variantId: Int): Boolean
+        fun onItemSelected(position: Int, item: Product)
+        fun toggleFavIfUserLoggedIn(skuId: String): Boolean
     }
 }

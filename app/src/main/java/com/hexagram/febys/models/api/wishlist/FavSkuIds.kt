@@ -1,4 +1,4 @@
-package com.hexagram.febys.models.api.product
+package com.hexagram.febys.models.api.wishlist
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName

@@ -9,6 +9,17 @@ import kotlinx.parcelize.Parcelize
 data class Trending(
     @SerializedName("top_performers")
     val topPerformers: List<TopPerformer>,
+    @SerializedName("pagingInfo", alternate = ["pagination_info"])
     val pagingInfo: PagingInfo,
+    @SerializedName("total_rows")
     val totalRows: Int
-) : Parcelable
+) : Parcelable {
+
+    fun getAllProducts(): List<Product> {
+        val list = mutableListOf<Product>()
+        topPerformers.forEach {
+            list.addAll(it.product)
+        }
+        return list
+    }
+}
