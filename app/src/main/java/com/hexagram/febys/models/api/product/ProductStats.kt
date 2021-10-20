@@ -6,7 +6,7 @@ import com.hexagram.febys.models.api.price.Price
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Stats(
+data class ProductStats(
     val _id: String,
     @SerializedName("units_sold")
     val unitsSold: Int,

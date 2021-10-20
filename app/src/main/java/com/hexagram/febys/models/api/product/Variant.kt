@@ -27,4 +27,6 @@ data class Variant(
     val images: List<String>,
     val refund: Refund,
     val warranty: Warranty,
+    val stats: ProductStats,
+    val packaging: Packaging
 ) : Parcelable

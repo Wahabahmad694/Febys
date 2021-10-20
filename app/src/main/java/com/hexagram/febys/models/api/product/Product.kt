@@ -2,6 +2,7 @@ package com.hexagram.febys.models.api.product
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import com.hexagram.febys.models.api.vendor.Vendor
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -22,8 +23,12 @@ data class Product constructor(
     @SerializedName("vendor_active")
     val vendorActive: Boolean,
     val variants: List<Variant>,
+    val vendor: Vendor,
+    @SerializedName("question_answers")
+    val questionAnswers: List<QuestionAnswers>,
     @SerializedName("created_at")
     val createdAt: String,
     @SerializedName("updated_at")
     val updatedAt: String,
 ) : Parcelable
+
