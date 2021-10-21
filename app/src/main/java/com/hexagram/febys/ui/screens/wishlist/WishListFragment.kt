@@ -10,6 +10,7 @@ import androidx.paging.LoadState
 import androidx.paging.filter
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
+import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentWishListBinding
@@ -58,9 +59,9 @@ class WishListFragment : BaseFragment() {
 
         wishlistPagerAdapter.interaction = object : WishlistPagerAdapter.Interaction {
             override fun onItemSelected(position: Int, item: Product) {
-                /*newChanges val variantId = item.variants[0]._id
-                val gotoProductDetail = NavGraphDirections.actionToProductDetail(item.id, variantId)
-                navigateTo(gotoProductDetail)*/
+                val gotoProductDetail =
+                    NavGraphDirections.actionToProductDetail(item._id, item.variants[0].skuId)
+                navigateTo(gotoProductDetail)
             }
 
             override fun removeFav(skuId: String) {

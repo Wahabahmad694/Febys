@@ -29,4 +29,15 @@ data class Variant(
     val warranty: Warranty,
     val stats: ProductStats,
     val packaging: Packaging
-) : Parcelable
+) : Parcelable {
+
+    fun getFirstVariantAttr(): Attr? {
+        if (attributes.isNullOrEmpty()) return null
+        return attributes.sortedBy { it._id }[0]
+    }
+
+    fun getSecondVariantAttr(): Attr? {
+        if (attributes.isNullOrEmpty() || attributes.size < 2) return null
+        return attributes.sortedBy { it._id }[1]
+    }
+}

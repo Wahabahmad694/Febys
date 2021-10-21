@@ -7,5 +7,5 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class FavSkuIds @JvmOverloads constructor(
     @SerializedName("sku_ids", alternate = ["variant_sku_ids"])
-    val skuIds: Set<String> = emptySet()
+    val skuIds: MutableSet<String> = mutableSetOf()
 ) : Parcelable

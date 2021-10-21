@@ -152,8 +152,9 @@ class HomeFragment : SliderFragment() {
 
         val homeProductAdapterInteraction = object : HomeProductsAdapter.Interaction {
             override fun onItemSelected(position: Int, item: Product) {
-                /*newChanges val gotoProductDetail = NavGraphDirections.actionToProductDetail(item._id)
-                navigateTo(gotoProductDetail)*/
+                val gotoProductDetail =
+                    NavGraphDirections.actionToProductDetail(item._id, item.variants[0].skuId)
+                navigateTo(gotoProductDetail)
             }
 
             override fun onFavToggleClick(skuId: String) {

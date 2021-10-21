@@ -25,7 +25,7 @@ data class Product constructor(
     val variants: List<Variant>,
     val vendor: Vendor,
     @SerializedName("question_answers")
-    val questionAnswers: List<QuestionAnswers>,
+    val questionAnswers: MutableList<QuestionAnswers>,
     @SerializedName("created_at")
     val createdAt: String,
     @SerializedName("updated_at")

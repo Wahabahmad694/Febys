@@ -1,6 +1,7 @@
 package com.hexagram.febys.models.api.chat
 
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -9,5 +10,6 @@ data class Chat(
     val sender: Sender,
     val message: String,
     val from: String,
-    val sent_time: String,
+    @SerializedName("sent_time")
+    val sentTime: String,
 ) : Parcelable
