@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.hexagram.febys.databinding.ItemProductHomeBinding
-import com.hexagram.febys.network.response.Product
+import com.hexagram.febys.models.api.product.Product
 
 class HomeProductsAdapter :
     ListAdapter<Product, HomeProductsAdapter.ProductHomeViewHolder>(diffCallback) {
@@ -14,7 +14,7 @@ class HomeProductsAdapter :
         private val diffCallback = object : DiffUtil.ItemCallback<Product>() {
 
             override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean {
-                return oldItem.id == newItem.id
+                return oldItem._id == newItem._id
             }
 
             override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
@@ -24,7 +24,7 @@ class HomeProductsAdapter :
     }
 
     var interaction: Interaction? = null
-    private var fav = mutableSetOf<Int>()
+    private var fav = mutableSetOf<String>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductHomeViewHolder {
         return ProductHomeViewHolder(
@@ -38,7 +38,7 @@ class HomeProductsAdapter :
         holder.bind(getItem(position), position)
     }
 
-    fun submitFav(fav: MutableSet<Int>) {
+    fun submitFav(fav: MutableSet<String>) {
         this.fav = fav
         notifyDataSetChanged()
     }
@@ -54,18 +54,18 @@ class HomeProductsAdapter :
             binding.product = item
             binding.isFav = false
 
-            val variantId = item.productVariants[0].id
+            val skuId = item.variants[0].skuId
 
-            binding.isFav = variantId in fav
+            binding.isFav = skuId in fav
 
             binding.ivFav.setOnClickListener {
-                interaction?.onFavToggleClick(variantId)
+                interaction?.onFavToggleClick(skuId)
             }
         }
     }
 
     interface Interaction {
         fun onItemSelected(position: Int, item: Product)
-        fun onFavToggleClick(variantId: Int)
+        fun onFavToggleClick(skuId: String)
     }
 }

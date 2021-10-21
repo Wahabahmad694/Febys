@@ -4,10 +4,10 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.hexagram.febys.models.api.product.Product
+import com.hexagram.febys.models.api.product.ProductPagingListing
+import com.hexagram.febys.models.api.request.PagingListRequest
 import com.hexagram.febys.network.FebysBackendService
-import com.hexagram.febys.network.requests.RequestOfPagination
-import com.hexagram.febys.network.response.Product
-import com.hexagram.febys.network.response.ResponseProductListing
 import com.hexagram.febys.paginations.*
 import com.hexagram.febys.prefs.IPrefManger
 import kotlinx.coroutines.CoroutineDispatcher
@@ -23,12 +23,12 @@ class ProductListingRepoImpl @Inject constructor(
     override fun fetchTodayDealsListing(
         scope: CoroutineScope,
         dispatcher: CoroutineDispatcher,
-        onProductListingResponse: ((ResponseProductListing) -> Unit)?
+        onProductListingResponse: ((ProductPagingListing) -> Unit)?
     ): Flow<PagingData<Product>> {
         return Pager(
             PagingConfig(pageSize = 10)
         ) {
-            TodayDealsPagingSource(backendService, RequestOfPagination(), onProductListingResponse)
+            TodayDealsPagingSource(backendService, PagingListRequest(), onProductListingResponse)
         }.flow
             .flowOn(dispatcher)
             .cachedIn(scope)
@@ -37,13 +37,13 @@ class ProductListingRepoImpl @Inject constructor(
     override fun fetchTrendingProductsListing(
         scope: CoroutineScope,
         dispatcher: CoroutineDispatcher,
-        onProductListingResponse: ((ResponseProductListing) -> Unit)?
+        onProductListingResponse: ((ProductPagingListing) -> Unit)?
     ): Flow<PagingData<Product>> {
         return Pager(
             PagingConfig(pageSize = 10)
         ) {
             TrendingProductsPagingSource(
-                backendService, RequestOfPagination(), onProductListingResponse
+                backendService, PagingListRequest(), onProductListingResponse
             )
         }.flow
             .flowOn(dispatcher)
@@ -53,13 +53,13 @@ class ProductListingRepoImpl @Inject constructor(
     override fun fetchUnder100DollarsItemsListing(
         scope: CoroutineScope,
         dispatcher: CoroutineDispatcher,
-        onProductListingResponse: ((ResponseProductListing) -> Unit)?
+        onProductListingResponse: ((ProductPagingListing) -> Unit)?
     ): Flow<PagingData<Product>> {
         return Pager(
             PagingConfig(pageSize = 10)
         ) {
             Under100DollarsItemsPagingSource(
-                backendService, RequestOfPagination(), onProductListingResponse
+                backendService, PagingListRequest(), onProductListingResponse
             )
         }.flow
             .flowOn(dispatcher)
@@ -70,13 +70,13 @@ class ProductListingRepoImpl @Inject constructor(
         categoryId: Int,
         scope: CoroutineScope,
         dispatcher: CoroutineDispatcher,
-        onProductListingResponse: ((ResponseProductListing) -> Unit)?
+        onProductListingResponse: ((ProductPagingListing) -> Unit)?
     ): Flow<PagingData<Product>> {
         return Pager(
             PagingConfig(pageSize = 10)
         ) {
             CategoryProductsListingPagingSource(
-                categoryId, backendService, RequestOfPagination(), onProductListingResponse
+                categoryId, backendService, PagingListRequest(), onProductListingResponse
             )
         }.flow
             .flowOn(dispatcher)
@@ -87,13 +87,13 @@ class ProductListingRepoImpl @Inject constructor(
         query: String,
         scope: CoroutineScope,
         dispatcher: CoroutineDispatcher,
-        onProductListingResponse: ((ResponseProductListing) -> Unit)?
+        onProductListingResponse: ((ProductPagingListing) -> Unit)?
     ): Flow<PagingData<Product>> {
         return Pager(
             PagingConfig(pageSize = 10)
         ) {
             SearchProductPagingSource(
-                query, backendService, RequestOfPagination(), onProductListingResponse
+                backendService, PagingListRequest(searchStr = query), onProductListingResponse
             )
         }.flow
             .flowOn(dispatcher)
@@ -103,14 +103,14 @@ class ProductListingRepoImpl @Inject constructor(
     override fun fetchWishList(
         scope: CoroutineScope,
         dispatcher: CoroutineDispatcher,
-        onProductListingResponse: ((ResponseProductListing) -> Unit)?
+        onProductListingResponse: ((ProductPagingListing) -> Unit)?
     ): Flow<PagingData<Product>> {
         return Pager(
             PagingConfig(pageSize = 10)
         ) {
             val authToken = pref.getAccessToken()
             WishlistPagingSource(
-                backendService, authToken, RequestOfPagination(), onProductListingResponse
+                backendService, authToken, PagingListRequest(), onProductListingResponse
             )
         }.flow
             .flowOn(dispatcher)

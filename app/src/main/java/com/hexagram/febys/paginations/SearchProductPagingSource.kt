@@ -1,27 +1,25 @@
 package com.hexagram.febys.paginations
 
+import com.hexagram.febys.models.api.product.Product
+import com.hexagram.febys.models.api.product.ProductPagingListing
+import com.hexagram.febys.models.api.request.PagingListRequest
 import com.hexagram.febys.network.FebysBackendService
 import com.hexagram.febys.network.adapter.ApiResponse
-import com.hexagram.febys.network.requests.RequestOfPagination
-import com.hexagram.febys.network.response.Product
-import com.hexagram.febys.network.response.ResponseProductListing
 
 class SearchProductPagingSource constructor(
-    private val query: String,
     private val service: FebysBackendService,
-    private val request: RequestOfPagination,
-    onProductListingResponse: ((ResponseProductListing) -> Unit)? = null
+    private val request: PagingListRequest,
+    onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
 ) : ProductListingPagingSource(onProductListingResponse) {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Product> {
         request.pageNo = params.key ?: 1
-        val req =
-            mapOf("chunkSize" to request.chunkSize, "pageNo" to request.pageNo)
-        return when (val response = service.searchProducts(query, req)) {
+        val queryMap = request.createQueryMap()
+        return when (val response = service.searchProducts(queryMap, request)) {
             is ApiResponse.ApiSuccessResponse -> {
-                val searchProductResponse = response.data!!.getResponse<ResponseProductListing>()
+                val searchProductResponse = response.data!!.getResponse<ProductPagingListing>()
                 onProductListingResponse?.invoke(searchProductResponse)
-                val (prevKey, nextKey) = getPagingKeys(searchProductResponse.paginationInformation)
+                val (prevKey, nextKey) = getPagingKeys(searchProductResponse.pagingInfo)
                 LoadResult.Page(searchProductResponse.products, prevKey, nextKey)
             }
             is ApiResponse.ApiFailureResponse.Error -> {

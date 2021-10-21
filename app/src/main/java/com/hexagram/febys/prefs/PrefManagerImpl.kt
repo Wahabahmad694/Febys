@@ -55,57 +55,55 @@ class PrefManagerImpl @Inject constructor(
     }
 
     override fun clearUser() {
-        removeString(KEY_USER)
+        remove(KEY_USER)
     }
 
     override fun clearAccessToken() {
-        removeString(KEY_ACCESS_TOKEN)
+        remove(KEY_ACCESS_TOKEN)
     }
 
     override fun clearRefreshToken() {
-        removeString(KEY_REFRESH_TOKEN)
+        remove(KEY_REFRESH_TOKEN)
     }
 
-    override fun toggleFav(variantId: Int): Boolean {
+    override fun toggleFav(skuId: String): Boolean {
         val set = getFav()
-        val addToFav = variantId !in set
-        if (addToFav) set.add(variantId) else set.remove(variantId)
+        val addToFav = skuId !in set
+        if (addToFav) set.add(skuId) else set.remove(skuId)
         saveFav(set)
         return addToFav
     }
 
-    override fun addToFav(variantId: Int): Boolean {
+    override fun addToFav(skuId: String): Boolean {
         val set = getFav()
-        val addToFav = !set.contains(variantId)
+        val addToFav = !set.contains(skuId)
         if (addToFav) {
-            set.add(variantId)
+            set.add(skuId)
             saveFav(set)
         }
         return addToFav
     }
 
-    override fun removeFromFav(variantId: Int): Boolean {
+    override fun removeFromFav(skuId: String): Boolean {
         val set = getFav()
-        val removeFromFav = set.contains(variantId)
+        val removeFromFav = set.contains(skuId)
         if (removeFromFav) {
-            set.remove(variantId)
+            set.remove(skuId)
             saveFav(set)
         }
         return removeFromFav
     }
 
-    override fun getFav(): MutableSet<Int> {
-        val favSetAsString = getString(KEY_FAV, "")
-        return Utils.jsonToSetOfInt(favSetAsString)
+    override fun getFav(): MutableSet<String> {
+        return getStringSet(KEY_FAV, emptySet()).toMutableSet()
     }
 
-    override fun saveFav(set: MutableSet<Int>) {
-        val favSetAsString = Utils.jsonFromSetOfInt(set)
-        saveString(KEY_FAV, favSetAsString)
+    override fun saveFav(set: MutableSet<String>) {
+        saveStringSet(KEY_FAV, set)
     }
 
     override fun clearFav() {
-        removeString(KEY_FAV)
+        remove(KEY_FAV)
     }
 
     override fun getDefaultShippingAddress(): ShippingAddress? {
@@ -140,7 +138,17 @@ class PrefManagerImpl @Inject constructor(
         return pref.getString(key, defValue)!!
     }
 
-    private fun removeString(key: String) {
+    private fun getStringSet(key: String, defValue: Set<String>): Set<String> {
+        return pref.getStringSet(key, defValue)!!
+    }
+
+    private fun saveStringSet(key: String, value: Set<String>) {
+        pref.edit {
+            putStringSet(key, value)
+        }
+    }
+
+    private fun remove(key: String) {
         pref.edit {
             remove(key)
         }

@@ -2,6 +2,7 @@ package com.hexagram.febys.paginations
 
 import androidx.paging.PagingState
 import com.hexagram.febys.R
+import com.hexagram.febys.models.api.request.PagingListRequest
 import com.hexagram.febys.models.view.VendorListing
 import com.hexagram.febys.network.FebysBackendService
 import com.hexagram.febys.network.adapter.ApiResponse
@@ -12,7 +13,7 @@ class VendorListingPagingSource constructor(
     private val authKey: String,
     private val service: FebysBackendService,
     private val isCelebrity: Boolean,
-    private val request: RequestOfPagination
+    private val request: PagingListRequest
 ) : BasePagingSource<Int, VendorListing>() {
     private var fetchFollowingVendor = true
     private var addHeader = true

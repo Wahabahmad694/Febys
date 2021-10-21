@@ -1,6 +1,7 @@
 package com.hexagram.febys.paginations
 
 import androidx.paging.PagingState
+import com.hexagram.febys.models.api.request.PagingListRequest
 import com.hexagram.febys.network.FebysBackendService
 import com.hexagram.febys.network.adapter.ApiResponse
 import com.hexagram.febys.network.requests.RequestOfPagination
@@ -9,7 +10,7 @@ import com.hexagram.febys.network.response.ResponseAllCategories
 
 class CategoryPagingSource constructor(
     private val service: FebysBackendService,
-    private val request: RequestOfPagination
+    private val request: PagingListRequest
 ) : BasePagingSource<Int, Category>() {
     override fun getRefreshKey(state: PagingState<Int, Category>): Int? {
         return state.anchorPosition?.let { anchorPosition ->

@@ -1,25 +1,28 @@
 package com.hexagram.febys.paginations
 
+import com.hexagram.febys.models.api.product.Product
+import com.hexagram.febys.models.api.product.ProductPagingListing
+import com.hexagram.febys.models.api.request.PagingListRequest
 import com.hexagram.febys.network.FebysBackendService
 import com.hexagram.febys.network.adapter.ApiResponse
-import com.hexagram.febys.network.requests.RequestOfPagination
-import com.hexagram.febys.network.response.Product
-import com.hexagram.febys.network.response.ResponseProductListing
 
 class TrendingProductsPagingSource constructor(
     private val service: FebysBackendService,
-    private val request: RequestOfPagination,
-    onProductListingResponse: ((ResponseProductListing) -> Unit)? = null
+    private val request: PagingListRequest,
+    onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
 ) : ProductListingPagingSource(onProductListingResponse) {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Product> {
         request.pageNo = params.key ?: 1
-        val req = mapOf("chunkSize" to request.chunkSize, "pageNo" to request.pageNo)
-        return when (val response = service.fetchTrendingProducts(req)) {
+        val queryMap = request.createQueryMap()
+        return when (val response = service.fetchTrendingProductsByUnits(queryMap)) {
             is ApiResponse.ApiSuccessResponse -> {
-                val trendingProductsResponse = response.data!!.getResponse<ResponseProductListing>()
+                val trending = response.data!!
+                val trendingProductsResponse = ProductPagingListing(
+                    trending.getAllProducts(), trending.pagingInfo, trending.totalRows
+                )
                 onProductListingResponse?.invoke(trendingProductsResponse)
-                val (prevKey, nextKey) = getPagingKeys(trendingProductsResponse.paginationInformation)
+                val (prevKey, nextKey) = getPagingKeys(trendingProductsResponse.pagingInfo)
                 LoadResult.Page(trendingProductsResponse.products, prevKey, nextKey)
             }
             is ApiResponse.ApiFailureResponse.Error -> {

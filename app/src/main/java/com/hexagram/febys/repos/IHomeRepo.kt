@@ -1,6 +1,12 @@
 package com.hexagram.febys.repos
 
-import com.hexagram.febys.network.response.*
+import com.hexagram.febys.models.api.banners.Banner
+import com.hexagram.febys.models.api.category.UniqueCategory
+import com.hexagram.febys.models.api.product.FeaturedCategory
+import com.hexagram.febys.models.api.product.Product
+import com.hexagram.febys.network.response.Category
+import com.hexagram.febys.network.response.OldProduct
+import com.hexagram.febys.network.response.SeasonalOffer
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
@@ -11,11 +17,13 @@ interface IHomeRepo {
 
     suspend fun fetchTodayDeals(dispatcher: CoroutineDispatcher = Dispatchers.IO): List<Product>
 
-    suspend fun fetchFeaturedCategories(dispatcher: CoroutineDispatcher = Dispatchers.IO): List<Category>
+    suspend fun fetchFeaturedCategories(dispatcher: CoroutineDispatcher = Dispatchers.IO): List<FeaturedCategory>
 
     suspend fun fetchAllSeasonalOffers(dispatcher: CoroutineDispatcher = Dispatchers.IO): List<SeasonalOffer>
 
-    suspend fun fetchTrendingProducts(dispatcher: CoroutineDispatcher = Dispatchers.IO): List<Product>
+    suspend fun fetchTrendingProductsByUnits(dispatcher: CoroutineDispatcher = Dispatchers.IO): List<Product>
+
+    suspend fun fetchTrendingProductsBySale(dispatcher: CoroutineDispatcher = Dispatchers.IO): List<Product>
 
     suspend fun fetchStoresYouFollow(dispatcher: CoroutineDispatcher = Dispatchers.IO): List<String>
 

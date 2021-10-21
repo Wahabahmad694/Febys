@@ -28,7 +28,7 @@ class CartAdapter(private val isInCheckout: Boolean = false) :
     }
 
 
-    private var fav = mutableSetOf<Int>()
+    private var fav = mutableSetOf<String>()
     var interaction: Interaction? = null
     var showHeader = false
 
@@ -67,7 +67,7 @@ class CartAdapter(private val isInCheckout: Boolean = false) :
                     interaction?.openProductDetail(cartDTO)
                 }
 
-                val isFav = cartDTO.variantId in fav
+                val isFav = /*cartDTO.variantId in fav*/ false
                 if (isFav) {
                     ivFavToggle.setImageResource(R.drawable.ic_fav)
                     tvFav.setText(R.string.label_remove_from_wishlist)
@@ -89,14 +89,14 @@ class CartAdapter(private val isInCheckout: Boolean = false) :
 
         private fun toggleFav(cartDTO: CartDTO) {
             val isUserLoggedIn =
-                interaction?.toggleFavIfUserLoggedIn(cartDTO.variantId) ?: false
+                interaction?.toggleFavIfUserLoggedIn(/*newChange cartDTO.variantId*/ "") ?: false
             if (!isUserLoggedIn) return
 
-            if (cartDTO.variantId in fav) {
+            /*newChange if (cartDTO.variantId in fav) {
                 fav.remove(cartDTO.variantId)
             } else {
                 fav.add(cartDTO.variantId)
-            }
+            }*/
             val position = currentList.indexOf(cartDTO)
             notifyItemChanged(position)
         }
@@ -126,7 +126,7 @@ class CartAdapter(private val isInCheckout: Boolean = false) :
         super.submitList(list)
     }
 
-    fun submitFav(fav: MutableSet<Int>) {
+    fun submitFav(fav: MutableSet<String>) {
         this.fav = fav
     }
 
@@ -144,7 +144,7 @@ class CartAdapter(private val isInCheckout: Boolean = false) :
 
     interface Interaction {
         fun updateCartItem(cartDTO: CartDTO)
-        fun toggleFavIfUserLoggedIn(variantId: Int): Boolean
+        fun toggleFavIfUserLoggedIn(skuId: String): Boolean
         fun removeFromCart(cartDTO: CartDTO)
         fun openProductDetail(cartDTO: CartDTO)
     }

@@ -6,7 +6,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.hexagram.febys.databinding.ItemProductListBinding
-import com.hexagram.febys.network.response.Product
+import com.hexagram.febys.models.api.product.Product
 
 class ProductListingPagerAdapter :
     PagingDataAdapter<Product, ProductListingPagerAdapter.ProductPagerViewHolder>(diffCallback) {
@@ -18,13 +18,13 @@ class ProductListingPagerAdapter :
             }
 
             override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
-                return oldItem.id == newItem.id
+                return oldItem._id == newItem._id
             }
         }
     }
 
     var interaction: Interaction? = null
-    private var fav = mutableSetOf<Int>()
+    private var fav = mutableSetOf<String>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductPagerViewHolder {
         return ProductPagerViewHolder(
@@ -40,7 +40,7 @@ class ProductListingPagerAdapter :
 
     fun totalSize() = itemCount
 
-    fun submitFav(fav: MutableSet<Int>) {
+    fun submitFav(fav: MutableSet<String>) {
         this.fav = fav
     }
 
@@ -53,18 +53,18 @@ class ProductListingPagerAdapter :
                 interaction?.onItemSelected(position, item)
             }
 
-            val variantId = item.productVariants[0].id
+            val skuId = item.variants[0].skuId
 
-            binding.isFav = variantId in fav
+            binding.isFav = skuId in fav
 
             binding.ivFavToggle.setOnClickListener {
-                val isUserLoggedIn = interaction?.toggleFavIfUserLoggedIn(variantId) ?: false
+                val isUserLoggedIn = interaction?.toggleFavIfUserLoggedIn(skuId) ?: false
                 if (!isUserLoggedIn) return@setOnClickListener
 
-                if (variantId in fav) {
-                    fav.remove(variantId)
+                if (skuId in fav) {
+                    fav.remove(skuId)
                 } else {
-                    fav.add(variantId)
+                    fav.add(skuId)
                 }
                 notifyItemChanged(position)
             }
@@ -75,6 +75,6 @@ class ProductListingPagerAdapter :
 
     interface Interaction {
         fun onItemSelected(position: Int, item: Product)
-        fun toggleFavIfUserLoggedIn(variantId: Int): Boolean
+        fun toggleFavIfUserLoggedIn(skuId: String): Boolean
     }
 }

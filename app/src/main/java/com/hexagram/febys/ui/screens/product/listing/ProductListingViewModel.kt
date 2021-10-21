@@ -2,8 +2,8 @@ package com.hexagram.febys.ui.screens.product.listing
 
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
-import com.hexagram.febys.network.response.Product
-import com.hexagram.febys.network.response.ResponseProductListing
+import com.hexagram.febys.models.api.product.Product
+import com.hexagram.febys.models.api.product.ProductPagingListing
 import com.hexagram.febys.repos.IProductListingRepo
 import com.hexagram.febys.ui.screens.product.ProductViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,7 +22,7 @@ open class ProductListingViewModel @Inject constructor(
     private var vendorProductsListing: Flow<PagingData<Product>>? = null
 
     fun todayDealsListing(
-        onProductListingResponse: ((ResponseProductListing) -> Unit)? = null
+        onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
     ): Flow<PagingData<Product>> {
         if (todayDealsListing == null) {
             todayDealsListing =
@@ -35,7 +35,7 @@ open class ProductListingViewModel @Inject constructor(
     }
 
     fun trendingProductsListing(
-        onProductListingResponse: ((ResponseProductListing) -> Unit)? = null
+        onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
     ): Flow<PagingData<Product>> {
         if (trendingProductsListing == null) {
             trendingProductsListing =
@@ -48,7 +48,7 @@ open class ProductListingViewModel @Inject constructor(
     }
 
     fun under100DollarsItemsListing(
-        onProductListingResponse: ((ResponseProductListing) -> Unit)? = null
+        onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
     ): Flow<PagingData<Product>> {
         if (under100DollarsItemsListing == null) {
             under100DollarsItemsListing =
@@ -61,7 +61,7 @@ open class ProductListingViewModel @Inject constructor(
     }
 
     fun categoryProductsListing(
-        categoryId: Int, onProductListingResponse: ((ResponseProductListing) -> Unit)? = null
+        categoryId: Int, onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
     ): Flow<PagingData<Product>> {
         if (categoryProductsListing == null) {
             categoryProductsListing =
@@ -74,7 +74,7 @@ open class ProductListingViewModel @Inject constructor(
     }
 
     fun searchProductsListing(
-        query: String, onProductListingResponse: ((ResponseProductListing) -> Unit)? = null
+        query: String, onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
     ): Flow<PagingData<Product>> {
         if (searchProductsListing == null) {
             searchProductsListing =
@@ -87,7 +87,7 @@ open class ProductListingViewModel @Inject constructor(
     }
 
     fun vendorProductListing(
-        vendorId: Int, onProductListingResponse: ((ResponseProductListing) -> Unit)? = null
+        vendorId: Int, onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
     ): Flow<PagingData<Product>> {
         if (vendorProductsListing == null) {
             vendorProductsListing =

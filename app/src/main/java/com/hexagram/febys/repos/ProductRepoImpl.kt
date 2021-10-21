@@ -1,13 +1,12 @@
 package com.hexagram.febys.repos
 
+import com.hexagram.febys.models.api.wishlist.FavSkuIds
 import com.hexagram.febys.models.view.QuestionAnswersThread
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.FakeApiService
 import com.hexagram.febys.network.FebysBackendService
 import com.hexagram.febys.network.adapter.*
-import com.hexagram.febys.network.requests.RequestToggleFav
-import com.hexagram.febys.network.response.Product
-import com.hexagram.febys.network.response.ResponseToggleFav
+import com.hexagram.febys.network.response.OldProduct
 import com.hexagram.febys.prefs.IPrefManger
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
@@ -20,61 +19,66 @@ open class ProductRepoImpl @Inject constructor(
 ) : IProductRepo {
     override fun fetchProductDetail(
         productId: Int, dispatcher: CoroutineDispatcher
-    ) = flow<DataState<Product>> {
+    ) = flow<DataState<OldProduct>> {
         backendService.fetchProduct(productId)
             .onSuccess {
-                emit(DataState.Data(data!!.product))
+                emit(DataState.Data(data!!.oldProduct))
             }
             .onError { emit(DataState.ApiError(message)) }
             .onException { emit(DataState.ExceptionError()) }
             .onNetworkError { emit(DataState.NetworkError()) }
     }.flowOn(dispatcher)
 
-    override suspend fun toggleFav(variantId: Int) {
-        val addToFav = pref.toggleFav(variantId)
+    override suspend fun toggleFav(skuId: String) {
+        val addToFav = pref.toggleFav(skuId)
 
         val authToken = pref.getAccessToken()
-        val req = RequestToggleFav(setOf(variantId))
-        val response = if (addToFav) {
-            backendService.addToWishList(authToken, req)
+        val req = FavSkuIds(setOf(skuId))
+        if (addToFav) {
+            val response = backendService.addToWishList(authToken, req)
+            if (response is ApiResponse.ApiSuccessResponse) {
+                updateFavList(response.data!!.wishList.skuIds)
+            }
         } else {
-            backendService.removeFromWishList(authToken, req)
+            val response = backendService.removeFromWishList(authToken, req)
+            if (response is ApiResponse.ApiSuccessResponse) {
+                updateFavList(response.data!!.skuIds)
+            }
         }
-
-        updateFavList(response)
     }
 
-    override fun getFav(): MutableSet<Int> = pref.getFav()
+    override fun getFav(): MutableSet<String> = pref.getFav()
 
-    override suspend fun addToFav(variantId: Int, dispatcher: CoroutineDispatcher) {
-        val addToFav = pref.addToFav(variantId)
+    override suspend fun addToFav(skuId: String, dispatcher: CoroutineDispatcher) {
+        val addToFav = pref.addToFav(skuId)
 
         if (addToFav) {
             val authToken = pref.getAccessToken()
-            val req = RequestToggleFav(setOf(variantId))
+            val req = FavSkuIds(setOf(skuId))
             val response = backendService.addToWishList(authToken, req)
 
-            updateFavList(response)
+            if (response is ApiResponse.ApiSuccessResponse) {
+                updateFavList(response.data!!.wishList.skuIds)
+            }
         }
     }
 
-    override suspend fun removeFromFav(variantId: Int, dispatcher: CoroutineDispatcher) {
-        val removeFromFav = pref.removeFromFav(variantId)
+    override suspend fun removeFromFav(skuId: String, dispatcher: CoroutineDispatcher) {
+        val removeFromFav = pref.removeFromFav(skuId)
 
         if (removeFromFav) {
             val authToken = pref.getAccessToken()
-            val req = RequestToggleFav(setOf(variantId))
+            val req = FavSkuIds(setOf(skuId))
             val response = backendService.removeFromWishList(authToken, req)
-
-            updateFavList(response)
+            if (response is ApiResponse.ApiSuccessResponse) {
+                updateFavList(response.data!!.skuIds)
+            }
         }
     }
 
-    private fun updateFavList(response: ApiResponse<ResponseToggleFav>) {
-        if (response is ApiResponse.ApiSuccessResponse) {
-            val fav = response.data!!.variantIds.toMutableSet()
-            pref.saveFav(fav)
-        }
+    private fun updateFavList(skuIds: Set<String>) {
+        val fav = skuIds.toMutableSet()
+        pref.saveFav(fav)
     }
 
     override suspend fun askQuestion(

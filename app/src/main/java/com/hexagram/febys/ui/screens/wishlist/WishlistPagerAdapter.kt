@@ -6,7 +6,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.hexagram.febys.databinding.ItemWishListBinding
-import com.hexagram.febys.network.response.Product
+import com.hexagram.febys.models.api.product.Product
 
 class WishlistPagerAdapter :
     PagingDataAdapter<Product, WishlistPagerAdapter.WishlistViewHolder>(diffCallback) {
@@ -18,7 +18,7 @@ class WishlistPagerAdapter :
             }
 
             override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
-                return oldItem.id == newItem.id
+                return oldItem._id == newItem._id
             }
         }
     }
@@ -46,8 +46,8 @@ class WishlistPagerAdapter :
             }
 
             binding.ivClose.setOnClickListener {
-                val variantId = item.productVariants[0].id
-                interaction?.removeFav(variantId)
+                val skuId = item.variants[0].skuId
+                interaction?.removeFav(skuId)
             }
 
             binding.product = item
@@ -56,6 +56,6 @@ class WishlistPagerAdapter :
 
     interface Interaction {
         fun onItemSelected(position: Int, item: Product)
-        fun removeFav(variantId: Int)
+        fun removeFav(skuId: String)
     }
 }

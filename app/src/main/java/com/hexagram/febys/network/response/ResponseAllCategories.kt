@@ -1,6 +1,7 @@
 package com.hexagram.febys.network.response
 
 import com.google.gson.annotations.SerializedName
+import com.hexagram.febys.models.api.pagination.PagingInfo
 
 data class ResponseAllCategories(
     @SerializedName("total_rows")
@@ -8,5 +9,5 @@ data class ResponseAllCategories(
     @SerializedName("categories")
     val categories: List<Category>,
     @SerializedName("pagination_information")
-    val paginationInformation: PaginationInformation
+    val paginationInformation: PagingInfo
 )

@@ -12,19 +12,19 @@ open class ProductViewModel @Inject constructor(
     val productRepo: IProductRepo
 ) : BaseViewModel() {
 
-    fun toggleFav(variantId: Int) = viewModelScope.launch {
-        productRepo.toggleFav(variantId)
+    fun toggleFav(skuId: String) = viewModelScope.launch {
+        productRepo.toggleFav(skuId)
     }
 
-    fun addToFav(variantId: Int) = viewModelScope.launch {
-        productRepo.addToFav(variantId)
+    fun addToFav(skuId: String) = viewModelScope.launch {
+        productRepo.addToFav(skuId)
     }
 
-    fun removeFromFav(variantId: Int) = viewModelScope.launch {
-        productRepo.removeFromFav(variantId)
+    fun removeFromFav(skuId: String) = viewModelScope.launch {
+        productRepo.removeFromFav(skuId)
     }
 
-    fun getFav(): MutableSet<Int> = productRepo.getFav()
+    fun getFav(): MutableSet<String> = productRepo.getFav()
 
-    fun isFavProduct(variantId: Int) = variantId in getFav()
+    fun isFavProduct(skuId: String) = skuId in getFav()
 }

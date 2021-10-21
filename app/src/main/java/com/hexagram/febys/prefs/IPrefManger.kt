@@ -23,15 +23,15 @@ interface IPrefManger {
 
     fun clearRefreshToken()
 
-    fun toggleFav(variantId: Int): Boolean
+    fun toggleFav(skuId: String): Boolean
 
-    fun addToFav(variantId: Int): Boolean
+    fun addToFav(skuId: String): Boolean
 
-    fun removeFromFav(variantId: Int): Boolean
+    fun removeFromFav(skuId: String): Boolean
 
-    fun getFav(): MutableSet<Int>
+    fun getFav(): MutableSet<String>
 
-    fun saveFav(set: MutableSet<Int>)
+    fun saveFav(set: MutableSet<String>)
 
     fun clearFav()
 

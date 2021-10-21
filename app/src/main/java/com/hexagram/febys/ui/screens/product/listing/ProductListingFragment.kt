@@ -15,7 +15,7 @@ import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentProductListingBinding
-import com.hexagram.febys.network.response.Product
+import com.hexagram.febys.models.api.product.Product
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.Flow
@@ -94,14 +94,14 @@ abstract class ProductListingFragment : BaseFragment() {
 
         productListingPagerAdapter.interaction = object : ProductListingPagerAdapter.Interaction {
             override fun onItemSelected(position: Int, item: Product) {
-                val gotoProductDetail = NavGraphDirections.actionToProductDetail(item.id)
-                navigateTo(gotoProductDetail)
+                /*newChanges val gotoProductDetail = NavGraphDirections.actionToProductDetail(item.id)
+                navigateTo(gotoProductDetail)*/
             }
 
-            override fun toggleFavIfUserLoggedIn(variantId: Int): Boolean {
+            override fun toggleFavIfUserLoggedIn(skuId: String): Boolean {
                 return isUserLoggedIn.also {
                     if (it) {
-                        productListingViewModel.toggleFav(variantId)
+                        productListingViewModel.toggleFav(skuId)
                     } else {
                         val navigateToLogin = NavGraphDirections.actionToLoginFragment()
                         navigateTo(navigateToLogin)

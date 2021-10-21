@@ -12,7 +12,7 @@
 
         <variable
             name="product"
-            type="com.hexagram.febys.network.response.Product" />
+            type="com.hexagram.febys.models.api.product.Product" />
 
     </data>
 
@@ -40,7 +40,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            binding:image_url="@{product.productVariants.get(0).images.get(0)}" />
+            binding:image_url="@{product.variants.get(0).images.get(0)}" />
 
         <TextView
             android:id="@+id/tv_product_brand"
@@ -76,12 +76,12 @@
             style="@style/TextTheme.Arial.TS10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{`$` + product.productVariants.get(0).price}"
+            android:text="@{`$` + product.variants.get(0).originalPrice.value}"
             app:layout_constraintBaseline_toBaselineOf="@id/tv_product_price"
             app:layout_constraintEnd_toStartOf="@id/tv_product_off_price_separator"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="@id/tv_product_name"
-            binding:is_visible="@{product.productVariants.get(0).hasPromotion}"
+            binding:is_visible="@{product.variants.get(0).hasPromotion}"
             binding:strike_through="@{true}"
             tools:text="$14" />
 
@@ -95,7 +95,7 @@
             app:layout_constraintBaseline_toBaselineOf="@id/tv_product_price"
             app:layout_constraintEnd_toStartOf="@id/tv_product_price"
             app:layout_constraintStart_toEndOf="@id/tv_product_off_price"
-            binding:is_visible="@{product.productVariants.get(0).hasPromotion}" />
+            binding:is_visible="@{product.variants.get(0).hasPromotion}" />
 
         <TextView
             android:id="@+id/tv_product_price"
@@ -103,7 +103,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_2dp"
-            android:text="@{product.productVariants.get(0).hasPromotion ? `$` + product.productVariants.get(0).promotionPrice : `$` + product.productVariants.get(0).price}"
+            android:text="@{`$` + product.variants.get(0).price.value}"
             app:layout_constraintEnd_toEndOf="@id/tv_product_name"
             app:layout_constraintStart_toEndOf="@id/tv_product_off_price_separator"
             app:layout_constraintTop_toBottomOf="@id/tv_product_name"

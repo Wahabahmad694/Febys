@@ -15,8 +15,12 @@ import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
 import com.hexagram.febys.base.SliderFragment
 import com.hexagram.febys.databinding.FragmentHomeBinding
+import com.hexagram.febys.models.api.banners.Banner
+import com.hexagram.febys.models.api.category.UniqueCategory
+import com.hexagram.febys.models.api.product.FeaturedCategory
+import com.hexagram.febys.models.api.product.Product
 import com.hexagram.febys.network.DataState
-import com.hexagram.febys.network.response.*
+import com.hexagram.febys.network.response.SeasonalOffer
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -148,13 +152,13 @@ class HomeFragment : SliderFragment() {
 
         val homeProductAdapterInteraction = object : HomeProductsAdapter.Interaction {
             override fun onItemSelected(position: Int, item: Product) {
-                val gotoProductDetail = NavGraphDirections.actionToProductDetail(item.id)
-                navigateTo(gotoProductDetail)
+                /*newChanges val gotoProductDetail = NavGraphDirections.actionToProductDetail(item._id)
+                navigateTo(gotoProductDetail)*/
             }
 
-            override fun onFavToggleClick(variantId: Int) {
+            override fun onFavToggleClick(skuId: String) {
                 if (isUserLoggedIn) {
-                    homeViewModel.toggleFav(variantId)
+                    homeViewModel.toggleFav(skuId)
                     updateFav()
                 } else {
                     val navigateToLogin = NavGraphDirections.actionToLoginFragment()
@@ -210,7 +214,7 @@ class HomeFragment : SliderFragment() {
 
     private fun setupBanner(banners: List<Banner>) {
         val sliderImages =
-            banners.filter { banner -> banner.type == "headerImages" }
+            banners.filter { banner -> banner.type == "headerImages" && banner._for == "mobile" }
         binding.imageSliderHome.adapter = PagerAdapter(sliderImages, this)
         binding.dotsIndicator.setViewPager2(binding.imageSliderHome)
 
@@ -230,7 +234,7 @@ class HomeFragment : SliderFragment() {
         )
     }
 
-    private fun setupFeaturedCategories(featuredCategories: List<Category>) {
+    private fun setupFeaturedCategories(featuredCategories: List<FeaturedCategory>) {
         featuredCategories.forEach { category ->
             if (category.products.isNotEmpty()) {
                 val radioButton = makeRadioButton(category.id, category.name)
@@ -239,9 +243,8 @@ class HomeFragment : SliderFragment() {
         }
 
         binding.radioGroupFeaturedCategories.setOnCheckedChangeListener { _, id ->
-            val products =
-                featuredCategories.find { category -> category.id == id }?.products
-            featuredCategoryProductsAdapter.submitList(products ?: emptyList())
+            val products = featuredCategories.find { category -> category.id == id }?.products
+            featuredCategoryProductsAdapter.submitList(products)
 
             lastCheckedCategoryId = id
         }

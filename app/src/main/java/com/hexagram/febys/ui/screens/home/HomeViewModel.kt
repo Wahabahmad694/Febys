@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.hexagram.febys.models.view.HomeModel
 import com.hexagram.febys.network.DataState
-import com.hexagram.febys.network.response.*
 import com.hexagram.febys.repos.IHomeRepo
 import com.hexagram.febys.repos.IProductRepo
 import com.hexagram.febys.ui.screens.product.ProductViewModel
@@ -33,7 +32,7 @@ class HomeViewModel @Inject constructor(
             val todayDeals = async { homeRepo.fetchTodayDeals() }
             val featuredCategories = async { homeRepo.fetchFeaturedCategories() }
             val seasonalOffers = async { homeRepo.fetchAllSeasonalOffers() }
-            val trendingProducts = async { homeRepo.fetchTrendingProducts() }
+            val trendingProducts = async { homeRepo.fetchTrendingProductsByUnits() }
             val storeYouFollow = async { homeRepo.fetchStoresYouFollow() }
             val under100DollarsItems = async { homeRepo.fetchUnder100DollarsItems() }
 
