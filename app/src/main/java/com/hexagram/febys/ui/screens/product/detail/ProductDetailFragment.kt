@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -20,6 +21,7 @@ import com.hexagram.febys.R
 import com.hexagram.febys.base.SliderFragment
 import com.hexagram.febys.databinding.FragmentProductDetailBinding
 import com.hexagram.febys.databinding.ItemQuestionAnswersThreadBinding
+import com.hexagram.febys.databinding.LayoutAdditionalProductBinding
 import com.hexagram.febys.databinding.LayoutProductDescriptionBinding
 import com.hexagram.febys.models.api.product.Description
 import com.hexagram.febys.models.api.product.Product
@@ -29,6 +31,7 @@ import com.hexagram.febys.models.view.QuestionAnswersThread
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.cart.CartViewModel
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
+import com.hexagram.febys.ui.screens.product.additional.AdditionalProductAdapter
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -346,6 +349,29 @@ class ProductDetailFragment : SliderFragment() {
             answersAdapter.submitList(answers)
         }
         addView(parent, layoutQuestionAnswersThread.root, position)
+    }
+
+    private fun addAdditionalProduct(title: String, products: List<Product>) {
+        if (products.isEmpty()) return
+
+        val parent = binding.containerAdditionalProducts
+        val layoutAdditionalProductBinding = LayoutAdditionalProductBinding
+            .inflate(layoutInflater, parent, false)
+
+        layoutAdditionalProductBinding.apply {
+            additionalProductTitle.text = title
+            val additionalAdapter = AdditionalProductAdapter()
+            additionalAdapter.submitList(products)
+            rvAdditionalProducts.apply {
+                setHasFixedSize(true)
+                addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+                addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL))
+                layoutManager = GridLayoutManager(context, 2)
+                adapter = additionalAdapter
+            }
+        }
+
+        addView(parent, layoutAdditionalProductBinding.root)
     }
 
     private fun updateVariant(variant: Variant) {
