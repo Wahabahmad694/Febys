@@ -1,7 +1,9 @@
 package com.hexagram.febys.repos
 
 import com.hexagram.febys.models.api.product.Product
+import com.hexagram.febys.models.api.product.ProductPagingListing
 import com.hexagram.febys.models.api.product.QuestionAnswers
+import com.hexagram.febys.models.api.request.PagingListRequest
 import com.hexagram.febys.models.api.wishlist.FavSkuIds
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.FakeApiService
@@ -93,4 +95,20 @@ open class ProductRepoImpl @Inject constructor(
             .onException { emit(DataState.ExceptionError()) }
             .onNetworkError { emit(DataState.NetworkError()) }
     }.flowOn(dispatcher)
+
+    override suspend fun fetchRecommendProducts(dispatcher: CoroutineDispatcher): List<Product> {
+        val pagingListRequest = PagingListRequest()
+        val response = backendService.fetchRecommendProducts(pagingListRequest)
+        return (response as? ApiResponse.ApiSuccessResponse)
+            ?.data?.getResponse<ProductPagingListing>()?.products ?: emptyList()
+    }
+
+    override suspend fun fetchSimilarProducts(
+        productId: String, dispatcher: CoroutineDispatcher
+    ): List<Product> {
+        val pagingListRequest = PagingListRequest()
+        val response = backendService.fetchSimilarProducts(productId, pagingListRequest)
+        return (response as? ApiResponse.ApiSuccessResponse)
+            ?.data?.getResponse<ProductPagingListing>()?.products ?: emptyList()
+    }
 }

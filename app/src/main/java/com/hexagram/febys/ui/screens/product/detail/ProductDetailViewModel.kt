@@ -28,6 +28,12 @@ class ProductDetailViewModel @Inject constructor(
     private val _observeAskQuestion = MutableLiveData<DataState<QuestionAnswers>>()
     val observeAskQuestion: LiveData<DataState<QuestionAnswers>> = _observeAskQuestion
 
+    private val _recommendProducts = MutableLiveData<DataState<List<Product>>>()
+    val recommendProducts: LiveData<DataState<List<Product>>> = _recommendProducts
+
+    private val _similarProducts = MutableLiveData<DataState<List<Product>>>()
+    val similarProducts: LiveData<DataState<List<Product>>> = _similarProducts
+
     fun fetchProductDetail(productId: String) = viewModelScope.launch {
         _observeProductDetail.postValue(DataState.Loading())
         productRepo.fetchProductDetail(productId).collect {
@@ -71,5 +77,16 @@ class ProductDetailViewModel @Inject constructor(
         productRepo.askQuestion(productId, question).collect {
             _observeAskQuestion.postValue(it)
         }
+    }
+
+
+    fun fetchRecommendProducts() = viewModelScope.launch {
+        val products = productRepo.fetchRecommendProducts()
+        _recommendProducts.postValue(DataState.Data(products))
+    }
+
+    fun fetchSimilarProducts(productId: String) = viewModelScope.launch {
+        val products = productRepo.fetchSimilarProducts(productId)
+        _similarProducts.postValue(DataState.Data(products))
     }
 }

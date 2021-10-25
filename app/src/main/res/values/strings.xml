@@ -197,5 +197,7 @@
     <string name="label_ask_about_product">Ask about the product.</string>
     <string name="label_ask">Ask</string>
     <string name="label_payment_method">Payment Method</string>
+    <string name="label_customer_recommend">Customer Recommend</string>
+    <string name="label_compare_with_similar_items">Compare With Similar Items</string>
 
 </resources>

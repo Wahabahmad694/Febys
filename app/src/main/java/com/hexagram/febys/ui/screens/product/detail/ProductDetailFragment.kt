@@ -67,6 +67,9 @@ class ProductDetailFragment : SliderFragment() {
         initUi()
         uiListeners()
         observersSetup()
+
+        productDetailViewModel.fetchRecommendProducts()
+        productDetailViewModel.fetchSimilarProducts(args.productId)
     }
 
     private fun initUi() {
@@ -260,6 +263,40 @@ class ProductDetailFragment : SliderFragment() {
                 }
             }
         }
+
+        productDetailViewModel.recommendProducts.observe(viewLifecycleOwner) {
+            when (it) {
+                is DataState.Loading -> {
+                    showLoader()
+                }
+                is DataState.Error -> {
+                    hideLoader()
+                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
+                }
+                is DataState.Data -> {
+                    hideLoader()
+                    addAdditionalProduct(getString(R.string.label_customer_recommend), it.data, 0)
+                }
+            }
+        }
+
+        productDetailViewModel.similarProducts.observe(viewLifecycleOwner) {
+            when (it) {
+                is DataState.Loading -> {
+                    showLoader()
+                }
+                is DataState.Error -> {
+                    hideLoader()
+                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
+                }
+                is DataState.Data -> {
+                    hideLoader()
+                    addAdditionalProduct(
+                        getString(R.string.label_compare_with_similar_items), it.data
+                    )
+                }
+            }
+        }
     }
 
     private fun updateUi(product: Product) {
@@ -340,6 +377,7 @@ class ProductDetailFragment : SliderFragment() {
 
             val answersAdapter = AnswersAdapter()
             rvAnswers.adapter = answersAdapter
+            rvAnswers.isNestedScrollingEnabled = false
             rvAnswers.addItemDecoration(
                 DividerItemDecoration(
                     context, (rvAnswers.layoutManager as LinearLayoutManager).orientation
@@ -351,7 +389,7 @@ class ProductDetailFragment : SliderFragment() {
         addView(parent, layoutQuestionAnswersThread.root, position)
     }
 
-    private fun addAdditionalProduct(title: String, products: List<Product>) {
+    private fun addAdditionalProduct(title: String, products: List<Product>, position: Int = -1) {
         if (products.isEmpty()) return
 
         val parent = binding.containerAdditionalProducts
@@ -364,6 +402,7 @@ class ProductDetailFragment : SliderFragment() {
             additionalAdapter.submitList(products)
             rvAdditionalProducts.apply {
                 setHasFixedSize(true)
+                isNestedScrollingEnabled = false
                 addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
                 addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL))
                 layoutManager = GridLayoutManager(context, 2)
@@ -371,7 +410,7 @@ class ProductDetailFragment : SliderFragment() {
             }
         }
 
-        addView(parent, layoutAdditionalProductBinding.root)
+        addView(parent, layoutAdditionalProductBinding.root, position)
     }
 
     private fun updateVariant(variant: Variant) {
