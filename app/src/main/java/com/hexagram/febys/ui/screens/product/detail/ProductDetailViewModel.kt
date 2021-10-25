@@ -23,7 +23,7 @@ class ProductDetailViewModel @Inject constructor(
     var selectedSecondAttr = ""
 
     private val _observeProductDetail = MutableLiveData<DataState<Product>>()
-    val observeOldProductDetail: LiveData<DataState<Product>> = _observeProductDetail
+    val observeProductDetail: LiveData<DataState<Product>> = _observeProductDetail
 
     private val _observeAskQuestion = MutableLiveData<DataState<QuestionAnswers>>()
     val observeAskQuestion: LiveData<DataState<QuestionAnswers>> = _observeAskQuestion

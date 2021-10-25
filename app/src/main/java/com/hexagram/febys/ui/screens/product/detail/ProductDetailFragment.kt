@@ -232,7 +232,7 @@ class ProductDetailFragment : SliderFragment() {
     }
 
     private fun observersSetup() {
-        productDetailViewModel.observeOldProductDetail.observe(viewLifecycleOwner) {
+        productDetailViewModel.observeProductDetail.observe(viewLifecycleOwner) {
             when (it) {
                 is DataState.Loading -> {
                     showLoader()
