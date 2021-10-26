@@ -6,7 +6,6 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.hexagram.febys.models.api.request.PagingListRequest
 import com.hexagram.febys.models.view.VendorDetail
-import com.hexagram.febys.models.view.VendorListing
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.FakeApiService
 import com.hexagram.febys.network.FebysBackendService
@@ -29,7 +28,7 @@ class VendorRepoImpl @Inject constructor(
 ) : IVendorRepo {
     override fun fetchVendors(
         isCelebrity: Boolean, scope: CoroutineScope, dispatcher: CoroutineDispatcher
-    ): Flow<PagingData<VendorListing>> {
+    ): Flow<PagingData<Any>> {
         return Pager(
             PagingConfig(pageSize = 10)
         ) {
@@ -40,26 +39,24 @@ class VendorRepoImpl @Inject constructor(
             .cachedIn(scope)
     }
 
-    override suspend fun followVendor(vendorId: Int) {
+    override suspend fun followVendor(vendorId: String) {
         val authKey = getAuthKey()
-        val req = buildFollowUnfollowReq(vendorId)
-        val response = service.followVendor(authKey, req)
+        val response = service.followVendor(authKey, vendorId)
         response.onSuccess {
             // do nothing
         }
     }
 
-    override suspend fun unFollowVendor(vendorId: Int) {
+    override suspend fun unFollowVendor(vendorId: String) {
         val authKey = getAuthKey()
-        val req = buildFollowUnfollowReq(vendorId)
-        val response = service.unFollowVendor(authKey, req)
+        val response = service.unFollowVendor(authKey, vendorId)
         response.onSuccess {
             // do nothing
         }
     }
 
     override fun fetchVendorDetail(
-        vendorId: Int, dispatcher: CoroutineDispatcher
+        vendorId: String, dispatcher: CoroutineDispatcher
     ): Flow<DataState<VendorDetail>> = flow<DataState<VendorDetail>> {
         val response = FakeApiService.fetchVendorDetail(vendorId)
         response.onSuccess {
@@ -69,10 +66,6 @@ class VendorRepoImpl @Inject constructor(
             .onException { emit(DataState.ExceptionError()) }
             .onNetworkError { emit(DataState.NetworkError()) }
     }.flowOn(dispatcher)
-
-    private fun buildFollowUnfollowReq(vendorId: Int): Map<String, Int> {
-        return mapOf("user_id" to vendorId)
-    }
 
     private fun getAuthKey(): String = pref.getAccessToken()
 }

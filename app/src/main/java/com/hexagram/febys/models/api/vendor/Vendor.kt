@@ -9,7 +9,7 @@ import com.hexagram.febys.models.api.template.Template
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Vendor(
+data class Vendor @JvmOverloads constructor(
     val _id: String,
     val email: String,
     val name: String,
@@ -25,5 +25,6 @@ data class Vendor(
     @SerializedName("business_info")
     val businessInfo: BusinessInfo,
     @SerializedName("contact_details")
-    val contactDetails: ContactDetails
+    val contactDetails: ContactDetails,
+    var isFollow: Boolean = false
 ) : Parcelable
