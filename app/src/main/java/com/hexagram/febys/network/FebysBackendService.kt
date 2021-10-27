@@ -5,13 +5,13 @@ import com.hexagram.febys.models.api.product.FeaturedCategory
 import com.hexagram.febys.models.api.product.Trending
 import com.hexagram.febys.models.api.request.PagingListRequest
 import com.hexagram.febys.models.api.response.ProductDetailResponse
+import com.hexagram.febys.models.api.vendor.VendorPagingListing
 import com.hexagram.febys.models.api.wishlist.FavSkuIds
 import com.hexagram.febys.models.api.wishlist.WishlistSkuIds
 import com.hexagram.febys.network.adapter.ApiResponse
 import com.hexagram.febys.network.requests.RequestPushCart
 import com.hexagram.febys.network.response.Cart
 import com.hexagram.febys.network.response.ResponseOfPagination
-import com.hexagram.febys.network.response.ResponseVendorListing
 import retrofit2.http.*
 
 interface FebysBackendService {
@@ -87,26 +87,36 @@ interface FebysBackendService {
         @Body req: RequestPushCart
     ): ApiResponse<Cart>
 
-    @GET("v1/users/vendors-listing")
-    suspend fun fetchVendors(@QueryMap req: Map<String, Int>): ApiResponse<ResponseOfPagination>
+    @POST("v1/consumers/stores")
+    suspend fun fetchVendors(@QueryMap req: Map<String, String>): ApiResponse<Pagination>
 
-    @GET("v1/users/celebrities-listing")
-    suspend fun fetchCelebrities(@QueryMap req: Map<String, Int>): ApiResponse<ResponseOfPagination>
+    @POST("v1/consumers/stores/recommendations")
+    suspend fun fetchRecommendVendors(
+        @Header("Authorization") authToken: String, @QueryMap req: Map<String, String>
+    ): ApiResponse<Pagination>
 
-    @GET("v1/consumers/followed-vendors")
-    suspend fun fetchFollowingVendors(@Header("Authorization") authToken: String): ApiResponse<ResponseVendorListing>
+    @POST("v1/consumers/celebs")
+    suspend fun fetchCelebrities(@QueryMap req: Map<String, String>): ApiResponse<Pagination>
 
-    @GET("v1/consumers/followed-celebrities")
-    suspend fun fetchFollowingCelebrities(@Header("Authorization") authToken: String): ApiResponse<ResponseVendorListing>
+    @POST("v1/consumers/celebs/recommendations")
+    suspend fun fetchRecommendCelebrities(
+        @Header("Authorization") authToken: String, @QueryMap req: Map<String, String>
+    ): ApiResponse<Pagination>
 
-    @POST("v1/consumers/follow-user")
+    @GET("v1/consumers/stores/following")
+    suspend fun fetchFollowingVendors(@Header("Authorization") authToken: String): ApiResponse<VendorPagingListing>
+
+    @GET("v1/consumers/celebs/following")
+    suspend fun fetchFollowingCelebrities(@Header("Authorization") authToken: String): ApiResponse<VendorPagingListing>
+
+    @POST("v1/consumers/follow/{vendorId}")
     suspend fun followVendor(
-        @Header("Authorization") authKey: String, @Body req: Map<String, Int>
+        @Header("Authorization") authKey: String, @Path("vendorId") vendorId: String
     ): ApiResponse<Unit>
 
-    @POST("v1/consumers/unFollow-user")
+    @POST("v1/consumers/un-follow/{vendorId}")
     suspend fun unFollowVendor(
-        @Header("Authorization") authKey: String, @Body req: Map<String, Int>
+        @Header("Authorization") authKey: String, @Path("vendorId") vendorId: String
     ): ApiResponse<Unit>
 
     @POST("v1/consumers/products/recommended")
@@ -114,6 +124,6 @@ interface FebysBackendService {
 
     @POST("v1/consumers/products/{productId}/similar")
     suspend fun fetchSimilarProducts(
-        @Path("productId")productId: String, @Body request: PagingListRequest
+        @Path("productId") productId: String, @Body request: PagingListRequest
     ): ApiResponse<Pagination>
 }

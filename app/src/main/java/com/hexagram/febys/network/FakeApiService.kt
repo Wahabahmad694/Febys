@@ -78,7 +78,7 @@ object FakeApiService {
         return ApiResponse.ApiSuccessResponse(Response.success(Unit))
     }
 
-    suspend fun fetchVendorDetail(vendorId: Int): ApiResponse<VendorDetail> {
+    suspend fun fetchVendorDetail(vendorId: String): ApiResponse<VendorDetail> {
         delay(100)
         return ApiResponse.ApiSuccessResponse(Response.success(getVendorDetail()))
     }

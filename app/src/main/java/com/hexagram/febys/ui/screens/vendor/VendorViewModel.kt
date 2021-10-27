@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import com.hexagram.febys.models.view.VendorDetail
-import com.hexagram.febys.models.view.VendorListing
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.repos.IVendorRepo
 import com.hexagram.febys.repos.ProductListingRepoImpl
@@ -22,11 +21,11 @@ class VendorViewModel @Inject constructor(
     productListingRepo: ProductListingRepoImpl
 ) : ProductListingViewModel(productListingRepo) {
 
-    private var allCategoryPagingData: Flow<PagingData<VendorListing>>? = null
+    private var allCategoryPagingData: Flow<PagingData<Any>>? = null
     private val _observerVendorDetail = MutableLiveData<DataState<VendorDetail>>()
     val observerVendorDetail: LiveData<DataState<VendorDetail>> = _observerVendorDetail
 
-    fun fetchVendors(isCelebrity: Boolean): Flow<PagingData<VendorListing>> {
+    fun fetchVendors(isCelebrity: Boolean): Flow<PagingData<Any>> {
         if (allCategoryPagingData == null) {
             allCategoryPagingData = vendorRepo.fetchVendors(isCelebrity, viewModelScope)
         }
@@ -34,13 +33,13 @@ class VendorViewModel @Inject constructor(
         return allCategoryPagingData!!
     }
 
-    fun followVendor(vendorId: Int) =
+    fun followVendor(vendorId: String) =
         viewModelScope.launch { vendorRepo.followVendor(vendorId) }
 
-    fun unFollowVendor(vendorId: Int) =
+    fun unFollowVendor(vendorId: String) =
         viewModelScope.launch { vendorRepo.unFollowVendor(vendorId) }
 
-    fun fetchVendorDetail(vendorId: Int) = viewModelScope.launch {
+    fun fetchVendorDetail(vendorId: String) = viewModelScope.launch {
         _observerVendorDetail.postValue(DataState.Loading())
         vendorRepo.fetchVendorDetail(vendorId).collect {
             _observerVendorDetail.postValue(it)

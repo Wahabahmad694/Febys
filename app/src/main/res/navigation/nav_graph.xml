@@ -172,7 +172,7 @@
             app:argType="string" />
         <argument
             android:name="skuId"
-            app:argType="string"/>
+            app:argType="string" />
         <action
             android:id="@+id/action_productDetailFragment_to_QAThreadsFragment"
             app:destination="@id/QAThreadsFragment"
@@ -397,7 +397,7 @@
         tools:layout="@layout/fragment_celebrity_detail">
         <argument
             android:name="id"
-            app:argType="integer" />
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/productListingByVendorFragment"
@@ -406,7 +406,7 @@
         tools:layout="@layout/fragment_product_listing_by_vendor">
         <argument
             android:name="id"
-            app:argType="integer" />
+            app:argType="string" />
         <argument
             android:name="title"
             app:argType="string" />
@@ -428,7 +428,7 @@
         tools:layout="@layout/fragment_vendor_detail">
         <argument
             android:name="id"
-            app:argType="integer" />
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/menuFragment"

@@ -8,22 +8,29 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hexagram.febys.bindings.BindingAdapter
 import com.hexagram.febys.databinding.ItemVendorStoreBinding
 import com.hexagram.febys.databinding.ItemVendorStoreHeadingBinding
-import com.hexagram.febys.models.view.VendorListing
+import com.hexagram.febys.models.api.vendor.Vendor
+import com.hexagram.febys.models.view.ListingHeader
 
 class VendorListingAdapter(private val isCelebrity: Boolean) :
-    PagingDataAdapter<VendorListing, RecyclerView.ViewHolder>(diffCallback) {
+    PagingDataAdapter<Any, RecyclerView.ViewHolder>(diffCallback) {
 
     companion object {
-        private val diffCallback = object : DiffUtil.ItemCallback<VendorListing>() {
+        private val diffCallback = object : DiffUtil.ItemCallback<Any>() {
 
-            override fun areItemsTheSame(oldItem: VendorListing, newItem: VendorListing): Boolean {
-                return oldItem == newItem
+            override fun areItemsTheSame(oldItem: Any, newItem: Any): Boolean {
+                return if (oldItem is Vendor && newItem is Vendor) {
+                    oldItem._id == newItem._id
+                } else {
+                    false
+                }
             }
 
-            override fun areContentsTheSame(
-                oldItem: VendorListing, newItem: VendorListing
-            ): Boolean {
-                return oldItem == newItem
+            override fun areContentsTheSame(oldItem: Any, newItem: Any): Boolean {
+                return if (oldItem is Vendor && newItem is Vendor) {
+                    oldItem == newItem
+                } else {
+                    false
+                }
             }
         }
 
@@ -31,17 +38,17 @@ class VendorListingAdapter(private val isCelebrity: Boolean) :
         private const val VIEW_TYPE_VENDOR = 2
     }
 
-    var followVendor: ((vendor: Int) -> Unit)? = null
-    var unFollowVendor: ((vendor: Int) -> Unit)? = null
-    var gotoCelebrityDetail: ((vendor: VendorListing.Vendor) -> Unit)? = null
-    var gotoVendorDetail: ((vendor: VendorListing.Vendor) -> Unit)? = null
+    var followVendor: ((vendor: String) -> Unit)? = null
+    var unFollowVendor: ((vendor: String) -> Unit)? = null
+    var gotoCelebrityDetail: ((vendor: Vendor) -> Unit)? = null
+    var gotoVendorDetail: ((vendor: Vendor) -> Unit)? = null
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val item = getItem(position)) {
-            is VendorListing.VendorListingHeader -> {
+            is ListingHeader -> {
                 (holder as HeaderViewHolder).bind(item)
             }
-            is VendorListing.Vendor -> {
+            is Vendor -> {
                 (holder as VendorViewHolder).bind(item, position)
             }
         }
@@ -70,7 +77,7 @@ class VendorListingAdapter(private val isCelebrity: Boolean) :
 
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {
-            is VendorListing.VendorListingHeader -> VIEW_TYPE_HEADER
+            is ListingHeader -> VIEW_TYPE_HEADER
             else -> VIEW_TYPE_VENDOR
         }
     }
@@ -79,7 +86,7 @@ class VendorListingAdapter(private val isCelebrity: Boolean) :
         private val binding: ItemVendorStoreBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: VendorListing.Vendor, position: Int) {
+        fun bind(item: Vendor, position: Int) {
             binding.apply {
                 isCelebrity = this@VendorListingAdapter.isCelebrity
 
@@ -88,32 +95,30 @@ class VendorListingAdapter(private val isCelebrity: Boolean) :
                 }
 
                 vendorName.text = item.name
-                vendorType.text = item.role
-                preferredVendorOrShopName.text = item.preferredVendorOrShopName
+                vendorType.text = item.role.name
+                preferredVendorOrShopName.text = item.shopName
                 storeRatingBar.max = 100
-                storeRatingBar.progress = item.vendorRating
+                storeRatingBar.progress = 50
 
-                val imageUrl =
-                    if (this@VendorListingAdapter.isCelebrity) item.profileImage else item.businessLogo
+                val imageUrl = item.businessInfo.logo
                 BindingAdapter.imageUrl(vendorImg, imageUrl)
 
-                showFollowBtn = item is VendorListing.FollowingVendor
-                isFollowing = (item as? VendorListing.FollowingVendor)?.isFollow ?: false
+                isFollowing = item.isFollow
 
                 btnToggleFollow.setOnClickListener {
                     if (isFollowing == null) return@setOnClickListener
 
                     isFollowing = !isFollowing!!
-                    (item as? VendorListing.FollowingVendor)?.isFollow = isFollowing!!
+                    item.isFollow = isFollowing!!
                     notifyItemChanged(position)
 
                     if (isFollowing!!)
-                        followVendor?.invoke(item.id) else unFollowVendor?.invoke(item.id)
+                        followVendor?.invoke(item._id) else unFollowVendor?.invoke(item._id)
                 }
             }
         }
 
-        private fun gotoDetailPage(vendor: VendorListing.Vendor) {
+        private fun gotoDetailPage(vendor: Vendor) {
             if (isCelebrity) {
                 gotoCelebrityDetail?.invoke(vendor)
             } else {
@@ -126,7 +131,7 @@ class VendorListingAdapter(private val isCelebrity: Boolean) :
         private val binding: ItemVendorStoreHeadingBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: VendorListing.VendorListingHeader) {
+        fun bind(item: ListingHeader) {
             binding.apply {
                 tvHeading.text = root.context.getString(item.title)
             }

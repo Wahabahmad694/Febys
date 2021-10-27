@@ -2,7 +2,6 @@ package com.hexagram.febys.repos
 
 import androidx.paging.PagingData
 import com.hexagram.febys.models.view.VendorDetail
-import com.hexagram.febys.models.view.VendorListing
 import com.hexagram.febys.network.DataState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -14,13 +13,13 @@ interface IVendorRepo {
         isCelebrity: Boolean,
         scope: CoroutineScope,
         dispatcher: CoroutineDispatcher = Dispatchers.IO
-    ): Flow<PagingData<VendorListing>>
+    ): Flow<PagingData<Any>>
 
-    suspend fun followVendor(vendorId: Int)
+    suspend fun followVendor(vendorId: String)
 
-    suspend fun unFollowVendor(vendorId: Int)
+    suspend fun unFollowVendor(vendorId: String)
 
     fun fetchVendorDetail(
-        vendorId: Int, dispatcher: CoroutineDispatcher = Dispatchers.IO
+        vendorId: String, dispatcher: CoroutineDispatcher = Dispatchers.IO
     ): Flow<DataState<VendorDetail>>
 }

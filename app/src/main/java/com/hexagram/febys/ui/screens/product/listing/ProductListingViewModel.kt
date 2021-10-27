@@ -87,7 +87,7 @@ open class ProductListingViewModel @Inject constructor(
     }
 
     fun vendorProductListing(
-        vendorId: Int, onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
+        vendorId: String, onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
     ): Flow<PagingData<Product>> {
         if (vendorProductsListing == null) {
             vendorProductsListing =
