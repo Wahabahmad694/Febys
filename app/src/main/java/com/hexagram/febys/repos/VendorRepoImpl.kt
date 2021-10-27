@@ -5,9 +5,8 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.hexagram.febys.models.api.request.PagingListRequest
-import com.hexagram.febys.models.view.VendorDetail
+import com.hexagram.febys.models.api.vendor.Vendor
 import com.hexagram.febys.network.DataState
-import com.hexagram.febys.network.FakeApiService
 import com.hexagram.febys.network.FebysBackendService
 import com.hexagram.febys.network.adapter.onError
 import com.hexagram.febys.network.adapter.onException
@@ -23,7 +22,7 @@ import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class VendorRepoImpl @Inject constructor(
-    private val service: FebysBackendService,
+    private val backendService: FebysBackendService,
     private val pref: IPrefManger
 ) : IVendorRepo {
     override fun fetchVendors(
@@ -33,7 +32,7 @@ class VendorRepoImpl @Inject constructor(
             PagingConfig(pageSize = 10)
         ) {
             val authKey = getAuthKey()
-            VendorListingPagingSource(authKey, service, isCelebrity, PagingListRequest())
+            VendorListingPagingSource(authKey, backendService, isCelebrity, PagingListRequest())
         }.flow
             .flowOn(dispatcher)
             .cachedIn(scope)
@@ -41,7 +40,7 @@ class VendorRepoImpl @Inject constructor(
 
     override suspend fun followVendor(vendorId: String) {
         val authKey = getAuthKey()
-        val response = service.followVendor(authKey, vendorId)
+        val response = backendService.followVendor(authKey, vendorId)
         response.onSuccess {
             // do nothing
         }
@@ -49,7 +48,7 @@ class VendorRepoImpl @Inject constructor(
 
     override suspend fun unFollowVendor(vendorId: String) {
         val authKey = getAuthKey()
-        val response = service.unFollowVendor(authKey, vendorId)
+        val response = backendService.unFollowVendor(authKey, vendorId)
         response.onSuccess {
             // do nothing
         }
@@ -57,8 +56,8 @@ class VendorRepoImpl @Inject constructor(
 
     override fun fetchVendorDetail(
         vendorId: String, dispatcher: CoroutineDispatcher
-    ): Flow<DataState<VendorDetail>> = flow<DataState<VendorDetail>> {
-        val response = FakeApiService.fetchVendorDetail(vendorId)
+    ): Flow<DataState<Vendor>> = flow<DataState<Vendor>> {
+        val response = backendService.fetchVendorDetail(vendorId)
         response.onSuccess {
             emit(DataState.Data(data!!))
         }

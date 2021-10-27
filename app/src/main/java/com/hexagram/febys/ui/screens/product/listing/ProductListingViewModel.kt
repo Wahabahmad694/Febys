@@ -91,8 +91,8 @@ open class ProductListingViewModel @Inject constructor(
     ): Flow<PagingData<Product>> {
         if (vendorProductsListing == null) {
             vendorProductsListing =
-                productListingRepo.fetchUnder100DollarsItemsListing(
-                    viewModelScope, onProductListingResponse = onProductListingResponse
+                productListingRepo.vendorProductListing(
+                    vendorId, viewModelScope, onProductListingResponse = onProductListingResponse
                 )
         }
 
