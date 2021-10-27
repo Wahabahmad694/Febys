@@ -96,7 +96,7 @@ class VendorDetailFragment : BaseFragment() {
             address.text = vendor.contactDetails.address
             addSocialLinks(vendor.socials)
 
-            binding.isFollowing = vendor.isFollow
+            binding.isFollowing = args.isFollow
         }
     }
 

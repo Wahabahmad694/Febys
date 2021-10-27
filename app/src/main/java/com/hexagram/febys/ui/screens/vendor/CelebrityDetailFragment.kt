@@ -160,7 +160,7 @@ class CelebrityDetailFragment : BaseFragment() {
             addSocialLinks(vendor.socials)
 //            endorsementAdapter.submitList(vendorDetail.endorsements)
 
-            binding.isFollowing = vendor.isFollow
+            binding.isFollowing = args.isFollow
         }
     }
 

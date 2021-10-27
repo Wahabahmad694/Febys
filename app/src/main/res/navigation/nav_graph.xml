@@ -398,6 +398,9 @@
         <argument
             android:name="id"
             app:argType="string" />
+        <argument
+            android:name="isFollow"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/productListingByVendorFragment"
@@ -413,6 +416,9 @@
         <argument
             android:name="type"
             app:argType="string" />
+        <argument
+            android:name="isFollow"
+            app:argType="boolean" />
         <action
             android:id="@+id/action_productListingByVendorFragment_to_vendorDetailFragment"
             app:destination="@id/vendorDetailFragment"
@@ -429,6 +435,9 @@
         <argument
             android:name="id"
             app:argType="string" />
+        <argument
+            android:name="isFollow"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/menuFragment"

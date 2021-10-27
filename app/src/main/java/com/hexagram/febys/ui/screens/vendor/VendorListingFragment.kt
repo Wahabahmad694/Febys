@@ -70,10 +70,10 @@ class VendorListingFragment : BaseFragment() {
             { vendorId -> vendorViewModel.unFollowVendor(vendorId) }
 
         vendorListingAdapter.gotoCelebrityDetail =
-            { vendor -> gotoCelebrityDetail(vendor._id) }
+            { vendor -> gotoCelebrityDetail(vendor._id, vendor.isFollow) }
 
         vendorListingAdapter.gotoVendorDetail =
-            { vendor -> gotoVendorDetail(vendor) }
+            { vendor -> gotoVendorDetail(vendor, vendor.isFollow) }
     }
 
     private fun setObserver() {
@@ -99,16 +99,16 @@ class VendorListingFragment : BaseFragment() {
         }
     }
 
-    private fun gotoCelebrityDetail(vendorId: String) {
+    private fun gotoCelebrityDetail(vendorId: String, isFollow: Boolean) {
         val direction = SearchFragmentDirections
-            .actionSearchFragmentToCelebrityDetailFragment(vendorId)
+            .actionSearchFragmentToCelebrityDetailFragment(vendorId, isFollow)
         navigateTo(direction)
     }
 
-    private fun gotoVendorDetail(vendor: Vendor) {
+    private fun gotoVendorDetail(vendor: Vendor, isFollow: Boolean) {
         val direction = SearchFragmentDirections
             .actionSearchFragmentToProductListingByVendorFragment(
-                vendor._id, vendor.name, vendor.role.name
+                vendor._id, vendor.name, vendor.role.name, isFollow
             )
         navigateTo(direction)
     }
