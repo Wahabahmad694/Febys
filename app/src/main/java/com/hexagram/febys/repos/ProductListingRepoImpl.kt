@@ -66,6 +66,23 @@ class ProductListingRepoImpl @Inject constructor(
             .cachedIn(scope)
     }
 
+    override fun vendorProductListing(
+        vendorId: String,
+        scope: CoroutineScope,
+        dispatcher: CoroutineDispatcher,
+        onProductListingResponse: ((ProductPagingListing) -> Unit)?
+    ): Flow<PagingData<Product>> {
+        return Pager(
+            PagingConfig(pageSize = 10)
+        ) {
+            VendorProductListingPagingSource(
+                vendorId, backendService, PagingListRequest(), onProductListingResponse
+            )
+        }.flow
+            .flowOn(dispatcher)
+            .cachedIn(scope)
+    }
+
     override fun fetchCategoryProductsListing(
         categoryId: Int,
         scope: CoroutineScope,

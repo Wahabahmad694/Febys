@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
-import com.hexagram.febys.models.view.VendorDetail
+import com.hexagram.febys.models.api.vendor.Vendor
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.repos.IVendorRepo
 import com.hexagram.febys.repos.ProductListingRepoImpl
@@ -22,8 +22,8 @@ class VendorViewModel @Inject constructor(
 ) : ProductListingViewModel(productListingRepo) {
 
     private var allCategoryPagingData: Flow<PagingData<Any>>? = null
-    private val _observerVendorDetail = MutableLiveData<DataState<VendorDetail>>()
-    val observerVendorDetail: LiveData<DataState<VendorDetail>> = _observerVendorDetail
+    private val _observerVendorDetail = MutableLiveData<DataState<Vendor>>()
+    val observerVendorDetail: LiveData<DataState<Vendor>> = _observerVendorDetail
 
     fun fetchVendors(isCelebrity: Boolean): Flow<PagingData<Any>> {
         if (allCategoryPagingData == null) {

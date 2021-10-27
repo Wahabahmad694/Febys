@@ -134,7 +134,7 @@ class ProductListingByVendorFragment : BaseFragment() {
 
     private fun gotoVendorDetail(vendorId: String) {
         val direction = ProductListingByVendorFragmentDirections
-            .actionProductListingByVendorFragmentToVendorDetailFragment(vendorId)
+            .actionProductListingByVendorFragmentToVendorDetailFragment(vendorId, args.isFollow)
         navigateTo(direction)
     }
 

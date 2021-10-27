@@ -5,6 +5,7 @@ import com.hexagram.febys.models.api.product.FeaturedCategory
 import com.hexagram.febys.models.api.product.Trending
 import com.hexagram.febys.models.api.request.PagingListRequest
 import com.hexagram.febys.models.api.response.ProductDetailResponse
+import com.hexagram.febys.models.api.vendor.Vendor
 import com.hexagram.febys.models.api.vendor.VendorPagingListing
 import com.hexagram.febys.models.api.wishlist.FavSkuIds
 import com.hexagram.febys.models.api.wishlist.WishlistSkuIds
@@ -46,6 +47,13 @@ interface FebysBackendService {
     @POST("v1/consumers/products/under100")
     suspend fun fetchUnder100DollarsItems(
         @QueryMap queryMap: Map<String, String>, @Body request: PagingListRequest
+    ): ApiResponse<Pagination>
+
+    @POST("v1/consumers/products/vendor/{vendorId}")
+    suspend fun fetchVendorProducts(
+        @Path("vendorId") vendorId: String,
+        @QueryMap queryMap: Map<String, String>,
+        @Body request: PagingListRequest
     ): ApiResponse<Pagination>
 
     @GET("v1/products")
@@ -108,6 +116,9 @@ interface FebysBackendService {
 
     @GET("v1/consumers/celebs/following")
     suspend fun fetchFollowingCelebrities(@Header("Authorization") authToken: String): ApiResponse<VendorPagingListing>
+
+    @GET("v1/consumers/vendor-detail/{vendorId}")
+    suspend fun fetchVendorDetail(@Path("vendorId") vendorId: String): ApiResponse<Vendor>
 
     @POST("v1/consumers/follow/{vendorId}")
     suspend fun followVendor(
