@@ -8,11 +8,11 @@
 
         <variable
             name="product"
-            type="com.hexagram.febys.network.response.OldProduct" />
+            type="com.hexagram.febys.models.api.product.Product" />
 
         <variable
             name="variant"
-            type="com.hexagram.febys.network.response.ProductVariant" />
+            type="com.hexagram.febys.models.api.product.Variant" />
 
         <variable
             name="firstAttrName"
@@ -41,7 +41,7 @@
                 android:background="@color/grey"
                 android:gravity="center"
                 android:paddingHorizontal="@dimen/_32dp"
-                android:text="TCL"
+                android:text="@{product.vendor.shopName}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -143,7 +143,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/_16dp"
                         android:layout_marginTop="@dimen/_16dp"
-                        android:text="TCL"
+                        android:text="@{product.vendor.shopName}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/slider_product_images" />
@@ -170,7 +170,7 @@
                         style="@style/TextTheme.Arial.TS10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{`$` + variant.price}"
+                        android:text="@{`$` + variant.originalPrice.value}"
                         app:layout_constraintBaseline_toBaselineOf="@id/tv_product_price"
                         app:layout_constraintEnd_toStartOf="@id/tv_product_off_price_separator"
                         app:layout_constraintHorizontal_chainStyle="packed"
@@ -197,7 +197,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_2dp"
-                        android:text="@{variant.hasPromotion ? `$` + variant.promotionPrice : `$` + variant.price}"
+                        android:text="@{`$` + variant.price.value}"
                         app:layout_constraintEnd_toEndOf="@id/tv_product_name"
                         app:layout_constraintStart_toEndOf="@id/tv_product_off_price_separator"
                         app:layout_constraintTop_toBottomOf="@id/tv_product_name"
@@ -680,9 +680,9 @@
                                     android:id="@+id/iv_stores_image"
                                     android:layout_width="56dp"
                                     android:layout_height="56dp"
-                                    app:actualImageResource="@drawable/ic_store"
                                     app:actualImageScaleType="centerCrop"
-                                    app:roundAsCircle="true" />
+                                    app:roundAsCircle="true"
+                                    binding:image_url="@{product.vendor.businessInfo.logo}" />
 
                                 <LinearLayout
                                     android:layout_width="wrap_content"
@@ -695,14 +695,14 @@
                                         style="@style/TextTheme.Arial.TS14"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Deal-Train" />
+                                        android:text="@{product.vendor.contactDetails.name}" />
 
                                     <TextView
-                                        android:id="@+id/label_official"
+                                        android:id="@+id/tv_store_type"
                                         style="@style/TextTheme.Arial.TS12"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="@string/label_official"
+                                        android:text="@{product.vendor.businessInfo.vendorType}"
                                         android:textColor="@color/red" />
                                 </LinearLayout>
 
@@ -746,6 +746,15 @@
                             android:background="@color/grey_e1e5e8" />
 
                     </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/container_additional_products"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:orientation="vertical"
+                        app:layout_constraintTop_toBottomOf="@id/container_store_information" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.hexagram.febys.utils.ScrollView>
 

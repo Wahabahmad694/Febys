@@ -52,10 +52,8 @@ class HomeProductsAdapter :
             }
 
             binding.product = item
-            binding.isFav = false
 
             val skuId = item.variants[0].skuId
-
             binding.isFav = skuId in fav
 
             binding.ivFav.setOnClickListener {

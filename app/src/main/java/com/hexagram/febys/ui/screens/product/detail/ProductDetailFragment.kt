@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -20,14 +21,17 @@ import com.hexagram.febys.R
 import com.hexagram.febys.base.SliderFragment
 import com.hexagram.febys.databinding.FragmentProductDetailBinding
 import com.hexagram.febys.databinding.ItemQuestionAnswersThreadBinding
+import com.hexagram.febys.databinding.LayoutAdditionalProductBinding
 import com.hexagram.febys.databinding.LayoutProductDescriptionBinding
+import com.hexagram.febys.models.api.product.Description
+import com.hexagram.febys.models.api.product.Product
+import com.hexagram.febys.models.api.product.QuestionAnswers
+import com.hexagram.febys.models.api.product.Variant
 import com.hexagram.febys.models.view.QuestionAnswersThread
 import com.hexagram.febys.network.DataState
-import com.hexagram.febys.network.response.OldProduct
-import com.hexagram.febys.network.response.ProductDescription
-import com.hexagram.febys.network.response.ProductVariant
 import com.hexagram.febys.ui.screens.cart.CartViewModel
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
+import com.hexagram.febys.ui.screens.product.additional.AdditionalProductAdapter
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -63,6 +67,9 @@ class ProductDetailFragment : SliderFragment() {
         initUi()
         uiListeners()
         observersSetup()
+
+        productDetailViewModel.fetchRecommendProducts()
+        productDetailViewModel.fetchSimilarProducts(args.productId)
     }
 
     private fun initUi() {
@@ -171,11 +178,11 @@ class ProductDetailFragment : SliderFragment() {
         }
 
         binding.btnAddToCart.setOnClickListener {
-            val product = binding.product
+            /*newChanges val product = binding.product
             val variantId = binding.variant?.id
             if (product != null && variantId != null) {
                 cartViewModel.addToCart(product, variantId)
-            }
+            }*/
         }
 
         binding.ivBack.setOnClickListener {
@@ -183,8 +190,8 @@ class ProductDetailFragment : SliderFragment() {
         }
 
         binding.seeMoreQAndA.setOnClickListener {
-            val threads = binding.product?.questionAnswersThread
-            if (!threads.isNullOrEmpty()) gotoQAThreads(threads.toTypedArray())
+            /*newChanges val threads = binding.product?.questionAnswersThread
+            if (!threads.isNullOrEmpty()) gotoQAThreads(threads.toTypedArray())*/
         }
 
         binding.btnAskAboutProduct.setOnClickListener {
@@ -192,29 +199,29 @@ class ProductDetailFragment : SliderFragment() {
         }
     }
 
-    private fun updateVariantByFirstAttr(firstAttr: String, oldProduct: OldProduct) {
+    private fun updateVariantByFirstAttr(firstAttr: String, product: Product) {
         productDetailViewModel.selectedFirstAttr = firstAttr
 
         val secondAttrList =
-            productDetailViewModel.getSecondAttrList(firstAttr, oldProduct)
+            productDetailViewModel.getSecondAttrList(firstAttr, product)
 
         val variant = if (secondAttrList.isEmpty()) {
-            productDetailViewModel.getVariantByFirstAttr(oldProduct)
+            productDetailViewModel.getVariantByFirstAttr(product)
         } else {
             productVariantSecondAttrAdapter
                 .submitList(secondAttrList.first(), secondAttrList)
 
             productDetailViewModel.selectedSecondAttr = secondAttrList.first()
-            productDetailViewModel.getVariantBySecondAttr(oldProduct)
+            productDetailViewModel.getVariantBySecondAttr(product)
         }
 
         variant?.let { updateVariant(it) }
     }
 
     private fun toggleFavAndUpdateIcon() {
-        val variantId = binding.variant?.id ?: return
-        productDetailViewModel.toggleFav(/*newChange variantId*/ "")
-        updateFavIcon(variantId)
+        val skuId = binding.variant?.skuId ?: return
+        productDetailViewModel.toggleFav(skuId)
+        updateFavIcon(skuId)
     }
 
     private fun onBottomSheetStateChange(state: Int) {
@@ -256,19 +263,53 @@ class ProductDetailFragment : SliderFragment() {
                 }
             }
         }
+
+        productDetailViewModel.recommendProducts.observe(viewLifecycleOwner) {
+            when (it) {
+                is DataState.Loading -> {
+                    showLoader()
+                }
+                is DataState.Error -> {
+                    hideLoader()
+                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
+                }
+                is DataState.Data -> {
+                    hideLoader()
+                    addAdditionalProduct(getString(R.string.label_customer_recommend), it.data, 0)
+                }
+            }
+        }
+
+        productDetailViewModel.similarProducts.observe(viewLifecycleOwner) {
+            when (it) {
+                is DataState.Loading -> {
+                    showLoader()
+                }
+                is DataState.Error -> {
+                    hideLoader()
+                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
+                }
+                is DataState.Data -> {
+                    hideLoader()
+                    addAdditionalProduct(
+                        getString(R.string.label_compare_with_similar_items), it.data
+                    )
+                }
+            }
+        }
     }
 
-    private fun updateUi(oldProduct: OldProduct) {
-        binding.product = oldProduct
+    private fun updateUi(product: Product) {
+        binding.product = product
 
         val variant = productDetailViewModel.selectedVariant
-            ?: oldProduct.productVariants.firstOrNull { it.id == args.variantId }
-            ?: oldProduct.productVariants[0]
+            ?: product.variants.firstOrNull { it.skuId == args.skuId }
+            ?: product.variants[0]
 
         variant.getFirstVariantAttr()?.value?.let { selectedFirstAttr ->
             productDetailViewModel.selectedFirstAttr = selectedFirstAttr
 
-            val firstAttrList = productDetailViewModel.getFirstAttrList(oldProduct)
+            val firstAttrList = productDetailViewModel.getFirstAttrList(product)
 
             productVariantFirstAttrAdapter
                 .submitList(selectedFirstAttr, firstAttrList)
@@ -277,7 +318,7 @@ class ProductDetailFragment : SliderFragment() {
                 productDetailViewModel.selectedSecondAttr = selectedSecondAttr
 
                 val secondAttrList =
-                    productDetailViewModel.getSecondAttrList(selectedFirstAttr, oldProduct)
+                    productDetailViewModel.getSecondAttrList(selectedFirstAttr, product)
 
                 productVariantSecondAttrAdapter.submitList(
                     selectedSecondAttr, secondAttrList
@@ -287,33 +328,40 @@ class ProductDetailFragment : SliderFragment() {
         }
         updateVariant(variant)
 
-        val shortDescription = ProductDescription(
-            0, oldProduct.descriptionHTML, getString(R.string.label_description)
-        )
-        updateProductDescription(shortDescription)
-        updateProductDescription(oldProduct.descriptions)
+        updateProductDescription(product.descriptions)
 
-        updateQuestionAnswersThread(oldProduct.questionAnswersThread)
+        updateQuestionAnswersThread(product.questionAnswers)
     }
 
-    private fun updateQuestionAnswersThread(questionAnswersThread: MutableList<QuestionAnswersThread>) {
-        if (questionAnswersThread.isEmpty()) return
+    private fun updateQuestionAnswersThread(listOfQuestionAnswers: MutableList<QuestionAnswers>) {
+        if (listOfQuestionAnswers.isEmpty()) return
 
-        addQuestionAnswersToLayout(questionAnswersThread[0])
-        if (questionAnswersThread.size >= 2) {
-            addQuestionAnswersToLayout(questionAnswersThread[1])
+        addQuestionAnswersToLayout(listOfQuestionAnswers[0])
+        if (listOfQuestionAnswers.size >= 2) {
+            addQuestionAnswersToLayout(listOfQuestionAnswers[1])
         }
     }
 
-    private fun addQuestionAnswersToLayout(thread: QuestionAnswersThread, position: Int = -1) {
+    private fun addQuestionAnswersToLayout(questionAnswers: QuestionAnswers, position: Int = -1) {
+        if (questionAnswers.chat.isEmpty()) return
+
         val parent = binding.containerQAndAThread
         val layoutQuestionAnswersThread = ItemQuestionAnswersThreadBinding
             .inflate(layoutInflater, parent, false)
+
         layoutQuestionAnswersThread.apply {
-            root.tag = thread.id
-            this.question.text = thread.question.message
-            voteUp.text = thread.upVotes.size.toString()
-            voteDown.text = thread.downVotes.size.toString()
+            val chat = questionAnswers.chat
+
+            root.tag = questionAnswers._id
+
+            val question = chat[0]
+            this.question.text = chat[0].message
+            edit.isVisible = isUserLoggedIn && user?.id.toString() == question.sender._id
+            delete.isVisible = isUserLoggedIn && user?.id.toString() == question.sender._id
+            reply.isVisible = isUserLoggedIn
+
+            voteUp.text = questionAnswers.upVotes.size.toString()
+            voteDown.text = questionAnswers.downVotes.size.toString()
 
             edit.setOnClickListener {
                 // todo move to edit question screen
@@ -329,28 +377,49 @@ class ProductDetailFragment : SliderFragment() {
 
             val answersAdapter = AnswersAdapter()
             rvAnswers.adapter = answersAdapter
+            rvAnswers.isNestedScrollingEnabled = false
             rvAnswers.addItemDecoration(
                 DividerItemDecoration(
-                    context,
-                    (rvAnswers.layoutManager as LinearLayoutManager).orientation
+                    context, (rvAnswers.layoutManager as LinearLayoutManager).orientation
                 )
             )
-            answersAdapter.submitList(thread.answers)
-
-            edit.isVisible = isUserLoggedIn && user?.id.toString() == thread.question.senderId
-            delete.isVisible = isUserLoggedIn && user?.id.toString() == thread.question.senderId
-            reply.isVisible = isUserLoggedIn
+            val answers = if (chat.size > 1) chat.subList(1, chat.size) else mutableListOf()
+            answersAdapter.submitList(answers)
         }
         addView(parent, layoutQuestionAnswersThread.root, position)
     }
 
-    private fun updateVariant(variant: ProductVariant) {
+    private fun addAdditionalProduct(title: String, products: List<Product>, position: Int = -1) {
+        if (products.isEmpty()) return
+
+        val parent = binding.containerAdditionalProducts
+        val layoutAdditionalProductBinding = LayoutAdditionalProductBinding
+            .inflate(layoutInflater, parent, false)
+
+        layoutAdditionalProductBinding.apply {
+            additionalProductTitle.text = title
+            val additionalAdapter = AdditionalProductAdapter()
+            additionalAdapter.submitList(products)
+            rvAdditionalProducts.apply {
+                setHasFixedSize(true)
+                isNestedScrollingEnabled = false
+                addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+                addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL))
+                layoutManager = GridLayoutManager(context, 2)
+                adapter = additionalAdapter
+            }
+        }
+
+        addView(parent, layoutAdditionalProductBinding.root, position)
+    }
+
+    private fun updateVariant(variant: Variant) {
         binding.variant = variant
         productDetailViewModel.selectedVariant = variant
 
         setupProductImagesSlider(variant.images)
 
-        updateFavIcon(variant.id)
+        updateFavIcon(variant.skuId)
 
         val firstVariantAttr = variant.getFirstVariantAttr()
         firstVariantAttr?.let {
@@ -374,7 +443,7 @@ class ProductDetailFragment : SliderFragment() {
         binding.containerProductVariantSecondAttr.isVisible = false
     }
 
-    private fun updateProductDescription(description: ProductDescription) {
+    private fun updateProductDescription(description: Description) {
         val productDescriptionsBinding = LayoutProductDescriptionBinding.inflate(
             layoutInflater, binding.containerProductDescriptions, false
         )
@@ -392,7 +461,7 @@ class ProductDetailFragment : SliderFragment() {
         addView(binding.containerProductDescriptions, productDescriptionsBinding.root)
     }
 
-    private fun updateProductDescription(descriptions: List<ProductDescription>) {
+    private fun updateProductDescription(descriptions: List<Description>) {
         descriptions.forEach {
             updateProductDescription(it)
         }
@@ -403,8 +472,8 @@ class ProductDetailFragment : SliderFragment() {
         binding.dotsIndicator.setViewPager2(binding.sliderProductImages)
     }
 
-    private fun updateFavIcon(variantId: Int) {
-        val isFav = productDetailViewModel.isFavProduct(/*newChange variantId*/ "")
+    private fun updateFavIcon(skuId: String) {
+        val isFav = productDetailViewModel.isFavProduct(skuId)
         binding.ivProductFav.setImageResource(if (isFav) R.drawable.ic_fav else R.drawable.ic_un_fav)
     }
 
@@ -481,7 +550,7 @@ class ProductDetailFragment : SliderFragment() {
 
     override fun onStart() {
         super.onStart()
-        updateFavIcon(binding.variant?.id ?: return)
+        updateFavIcon(binding.variant?.skuId ?: return)
     }
 
     private fun addView(parent: ViewGroup, view: View, position: Int = -1) {

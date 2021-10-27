@@ -169,11 +169,10 @@
         tools:layout="@layout/fragment_product_detail">
         <argument
             android:name="productId"
-            app:argType="integer" />
+            app:argType="string" />
         <argument
-            android:name="variantId"
-            android:defaultValue="-1"
-            app:argType="integer" />
+            android:name="skuId"
+            app:argType="string"/>
         <action
             android:id="@+id/action_productDetailFragment_to_QAThreadsFragment"
             app:destination="@id/QAThreadsFragment"

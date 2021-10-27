@@ -7,11 +7,11 @@
 
         <variable
             name="product"
-            type="com.hexagram.febys.network.response.OldProduct" />
+            type="com.hexagram.febys.models.api.product.Product" />
 
         <variable
             name="variant"
-            type="com.hexagram.febys.network.response.ProductVariant" />
+            type="com.hexagram.febys.models.api.product.Variant" />
 
     </data>
 
@@ -73,7 +73,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
-                    android:text="@{variant.available ? @string/label_in_stock : @string/label_out_stock}"
+                    android:text="@{variant.availability ? @string/label_in_stock : @string/label_out_stock}"
                     app:chipBackgroundColor="@color/grey"
                     app:chipStrokeColor="@color/grey" />
 
@@ -100,7 +100,7 @@
                     style="@style/TextTheme.HelveticaNeue.TS14.Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{product.fulfillment}" />
+                    android:text="@{variant.fulfillmentByFebys ? @string/label_yes : @string/label_no}" />
 
             </LinearLayout>
 
@@ -130,7 +130,7 @@
                         style="@style/TextTheme.HelveticaNeue.TS14.Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{product.warranty ? @string/label_yes : @string/label_no}" />
+                        android:text="@{variant.warranty.applicable ? @string/label_yes : @string/label_no}" />
 
                 </LinearLayout>
 
@@ -138,7 +138,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_8dp"
-                    binding:is_visible="@{product.warranty}">
+                    binding:is_visible="@{variant.warranty.applicable}">
 
                     <TextView
                         style="@style/TextTheme.Arial.TS14"
@@ -151,7 +151,7 @@
                         style="@style/TextTheme.Arial.TS14"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{product.warrantyDuration}" />
+                        android:text="@{variant.warranty.durationDays + `days`}" />
 
                 </LinearLayout>
 
@@ -178,7 +178,7 @@
                     style="@style/TextTheme.HelveticaNeue.TS14.Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{product.productReturnRefundable ? @string/label_yes : @string/label_no}" />
+                    android:text="@{variant.refund.refundable ? @string/label_yes : @string/label_no}" />
 
             </LinearLayout>
 
@@ -191,7 +191,7 @@
                 android:text="@string/label_return_and_refund_policy"
                 app:chipBackgroundColor="@color/grey"
                 app:chipStrokeColor="@color/grey"
-                binding:is_visible="@{product.productReturnRefundable}" />
+                binding:is_visible="@{variant.refund.refundable}" />
 
         </LinearLayout>
 

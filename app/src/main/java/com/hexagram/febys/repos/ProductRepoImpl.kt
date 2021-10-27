@@ -1,12 +1,14 @@
 package com.hexagram.febys.repos
 
+import com.hexagram.febys.models.api.product.Product
+import com.hexagram.febys.models.api.product.ProductPagingListing
+import com.hexagram.febys.models.api.product.QuestionAnswers
+import com.hexagram.febys.models.api.request.PagingListRequest
 import com.hexagram.febys.models.api.wishlist.FavSkuIds
-import com.hexagram.febys.models.view.QuestionAnswersThread
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.FakeApiService
 import com.hexagram.febys.network.FebysBackendService
 import com.hexagram.febys.network.adapter.*
-import com.hexagram.febys.network.response.OldProduct
 import com.hexagram.febys.prefs.IPrefManger
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
@@ -18,11 +20,11 @@ open class ProductRepoImpl @Inject constructor(
     val backendService: FebysBackendService
 ) : IProductRepo {
     override fun fetchProductDetail(
-        productId: Int, dispatcher: CoroutineDispatcher
-    ) = flow<DataState<OldProduct>> {
+        productId: String, dispatcher: CoroutineDispatcher
+    ) = flow<DataState<Product>> {
         backendService.fetchProduct(productId)
             .onSuccess {
-                emit(DataState.Data(data!!.oldProduct))
+                emit(DataState.Data(data!!.product))
             }
             .onError { emit(DataState.ApiError(message)) }
             .onException { emit(DataState.ExceptionError()) }
@@ -33,7 +35,7 @@ open class ProductRepoImpl @Inject constructor(
         val addToFav = pref.toggleFav(skuId)
 
         val authToken = pref.getAccessToken()
-        val req = FavSkuIds(setOf(skuId))
+        val req = FavSkuIds(mutableSetOf(skuId))
         if (addToFav) {
             val response = backendService.addToWishList(authToken, req)
             if (response is ApiResponse.ApiSuccessResponse) {
@@ -54,7 +56,7 @@ open class ProductRepoImpl @Inject constructor(
 
         if (addToFav) {
             val authToken = pref.getAccessToken()
-            val req = FavSkuIds(setOf(skuId))
+            val req = FavSkuIds(mutableSetOf(skuId))
             val response = backendService.addToWishList(authToken, req)
 
             if (response is ApiResponse.ApiSuccessResponse) {
@@ -68,7 +70,7 @@ open class ProductRepoImpl @Inject constructor(
 
         if (removeFromFav) {
             val authToken = pref.getAccessToken()
-            val req = FavSkuIds(setOf(skuId))
+            val req = FavSkuIds(mutableSetOf(skuId))
             val response = backendService.removeFromWishList(authToken, req)
             if (response is ApiResponse.ApiSuccessResponse) {
                 updateFavList(response.data!!.skuIds)
@@ -82,8 +84,8 @@ open class ProductRepoImpl @Inject constructor(
     }
 
     override suspend fun askQuestion(
-        productId: Int, question: String, dispatcher: CoroutineDispatcher
-    ) = flow<DataState<QuestionAnswersThread>> {
+        productId: String, question: String, dispatcher: CoroutineDispatcher
+    ) = flow<DataState<QuestionAnswers>> {
         val authToken = pref.getAccessToken()
         FakeApiService.postQuestion(authToken, productId, question)
             .onSuccess {
@@ -93,4 +95,20 @@ open class ProductRepoImpl @Inject constructor(
             .onException { emit(DataState.ExceptionError()) }
             .onNetworkError { emit(DataState.NetworkError()) }
     }.flowOn(dispatcher)
+
+    override suspend fun fetchRecommendProducts(dispatcher: CoroutineDispatcher): List<Product> {
+        val pagingListRequest = PagingListRequest()
+        val response = backendService.fetchRecommendProducts(pagingListRequest)
+        return (response as? ApiResponse.ApiSuccessResponse)
+            ?.data?.getResponse<ProductPagingListing>()?.products ?: emptyList()
+    }
+
+    override suspend fun fetchSimilarProducts(
+        productId: String, dispatcher: CoroutineDispatcher
+    ): List<Product> {
+        val pagingListRequest = PagingListRequest()
+        val response = backendService.fetchSimilarProducts(productId, pagingListRequest)
+        return (response as? ApiResponse.ApiSuccessResponse)
+            ?.data?.getResponse<ProductPagingListing>()?.products ?: emptyList()
+    }
 }

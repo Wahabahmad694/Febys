@@ -4,18 +4,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.hexagram.febys.databinding.ItemRvAnswersBinding
-import com.hexagram.febys.models.view.Thread
+import com.hexagram.febys.models.api.chat.Chat
 
 class AnswersAdapter : RecyclerView.Adapter<AnswersAdapter.AnswersVH>() {
-    private var answers = mutableListOf<Thread>()
+    private var answers = mutableListOf<Chat>()
 
     inner class AnswersVH(
         private val binding: ItemRvAnswersBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Thread, position: Int) = binding.apply {
+        fun bind(item: Chat, position: Int) = binding.apply {
             answer.text = item.message
-            name.text = item.senderName
-            date.text = item.timeStamp
+            name.text = item.sender.name
+            date.text = item.sentTime
         }
     }
 
@@ -30,7 +30,7 @@ class AnswersAdapter : RecyclerView.Adapter<AnswersAdapter.AnswersVH>() {
         holder.bind(answers[position], position)
     }
 
-    fun submitList(list: MutableList<Thread>) {
+    fun submitList(list: MutableList<Chat>) {
         answers = list
         notifyItemRangeChanged(0, list.size)
     }

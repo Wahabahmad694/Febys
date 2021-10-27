@@ -99,8 +99,9 @@ class CelebrityDetailFragment : BaseFragment() {
 
         productListingPagerAdapter.interaction = object : ProductListingPagerAdapter.Interaction {
             override fun onItemSelected(position: Int, item: Product) {
-                /*newChanges val gotoProductDetail = NavGraphDirections.actionToProductDetail(item.id)
-                navigateTo(gotoProductDetail)*/
+                val gotoProductDetail =
+                    NavGraphDirections.actionToProductDetail(item._id, item.variants[0].skuId)
+                navigateTo(gotoProductDetail)
             }
 
             override fun toggleFavIfUserLoggedIn(skuId: String): Boolean {

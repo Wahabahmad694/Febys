@@ -8,9 +8,9 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class QuestionAnswers(
     val _id: String,
-    val chat: List<Chat>,
+    val chat: MutableList<Chat>,
     @SerializedName("up_votes")
-    val upVotes: List<String>,
+    val upVotes: MutableSet<String>,
     @SerializedName("down_votes")
-    val downVotes: List<String>,
+    val downVotes: MutableSet<String>,
 ) : Parcelable

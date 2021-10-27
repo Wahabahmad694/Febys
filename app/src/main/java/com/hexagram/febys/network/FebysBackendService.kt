@@ -4,13 +4,13 @@ import com.hexagram.febys.models.api.pagination.Pagination
 import com.hexagram.febys.models.api.product.FeaturedCategory
 import com.hexagram.febys.models.api.product.Trending
 import com.hexagram.febys.models.api.request.PagingListRequest
+import com.hexagram.febys.models.api.response.ProductDetailResponse
 import com.hexagram.febys.models.api.wishlist.FavSkuIds
 import com.hexagram.febys.models.api.wishlist.WishlistSkuIds
 import com.hexagram.febys.network.adapter.ApiResponse
 import com.hexagram.febys.network.requests.RequestPushCart
 import com.hexagram.febys.network.response.Cart
 import com.hexagram.febys.network.response.ResponseOfPagination
-import com.hexagram.febys.network.response.ResponseProduct
 import com.hexagram.febys.network.response.ResponseVendorListing
 import retrofit2.http.*
 
@@ -54,7 +54,7 @@ interface FebysBackendService {
     ): ApiResponse<ResponseOfPagination>
 
     @GET("v1/products/{productId}")
-    suspend fun fetchProduct(@Path("productId") productId: Int): ApiResponse<ResponseProduct>
+    suspend fun fetchProduct(@Path("productId") productId: String): ApiResponse<ProductDetailResponse>
 
     @POST("v1/consumers/wishlist/list")
     suspend fun fetchWishlist(
@@ -108,4 +108,12 @@ interface FebysBackendService {
     suspend fun unFollowVendor(
         @Header("Authorization") authKey: String, @Body req: Map<String, Int>
     ): ApiResponse<Unit>
+
+    @POST("v1/consumers/products/recommended")
+    suspend fun fetchRecommendProducts(@Body request: PagingListRequest): ApiResponse<Pagination>
+
+    @POST("v1/consumers/products/{productId}/similar")
+    suspend fun fetchSimilarProducts(
+        @Path("productId")productId: String, @Body request: PagingListRequest
+    ): ApiResponse<Pagination>
 }

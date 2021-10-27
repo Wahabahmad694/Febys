@@ -25,7 +25,7 @@ class QAThreadsAdapter : RecyclerView.Adapter<QAThreadsAdapter.QAThreadsVH>() {
             delete.isVisible = userId != null && userId == item.question.senderId
             reply.isVisible = userId != null
 
-            rvAnswers.adapter = AnswersAdapter().also { it.submitList(item.answers) }
+            rvAnswers.adapter = AnswersAdapter().also { /*newChanges it.submitList(item.answers)*/ }
             rvAnswers.addItemDecoration(
                 DividerItemDecoration(
                     rvAnswers.context,

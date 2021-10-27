@@ -1,6 +1,9 @@
 package com.hexagram.febys.network
 
 import com.hexagram.febys.R
+import com.hexagram.febys.models.api.chat.Chat
+import com.hexagram.febys.models.api.chat.Sender
+import com.hexagram.febys.models.api.product.QuestionAnswers
 import com.hexagram.febys.models.view.*
 import com.hexagram.febys.network.adapter.ApiResponse
 import kotlinx.coroutines.delay
@@ -178,24 +181,24 @@ object FakeApiService {
     }
 
     suspend fun postQuestion(
-        authToken: String, productId: Int, msg: String
-    ): ApiResponse.ApiSuccessResponse<QuestionAnswersThread> {
+        authToken: String, productId: String, msg: String
+    ): ApiResponse.ApiSuccessResponse<QuestionAnswers> {
         delay(100)
-        val question = QuestionAnswersThread(
+        val question = QuestionAnswers(
             "" + questionAnswersThread.size + 1,
-            Thread(
-                (questionAnswersThread.size + 100).toString(),
-                "1",
-                "Houd",
-                msg,
-                "Consumer",
-                "2021-11-04T20:39:02.785Z"
-            ),
-            mutableListOf(), // answer
+            mutableListOf(
+                Chat(
+                    "" + questionAnswersThread.size + 100,
+                    Sender("1", "Houd"),
+                    msg,
+                    "Consumer",
+                    "2021-11-04T20:39:02.785Z"
+                )
+            ), // answer
             mutableSetOf(), // up vote
             mutableSetOf()  // down vote
         )
-        questionAnswersThread.add(question)
+//        questionAnswersThread.add(question)
         return ApiResponse.ApiSuccessResponse(Response.success(question))
     }
 

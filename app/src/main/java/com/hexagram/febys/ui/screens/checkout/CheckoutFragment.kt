@@ -90,9 +90,9 @@ class CheckoutFragment : BaseFragment() {
             }
 
             override fun openProductDetail(cartDTO: CartDTO) {
-                val navigateToProductDetail =
+                /*newChanges val navigateToProductDetail =
                     NavGraphDirections.actionToProductDetail(cartDTO.productId, cartDTO.variantId)
-                navigateTo(navigateToProductDetail)
+                navigateTo(navigateToProductDetail)*/
             }
         }
     }

@@ -11,6 +11,7 @@
     <string name="label_under_100_dollar_items">Under $100 Items</string>
     <string name="label_under_100_dollar_items_slogan">Discover new deal\'s, just for you</string>
     <string name="label_shop_now">Shop Now</string>
+    <string name="label_shop_all">Shop All</string>
     <string name="label_seasonal_offers">Seasonal Offers</string>
     <string name="label_same_day_delivery">Same day delivery</string>
     <string name="label_store_you_follow">Stores You Follow</string>
@@ -67,7 +68,7 @@
     <string name="label_product_availability">Product Availability</string>
     <string name="label_in_stock">In Stock</string>
     <string name="label_out_stock">Out of Stock</string>
-    <string name="label_product_will_be_fulfilled_by">Product Will Be Fulfilled By</string>
+    <string name="label_product_will_be_fulfilled_by">Product Will Be Fulfilled Febys</string>
     <string name="label_product_warranty">Product Warranty</string>
     <string name="label_yes">Yes</string>
     <string name="label_no">No</string>
@@ -196,5 +197,7 @@
     <string name="label_ask_about_product">Ask about the product.</string>
     <string name="label_ask">Ask</string>
     <string name="label_payment_method">Payment Method</string>
+    <string name="label_customer_recommend">Customer Recommend</string>
+    <string name="label_compare_with_similar_items">Compare With Similar Items</string>
 
 </resources>

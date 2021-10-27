@@ -7,10 +7,6 @@
     <data>
 
         <variable
-            name="isFav"
-            type="Boolean" />
-
-        <variable
             name="product"
             type="com.hexagram.febys.models.api.product.Product" />
 
@@ -18,17 +14,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_264sdp">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_fav_toggle"
-            android:layout_width="@dimen/_16dp"
-            android:layout_height="@dimen/_16dp"
-            android:layout_marginTop="@dimen/_16dp"
-            android:layout_marginEnd="@dimen/_16dp"
-            android:src="@{isFav ? @drawable/ic_fav : @drawable/ic_un_fav}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content">
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_product"
@@ -103,18 +89,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_2dp"
+            android:layout_marginBottom="@dimen/_16sdp"
             android:text="@{`$` + product.variants.get(0).price.value}"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/tv_product_name"
             app:layout_constraintStart_toEndOf="@id/tv_product_off_price_separator"
             app:layout_constraintTop_toBottomOf="@id/tv_product_name"
             tools:text="$14" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_120sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_product"
-            app:layout_constraintVertical_bias="1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
