@@ -30,6 +30,7 @@ class SignupFragment : SocialMediaAuthFragment() {
     private var lastName: String = ""
     private var email: String = ""
     private var phone: String = ""
+    private var countryCode: String = "PK"
     private var password: String = ""
     private var confirmPassword: String = ""
 
@@ -172,7 +173,7 @@ class SignupFragment : SocialMediaAuthFragment() {
 
     private fun createSignupRequest(): RequestSignup {
         return RequestSignup(
-            firstName, lastName, email, phone, password
+            firstName, lastName, email, phone, countryCode, password
         )
     }
 
