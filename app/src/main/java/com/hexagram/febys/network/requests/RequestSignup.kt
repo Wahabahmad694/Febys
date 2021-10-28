@@ -11,6 +11,8 @@ data class RequestSignup(
     val email: String,
     @SerializedName("phone_number")
     val phoneNo: String,
+    @SerializedName("country_code")
+    val countryCode: String,
     @SerializedName("password")
     val password: String
 )
