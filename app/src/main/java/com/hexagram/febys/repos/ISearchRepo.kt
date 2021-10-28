@@ -1,8 +1,7 @@
 package com.hexagram.febys.repos
 
 import androidx.paging.PagingData
-import com.hexagram.febys.network.response.Category
-import com.hexagram.febys.network.DataState
+import com.hexagram.febys.models.api.category.Category
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

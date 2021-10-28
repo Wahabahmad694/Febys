@@ -1,12 +1,11 @@
 package com.hexagram.febys.paginations
 
 import androidx.paging.PagingState
+import com.hexagram.febys.models.api.category.Category
+import com.hexagram.febys.models.api.category.CategoryPagingListing
 import com.hexagram.febys.models.api.request.PagingListRequest
 import com.hexagram.febys.network.FebysBackendService
 import com.hexagram.febys.network.adapter.ApiResponse
-import com.hexagram.febys.network.requests.RequestOfPagination
-import com.hexagram.febys.network.response.Category
-import com.hexagram.febys.network.response.ResponseAllCategories
 
 class CategoryPagingSource constructor(
     private val service: FebysBackendService,
@@ -24,8 +23,8 @@ class CategoryPagingSource constructor(
         val req = mapOf("listing" to request)
         return when (val response = service.fetchAllCategories(req)) {
             is ApiResponse.ApiSuccessResponse -> {
-                val allCategories = response.data!!.getResponse<ResponseAllCategories>()
-                val (prevKey, nextKey) = getPagingKeys(allCategories.paginationInformation)
+                val allCategories = response.data!!.getResponse<CategoryPagingListing>()
+                val (prevKey, nextKey) = getPagingKeys(allCategories.pagingInfo)
                 LoadResult.Page(allCategories.categories, prevKey, nextKey)
             }
             is ApiResponse.ApiFailureResponse.Error -> {

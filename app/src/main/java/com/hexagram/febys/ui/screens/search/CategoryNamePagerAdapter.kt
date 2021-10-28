@@ -2,12 +2,11 @@ package com.hexagram.febys.ui.screens.search
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.hexagram.febys.databinding.ItemCategoryNameBinding
-import com.hexagram.febys.network.response.Category
+import com.hexagram.febys.models.api.category.Category
 
 class CategoryNamePagerAdapter :
     PagingDataAdapter<Category, CategoryNamePagerAdapter.CategoryNamePagerViewHolder>(diffCallback) {

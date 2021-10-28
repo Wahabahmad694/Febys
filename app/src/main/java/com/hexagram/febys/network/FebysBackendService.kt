@@ -17,7 +17,7 @@ import retrofit2.http.*
 
 interface FebysBackendService {
     @POST("v1/categories/all")
-    suspend fun fetchAllCategories(@Body req: Map<String, PagingListRequest>): ApiResponse<ResponseOfPagination>
+    suspend fun fetchAllCategories(@Body req: Map<String, PagingListRequest>): ApiResponse<Pagination>
 
     @POST("v1/consumers/products/today-deals")
     suspend fun fetchTodayDeals(

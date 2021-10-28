@@ -3,7 +3,7 @@ package com.hexagram.febys.models.api.request
 import com.google.gson.annotations.SerializedName
 
 data class PagingListRequest constructor(
-    @SerializedName("searchStr", alternate = ["queryStr"])
+    @SerializedName("queryStr", alternate = ["searchStr"])
     var searchStr: String = "",
     var chunkSize: Int = 10,
     var pageNo: Int = 1,
