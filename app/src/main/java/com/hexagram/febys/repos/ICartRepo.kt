@@ -10,7 +10,7 @@ interface ICartRepo {
 
     suspend fun removeFromCart(cartDTO: CartDTO)
 
-    fun getCartItem(variantId: Int): CartDTO?
+    fun getCartItem(skuId: String): CartDTO?
 
     suspend fun addCartItem(cartDTO: CartDTO)
 

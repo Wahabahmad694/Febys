@@ -28,7 +28,7 @@ class CartRepoImpl @Inject constructor(
         pushCart()
     }
 
-    override fun getCartItem(variantId: Int) = cartDataSource.getCartItem(variantId)
+    override fun getCartItem(skuId: String) = cartDataSource.getCartItem(skuId)
 
     override suspend fun addCartItem(cartDTO: CartDTO) {
         cartDataSource.addCartItem(cartDTO)

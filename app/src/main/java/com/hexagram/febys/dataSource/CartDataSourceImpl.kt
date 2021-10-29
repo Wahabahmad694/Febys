@@ -2,6 +2,7 @@ package com.hexagram.febys.dataSource
 
 import androidx.lifecycle.LiveData
 import com.hexagram.febys.db.dao.CartDao
+import com.hexagram.febys.models.api.cart.CartResponse
 import com.hexagram.febys.models.db.CartDTO
 import com.hexagram.febys.network.domain.util.CartMapper
 import com.hexagram.febys.network.response.Cart
@@ -15,7 +16,7 @@ class CartDataSourceImpl @Inject constructor(
         cartDao.insert(cartDTO)
     }
 
-    override suspend fun insertCart(cart: Cart) {
+    override suspend fun insertCart(cart: CartResponse) {
         val listOfCartDTO = cartMapper.mapFromDomainModel(cart)
         cartDao.insert(listOfCartDTO)
     }
@@ -40,25 +41,25 @@ class CartDataSourceImpl @Inject constructor(
         cartDao.delete(cartDTO)
     }
 
-    override fun getCartItem(variantId: Int): CartDTO? {
-        return cartDao.getCartItem(variantId)
+    override fun getCartItem(skuId: String): CartDTO? {
+        return cartDao.getCartItem(skuId)
     }
 
     override fun addCartItem(cartDTO: CartDTO) {
         cartDao.insert(cartDTO)
     }
 
-    override fun mergeCart(cart: Cart) {
+    override fun mergeCart(cart: CartResponse) {
         val listOfCartDTO = cartMapper.mapFromDomainModel(cart)
         cartDao.insertAndIgnoreIfAlreadyExist(listOfCartDTO)
     }
 
-    override fun updateCart(cart: Cart) {
+    override fun updateCart(cart: CartResponse) {
         val listOfCartDTO = cartMapper.mapFromDomainModel(cart)
         val dbCart = cartDao.getCart()
         listOfCartDTO.forEach { cartItem ->
             val dbCartItem =
-                dbCart.firstOrNull { dbCartItem -> cartItem.variantId == dbCartItem.variantId }
+                dbCart.firstOrNull { dbCartItem -> cartItem.skuId == dbCartItem.skuId }
             if (dbCartItem != null) {
                 updateCartItemIfChange(dbCartItem, cartItem)
             } else {
@@ -68,7 +69,7 @@ class CartDataSourceImpl @Inject constructor(
     }
 
     private fun updateCartItemIfChange(dbCartItem: CartDTO, cartItem: CartDTO) {
-        if (dbCartItem.hasVariantPromotion != cartItem.hasVariantPromotion) {
+        if (dbCartItem.hasPromotion != cartItem.hasPromotion) {
             cartDao.update(cartItem)
         }
     }

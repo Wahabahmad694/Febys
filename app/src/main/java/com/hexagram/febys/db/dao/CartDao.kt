@@ -17,12 +17,12 @@ interface CartDao : BaseDao<CartDTO> {
     @Query("Select * From CartDTO Order By createdAt DESC")
     fun observeCart(): LiveData<List<CartDTO>>
 
-    @Query("Select * From CartDTO Where variantId = :variantId")
-    fun getCartItem(variantId: Int): CartDTO?
+    @Query("Select * From CartDTO Where skuId = :skuId")
+    fun getCartItem(skuId: String): CartDTO?
 
     @Query("Select * From CartDTO Order By createdAt DESC")
     fun getCart(): List<CartDTO>
 
-    @Query("Select variantId, quantity From CartDTO Order By createdAt DESC")
+    @Query("Select skuId, quantity From CartDTO Order By createdAt DESC")
     fun getCartForPush(): List<VariantAndQuantityCart>
 }

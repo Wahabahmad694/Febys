@@ -113,18 +113,12 @@ class CheckoutFragment : BaseFragment() {
         updateOrderSummaryQuantity(cart?.size ?: 0)
 
         cart?.forEach {
-            val price = if (it.hasVariantPromotion)
-                it.promotionPrice?.toDouble() ?: 0.0
-            else
-                it.variantPrice
+            val price = it.price.value
 
             addProductToOrderSummary(it.productName, it.quantity, price)
         }
 
-        val subtotal: Double = cart?.sumOf {
-            (if (it.hasVariantPromotion) it.promotionPrice?.toDouble() ?: 0.0 else it.variantPrice)
-                .times(it.quantity)
-        } ?: 0.0
+        val subtotal: Double = cart?.sumOf { it.price.value.times(it.quantity) } ?: 0.0
 
         addProductToOrderSummary(getString(R.string.label_subtotal), 1, subtotal)
         addProductToOrderSummary(getString(R.string.label_vat), 1, 10.0)

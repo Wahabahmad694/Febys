@@ -15,14 +15,14 @@ class CartAdapter(private val isInCheckout: Boolean = false) :
     companion object {
         private val DIFF_UTIL = object : DiffUtil.ItemCallback<CartDTO>() {
             override fun areItemsTheSame(oldItem: CartDTO, newItem: CartDTO): Boolean {
-                return oldItem.variantId == newItem.variantId
+                return oldItem.skuId == newItem.skuId
             }
 
             override fun areContentsTheSame(oldItem: CartDTO, newItem: CartDTO): Boolean {
-                return oldItem.variantId == newItem.variantId
+                return oldItem.skuId == newItem.skuId
                         && oldItem.quantity == newItem.quantity
-                        && oldItem.promotionPrice == newItem.promotionPrice
-                        && oldItem.variantPrice == newItem.variantPrice
+                        && oldItem.hasPromotion == newItem.hasPromotion
+                        && oldItem.price.value == newItem.price.value
             }
         }
     }
@@ -67,7 +67,7 @@ class CartAdapter(private val isInCheckout: Boolean = false) :
                     interaction?.openProductDetail(cartDTO)
                 }
 
-                val isFav = /*cartDTO.variantId in fav*/ false
+                val isFav = cartDTO.skuId in fav
                 if (isFav) {
                     ivFavToggle.setImageResource(R.drawable.ic_fav)
                     tvFav.setText(R.string.label_remove_from_wishlist)
@@ -89,14 +89,14 @@ class CartAdapter(private val isInCheckout: Boolean = false) :
 
         private fun toggleFav(cartDTO: CartDTO) {
             val isUserLoggedIn =
-                interaction?.toggleFavIfUserLoggedIn(/*newChange cartDTO.variantId*/ "") ?: false
+                interaction?.toggleFavIfUserLoggedIn(cartDTO.skuId) ?: false
             if (!isUserLoggedIn) return
 
-            /*newChange if (cartDTO.variantId in fav) {
-                fav.remove(cartDTO.variantId)
+            if (cartDTO.skuId in fav) {
+                fav.remove(cartDTO.skuId)
             } else {
-                fav.add(cartDTO.variantId)
-            }*/
+                fav.add(cartDTO.skuId)
+            }
             val position = currentList.indexOf(cartDTO)
             notifyItemChanged(position)
         }
