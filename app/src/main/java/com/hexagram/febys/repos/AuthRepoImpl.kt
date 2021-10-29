@@ -104,7 +104,7 @@ class AuthRepoImpl @Inject constructor(
                 "client_secret" to BuildConfig.keycloakClientSecret
             )
             val baseUrl = BuildConfig.backendBaseUrl.replace("/api", "/auth")
-            val url = "$baseUrl/realms/febys-consumers/protocol/openid-connect/token"
+            val url = "${baseUrl}realms/febys-consumers/protocol/openid-connect/token"
 
             authService.refreshToken(url, fields)
                 .onSuccess {
