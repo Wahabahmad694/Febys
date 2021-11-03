@@ -1,6 +1,8 @@
 package com.hexagram.febys.db.converter
 
 import androidx.room.TypeConverter
+import com.google.gson.Gson
+import com.hexagram.febys.models.api.price.Price
 import java.util.*
 
 class TypeConverter {
@@ -22,5 +24,15 @@ class TypeConverter {
     @TypeConverter
     fun dateToTimestamp(date: Date): Long {
         return date.time
+    }
+
+    @TypeConverter
+    fun priceToString(price: Price): String {
+        return Gson().toJson(price)
+    }
+
+    @TypeConverter
+    fun priceFromString(price: String): Price {
+        return Gson().fromJson(price, Price::class.java)
     }
 }

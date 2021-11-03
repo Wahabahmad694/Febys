@@ -111,9 +111,7 @@ class CartFragment : BaseFragment() {
     }
 
     private fun updateUi(cart: List<CartDTO>?, shippingCost: Double = 100.0) {
-        val itemsTotal: Double = cart?.sumOf {
-            (it.promotionPrice?.toDouble() ?: it.variantPrice).times(it.quantity)
-        } ?: 0.0
+        val itemsTotal: Double = cart?.sumOf { it.price.value.times(it.quantity) } ?: 0.0
 
         binding.tvSubtotalAmount.text =
             getString(R.string.variant_price, itemsTotal.toFixedDecimal(2))

@@ -14,6 +14,7 @@ import com.hexagram.febys.network.response.User
 import com.hexagram.febys.repos.IAuthRepo
 import com.hexagram.febys.utils.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -68,6 +69,7 @@ class AuthViewModel @Inject constructor(
     }
 
     fun refreshToken() = viewModelScope.launch {
+        delay(1000)
         authRepo.refreshToken().collect {
             _observeRefreshTokenResponse.postValue(it)
         }

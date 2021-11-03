@@ -236,7 +236,7 @@
         tools:layout="@layout/fragment_category_name">
         <argument
             android:name="category"
-            app:argType="com.hexagram.febys.network.response.Category" />
+            app:argType="com.hexagram.febys.models.api.category.Category" />
         <argument
             android:name="parentName"
             app:argType="string" />

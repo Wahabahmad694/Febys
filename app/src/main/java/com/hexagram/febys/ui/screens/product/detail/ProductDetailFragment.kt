@@ -178,11 +178,11 @@ class ProductDetailFragment : SliderFragment() {
         }
 
         binding.btnAddToCart.setOnClickListener {
-            /*newChanges val product = binding.product
-            val variantId = binding.variant?.id
-            if (product != null && variantId != null) {
-                cartViewModel.addToCart(product, variantId)
-            }*/
+            val product = binding.product
+            val skuId = binding.variant?.skuId
+            if (product != null && skuId != null) {
+                cartViewModel.addToCart(product, skuId)
+            }
         }
 
         binding.ivBack.setOnClickListener {

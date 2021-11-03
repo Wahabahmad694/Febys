@@ -1,5 +1,6 @@
 package com.hexagram.febys.network
 
+import com.hexagram.febys.models.api.cart.CartResponse
 import com.hexagram.febys.models.api.pagination.Pagination
 import com.hexagram.febys.models.api.product.FeaturedCategory
 import com.hexagram.febys.models.api.product.Trending
@@ -17,7 +18,7 @@ import retrofit2.http.*
 
 interface FebysBackendService {
     @POST("v1/categories/all")
-    suspend fun fetchAllCategories(@Body req: Map<String, PagingListRequest>): ApiResponse<ResponseOfPagination>
+    suspend fun fetchAllCategories(@Body req: Map<String, PagingListRequest>): ApiResponse<Pagination>
 
     @POST("v1/consumers/products/today-deals")
     suspend fun fetchTodayDeals(
@@ -87,13 +88,13 @@ interface FebysBackendService {
     @GET("v1/cart")
     suspend fun fetchCart(
         @Header("Authorization") authToken: String
-    ): ApiResponse<Cart>
+    ): ApiResponse<CartResponse>
 
     @POST("v1/cart")
     suspend fun pushCart(
         @Header("Authorization") authToken: String,
         @Body req: RequestPushCart
-    ): ApiResponse<Cart>
+    ): ApiResponse<CartResponse>
 
     @POST("v1/consumers/stores")
     suspend fun fetchVendors(@QueryMap req: Map<String, String>): ApiResponse<Pagination>

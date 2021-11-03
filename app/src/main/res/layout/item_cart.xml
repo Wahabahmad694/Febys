@@ -32,12 +32,12 @@
                 android:layout_width="@dimen/_28sdp"
                 android:layout_height="@dimen/_28sdp"
                 android:layout_marginStart="@dimen/_16sdp"
-                app:actualImageResource="@drawable/ic_store"
                 app:actualImageScaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:roundAsCircle="true" />
+                app:roundAsCircle="true"
+                binding:image_url="@{cart.vendorImg}" />
 
             <TextView
                 android:id="@+id/vendor_name"
@@ -45,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_8sdp"
-                android:text="@{cart.vendorStoreName}"
+                android:text="@{cart.vendorShopName}"
                 app:layout_constraintBottom_toTopOf="@id/vendor_type"
                 app:layout_constraintStart_toEndOf="@id/vendor_img"
                 app:layout_constraintTop_toTopOf="parent"
@@ -57,7 +57,7 @@
                 style="@style/TextTheme.Arial.TS12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{cart.vendorIndividualType}"
+                android:text="@{cart.vendorType}"
                 android:textColor="@color/red"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@id/vendor_name"
@@ -90,7 +90,7 @@
                 app:actualImageScaleType="fitCenter"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                binding:image_url="@{cart.variantImages.get(0)}" />
+                binding:image_url="@{cart.productImg}" />
 
             <TextView
                 android:id="@+id/tv_product_name"
@@ -123,43 +123,49 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_4sdp"
                 android:layout_marginTop="@dimen/_16dp"
-                android:text="@{`` + cart.variantId}"
+                android:text="@{`` + cart.skuId}"
                 app:layout_constraintBaseline_toBaselineOf="@id/label_item_id"
                 app:layout_constraintStart_toEndOf="@id/label_item_id"
                 tools:text="123" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_minus"
+            <LinearLayout
+                android:id="@+id/container_quantity"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_minus"
-                app:layout_constraintBottom_toBottomOf="@id/tv_quantity"
-                app:layout_constraintStart_toStartOf="@id/label_item_id"
-                app:layout_constraintTop_toTopOf="@id/tv_quantity" />
-
-            <TextView
-                android:id="@+id/tv_quantity"
-                android:layout_width="@dimen/_64sdp"
                 android:layout_height="@dimen/_24sdp"
-                android:layout_marginStart="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/_12dp"
                 android:background="@drawable/bg_border_dark_grey"
-                android:gravity="center"
-                android:text="@{`` + cart.quantity}"
-                android:textAlignment="center"
-                app:layout_constraintStart_toEndOf="@id/iv_minus"
-                app:layout_constraintTop_toBottomOf="@id/label_item_id"
-                tools:text="5" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/_4sdp"
+                app:layout_constraintStart_toStartOf="@id/label_item_id"
+                app:layout_constraintTop_toBottomOf="@id/label_item_id">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_add"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:src="@drawable/ic_add"
-                app:layout_constraintBottom_toBottomOf="@id/tv_quantity"
-                app:layout_constraintStart_toEndOf="@id/tv_quantity"
-                app:layout_constraintTop_toTopOf="@id/tv_quantity" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_minus"
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    android:src="@drawable/ic_minus" />
+
+                <TextView
+                    android:id="@+id/tv_quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:gravity="center"
+                    android:text="@{`` + cart.quantity}"
+                    android:textAlignment="center"
+                    tools:text="5" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_add"
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:src="@drawable/ic_add" />
+
+
+            </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_fav_toggle"
@@ -169,7 +175,7 @@
                 android:layout_marginTop="@dimen/_20sdp"
                 android:src="@drawable/ic_un_fav"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_quantity" />
+                app:layout_constraintTop_toBottomOf="@id/container_quantity" />
 
             <TextView
                 android:id="@+id/tv_fav"
@@ -188,10 +194,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_2sdp"
-                android:text="@{`$` + cart.variantPriceByQuantity}"
+                android:text="@{`$` + cart.originalPrice.value * cart.quantity}"
                 app:layout_constraintBaseline_toBaselineOf="@id/tv_product_price"
                 app:layout_constraintEnd_toStartOf="@id/tv_product_off_price_separator"
-                binding:is_visible="@{cart.hasVariantPromotion}"
+                binding:is_visible="@{cart.hasPromotion}"
                 binding:strike_through="@{true}"
                 tools:text="$14" />
 
@@ -204,7 +210,7 @@
                 android:text="@string/minus"
                 app:layout_constraintBaseline_toBaselineOf="@id/tv_product_price"
                 app:layout_constraintEnd_toStartOf="@id/tv_product_price"
-                binding:is_visible="@{cart.hasVariantPromotion}" />
+                binding:is_visible="@{cart.hasPromotion}" />
 
             <TextView
                 android:id="@+id/tv_product_price"
@@ -212,7 +218,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_2dp"
-                android:text="@{cart.hasVariantPromotion ? `$` + cart.promotionPriceByQuantity : `$` + cart.variantPriceByQuantity}"
+                android:text="@{`` + (cart.price.value * cart.quantity)}"
                 app:layout_constraintBaseline_toBaselineOf="@id/tv_fav"
                 app:layout_constraintEnd_toEndOf="@id/iv_remove"
                 tools:text="$14" />
