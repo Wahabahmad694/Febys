@@ -3,6 +3,7 @@ package com.hexagram.febys.models.api.product
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import com.hexagram.febys.models.api.price.Price
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -24,12 +25,20 @@ data class Variant(
     @SerializedName("original_price")
     val originalPrice: Price,
     val price: Price,
-    val images: List<String>,
+    @SerializedName("images")
+    val _images: List<String>,
     val refund: Refund,
     val warranty: Warranty,
     val stats: ProductStats,
     val packaging: Packaging
 ) : Parcelable {
+
+    @IgnoredOnParcel
+    @Transient
+    val images: List<String> = emptyList()
+        get() {
+            return if (_images.isNotEmpty()) field else listOf("")
+        }
 
     fun getFirstVariantAttr(): Attr? {
         if (attributes.isNullOrEmpty()) return null
