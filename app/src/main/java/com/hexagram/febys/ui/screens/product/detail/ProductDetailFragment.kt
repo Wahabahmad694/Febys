@@ -45,6 +45,7 @@ class ProductDetailFragment : SliderFragment() {
     private val productVariantSecondAttrAdapter = ProductVariantAdapter()
     private val variantFirstAttrBottomSheet get() = BottomSheetBehavior.from(binding.bottomSheetVariantFirstAttr.root)
     private val variantSecondAttrBottomSheet get() = BottomSheetBehavior.from(binding.bottomSheetVariantSecondAttr.root)
+    private val askQuestionBottomSheet get() = BottomSheetBehavior.from(binding.bottomSheetAskQuestion.root)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,6 +75,7 @@ class ProductDetailFragment : SliderFragment() {
     private fun initUi() {
         closeVariantBottomSheet(variantFirstAttrBottomSheet)
         closeVariantBottomSheet(variantSecondAttrBottomSheet)
+        closeVariantBottomSheet(askQuestionBottomSheet)
 
         binding.containerAskAboutProduct.isVisible = isUserLoggedIn
 
@@ -121,6 +123,10 @@ class ProductDetailFragment : SliderFragment() {
 
         binding.bottomSheetVariantSecondAttr.btnClose.setOnClickListener {
             closeVariantBottomSheet(variantSecondAttrBottomSheet)
+        }
+
+        binding.bottomSheetAskQuestion.btnClose.setOnClickListener {
+            closeVariantBottomSheet(askQuestionBottomSheet)
         }
 
         productVariantFirstAttrAdapter.interaction = { selectedFirstAttr ->
@@ -172,6 +178,10 @@ class ProductDetailFragment : SliderFragment() {
             onBottomSheetStateChange(state)
         }
 
+        askQuestionBottomSheet.onStateChange { state ->
+            onBottomSheetStateChange(state)
+        }
+
         binding.bgDim.setOnClickListener {
             // do nothing, just add to avoid click on views that are behind of bg dim when bg dim is visible
         }
@@ -193,8 +203,12 @@ class ProductDetailFragment : SliderFragment() {
             gotoQAThreads(threads.toTypedArray())
         }
 
-        binding.btnAskAboutProduct.setOnClickListener {
-            askQuestion()
+        binding.containerAskAboutProduct.setOnClickListener {
+            if (!isUserLoggedIn) {
+                gotoLogin()
+                return@setOnClickListener
+            }
+            showVariantBottomSheet(askQuestionBottomSheet)
         }
     }
 
@@ -492,31 +506,18 @@ class ProductDetailFragment : SliderFragment() {
     }
 
     private fun closeBottomsSheetElseGoBack() {
-        if (variantFirstAttrBottomSheet.state != BottomSheetBehavior.STATE_HIDDEN
-        ) {
-            closeVariantBottomSheet(variantFirstAttrBottomSheet)
-            return
-        }
-
-        if (variantSecondAttrBottomSheet.state != BottomSheetBehavior.STATE_HIDDEN) {
-            closeVariantBottomSheet(variantSecondAttrBottomSheet)
-            return
+        listOf(
+            variantFirstAttrBottomSheet,
+            variantSecondAttrBottomSheet,
+            askQuestionBottomSheet
+        ).forEach {
+            if (it.state != BottomSheetBehavior.STATE_HIDDEN) {
+                closeVariantBottomSheet(it)
+                return
+            }
         }
 
         goBack()
-    }
-
-    private fun askQuestion() {
-        if (!isUserLoggedIn) {
-            gotoLogin()
-            return
-        }
-        val question = binding.etAskAboutProduct.text.toString()
-
-        if (question.isEmpty()) return
-
-        productDetailViewModel.askQuestion(args.productId, question)
-        binding.etAskAboutProduct.text = null
     }
 
     private fun gotoQAThreads(threads: Array<QuestionAnswers>) {

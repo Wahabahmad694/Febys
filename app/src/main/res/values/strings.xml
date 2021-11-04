@@ -194,11 +194,12 @@
     <string name="label_reply">Reply</string>
     <string name="label_by">By</string>
     <string name="label_see_more">See More</string>
-    <string name="label_ask_about_product">Ask about the product.</string>
+    <string name="label_ask_about_product">Ask about the product</string>
     <string name="label_ask">Ask</string>
     <string name="label_payment_method">Payment Method</string>
     <string name="label_customer_recommend">Customer Recommend</string>
     <string name="label_compare_with_similar_items">Compare With Similar Items</string>
     <string name="label_no_answer">---</string>
+    <string name="label_question">Question</string>
 
 </resources>
