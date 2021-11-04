@@ -27,7 +27,6 @@ import com.hexagram.febys.models.api.product.Description
 import com.hexagram.febys.models.api.product.Product
 import com.hexagram.febys.models.api.product.QuestionAnswers
 import com.hexagram.febys.models.api.product.Variant
-import com.hexagram.febys.models.view.QuestionAnswersThread
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.cart.CartViewModel
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
@@ -190,8 +189,8 @@ class ProductDetailFragment : SliderFragment() {
         }
 
         binding.seeMoreQAndA.setOnClickListener {
-            /*newChanges val threads = binding.product?.questionAnswersThread
-            if (!threads.isNullOrEmpty()) gotoQAThreads(threads.toTypedArray())*/
+            val threads = binding.product?.questionAnswers ?: mutableListOf()
+            gotoQAThreads(threads.toTypedArray())
         }
 
         binding.btnAskAboutProduct.setOnClickListener {
@@ -354,22 +353,10 @@ class ProductDetailFragment : SliderFragment() {
 
             root.tag = questionAnswers._id
 
-            val question = chat[0]
             this.question.text = chat[0].message
-            edit.isVisible = isUserLoggedIn && user?.id.toString() == question.sender._id
-            delete.isVisible = isUserLoggedIn && user?.id.toString() == question.sender._id
-            reply.isVisible = isUserLoggedIn
 
             voteUp.text = questionAnswers.upVotes.size.toString()
             voteDown.text = questionAnswers.downVotes.size.toString()
-
-            edit.setOnClickListener {
-                // todo move to edit question screen
-            }
-
-            delete.setOnClickListener {
-                // todo remove thread
-            }
 
             reply.setOnClickListener {
                 // todo move to reply screen
@@ -378,12 +365,8 @@ class ProductDetailFragment : SliderFragment() {
             val answersAdapter = AnswersAdapter()
             rvAnswers.adapter = answersAdapter
             rvAnswers.isNestedScrollingEnabled = false
-            rvAnswers.addItemDecoration(
-                DividerItemDecoration(
-                    context, (rvAnswers.layoutManager as LinearLayoutManager).orientation
-                )
-            )
             val answers = if (chat.size > 1) chat.subList(1, chat.size) else mutableListOf()
+            hasAnswers = answers.isNotEmpty()
             answersAdapter.submitList(answers)
         }
         addView(parent, layoutQuestionAnswersThread.root, position)
@@ -536,7 +519,7 @@ class ProductDetailFragment : SliderFragment() {
         binding.etAskAboutProduct.text = null
     }
 
-    private fun gotoQAThreads(threads: Array<QuestionAnswersThread>) {
+    private fun gotoQAThreads(threads: Array<QuestionAnswers>) {
         val userId = user?.id?.toString()
         val action = ProductDetailFragmentDirections
             .actionProductDetailFragmentToQAThreadsFragment(userId, threads)

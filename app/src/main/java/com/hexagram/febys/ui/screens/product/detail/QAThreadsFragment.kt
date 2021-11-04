@@ -34,7 +34,6 @@ class QAThreadsFragment : BaseBottomSheet() {
 
     private fun initUi() {
         binding.rvQAThreads.adapter = qaThreadsAdapter
-        qaThreadsAdapter.userId = args.userId
         qaThreadsAdapter.submitList(args.threads.toMutableList())
     }
 

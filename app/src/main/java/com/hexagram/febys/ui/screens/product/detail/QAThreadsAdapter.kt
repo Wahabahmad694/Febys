@@ -2,36 +2,31 @@ package com.hexagram.febys.ui.screens.product.detail
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.view.isVisible
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hexagram.febys.databinding.ItemQuestionAnswersThreadBinding
-import com.hexagram.febys.models.view.QuestionAnswersThread
+import com.hexagram.febys.models.api.product.QuestionAnswers
 
 class QAThreadsAdapter : RecyclerView.Adapter<QAThreadsAdapter.QAThreadsVH>() {
-    var userId: String? = null
-    private var answers = mutableListOf<QuestionAnswersThread>()
+    private var answers = mutableListOf<QuestionAnswers>()
 
     inner class QAThreadsVH(
         private val binding: ItemQuestionAnswersThreadBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: QuestionAnswersThread, position: Int) = binding.apply {
-            question.text = item.question.message
+        fun bind(item: QuestionAnswers, position: Int) = binding.apply {
+            val question = item.chat.first()
+            this.question.text = question.message
             voteUp.text = item.upVotes.size.toString()
             voteDown.text = item.downVotes.size.toString()
 
-            edit.isVisible = userId != null && userId == item.question.senderId
-            delete.isVisible = userId != null && userId == item.question.senderId
-            reply.isVisible = userId != null
+            val answers =
+                if (item.chat.size > 1)
+                    item.chat.subList(1, item.chat.size)
+                else
+                    mutableListOf()
 
-            rvAnswers.adapter = AnswersAdapter().also { /*newChanges it.submitList(item.answers)*/ }
-            rvAnswers.addItemDecoration(
-                DividerItemDecoration(
-                    rvAnswers.context,
-                    (rvAnswers.layoutManager as LinearLayoutManager).orientation
-                )
-            )
+            hasAnswers = answers.isNotEmpty()
+
+            rvAnswers.adapter = AnswersAdapter().also { it.submitList(answers) }
         }
     }
 
@@ -46,7 +41,7 @@ class QAThreadsAdapter : RecyclerView.Adapter<QAThreadsAdapter.QAThreadsVH>() {
         holder.bind(answers[position], position)
     }
 
-    fun submitList(list: MutableList<QuestionAnswersThread>) {
+    fun submitList(list: MutableList<QuestionAnswers>) {
         answers = list
         notifyItemRangeChanged(0, list.size)
     }
