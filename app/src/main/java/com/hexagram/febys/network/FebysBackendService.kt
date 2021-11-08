@@ -3,11 +3,11 @@ package com.hexagram.febys.network
 import com.hexagram.febys.models.api.cart.CartResponse
 import com.hexagram.febys.models.api.pagination.Pagination
 import com.hexagram.febys.models.api.product.FeaturedCategory
-import com.hexagram.febys.models.api.product.QuestionAnswers
 import com.hexagram.febys.models.api.product.Trending
 import com.hexagram.febys.models.api.request.AskQuestionRequest
 import com.hexagram.febys.models.api.request.PagingListRequest
 import com.hexagram.febys.models.api.response.ProductDetailResponse
+import com.hexagram.febys.models.api.response.QuestionAnswersResponse
 import com.hexagram.febys.models.api.vendor.Vendor
 import com.hexagram.febys.models.api.vendor.VendorPagingListing
 import com.hexagram.febys.models.api.wishlist.FavSkuIds
@@ -140,10 +140,10 @@ interface FebysBackendService {
         @Path("productId") productId: String, @Body request: PagingListRequest
     ): ApiResponse<Pagination>
 
-    @POST("v1/consumers/products/{productId}/ask-question")
+    @POST("v1/products/{productId}/ask-question")
     suspend fun askQuestion(
         @Header("Authorization") authKey: String,
         @Path("productId") productId: String,
         @Body askQuestionRequest: AskQuestionRequest
-    ): ApiResponse<QuestionAnswers>
+    ): ApiResponse<QuestionAnswersResponse>
 }

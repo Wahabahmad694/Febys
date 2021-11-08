@@ -2,7 +2,7 @@ package com.hexagram.febys.repos
 
 import com.hexagram.febys.models.api.product.Product
 import com.hexagram.febys.models.api.product.ProductPagingListing
-import com.hexagram.febys.models.api.product.QuestionAnswers
+import com.hexagram.febys.models.api.product.QAThread
 import com.hexagram.febys.models.api.request.AskQuestionRequest
 import com.hexagram.febys.models.api.request.PagingListRequest
 import com.hexagram.febys.models.api.wishlist.FavSkuIds
@@ -85,11 +85,11 @@ open class ProductRepoImpl @Inject constructor(
 
     override suspend fun askQuestion(
         productId: String, question: String, dispatcher: CoroutineDispatcher
-    ) = flow<DataState<QuestionAnswers>> {
+    ) = flow<DataState<MutableList<QAThread>>> {
         val authToken = pref.getAccessToken()
         backendService.askQuestion(authToken, productId, AskQuestionRequest(question))
             .onSuccess {
-                emit(DataState.Data(data!!))
+                emit(DataState.Data(data!!.questionAnswers.qaThreads))
             }
             .onError { emit(DataState.ApiError(message)) }
             .onException { emit(DataState.ExceptionError()) }

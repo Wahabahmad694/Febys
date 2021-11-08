@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.hexagram.febys.models.api.product.Product
-import com.hexagram.febys.models.api.product.QuestionAnswers
+import com.hexagram.febys.models.api.product.QAThread
 import com.hexagram.febys.models.api.product.Variant
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.repos.IProductRepo
@@ -25,8 +25,8 @@ class ProductDetailViewModel @Inject constructor(
     private val _observeProductDetail = MutableLiveData<DataState<Product>>()
     val observeProductDetail: LiveData<DataState<Product>> = _observeProductDetail
 
-    private val _observeAskQuestion = MutableLiveData<DataState<QuestionAnswers>>()
-    val observeAskQuestion: LiveData<DataState<QuestionAnswers>> = _observeAskQuestion
+    private val _observeAskQuestion = MutableLiveData<DataState<MutableList<QAThread>>>()
+    val observeAskQuestion: LiveData<DataState<MutableList<QAThread>>> = _observeAskQuestion
 
     private val _recommendProducts = MutableLiveData<DataState<List<Product>>>()
     val recommendProducts: LiveData<DataState<List<Product>>> = _recommendProducts

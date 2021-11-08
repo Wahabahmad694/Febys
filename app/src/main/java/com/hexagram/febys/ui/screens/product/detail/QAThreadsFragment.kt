@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
 import com.hexagram.febys.base.BaseBottomSheet
 import com.hexagram.febys.databinding.FragmentQAThreadsBinding
+import com.hexagram.febys.models.api.product.QAThread
 import com.hexagram.febys.utils.goBack
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -35,7 +36,12 @@ class QAThreadsFragment : BaseBottomSheet() {
     private fun initUi() {
         binding.rvQAThreads.adapter = qaThreadsAdapter
         qaThreadsAdapter.consumerId = args.userId ?: ""
-        qaThreadsAdapter.submitList(args.threads.toMutableList())
+
+        updateQA(args.threads.toMutableList())
+    }
+
+    private fun updateQA(qa: MutableList<QAThread>) {
+        qaThreadsAdapter.submitList(qa)
     }
 
     private fun uiListeners() {

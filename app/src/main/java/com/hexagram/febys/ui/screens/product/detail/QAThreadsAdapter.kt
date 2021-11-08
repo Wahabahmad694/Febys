@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.hexagram.febys.databinding.ItemQuestionAnswersThreadBinding
-import com.hexagram.febys.models.api.product.QuestionAnswers
+import com.hexagram.febys.models.api.product.QAThread
 
 class QAThreadsAdapter : RecyclerView.Adapter<QAThreadsAdapter.QAThreadsVH>() {
-    private var answers = mutableListOf<QuestionAnswers>()
+    private var answers = mutableListOf<QAThread>()
 
     // consumerId must be set before calling submitList
     var consumerId: String = ""
@@ -15,7 +15,7 @@ class QAThreadsAdapter : RecyclerView.Adapter<QAThreadsAdapter.QAThreadsVH>() {
     inner class QAThreadsVH(
         private val binding: ItemQuestionAnswersThreadBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: QuestionAnswers, position: Int) = binding.apply {
+        fun bind(item: QAThread, position: Int) = binding.apply {
             val question = item.chat.first()
             this.question.text = question.message
             voteUp.text = item.upVotes.size.toString()
@@ -46,7 +46,7 @@ class QAThreadsAdapter : RecyclerView.Adapter<QAThreadsAdapter.QAThreadsVH>() {
         holder.bind(answers[position], position)
     }
 
-    fun submitList(list: MutableList<QuestionAnswers>) {
+    fun submitList(list: MutableList<QAThread>) {
         answers = list
         notifyItemRangeChanged(0, list.size)
     }

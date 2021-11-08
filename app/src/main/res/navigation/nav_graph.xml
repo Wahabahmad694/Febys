@@ -455,7 +455,7 @@
             app:nullable="true" />
         <argument
             android:name="threads"
-            app:argType="com.hexagram.febys.models.api.product.QuestionAnswers[]" />
+            app:argType="com.hexagram.febys.models.api.product.QAThread[]" />
     </dialog>
     <fragment
         android:id="@+id/vouchersFragment"
