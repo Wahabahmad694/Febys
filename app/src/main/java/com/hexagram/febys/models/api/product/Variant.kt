@@ -34,10 +34,9 @@ data class Variant(
 ) : Parcelable {
 
     @IgnoredOnParcel
-    @Transient
-    val images: List<String> = emptyList()
+    val images: List<String>
         get() {
-            return if (_images.isNotEmpty()) field else listOf("")
+            return if (_images.isNotEmpty()) _images else listOf("")
         }
 
     fun getFirstVariantAttr(): Attr? {

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.hexagram.febys.base.BaseViewModel
-import com.hexagram.febys.models.view.Voucher
+import com.hexagram.febys.models.api.vouchers.Voucher
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.repos.IVoucherRepo
 import dagger.hilt.android.lifecycle.HiltViewModel

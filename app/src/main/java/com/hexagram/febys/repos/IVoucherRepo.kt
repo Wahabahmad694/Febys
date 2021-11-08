@@ -1,6 +1,6 @@
 package com.hexagram.febys.repos
 
-import com.hexagram.febys.models.view.Voucher
+import com.hexagram.febys.models.api.vouchers.Voucher
 import com.hexagram.febys.network.DataState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
