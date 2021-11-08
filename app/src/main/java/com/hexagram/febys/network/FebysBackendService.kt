@@ -8,6 +8,8 @@ import com.hexagram.febys.models.api.request.PagingListRequest
 import com.hexagram.febys.models.api.response.ProductDetailResponse
 import com.hexagram.febys.models.api.vendor.Vendor
 import com.hexagram.febys.models.api.vendor.VendorPagingListing
+import com.hexagram.febys.models.api.vouchers.Voucher
+import com.hexagram.febys.models.api.vouchers.VoucherResponse
 import com.hexagram.febys.models.api.wishlist.FavSkuIds
 import com.hexagram.febys.models.api.wishlist.WishlistSkuIds
 import com.hexagram.febys.network.adapter.ApiResponse
@@ -138,4 +140,9 @@ interface FebysBackendService {
     suspend fun fetchSimilarProducts(
         @Path("productId") productId: String, @Body request: PagingListRequest
     ): ApiResponse<Pagination>
+
+    @POST("v1/vouchers/of-consumer/list")
+    suspend fun fetchVouchers(@Header("Authorization") authKey: String): ApiResponse<VoucherResponse>
+
+
 }
