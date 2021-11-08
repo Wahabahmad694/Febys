@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.google.gson.Gson
+import com.hexagram.febys.models.api.consumer.Consumer
 import com.hexagram.febys.models.view.PaymentMethod
 import com.hexagram.febys.models.view.ShippingAddress
 import com.hexagram.febys.network.response.User
@@ -16,6 +17,7 @@ class PrefManagerImpl @Inject constructor(
 ) : IPrefManger {
     companion object {
         private const val KEY_USER = "user"
+        private const val KEY_CONSUMER = "consumer"
         private const val KEY_ACCESS_TOKEN = "accessToken"
         private const val KEY_REFRESH_TOKEN = "refreshToken"
         private const val KEY_FAV = "fav"
@@ -40,10 +42,21 @@ class PrefManagerImpl @Inject constructor(
         saveString(KEY_USER, userJson)
     }
 
+    override fun saveConsumer(consumer: Consumer) {
+        val userJson = Gson().toJson(consumer)
+        saveString(KEY_CONSUMER, userJson)
+    }
+
     override fun getUser(): User? {
         val userJson = getString(KEY_USER, "")
         if (userJson.isEmpty()) return null
         return Gson().fromJson(userJson, User::class.java)
+    }
+
+    override fun getConsumer(): Consumer? {
+        val consumerJson = getString(KEY_CONSUMER, "")
+        if (consumerJson.isEmpty()) return null
+        return Gson().fromJson(consumerJson, Consumer::class.java)
     }
 
     override fun saveRefreshToken(refreshToken: String) {
@@ -56,6 +69,10 @@ class PrefManagerImpl @Inject constructor(
 
     override fun clearUser() {
         remove(KEY_USER)
+    }
+
+    override fun clearConsumer() {
+        remove(KEY_CONSUMER)
     }
 
     override fun clearAccessToken() {

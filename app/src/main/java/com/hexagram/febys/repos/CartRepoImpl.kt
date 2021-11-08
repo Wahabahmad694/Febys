@@ -2,6 +2,8 @@ package com.hexagram.febys.repos
 
 import androidx.lifecycle.LiveData
 import com.hexagram.febys.dataSource.ICartDataSource
+import com.hexagram.febys.models.api.cart.Cart
+import com.hexagram.febys.models.api.cart.CartResponse
 import com.hexagram.febys.models.db.CartDTO
 import com.hexagram.febys.network.FebysBackendService
 import com.hexagram.febys.network.adapter.ApiResponse
@@ -47,19 +49,8 @@ class CartRepoImpl @Inject constructor(
         }
     }
 
-    private suspend fun pullCart() {
-        val authToken = pref.getAccessToken()
-        if (authToken.isEmpty()) return
-        val response = backendService.fetchCart(authToken)
-        if (response is ApiResponse.ApiSuccessResponse) {
-            val cart = response.data!!
-            cartDataSource.updateCart(cart)
-        }
-    }
-
-    override suspend fun pullAndPushCart() {
-        pullCart()
-        pushCart()
+    override suspend fun updateCart(cart: CartResponse) {
+        cartDataSource.updateCart(cart)
     }
 
     override suspend fun refreshCart() = pushCart()

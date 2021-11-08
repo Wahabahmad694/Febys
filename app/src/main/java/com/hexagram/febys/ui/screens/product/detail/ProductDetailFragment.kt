@@ -372,6 +372,8 @@ class ProductDetailFragment : SliderFragment() {
             voteUp.text = questionAnswers.upVotes.size.toString()
             voteDown.text = questionAnswers.downVotes.size.toString()
 
+            // todo update icon of voteUp and voteDown
+
             reply.setOnClickListener {
                 // todo move to reply screen
             }
@@ -521,7 +523,7 @@ class ProductDetailFragment : SliderFragment() {
     }
 
     private fun gotoQAThreads(threads: Array<QuestionAnswers>) {
-        val userId = user?.id?.toString()
+        val userId = consumer?.id?.toString()
         val action = ProductDetailFragmentDirections
             .actionProductDetailFragmentToQAThreadsFragment(userId, threads)
         navigateTo(action)

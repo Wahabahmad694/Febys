@@ -3,10 +3,10 @@ package com.hexagram.febys.repos
 import com.hexagram.febys.models.api.product.Product
 import com.hexagram.febys.models.api.product.ProductPagingListing
 import com.hexagram.febys.models.api.product.QuestionAnswers
+import com.hexagram.febys.models.api.request.AskQuestionRequest
 import com.hexagram.febys.models.api.request.PagingListRequest
 import com.hexagram.febys.models.api.wishlist.FavSkuIds
 import com.hexagram.febys.network.DataState
-import com.hexagram.febys.network.FakeApiService
 import com.hexagram.febys.network.FebysBackendService
 import com.hexagram.febys.network.adapter.*
 import com.hexagram.febys.prefs.IPrefManger
@@ -87,7 +87,7 @@ open class ProductRepoImpl @Inject constructor(
         productId: String, question: String, dispatcher: CoroutineDispatcher
     ) = flow<DataState<QuestionAnswers>> {
         val authToken = pref.getAccessToken()
-        FakeApiService.postQuestion(authToken, productId, question)
+        backendService.askQuestion(authToken, productId, AskQuestionRequest(question))
             .onSuccess {
                 emit(DataState.Data(data!!))
             }

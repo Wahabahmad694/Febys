@@ -9,6 +9,9 @@ import com.hexagram.febys.models.api.product.QuestionAnswers
 class QAThreadsAdapter : RecyclerView.Adapter<QAThreadsAdapter.QAThreadsVH>() {
     private var answers = mutableListOf<QuestionAnswers>()
 
+    // consumerId must be set before calling submitList
+    var consumerId: String = ""
+
     inner class QAThreadsVH(
         private val binding: ItemQuestionAnswersThreadBinding
     ) : RecyclerView.ViewHolder(binding.root) {
@@ -17,6 +20,8 @@ class QAThreadsAdapter : RecyclerView.Adapter<QAThreadsAdapter.QAThreadsVH>() {
             this.question.text = question.message
             voteUp.text = item.upVotes.size.toString()
             voteDown.text = item.downVotes.size.toString()
+
+            // todo update voteUp and voteDown icon
 
             val answers =
                 if (item.chat.size > 1)
