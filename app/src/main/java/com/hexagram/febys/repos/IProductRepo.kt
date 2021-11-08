@@ -24,6 +24,13 @@ interface IProductRepo {
         productId: String, question: String, dispatcher: CoroutineDispatcher = Dispatchers.IO
     ): Flow<DataState<MutableList<QAThread>>>
 
+    suspend fun replyQuestion(
+        productId: String,
+        question: String,
+        threadId: String,
+        dispatcher: CoroutineDispatcher = Dispatchers.IO
+    ): Flow<DataState<MutableList<QAThread>>>
+
     suspend fun fetchRecommendProducts(dispatcher: CoroutineDispatcher = Dispatchers.IO): List<Product>
 
     suspend fun fetchSimilarProducts(

@@ -454,6 +454,9 @@
             app:argType="string"
             app:nullable="true" />
         <argument
+            android:name="productId"
+            app:argType="string" />
+        <argument
             android:name="threads"
             app:argType="com.hexagram.febys.models.api.product.QAThread[]" />
     </dialog>

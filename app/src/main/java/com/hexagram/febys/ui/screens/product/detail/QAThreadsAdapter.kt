@@ -12,6 +12,8 @@ class QAThreadsAdapter : RecyclerView.Adapter<QAThreadsAdapter.QAThreadsVH>() {
     // consumerId must be set before calling submitList
     var consumerId: String = ""
 
+    var replyTo: ((thread: QAThread) -> Unit)? = null
+
     inner class QAThreadsVH(
         private val binding: ItemQuestionAnswersThreadBinding
     ) : RecyclerView.ViewHolder(binding.root) {
@@ -32,6 +34,10 @@ class QAThreadsAdapter : RecyclerView.Adapter<QAThreadsAdapter.QAThreadsVH>() {
             hasAnswers = answers.isNotEmpty()
 
             rvAnswers.adapter = AnswersAdapter().also { it.submitList(answers) }
+
+            reply.setOnClickListener {
+                replyTo?.invoke(item)
+            }
         }
     }
 

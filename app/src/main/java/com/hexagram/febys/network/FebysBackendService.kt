@@ -6,6 +6,7 @@ import com.hexagram.febys.models.api.product.FeaturedCategory
 import com.hexagram.febys.models.api.product.Trending
 import com.hexagram.febys.models.api.request.AskQuestionRequest
 import com.hexagram.febys.models.api.request.PagingListRequest
+import com.hexagram.febys.models.api.request.ReplyQuestionRequest
 import com.hexagram.febys.models.api.response.ProductDetailResponse
 import com.hexagram.febys.models.api.response.QuestionAnswersResponse
 import com.hexagram.febys.models.api.vendor.Vendor
@@ -145,5 +146,12 @@ interface FebysBackendService {
         @Header("Authorization") authKey: String,
         @Path("productId") productId: String,
         @Body askQuestionRequest: AskQuestionRequest
+    ): ApiResponse<QuestionAnswersResponse>
+
+    @POST("v1/products/{productId}/ask-question")
+    suspend fun replyQuestion(
+        @Header("Authorization") authKey: String,
+        @Path("productId") productId: String,
+        @Body askQuestionRequest: ReplyQuestionRequest
     ): ApiResponse<QuestionAnswersResponse>
 }

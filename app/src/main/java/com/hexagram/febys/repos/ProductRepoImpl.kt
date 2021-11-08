@@ -5,6 +5,7 @@ import com.hexagram.febys.models.api.product.ProductPagingListing
 import com.hexagram.febys.models.api.product.QAThread
 import com.hexagram.febys.models.api.request.AskQuestionRequest
 import com.hexagram.febys.models.api.request.PagingListRequest
+import com.hexagram.febys.models.api.request.ReplyQuestionRequest
 import com.hexagram.febys.models.api.wishlist.FavSkuIds
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.FebysBackendService
@@ -88,6 +89,19 @@ open class ProductRepoImpl @Inject constructor(
     ) = flow<DataState<MutableList<QAThread>>> {
         val authToken = pref.getAccessToken()
         backendService.askQuestion(authToken, productId, AskQuestionRequest(question))
+            .onSuccess {
+                emit(DataState.Data(data!!.questionAnswers.qaThreads))
+            }
+            .onError { emit(DataState.ApiError(message)) }
+            .onException { emit(DataState.ExceptionError()) }
+            .onNetworkError { emit(DataState.NetworkError()) }
+    }.flowOn(dispatcher)
+
+    override suspend fun replyQuestion(
+        productId: String, question: String, threadId: String, dispatcher: CoroutineDispatcher
+    ) = flow<DataState<MutableList<QAThread>>> {
+        val authToken = pref.getAccessToken()
+        backendService.replyQuestion(authToken, productId, ReplyQuestionRequest(threadId, question))
             .onSuccess {
                 emit(DataState.Data(data!!.questionAnswers.qaThreads))
             }

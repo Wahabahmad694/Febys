@@ -11,6 +11,10 @@
             type="com.hexagram.febys.models.api.product.Product" />
 
         <variable
+            name="thread"
+            type="com.hexagram.febys.models.api.product.QAThread" />
+
+        <variable
             name="variant"
             type="com.hexagram.febys.models.api.product.Variant" />
 
@@ -805,6 +809,11 @@
         <include
             android:id="@+id/bottom_sheet_ask_question"
             layout="@layout/bottom_sheet_ask_question" />
+
+        <include
+            android:id="@+id/bottom_sheet_reply_question"
+            layout="@layout/bottom_sheet_reply_question"
+            app:thread="@{thread}" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
