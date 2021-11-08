@@ -131,7 +131,7 @@
                     style="@style/TextTheme.HelveticaNeue.TS14.Grey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/label_expiration_date"/>
+                    android:text="@string/label_expiration_date" />
 
                 <TextView
                     android:id="@+id/voucher_expiration_date"
