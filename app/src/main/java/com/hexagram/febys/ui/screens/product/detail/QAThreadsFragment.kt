@@ -73,6 +73,14 @@ class QAThreadsFragment : BaseBottomSheet() {
             showBottomSheet(replyQuestionBottomSheet)
         }
 
+        qaThreadsAdapter.upVote = { thread, isRevoke ->
+            productDetailViewModel.voteUp(args.productId, thread._id, isRevoke)
+        }
+
+        qaThreadsAdapter.downVote = { thread, isRevoke ->
+            productDetailViewModel.voteDown(args.productId, thread._id, isRevoke)
+        }
+
         binding.bottomSheetReplyQuestion.btnPostAnswer.setOnClickListener {
             val answer = binding.bottomSheetReplyQuestion.etAnswer.text.toString()
             val threadId = binding.thread?._id

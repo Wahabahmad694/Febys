@@ -2,6 +2,7 @@ package com.hexagram.febys.models.api.consumer
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import com.hexagram.febys.models.api.contact.PhoneNo
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -17,7 +18,7 @@ data class Consumer(
     @SerializedName("country_code")
     val countryCode: String,
     @SerializedName("phone_number")
-    val phoneNumber: String,
+    val phoneNumber: PhoneNo,
     @SerializedName("units_purchased")
     val unitsPurchased: Int,
     @SerializedName("sale_value")

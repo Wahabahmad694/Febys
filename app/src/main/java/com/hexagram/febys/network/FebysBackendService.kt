@@ -154,4 +154,32 @@ interface FebysBackendService {
         @Path("productId") productId: String,
         @Body askQuestionRequest: ReplyQuestionRequest
     ): ApiResponse<QuestionAnswersResponse>
+
+    @POST("v1/products/{productId}/threads/{threadId}/up-vote")
+    suspend fun voteUp(
+        @Header("Authorization") authToken: String,
+        @Path("productId") productId: String,
+        @Path("threadId") threadId: String
+    ): ApiResponse<QuestionAnswersResponse>
+
+    @DELETE("v1/products/{productId}/threads/{threadId}/up-vote")
+    suspend fun revokeVoteUp(
+        @Header("Authorization") authToken: String,
+        @Path("productId") productId: String,
+        @Path("threadId") threadId: String
+    ): ApiResponse<QuestionAnswersResponse>
+
+    @POST("v1/products/{productId}/threads/{threadId}/down-vote")
+    suspend fun voteDown(
+        @Header("Authorization") authToken: String,
+        @Path("productId") productId: String,
+        @Path("threadId") threadId: String
+    ): ApiResponse<QuestionAnswersResponse>
+
+    @DELETE("v1/products/{productId}/threads/{threadId}/down-vote")
+    suspend fun revokeVoteDown(
+        @Header("Authorization") authToken: String,
+        @Path("productId") productId: String,
+        @Path("threadId") threadId: String
+    ): ApiResponse<QuestionAnswersResponse>
 }

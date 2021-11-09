@@ -31,6 +31,20 @@ interface IProductRepo {
         dispatcher: CoroutineDispatcher = Dispatchers.IO
     ): Flow<DataState<MutableList<QAThread>>>
 
+    fun voteUp(
+        productId: String,
+        threadId: String,
+        revoke: Boolean,
+        dispatcher: CoroutineDispatcher = Dispatchers.IO
+    ): Flow<DataState<MutableList<QAThread>>>
+
+    fun voteDown(
+        productId: String,
+        threadId: String,
+        revoke: Boolean,
+        dispatcher: CoroutineDispatcher = Dispatchers.IO
+    ): Flow<DataState<MutableList<QAThread>>>
+
     suspend fun fetchRecommendProducts(dispatcher: CoroutineDispatcher = Dispatchers.IO): List<Product>
 
     suspend fun fetchSimilarProducts(

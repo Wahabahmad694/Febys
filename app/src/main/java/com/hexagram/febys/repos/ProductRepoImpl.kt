@@ -110,6 +110,42 @@ open class ProductRepoImpl @Inject constructor(
             .onNetworkError { emit(DataState.NetworkError()) }
     }.flowOn(dispatcher)
 
+    override fun voteUp(
+        productId: String, threadId: String, revoke: Boolean, dispatcher: CoroutineDispatcher
+    ) = flow<DataState<MutableList<QAThread>>> {
+        val authToken = pref.getAccessToken()
+
+        val response = if (!revoke)
+            backendService.voteUp(authToken, productId, threadId)
+        else
+            backendService.revokeVoteUp(authToken, productId, threadId)
+
+        response.onSuccess {
+            emit(DataState.Data(data!!.questionAnswers.qaThreads))
+        }
+            .onError { emit(DataState.ApiError(message)) }
+            .onException { emit(DataState.ExceptionError()) }
+            .onNetworkError { emit(DataState.NetworkError()) }
+    }.flowOn(dispatcher)
+
+    override fun voteDown(
+        productId: String, threadId: String, revoke: Boolean, dispatcher: CoroutineDispatcher
+    ) = flow<DataState<MutableList<QAThread>>> {
+        val authToken = pref.getAccessToken()
+
+        val response = if (!revoke)
+            backendService.voteDown(authToken, productId, threadId)
+        else
+            backendService.revokeVoteDown(authToken, productId, threadId)
+
+        response.onSuccess {
+            emit(DataState.Data(data!!.questionAnswers.qaThreads))
+        }
+            .onError { emit(DataState.ApiError(message)) }
+            .onException { emit(DataState.ExceptionError()) }
+            .onNetworkError { emit(DataState.NetworkError()) }
+    }.flowOn(dispatcher)
+
     override suspend fun fetchRecommendProducts(dispatcher: CoroutineDispatcher): List<Product> {
         val pagingListRequest = PagingListRequest()
         val response = backendService.fetchRecommendProducts(pagingListRequest)

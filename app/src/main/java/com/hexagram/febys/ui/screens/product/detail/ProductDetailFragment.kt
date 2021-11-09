@@ -418,11 +418,47 @@ class ProductDetailFragment : SliderFragment() {
             voteUp.text = qaThread.upVotes.size.toString()
             voteDown.text = qaThread.downVotes.size.toString()
 
-            // todo update icon of voteUp and voteDown
+            if (qaThread.upVotes.contains(consumer?.id.toString())) {
+//                todo update icon of upVote
+            }
+            if (qaThread.downVotes.contains(consumer?.id.toString())) {
+//                todo update icon of downVote
+            }
 
             reply.setOnClickListener {
+                if (!isUserLoggedIn) {
+                    gotoLogin()
+                    return@setOnClickListener
+                }
+
                 binding.thread = qaThread
                 showBottomSheet(replyQuestionBottomSheet)
+            }
+
+            voteUp.setOnClickListener {
+                if (!isUserLoggedIn) {
+                    gotoLogin()
+                    return@setOnClickListener
+                }
+
+                productDetailViewModel.voteUp(
+                    args.productId,
+                    qaThread._id,
+                    qaThread.upVotes.contains(consumer?.id.toString() ?: "")
+                )
+            }
+
+            voteDown.setOnClickListener {
+                if (!isUserLoggedIn) {
+                    gotoLogin()
+                    return@setOnClickListener
+                }
+
+                productDetailViewModel.voteDown(
+                    args.productId,
+                    qaThread._id,
+                    qaThread.downVotes.contains(consumer?.id.toString() ?: "")
+                )
             }
 
             val answersAdapter = AnswersAdapter()

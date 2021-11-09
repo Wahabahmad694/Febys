@@ -89,6 +89,22 @@ class ProductDetailViewModel @Inject constructor(
             }
         }
 
+    fun voteUp(productId: String, threadId: String, revoke: Boolean) = viewModelScope.launch {
+        this@ProductDetailViewModel._observeQAThreads.postValue(DataState.Loading())
+        productRepo.voteUp(productId, threadId, revoke).collect {
+            if (it is DataState.Data) updateQAThreads(it.data)
+            this@ProductDetailViewModel._observeQAThreads.postValue(it)
+        }
+    }
+
+    fun voteDown(productId: String, threadId: String, revoke: Boolean) = viewModelScope.launch {
+        this@ProductDetailViewModel._observeQAThreads.postValue(DataState.Loading())
+        productRepo.voteDown(productId, threadId, revoke).collect {
+            if (it is DataState.Data) updateQAThreads(it.data)
+            this@ProductDetailViewModel._observeQAThreads.postValue(it)
+        }
+    }
+
     fun updateQAThreads(qaThread: MutableList<QAThread>) {
         val productState = _observeProductDetail.value
         if (productState is DataState.Data) {

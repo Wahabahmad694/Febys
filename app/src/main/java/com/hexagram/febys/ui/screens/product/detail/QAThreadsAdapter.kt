@@ -13,6 +13,8 @@ class QAThreadsAdapter : RecyclerView.Adapter<QAThreadsAdapter.QAThreadsVH>() {
     var consumerId: String = ""
 
     var replyTo: ((thread: QAThread) -> Unit)? = null
+    var upVote: ((thread: QAThread, isRevoke: Boolean) -> Unit)? = null
+    var downVote: ((thread: QAThread, isRevoke: Boolean) -> Unit)? = null
 
     inner class QAThreadsVH(
         private val binding: ItemQuestionAnswersThreadBinding
@@ -23,7 +25,12 @@ class QAThreadsAdapter : RecyclerView.Adapter<QAThreadsAdapter.QAThreadsVH>() {
             voteUp.text = item.upVotes.size.toString()
             voteDown.text = item.downVotes.size.toString()
 
-            // todo update voteUp and voteDown icon
+            if (item.upVotes.contains(consumerId)) {
+//                todo update icon of upVote
+            }
+            if (item.downVotes.contains(consumerId)) {
+//                todo update icon of downVote
+            }
 
             val answers =
                 if (item.chat.size > 1)
@@ -37,6 +44,13 @@ class QAThreadsAdapter : RecyclerView.Adapter<QAThreadsAdapter.QAThreadsVH>() {
 
             reply.setOnClickListener {
                 replyTo?.invoke(item)
+            }
+
+            voteUp.setOnClickListener {
+                upVote?.invoke(item, item.upVotes.contains(consumerId))
+            }
+            voteDown.setOnClickListener {
+                downVote?.invoke(item, item.downVotes.contains(consumerId))
             }
         }
     }
