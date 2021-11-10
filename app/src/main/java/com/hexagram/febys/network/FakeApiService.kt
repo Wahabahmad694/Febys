@@ -1,12 +1,8 @@
 package com.hexagram.febys.network
 
 import com.hexagram.febys.R
-import com.hexagram.febys.models.api.chat.Chat
-import com.hexagram.febys.models.api.chat.Sender
-import com.hexagram.febys.models.api.product.QAThread
-import com.hexagram.febys.models.api.product.QuestionAnswers
-import com.hexagram.febys.models.api.vouchers.Voucher
-import com.hexagram.febys.models.view.*
+import com.hexagram.febys.models.view.PaymentMethod
+import com.hexagram.febys.models.view.ShippingAddress
 import com.hexagram.febys.network.adapter.ApiResponse
 import kotlinx.coroutines.delay
 import retrofit2.Response
