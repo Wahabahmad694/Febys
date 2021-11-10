@@ -2,11 +2,12 @@ package com.hexagram.febys.repos
 
 import com.hexagram.febys.models.api.product.Product
 import com.hexagram.febys.models.api.product.ProductPagingListing
-import com.hexagram.febys.models.api.product.QuestionAnswers
+import com.hexagram.febys.models.api.product.QAThread
+import com.hexagram.febys.models.api.request.AskQuestionRequest
 import com.hexagram.febys.models.api.request.PagingListRequest
+import com.hexagram.febys.models.api.request.ReplyQuestionRequest
 import com.hexagram.febys.models.api.wishlist.FavSkuIds
 import com.hexagram.febys.network.DataState
-import com.hexagram.febys.network.FakeApiService
 import com.hexagram.febys.network.FebysBackendService
 import com.hexagram.febys.network.adapter.*
 import com.hexagram.febys.prefs.IPrefManger
@@ -85,12 +86,61 @@ open class ProductRepoImpl @Inject constructor(
 
     override suspend fun askQuestion(
         productId: String, question: String, dispatcher: CoroutineDispatcher
-    ) = flow<DataState<QuestionAnswers>> {
+    ) = flow<DataState<MutableList<QAThread>>> {
         val authToken = pref.getAccessToken()
-        FakeApiService.postQuestion(authToken, productId, question)
+        backendService.askQuestion(authToken, productId, AskQuestionRequest(question))
             .onSuccess {
-                emit(DataState.Data(data!!))
+                emit(DataState.Data(data!!.questionAnswers.qaThreads))
             }
+            .onError { emit(DataState.ApiError(message)) }
+            .onException { emit(DataState.ExceptionError()) }
+            .onNetworkError { emit(DataState.NetworkError()) }
+    }.flowOn(dispatcher)
+
+    override suspend fun replyQuestion(
+        productId: String, question: String, threadId: String, dispatcher: CoroutineDispatcher
+    ) = flow<DataState<MutableList<QAThread>>> {
+        val authToken = pref.getAccessToken()
+        backendService.replyQuestion(authToken, productId, ReplyQuestionRequest(threadId, question))
+            .onSuccess {
+                emit(DataState.Data(data!!.questionAnswers.qaThreads))
+            }
+            .onError { emit(DataState.ApiError(message)) }
+            .onException { emit(DataState.ExceptionError()) }
+            .onNetworkError { emit(DataState.NetworkError()) }
+    }.flowOn(dispatcher)
+
+    override fun voteUp(
+        productId: String, threadId: String, revoke: Boolean, dispatcher: CoroutineDispatcher
+    ) = flow<DataState<MutableList<QAThread>>> {
+        val authToken = pref.getAccessToken()
+
+        val response = if (!revoke)
+            backendService.voteUp(authToken, productId, threadId)
+        else
+            backendService.revokeVoteUp(authToken, productId, threadId)
+
+        response.onSuccess {
+            emit(DataState.Data(data!!.questionAnswers.qaThreads))
+        }
+            .onError { emit(DataState.ApiError(message)) }
+            .onException { emit(DataState.ExceptionError()) }
+            .onNetworkError { emit(DataState.NetworkError()) }
+    }.flowOn(dispatcher)
+
+    override fun voteDown(
+        productId: String, threadId: String, revoke: Boolean, dispatcher: CoroutineDispatcher
+    ) = flow<DataState<MutableList<QAThread>>> {
+        val authToken = pref.getAccessToken()
+
+        val response = if (!revoke)
+            backendService.voteDown(authToken, productId, threadId)
+        else
+            backendService.revokeVoteDown(authToken, productId, threadId)
+
+        response.onSuccess {
+            emit(DataState.Data(data!!.questionAnswers.qaThreads))
+        }
             .onError { emit(DataState.ApiError(message)) }
             .onException { emit(DataState.ExceptionError()) }
             .onNetworkError { emit(DataState.NetworkError()) }

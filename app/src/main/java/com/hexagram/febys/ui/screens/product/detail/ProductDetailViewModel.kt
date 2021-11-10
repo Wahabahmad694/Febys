@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.hexagram.febys.models.api.product.Product
-import com.hexagram.febys.models.api.product.QuestionAnswers
+import com.hexagram.febys.models.api.product.QAThread
 import com.hexagram.febys.models.api.product.Variant
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.repos.IProductRepo
@@ -25,8 +25,8 @@ class ProductDetailViewModel @Inject constructor(
     private val _observeProductDetail = MutableLiveData<DataState<Product>>()
     val observeProductDetail: LiveData<DataState<Product>> = _observeProductDetail
 
-    private val _observeAskQuestion = MutableLiveData<DataState<QuestionAnswers>>()
-    val observeAskQuestion: LiveData<DataState<QuestionAnswers>> = _observeAskQuestion
+    private val _observeQAThreads = MutableLiveData<DataState<MutableList<QAThread>>>()
+    val observeQAThreads: LiveData<DataState<MutableList<QAThread>>> = _observeQAThreads
 
     private val _recommendProducts = MutableLiveData<DataState<List<Product>>>()
     val recommendProducts: LiveData<DataState<List<Product>>> = _recommendProducts
@@ -73,12 +73,44 @@ class ProductDetailViewModel @Inject constructor(
     }
 
     fun askQuestion(productId: String, question: String) = viewModelScope.launch {
-        _observeAskQuestion.postValue(DataState.Loading())
+        this@ProductDetailViewModel._observeQAThreads.postValue(DataState.Loading())
         productRepo.askQuestion(productId, question).collect {
-            _observeAskQuestion.postValue(it)
+            if (it is DataState.Data) updateQAThreads(it.data)
+            this@ProductDetailViewModel._observeQAThreads.postValue(it)
         }
     }
 
+    fun replyQuestion(productId: String, answer: String, threadId: String) =
+        viewModelScope.launch {
+            this@ProductDetailViewModel._observeQAThreads.postValue(DataState.Loading())
+            productRepo.replyQuestion(productId, answer, threadId).collect {
+                if (it is DataState.Data) updateQAThreads(it.data)
+                this@ProductDetailViewModel._observeQAThreads.postValue(it)
+            }
+        }
+
+    fun voteUp(productId: String, threadId: String, revoke: Boolean) = viewModelScope.launch {
+        this@ProductDetailViewModel._observeQAThreads.postValue(DataState.Loading())
+        productRepo.voteUp(productId, threadId, revoke).collect {
+            if (it is DataState.Data) updateQAThreads(it.data)
+            this@ProductDetailViewModel._observeQAThreads.postValue(it)
+        }
+    }
+
+    fun voteDown(productId: String, threadId: String, revoke: Boolean) = viewModelScope.launch {
+        this@ProductDetailViewModel._observeQAThreads.postValue(DataState.Loading())
+        productRepo.voteDown(productId, threadId, revoke).collect {
+            if (it is DataState.Data) updateQAThreads(it.data)
+            this@ProductDetailViewModel._observeQAThreads.postValue(it)
+        }
+    }
+
+    fun updateQAThreads(qaThread: MutableList<QAThread>) {
+        val productState = _observeProductDetail.value
+        if (productState is DataState.Data) {
+            productState.data._qaThreads = qaThread.asReversed()
+        }
+    }
 
     fun fetchRecommendProducts() = viewModelScope.launch {
         val products = productRepo.fetchRecommendProducts()

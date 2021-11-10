@@ -5,49 +5,70 @@
 
     <data>
 
+        <variable
+            name="thread"
+            type="com.hexagram.febys.models.api.product.QAThread" />
+
     </data>
 
-    <LinearLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_product_brand_appbar"
-                style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
-                android:background="@color/grey"
-                android:gravity="center"
-                android:paddingHorizontal="@dimen/_32dp"
-                android:text="@string/label_customer_q_and_a"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_height="wrap_content">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/_16dp"
-                android:src="@drawable/ic_close"
-                app:layout_constraintBottom_toBottomOf="@id/tv_product_brand_appbar"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_product_brand_appbar" />
+                <TextView
+                    android:id="@+id/tv_product_brand_appbar"
+                    style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="?actionBarSize"
+                    android:background="@color/grey"
+                    android:gravity="center"
+                    android:paddingHorizontal="@dimen/_32dp"
+                    android:text="@string/label_customer_q_and_a"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_16dp"
+                    android:src="@drawable/ic_close"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_product_brand_appbar"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_product_brand_appbar" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_q_a_threads"
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_q_a_threads"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:paddingHorizontal="@dimen/_16sdp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_question_answers_thread" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/bg_dim"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:paddingHorizontal="@dimen/_16sdp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_question_answers_thread" />
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:background="?color_dim" />
+
+        <include
+            android:id="@+id/bottom_sheet_reply_question"
+            layout="@layout/bottom_sheet_reply_question"
+            app:thread="@{thread}" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

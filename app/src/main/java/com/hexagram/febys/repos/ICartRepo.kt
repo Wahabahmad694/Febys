@@ -1,6 +1,8 @@
 package com.hexagram.febys.repos
 
 import androidx.lifecycle.LiveData
+import com.hexagram.febys.models.api.cart.Cart
+import com.hexagram.febys.models.api.cart.CartResponse
 import com.hexagram.febys.models.db.CartDTO
 
 interface ICartRepo {
@@ -16,7 +18,7 @@ interface ICartRepo {
 
     fun clearCart()
 
-    suspend fun pullAndPushCart()
+    suspend fun updateCart(cart: CartResponse)
 
     suspend fun refreshCart()
 }

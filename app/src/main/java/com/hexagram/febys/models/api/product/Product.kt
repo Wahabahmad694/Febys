@@ -25,10 +25,13 @@ data class Product constructor(
     val variants: List<Variant>,
     val vendor: Vendor,
     @SerializedName("question_answers")
-    val questionAnswers: MutableList<QuestionAnswers>,
+    var _qaThreads: MutableList<QAThread>,
     @SerializedName("created_at")
     val createdAt: String,
     @SerializedName("updated_at")
     val updatedAt: String,
-) : Parcelable
+) : Parcelable {
+    val qaThreads
+        get() = _qaThreads.asReversed()
+}
 

@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -25,9 +26,8 @@ import com.hexagram.febys.databinding.LayoutAdditionalProductBinding
 import com.hexagram.febys.databinding.LayoutProductDescriptionBinding
 import com.hexagram.febys.models.api.product.Description
 import com.hexagram.febys.models.api.product.Product
-import com.hexagram.febys.models.api.product.QuestionAnswers
+import com.hexagram.febys.models.api.product.QAThread
 import com.hexagram.febys.models.api.product.Variant
-import com.hexagram.febys.models.view.QuestionAnswersThread
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.cart.CartViewModel
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
@@ -46,6 +46,8 @@ class ProductDetailFragment : SliderFragment() {
     private val productVariantSecondAttrAdapter = ProductVariantAdapter()
     private val variantFirstAttrBottomSheet get() = BottomSheetBehavior.from(binding.bottomSheetVariantFirstAttr.root)
     private val variantSecondAttrBottomSheet get() = BottomSheetBehavior.from(binding.bottomSheetVariantSecondAttr.root)
+    private val askQuestionBottomSheet get() = BottomSheetBehavior.from(binding.bottomSheetAskQuestion.root)
+    private val replyQuestionBottomSheet get() = BottomSheetBehavior.from(binding.bottomSheetReplyQuestion.root)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,8 +75,10 @@ class ProductDetailFragment : SliderFragment() {
     }
 
     private fun initUi() {
-        closeVariantBottomSheet(variantFirstAttrBottomSheet)
-        closeVariantBottomSheet(variantSecondAttrBottomSheet)
+        closeBottomSheet(variantFirstAttrBottomSheet)
+        closeBottomSheet(variantSecondAttrBottomSheet)
+        closeBottomSheet(askQuestionBottomSheet)
+        closeBottomSheet(replyQuestionBottomSheet)
 
         binding.containerAskAboutProduct.isVisible = isUserLoggedIn
 
@@ -106,22 +110,30 @@ class ProductDetailFragment : SliderFragment() {
 
         binding.containerProductVariantFirstAttr.setOnClickListener {
             binding.variant?.let {
-                showVariantBottomSheet(variantFirstAttrBottomSheet)
+                showBottomSheet(variantFirstAttrBottomSheet)
             }
         }
 
         binding.containerProductVariantSecondAttr.setOnClickListener {
             binding.variant?.let {
-                showVariantBottomSheet(variantSecondAttrBottomSheet)
+                showBottomSheet(variantSecondAttrBottomSheet)
             }
         }
 
         binding.bottomSheetVariantFirstAttr.btnClose.setOnClickListener {
-            closeVariantBottomSheet(variantFirstAttrBottomSheet)
+            closeBottomSheet(variantFirstAttrBottomSheet)
         }
 
         binding.bottomSheetVariantSecondAttr.btnClose.setOnClickListener {
-            closeVariantBottomSheet(variantSecondAttrBottomSheet)
+            closeBottomSheet(variantSecondAttrBottomSheet)
+        }
+
+        binding.bottomSheetAskQuestion.btnClose.setOnClickListener {
+            closeBottomSheet(askQuestionBottomSheet)
+        }
+
+        binding.bottomSheetReplyQuestion.btnClose.setOnClickListener {
+            closeBottomSheet(replyQuestionBottomSheet)
         }
 
         productVariantFirstAttrAdapter.interaction = { selectedFirstAttr ->
@@ -129,7 +141,7 @@ class ProductDetailFragment : SliderFragment() {
                 updateVariantByFirstAttr(selectedFirstAttr, it)
             }
 
-            closeVariantBottomSheet(variantFirstAttrBottomSheet)
+            closeBottomSheet(variantFirstAttrBottomSheet)
         }
 
         productVariantSecondAttrAdapter.interaction = { selectedSecondAttr ->
@@ -138,7 +150,7 @@ class ProductDetailFragment : SliderFragment() {
                 val variant = productDetailViewModel.getVariantBySecondAttr(product)
                 variant?.let { updateVariant(it) }
             }
-            closeVariantBottomSheet(variantSecondAttrBottomSheet)
+            closeBottomSheet(variantSecondAttrBottomSheet)
         }
 
         binding.productReviewsToggle.setOnClickListener {
@@ -173,6 +185,14 @@ class ProductDetailFragment : SliderFragment() {
             onBottomSheetStateChange(state)
         }
 
+        askQuestionBottomSheet.onStateChange { state ->
+            onBottomSheetStateChange(state)
+        }
+
+        replyQuestionBottomSheet.onStateChange { state ->
+            onBottomSheetStateChange(state)
+        }
+
         binding.bgDim.setOnClickListener {
             // do nothing, just add to avoid click on views that are behind of bg dim when bg dim is visible
         }
@@ -190,12 +210,44 @@ class ProductDetailFragment : SliderFragment() {
         }
 
         binding.seeMoreQAndA.setOnClickListener {
-            /*newChanges val threads = binding.product?.questionAnswersThread
-            if (!threads.isNullOrEmpty()) gotoQAThreads(threads.toTypedArray())*/
+            val threads =
+                (productDetailViewModel.observeProductDetail.value as? DataState.Data)
+                    ?.data?.qaThreads
+                    ?: mutableListOf()
+
+            gotoQAThreads(threads.toTypedArray())
         }
 
-        binding.btnAskAboutProduct.setOnClickListener {
-            askQuestion()
+        binding.bottomSheetReplyQuestion.btnPostAnswer.setOnClickListener {
+            val answer = binding.bottomSheetReplyQuestion.etAnswer.text.toString()
+            val threadId = binding.thread?._id
+            if (threadId == null || answer.isEmpty()) return@setOnClickListener
+            productDetailViewModel.replyQuestion(args.productId, answer, threadId)
+        }
+
+        binding.containerAskAboutProduct.setOnClickListener {
+            if (!isUserLoggedIn) {
+                gotoLogin()
+                return@setOnClickListener
+            }
+            showBottomSheet(askQuestionBottomSheet)
+        }
+
+        binding.bottomSheetAskQuestion.btnAskQuestion.setOnClickListener {
+            val question = binding.bottomSheetAskQuestion.etQuestion.text.toString()
+            if (question.isNotEmpty()) {
+                productDetailViewModel.askQuestion(args.productId, question)
+            }
+        }
+
+        setFragmentResultListener(QAThreadsFragment.REQ_KEY_QA_THREAD_UPDATE) { _, bundle ->
+            val updatedQAThreads = bundle
+                .getParcelableArrayList<QAThread>(QAThreadsFragment.REQ_KEY_QA_THREAD_UPDATE)
+                ?.toMutableList()
+                ?: return@setFragmentResultListener
+
+            updateQuestionAnswersThread(updatedQAThreads.toMutableList())
+            productDetailViewModel.updateQAThreads(updatedQAThreads)
         }
     }
 
@@ -248,7 +300,7 @@ class ProductDetailFragment : SliderFragment() {
             }
         }
 
-        productDetailViewModel.observeAskQuestion.observe(viewLifecycleOwner) {
+        productDetailViewModel.observeQAThreads.observe(viewLifecycleOwner) {
             when (it) {
                 is DataState.Loading -> {
                     showLoader()
@@ -259,7 +311,14 @@ class ProductDetailFragment : SliderFragment() {
                 }
                 is DataState.Data -> {
                     hideLoader()
-                    addQuestionAnswersToLayout(it.data, 0)
+
+                    binding.bottomSheetAskQuestion.etQuestion.setText("")
+                    closeBottomSheet(askQuestionBottomSheet)
+
+                    binding.bottomSheetReplyQuestion.etAnswer.setText("")
+                    closeBottomSheet(replyQuestionBottomSheet)
+
+                    updateQuestionAnswersThread(it.data)
                 }
             }
         }
@@ -320,9 +379,7 @@ class ProductDetailFragment : SliderFragment() {
                 val secondAttrList =
                     productDetailViewModel.getSecondAttrList(selectedFirstAttr, product)
 
-                productVariantSecondAttrAdapter.submitList(
-                    selectedSecondAttr, secondAttrList
-                )
+                productVariantSecondAttrAdapter.submitList(selectedSecondAttr, secondAttrList)
             }
 
         }
@@ -330,62 +387,90 @@ class ProductDetailFragment : SliderFragment() {
 
         updateProductDescription(product.descriptions)
 
-        updateQuestionAnswersThread(product.questionAnswers)
+        updateQuestionAnswersThread(product.qaThreads)
     }
 
-    private fun updateQuestionAnswersThread(listOfQuestionAnswers: MutableList<QuestionAnswers>) {
-        if (listOfQuestionAnswers.isEmpty()) return
+    private fun updateQuestionAnswersThread(qaThreads: MutableList<QAThread>) {
+        if (qaThreads.isEmpty()) return
 
-        addQuestionAnswersToLayout(listOfQuestionAnswers[0])
-        if (listOfQuestionAnswers.size >= 2) {
-            addQuestionAnswersToLayout(listOfQuestionAnswers[1])
+        binding.containerQAndAThread.removeAllViews()
+
+        addQuestionAnswersToLayout(qaThreads[0])
+        if (qaThreads.size >= 2) {
+            addQuestionAnswersToLayout(qaThreads[1])
         }
     }
 
-    private fun addQuestionAnswersToLayout(questionAnswers: QuestionAnswers, position: Int = -1) {
-        if (questionAnswers.chat.isEmpty()) return
+    private fun addQuestionAnswersToLayout(qaThread: QAThread, position: Int = -1) {
+        val chat = qaThread.chat
+
+        if (chat.isNullOrEmpty()) return
 
         val parent = binding.containerQAndAThread
         val layoutQuestionAnswersThread = ItemQuestionAnswersThreadBinding
             .inflate(layoutInflater, parent, false)
 
-        layoutQuestionAnswersThread.apply {
-            val chat = questionAnswers.chat
+        layoutQuestionAnswersThread.root.tag = qaThread._id
+        layoutQuestionAnswersThread.question.text = chat[0].message
+        layoutQuestionAnswersThread.voteUp.text = qaThread.upVotes.size.toString()
+        layoutQuestionAnswersThread.voteDown.text = qaThread.downVotes.size.toString()
 
-            root.tag = questionAnswers._id
+        val consumerId = consumer?.id.toString()
 
-            val question = chat[0]
-            this.question.text = chat[0].message
-            edit.isVisible = isUserLoggedIn && user?.id.toString() == question.sender._id
-            delete.isVisible = isUserLoggedIn && user?.id.toString() == question.sender._id
-            reply.isVisible = isUserLoggedIn
-
-            voteUp.text = questionAnswers.upVotes.size.toString()
-            voteDown.text = questionAnswers.downVotes.size.toString()
-
-            edit.setOnClickListener {
-                // todo move to edit question screen
-            }
-
-            delete.setOnClickListener {
-                // todo remove thread
-            }
-
-            reply.setOnClickListener {
-                // todo move to reply screen
-            }
-
-            val answersAdapter = AnswersAdapter()
-            rvAnswers.adapter = answersAdapter
-            rvAnswers.isNestedScrollingEnabled = false
-            rvAnswers.addItemDecoration(
-                DividerItemDecoration(
-                    context, (rvAnswers.layoutManager as LinearLayoutManager).orientation
-                )
-            )
-            val answers = if (chat.size > 1) chat.subList(1, chat.size) else mutableListOf()
-            answersAdapter.submitList(answers)
+        val voteUpDrawable = if (qaThread.upVotes.contains(consumerId)) {
+            R.drawable.ic_vote_up_fill
+        } else {
+            R.drawable.ic_vote_up
         }
+        layoutQuestionAnswersThread.voteUp.setDrawableRes(voteUpDrawable)
+
+        val voteDownDrawable = if (qaThread.downVotes.contains(consumerId)) {
+            R.drawable.ic_vote_down_fill
+        } else {
+            R.drawable.ic_vote_down
+        }
+        layoutQuestionAnswersThread.voteDown.setDrawableRes(voteDownDrawable)
+
+        layoutQuestionAnswersThread.reply.setOnClickListener {
+            if (isUserLoggedIn) {
+                binding.thread = qaThread
+                showBottomSheet(replyQuestionBottomSheet)
+            } else {
+                gotoLogin()
+            }
+        }
+
+        layoutQuestionAnswersThread.voteUp.setOnClickListener {
+            if (isUserLoggedIn) {
+                productDetailViewModel.voteUp(
+                    args.productId,
+                    qaThread._id,
+                    qaThread.upVotes.contains(consumer?.id.toString())
+                )
+            } else {
+                gotoLogin()
+            }
+        }
+
+        layoutQuestionAnswersThread.voteDown.setOnClickListener {
+            if (isUserLoggedIn) {
+                productDetailViewModel.voteDown(
+                    args.productId,
+                    qaThread._id,
+                    qaThread.downVotes.contains(consumer?.id.toString())
+                )
+            } else {
+                gotoLogin()
+            }
+        }
+
+        val answersAdapter = AnswersAdapter()
+        layoutQuestionAnswersThread.rvAnswers.adapter = answersAdapter
+        layoutQuestionAnswersThread.rvAnswers.isNestedScrollingEnabled = false
+        val answers = if (chat.size > 1) chat.subList(1, chat.size) else mutableListOf()
+        layoutQuestionAnswersThread.hasAnswers = answers.isNotEmpty()
+        answersAdapter.submitList(answers)
+
         addView(parent, layoutQuestionAnswersThread.root, position)
     }
 
@@ -393,6 +478,8 @@ class ProductDetailFragment : SliderFragment() {
         if (products.isEmpty()) return
 
         val parent = binding.containerAdditionalProducts
+        parent.removeAllViews()
+
         val layoutAdditionalProductBinding = LayoutAdditionalProductBinding
             .inflate(layoutInflater, parent, false)
 
@@ -498,48 +585,35 @@ class ProductDetailFragment : SliderFragment() {
         setImageResource(arrow)
     }
 
-    private fun showVariantBottomSheet(bottomSheet: BottomSheetBehavior<View>) {
+    private fun showBottomSheet(bottomSheet: BottomSheetBehavior<View>) {
         binding.bgDim.fadeVisibility(true)
         bottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
     }
 
-    private fun closeVariantBottomSheet(bottomSheet: BottomSheetBehavior<View>) {
+    private fun closeBottomSheet(bottomSheet: BottomSheetBehavior<View>) {
         binding.bgDim.fadeVisibility(false)
         bottomSheet.state = BottomSheetBehavior.STATE_HIDDEN
     }
 
     private fun closeBottomsSheetElseGoBack() {
-        if (variantFirstAttrBottomSheet.state != BottomSheetBehavior.STATE_HIDDEN
-        ) {
-            closeVariantBottomSheet(variantFirstAttrBottomSheet)
-            return
-        }
-
-        if (variantSecondAttrBottomSheet.state != BottomSheetBehavior.STATE_HIDDEN) {
-            closeVariantBottomSheet(variantSecondAttrBottomSheet)
-            return
+        listOf(
+            variantFirstAttrBottomSheet,
+            variantSecondAttrBottomSheet,
+            askQuestionBottomSheet
+        ).forEach {
+            if (it.state != BottomSheetBehavior.STATE_HIDDEN) {
+                closeBottomSheet(it)
+                return
+            }
         }
 
         goBack()
     }
 
-    private fun askQuestion() {
-        if (!isUserLoggedIn) {
-            gotoLogin()
-            return
-        }
-        val question = binding.etAskAboutProduct.text.toString()
-
-        if (question.isEmpty()) return
-
-        productDetailViewModel.askQuestion(args.productId, question)
-        binding.etAskAboutProduct.text = null
-    }
-
-    private fun gotoQAThreads(threads: Array<QuestionAnswersThread>) {
-        val userId = user?.id?.toString()
+    private fun gotoQAThreads(threads: Array<QAThread>) {
+        val userId = consumer?.id?.toString()
         val action = ProductDetailFragmentDirections
-            .actionProductDetailFragmentToQAThreadsFragment(userId, threads)
+            .actionProductDetailFragmentToQAThreadsFragment(userId, args.productId, threads)
         navigateTo(action)
     }
 

@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.dataSource.ICartDataSource
 import com.hexagram.febys.dataSource.IUserDataSource
+import com.hexagram.febys.models.api.consumer.Consumer
 import com.hexagram.febys.network.response.User
 import com.hexagram.febys.utils.navigateTo
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,10 +24,10 @@ abstract class BaseFragment : Fragment() {
     lateinit var cartDataSource: ICartDataSource
 
     val isUserLoggedIn: Boolean
-        get() = userDataSource.getUser() != null
+        get() = userDataSource.getConsumer() != null
 
-    val user: User?
-        get() = userDataSource.getUser()
+    val consumer: Consumer?
+        get() = userDataSource.getConsumer()
 
     private val _observeUserLoggedIn = MutableLiveData(false)
     val observesUserLoggedIn = _observeUserLoggedIn

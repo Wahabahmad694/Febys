@@ -36,7 +36,7 @@ data class Variant(
     @IgnoredOnParcel
     val images: List<String>
         get() {
-            return if (_images.isNotEmpty()) _images else listOf("")
+            return if (_images.isNullOrEmpty()) listOf("") else _images
         }
 
     fun getFirstVariantAttr(): Attr? {

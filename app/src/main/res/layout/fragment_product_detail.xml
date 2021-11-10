@@ -11,6 +11,10 @@
             type="com.hexagram.febys.models.api.product.Product" />
 
         <variable
+            name="thread"
+            type="com.hexagram.febys.models.api.product.QAThread" />
+
+        <variable
             name="variant"
             type="com.hexagram.febys.models.api.product.Variant" />
 
@@ -600,23 +604,18 @@
                                 android:gravity="center_vertical"
                                 android:maxWidth="@dimen/_298sdp">
 
-                                <androidx.appcompat.widget.AppCompatEditText
-                                    android:id="@+id/et_ask_about_product"
+                                <TextView
+                                    android:id="@+id/label_ask_about_product"
                                     style="@style/TextTheme.HelveticaNeue.TS14"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_marginHorizontal="@dimen/_16sdp"
                                     android:layout_weight="1"
-                                    android:background="@null"
-                                    android:hint="@string/label_ask_about_product"
-                                    android:inputType="textMultiLine"
                                     android:paddingVertical="@dimen/_8dp"
-                                    android:textAppearance="@style/TextTheme.Arial.TS16"
-                                    android:textColorHint="@color/black"
-                                    app:layout_constraintTop_toBottomOf="@id/label_email_address" />
+                                    android:text="@string/label_ask_about_product" />
 
                                 <TextView
-                                    android:id="@+id/btn_ask_about_product"
+                                    android:id="@+id/label_ask"
                                     style="@style/TextTheme.HelveticaNeue.TS14.Bold"
                                     android:layout_width="@dimen/_58sdp"
                                     android:layout_height="match_parent"
@@ -806,6 +805,15 @@
             android:id="@+id/bottom_sheet_variant_second_attr"
             layout="@layout/bottom_sheet_product_variant"
             app:variantName="@{secondAttrName}" />
+
+        <include
+            android:id="@+id/bottom_sheet_ask_question"
+            layout="@layout/bottom_sheet_ask_question" />
+
+        <include
+            android:id="@+id/bottom_sheet_reply_question"
+            layout="@layout/bottom_sheet_reply_question"
+            app:thread="@{thread}" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
