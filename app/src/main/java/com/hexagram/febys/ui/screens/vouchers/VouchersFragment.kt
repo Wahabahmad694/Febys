@@ -8,7 +8,7 @@ import androidx.fragment.app.viewModels
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentVouchersBinding
-import com.hexagram.febys.models.view.Voucher
+import com.hexagram.febys.models.api.vouchers.Voucher
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.utils.applySpaceItemDecoration

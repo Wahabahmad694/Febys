@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.hexagram.febys.R
 import com.hexagram.febys.databinding.ItemVoucherBinding
-import com.hexagram.febys.models.view.Voucher
+import com.hexagram.febys.models.api.vouchers.Voucher
 import com.hexagram.febys.utils.toFixedDecimal
 
 class VouchersAdapter : RecyclerView.Adapter<VouchersAdapter.ViewHolder>() {
@@ -38,11 +38,11 @@ class VouchersAdapter : RecyclerView.Adapter<VouchersAdapter.ViewHolder>() {
             card.preventCornerOverlap = false
 
             val voucher = vouchers[position]
-            voucherType.text = voucher.type
-            voucherCode.text = voucher.code
-            voucherExpirationDate.text = voucher.expireDate
+            voucherType.text = voucher.voucher.amountType
+            voucherCode.text = voucher.voucher.code
+            voucherExpirationDate.text = voucher.voucher.endingTime
             voucherAmount.text = root.context.getString(
-                R.string.price_with_dollar_sign, voucher.amount.toFixedDecimal(2)
+                R.string.price_with_dollar_sign, voucher.voucher.amount.toFixedDecimal(2)
             )
 
             background.setImageURI("res:///${R.drawable.bg_voucher}")

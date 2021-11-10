@@ -4,6 +4,8 @@ import com.hexagram.febys.R
 import com.hexagram.febys.models.api.chat.Chat
 import com.hexagram.febys.models.api.chat.Sender
 import com.hexagram.febys.models.api.product.QAThread
+import com.hexagram.febys.models.api.product.QuestionAnswers
+import com.hexagram.febys.models.api.vouchers.Voucher
 import com.hexagram.febys.models.view.*
 import com.hexagram.febys.network.adapter.ApiResponse
 import kotlinx.coroutines.delay
@@ -76,15 +78,6 @@ object FakeApiService {
         addresses.add(shippingAddress)
         if (shippingAddress.isDefault) setAsDefaultShippingAddress(shippingAddress.id)
         return ApiResponse.ApiSuccessResponse(Response.success(Unit))
-    }
-
-    suspend fun fetchVouchers(): ApiResponse<List<Voucher>> {
-        delay(300)
-        val list = listOf(
-            Voucher(1, "Refund", "WCLN2445KJ", "May 28, 2021", 600.50),
-            Voucher(2, "Refund", "WCLN4444KJ", "May 29, 2021", 200.50)
-        )
-        return ApiResponse.ApiSuccessResponse(Response.success(list))
     }
 
     private val paymentMethods = mutableListOf(
