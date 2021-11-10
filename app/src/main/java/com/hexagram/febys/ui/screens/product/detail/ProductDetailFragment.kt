@@ -402,77 +402,75 @@ class ProductDetailFragment : SliderFragment() {
     }
 
     private fun addQuestionAnswersToLayout(qaThread: QAThread, position: Int = -1) {
-        if (qaThread.chat.isEmpty()) return
+        val chat = qaThread.chat
+
+        if (chat.isNullOrEmpty()) return
 
         val parent = binding.containerQAndAThread
         val layoutQuestionAnswersThread = ItemQuestionAnswersThreadBinding
             .inflate(layoutInflater, parent, false)
 
-        layoutQuestionAnswersThread.apply {
-            val chat = qaThread.chat
+        layoutQuestionAnswersThread.root.tag = qaThread._id
+        layoutQuestionAnswersThread.question.text = chat[0].message
+        layoutQuestionAnswersThread.voteUp.text = qaThread.upVotes.size.toString()
+        layoutQuestionAnswersThread.voteDown.text = qaThread.downVotes.size.toString()
 
-            root.tag = qaThread._id
+        val consumerId = consumer?.id.toString()
 
-            this.question.text = chat[0].message
+        val voteUpDrawable = if (qaThread.upVotes.contains(consumerId)) {
+            R.drawable.ic_vote_up_fill
+        } else {
+            R.drawable.ic_vote_up
+        }
+        layoutQuestionAnswersThread.voteUp.setDrawableRes(voteUpDrawable)
 
-            voteUp.text = qaThread.upVotes.size.toString()
-            voteDown.text = qaThread.downVotes.size.toString()
+        val voteDownDrawable = if (qaThread.downVotes.contains(consumerId)) {
+            R.drawable.ic_vote_down_fill
+        } else {
+            R.drawable.ic_vote_down
+        }
+        layoutQuestionAnswersThread.voteDown.setDrawableRes(voteDownDrawable)
 
-            if (qaThread.upVotes.contains(consumer?.id.toString())) {
-                voteUp.setDrawableRes(R.drawable.ic_vote_up)
-            } else {
-                voteUp.setDrawableRes(R.drawable.ic_vote_up)
-            }
-
-            if (qaThread.downVotes.contains(consumer?.id.toString())) {
-                voteDown.setDrawableRes(R.drawable.ic_vote_down)
-            } else {
-                voteDown.setDrawableRes(R.drawable.ic_vote_down)
-            }
-
-            reply.setOnClickListener {
-                if (!isUserLoggedIn) {
-                    gotoLogin()
-                    return@setOnClickListener
-                }
-
+        layoutQuestionAnswersThread.reply.setOnClickListener {
+            if (isUserLoggedIn) {
                 binding.thread = qaThread
                 showBottomSheet(replyQuestionBottomSheet)
+            } else {
+                gotoLogin()
             }
+        }
 
-            voteUp.setOnClickListener {
-                if (!isUserLoggedIn) {
-                    gotoLogin()
-                    return@setOnClickListener
-                }
-
+        layoutQuestionAnswersThread.voteUp.setOnClickListener {
+            if (isUserLoggedIn) {
                 productDetailViewModel.voteUp(
                     args.productId,
                     qaThread._id,
                     qaThread.upVotes.contains(consumer?.id.toString())
                 )
+            } else {
+                gotoLogin()
             }
+        }
 
-            voteDown.setOnClickListener {
-                if (!isUserLoggedIn) {
-                    gotoLogin()
-                    return@setOnClickListener
-                }
-
+        layoutQuestionAnswersThread.voteDown.setOnClickListener {
+            if (isUserLoggedIn) {
                 productDetailViewModel.voteDown(
                     args.productId,
                     qaThread._id,
                     qaThread.downVotes.contains(consumer?.id.toString())
                 )
+            } else {
+                gotoLogin()
             }
-
-            val answersAdapter = AnswersAdapter()
-            rvAnswers.adapter = answersAdapter
-            rvAnswers.isNestedScrollingEnabled = false
-            val answers = if (chat.size > 1) chat.subList(1, chat.size) else mutableListOf()
-            hasAnswers = answers.isNotEmpty()
-            answersAdapter.submitList(answers)
         }
+
+        val answersAdapter = AnswersAdapter()
+        layoutQuestionAnswersThread.rvAnswers.adapter = answersAdapter
+        layoutQuestionAnswersThread.rvAnswers.isNestedScrollingEnabled = false
+        val answers = if (chat.size > 1) chat.subList(1, chat.size) else mutableListOf()
+        layoutQuestionAnswersThread.hasAnswers = answers.isNotEmpty()
+        answersAdapter.submitList(answers)
+
         addView(parent, layoutQuestionAnswersThread.root, position)
     }
 

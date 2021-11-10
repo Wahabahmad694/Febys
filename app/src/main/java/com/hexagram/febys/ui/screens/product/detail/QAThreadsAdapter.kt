@@ -27,17 +27,19 @@ class QAThreadsAdapter : RecyclerView.Adapter<QAThreadsAdapter.QAThreadsVH>() {
             voteUp.text = item.upVotes.size.toString()
             voteDown.text = item.downVotes.size.toString()
 
-            if (item.upVotes.contains(consumerId)) {
-                voteUp.setDrawableRes(R.drawable.ic_vote_up)
+            val voteUpDrawable = if (item.upVotes.contains(consumerId)) {
+                R.drawable.ic_vote_up_fill
             } else {
-                voteUp.setDrawableRes(R.drawable.ic_vote_up)
+                R.drawable.ic_vote_up
             }
+            voteUp.setDrawableRes(voteUpDrawable)
 
-            if (item.downVotes.contains(consumerId)) {
-                voteDown.setDrawableRes(R.drawable.ic_vote_down)
+            val voteDownDrawable = if (item.downVotes.contains(consumerId)) {
+                R.drawable.ic_vote_down_fill
             } else {
-                voteDown.setDrawableRes(R.drawable.ic_vote_down)
+                R.drawable.ic_vote_down
             }
+            voteDown.setDrawableRes(voteDownDrawable)
 
             val answers =
                 if (item.chat.size > 1)

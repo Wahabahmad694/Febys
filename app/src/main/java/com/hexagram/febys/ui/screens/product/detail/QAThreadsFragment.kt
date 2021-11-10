@@ -73,27 +73,27 @@ class QAThreadsFragment : BaseBottomSheet() {
         }
 
         qaThreadsAdapter.replyTo = {
-            if (!isUserLoggedIn) {
-                gotoLogin()
-            } else {
+            if (isUserLoggedIn) {
                 binding.thread = it
                 showBottomSheet(replyQuestionBottomSheet)
+            } else {
+                gotoLogin()
             }
         }
 
         qaThreadsAdapter.upVote = { thread, isRevoke ->
-            if (!isUserLoggedIn) {
-                gotoLogin()
-            } else {
+            if (isUserLoggedIn) {
                 productDetailViewModel.voteUp(args.productId, thread._id, isRevoke)
+            } else {
+                gotoLogin()
             }
         }
 
         qaThreadsAdapter.downVote = { thread, isRevoke ->
-            if (!isUserLoggedIn) {
-                gotoLogin()
-            } else {
+            if (isUserLoggedIn) {
                 productDetailViewModel.voteDown(args.productId, thread._id, isRevoke)
+            } else {
+                gotoLogin()
             }
         }
 
