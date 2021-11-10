@@ -3,8 +3,10 @@ package com.hexagram.febys.ui.screens.product.detail
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.hexagram.febys.R
 import com.hexagram.febys.databinding.ItemQuestionAnswersThreadBinding
 import com.hexagram.febys.models.api.product.QAThread
+import com.hexagram.febys.utils.setDrawableRes
 
 class QAThreadsAdapter : RecyclerView.Adapter<QAThreadsAdapter.QAThreadsVH>() {
     private var answers = mutableListOf<QAThread>()
@@ -26,10 +28,15 @@ class QAThreadsAdapter : RecyclerView.Adapter<QAThreadsAdapter.QAThreadsVH>() {
             voteDown.text = item.downVotes.size.toString()
 
             if (item.upVotes.contains(consumerId)) {
-//                todo update icon of upVote
+                voteUp.setDrawableRes(R.drawable.ic_vote_up)
+            } else {
+                voteUp.setDrawableRes(R.drawable.ic_vote_up)
             }
+
             if (item.downVotes.contains(consumerId)) {
-//                todo update icon of downVote
+                voteDown.setDrawableRes(R.drawable.ic_vote_down)
+            } else {
+                voteDown.setDrawableRes(R.drawable.ic_vote_down)
             }
 
             val answers =

@@ -419,10 +419,15 @@ class ProductDetailFragment : SliderFragment() {
             voteDown.text = qaThread.downVotes.size.toString()
 
             if (qaThread.upVotes.contains(consumer?.id.toString())) {
-//                todo update icon of upVote
+                voteUp.setDrawableRes(R.drawable.ic_vote_up)
+            } else {
+                voteUp.setDrawableRes(R.drawable.ic_vote_up)
             }
+
             if (qaThread.downVotes.contains(consumer?.id.toString())) {
-//                todo update icon of downVote
+                voteDown.setDrawableRes(R.drawable.ic_vote_down)
+            } else {
+                voteDown.setDrawableRes(R.drawable.ic_vote_down)
             }
 
             reply.setOnClickListener {
@@ -444,7 +449,7 @@ class ProductDetailFragment : SliderFragment() {
                 productDetailViewModel.voteUp(
                     args.productId,
                     qaThread._id,
-                    qaThread.upVotes.contains(consumer?.id.toString() ?: "")
+                    qaThread.upVotes.contains(consumer?.id.toString())
                 )
             }
 
@@ -457,7 +462,7 @@ class ProductDetailFragment : SliderFragment() {
                 productDetailViewModel.voteDown(
                     args.productId,
                     qaThread._id,
-                    qaThread.downVotes.contains(consumer?.id.toString() ?: "")
+                    qaThread.downVotes.contains(consumer?.id.toString())
                 )
             }
 

@@ -9,6 +9,7 @@ import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.base.BaseBottomSheet
 import com.hexagram.febys.databinding.FragmentQAThreadsBinding
 import com.hexagram.febys.models.api.product.QAThread
@@ -32,6 +33,9 @@ class QAThreadsFragment : BaseBottomSheet() {
     private val replyQuestionBottomSheet get() = BottomSheetBehavior.from(binding.bottomSheetReplyQuestion.root)
 
     private val qaThreadsAdapter = QAThreadsAdapter()
+
+    private val isUserLoggedIn
+        get() = !args.userId.isNullOrEmpty()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -69,16 +73,28 @@ class QAThreadsFragment : BaseBottomSheet() {
         }
 
         qaThreadsAdapter.replyTo = {
-            binding.thread = it
-            showBottomSheet(replyQuestionBottomSheet)
+            if (!isUserLoggedIn) {
+                gotoLogin()
+            } else {
+                binding.thread = it
+                showBottomSheet(replyQuestionBottomSheet)
+            }
         }
 
         qaThreadsAdapter.upVote = { thread, isRevoke ->
-            productDetailViewModel.voteUp(args.productId, thread._id, isRevoke)
+            if (!isUserLoggedIn) {
+                gotoLogin()
+            } else {
+                productDetailViewModel.voteUp(args.productId, thread._id, isRevoke)
+            }
         }
 
         qaThreadsAdapter.downVote = { thread, isRevoke ->
-            productDetailViewModel.voteDown(args.productId, thread._id, isRevoke)
+            if (!isUserLoggedIn) {
+                gotoLogin()
+            } else {
+                productDetailViewModel.voteDown(args.productId, thread._id, isRevoke)
+            }
         }
 
         binding.bottomSheetReplyQuestion.btnPostAnswer.setOnClickListener {
@@ -149,6 +165,11 @@ class QAThreadsFragment : BaseBottomSheet() {
         }
 
         goBack()
+    }
+
+    private fun gotoLogin() {
+        val gotoLogin = NavGraphDirections.actionToLoginFragment()
+        navigateTo(gotoLogin)
     }
 
     override fun fullScreen() = true
