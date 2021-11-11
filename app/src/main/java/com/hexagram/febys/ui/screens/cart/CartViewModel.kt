@@ -2,13 +2,16 @@ package com.hexagram.febys.ui.screens.cart
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import com.hexagram.febys.models.api.order.Order
 import com.hexagram.febys.models.api.product.Product
 import com.hexagram.febys.models.db.CartDTO
+import com.hexagram.febys.network.DataState
 import com.hexagram.febys.repos.ICartRepo
 import com.hexagram.febys.repos.IProductRepo
 import com.hexagram.febys.ui.screens.product.ProductViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -63,4 +66,15 @@ open class CartViewModel @Inject constructor(
     fun refreshCart() = viewModelScope.launch { cartRepo.refreshCart() }
 
     fun clearCart() = viewModelScope.launch(Dispatchers.IO) { cartRepo.clearCart() }
+
+    fun fetchOrderInfo(voucher: String? = null, onVoucherResponse: (DataState<Order>) -> Unit) {
+        onVoucherResponse(DataState.Loading())
+        viewModelScope.launch {
+            cartRepo.fetchOrderInfo(voucher).collect {
+                launch(Dispatchers.Main) {
+                    onVoucherResponse(it)
+                }
+            }
+        }
+    }
 }

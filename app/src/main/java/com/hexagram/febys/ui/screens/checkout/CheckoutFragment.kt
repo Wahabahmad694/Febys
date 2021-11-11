@@ -10,10 +10,14 @@ import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentCheckoutBinding
 import com.hexagram.febys.databinding.LayoutOrderSummaryProductBinding
+import com.hexagram.febys.models.api.order.Order
+import com.hexagram.febys.models.api.price.Price
 import com.hexagram.febys.models.db.CartDTO
 import com.hexagram.febys.models.view.PaymentMethod
 import com.hexagram.febys.models.view.ShippingAddress
+import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.cart.CartAdapter
+import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.ui.screens.dialog.InfoDialog
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,6 +27,18 @@ class CheckoutFragment : BaseFragment() {
     private lateinit var binding: FragmentCheckoutBinding
     private val checkoutViewModel: CheckoutViewModel by viewModels()
     private val cartAdapter = CartAdapter(true)
+
+    private var applyVoucher = false
+
+    private val handleVoucherResponse: (voucherResponse: DataState<Order>) -> Unit = {
+        handleVoucherResponse(it)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        fetchOrderInfo()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -69,9 +85,18 @@ class CheckoutFragment : BaseFragment() {
             doPayment()
         }
 
+        binding.containerApplyVoucher.btnApplyVoucher.setOnClickListener {
+            val voucher = binding.containerApplyVoucher.etApplyVoucher.text.toString()
+            if (isUserLoggedIn && voucher.isNotEmpty()) {
+                applyVoucher = true
+                fetchOrderInfo()
+            }
+        }
+
         cartAdapter.interaction = object : CartAdapter.Interaction {
             override fun updateCartItem(cartDTO: CartDTO) {
                 checkoutViewModel.updateCartItem(cartDTO)
+                fetchOrderInfo()
             }
 
             override fun toggleFavIfUserLoggedIn(skuId: String): Boolean {
@@ -87,12 +112,36 @@ class CheckoutFragment : BaseFragment() {
 
             override fun removeFromCart(cartDTO: CartDTO) {
                 checkoutViewModel.removeFromCart(cartDTO)
+                fetchOrderInfo()
             }
 
             override fun openProductDetail(cartDTO: CartDTO) {
-                /*newChanges val navigateToProductDetail =
-                    NavGraphDirections.actionToProductDetail(cartDTO.productId, cartDTO.variantId)
-                navigateTo(navigateToProductDetail)*/
+                val navigateToProductDetail =
+                    NavGraphDirections.actionToProductDetail(cartDTO.productId, cartDTO.skuId)
+                navigateTo(navigateToProductDetail)
+            }
+        }
+    }
+
+    private fun fetchOrderInfo() {
+        val voucher =
+            if (applyVoucher) binding.containerApplyVoucher.etApplyVoucher.text.toString() else null
+
+        checkoutViewModel.fetchOrderInfo(voucher, handleVoucherResponse)
+    }
+
+    private fun handleVoucherResponse(voucherResponse: DataState<Order>) {
+        when (voucherResponse) {
+            is DataState.Loading -> {
+                showLoader()
+            }
+            is DataState.Error -> {
+                hideLoader()
+                ErrorDialog(voucherResponse).show(childFragmentManager, ErrorDialog.TAG)
+            }
+            is DataState.Data -> {
+                hideLoader()
+                createOrderSummary(voucherResponse.data)
             }
         }
     }
@@ -101,29 +150,32 @@ class CheckoutFragment : BaseFragment() {
         checkoutViewModel.observeCart().observe(viewLifecycleOwner) {
             val sortedListForCart = checkoutViewModel.sortListForCart(it)
             cartAdapter.submitList(sortedListForCart)
-            createOrderSummary(sortedListForCart)
-
             if (sortedListForCart.isNullOrEmpty()) goBack()
         }
     }
 
-    private fun createOrderSummary(cart: List<CartDTO>?) {
+    private fun createOrderSummary(order: Order) {
         binding.containerOrderSummary.containerOrderSummaryProducts.removeAllViews()
 
-        updateOrderSummaryQuantity(cart?.size ?: 0)
+        val cartItems = order.toListOfCartDTO()
 
-        cart?.forEach {
+        updateOrderSummaryQuantity(cartItems.size)
+
+        cartItems.forEach {
             val price = it.price.value
 
             addProductToOrderSummary(it.productName, it.quantity, price)
         }
 
-        val subtotal: Double = cart?.sumOf { it.price.value.times(it.quantity) } ?: 0.0
-
+        val subtotal: Double = order.productsAmount.value
         addProductToOrderSummary(getString(R.string.label_subtotal), 1, subtotal)
-        addProductToOrderSummary(getString(R.string.label_vat), 1, 10.0)
-        addProductToOrderSummary(getString(R.string.label_shipping_fee), 1, 100.0)
-        calculateAndUpdateTotalAmount(subtotal)
+
+        if (order.voucher != null) {
+            val voucherDiscount = order.voucher.discount ?: 0.0
+            addProductToOrderSummary(getString(R.string.label_voucher), 1, -voucherDiscount)
+        }
+
+        updateTotalAmount(order.billAmount)
     }
 
     private fun addProductToOrderSummary(productName: String, quantity: Int, price: Double) {
@@ -146,12 +198,9 @@ class CheckoutFragment : BaseFragment() {
             getString(R.string.label_order_summary_with_quantity, quantity)
     }
 
-    private fun calculateAndUpdateTotalAmount(
-        subtotal: Double, vat: Double = 10.0, shippingCost: Double = 100.0
-    ) {
-        val totalPrice = subtotal.plus(shippingCost).plus(vat)
+    private fun updateTotalAmount(price: Price) {
         val totalAmountAsString =
-            getString(R.string.price_with_dollar_sign, totalPrice.toFixedDecimal(2))
+            getString(R.string.price_with_dollar_sign, price.value.toFixedDecimal(2))
 
         binding.tvTotalAmount.text = totalAmountAsString
         binding.containerOrderSummary.tvTotalPrice.text = totalAmountAsString
@@ -203,5 +252,10 @@ class CheckoutFragment : BaseFragment() {
         val destination = CheckoutFragmentDirections
             .actionCheckoutFragmentToCheckoutSuccessFragment(orderId)
         navigateTo(destination)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        hideLoader()
     }
 }
