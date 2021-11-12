@@ -185,7 +185,10 @@ class AddEditShippingAddressFragment : Fragment() {
                 }
                 is DataState.Data -> {
                     hideLoader()
-                    setFragmentResult(REQ_KEY_IS_ADD_OR_UPDATE, bundleOf(REQ_KEY_IS_ADD_OR_UPDATE to true))
+                    setFragmentResult(
+                        REQ_KEY_IS_ADD_OR_UPDATE,
+                        bundleOf(REQ_KEY_IS_ADD_OR_UPDATE to true)
+                    )
                     goBack()
                 }
             }

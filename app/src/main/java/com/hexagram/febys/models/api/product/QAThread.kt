@@ -6,7 +6,7 @@ import com.hexagram.febys.models.api.chat.Chat
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class QuestionAnswers(
+data class QAThread(
     val _id: String,
     val chat: MutableList<Chat>,
     @SerializedName("up_votes")

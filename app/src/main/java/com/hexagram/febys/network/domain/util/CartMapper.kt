@@ -1,8 +1,8 @@
 package com.hexagram.febys.network.domain.util
 
 import com.hexagram.febys.models.api.cart.CartResponse
+import com.hexagram.febys.models.api.cart.VendorProducts
 import com.hexagram.febys.models.db.CartDTO
-import com.hexagram.febys.network.response.*
 import java.util.*
 import javax.inject.Inject
 
@@ -13,8 +13,12 @@ class CartMapper @Inject constructor() : DomainMapper<List<CartDTO>, CartRespons
     }
 
     override fun mapFromDomainModel(domainModel: CartResponse?): List<CartDTO> {
+        return mapFromVendorProducts(domainModel?.cart?.vendorProducts)
+    }
+
+    fun mapFromVendorProducts(vendorProducts: MutableList<VendorProducts>?): List<CartDTO> {
         val list = mutableListOf<CartDTO>()
-        domainModel?.cart?.vendorProducts?.forEach { vendorProduct ->
+        vendorProducts?.forEach { vendorProduct ->
             val vendor = vendorProduct.vendor
             val products = vendorProduct.products
             products.forEach { cartProduct ->
@@ -22,6 +26,7 @@ class CartMapper @Inject constructor() : DomainMapper<List<CartDTO>, CartRespons
                 val product = cartProduct.product
                 val variant = product.variants[0]
                 val cartDTO = CartDTO(
+                    productId = product._id,
                     vendorId = vendor._id,
                     vendorImg = vendor.businessInfo.logo,
                     vendorShopName = vendor.shopName,

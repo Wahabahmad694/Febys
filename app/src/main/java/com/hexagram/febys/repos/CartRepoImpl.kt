@@ -2,12 +2,20 @@ package com.hexagram.febys.repos
 
 import androidx.lifecycle.LiveData
 import com.hexagram.febys.dataSource.ICartDataSource
+import com.hexagram.febys.models.api.cart.CartResponse
+import com.hexagram.febys.models.api.order.Order
+import com.hexagram.febys.models.api.request.OrderRequest
+import com.hexagram.febys.models.api.vendor.VendorMessage
 import com.hexagram.febys.models.db.CartDTO
+import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.FebysBackendService
-import com.hexagram.febys.network.adapter.ApiResponse
+import com.hexagram.febys.network.adapter.*
 import com.hexagram.febys.network.requests.RequestPushCart
-import com.hexagram.febys.network.requests.VariantAndQuantityCart
+import com.hexagram.febys.network.requests.SkuIdAndQuantity
 import com.hexagram.febys.prefs.IPrefManger
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class CartRepoImpl @Inject constructor(
@@ -38,7 +46,7 @@ class CartRepoImpl @Inject constructor(
     private suspend fun pushCart() {
         val authToken = pref.getAccessToken()
         if (authToken.isEmpty()) return
-        val cart: List<VariantAndQuantityCart> = cartDataSource.getCartForPush()
+        val cart: List<SkuIdAndQuantity> = cartDataSource.getCartSkuIdsAndQuantity()
         val requestPushCart = RequestPushCart(cart)
         val response = backendService.pushCart(authToken, requestPushCart)
         if (response is ApiResponse.ApiSuccessResponse) {
@@ -47,22 +55,33 @@ class CartRepoImpl @Inject constructor(
         }
     }
 
-    private suspend fun pullCart() {
-        val authToken = pref.getAccessToken()
-        if (authToken.isEmpty()) return
-        val response = backendService.fetchCart(authToken)
-        if (response is ApiResponse.ApiSuccessResponse) {
-            val cart = response.data!!
-            cartDataSource.updateCart(cart)
-        }
-    }
-
-    override suspend fun pullAndPushCart() {
-        pullCart()
-        pushCart()
+    override suspend fun updateCart(cart: CartResponse) {
+        cartDataSource.updateCart(cart)
     }
 
     override suspend fun refreshCart() = pushCart()
+
+    override suspend fun fetchOrderInfo(
+        voucher: String?, dispatcher: CoroutineDispatcher
+    ): Flow<DataState<Order>> = flow<DataState<Order>> {
+        val authToken = pref.getAccessToken()
+        if (authToken.isEmpty()) return@flow
+
+//        val shippingAddress = pref.getDefaultShippingAddress()
+        val items: List<SkuIdAndQuantity> = cartDataSource.getCartSkuIdsAndQuantity()
+        val messagesForVendors = emptyList<VendorMessage>()
+
+        val orderRequest = OrderRequest(/*shippingAddress, */voucher, items, messagesForVendors)
+
+        backendService.fetchOrderInfo(authToken, orderRequest)
+            .onSuccess {
+                cartDataSource.updateCart(data!!.order.toListOfCartDTO())
+                emit(DataState.Data(data.order))
+            }
+            .onError { emit(DataState.ApiError(message)) }
+            .onException { emit(DataState.ExceptionError()) }
+            .onNetworkError { emit(DataState.NetworkError()) }
+    }
 
     override fun clearCart() {
         cartDataSource.clear()

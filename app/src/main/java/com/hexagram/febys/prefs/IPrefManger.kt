@@ -1,5 +1,6 @@
 package com.hexagram.febys.prefs
 
+import com.hexagram.febys.models.api.consumer.Consumer
 import com.hexagram.febys.models.view.PaymentMethod
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
 import com.hexagram.febys.network.response.User
@@ -15,9 +16,15 @@ interface IPrefManger {
 
     fun saveUser(user: User)
 
+    fun saveConsumer(consumer: Consumer)
+
     fun getUser(): User?
 
+    fun getConsumer(): Consumer?
+
     fun clearUser()
+
+    fun clearConsumer()
 
     fun clearAccessToken()
 

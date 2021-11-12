@@ -1,5 +1,7 @@
 package com.hexagram.febys.network
 
+import com.hexagram.febys.models.api.profile.Profile
+import com.hexagram.febys.models.api.request.PagingListRequest
 import com.hexagram.febys.network.adapter.ApiResponse
 import com.hexagram.febys.network.requests.RequestSignup
 import com.hexagram.febys.network.response.ResponseLogin
@@ -34,4 +36,7 @@ interface AuthService {
 
     @GET("v1/social/login")
     suspend fun socialLogin(@QueryMap reqLogin: Map<String, String>): ApiResponse<ResponseLogin>
+
+    @GET("v1/consumers/me")
+    suspend fun me(@Header("Authorization") authKey: String): ApiResponse<Profile>
 }

@@ -5,12 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.hexagram.febys.base.BaseViewModel
 import com.hexagram.febys.enum.SocialLogin
+import com.hexagram.febys.models.api.consumer.Consumer
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.requests.RequestSignup
 import com.hexagram.febys.network.response.ResponseLogin
 import com.hexagram.febys.network.response.ResponseOtpVerification
 import com.hexagram.febys.network.response.ResponseSignup
-import com.hexagram.febys.network.response.User
 import com.hexagram.febys.repos.IAuthRepo
 import com.hexagram.febys.utils.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -87,5 +87,5 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    fun getUser(): User? = authRepo.getUser()
+    fun getConsumer(): Consumer? = authRepo.getConsumer()
 }

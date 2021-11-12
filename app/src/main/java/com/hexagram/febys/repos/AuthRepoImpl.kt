@@ -3,6 +3,8 @@ package com.hexagram.febys.repos
 import com.hexagram.febys.BuildConfig
 import com.hexagram.febys.dataSource.IUserDataSource
 import com.hexagram.febys.enum.SocialLogin
+import com.hexagram.febys.models.api.cart.CartResponse
+import com.hexagram.febys.models.api.consumer.Consumer
 import com.hexagram.febys.network.AuthService
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.FebysBackendService
@@ -33,6 +35,7 @@ class AuthRepoImpl @Inject constructor(
                 .onSuccess {
                     data!!.apply {
                         saveUserAndToken(user)
+                        fetchUserDataOnLogin()
                         emit(DataState.Data(this))
                     }
                 }
@@ -155,21 +158,22 @@ class AuthRepoImpl @Inject constructor(
     }
 
     private suspend fun fetchUserDataOnLogin() {
-        fetchWishListIds()
-        fetchCart()
-    }
-
-    private suspend fun fetchCart() {
-        cartRepo.pullAndPushCart()
-    }
-
-    private suspend fun fetchWishListIds() {
-        val authToken = pref.getAccessToken()
-        val response = backendService.fetchWishlistIds(authToken)
+        val authKey = pref.getAccessToken()
+        val response = authService.me(authKey)
         if (response is ApiResponse.ApiSuccessResponse) {
-            val fav = response.data!!.skuIds
-            pref.saveFav(fav.toMutableSet())
+            val profile = response.data!!
+            userDataSource.saveConsumer(profile.consumerInfo)
+            updateWishlist(profile.wishlist.skuIds.toMutableSet())
+            updateCart(profile.cart)
         }
+    }
+
+    private suspend fun updateCart(cart: CartResponse) {
+        cartRepo.updateCart(cart)
+    }
+
+    private fun updateWishlist(skuIds: MutableSet<String>) {
+        pref.saveFav(skuIds)
     }
 
     override fun signOut() {
@@ -177,9 +181,14 @@ class AuthRepoImpl @Inject constructor(
         cartRepo.clearCart()
         userDataSource.clearUserState()
         userDataSource.clearUserData()
+        userDataSource.clearConsumerData()
     }
 
     override fun getUser(): User? {
         return userDataSource.getUser()
+    }
+
+    override fun getConsumer(): Consumer? {
+        return userDataSource.getConsumer()
     }
 }

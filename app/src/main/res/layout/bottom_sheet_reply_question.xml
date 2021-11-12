@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="thread"
+            type="com.hexagram.febys.models.api.product.QAThread" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_bottom_sheet"
+        android:elevation="@dimen/_16sdp"
+        android:orientation="vertical"
+        app:behavior_hideable="true"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btn_close"
+            android:layout_width="@dimen/_16dp"
+            android:layout_height="@dimen/_16dp"
+            android:layout_gravity="end"
+            android:layout_marginTop="@dimen/_24dp"
+            android:layout_marginEnd="@dimen/_24dp"
+            android:src="@drawable/ic_close" />
+
+        <TextView
+            android:id="@+id/tv_question"
+            style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_39sdp"
+            android:text="@{thread.chat.get(0).message}"
+            tools:text="@string/label_ask_about_product" />
+
+        <TextView
+            android:id="@+id/label_answer"
+            style="@style/TextTheme.Arial.TS16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_59sdp"
+            android:text="@{@string/label_answer + `:`}" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_answer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:background="@null"
+            android:inputType="textMultiLine"
+            android:maxLines="7"
+            android:minLines="3" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1dp"
+            android:background="@color/grey_e1e5e8" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_post_answer"
+            style="@style/ButtonTheme.Contained"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_17sdp"
+            android:layout_marginTop="@dimen/_49sdp"
+            android:layout_marginBottom="@dimen/_14sdp"
+            android:text="@string/label_answer"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_max="@dimen/_298sdp" />
+    </LinearLayout>
+</layout>

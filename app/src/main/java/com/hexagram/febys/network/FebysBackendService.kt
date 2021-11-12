@@ -4,8 +4,13 @@ import com.hexagram.febys.models.api.cart.CartResponse
 import com.hexagram.febys.models.api.pagination.Pagination
 import com.hexagram.febys.models.api.product.FeaturedCategory
 import com.hexagram.febys.models.api.product.Trending
+import com.hexagram.febys.models.api.request.AskQuestionRequest
+import com.hexagram.febys.models.api.request.OrderRequest
 import com.hexagram.febys.models.api.request.PagingListRequest
+import com.hexagram.febys.models.api.request.ReplyQuestionRequest
+import com.hexagram.febys.models.api.response.OrderResponse
 import com.hexagram.febys.models.api.response.ProductDetailResponse
+import com.hexagram.febys.models.api.response.QuestionAnswersResponse
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddressResponse
 import com.hexagram.febys.models.api.vendor.Vendor
 import com.hexagram.febys.models.api.vendor.VendorPagingListing
@@ -140,6 +145,48 @@ interface FebysBackendService {
         @Path("productId") productId: String, @Body request: PagingListRequest
     ): ApiResponse<Pagination>
 
+    @POST("v1/products/{productId}/ask-question")
+    suspend fun askQuestion(
+        @Header("Authorization") authKey: String,
+        @Path("productId") productId: String,
+        @Body askQuestionRequest: AskQuestionRequest
+    ): ApiResponse<QuestionAnswersResponse>
+
+    @POST("v1/products/{productId}/ask-question")
+    suspend fun replyQuestion(
+        @Header("Authorization") authKey: String,
+        @Path("productId") productId: String,
+        @Body askQuestionRequest: ReplyQuestionRequest
+    ): ApiResponse<QuestionAnswersResponse>
+
+    @POST("v1/products/{productId}/threads/{threadId}/up-vote")
+    suspend fun voteUp(
+        @Header("Authorization") authToken: String,
+        @Path("productId") productId: String,
+        @Path("threadId") threadId: String
+    ): ApiResponse<QuestionAnswersResponse>
+
+    @DELETE("v1/products/{productId}/threads/{threadId}/up-vote")
+    suspend fun revokeVoteUp(
+        @Header("Authorization") authToken: String,
+        @Path("productId") productId: String,
+        @Path("threadId") threadId: String
+    ): ApiResponse<QuestionAnswersResponse>
+
+    @POST("v1/products/{productId}/threads/{threadId}/down-vote")
+    suspend fun voteDown(
+        @Header("Authorization") authToken: String,
+        @Path("productId") productId: String,
+        @Path("threadId") threadId: String
+    ): ApiResponse<QuestionAnswersResponse>
+
+    @DELETE("v1/products/{productId}/threads/{threadId}/down-vote")
+    suspend fun revokeVoteDown(
+        @Header("Authorization") authToken: String,
+        @Path("productId") productId: String,
+        @Path("threadId") threadId: String
+    ): ApiResponse<QuestionAnswersResponse>
+
     @POST("v1/vouchers/of-consumer/list")
     suspend fun fetchVouchers(@Header("Authorization") authKey: String): ApiResponse<VoucherResponse>
 
@@ -152,4 +199,8 @@ interface FebysBackendService {
         @Path("id") id: String
     ): ApiResponse<Unit>
 
+    @POST("v1/orders/info")
+    suspend fun fetchOrderInfo(
+        @Header("Authorization") authToken: String, @Body orderRequest: OrderRequest
+    ): ApiResponse<OrderResponse>
 }

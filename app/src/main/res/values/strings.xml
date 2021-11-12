@@ -93,6 +93,7 @@
     <string name="label_pay_now">Pay Now</string>
     <string name="label_shopping_cart">Shopping Cart</string>
     <string name="label_subtotal">Subtotal</string>
+    <string name="label_voucher">Voucher</string>
     <string name="label_shipping">Shipping</string>
     <string name="label_item_id">Item ID:</string>
     <string name="label_remove_from_wishlist">Remove from wishlist</string>
@@ -194,10 +195,13 @@
     <string name="label_reply">Reply</string>
     <string name="label_by">By</string>
     <string name="label_see_more">See More</string>
-    <string name="label_ask_about_product">Ask about the product.</string>
+    <string name="label_ask_about_product">Ask about the product</string>
     <string name="label_ask">Ask</string>
     <string name="label_payment_method">Payment Method</string>
     <string name="label_customer_recommend">Customer Recommend</string>
     <string name="label_compare_with_similar_items">Compare With Similar Items</string>
+    <string name="label_no_answer">---</string>
+    <string name="label_question">Question</string>
+    <string name="label_answer">Answer</string>
 
 </resources>

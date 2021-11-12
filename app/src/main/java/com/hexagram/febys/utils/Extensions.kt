@@ -5,8 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.DimenRes
+import androidx.annotation.DrawableRes
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
@@ -22,6 +24,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.hexagram.febys.base.BaseActivity
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
+
 
 fun View.show() {
     visibility = View.VISIBLE
@@ -152,4 +155,13 @@ fun SimpleDraweeView.load(imageUrl: String?) {
     if (imageUrl.isNullOrEmpty()) return
     hierarchy.fadeDuration = 200
     setImageURI(imageUrl)
+}
+
+fun TextView.setDrawableRes(
+    @DrawableRes left: Int = 0,
+    @DrawableRes top: Int = 0,
+    @DrawableRes right: Int = 0,
+    @DrawableRes bottom: Int = 0,
+) {
+    this.setCompoundDrawablesWithIntrinsicBounds(left, top, right, bottom)
 }

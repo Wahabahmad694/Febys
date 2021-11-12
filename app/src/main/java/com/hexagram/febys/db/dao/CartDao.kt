@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Query
 import com.hexagram.febys.models.db.CartDTO
-import com.hexagram.febys.network.requests.VariantAndQuantityCart
+import com.hexagram.febys.network.requests.SkuIdAndQuantity
 
 @Dao
 interface CartDao : BaseDao<CartDTO> {
@@ -24,5 +24,5 @@ interface CartDao : BaseDao<CartDTO> {
     fun getCart(): List<CartDTO>
 
     @Query("Select skuId, quantity From CartDTO Order By createdAt DESC")
-    fun getCartForPush(): List<VariantAndQuantityCart>
+    fun getCartSkuIdsAndQuantity(): List<SkuIdAndQuantity>
 }

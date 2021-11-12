@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import com.hexagram.febys.models.view.QuestionAnswersThread
 import com.hexagram.febys.network.FakeApiService
 
-data class OldProduct @JvmOverloads constructor(
+data class OldProduct constructor(
     @SerializedName("id")
     val id: Int,
     @SerializedName("name")
@@ -42,8 +42,6 @@ data class OldProduct @JvmOverloads constructor(
     @SerializedName("variants")
     val productVariants: List<ProductVariant>,
 ) {
-    val questionAnswersThread: MutableList<QuestionAnswersThread>
-    get() = FakeApiService.fetchQuestionAnswersThread()
 
     val warranty
         get() = _warranty == 1

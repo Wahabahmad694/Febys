@@ -1,7 +1,7 @@
 package com.hexagram.febys.repos
 
 import com.hexagram.febys.models.api.product.Product
-import com.hexagram.febys.models.api.product.QuestionAnswers
+import com.hexagram.febys.models.api.product.QAThread
 import com.hexagram.febys.network.DataState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -22,7 +22,28 @@ interface IProductRepo {
 
     suspend fun askQuestion(
         productId: String, question: String, dispatcher: CoroutineDispatcher = Dispatchers.IO
-    ): Flow<DataState<QuestionAnswers>>
+    ): Flow<DataState<MutableList<QAThread>>>
+
+    suspend fun replyQuestion(
+        productId: String,
+        question: String,
+        threadId: String,
+        dispatcher: CoroutineDispatcher = Dispatchers.IO
+    ): Flow<DataState<MutableList<QAThread>>>
+
+    fun voteUp(
+        productId: String,
+        threadId: String,
+        revoke: Boolean,
+        dispatcher: CoroutineDispatcher = Dispatchers.IO
+    ): Flow<DataState<MutableList<QAThread>>>
+
+    fun voteDown(
+        productId: String,
+        threadId: String,
+        revoke: Boolean,
+        dispatcher: CoroutineDispatcher = Dispatchers.IO
+    ): Flow<DataState<MutableList<QAThread>>>
 
     suspend fun fetchRecommendProducts(dispatcher: CoroutineDispatcher = Dispatchers.IO): List<Product>
 

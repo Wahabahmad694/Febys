@@ -1,5 +1,6 @@
 package com.hexagram.febys.dataSource
 
+import com.hexagram.febys.models.api.consumer.Consumer
 import com.hexagram.febys.network.response.User
 import com.hexagram.febys.prefs.IPrefManger
 import javax.inject.Inject
@@ -11,8 +12,16 @@ class UserDataSourceImpl @Inject constructor(
         pref.saveUser(user)
     }
 
+    override fun saveConsumer(consumer: Consumer) {
+        pref.saveConsumer(consumer)
+    }
+
     override fun getUser(): User? {
         return pref.getUser()
+    }
+
+    override fun getConsumer(): Consumer? {
+        return pref.getConsumer()
     }
 
     override fun saveAccessToken(token: String) {
@@ -33,6 +42,10 @@ class UserDataSourceImpl @Inject constructor(
 
     override fun clearUserData() {
         pref.clearUser()
+    }
+
+    override fun clearConsumerData() {
+        pref.clearConsumer()
     }
 
     override fun clearUserState() {

@@ -93,9 +93,9 @@ class ShippingAddressFragment : BaseFragment() {
     }
 
     private fun updateUi(addresses: List<ShippingAddress>) {
-      /*  if (addresses.isEmpty()) {
-            return
-        }*/
+        /*  if (addresses.isEmpty()) {
+              return
+          }*/
 
         shippingAddressAdapter.submitList(addresses)
     }
