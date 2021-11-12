@@ -5,8 +5,10 @@ import com.hexagram.febys.models.api.pagination.Pagination
 import com.hexagram.febys.models.api.product.FeaturedCategory
 import com.hexagram.febys.models.api.product.Trending
 import com.hexagram.febys.models.api.request.AskQuestionRequest
+import com.hexagram.febys.models.api.request.OrderRequest
 import com.hexagram.febys.models.api.request.PagingListRequest
 import com.hexagram.febys.models.api.request.ReplyQuestionRequest
+import com.hexagram.febys.models.api.response.OrderResponse
 import com.hexagram.febys.models.api.response.ProductDetailResponse
 import com.hexagram.febys.models.api.response.QuestionAnswersResponse
 import com.hexagram.febys.models.api.vendor.Vendor
@@ -82,16 +84,6 @@ interface FebysBackendService {
     suspend fun removeFromWishList(
         @Header("Authorization") authToken: String, @Body req: FavSkuIds
     ): ApiResponse<FavSkuIds>
-
-    @GET("v1/consumers/wishlist")
-    suspend fun fetchWishlistIds(
-        @Header("Authorization") authToken: String
-    ): ApiResponse<FavSkuIds>
-
-    @GET("v1/cart")
-    suspend fun fetchCart(
-        @Header("Authorization") authToken: String
-    ): ApiResponse<CartResponse>
 
     @POST("v1/cart")
     suspend fun pushCart(
@@ -187,5 +179,8 @@ interface FebysBackendService {
     @POST("v1/vouchers/of-consumer/list")
     suspend fun fetchVouchers(@Header("Authorization") authKey: String): ApiResponse<VoucherResponse>
 
-
+    @POST("v1/orders/info")
+    suspend fun fetchOrderInfo(
+        @Header("Authorization") authToken: String, @Body orderRequest: OrderRequest
+    ): ApiResponse<OrderResponse>
 }

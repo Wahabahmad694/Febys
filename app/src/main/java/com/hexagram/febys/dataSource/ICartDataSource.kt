@@ -3,7 +3,7 @@ package com.hexagram.febys.dataSource
 import androidx.lifecycle.LiveData
 import com.hexagram.febys.models.api.cart.CartResponse
 import com.hexagram.febys.models.db.CartDTO
-import com.hexagram.febys.network.requests.VariantAndQuantityCart
+import com.hexagram.febys.network.requests.SkuIdAndQuantity
 
 interface ICartDataSource {
     suspend fun insertCart(cartDTO: CartDTO)
@@ -28,7 +28,9 @@ interface ICartDataSource {
 
     fun updateCart(cart: CartResponse)
 
+    fun updateCart(listOfCartDTO: List<CartDTO>)
+
     fun getCart(): List<CartDTO>
 
-    fun getCartForPush(): List<VariantAndQuantityCart>
+    fun getCartSkuIdsAndQuantity(): List<SkuIdAndQuantity>
 }

@@ -93,6 +93,7 @@
     <string name="label_pay_now">Pay Now</string>
     <string name="label_shopping_cart">Shopping Cart</string>
     <string name="label_subtotal">Subtotal</string>
+    <string name="label_voucher">Voucher</string>
     <string name="label_shipping">Shipping</string>
     <string name="label_item_id">Item ID:</string>
     <string name="label_remove_from_wishlist">Remove from wishlist</string>

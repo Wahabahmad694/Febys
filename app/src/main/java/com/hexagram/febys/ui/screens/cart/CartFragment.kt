@@ -10,10 +10,11 @@ import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentCartBinding
+import com.hexagram.febys.models.api.order.Order
 import com.hexagram.febys.models.db.CartDTO
-import com.hexagram.febys.utils.goBack
-import com.hexagram.febys.utils.navigateTo
-import com.hexagram.febys.utils.toFixedDecimal
+import com.hexagram.febys.network.DataState
+import com.hexagram.febys.ui.screens.dialog.ErrorDialog
+import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -76,14 +77,10 @@ class CartFragment : BaseFragment() {
             }
 
             override fun openProductDetail(cartDTO: CartDTO) {
-                /*newChanges val navigateToProductDetail =
-                    NavGraphDirections.actionToProductDetail(cartDTO.productId, cartDTO.variantId)
-                navigateTo(navigateToProductDetail)*/
+                val navigateToProductDetail =
+                    NavGraphDirections.actionToProductDetail(cartDTO.productId, cartDTO.skuId)
+                navigateTo(navigateToProductDetail)
             }
-        }
-
-        binding.containerApplyVoucher.btnApplyVoucher.setOnClickListener {
-            // do apply voucher once backend ready
         }
     }
 
@@ -99,10 +96,7 @@ class CartFragment : BaseFragment() {
 
     private fun setupObserver() {
         cartViewModel.observeCart().observe(viewLifecycleOwner) {
-            val sortedListForCart = cartViewModel.sortListForCart(it)
-            cartAdapter.submitList(sortedListForCart)
-            updateUi(sortedListForCart)
-            updateGotoCheckoutBtnVisibility(!sortedListForCart.isNullOrEmpty())
+           updateUi(it)
         }
     }
 
@@ -110,19 +104,20 @@ class CartFragment : BaseFragment() {
         binding.btnProceedToCheckout.isVisible = isVisible
     }
 
-    private fun updateUi(cart: List<CartDTO>?, shippingCost: Double = 100.0) {
-        val itemsTotal: Double = cart?.sumOf { it.price.value.times(it.quantity) } ?: 0.0
+    private fun updateUi(cart: List<CartDTO>?) {
+        val sortedListForCart = cartViewModel.sortListForCart(cart)
+
+        cartAdapter.submitList(sortedListForCart)
+
+        updateGotoCheckoutBtnVisibility(!sortedListForCart.isNullOrEmpty())
+
+        val itemsTotal: Double = sortedListForCart?.sumOf { it.price.value.times(it.quantity) } ?: 0.0
 
         binding.tvSubtotalAmount.text =
             getString(R.string.variant_price, itemsTotal.toFixedDecimal(2))
 
-        binding.tvShippingAmount.text =
-            getString(R.string.variant_price, shippingCost.toFixedDecimal(2))
-
-        val totalPrice = itemsTotal.plus(shippingCost)
-
         binding.tvTotalAmount.text =
-            getString(R.string.variant_price, totalPrice.toFixedDecimal(2))
+            getString(R.string.variant_price, itemsTotal.toFixedDecimal(2))
     }
 
     override fun getTvCartCount() = binding.tvCartCount

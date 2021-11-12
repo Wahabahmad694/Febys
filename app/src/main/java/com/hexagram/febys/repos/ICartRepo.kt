@@ -1,9 +1,13 @@
 package com.hexagram.febys.repos
 
 import androidx.lifecycle.LiveData
-import com.hexagram.febys.models.api.cart.Cart
 import com.hexagram.febys.models.api.cart.CartResponse
+import com.hexagram.febys.models.api.order.Order
 import com.hexagram.febys.models.db.CartDTO
+import com.hexagram.febys.network.DataState
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 
 interface ICartRepo {
     fun observeCart(): LiveData<List<CartDTO>>
@@ -21,4 +25,8 @@ interface ICartRepo {
     suspend fun updateCart(cart: CartResponse)
 
     suspend fun refreshCart()
+
+    suspend fun fetchOrderInfo(
+        voucher: String?, dispatcher: CoroutineDispatcher = Dispatchers.IO
+    ): Flow<DataState<Order>>
 }

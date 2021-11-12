@@ -27,5 +27,6 @@ data class VoucherDetail(
     val startingDate: String,
     val stats: Stats,
     @SerializedName("updated_at")
-    val updatedTime: String
+    val updatedTime: String,
+    val discount: Double?
 ):Parcelable

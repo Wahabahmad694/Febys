@@ -5,7 +5,6 @@ import com.hexagram.febys.db.dao.CartDao
 import com.hexagram.febys.models.api.cart.CartResponse
 import com.hexagram.febys.models.db.CartDTO
 import com.hexagram.febys.network.domain.util.CartMapper
-import com.hexagram.febys.network.response.Cart
 import javax.inject.Inject
 
 class CartDataSourceImpl @Inject constructor(
@@ -56,6 +55,10 @@ class CartDataSourceImpl @Inject constructor(
 
     override fun updateCart(cart: CartResponse) {
         val listOfCartDTO = cartMapper.mapFromDomainModel(cart)
+        updateCart(listOfCartDTO)
+    }
+
+    override fun updateCart(listOfCartDTO: List<CartDTO>) {
         val dbCart = cartDao.getCart()
         listOfCartDTO.forEach { cartItem ->
             val dbCartItem =
@@ -76,5 +79,5 @@ class CartDataSourceImpl @Inject constructor(
 
     override fun getCart() = cartDao.getCart()
 
-    override fun getCartForPush() = cartDao.getCartForPush()
+    override fun getCartSkuIdsAndQuantity() = cartDao.getCartSkuIdsAndQuantity()
 }

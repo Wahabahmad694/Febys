@@ -10,6 +10,7 @@ import java.util.*
 
 @Entity
 data class CartDTO constructor(
+    val productId: String,
     val vendorId: String,
     val vendorImg: String,
     val vendorShopName: String,
@@ -29,6 +30,7 @@ data class CartDTO constructor(
             vendor: Vendor, product: Product, variant: Variant, quantity: Int = 1
         ): CartDTO {
             return CartDTO(
+                productId = product._id,
                 vendorId = vendor._id,
                 vendorImg = vendor.businessInfo.logo,
                 vendorShopName = vendor.shopName,
