@@ -1,6 +1,6 @@
 package com.hexagram.febys.repos
 
-import com.hexagram.febys.models.view.ShippingAddress
+import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
 import com.hexagram.febys.network.DataState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -11,7 +11,7 @@ interface IShippingAddressRepo {
         dispatcher: CoroutineDispatcher = Dispatchers.IO
     ): Flow<DataState<List<ShippingAddress>>>
 
-    suspend fun setAsDefault(id: Int)
+    suspend fun setAsDefault(shippingAddress: ShippingAddress)
 
     suspend fun updateShippingAddress(
         shippingAddress: ShippingAddress, dispatcher: CoroutineDispatcher = Dispatchers.IO
@@ -19,5 +19,10 @@ interface IShippingAddressRepo {
 
     suspend fun addShippingAddress(
         shippingAddress: ShippingAddress, dispatcher: CoroutineDispatcher = Dispatchers.IO
+    ): Flow<DataState<Unit>>
+
+    suspend fun deleteShippingAddress(
+        shippingAddress: ShippingAddress,
+        dispatcher: CoroutineDispatcher = Dispatchers.IO
     ): Flow<DataState<Unit>>
 }

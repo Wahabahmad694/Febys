@@ -7,7 +7,7 @@
 
         <variable
             name="address"
-            type="com.hexagram.febys.models.view.ShippingAddress" />
+            type="com.hexagram.febys.models.api.shippingAddress.ShippingAddress" />
 
     </data>
 
@@ -21,7 +21,7 @@
             style="@style/TextTheme.HelveticaNeue.TS14.Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{address.firstName}"
+            android:text="@{address.shippingDetail.firstName}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Hillary" />
@@ -35,7 +35,7 @@
             android:background="@color/grey_e1e5e8"
             android:paddingHorizontal="@dimen/_6sdp"
             android:paddingVertical="@dimen/_1sdp"
-            android:text="@{address.addressLabel}"
+            android:text="@{address.shippingDetail.label}"
             app:layout_constraintStart_toEndOf="@id/user_name"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Home" />
@@ -44,7 +44,7 @@
             android:id="@+id/set_as_default"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@{address.isDefault ? @drawable/ic_circle_fill : @drawable/ic_circle}"
+            android:src="@{address.shippingDetail.isDefault ? @drawable/ic_circle_fill : @drawable/ic_circle}"
             app:layout_constraintBottom_toBottomOf="@id/address_label"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/address_label"
@@ -55,7 +55,7 @@
             style="@style/TextTheme.Arial.TS14"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{address.fullAddress}"
+            android:text="@{address.shippingDetail.address.fullAddress()}"
             app:layout_constraintTop_toBottomOf="@id/address_label"
             tools:text="Virtual Incubator, Busy Internet,\nAccra-north\n23321,\nGhana" />
 
@@ -81,6 +81,30 @@
                 android:layout_marginHorizontal="@dimen/_6sdp"
                 android:src="@drawable/ic_edit" />
 
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/delete_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toEndOf="@id/edit_address"
+            app:layout_constraintTop_toBottomOf="@id/tv_shipping_address">
+
+            <TextView
+                style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_delete" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_6sdp"
+                android:src="@drawable/ic_delete" />
         </LinearLayout>
 
         <View

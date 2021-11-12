@@ -12,7 +12,7 @@ import com.hexagram.febys.databinding.FragmentCheckoutBinding
 import com.hexagram.febys.databinding.LayoutOrderSummaryProductBinding
 import com.hexagram.febys.models.db.CartDTO
 import com.hexagram.febys.models.view.PaymentMethod
-import com.hexagram.febys.models.view.ShippingAddress
+import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
 import com.hexagram.febys.ui.screens.cart.CartAdapter
 import com.hexagram.febys.ui.screens.dialog.InfoDialog
 import com.hexagram.febys.utils.*
@@ -160,7 +160,7 @@ class CheckoutFragment : BaseFragment() {
 
     private fun updateShippingAddressUi(shippingAddress: ShippingAddress?) {
         binding.tvShippingAddress.text =
-            shippingAddress?.fullAddress() ?: getString(R.string.msg_for_no_shipping_address)
+            shippingAddress?.shippingDetail?.address?.fullAddress() ?: getString(R.string.msg_for_no_shipping_address)
     }
 
     private fun updatePaymentMethod(paymentMethod: PaymentMethod?) {

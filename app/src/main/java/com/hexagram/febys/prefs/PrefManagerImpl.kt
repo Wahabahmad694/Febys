@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.google.gson.Gson
 import com.hexagram.febys.models.view.PaymentMethod
-import com.hexagram.febys.models.view.ShippingAddress
+import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
 import com.hexagram.febys.network.response.User
 import com.hexagram.febys.utils.Utils
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -104,6 +104,12 @@ class PrefManagerImpl @Inject constructor(
 
     override fun clearFav() {
         remove(KEY_FAV)
+    }
+
+    override fun removeShippingAddress(): Boolean {
+        getDefaultShippingAddress() ?: return false
+        remove(KEY_DEF_SHIPPING_ADDRESS)
+        return true
     }
 
     override fun getDefaultShippingAddress(): ShippingAddress? {

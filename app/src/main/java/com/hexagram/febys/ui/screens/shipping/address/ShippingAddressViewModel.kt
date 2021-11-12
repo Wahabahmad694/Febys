@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.hexagram.febys.base.BaseViewModel
-import com.hexagram.febys.models.view.ShippingAddress
+import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.repos.IShippingAddressRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -33,8 +33,16 @@ class ShippingAddressViewModel @Inject constructor(
         }
     }
 
-    fun setAsDefault(id: Int) = viewModelScope.launch {
-        shippingRepo.setAsDefault(id)
+    fun deleteShippingAddresses(shippingAddress: ShippingAddress) = viewModelScope.launch {
+        _addUpdateShippingAddress.postValue(DataState.Loading())
+        shippingRepo.deleteShippingAddress(shippingAddress).collect {
+            _addUpdateShippingAddress.postValue(it)
+        }
+        refreshShippingAddresses()
+    }
+
+    fun setAsDefault(shippingAddress: ShippingAddress) = viewModelScope.launch {
+        shippingRepo.setAsDefault(shippingAddress)
     }
 
     fun updateShippingAddress(shippingAddress: ShippingAddress) = viewModelScope.launch {
@@ -50,4 +58,6 @@ class ShippingAddressViewModel @Inject constructor(
             _addUpdateShippingAddress.postValue(it)
         }
     }
+
+
 }

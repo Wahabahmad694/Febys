@@ -346,7 +346,7 @@
         <argument
             android:name="shippingAddress"
             android:defaultValue="@null"
-            app:argType="com.hexagram.febys.models.view.ShippingAddress"
+            app:argType="com.hexagram.febys.models.api.shippingAddress.ShippingAddress"
             app:nullable="true" />
         <argument
             android:name="forceSetAsDefault"

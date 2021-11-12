@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.hexagram.febys.R
 import com.hexagram.febys.databinding.FragmentAddEditShippingAddressBinding
-import com.hexagram.febys.models.view.ShippingAddress
+import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.ui.screens.list.selection.ListSelectionAdapter
@@ -110,32 +110,31 @@ class AddEditShippingAddressFragment : Fragment() {
 
         binding.labelShippingAddress.setText(R.string.label_edit_shipping_address)
 
-        addressLabelsAdapter.updateSelectedItem(shippingAddress.addressLabel)
-        binding.tvAddressLabel.text = shippingAddress.addressLabel
+        addressLabelsAdapter.updateSelectedItem(shippingAddress.shippingDetail.label)
+        binding.tvAddressLabel.text = shippingAddress.shippingDetail.label
 
-        binding.etFirstName.setText(shippingAddress.firstName)
-        binding.etLastName.setText(shippingAddress.lastName)
+        binding.etFirstName.setText(shippingAddress.shippingDetail.firstName)
+        binding.etLastName.setText(shippingAddress.shippingDetail.lastName)
 
-        regionsAdapter.updateSelectedItem(shippingAddress.region)
-        binding.tvRegion.text = shippingAddress.region
+        regionsAdapter.updateSelectedItem(shippingAddress.shippingDetail.address.city)
+        binding.tvRegion.text = shippingAddress.shippingDetail.address.city
 
-        binding.etAddressLine1.setText(shippingAddress.addressLine1)
-        binding.etAddressLine2.setText(shippingAddress.addressLine2)
-        binding.etCity.setText(shippingAddress.city)
-        binding.etState.setText(shippingAddress.state)
-        binding.etPostalCode.setText(shippingAddress.postalCode)
-        binding.etPhone.setText(shippingAddress.phoneNo)
+        binding.etAddressLine1.setText(shippingAddress.shippingDetail.address.fullAddress())
+        binding.etCity.setText(shippingAddress.shippingDetail.address.city)
+        binding.etState.setText(shippingAddress.shippingDetail.address.state)
+        binding.etPostalCode.setText(shippingAddress.shippingDetail.address.zipCode)
+        binding.etPhone.setText(shippingAddress.shippingDetail.contact.number)
 
-        isDefault = shippingAddress.isDefault
-        binding.switchSetAsDefault.isChecked = shippingAddress.isDefault
-        binding.switchSetAsDefault.isEnabled = !shippingAddress.isDefault
+        isDefault = shippingAddress.shippingDetail.isDefault
+        binding.switchSetAsDefault.isChecked = shippingAddress.shippingDetail.isDefault
+        binding.switchSetAsDefault.isEnabled = !shippingAddress.shippingDetail.isDefault
     }
 
     private fun uiListeners() {
         binding.btnSave.setOnClickListener {
             initFields()
             if (areAllFieldsValid()) {
-                saveOrUpdateShippingAddress()
+//                saveOrUpdateShippingAddress()
             }
         }
 
@@ -193,33 +192,33 @@ class AddEditShippingAddressFragment : Fragment() {
         }
     }
 
-    private fun saveOrUpdateShippingAddress() {
-        val id = args.shippingAddress?.id ?: -1
-        if (id != -1) {
-            val shippingAddress = createShippingAddress(id)
-            shippingAddressViewModel.updateShippingAddress(shippingAddress)
-        } else {
-            val shippingAddress = createShippingAddress()
-            shippingAddressViewModel.addShippingAddress(shippingAddress)
-        }
-    }
+//    private fun saveOrUpdateShippingAddress() {
+//        val id = args.shippingAddress?.id ?: -1
+//        if (id != -1) {
+//            val shippingAddress = createShippingAddress(id)
+//            shippingAddressViewModel.updateShippingAddress(shippingAddress)
+//        } else {
+////            val shippingAddress = createShippingAddress()
+//            shippingAddressViewModel.addShippingAddress(shippingAddress)
+//        }
+//    }
 
-    private fun createShippingAddress(id: Int? = null): ShippingAddress {
-        return ShippingAddress(
-            id ?: Random.nextInt(),
-            firstName,
-            lastName,
-            addressLabel,
-            region,
-            addressLine1,
-            if (addressLine2.isNotEmpty()) addressLine2 else null,
-            city,
-            if (state.isNotEmpty()) state else null,
-            postalCode,
-            phoneNo,
-            isDefault
-        )
-    }
+//    private fun createShippingAddress(id: Int? = null): ShippingAddress {
+//        return ShippingAddress(
+//            id ?: Random.nextInt(),
+//            firstName,
+//            lastName,
+//            addressLabel,
+//            region,
+//            addressLine1,
+//            if (addressLine2.isNotEmpty()) addressLine2 else null,
+//            city,
+//            if (state.isNotEmpty()) state else null,
+//            postalCode,
+//            phoneNo,
+//            isDefault
+//        )
+//    }
 
 
     private fun initFields() {
