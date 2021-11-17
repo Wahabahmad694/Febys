@@ -5,9 +5,8 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class ShippingAddress constructor(
-    @SerializedName("__v")
-    val version: Int,
+data class ShippingAddress (
+
     @SerializedName("_id")
     val id: String,
     @SerializedName("consumer_id")

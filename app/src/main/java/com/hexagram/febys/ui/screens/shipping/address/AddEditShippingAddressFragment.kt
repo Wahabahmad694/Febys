@@ -15,13 +15,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.hexagram.febys.R
 import com.hexagram.febys.databinding.FragmentAddEditShippingAddressBinding
-import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
+import com.hexagram.febys.models.api.contact.PhoneNo
+import com.hexagram.febys.models.api.shippingAddress.*
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.ui.screens.list.selection.ListSelectionAdapter
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.random.Random
 
 @AndroidEntryPoint
 class AddEditShippingAddressFragment : Fragment() {
@@ -42,13 +42,14 @@ class AddEditShippingAddressFragment : Fragment() {
     private var firstName: String = ""
     private var lastName: String = ""
     private var addressLabel: String = ""
-    private var region: String = ""
+    private var countryCode: String = ""
     private var addressLine1: String = ""
     private var addressLine2: String = ""
     private var city: String = ""
     private var state: String = ""
-    private var postalCode: String = ""
+    private var zipCode: String = ""
     private var phoneNo: String = ""
+    private var street: String = ""
     private var isDefault: Boolean = false
 
     override fun onCreateView(
@@ -87,10 +88,8 @@ class AddEditShippingAddressFragment : Fragment() {
         }
 
         val addressLabels = resources.getStringArray(R.array.address_labels).toMutableList()
-        val regions = resources.getStringArray(R.array.regions).toMutableList()
-
         addressLabelsAdapter.submitList(addressLabels)
-        regionsAdapter.submitList(regions)
+
 
         updateUi(args.shippingAddress)
     }
@@ -105,6 +104,7 @@ class AddEditShippingAddressFragment : Fragment() {
 
             binding.tvAddressLabel.text = addressLabelsAdapter.getSelectedItem()
             binding.tvRegion.text = regionsAdapter.getSelectedItem()
+
             return
         }
 
@@ -116,11 +116,15 @@ class AddEditShippingAddressFragment : Fragment() {
         binding.etFirstName.setText(shippingAddress.shippingDetail.firstName)
         binding.etLastName.setText(shippingAddress.shippingDetail.lastName)
 
-        regionsAdapter.updateSelectedItem(shippingAddress.shippingDetail.address.city)
-        binding.tvRegion.text = shippingAddress.shippingDetail.address.city
+        regionsAdapter.updateSelectedItem(shippingAddress.shippingDetail.address.countryCode)
+        binding.tvRegion.text = shippingAddress.shippingDetail.address.countryCode
 
-        binding.etAddressLine1.setText(shippingAddress.shippingDetail.address.fullAddress())
-        binding.etCity.setText(shippingAddress.shippingDetail.address.city)
+        regionsAdapter.updateSelectedItem(shippingAddress.shippingDetail.address.city)
+        binding.tvCity.text = shippingAddress.shippingDetail.address.city
+
+        binding.etAddressLine1.setText(shippingAddress.shippingDetail.address.street)
+
+//        binding.etCity.setText(shippingAddress.shippingDetail.address.city)
         binding.etState.setText(shippingAddress.shippingDetail.address.state)
         binding.etPostalCode.setText(shippingAddress.shippingDetail.address.zipCode)
         binding.etPhone.setText(shippingAddress.shippingDetail.contact.number)
@@ -134,10 +138,13 @@ class AddEditShippingAddressFragment : Fragment() {
         binding.btnSave.setOnClickListener {
             initFields()
             if (areAllFieldsValid()) {
-//                saveOrUpdateShippingAddress()
+                saveOrUpdateShippingAddress()
             }
         }
 
+        binding.ivBack.setOnClickListener {
+            goBack()
+        }
         binding.containerAddressLabel.setOnClickListener {
             showBottomSheet(addressLabelsBottomSheet)
         }
@@ -193,47 +200,74 @@ class AddEditShippingAddressFragment : Fragment() {
                 }
             }
         }
+
+
+        shippingAddressViewModel.countryResponse.observe(viewLifecycleOwner) {
+            when (it) {
+                is DataState.Loading -> {
+                    showLoader()
+                }
+                is DataState.Error -> {
+                    hideLoader()
+                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
+                }
+                is DataState.Data -> {
+                    hideLoader()
+                    val countries = it.data.countries.map { country -> country.name }
+                    regionsAdapter.submitList(countries)
+                }
+            }
+        }
     }
 
-//    private fun saveOrUpdateShippingAddress() {
-//        val id = args.shippingAddress?.id ?: -1
-//        if (id != -1) {
-//            val shippingAddress = createShippingAddress(id)
-//            shippingAddressViewModel.updateShippingAddress(shippingAddress)
-//        } else {
-////            val shippingAddress = createShippingAddress()
-//            shippingAddressViewModel.addShippingAddress(shippingAddress)
-//        }
-//    }
+    private fun saveOrUpdateShippingAddress() {
+        val id = args.shippingAddress?.id ?: ""
+        if (id != "") {
+            val shippingAddress = createShippingAddress(id)
+            shippingAddressViewModel.updateShippingAddress(shippingAddress)
+        } else {
+            val shippingAddress = createShippingAddress()
+            shippingAddressViewModel.addShippingAddress(shippingAddress)
+        }
+    }
 
-//    private fun createShippingAddress(id: Int? = null): ShippingAddress {
-//        return ShippingAddress(
-//            id ?: Random.nextInt(),
-//            firstName,
-//            lastName,
-//            addressLabel,
-//            region,
-//            addressLine1,
-//            if (addressLine2.isNotEmpty()) addressLine2 else null,
-//            city,
-//            if (state.isNotEmpty()) state else null,
-//            postalCode,
-//            phoneNo,
-//            isDefault
-//        )
-//    }
+    private fun createShippingAddress(id: String? = null): PostShippingAddress {
+        val phoneNo: PhoneNo = PhoneNo(
+            contactId = "",
+            countryCode,
+            number = ""
+        )
+        val address: Address = Address(
+            city,
+            countryCode,
+            state,
+            street,
+            zipCode,
+        )
+        val shippingDetail = PostShippingDetail(
+            address = address,
+            contact = phoneNo,
+            firstName,
+            label = "",
+            lastName,
+            email = "a@gmail.com"
+        )
+
+        return PostShippingAddress(
+            postShippingDetail = shippingDetail
+        )
+    }
 
 
     private fun initFields() {
         firstName = binding.etFirstName.text.toString()
         lastName = binding.etLastName.text.toString()
         addressLabel = binding.tvAddressLabel.text.toString()
-        region = binding.tvRegion.text.toString()
+        countryCode = binding.tvRegion.text.toString()
         addressLine1 = binding.etAddressLine1.text.toString()
         addressLine2 = binding.etAddressLine2.text.toString()
-        city = binding.etCity.text.toString()
         state = binding.etState.text.toString()
-        postalCode = binding.etPostalCode.text.toString()
+        zipCode = binding.etPostalCode.text.toString()
         phoneNo = binding.etPhone.text.toString()
         isDefault = binding.switchSetAsDefault.isChecked
     }
@@ -269,7 +303,7 @@ class AddEditShippingAddressFragment : Fragment() {
             return false
         }
 
-        if (!Validator.isValidPostalCode(postalCode)) {
+        if (!Validator.isValidPostalCode(zipCode)) {
             showErrorDialog(getString(R.string.error_enter_valid_postal_code))
             return false
         }

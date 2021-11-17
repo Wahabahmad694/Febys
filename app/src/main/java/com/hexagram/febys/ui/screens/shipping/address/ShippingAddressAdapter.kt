@@ -65,7 +65,7 @@ class ShippingAddressAdapter :
         fun bind(shippingAddress: ShippingAddress, position: Int) {
             binding.address = shippingAddress
 
-            binding.setAsDefault.setOnClickListener {
+            binding.root.setOnClickListener {
                 if (!shippingAddress.shippingDetail.isDefault) {
                     setAsDefault(shippingAddress, position)
                 }

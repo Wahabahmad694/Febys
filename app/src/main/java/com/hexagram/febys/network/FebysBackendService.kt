@@ -1,6 +1,7 @@
 package com.hexagram.febys.network
 
 import com.hexagram.febys.models.api.cart.CartResponse
+import com.hexagram.febys.models.api.countries.CountryResponse
 import com.hexagram.febys.models.api.pagination.Pagination
 import com.hexagram.febys.models.api.product.FeaturedCategory
 import com.hexagram.febys.models.api.product.Trending
@@ -11,6 +12,8 @@ import com.hexagram.febys.models.api.request.ReplyQuestionRequest
 import com.hexagram.febys.models.api.response.OrderResponse
 import com.hexagram.febys.models.api.response.ProductDetailResponse
 import com.hexagram.febys.models.api.response.QuestionAnswersResponse
+import com.hexagram.febys.models.api.shippingAddress.PostShippingAddress
+import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddressResponse
 import com.hexagram.febys.models.api.vendor.Vendor
 import com.hexagram.febys.models.api.vendor.VendorPagingListing
@@ -203,4 +206,13 @@ interface FebysBackendService {
     suspend fun fetchOrderInfo(
         @Header("Authorization") authToken: String, @Body orderRequest: OrderRequest
     ): ApiResponse<OrderResponse>
+
+    @POST("v1/consumers/save/shipping-detail")
+    suspend fun addShippingAddress(
+        @Header("Authorization") authToken: String,
+    @Body postShippingAddress: PostShippingAddress): ApiResponse<PostShippingAddress>
+
+    @GET("v1/consumers/countries/list")
+    suspend fun fetchCountries(@Header("Authorization") authToken: String): ApiResponse<CountryResponse>
+
 }

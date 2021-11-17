@@ -1,7 +1,8 @@
 package com.hexagram.febys.repos
 
+import com.hexagram.febys.models.api.countries.CountryResponse
+import com.hexagram.febys.models.api.shippingAddress.PostShippingAddress
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
-import com.hexagram.febys.models.api.wishlist.FavSkuIds
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.FebysBackendService
 import com.hexagram.febys.network.adapter.*
@@ -42,10 +43,10 @@ class ShippingAddressRepoImpl @Inject constructor(
     }
 
     override suspend fun updateShippingAddress(
-        shippingAddress: ShippingAddress, dispatcher: CoroutineDispatcher
+        shippingAddress: PostShippingAddress, dispatcher: CoroutineDispatcher
     ): Flow<DataState<Unit>> = flow<DataState<Unit>> {
 //        val authToken = pref.getAccessToken()
-//        val response = FakeApiService.updateShippingAddress(authToken, shippingAddress)
+//        val response = backendService.updateShippingAddress(authToken, shippingAddress)
 //        response
 //            .onSuccess {
 //                emit(DataState.Data(Unit))
@@ -59,20 +60,20 @@ class ShippingAddressRepoImpl @Inject constructor(
     }.flowOn(dispatcher)
 
     override suspend fun addShippingAddress(
-        shippingAddress: ShippingAddress, dispatcher: CoroutineDispatcher
+        shippingAddress: PostShippingAddress, dispatcher: CoroutineDispatcher
     ): Flow<DataState<Unit>> = flow<DataState<Unit>> {
-//        val authToken = pref.getAccessToken()
-//        val response = FakeApiService.addShippingAddress(authToken, shippingAddress)
-//        response
-//            .onSuccess {
-//                emit(DataState.Data(Unit))
+        val authToken = pref.getAccessToken()
+        val response = backendService.addShippingAddress(authToken, shippingAddress)
+        response
+            .onSuccess {
+                emit(DataState.Data(Unit))
 //                if (shippingAddress.shippingDetail.default) {
 //                    saveDefaultShippingAddress(shippingAddress)
 //                }
-//            }
-//            .onError { emit(DataState.ApiError(message)) }
-//            .onException { emit(DataState.ExceptionError()) }
-//            .onNetworkError { emit(DataState.NetworkError()) }
+            }
+            .onError { emit(DataState.ApiError(message)) }
+            .onException { emit(DataState.ExceptionError()) }
+            .onNetworkError { emit(DataState.NetworkError()) }
     }.flowOn(dispatcher)
 
     override suspend fun deleteShippingAddress(
@@ -87,6 +88,22 @@ class ShippingAddressRepoImpl @Inject constructor(
                 if (shippingAddress.shippingDetail.isDefault) {
                     pref.removeShippingAddress()
                 }
+            }
+            .onError { emit(DataState.ApiError(message)) }
+            .onException { emit(DataState.ExceptionError()) }
+            .onNetworkError { emit(DataState.NetworkError()) }
+
+    }.flowOn(dispatcher)
+
+
+    override suspend fun fetchCountries(
+        dispatcher: CoroutineDispatcher
+    ): Flow<DataState<CountryResponse>> = flow<DataState<CountryResponse>> {
+        val authToken = getAuthToken()
+        if (authToken.isEmpty()) return@flow
+        backendService.fetchCountries(authToken)
+            .onSuccess {
+                emit(DataState.Data(data!!))
             }
             .onError { emit(DataState.ApiError(message)) }
             .onException { emit(DataState.ExceptionError()) }

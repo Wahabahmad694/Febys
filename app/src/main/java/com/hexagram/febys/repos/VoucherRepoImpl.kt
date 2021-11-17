@@ -2,7 +2,6 @@ package com.hexagram.febys.repos
 
 import com.hexagram.febys.models.api.vouchers.Voucher
 import com.hexagram.febys.network.DataState
-import com.hexagram.febys.network.FakeApiService
 import com.hexagram.febys.network.FebysBackendService
 import com.hexagram.febys.network.adapter.onError
 import com.hexagram.febys.network.adapter.onException

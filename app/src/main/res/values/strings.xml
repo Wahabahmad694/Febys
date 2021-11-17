@@ -162,7 +162,7 @@
     <string name="label_address_line_1">Address Line 1</string>
     <string name="label_address_line_2">Address Line 2 (Optional)</string>
     <string name="label_city">City</string>
-    <string name="label_state_optional">State (Optional)</string>
+    <string name="label_state">State</string>
     <string name="label_postal_code">Postal Code</string>
     <string name="label_set_as_default_shipping_address">Set as default shipping address</string>
     <string name="label_save_and_continue">Save and continue</string>
@@ -172,6 +172,7 @@
     <string name="error_enter_valid_address">Please enter valid address</string>
     <string name="label_select_address_label">Select Address Label</string>
     <string name="label_select_region">Select State</string>
+    <string name="label_select_city">Select City</string>
     <string name="label_checkout">Checkout</string>
     <string name="msg_for_no_shipping_address">Please add shipping address before placing the order</string>
     <string name="msg_for_no_payment">Please add payment method before placing the order</string>
