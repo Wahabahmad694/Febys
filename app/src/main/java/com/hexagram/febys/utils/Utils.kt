@@ -5,7 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import com.google.gson.Gson
 import com.hexagram.febys.models.view.PaymentMethod
-import com.hexagram.febys.models.view.ShippingAddress
+import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
 
 object Utils {
     fun jsonFromShippingAddress(obj: ShippingAddress): String {

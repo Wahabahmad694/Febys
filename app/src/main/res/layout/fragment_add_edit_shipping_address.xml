@@ -257,43 +257,14 @@
                         app:layout_constraintTop_toBottomOf="@id/et_address_line_2" />
 
                     <TextView
-                        android:id="@+id/label_city"
+                        android:id="@+id/label_state"
                         style="@style/TextTheme.Arial.TS16"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/_16sdp"
                         android:layout_marginTop="@dimen/_32sdp"
-                        android:text="@string/label_city"
+                        android:text="@string/label_state"
                         app:layout_constraintTop_toBottomOf="@id/et_address_line_2" />
-
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/et_city"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/_16sdp"
-                        android:background="@null"
-                        android:imeOptions="actionNext"
-                        android:inputType="textPostalAddress"
-                        android:paddingVertical="@dimen/_8dp"
-                        android:textAppearance="@style/TextTheme.Arial.TS16"
-                        app:layout_constraintTop_toBottomOf="@id/label_city" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1dp"
-                        android:layout_marginHorizontal="@dimen/_16sdp"
-                        android:background="@color/grey_e1e5e8"
-                        app:layout_constraintTop_toBottomOf="@id/et_city" />
-
-                    <TextView
-                        android:id="@+id/label_state"
-                        style="@style/TextTheme.Arial.TS16.Grey"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/_16sdp"
-                        android:layout_marginTop="@dimen/_32sdp"
-                        android:text="@string/label_state_optional"
-                        app:layout_constraintTop_toBottomOf="@id/et_city" />
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/et_state"
@@ -314,6 +285,59 @@
                         android:background="@color/grey_e1e5e8"
                         app:layout_constraintTop_toBottomOf="@id/et_state" />
 
+                    <LinearLayout
+                        android:id="@+id/container_city"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_32sdp"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="@dimen/_16sdp"
+                        app:layout_constraintTop_toBottomOf="@id/et_state">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/label_city"
+                                style="@style/TextTheme.Arial.TS16"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/label_city" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/city_arrow"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_arrow_down" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tv_city"
+                            style="@style/TextTheme.Arial.TS16"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="2dp"
+                            tools:text="London" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:background="@color/grey_e1e5e8" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1dp"
+                        android:layout_marginHorizontal="@dimen/_16sdp"
+                        android:background="@color/grey_e1e5e8"
+                        app:layout_constraintTop_toBottomOf="@id/container_city" />
+
                     <TextView
                         android:id="@+id/label_postal_code"
                         style="@style/TextTheme.Arial.TS16"
@@ -322,7 +346,7 @@
                         android:layout_marginHorizontal="@dimen/_16sdp"
                         android:layout_marginTop="@dimen/_32sdp"
                         android:text="@string/label_postal_code"
-                        app:layout_constraintTop_toBottomOf="@id/et_state" />
+                        app:layout_constraintTop_toBottomOf="@id/container_city" />
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/et_postal_code"

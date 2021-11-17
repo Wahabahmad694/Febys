@@ -3,7 +3,6 @@ package com.hexagram.febys.models.api.request
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import com.hexagram.febys.models.api.vendor.VendorMessage
-import com.hexagram.febys.models.view.ShippingAddress
 import com.hexagram.febys.network.requests.SkuIdAndQuantity
 import kotlinx.parcelize.Parcelize
 
@@ -14,4 +13,4 @@ data class OrderRequest(
     var voucherCode: String?,
     val items: List<SkuIdAndQuantity>,
     val messages: List<VendorMessage>
-): Parcelable
+) : Parcelable

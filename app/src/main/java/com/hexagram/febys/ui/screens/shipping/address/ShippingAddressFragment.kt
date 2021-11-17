@@ -8,7 +8,7 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentShippingAddressBinding
-import com.hexagram.febys.models.view.ShippingAddress
+import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.utils.goBack
@@ -45,12 +45,15 @@ class ShippingAddressFragment : BaseFragment() {
     private fun uiListener() {
         binding.ivBack.setOnClickListener { goBack() }
 
-        shippingAddressAdapter.setAsDefault = { id ->
-            shippingAddressViewModel.setAsDefault(id)
+        shippingAddressAdapter.setAsDefault = { shippingAddress ->
+            shippingAddressViewModel.setAsDefault(shippingAddress)
         }
 
         shippingAddressAdapter.editShippingAddress = { shippingAddress ->
             gotoAddEditShippingAddress(shippingAddress)
+        }
+        shippingAddressAdapter.deleteShippingAddress = { shippingAddress ->
+            shippingAddressViewModel.deleteShippingAddresses(shippingAddress)
         }
 
         binding.labelAddNewShippingAddress.setOnClickListener {
@@ -90,9 +93,9 @@ class ShippingAddressFragment : BaseFragment() {
     }
 
     private fun updateUi(addresses: List<ShippingAddress>) {
-        if (addresses.isEmpty()) {
-            return
-        }
+        /*  if (addresses.isEmpty()) {
+              return
+          }*/
 
         shippingAddressAdapter.submitList(addresses)
     }

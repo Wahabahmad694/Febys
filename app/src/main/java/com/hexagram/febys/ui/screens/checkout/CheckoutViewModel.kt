@@ -1,7 +1,7 @@
 package com.hexagram.febys.ui.screens.checkout
 
 import com.hexagram.febys.models.view.PaymentMethod
-import com.hexagram.febys.models.view.ShippingAddress
+import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
 import com.hexagram.febys.repos.ICartRepo
 import com.hexagram.febys.repos.ICheckoutRepo
 import com.hexagram.febys.repos.IProductRepo
