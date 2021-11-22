@@ -10,10 +10,7 @@ import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentCartBinding
-import com.hexagram.febys.models.api.order.Order
 import com.hexagram.febys.models.db.CartDTO
-import com.hexagram.febys.network.DataState
-import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -53,7 +50,7 @@ class CartFragment : BaseFragment() {
         }
 
         binding.btnProceedToCheckout.setOnClickListener {
-            gotoCheckout()
+            if (isUserLoggedIn) gotoCheckout() else gotoLogin()
         }
 
         cartAdapter.interaction = object : CartAdapter.Interaction {
@@ -87,6 +84,11 @@ class CartFragment : BaseFragment() {
     private fun gotoCheckout() {
         val gotoCheckout = CartFragmentDirections.actionCartFragmentToCheckoutFragment()
         navigateTo(gotoCheckout)
+    }
+
+    private fun gotoLogin() {
+        val gotoLogin = NavGraphDirections.actionToLoginFragment()
+        navigateTo(gotoLogin)
     }
 
     private fun updateFav() {

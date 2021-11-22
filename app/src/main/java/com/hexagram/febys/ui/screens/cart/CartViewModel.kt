@@ -71,9 +71,7 @@ open class CartViewModel @Inject constructor(
         onVoucherResponse(DataState.Loading())
         viewModelScope.launch {
             cartRepo.fetchOrderInfo(voucher).collect {
-                launch(Dispatchers.Main) {
-                    onVoucherResponse(it)
-                }
+                launch(Dispatchers.Main) { onVoucherResponse(it) }
             }
         }
     }

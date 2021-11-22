@@ -31,7 +31,7 @@ class CheckoutFragment : BaseFragment() {
     private var applyVoucher = false
 
     private val handleVoucherResponse: (voucherResponse: DataState<Order>) -> Unit = {
-        handleVoucherResponse(it)
+        handleOrderInfoResponse(it)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -130,18 +130,18 @@ class CheckoutFragment : BaseFragment() {
         checkoutViewModel.fetchOrderInfo(voucher, handleVoucherResponse)
     }
 
-    private fun handleVoucherResponse(voucherResponse: DataState<Order>) {
-        when (voucherResponse) {
+    private fun handleOrderInfoResponse(orderInfoResponse: DataState<Order>) {
+        when (orderInfoResponse) {
             is DataState.Loading -> {
                 showLoader()
             }
             is DataState.Error -> {
                 hideLoader()
-                ErrorDialog(voucherResponse).show(childFragmentManager, ErrorDialog.TAG)
+                ErrorDialog(orderInfoResponse).show(childFragmentManager, ErrorDialog.TAG)
             }
             is DataState.Data -> {
                 hideLoader()
-                createOrderSummary(voucherResponse.data)
+                createOrderSummary(orderInfoResponse.data)
             }
         }
     }
