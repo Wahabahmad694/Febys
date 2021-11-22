@@ -1,8 +1,12 @@
 package com.hexagram.febys.repos
 
+import com.hexagram.febys.models.api.cities.PostCitiesResponse
 import com.hexagram.febys.models.api.countries.CountryResponse
+import com.hexagram.febys.models.api.request.GetCitiesRequest
+import com.hexagram.febys.models.api.request.GetStatesRequest
 import com.hexagram.febys.models.api.shippingAddress.PostShippingAddress
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
+import com.hexagram.febys.models.api.states.PostStatesResponse
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.FebysBackendService
 import com.hexagram.febys.network.adapter.*
@@ -71,7 +75,8 @@ class ShippingAddressRepoImpl @Inject constructor(
 //                    saveDefaultShippingAddress(shippingAddress)
 //                }
             }
-            .onError { emit(DataState.ApiError(message)) }
+            .onError {
+                emit(DataState.ApiError(message)) }
             .onException { emit(DataState.ExceptionError()) }
             .onNetworkError { emit(DataState.NetworkError()) }
     }.flowOn(dispatcher)
@@ -110,6 +115,37 @@ class ShippingAddressRepoImpl @Inject constructor(
             .onNetworkError { emit(DataState.NetworkError()) }
 
     }.flowOn(dispatcher)
+
+    override suspend fun getStates(
+        getStatesRequest: GetStatesRequest,
+        dispatcher: CoroutineDispatcher
+    ): Flow<DataState<PostStatesResponse>> = flow<DataState<PostStatesResponse>> {
+        val authToken = getAuthToken()
+        if (authToken.isEmpty()) return@flow
+        backendService.getStates(authToken,getStatesRequest)
+            .onSuccess {
+                emit(DataState.Data(data!!))
+            }
+            .onError { emit(DataState.ApiError(message)) }
+            .onException { emit(DataState.ExceptionError()) }
+            .onNetworkError { emit(DataState.NetworkError()) }
+    }.flowOn(dispatcher)
+
+    override suspend fun getCities(
+        getCitiesRequest: GetCitiesRequest,
+        dispatcher: CoroutineDispatcher
+    ): Flow<DataState<PostCitiesResponse>> = flow<DataState<PostCitiesResponse>> {
+        val authToken = getAuthToken()
+        if (authToken.isEmpty()) return@flow
+        backendService.getCities(authToken,getCitiesRequest)
+            .onSuccess {
+                emit(DataState.Data(data!!))
+            }
+            .onError { emit(DataState.ApiError(message)) }
+            .onException { emit(DataState.ExceptionError()) }
+            .onNetworkError { emit(DataState.NetworkError()) }
+    }
+
 
     private fun saveDefaultShippingAddress(shippingAddress: ShippingAddress) {
         pref.saveDefaultShippingAddress(shippingAddress)
