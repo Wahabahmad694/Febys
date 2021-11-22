@@ -6,8 +6,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class PhoneNo(
-    @SerializedName("_id")
-    val contactId: String?=null,
     @SerializedName("country_code")
     val countryCode: String,
     val number: String

@@ -256,34 +256,51 @@
                         android:background="@color/grey_e1e5e8"
                         app:layout_constraintTop_toBottomOf="@id/et_address_line_2" />
 
-                    <TextView
-                        android:id="@+id/label_state"
-                        style="@style/TextTheme.Arial.TS16"
+                    <LinearLayout
+                        android:id="@+id/container_state"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/_16sdp"
                         android:layout_marginTop="@dimen/_32sdp"
-                        android:text="@string/label_state"
-                        app:layout_constraintTop_toBottomOf="@id/et_address_line_2" />
+                        android:orientation="vertical"
+                        android:paddingHorizontal="@dimen/_16sdp"
+                        app:layout_constraintTop_toBottomOf="@id/et_address_line_2">
 
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/et_state"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/_16sdp"
-                        android:background="@null"
-                        android:imeOptions="actionNext"
-                        android:inputType="textPostalAddress"
-                        android:paddingVertical="@dimen/_8dp"
-                        android:textAppearance="@style/TextTheme.Arial.TS16"
-                        app:layout_constraintTop_toBottomOf="@id/label_state" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1dp"
-                        android:layout_marginHorizontal="@dimen/_16sdp"
-                        android:background="@color/grey_e1e5e8"
-                        app:layout_constraintTop_toBottomOf="@id/et_state" />
+                            <TextView
+                                android:id="@+id/label_state"
+                                style="@style/TextTheme.Arial.TS16"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/label_state" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/state_arrow"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_arrow_down" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tv_state"
+                            style="@style/TextTheme.Arial.TS16"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="2dp"
+                            tools:text="London" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:background="@color/grey_e1e5e8" />
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/container_city"
@@ -292,7 +309,7 @@
                         android:layout_marginTop="@dimen/_32sdp"
                         android:orientation="vertical"
                         android:paddingHorizontal="@dimen/_16sdp"
-                        app:layout_constraintTop_toBottomOf="@id/et_state">
+                        app:layout_constraintTop_toBottomOf="@id/container_state">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -450,6 +467,14 @@
             android:id="@+id/bottom_sheet_region"
             layout="@layout/bottom_sheet_list_of_selection"
             app:title="@{@string/label_select_region}" />
+        <include
+            android:id="@+id/bottom_sheet_state"
+            layout="@layout/bottom_sheet_list_of_selection"
+            app:title="@{@string/label_select_state}" />
 
+        <include
+            android:id="@+id/bottom_sheet_city"
+            layout="@layout/bottom_sheet_list_of_selection"
+            app:title="@{@string/label_select_city}" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

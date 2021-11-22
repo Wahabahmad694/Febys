@@ -14,5 +14,4 @@ data class PostShippingDetail(
     val label: String,
     @SerializedName("last_name")
     val lastName: String,
-    val email: String,
 ): Parcelable
