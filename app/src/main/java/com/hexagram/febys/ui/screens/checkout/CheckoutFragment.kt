@@ -14,7 +14,6 @@ import com.hexagram.febys.models.api.order.Order
 import com.hexagram.febys.models.api.price.Price
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
 import com.hexagram.febys.models.db.CartDTO
-import com.hexagram.febys.models.view.PaymentMethod
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.cart.CartAdapter
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
@@ -62,9 +61,6 @@ class CheckoutFragment : BaseFragment() {
         val shippingAddress = checkoutViewModel.getDefaultShippingAddress()
         updateShippingAddressUi(shippingAddress)
 
-        val paymentMethod = checkoutViewModel.getDefaultPaymentMethod()
-        updatePaymentMethod(paymentMethod)
-
         updateFav()
     }
 
@@ -73,12 +69,6 @@ class CheckoutFragment : BaseFragment() {
 
         binding.containerShippingAddress.setOnClickListener {
             showChangeShippingAddressWarningDialog()
-        }
-
-        binding.containerPayment.setOnClickListener {
-            val gotoPaymentMethod =
-                CheckoutFragmentDirections.actionCheckoutFragmentToPaymentMethodsFragment()
-            navigateTo(gotoPaymentMethod)
         }
 
         binding.btnPlaceOrder.setOnClickListener {
@@ -211,17 +201,6 @@ class CheckoutFragment : BaseFragment() {
         binding.tvShippingAddress.text =
             shippingAddress?.shippingDetail?.address?.fullAddress()
                 ?: getString(R.string.msg_for_no_shipping_address)
-    }
-
-    private fun updatePaymentMethod(paymentMethod: PaymentMethod?) {
-        if (paymentMethod != null) {
-            binding.tvPayment.text = paymentMethod.name
-            binding.icPayment.show()
-            binding.icPayment.setImageResource(paymentMethod.img)
-        } else {
-            binding.tvPayment.text = getString(R.string.msg_for_no_payment)
-            binding.icPayment.invisible()
-        }
     }
 
     private fun showChangeShippingAddressWarningDialog() {
