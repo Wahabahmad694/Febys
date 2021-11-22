@@ -205,5 +205,6 @@
     <string name="label_no_answer">---</string>
     <string name="label_question">Question</string>
     <string name="label_answer">Answer</string>
+    <string name="error_please_select_shipping_address">Please select shipping address</string>
 
 </resources>

@@ -5,8 +5,8 @@ import com.google.gson.annotations.SerializedName
 import com.hexagram.febys.models.api.cart.VendorProducts
 import com.hexagram.febys.models.api.consumer.Consumer
 import com.hexagram.febys.models.api.price.Price
+import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
 import com.hexagram.febys.models.api.transaction.Transaction
-import com.hexagram.febys.models.api.vouchers.Voucher
 import com.hexagram.febys.models.api.vouchers.VoucherDetail
 import com.hexagram.febys.models.db.CartDTO
 import com.hexagram.febys.network.domain.util.CartMapper
@@ -19,8 +19,8 @@ data class Order(
     @SerializedName("consumer_id")
     val consumerId: String,
     val consumer: Consumer,
-//    @SerializedName("shipping_detail")
-//    val shippingAddress: ShippingAddress?,
+    @SerializedName("shipping_detail")
+    val shippingAddress: ShippingAddress?,
     @SerializedName("products_amount")
     val productsAmount: Price,
     @SerializedName("bill_amount")

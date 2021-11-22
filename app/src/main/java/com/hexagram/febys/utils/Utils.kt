@@ -4,8 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import com.google.gson.Gson
-import com.hexagram.febys.models.view.PaymentMethod
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
+import com.hexagram.febys.models.view.PaymentMethod
+import java.text.SimpleDateFormat
+import java.util.*
 
 object Utils {
     fun jsonFromShippingAddress(obj: ShippingAddress): String {
@@ -28,5 +30,12 @@ object Utils {
         val uri = Uri.parse(link)
         val intent = Intent(Intent.ACTION_VIEW, uri)
         context.startActivity(intent)
+    }
+
+    fun formatDate(dateString: String, pattern: String = "MMM dd, yyyy"): String {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US)
+        val date = dateFormat.parse(dateString) ?: return ""
+        val requiredDateFormat = SimpleDateFormat(pattern, Locale.US)
+        return requiredDateFormat.format(date)
     }
 }

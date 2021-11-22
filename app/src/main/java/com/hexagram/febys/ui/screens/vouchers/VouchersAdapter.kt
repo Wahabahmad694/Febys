@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hexagram.febys.R
 import com.hexagram.febys.databinding.ItemVoucherBinding
 import com.hexagram.febys.models.api.vouchers.Voucher
+import com.hexagram.febys.utils.Utils
 import com.hexagram.febys.utils.toFixedDecimal
 
 class VouchersAdapter : RecyclerView.Adapter<VouchersAdapter.ViewHolder>() {
@@ -40,7 +41,7 @@ class VouchersAdapter : RecyclerView.Adapter<VouchersAdapter.ViewHolder>() {
             val voucher = vouchers[position]
             voucherType.text = voucher.voucher.amountType
             voucherCode.text = voucher.voucher.code
-            voucherExpirationDate.text = voucher.voucher.endingTime
+            voucherExpirationDate.text = Utils.formatDate(voucher.voucher.endingTime)
             voucherAmount.text = root.context.getString(
                 R.string.price_with_dollar_sign, voucher.voucher.amount.toFixedDecimal(2)
             )

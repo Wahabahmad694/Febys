@@ -22,7 +22,7 @@ data class Consumer(
     @SerializedName("units_purchased")
     val unitsPurchased: Int,
     @SerializedName("sale_value")
-    val saleValue: Int,
+    val saleValue: Double,
     @SerializedName("sale_currency")
     val saleCurrency: String?,
     @SerializedName("is_verified")
