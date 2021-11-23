@@ -8,5 +8,5 @@ import kotlinx.parcelize.Parcelize
 data class VendorMessage(
     @SerializedName("vendor_id")
     val vendorId: String,
-    val message: String
+    var message: String
 ) : Parcelable

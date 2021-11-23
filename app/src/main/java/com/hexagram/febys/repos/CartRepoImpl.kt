@@ -69,7 +69,7 @@ class CartRepoImpl @Inject constructor(
         val authToken = pref.getAccessToken()
         if (authToken.isEmpty()) return@flow
 
-        val orderRequest = getOrderRequest(voucher, null)
+        val orderRequest = getOrderRequest(voucher, null, listOf())
         if (orderRequest.items.isEmpty()) return@flow
 
         backendService.fetchOrderInfo(authToken, orderRequest)
@@ -82,12 +82,16 @@ class CartRepoImpl @Inject constructor(
             .onNetworkError { emit(DataState.NetworkError()) }
     }
 
-    override suspend fun placeOrder(transactionId: String, voucher: String?) =
+    override suspend fun placeOrder(
+        transactionId: String,
+        voucher: String?,
+        vendorMessages: List<VendorMessage>
+    ) =
         flow<DataState<Order>> {
             val authToken = pref.getAccessToken()
             if (authToken.isEmpty()) return@flow
 
-            val orderRequest = getOrderRequest(voucher, transactionId)
+            val orderRequest = getOrderRequest(voucher, transactionId, vendorMessages)
             if (orderRequest.items.isEmpty()) return@flow
 
             backendService.placeOrder(authToken, orderRequest)
@@ -112,14 +116,17 @@ class CartRepoImpl @Inject constructor(
             .onNetworkError { emit(DataState.NetworkError()) }
     }
 
-    private fun getOrderRequest(voucher: String?, transactionId: String? = null): OrderRequest {
+    private fun getOrderRequest(
+        voucher: String?,
+        transactionId: String? = null,
+        vendorMessages: List<VendorMessage>
+    ): OrderRequest {
         val shippingAddress = pref.getDefaultShippingAddress()
         val items: List<SkuIdAndQuantity> = cartDataSource.getCartSkuIdsAndQuantity()
-        val messagesForVendors = emptyList<VendorMessage>()
         val transaction = if (transactionId == null) null else listOf(transactionId)
 
         return OrderRequest(
-            shippingAddress?.shippingDetail, voucher, items, messagesForVendors, transaction
+            shippingAddress?.shippingDetail, voucher, items, vendorMessages, transaction
         )
     }
 

@@ -249,7 +249,8 @@ class CheckoutFragment : BaseFragment() {
     }
 
     private fun placeOrder(transaction: Transaction) {
-        checkoutViewModel.placeOrder(transaction._id, voucher) {
+        val vendorMessages = cartAdapter.getVendorMessages()
+        checkoutViewModel.placeOrder(transaction._id, voucher, vendorMessages) {
             when (it) {
                 is DataState.Loading -> {
                     showLoader()
