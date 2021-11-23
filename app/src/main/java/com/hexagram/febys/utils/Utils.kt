@@ -10,6 +10,19 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 object Utils {
+    object DateTime {
+        const val FORMAT_ISO = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        const val FORMAT_MONTH_DATE_YEAR = "MMM dd, yyyy"
+        const val FORMAT_MONTH_DATE_YEAR_HOUR_MIN = "MMM dd.yyyy-hh:mm"
+
+        fun formatDate(dateString: String, pattern: String = FORMAT_MONTH_DATE_YEAR): String {
+            val dateFormat = SimpleDateFormat(FORMAT_ISO, Locale.US)
+            val date = dateFormat.parse(dateString) ?: return ""
+            val requiredDateFormat = SimpleDateFormat(pattern, Locale.US)
+            return requiredDateFormat.format(date)
+        }
+    }
+
     fun jsonFromShippingAddress(obj: ShippingAddress): String {
         return Gson().toJson(obj)
     }
@@ -30,12 +43,5 @@ object Utils {
         val uri = Uri.parse(link)
         val intent = Intent(Intent.ACTION_VIEW, uri)
         context.startActivity(intent)
-    }
-
-    fun formatDate(dateString: String, pattern: String = "MMM dd, yyyy"): String {
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US)
-        val date = dateFormat.parse(dateString) ?: return ""
-        val requiredDateFormat = SimpleDateFormat(pattern, Locale.US)
-        return requiredDateFormat.format(date)
     }
 }

@@ -8,6 +8,7 @@ import androidx.navigation.fragment.navArgs
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentCheckoutSuccessBinding
 import com.hexagram.febys.utils.goBack
+import com.hexagram.febys.utils.navigateTo
 
 class CheckoutSuccessFragment : BaseFragment() {
     private lateinit var binding: FragmentCheckoutSuccessBinding
@@ -35,5 +36,15 @@ class CheckoutSuccessFragment : BaseFragment() {
         binding.ivClose.setOnClickListener {
             goBack()
         }
+
+        binding.btnMyOrders.setOnClickListener {
+            gotoOrderListing()
+        }
+    }
+
+    private fun gotoOrderListing() {
+        val gotoOrderListing =
+            CheckoutSuccessFragmentDirections.actionCheckoutSuccessFragmentToOrderListingFragment()
+        navigateTo(gotoOrderListing)
     }
 }

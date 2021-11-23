@@ -41,7 +41,7 @@ class VouchersAdapter : RecyclerView.Adapter<VouchersAdapter.ViewHolder>() {
             val voucher = vouchers[position]
             voucherType.text = voucher.voucher.amountType
             voucherCode.text = voucher.voucher.code
-            voucherExpirationDate.text = Utils.formatDate(voucher.voucher.endingTime)
+            voucherExpirationDate.text = Utils.DateTime.formatDate(voucher.voucher.endingTime)
             voucherAmount.text = root.context.getString(
                 R.string.price_with_dollar_sign, voucher.voucher.amount.toFixedDecimal(2)
             )

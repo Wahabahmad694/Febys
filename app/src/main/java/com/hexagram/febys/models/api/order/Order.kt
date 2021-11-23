@@ -30,7 +30,9 @@ data class Order(
     @SerializedName("vat_percentage")
     val vatPercentage: Double,
     val transactions: List<Transaction>,
-    val voucher: VoucherDetail?
+    val voucher: VoucherDetail?,
+    @SerializedName("created_at")
+    val createdAt: String
 ) : Parcelable {
     fun toListOfCartDTO(): List<CartDTO> {
         return CartMapper().mapFromVendorProducts(vendorProducts)

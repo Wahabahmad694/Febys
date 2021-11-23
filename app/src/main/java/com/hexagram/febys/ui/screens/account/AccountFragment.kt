@@ -9,7 +9,6 @@ import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentAccountBinding
 import com.hexagram.febys.models.api.consumer.Consumer
-import com.hexagram.febys.network.response.User
 import com.hexagram.febys.ui.screens.auth.AuthViewModel
 import com.hexagram.febys.utils.navigateTo
 import dagger.hilt.android.AndroidEntryPoint
@@ -51,6 +50,10 @@ class AccountFragment : BaseFragment() {
             }
         }
 
+        binding.orders.myOrders.setOnClickListener {
+            gotoOrderListing()
+        }
+
         binding.orders.wishlist.setOnClickListener {
             val navigateToWishlist =
                 AccountFragmentDirections.actionAccountFragmentToWishListFragment()
@@ -67,6 +70,12 @@ class AccountFragment : BaseFragment() {
             val gotoVouchers = AccountFragmentDirections.actionAccountFragmentToVouchersFragment()
             navigateTo(gotoVouchers)
         }
+    }
+
+    private fun gotoOrderListing() {
+        val navigateToOrderListing =
+            AccountFragmentDirections.actionAccountFragmentToOrderListingFragment()
+        navigateTo(navigateToOrderListing)
     }
 
     private fun setupObserver() {

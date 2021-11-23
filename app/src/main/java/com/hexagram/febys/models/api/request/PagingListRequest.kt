@@ -13,7 +13,7 @@ data class PagingListRequest constructor(
     var startDate: String = "2001-10-04T14:59:17.238Z",
     @SerializedName("end_date")
     var endDate: String = "2022-12-04T14:59:17.238Z",
-    var filters: Filters = Filters()
+    var filters: Map<String, String>? = null
 ) {
     fun createQueryMap() = mapOf(
         "chunkSize" to chunkSize.toString(),
