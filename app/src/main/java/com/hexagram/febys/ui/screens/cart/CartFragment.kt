@@ -11,7 +11,9 @@ import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentCartBinding
 import com.hexagram.febys.models.db.CartDTO
-import com.hexagram.febys.utils.*
+import com.hexagram.febys.utils.goBack
+import com.hexagram.febys.utils.navigateTo
+import com.hexagram.febys.utils.toFixedDecimal
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -40,6 +42,9 @@ class CartFragment : BaseFragment() {
     private fun initUi() {
         binding.rvCart.isNestedScrollingEnabled = false
         binding.rvCart.adapter = cartAdapter
+
+        binding.tvShippingAmount.text =
+            getString(R.string.price_with_dollar_sign, 0.0.toFixedDecimal(2))
 
         updateFav()
     }
@@ -98,12 +103,13 @@ class CartFragment : BaseFragment() {
 
     private fun setupObserver() {
         cartViewModel.observeCart().observe(viewLifecycleOwner) {
-           updateUi(it)
+            updateUi(it)
         }
     }
 
-    private fun updateGotoCheckoutBtnVisibility(isVisible: Boolean) {
-        binding.btnProceedToCheckout.isVisible = isVisible
+    private fun updateBtnVisibilities(isVisible: Boolean) {
+        binding.btnProceedToCheckout.isEnabled = isVisible
+        binding.btnDownloadPdf.isVisible = isVisible
     }
 
     private fun updateUi(cart: List<CartDTO>?) {
@@ -111,9 +117,10 @@ class CartFragment : BaseFragment() {
 
         cartAdapter.submitList(sortedListForCart)
 
-        updateGotoCheckoutBtnVisibility(!sortedListForCart.isNullOrEmpty())
+        updateBtnVisibilities(!sortedListForCart.isNullOrEmpty())
 
-        val itemsTotal: Double = sortedListForCart?.sumOf { it.price.value.times(it.quantity) } ?: 0.0
+        val itemsTotal: Double =
+            sortedListForCart?.sumOf { it.price.value.times(it.quantity) } ?: 0.0
 
         binding.tvSubtotalAmount.text =
             getString(R.string.variant_price, itemsTotal.toFixedDecimal(2))
