@@ -5,9 +5,9 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Packaging(
-    val weight: Int,
-    val width: Int,
-    val length: Int,
-    val height: Int,
+    val weight: Double,
+    val width: Double,
+    val length: Double,
+    val height: Double,
     val _id: String
 ) : Parcelable

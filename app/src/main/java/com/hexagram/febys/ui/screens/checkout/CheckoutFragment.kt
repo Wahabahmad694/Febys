@@ -131,6 +131,7 @@ class CheckoutFragment : BaseFragment() {
             }
             is DataState.Error -> {
                 hideLoader()
+                voucher = ""
                 ErrorDialog(orderInfoResponse).show(childFragmentManager, ErrorDialog.TAG)
             }
             is DataState.Data -> {
