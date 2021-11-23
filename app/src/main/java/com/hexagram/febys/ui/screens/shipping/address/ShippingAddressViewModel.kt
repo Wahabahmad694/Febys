@@ -65,14 +65,7 @@ class ShippingAddressViewModel @Inject constructor(
         shippingRepo.setAsDefault(shippingAddress)
     }
 
-    fun updateShippingAddress(shippingAddress: PostShippingAddress) = viewModelScope.launch {
-        _addUpdateShippingAddress.postValue(DataState.Loading())
-        shippingRepo.updateShippingAddress(shippingAddress).collect {
-            _addUpdateShippingAddress.postValue(it)
-        }
-    }
-
-    fun addShippingAddress(shippingAddress: PostShippingAddress) = viewModelScope.launch {
+    fun addEditShippingAddress(shippingAddress: PostShippingAddress) = viewModelScope.launch {
         _addUpdateShippingAddress.postValue(DataState.Loading())
         shippingRepo.addShippingAddress(shippingAddress).collect {
             _addUpdateShippingAddress.postValue(it)

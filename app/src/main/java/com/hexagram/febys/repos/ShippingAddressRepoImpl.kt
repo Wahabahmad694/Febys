@@ -49,18 +49,18 @@ class ShippingAddressRepoImpl @Inject constructor(
     override suspend fun updateShippingAddress(
         shippingAddress: PostShippingAddress, dispatcher: CoroutineDispatcher
     ): Flow<DataState<Unit>> = flow<DataState<Unit>> {
-//        val authToken = pref.getAccessToken()
-//        val response = backendService.updateShippingAddress(authToken, shippingAddress)
-//        response
-//            .onSuccess {
-//                emit(DataState.Data(Unit))
+        val authToken = pref.getAccessToken()
+        val response = backendService.addShippingAddress(authToken, shippingAddress)
+        response
+            .onSuccess {
+                emit(DataState.Data(Unit))
 //                if (shippingAddress.shippingDetail.default) {
 //                    saveDefaultShippingAddress(shippingAddress)
 //                }
-//            }
-//            .onError { emit(DataState.ApiError(message)) }
-//            .onException { emit(DataState.ExceptionError()) }
-//            .onNetworkError { emit(DataState.NetworkError()) }
+            }
+            .onError { emit(DataState.ApiError(message)) }
+            .onException { emit(DataState.ExceptionError()) }
+            .onNetworkError { emit(DataState.NetworkError()) }
     }.flowOn(dispatcher)
 
     override suspend fun addShippingAddress(

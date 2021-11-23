@@ -56,7 +56,6 @@ class AddEditShippingAddressFragment : Fragment() {
     private var state: String = ""
     private var zipCode: String = ""
     private var phoneNo: String = ""
-    private var street: String = ""
     private var isDefault: Boolean = false
 
     override fun onCreateView(
@@ -87,7 +86,8 @@ class AddEditShippingAddressFragment : Fragment() {
                 DividerItemDecoration(context, (layoutManager as LinearLayoutManager).orientation)
             )
         }
-        binding.bottomSheetAddressLabels.btnClose.setOnClickListener{
+
+        binding.bottomSheetAddressLabels.btnClose.setOnClickListener {
             closeBottomSheet(addressLabelsBottomSheet)
         }
 
@@ -98,9 +98,11 @@ class AddEditShippingAddressFragment : Fragment() {
                 DividerItemDecoration(context, (layoutManager as LinearLayoutManager).orientation)
             )
         }
-        binding.bottomSheetRegion.btnClose.setOnClickListener{
+
+        binding.bottomSheetRegion.btnClose.setOnClickListener {
             closeBottomSheet(regionBottomSheet)
         }
+
         binding.bottomSheetState.rvSelectionList.apply {
             setHasFixedSize(true)
             adapter = statesAdapter
@@ -108,9 +110,11 @@ class AddEditShippingAddressFragment : Fragment() {
                 DividerItemDecoration(context, (layoutManager as LinearLayoutManager).orientation)
             )
         }
-        binding.bottomSheetState.btnClose.setOnClickListener{
+
+        binding.bottomSheetState.btnClose.setOnClickListener {
             closeBottomSheet(stateBottomSheet)
         }
+
         binding.bottomSheetCity.rvSelectionList.apply {
             setHasFixedSize(true)
             adapter = citiesAdapter
@@ -118,13 +122,13 @@ class AddEditShippingAddressFragment : Fragment() {
                 DividerItemDecoration(context, (layoutManager as LinearLayoutManager).orientation)
             )
         }
-        binding.bottomSheetCity.btnClose.setOnClickListener{
+
+        binding.bottomSheetCity.btnClose.setOnClickListener {
             closeBottomSheet(cityBottomSheet)
         }
 
         val addressLabels = resources.getStringArray(R.array.address_labels).toMutableList()
         addressLabelsAdapter.submitList(addressLabels)
-
 
         updateUi(args.shippingAddress)
     }
@@ -243,41 +247,39 @@ class AddEditShippingAddressFragment : Fragment() {
         shippingAddressViewModel.countryResponse.observe(viewLifecycleOwner) {
             when (it) {
                 is DataState.Data -> {
-                    val country = it.data.countries.filter { mCountry->
+                    val country = it.data.countries.filter { mCountry ->
                         mCountry.name.equals(countryName, ignoreCase = true)
                     }
-                    countryCode= country.first().isoCode
+                    countryCode = country.first().isoCode
                     getStates(country.first().isoCode)
-
                 }
             }
         }
 
     }
+
     private fun chooseState(stateName: String) {
         shippingAddressViewModel.statesResponse.observe(viewLifecycleOwner) {
             when (it) {
                 is DataState.Data -> {
-                    val country = it.data.states.filter { mState->
+                    val country = it.data.states.filter { mState ->
                         mState.name.equals(stateName, ignoreCase = true)
                     }
-                    state= country.first().isoCode
-                    getCities(country.first().countryCode,country.first().isoCode)
-
+                    state = country.first().isoCode
+                    getCities(country.first().countryCode, country.first().isoCode)
                 }
             }
         }
 
     }
 
-    private fun getStates(countryCode : String)
-    {
+    private fun getStates(countryCode: String) {
         shippingAddressViewModel.getStates(GetStatesRequest(countryCode))
 
     }
-    private fun getCities(countryCode : String, stateCode:String)
-    {
-        shippingAddressViewModel.getCities(GetCitiesRequest(countryCode,stateCode))
+
+    private fun getCities(countryCode: String, stateCode: String) {
+        shippingAddressViewModel.getCities(GetCitiesRequest(countryCode, stateCode))
 
     }
 
@@ -301,7 +303,6 @@ class AddEditShippingAddressFragment : Fragment() {
                 }
             }
         }
-
 
         shippingAddressViewModel.countryResponse.observe(viewLifecycleOwner) {
             when (it) {
@@ -355,34 +356,29 @@ class AddEditShippingAddressFragment : Fragment() {
 
 
     private fun saveOrUpdateShippingAddress() {
-        val id = args.shippingAddress?.id ?: ""
-        if (id != "") {
-            val shippingAddress = createShippingAddress(id)
-            shippingAddressViewModel.updateShippingAddress(shippingAddress)
-        } else {
-            val shippingAddress = createShippingAddress()
-            shippingAddressViewModel.addShippingAddress(shippingAddress)
-        }
+        val shippingAddress = createShippingAddress(args.shippingAddress?.id)
+        shippingAddressViewModel.addEditShippingAddress(shippingAddress)
     }
 
-    private fun createShippingAddress(id: String? = null): PostShippingAddress {
-        val phoneNo: PhoneNo = PhoneNo(
-            countryCode,
-            number =phoneNo
+    private fun createShippingAddress(id: String?): PostShippingAddress {
+        val phoneNo = PhoneNo(
+            countryCode = countryCode,
+            number = phoneNo
         )
-        val address: Address = Address(
-            city,
-            countryCode,
-            state,
-            street=addressLine1,
-            zipCode,
+        val address = Address(
+            city = city,
+            countryCode = countryCode,
+            state = state,
+            street = addressLine1,
+            zipCode = zipCode,
         )
         val shippingDetail = PostShippingDetail(
+            id = id,
             address = address,
             contact = phoneNo,
-            firstName,
+            firstName = firstName,
             label = addressLabel,
-            lastName,
+            lastName = lastName
         )
 
         return PostShippingAddress(
@@ -399,7 +395,8 @@ class AddEditShippingAddressFragment : Fragment() {
         addressLine1 = binding.etAddressLine1.text.toString()
         addressLine2 = binding.etAddressLine2.text.toString()
         zipCode = binding.etPostalCode.text.toString()
-        phoneNo = binding.etPhone.text.toString()
+        phoneNo =
+            binding.ccpPhoneCode.selectedCountryCodeWithPlus.toString() + binding.etPhone.text.toString()
         isDefault = binding.switchSetAsDefault.isChecked
     }
 
@@ -461,23 +458,16 @@ class AddEditShippingAddressFragment : Fragment() {
     }
 
     private fun closeBottomsSheetElseGoBack() {
-        if (addressLabelsBottomSheet.state != BottomSheetBehavior.STATE_HIDDEN
-        ) {
-            closeBottomSheet(addressLabelsBottomSheet)
-            return
-        }
-
-        if (regionBottomSheet.state != BottomSheetBehavior.STATE_HIDDEN) {
-            closeBottomSheet(regionBottomSheet)
-            return
-        }
-        if (stateBottomSheet.state != BottomSheetBehavior.STATE_HIDDEN) {
-            closeBottomSheet(stateBottomSheet)
-            return
-        }
-        if (cityBottomSheet.state != BottomSheetBehavior.STATE_HIDDEN) {
-            closeBottomSheet(cityBottomSheet)
-            return
+        listOf(
+            addressLabelsBottomSheet,
+            regionBottomSheet,
+            stateBottomSheet,
+            cityBottomSheet
+        ).forEach {
+            if (it.state != BottomSheetBehavior.STATE_HIDDEN) {
+                closeBottomSheet(it)
+                return
+            }
         }
 
         goBack()

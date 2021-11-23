@@ -6,7 +6,8 @@ import com.hexagram.febys.models.api.contact.PhoneNo
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class PostShippingDetail(
+data class PostShippingDetail constructor(
+    val id: String?,
     val address: Address,
     val contact: PhoneNo,
     @SerializedName("first_name")
@@ -14,4 +15,4 @@ data class PostShippingDetail(
     val label: String,
     @SerializedName("last_name")
     val lastName: String,
-): Parcelable
+) : Parcelable
