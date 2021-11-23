@@ -86,22 +86,21 @@ class CartRepoImpl @Inject constructor(
         transactionId: String,
         voucher: String?,
         vendorMessages: List<VendorMessage>
-    ) =
-        flow<DataState<Order>> {
-            val authToken = pref.getAccessToken()
-            if (authToken.isEmpty()) return@flow
+    ) = flow<DataState<Order>> {
+        val authToken = pref.getAccessToken()
+        if (authToken.isEmpty()) return@flow
 
-            val orderRequest = getOrderRequest(voucher, transactionId, vendorMessages)
-            if (orderRequest.items.isEmpty()) return@flow
+        val orderRequest = getOrderRequest(voucher, transactionId, vendorMessages)
+        if (orderRequest.items.isEmpty()) return@flow
 
-            backendService.placeOrder(authToken, orderRequest)
-                .onSuccess {
-                    emit(DataState.Data(data!!.order))
-                }
-                .onError { emit(DataState.ApiError(message)) }
-                .onException { emit(DataState.ExceptionError()) }
-                .onNetworkError { emit(DataState.NetworkError()) }
-        }
+        backendService.placeOrder(authToken, orderRequest)
+            .onSuccess {
+                emit(DataState.Data(data!!.order))
+            }
+            .onError { emit(DataState.ApiError(message)) }
+            .onException { emit(DataState.ExceptionError()) }
+            .onNetworkError { emit(DataState.NetworkError()) }
+    }
 
     override suspend fun doPayment(paymentRequest: PaymentRequest) = flow<DataState<Transaction>> {
         val authToken = pref.getAccessToken()

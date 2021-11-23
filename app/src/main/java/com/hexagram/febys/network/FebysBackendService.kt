@@ -7,10 +7,7 @@ import com.hexagram.febys.models.api.pagination.Pagination
 import com.hexagram.febys.models.api.product.FeaturedCategory
 import com.hexagram.febys.models.api.product.Trending
 import com.hexagram.febys.models.api.request.*
-import com.hexagram.febys.models.api.response.OrderResponse
-import com.hexagram.febys.models.api.response.PaymentResponse
-import com.hexagram.febys.models.api.response.ProductDetailResponse
-import com.hexagram.febys.models.api.response.QuestionAnswersResponse
+import com.hexagram.febys.models.api.response.*
 import com.hexagram.febys.models.api.shippingAddress.PostShippingAddress
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddressResponse
 import com.hexagram.febys.models.api.states.PostStatesResponse
@@ -212,6 +209,11 @@ interface FebysBackendService {
     suspend fun placeOrder(
         @Header("Authorization") authToken: String, @Body orderRequest: OrderRequest
     ): ApiResponse<OrderResponse>
+
+    @POST("v1/orders/for-consumer/list")
+    suspend fun fetchOrderListing(
+        @Header("Authorization") authToken: String, @Body orderListingRequest: OrderListingRequest
+    ): ApiResponse<Pagination>
 
     @POST("v1/consumers/save/shipping-detail")
     suspend fun addShippingAddress(

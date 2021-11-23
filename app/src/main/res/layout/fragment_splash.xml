@@ -16,7 +16,7 @@
             android:layout_width="@dimen/_198sdp"
             android:layout_height="@dimen/_54sdp"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/febys_splash"
+            android:src="@drawable/febyslogo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

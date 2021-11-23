@@ -214,6 +214,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_accountFragment_to_orderListingFragment"
+            app:destination="@id/orderListingFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <dialog
@@ -389,6 +396,15 @@
         <argument
             android:name="orderId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_checkoutSuccessFragment_to_orderListingFragment"
+            app:destination="@id/orderListingFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/cartFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/celebrityDetailFragment"
@@ -470,4 +486,9 @@
         android:name="com.hexagram.febys.ui.screens.payment.method.PaymentMethodsFragment"
         android:label="PaymentMethodsFragment"
         tools:layout="@layout/fragment_payment_methods" />
+    <fragment
+        android:id="@+id/orderListingFragment"
+        android:name="com.hexagram.febys.ui.screens.order.listing.OrderListingFragment"
+        android:label="OrderListingFragment"
+        tools:layout="@layout/fragment_order_listing" />
 </navigation>

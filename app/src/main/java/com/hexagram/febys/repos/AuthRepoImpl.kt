@@ -5,6 +5,7 @@ import com.hexagram.febys.dataSource.IUserDataSource
 import com.hexagram.febys.enum.SocialLogin
 import com.hexagram.febys.models.api.cart.CartResponse
 import com.hexagram.febys.models.api.consumer.Consumer
+import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
 import com.hexagram.febys.network.AuthService
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.FebysBackendService
@@ -164,6 +165,7 @@ class AuthRepoImpl @Inject constructor(
             val profile = response.data!!
             userDataSource.saveConsumer(profile.consumerInfo)
             updateWishlist(profile.wishlist.skuIds.toMutableSet())
+            updateShippingAddress(profile.shippingAddresses)
             updateCart(profile.cart)
         }
     }
@@ -174,6 +176,13 @@ class AuthRepoImpl @Inject constructor(
 
     private fun updateWishlist(skuIds: MutableSet<String>) {
         pref.saveFav(skuIds)
+    }
+
+    private fun updateShippingAddress(shippingAddresses: List<ShippingAddress>) {
+        val defaultShippingAddress = shippingAddresses.firstOrNull { it.shippingDetail.isDefault }
+        if (defaultShippingAddress != null) {
+            pref.saveDefaultShippingAddress(defaultShippingAddress)
+        }
     }
 
     override fun signOut() {

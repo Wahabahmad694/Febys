@@ -131,6 +131,7 @@ class CheckoutFragment : BaseFragment() {
             }
             is DataState.Error -> {
                 hideLoader()
+                voucher = ""
                 ErrorDialog(orderInfoResponse).show(childFragmentManager, ErrorDialog.TAG)
             }
             is DataState.Data -> {
@@ -164,6 +165,9 @@ class CheckoutFragment : BaseFragment() {
         val subtotal: Double = order.productsAmount.value
         addProductToOrderSummary(getString(R.string.label_subtotal), 1, subtotal)
 
+        addProductToOrderSummary(getString(R.string.label_shipping_fee), 1, 0.0)
+        addProductToOrderSummary(getString(R.string.label_vat), 1, 0.0)
+
         if (order.voucher != null) {
             val voucherDiscount = order.voucher.discount ?: 0.0
             addProductToOrderSummary(getString(R.string.label_voucher), 1, -voucherDiscount)
@@ -179,7 +183,7 @@ class CheckoutFragment : BaseFragment() {
             false
         )
 
-        val productNameWithQuantity = if (quantity > 1) "$productName x $quantity" else productName
+        val productNameWithQuantity = if (quantity > 1) "$quantity x $productName" else productName
         productSummary.tvProductNameWithQuantity.text = productNameWithQuantity
 
         val total = price.times(quantity).toFixedDecimal(2)

@@ -54,4 +54,8 @@ abstract class RepositoryModule {
     @Singleton
     @Binds
     abstract fun bindPaymentMethodRepo(repo: PaymentMethodRepoImpl): IPaymentMethodRepo
+
+    @Singleton
+    @Binds
+    abstract fun bindOrderRepo(repo: OrderRepoImpl): IOrderRepo
 }

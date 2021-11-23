@@ -98,8 +98,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_0dp"
             android:layout_marginTop="@dimen/_24sdp"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:paddingBottom="@dimen/_72sdp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/label_shipping">
 
@@ -113,13 +113,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    tools:itemCount="2"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="2"
                     tools:listitem="@layout/item_cart" />
 
-                <include
-                    android:id="@+id/container_apply_voucher"
-                    layout="@layout/layout_apply_voucher_code"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_download_pdf"
+                    style="@style/ButtonTheme.OutLine.Full"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_17sdp"
+                    android:layout_marginVertical="@dimen/_16sdp"
+                    android:layout_marginBottom="@dimen/_14sdp"
+                    android:maxWidth="@dimen/_298sdp"
+                    android:text="@string/label_download_pdf" />
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
@@ -129,11 +136,11 @@
             style="@style/ButtonTheme.Contained"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_17sdp"
             android:layout_marginBottom="@dimen/_14sdp"
             android:text="@string/label_proceed_to_checkout"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginHorizontal="@dimen/_17sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintWidth_max="@dimen/_298sdp" />
 
