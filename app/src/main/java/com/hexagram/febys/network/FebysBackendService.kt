@@ -8,10 +8,10 @@ import com.hexagram.febys.models.api.product.FeaturedCategory
 import com.hexagram.febys.models.api.product.Trending
 import com.hexagram.febys.models.api.request.*
 import com.hexagram.febys.models.api.response.OrderResponse
+import com.hexagram.febys.models.api.response.PaymentResponse
 import com.hexagram.febys.models.api.response.ProductDetailResponse
 import com.hexagram.febys.models.api.response.QuestionAnswersResponse
 import com.hexagram.febys.models.api.shippingAddress.PostShippingAddress
-import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddressResponse
 import com.hexagram.febys.models.api.states.PostStatesResponse
 import com.hexagram.febys.models.api.vendor.Vendor
@@ -193,7 +193,9 @@ interface FebysBackendService {
     suspend fun fetchVouchers(@Header("Authorization") authKey: String): ApiResponse<VoucherResponse>
 
     @POST("v1/consumers/shipping-details/list")
-    suspend fun fetchShippingAddress(@Header("Authorization") authKey: String): ApiResponse<ShippingAddressResponse>
+    suspend fun fetchShippingAddress(
+        @Header("Authorization") authKey: String
+    ): ApiResponse<ShippingAddressResponse>
 
     @DELETE("v1/consumers/delete/shipping-detail/{id}")
     suspend fun removeShippingAddress(
@@ -206,10 +208,16 @@ interface FebysBackendService {
         @Header("Authorization") authToken: String, @Body orderRequest: OrderRequest
     ): ApiResponse<OrderResponse>
 
+    @POST("v1/orders")
+    suspend fun placeOrder(
+        @Header("Authorization") authToken: String, @Body orderRequest: OrderRequest
+    ): ApiResponse<OrderResponse>
+
     @POST("v1/consumers/save/shipping-detail")
     suspend fun addShippingAddress(
         @Header("Authorization") authToken: String,
-    @Body postShippingAddress: PostShippingAddress): ApiResponse<PostShippingAddress>
+        @Body postShippingAddress: PostShippingAddress
+    ): ApiResponse<PostShippingAddress>
 
     @GET("v1/consumers/countries/list")
     suspend fun fetchCountries(@Header("Authorization") authToken: String): ApiResponse<CountryResponse>
@@ -217,12 +225,18 @@ interface FebysBackendService {
     @POST("v1/consumers/states-of-country/list")
     suspend fun getStates(
         @Header("Authorization") authToken: String,
-        @Body getStatesRequest: GetStatesRequest): ApiResponse<PostStatesResponse>
+        @Body getStatesRequest: GetStatesRequest
+    ): ApiResponse<PostStatesResponse>
 
     @POST("v1/consumers/cities-of-state/list")
     suspend fun getCities(
         @Header("Authorization") authToken: String,
-        @Body getCitiesRequest: GetCitiesRequest): ApiResponse<PostCitiesResponse>
+        @Body getCitiesRequest: GetCitiesRequest
+    ): ApiResponse<PostCitiesResponse>
 
-
+    @POST("v1/payments/transaction/wallet")
+    suspend fun doWalletPayment(
+        @Header("Authorization") authToken: String,
+        @Body paymentRequest: PaymentRequest
+    ): ApiResponse<PaymentResponse>
 }

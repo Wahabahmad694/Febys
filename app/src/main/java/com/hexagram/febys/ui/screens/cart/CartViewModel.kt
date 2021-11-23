@@ -4,6 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.hexagram.febys.models.api.order.Order
 import com.hexagram.febys.models.api.product.Product
+import com.hexagram.febys.models.api.request.PaymentRequest
+import com.hexagram.febys.models.api.transaction.Transaction
+import com.hexagram.febys.models.api.vendor.VendorMessage
 import com.hexagram.febys.models.db.CartDTO
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.repos.ICartRepo
@@ -71,9 +74,30 @@ open class CartViewModel @Inject constructor(
         onVoucherResponse(DataState.Loading())
         viewModelScope.launch {
             cartRepo.fetchOrderInfo(voucher).collect {
-                launch(Dispatchers.Main) {
-                    onVoucherResponse(it)
-                }
+                launch(Dispatchers.Main) { onVoucherResponse(it) }
+            }
+        }
+    }
+
+    fun doPayment(paymentRequest: PaymentRequest, onPayment: (DataState<Transaction>) -> Unit) {
+        onPayment(DataState.Loading())
+        viewModelScope.launch {
+            cartRepo.doPayment(paymentRequest).collect {
+                launch(Dispatchers.Main) { onPayment(it) }
+            }
+        }
+    }
+
+    fun placeOrder(
+        transactionId: String,
+        voucher: String?,
+        vendorMessages: List<VendorMessage>,
+        onPlaceOrderResponse: (DataState<Order>) -> Unit
+    ) {
+        onPlaceOrderResponse(DataState.Loading())
+        viewModelScope.launch {
+            cartRepo.placeOrder(transactionId, voucher, vendorMessages).collect {
+                launch(Dispatchers.Main) { onPlaceOrderResponse(it) }
             }
         }
     }

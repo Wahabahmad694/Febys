@@ -5,6 +5,8 @@ import com.hexagram.febys.dataSource.ICartDataSource
 import com.hexagram.febys.models.api.cart.CartResponse
 import com.hexagram.febys.models.api.order.Order
 import com.hexagram.febys.models.api.request.OrderRequest
+import com.hexagram.febys.models.api.request.PaymentRequest
+import com.hexagram.febys.models.api.transaction.Transaction
 import com.hexagram.febys.models.api.vendor.VendorMessage
 import com.hexagram.febys.models.db.CartDTO
 import com.hexagram.febys.network.DataState
@@ -67,11 +69,8 @@ class CartRepoImpl @Inject constructor(
         val authToken = pref.getAccessToken()
         if (authToken.isEmpty()) return@flow
 
-//        val shippingAddress = pref.getDefaultShippingAddress()
-        val items: List<SkuIdAndQuantity> = cartDataSource.getCartSkuIdsAndQuantity()
-        val messagesForVendors = emptyList<VendorMessage>()
-
-        val orderRequest = OrderRequest(/*shippingAddress, */voucher, items, messagesForVendors)
+        val orderRequest = getOrderRequest(voucher, null, listOf())
+        if (orderRequest.items.isEmpty()) return@flow
 
         backendService.fetchOrderInfo(authToken, orderRequest)
             .onSuccess {
@@ -81,6 +80,54 @@ class CartRepoImpl @Inject constructor(
             .onError { emit(DataState.ApiError(message)) }
             .onException { emit(DataState.ExceptionError()) }
             .onNetworkError { emit(DataState.NetworkError()) }
+    }
+
+    override suspend fun placeOrder(
+        transactionId: String,
+        voucher: String?,
+        vendorMessages: List<VendorMessage>
+    ) =
+        flow<DataState<Order>> {
+            val authToken = pref.getAccessToken()
+            if (authToken.isEmpty()) return@flow
+
+            val orderRequest = getOrderRequest(voucher, transactionId, vendorMessages)
+            if (orderRequest.items.isEmpty()) return@flow
+
+            backendService.placeOrder(authToken, orderRequest)
+                .onSuccess {
+                    emit(DataState.Data(data!!.order))
+                }
+                .onError { emit(DataState.ApiError(message)) }
+                .onException { emit(DataState.ExceptionError()) }
+                .onNetworkError { emit(DataState.NetworkError()) }
+        }
+
+    override suspend fun doPayment(paymentRequest: PaymentRequest) = flow<DataState<Transaction>> {
+        val authToken = pref.getAccessToken()
+        if (authToken.isEmpty()) return@flow
+
+        backendService.doWalletPayment(authToken, paymentRequest)
+            .onSuccess {
+                emit(DataState.Data(data!!.transaction))
+            }
+            .onError { emit(DataState.ApiError(message)) }
+            .onException { emit(DataState.ExceptionError()) }
+            .onNetworkError { emit(DataState.NetworkError()) }
+    }
+
+    private fun getOrderRequest(
+        voucher: String?,
+        transactionId: String? = null,
+        vendorMessages: List<VendorMessage>
+    ): OrderRequest {
+        val shippingAddress = pref.getDefaultShippingAddress()
+        val items: List<SkuIdAndQuantity> = cartDataSource.getCartSkuIdsAndQuantity()
+        val transaction = if (transactionId == null) null else listOf(transactionId)
+
+        return OrderRequest(
+            shippingAddress?.shippingDetail, voucher, items, vendorMessages, transaction
+        )
     }
 
     override fun clearCart() {

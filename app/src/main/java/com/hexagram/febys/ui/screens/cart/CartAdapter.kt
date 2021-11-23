@@ -3,11 +3,13 @@ package com.hexagram.febys.ui.screens.cart
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.hexagram.febys.R
 import com.hexagram.febys.databinding.ItemCartBinding
+import com.hexagram.febys.models.api.vendor.VendorMessage
 import com.hexagram.febys.models.db.CartDTO
 
 class CartAdapter(private val isInCheckout: Boolean = false) :
@@ -31,6 +33,7 @@ class CartAdapter(private val isInCheckout: Boolean = false) :
     private var fav = mutableSetOf<String>()
     var interaction: Interaction? = null
     var showHeader = false
+    private val messagesList = mutableListOf<VendorMessage>()
 
     inner class CartViewHolder(
         private val binding: ItemCartBinding
@@ -80,11 +83,38 @@ class CartAdapter(private val isInCheckout: Boolean = false) :
                     toggleFav(cartDTO)
                 }
 
-                binding.tvFav.setOnClickListener {
+                tvFav.setOnClickListener {
                     toggleFav(cartDTO)
                 }
+
+                etMessageForSeller.addTextChangedListener(afterTextChanged = {
+                    handleMessageForVendor(cartDTO.vendorId, it.toString().trim())
+                })
             }
             binding.executePendingBindings()
+        }
+
+        private fun handleMessageForVendor(vendorId: String, message: String) {
+            if (message.isEmpty()) {
+                removeMessageIfExist(vendorId)
+            } else {
+                addOrUpdateVendorMessage(vendorId, message)
+            }
+        }
+
+        private fun removeMessageIfExist(vendorId: String) {
+            val existingIndex = messagesList.indexOfFirst { it.vendorId == vendorId }
+            if (existingIndex != -1) messagesList.removeAt(existingIndex)
+        }
+
+        private fun addOrUpdateVendorMessage(vendorId: String, message: String) {
+            val vendorMessage = VendorMessage(vendorId, message)
+            val existingIndex = messagesList.indexOfFirst { it.vendorId == vendorId }
+            if (existingIndex == -1) {
+                messagesList.add(vendorMessage)
+            } else {
+                messagesList[existingIndex].message = message
+            }
         }
 
         private fun toggleFav(cartDTO: CartDTO) {
@@ -142,6 +172,7 @@ class CartAdapter(private val isInCheckout: Boolean = false) :
         holder.bind(getItem(position))
     }
 
+    fun getVendorMessages(): List<VendorMessage> = messagesList
     interface Interaction {
         fun updateCartItem(cartDTO: CartDTO)
         fun toggleFavIfUserLoggedIn(skuId: String): Boolean

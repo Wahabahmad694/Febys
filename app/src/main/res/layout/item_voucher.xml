@@ -122,7 +122,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="@id/container_voucher_code"
-                app:layout_constraintEnd_toEndOf="@id/container_voucher_amount"
                 app:layout_constraintStart_toStartOf="@id/container_voucher_amount"
                 app:layout_constraintTop_toTopOf="@id/container_voucher_code">
 

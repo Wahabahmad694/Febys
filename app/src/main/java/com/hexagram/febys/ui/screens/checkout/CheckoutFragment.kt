@@ -12,9 +12,10 @@ import com.hexagram.febys.databinding.FragmentCheckoutBinding
 import com.hexagram.febys.databinding.LayoutOrderSummaryProductBinding
 import com.hexagram.febys.models.api.order.Order
 import com.hexagram.febys.models.api.price.Price
+import com.hexagram.febys.models.api.request.PaymentRequest
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
+import com.hexagram.febys.models.api.transaction.Transaction
 import com.hexagram.febys.models.db.CartDTO
-import com.hexagram.febys.models.view.PaymentMethod
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.cart.CartAdapter
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
@@ -28,10 +29,12 @@ class CheckoutFragment : BaseFragment() {
     private val checkoutViewModel: CheckoutViewModel by viewModels()
     private val cartAdapter = CartAdapter(true)
 
-    private var applyVoucher = false
+    private var orderPrice: Price? = null
+
+    private var voucher = ""
 
     private val handleVoucherResponse: (voucherResponse: DataState<Order>) -> Unit = {
-        handleVoucherResponse(it)
+        handleOrderInfoResponse(it)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,9 +65,6 @@ class CheckoutFragment : BaseFragment() {
         val shippingAddress = checkoutViewModel.getDefaultShippingAddress()
         updateShippingAddressUi(shippingAddress)
 
-        val paymentMethod = checkoutViewModel.getDefaultPaymentMethod()
-        updatePaymentMethod(paymentMethod)
-
         updateFav()
     }
 
@@ -75,20 +75,17 @@ class CheckoutFragment : BaseFragment() {
             showChangeShippingAddressWarningDialog()
         }
 
-        binding.containerPayment.setOnClickListener {
-            val gotoPaymentMethod =
-                CheckoutFragmentDirections.actionCheckoutFragmentToPaymentMethodsFragment()
-            navigateTo(gotoPaymentMethod)
-        }
-
         binding.btnPlaceOrder.setOnClickListener {
-            doPayment()
+            if (checkoutViewModel.getDefaultShippingAddress() == null) {
+                showToast(getString(R.string.error_please_select_shipping_address))
+            } else {
+                doPayment()
+            }
         }
 
         binding.containerApplyVoucher.btnApplyVoucher.setOnClickListener {
-            val voucher = binding.containerApplyVoucher.etApplyVoucher.text.toString()
-            if (isUserLoggedIn && voucher.isNotEmpty()) {
-                applyVoucher = true
+            if (isUserLoggedIn) {
+                voucher = binding.containerApplyVoucher.etApplyVoucher.text.toString()
                 fetchOrderInfo()
             }
         }
@@ -124,24 +121,21 @@ class CheckoutFragment : BaseFragment() {
     }
 
     private fun fetchOrderInfo() {
-        val voucher =
-            if (applyVoucher) binding.containerApplyVoucher.etApplyVoucher.text.toString() else null
-
         checkoutViewModel.fetchOrderInfo(voucher, handleVoucherResponse)
     }
 
-    private fun handleVoucherResponse(voucherResponse: DataState<Order>) {
-        when (voucherResponse) {
+    private fun handleOrderInfoResponse(orderInfoResponse: DataState<Order>) {
+        when (orderInfoResponse) {
             is DataState.Loading -> {
                 showLoader()
             }
             is DataState.Error -> {
                 hideLoader()
-                ErrorDialog(voucherResponse).show(childFragmentManager, ErrorDialog.TAG)
+                ErrorDialog(orderInfoResponse).show(childFragmentManager, ErrorDialog.TAG)
             }
             is DataState.Data -> {
                 hideLoader()
-                createOrderSummary(voucherResponse.data)
+                createOrderSummary(orderInfoResponse.data)
             }
         }
     }
@@ -199,6 +193,7 @@ class CheckoutFragment : BaseFragment() {
     }
 
     private fun updateTotalAmount(price: Price) {
+        orderPrice = price
         val totalAmountAsString =
             getString(R.string.price_with_dollar_sign, price.value.toFixedDecimal(2))
 
@@ -211,17 +206,6 @@ class CheckoutFragment : BaseFragment() {
         binding.tvShippingAddress.text =
             shippingAddress?.shippingDetail?.address?.fullAddress()
                 ?: getString(R.string.msg_for_no_shipping_address)
-    }
-
-    private fun updatePaymentMethod(paymentMethod: PaymentMethod?) {
-        if (paymentMethod != null) {
-            binding.tvPayment.text = paymentMethod.name
-            binding.icPayment.show()
-            binding.icPayment.setImageResource(paymentMethod.img)
-        } else {
-            binding.tvPayment.text = getString(R.string.msg_for_no_payment)
-            binding.icPayment.invisible()
-        }
     }
 
     private fun showChangeShippingAddressWarningDialog() {
@@ -245,8 +229,43 @@ class CheckoutFragment : BaseFragment() {
     }
 
     private fun doPayment() {
-        checkoutViewModel.clearCart()
-        gotoCheckoutSuccessScreen("FT133659380093")
+        if (orderPrice == null) return
+        val paymentRequest = PaymentRequest(orderPrice!!.value, orderPrice!!.currency)
+        checkoutViewModel.doPayment(paymentRequest) {
+            when (it) {
+                is DataState.Loading -> {
+                    showLoader()
+                }
+                is DataState.Error -> {
+                    hideLoader()
+                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
+                }
+                is DataState.Data -> {
+                    hideLoader()
+                    placeOrder(it.data)
+                }
+            }
+        }
+    }
+
+    private fun placeOrder(transaction: Transaction) {
+        val vendorMessages = cartAdapter.getVendorMessages()
+        checkoutViewModel.placeOrder(transaction._id, voucher, vendorMessages) {
+            when (it) {
+                is DataState.Loading -> {
+                    showLoader()
+                }
+                is DataState.Error -> {
+                    hideLoader()
+                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
+                }
+                is DataState.Data -> {
+                    hideLoader()
+                    checkoutViewModel.clearCart()
+                    gotoCheckoutSuccessScreen(it.data.orderId)
+                }
+            }
+        }
     }
 
     private fun gotoCheckoutSuccessScreen(orderId: String) {

@@ -89,58 +89,6 @@
                     android:layout_marginTop="@dimen/_14sdp"
                     android:background="@color/grey_e1e5e8" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/container_payment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_18sdp"
-                    android:layout_marginTop="@dimen/_18sdp">
-
-                    <TextView
-                        android:id="@+id/label_payment"
-                        style="@style/TextTheme.HelveticaNeue.TS16.Bold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/label_payment"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="@dimen/_11sdp"
-                        android:layout_height="@dimen/_11sdp"
-                        android:src="@drawable/ic_arrow_forward"
-                        app:layout_constraintBottom_toBottomOf="@id/label_payment"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/label_payment" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ic_payment"
-                        android:layout_width="@dimen/_18sdp"
-                        android:layout_height="@dimen/_13sdp"
-                        android:layout_marginTop="@dimen/_8sdp"
-                        tools:src="@drawable/ic_rave_pay"
-                        app:layout_constraintStart_toStartOf="@id/label_payment"
-                        app:layout_constraintTop_toBottomOf="@id/label_payment" />
-
-                    <TextView
-                        android:id="@+id/tv_payment"
-                        style="@style/TextTheme.Arial.TS14"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_8sdp"
-                        app:layout_constraintBottom_toBottomOf="@id/ic_payment"
-                        app:layout_constraintStart_toEndOf="@id/ic_payment"
-                        app:layout_constraintTop_toTopOf="@id/ic_payment"
-                        tools:text="RavePay" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginHorizontal="@dimen/_18sdp"
-                    android:layout_marginTop="@dimen/_14sdp"
-                    android:background="@color/grey_e1e5e8" />
-
                 <TextView
                     android:id="@+id/label_order"
                     style="@style/TextTheme.HelveticaNeue.TS16.Bold"
