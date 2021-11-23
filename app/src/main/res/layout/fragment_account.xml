@@ -20,12 +20,15 @@
         <TextView
             android:id="@+id/user_name"
             style="@style/TextTheme.HelveticaNeue.TS32.Bold"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_16dp"
             app:layout_constraintBottom_toBottomOf="@id/iv_cart"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/iv_cart"
+            android:ellipsize="end"
+            android:lines="2"
+            app:layout_constraintEnd_toStartOf="@+id/iv_cart"
             tools:text="Hillary" />
 
         <ImageView
@@ -36,6 +39,8 @@
             android:layout_marginEnd="@dimen/_16dp"
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_cart"
+            android:layout_marginStart="@dimen/_10sdp"
+            app:layout_constraintStart_toEndOf="@+id/user_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
