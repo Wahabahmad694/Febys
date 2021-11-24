@@ -36,6 +36,7 @@
             app:actualImageScaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_seasonal_offers_title"
+            app:placeholderImage="@drawable/placeholder_image"
             binding:image_url="@{imageUrl}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

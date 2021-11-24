@@ -36,6 +36,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:placeholderImage="@drawable/placeholder_user"
                 app:roundAsCircle="true"
                 binding:image_url="@{cart.vendorImg}" />
 
@@ -90,6 +91,7 @@
                 app:actualImageScaleType="fitCenter"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:placeholderImage="@drawable/placeholder_image"
                 binding:image_url="@{cart.productImg}" />
 
             <TextView

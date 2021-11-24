@@ -380,10 +380,10 @@
                     android:id="@+id/iv_bg_same_day_delivery"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
+                    app:placeholderImage="@drawable/placeholder_image"
                     android:layout_marginHorizontal="@dimen/_16dp"
                     android:layout_marginTop="@dimen/_16dp"
                     app:actualImageResource="@drawable/bg_same_day_delivery"
-                    app:actualImageScaleType="none"
                     app:layout_constraintDimensionRatio="93:44"
                     app:layout_constraintTop_toBottomOf="@id/btn_shop_now_store_you_follow" />
 
