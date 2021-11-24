@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -14,11 +13,17 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.hexagram.febys.R
+import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentAddEditShippingAddressBinding
+import com.hexagram.febys.models.api.cities.City
 import com.hexagram.febys.models.api.contact.PhoneNo
+import com.hexagram.febys.models.api.countries.Country
 import com.hexagram.febys.models.api.request.GetCitiesRequest
 import com.hexagram.febys.models.api.request.GetStatesRequest
-import com.hexagram.febys.models.api.shippingAddress.*
+import com.hexagram.febys.models.api.shippingAddress.Address
+import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
+import com.hexagram.febys.models.api.shippingAddress.ShippingDetail
+import com.hexagram.febys.models.api.states.State
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.ui.screens.list.selection.ListSelectionAdapter
@@ -26,7 +31,7 @@ import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AddEditShippingAddressFragment : Fragment() {
+class AddEditShippingAddressFragment : BaseFragment() {
     companion object {
         const val REQ_KEY_IS_ADD_OR_UPDATE = "isAddOrUpdate"
     }
@@ -50,13 +55,19 @@ class AddEditShippingAddressFragment : Fragment() {
     private var lastName: String = ""
     private var addressLabel: String = ""
     private var countryCode: String = ""
+    private var countryCodeISO: String = ""
     private var addressLine1: String = ""
     private var addressLine2: String = ""
     private var city: String = ""
     private var state: String = ""
+    private var stateISO: String = ""
     private var zipCode: String = ""
     private var phoneNo: String = ""
     private var isDefault: Boolean = false
+
+    private var countries = listOf<Country>()
+    private var states = listOf<State>()
+    private var cities = listOf<City>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -146,6 +157,9 @@ class AddEditShippingAddressFragment : Fragment() {
             binding.tvState.text = statesAdapter.getSelectedItem()
             binding.tvCity.text = citiesAdapter.getSelectedItem()
 
+            binding.ccpPhoneCode.setDefaultCountryUsingNameCode("GH")
+            binding.ccpPhoneCode.resetToDefaultCountry()
+
             return
         }
 
@@ -157,22 +171,26 @@ class AddEditShippingAddressFragment : Fragment() {
         binding.etFirstName.setText(shippingAddress.shippingDetail.firstName)
         binding.etLastName.setText(shippingAddress.shippingDetail.lastName)
 
-        regionsAdapter.updateSelectedItem(shippingAddress.shippingDetail.address.countryCode)
-        binding.tvRegion.text = shippingAddress.shippingDetail.address.countryCode
-
-        statesAdapter.updateSelectedItem(shippingAddress.shippingDetail.address.state)
-        binding.tvState.text = shippingAddress.shippingDetail.address.state
-
-        citiesAdapter.updateSelectedItem(shippingAddress.shippingDetail.address.city)
-        binding.tvCity.text = shippingAddress.shippingDetail.address.city
+        countryCodeISO = shippingAddress.shippingDetail.address.countryCode
+        stateISO = shippingAddress.shippingDetail.address.state
+        city = shippingAddress.shippingDetail.address.city
 
         binding.etAddressLine1.setText(shippingAddress.shippingDetail.address.street)
         binding.etPostalCode.setText(shippingAddress.shippingDetail.address.zipCode)
         binding.etPhone.setText(shippingAddress.shippingDetail.contact.number)
 
+        updateDefaultCCP(shippingAddress.shippingDetail.contact)
+
         isDefault = shippingAddress.shippingDetail.isDefault
         binding.switchSetAsDefault.isChecked = shippingAddress.shippingDetail.isDefault
         binding.switchSetAsDefault.isEnabled = !shippingAddress.shippingDetail.isDefault
+    }
+
+    private fun updateDefaultCCP(contact: PhoneNo) {
+        binding.ccpPhoneCode.setDefaultCountryUsingNameCode(contact.countryCode)
+        binding.ccpPhoneCode.resetToDefaultCountry()
+        val countryCodeWithPlus = binding.ccpPhoneCode.selectedCountryCodeWithPlus
+        binding.etPhone.setText(contact.number.replace(countryCodeWithPlus, ""))
     }
 
     private fun uiListeners() {
@@ -206,17 +224,18 @@ class AddEditShippingAddressFragment : Fragment() {
         }
 
         regionsAdapter.interaction = { selectedItem ->
-            binding.tvRegion.text = selectedItem
-            chooseCountry(selectedItem)
+            countryCodeISO = countries.firstOrNull { it.name == selectedItem }?.isoCode ?: ""
+            updateSelectedCountry()
             closeBottomSheet(regionBottomSheet)
         }
         statesAdapter.interaction = { selectedItem ->
-            binding.tvState.text = selectedItem
-            chooseState(selectedItem)
+            stateISO = states.firstOrNull { it.name == selectedItem }?.isoCode ?: ""
+            updateSelectedState()
             closeBottomSheet(stateBottomSheet)
         }
         citiesAdapter.interaction = { selectedItem ->
-            binding.tvCity.text = selectedItem
+            city = cities.firstOrNull { it.name == selectedItem }?.name ?: ""
+            updateSelectedCity()
             closeBottomSheet(cityBottomSheet)
         }
 
@@ -241,46 +260,6 @@ class AddEditShippingAddressFragment : Fragment() {
         binding.bgDim.setOnClickListener {
             // do nothing, just add to avoid click on views that are behind of bg dim when bg dim is visible
         }
-    }
-
-    private fun chooseCountry(countryName: String) {
-        shippingAddressViewModel.countryResponse.observe(viewLifecycleOwner) {
-            when (it) {
-                is DataState.Data -> {
-                    val country = it.data.countries.filter { mCountry ->
-                        mCountry.name.equals(countryName, ignoreCase = true)
-                    }
-                    countryCode = country.first().isoCode
-                    getStates(country.first().isoCode)
-                }
-            }
-        }
-
-    }
-
-    private fun chooseState(stateName: String) {
-        shippingAddressViewModel.statesResponse.observe(viewLifecycleOwner) {
-            when (it) {
-                is DataState.Data -> {
-                    val country = it.data.states.filter { mState ->
-                        mState.name.equals(stateName, ignoreCase = true)
-                    }
-                    state = country.first().isoCode
-                    getCities(country.first().countryCode, country.first().isoCode)
-                }
-            }
-        }
-
-    }
-
-    private fun getStates(countryCode: String) {
-        shippingAddressViewModel.getStates(GetStatesRequest(countryCode))
-
-    }
-
-    private fun getCities(countryCode: String, stateCode: String) {
-        shippingAddressViewModel.getCities(GetCitiesRequest(countryCode, stateCode))
-
     }
 
     private fun setObserver() {
@@ -315,8 +294,10 @@ class AddEditShippingAddressFragment : Fragment() {
                 }
                 is DataState.Data -> {
                     hideLoader()
-                    val countries = it.data.countries.map { country -> country.name }
-                    regionsAdapter.submitList(countries)
+                    countries = it.data.countries
+                    val countriesName = countries.map { country -> country.name }
+                    regionsAdapter.submitList(countriesName)
+                    updateSelectedCountry()
                 }
             }
         }
@@ -331,8 +312,10 @@ class AddEditShippingAddressFragment : Fragment() {
                 }
                 is DataState.Data -> {
                     hideLoader()
-                    val states = it.data.states.map { state -> state.name }
-                    statesAdapter.submitList(states)
+                    states = it.data.states
+                    val statesName = it.data.states.map { state -> state.name }
+                    statesAdapter.submitList(statesName)
+                    updateSelectedState()
                 }
             }
         }
@@ -347,42 +330,111 @@ class AddEditShippingAddressFragment : Fragment() {
                 }
                 is DataState.Data -> {
                     hideLoader()
-                    val cities = it.data.cities.map { city -> city.name }
-                    citiesAdapter.submitList(cities)
+                    cities = it.data.cities
+                    val citiesName = it.data.cities.map { city -> city.name }
+                    citiesAdapter.submitList(citiesName)
+                    updateSelectedCity()
                 }
             }
         }
     }
 
+    private fun updateSelectedCountry() {
+        val selectedCountry =
+            countries.firstOrNull { country -> country.isoCode == countryCodeISO }
+
+        if (selectedCountry != null) {
+            val index = countries.indexOf(selectedCountry)
+            (binding.bottomSheetRegion.rvSelectionList.layoutManager as? LinearLayoutManager)
+                ?.scrollToPosition(index)
+
+            shippingAddressViewModel.fetchStates(GetStatesRequest(countryCodeISO))
+        }
+
+        val countryName = selectedCountry?.name ?: ""
+        regionsAdapter.updateSelectedItem(countryName)
+        binding.tvRegion.text = countryName
+
+        binding.tvState.text = ""
+        binding.tvCity.text = ""
+
+        binding.containerState.isEnabled = selectedCountry != null
+        binding.containerCity.isEnabled = selectedCountry != null
+    }
+
+    private fun updateSelectedState() {
+        val selectedState =
+            states.firstOrNull { state -> state.isoCode == stateISO }
+
+        if (selectedState != null) {
+            val index = states.indexOf(selectedState)
+            (binding.bottomSheetState.rvSelectionList.layoutManager as? LinearLayoutManager)
+                ?.scrollToPosition(index)
+
+            shippingAddressViewModel.fetchCities(GetCitiesRequest(countryCodeISO, stateISO))
+        }
+
+        val stateName = selectedState?.name ?: ""
+        statesAdapter.updateSelectedItem(stateName)
+        binding.tvState.text = stateName
+
+        binding.tvCity.text = ""
+
+        binding.containerCity.isEnabled = selectedState != null
+    }
+
+    private fun updateSelectedCity() {
+        val selectedCity =
+            cities.firstOrNull { city -> city.name == this.city }
+
+        if (selectedCity != null) {
+            val index = cities.indexOf(selectedCity)
+            (binding.bottomSheetCity.rvSelectionList.layoutManager as? LinearLayoutManager)
+                ?.scrollToPosition(index)
+        }
+
+        val cityName = selectedCity?.name ?: ""
+        citiesAdapter.updateSelectedItem(cityName)
+        binding.tvCity.text = cityName
+    }
 
     private fun saveOrUpdateShippingAddress() {
         val shippingAddress = createShippingAddress(args.shippingAddress?.id)
         shippingAddressViewModel.addEditShippingAddress(shippingAddress)
     }
 
-    private fun createShippingAddress(id: String?): PostShippingAddress {
+    private fun createShippingAddress(id: String?): ShippingAddress {
+        val phoneCountryCode = binding.ccpPhoneCode.selectedCountryNameCode
         val phoneNo = PhoneNo(
-            countryCode = countryCode,
+            countryCode = phoneCountryCode,
             number = phoneNo
         )
         val address = Address(
             city = city,
-            countryCode = countryCode,
-            state = state,
+            countryCode = countryCodeISO,
+            state = stateISO,
             street = addressLine1,
             zipCode = zipCode,
         )
-        val shippingDetail = PostShippingDetail(
-            id = id,
+        val shippingDetail = ShippingDetail(
+            shippingDetailId = id,
             address = address,
             contact = phoneNo,
+            createdAt = "",
+            isDefault = isDefault,
             firstName = firstName,
             label = addressLabel,
-            lastName = lastName
+            lastName = lastName,
+            updatedAt = ""
+
         )
 
-        return PostShippingAddress(
-            postShippingDetail = shippingDetail
+        return ShippingAddress(
+            id = id,
+            consumerId = consumer?.id ?: -1,
+            creationTime = "",
+            shippingDetail = shippingDetail,
+            updatedTime = ""
         )
     }
 
@@ -422,8 +474,13 @@ class AddEditShippingAddressFragment : Fragment() {
             return false
         }
 
-        if (state.isEmpty() && !Validator.isValidState(state)) {
+        if (stateISO.isEmpty() && !Validator.isValidState(stateISO)) {
             showErrorDialog(getString(R.string.error_enter_valid_state))
+            return false
+        }
+
+        if (countryCodeISO.isEmpty() && !Validator.isValidCountry(countryCodeISO)) {
+            showErrorDialog(getString(R.string.error_enter_valid_country))
             return false
         }
 

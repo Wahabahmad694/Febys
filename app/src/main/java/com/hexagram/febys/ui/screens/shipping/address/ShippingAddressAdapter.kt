@@ -42,15 +42,7 @@ class ShippingAddressAdapter :
     }
 
     private fun setAsDefault(shippingAddress: ShippingAddress, position: Int) {
-        val defaultIndex = currentList.indexOfFirst { it.shippingDetail.isDefault }
-        if (defaultIndex != -1) {
-            currentList[defaultIndex].shippingDetail.isDefault = false
-            notifyItemChanged(defaultIndex)
-        }
-
-        currentList[position].shippingDetail.isDefault = true
-        notifyItemChanged(position)
-
+        shippingAddress.shippingDetail.isDefault = true
         setAsDefault?.invoke(shippingAddress)
     }
 

@@ -5,11 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.hexagram.febys.base.BaseViewModel
 import com.hexagram.febys.models.api.cities.PostCitiesResponse
-import com.hexagram.febys.models.api.countries.Country
 import com.hexagram.febys.models.api.countries.CountryResponse
 import com.hexagram.febys.models.api.request.GetCitiesRequest
 import com.hexagram.febys.models.api.request.GetStatesRequest
-import com.hexagram.febys.models.api.shippingAddress.PostShippingAddress
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
 import com.hexagram.febys.models.api.states.PostStatesResponse
 import com.hexagram.febys.network.DataState
@@ -41,9 +39,7 @@ class ShippingAddressViewModel @Inject constructor(
 
     init {
         refreshShippingAddresses()
-        getCountries()
-
-
+        fetchCountries()
     }
 
     fun refreshShippingAddresses() = viewModelScope.launch {
@@ -62,30 +58,38 @@ class ShippingAddressViewModel @Inject constructor(
     }
 
     fun setAsDefault(shippingAddress: ShippingAddress) = viewModelScope.launch {
-        shippingRepo.setAsDefault(shippingAddress)
+        _addUpdateShippingAddress.postValue(DataState.Loading())
+        shippingRepo.addEditShippingAddress(shippingAddress).collect {
+            _addUpdateShippingAddress.postValue(it)
+        }
+        refreshShippingAddresses()
     }
 
-    fun addEditShippingAddress(shippingAddress: PostShippingAddress) = viewModelScope.launch {
+    fun addEditShippingAddress(shippingAddress: ShippingAddress) = viewModelScope.launch {
         _addUpdateShippingAddress.postValue(DataState.Loading())
-        shippingRepo.addShippingAddress(shippingAddress).collect {
+        shippingRepo.addEditShippingAddress(shippingAddress).collect {
             _addUpdateShippingAddress.postValue(it)
         }
     }
-    fun getCountries() = viewModelScope.launch {
+
+    private fun fetchCountries() = viewModelScope.launch {
+        _countryData.postValue(DataState.Loading())
         shippingRepo.fetchCountries(Dispatchers.IO).collect {
             _countryData.postValue(it)
         }
     }
-    fun getStates(getStatesRequest: GetStatesRequest) = viewModelScope.launch {
+
+    fun fetchStates(getStatesRequest: GetStatesRequest) = viewModelScope.launch {
+        _statesData.postValue(DataState.Loading())
         shippingRepo.getStates(getStatesRequest).collect {
             _statesData.postValue(it)
         }
     }
-    fun getCities(getCitiesRequest: GetCitiesRequest) = viewModelScope.launch {
+
+    fun fetchCities(getCitiesRequest: GetCitiesRequest) = viewModelScope.launch {
+        _citiesData.postValue(DataState.Loading())
         shippingRepo.getCities(getCitiesRequest).collect {
             _citiesData.postValue(it)
         }
     }
-
-
 }

@@ -194,7 +194,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_2sdp"
-                android:text="@{`$` + cart.originalPrice.value * cart.quantity}"
+                android:text="@{cart.originalPrice.getFormattedPrice(cart.quantity)}"
                 app:layout_constraintBaseline_toBaselineOf="@id/tv_product_price"
                 app:layout_constraintEnd_toStartOf="@id/tv_product_off_price_separator"
                 binding:is_visible="@{cart.hasPromotion}"
@@ -218,7 +218,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_2dp"
-                android:text="@{`$` + (cart.price.value * cart.quantity)}"
+                android:text="@{cart.price.getFormattedPrice(cart.quantity)}"
                 app:layout_constraintBaseline_toBaselineOf="@id/tv_fav"
                 app:layout_constraintEnd_toEndOf="@id/iv_remove"
                 tools:text="$14" />

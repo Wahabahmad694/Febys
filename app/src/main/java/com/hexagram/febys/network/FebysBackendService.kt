@@ -8,7 +8,7 @@ import com.hexagram.febys.models.api.product.FeaturedCategory
 import com.hexagram.febys.models.api.product.Trending
 import com.hexagram.febys.models.api.request.*
 import com.hexagram.febys.models.api.response.*
-import com.hexagram.febys.models.api.shippingAddress.PostShippingAddress
+import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddressResponse
 import com.hexagram.febys.models.api.states.PostStatesResponse
 import com.hexagram.febys.models.api.vendor.Vendor
@@ -216,10 +216,10 @@ interface FebysBackendService {
     ): ApiResponse<Pagination>
 
     @POST("v1/consumers/save/shipping-detail")
-    suspend fun addShippingAddress(
+    suspend fun addEditShippingAddress(
         @Header("Authorization") authToken: String,
-        @Body postShippingAddress: PostShippingAddress
-    ): ApiResponse<PostShippingAddress>
+        @Body shippingAddress: ShippingAddress
+    ): ApiResponse<ShippingAddress>
 
     @GET("v1/consumers/countries/list")
     suspend fun fetchCountries(@Header("Authorization") authToken: String): ApiResponse<CountryResponse>
