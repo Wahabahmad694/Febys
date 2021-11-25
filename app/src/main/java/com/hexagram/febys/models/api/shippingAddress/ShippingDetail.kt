@@ -8,7 +8,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class ShippingDetail(
     @SerializedName("_id")
-    val shippingDetailId: String,
+    val shippingDetailId: String?,
     val address: Address,
     val contact: PhoneNo,
     @SerializedName("created_at")

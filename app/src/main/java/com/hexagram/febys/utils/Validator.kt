@@ -9,16 +9,17 @@ object Validator {
     fun isValidPhone(number: String): Boolean =
         number.isNotEmpty() && Patterns.PHONE.matcher(number).matches()
 
-    fun isValidName(name: String): Boolean = name.isNotEmpty()
+    fun isValidName(name: String): Boolean = name.trim().isNotEmpty()
 
-    fun isValidPassword(password: String): Boolean = password.isNotEmpty()
+    fun isValidPassword(password: String): Boolean = password.trim().isNotEmpty()
 
-    fun isValidAddress(address: String): Boolean = address.isNotEmpty() && address.length > 6
+    fun isValidAddress(address: String): Boolean = address.trim().isNotEmpty()
 
-    fun isValidCity(city: String): Boolean = city.isNotEmpty() && city.length > 3
+    fun isValidCity(city: String): Boolean = city.trim().isNotEmpty()
 
-    fun isValidState(state: String): Boolean = state.isNotEmpty() && state.length > 3
+    fun isValidState(state: String): Boolean = state.trim().isNotEmpty()
 
-    fun isValidPostalCode(postalCode: String): Boolean =
-        postalCode.isNotEmpty() && postalCode.length >= 4
+    fun isValidCountry(country: String): Boolean = country.trim().isNotEmpty()
+
+    fun isValidPostalCode(postalCode: String): Boolean = postalCode.trim().isNotEmpty()
 }

@@ -7,13 +7,12 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.hexagram.febys.NavGraphDirections
-import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentCartBinding
+import com.hexagram.febys.models.api.price.Price
 import com.hexagram.febys.models.db.CartDTO
 import com.hexagram.febys.utils.goBack
 import com.hexagram.febys.utils.navigateTo
-import com.hexagram.febys.utils.toFixedDecimal
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -43,8 +42,8 @@ class CartFragment : BaseFragment() {
         binding.rvCart.isNestedScrollingEnabled = false
         binding.rvCart.adapter = cartAdapter
 
-        binding.tvShippingAmount.text =
-            getString(R.string.price_with_dollar_sign, 0.0.toFixedDecimal(2))
+        val shippingPrice = Price("", 0.0, "GHS")
+        binding.tvShippingAmount.text = shippingPrice.getFormattedPrice()
 
         updateFav()
     }
@@ -121,12 +120,14 @@ class CartFragment : BaseFragment() {
 
         val itemsTotal: Double =
             sortedListForCart?.sumOf { it.price.value.times(it.quantity) } ?: 0.0
+        val priceCurrency = sortedListForCart?.firstOrNull()?.price?.currency ?: ""
+        val formattedTotalPrice = if (priceCurrency.isEmpty())
+            Price("", itemsTotal, "").getFormattedPriceByLocale()
+        else
+            Price("", itemsTotal, priceCurrency).getFormattedPrice()
 
-        binding.tvSubtotalAmount.text =
-            getString(R.string.variant_price, itemsTotal.toFixedDecimal(2))
-
-        binding.tvTotalAmount.text =
-            getString(R.string.variant_price, itemsTotal.toFixedDecimal(2))
+        binding.tvSubtotalAmount.text = formattedTotalPrice
+        binding.tvTotalAmount.text = formattedTotalPrice
     }
 
     override fun getTvCartCount() = binding.tvCartCount

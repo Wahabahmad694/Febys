@@ -198,63 +198,13 @@
                             android:background="@color/grey_e1e5e8" />
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/label_address_line_1"
-                        style="@style/TextTheme.Arial.TS16"
+
+                    <View
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/_1dp"
                         android:layout_marginHorizontal="@dimen/_16sdp"
-                        android:layout_marginTop="@dimen/_32sdp"
-                        android:text="@string/label_address_line_1"
+                        android:background="@color/grey_e1e5e8"
                         app:layout_constraintTop_toBottomOf="@id/container_region" />
-
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/et_address_line_1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/_16sdp"
-                        android:background="@null"
-                        android:imeOptions="actionNext"
-                        android:inputType="textPostalAddress"
-                        android:paddingVertical="@dimen/_8dp"
-                        android:textAppearance="@style/TextTheme.Arial.TS16"
-                        app:layout_constraintTop_toBottomOf="@id/label_address_line_1" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1dp"
-                        android:layout_marginHorizontal="@dimen/_16sdp"
-                        android:background="@color/grey_e1e5e8"
-                        app:layout_constraintTop_toBottomOf="@id/et_address_line_1" />
-
-                    <TextView
-                        android:id="@+id/label_address_line_2"
-                        style="@style/TextTheme.Arial.TS16.Grey"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/_16sdp"
-                        android:layout_marginTop="@dimen/_32sdp"
-                        android:text="@string/label_address_line_2"
-                        app:layout_constraintTop_toBottomOf="@id/et_address_line_1" />
-
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/et_address_line_2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/_16sdp"
-                        android:background="@null"
-                        android:imeOptions="actionNext"
-                        android:inputType="textPostalAddress"
-                        android:paddingVertical="@dimen/_8dp"
-                        android:textAppearance="@style/TextTheme.Arial.TS16"
-                        app:layout_constraintTop_toBottomOf="@id/label_address_line_2" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1dp"
-                        android:layout_marginHorizontal="@dimen/_16sdp"
-                        android:background="@color/grey_e1e5e8"
-                        app:layout_constraintTop_toBottomOf="@id/et_address_line_2" />
 
                     <LinearLayout
                         android:id="@+id/container_state"
@@ -263,7 +213,7 @@
                         android:layout_marginTop="@dimen/_32sdp"
                         android:orientation="vertical"
                         android:paddingHorizontal="@dimen/_16sdp"
-                        app:layout_constraintTop_toBottomOf="@id/et_address_line_2">
+                        app:layout_constraintTop_toBottomOf="@id/container_region">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -348,12 +298,63 @@
                             android:background="@color/grey_e1e5e8" />
                     </LinearLayout>
 
+                    <TextView
+                        android:id="@+id/label_address_line_1"
+                        style="@style/TextTheme.Arial.TS16"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_32sdp"
+                        android:text="@string/label_address_line_1"
+                        app:layout_constraintTop_toBottomOf="@id/container_city" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/et_address_line_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_16sdp"
+                        android:background="@null"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPostalAddress"
+                        android:paddingVertical="@dimen/_8dp"
+                        android:textAppearance="@style/TextTheme.Arial.TS16"
+                        app:layout_constraintTop_toBottomOf="@id/label_address_line_1" />
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1dp"
                         android:layout_marginHorizontal="@dimen/_16sdp"
                         android:background="@color/grey_e1e5e8"
-                        app:layout_constraintTop_toBottomOf="@id/container_city" />
+                        app:layout_constraintTop_toBottomOf="@id/et_address_line_1" />
+
+                    <TextView
+                        android:id="@+id/label_address_line_2"
+                        style="@style/TextTheme.Arial.TS16.Grey"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_32sdp"
+                        android:text="@string/label_address_line_2"
+                        app:layout_constraintTop_toBottomOf="@id/et_address_line_1" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/et_address_line_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_16sdp"
+                        android:background="@null"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPostalAddress"
+                        android:paddingVertical="@dimen/_8dp"
+                        android:textAppearance="@style/TextTheme.Arial.TS16"
+                        app:layout_constraintTop_toBottomOf="@id/label_address_line_2" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1dp"
+                        android:layout_marginHorizontal="@dimen/_16sdp"
+                        android:background="@color/grey_e1e5e8"
+                        app:layout_constraintTop_toBottomOf="@id/et_address_line_2" />
 
                     <TextView
                         android:id="@+id/label_postal_code"
@@ -363,7 +364,7 @@
                         android:layout_marginHorizontal="@dimen/_16sdp"
                         android:layout_marginTop="@dimen/_32sdp"
                         android:text="@string/label_postal_code"
-                        app:layout_constraintTop_toBottomOf="@id/container_city" />
+                        app:layout_constraintTop_toBottomOf="@id/et_address_line_2" />
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/et_postal_code"
@@ -384,34 +385,61 @@
                         android:background="@color/grey_e1e5e8"
                         app:layout_constraintTop_toBottomOf="@id/et_postal_code" />
 
-                    <TextView
-                        android:id="@+id/label_phone"
-                        style="@style/TextTheme.Arial.TS16"
+                    <LinearLayout
+                        android:id="@+id/container_phone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/_16sdp"
-                        android:layout_marginTop="@dimen/_32sdp"
-                        android:text="@string/label_phone"
-                        app:layout_constraintTop_toBottomOf="@id/et_postal_code" />
+                        android:orientation="vertical"
+                        app:layout_constraintTop_toBottomOf="@id/et_postal_code">
 
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/et_phone"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/_16sdp"
-                        android:background="@null"
-                        android:imeOptions="actionDone"
-                        android:inputType="phone"
-                        android:paddingVertical="@dimen/_8dp"
-                        android:textAppearance="@style/TextTheme.Arial.TS16"
-                        app:layout_constraintTop_toBottomOf="@id/label_phone" />
+                        <TextView
+                            android:id="@+id/label_phone"
+                            style="@style/TextTheme.Arial.TS16"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/_16sdp"
+                            android:layout_marginTop="@dimen/_32sdp"
+                            android:text="@string/label_phone"
+                            app:layout_constraintTop_toBottomOf="@id/et_postal_code" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="@dimen/_16sdp">
+
+                            <com.hbb20.CountryCodePicker
+                                android:id="@+id/ccp_phone_code"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="@dimen/_4dp"
+                                app:ccpDialog_keyboardAutoPopup="false"
+                                app:ccp_arrowColor="@color/black"
+                                app:ccp_contentColor="@color/black"
+                                app:ccp_hintExampleNumber="true"
+                                app:ccp_textSize="@style/TextTheme.Arial.TS16" />
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/et_phone"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="@dimen/_12sdp"
+                                android:layout_weight="1"
+                                android:background="@null"
+                                android:imeOptions="actionDone"
+                                android:inputType="phone"
+                                android:paddingVertical="@dimen/_8dp"
+                                android:textAppearance="@style/TextTheme.Arial.TS16"
+                                app:layout_constraintTop_toBottomOf="@id/label_phone" />
+                        </LinearLayout>
+                    </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1dp"
                         android:layout_marginHorizontal="@dimen/_16sdp"
                         android:background="@color/grey_e1e5e8"
-                        app:layout_constraintTop_toBottomOf="@id/et_phone" />
+                        app:layout_constraintTop_toBottomOf="@id/container_phone" />
 
                     <TextView
                         android:id="@+id/label_phone_info"
@@ -421,7 +449,7 @@
                         android:layout_marginHorizontal="@dimen/_16sdp"
                         android:layout_marginTop="@dimen/_8sdp"
                         android:text="@string/label_phone_info_shipping_address"
-                        app:layout_constraintTop_toBottomOf="@id/et_phone" />
+                        app:layout_constraintTop_toBottomOf="@id/container_phone" />
 
                     <com.google.android.material.switchmaterial.SwitchMaterial
                         android:id="@+id/switch_set_as_default"
@@ -467,6 +495,7 @@
             android:id="@+id/bottom_sheet_region"
             layout="@layout/bottom_sheet_list_of_selection"
             app:title="@{@string/label_select_region}" />
+
         <include
             android:id="@+id/bottom_sheet_state"
             layout="@layout/bottom_sheet_list_of_selection"

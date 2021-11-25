@@ -137,22 +137,43 @@
                     android:text="@string/label_phone"
                     app:layout_constraintTop_toBottomOf="@id/et_email_address" />
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/et_phone"
+                <LinearLayout
+                    android:id="@+id/container_phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:imeOptions="actionNext"
-                    android:inputType="phone"
-                    android:paddingVertical="@dimen/_8dp"
-                    android:textAppearance="@style/TextTheme.Arial.TS16"
-                    app:layout_constraintTop_toBottomOf="@id/label_phone" />
+                    android:layout_marginHorizontal="@dimen/_minus8sdp"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@id/label_phone">
+
+                    <com.hbb20.CountryCodePicker
+                        android:id="@+id/ccp_phone_code"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_4dp"
+                        app:ccpDialog_keyboardAutoPopup="false"
+                        app:ccp_arrowColor="@color/black"
+                        app:ccp_contentColor="@color/black"
+                        app:ccp_hintExampleNumber="true"
+                        app:ccp_textSize="@style/TextTheme.Arial.TS16" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/et_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:imeOptions="actionNext"
+                        android:inputType="phone"
+                        android:paddingVertical="@dimen/_8dp"
+                        android:textAppearance="@style/TextTheme.Arial.TS16"
+                        app:layout_constraintTop_toBottomOf="@id/label_phone" />
+
+                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_1dp"
                     android:background="@color/grey_e1e5e8"
-                    app:layout_constraintTop_toBottomOf="@id/et_phone" />
+                    app:layout_constraintTop_toBottomOf="@id/container_phone" />
 
                 <TextView
                     android:id="@+id/label_password"
@@ -162,7 +183,7 @@
                     android:layout_marginTop="@dimen/_32dp"
                     android:text="@string/label_password"
                     app:endIconMode="password_toggle"
-                    app:layout_constraintTop_toBottomOf="@id/et_phone" />
+                    app:layout_constraintTop_toBottomOf="@id/container_phone" />
 
                 <com.hexagram.febys.utils.PasswordEditText
                     android:id="@+id/et_password"

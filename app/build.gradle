@@ -185,6 +185,9 @@ dependencies {
     def auth_version = "19.2.0"
     implementation "com.google.android.gms:play-services-auth:$auth_version"
 
+    //country code
+    implementation 'com.hbb20:ccp:2.5.4'
+
     // firebase
     def firebase_version = "28.2.0"
     implementation platform("com.google.firebase:firebase-bom:$firebase_version")

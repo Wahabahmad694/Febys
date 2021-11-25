@@ -4,7 +4,6 @@ import com.hexagram.febys.models.api.cities.PostCitiesResponse
 import com.hexagram.febys.models.api.countries.CountryResponse
 import com.hexagram.febys.models.api.request.GetCitiesRequest
 import com.hexagram.febys.models.api.request.GetStatesRequest
-import com.hexagram.febys.models.api.shippingAddress.PostShippingAddress
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
 import com.hexagram.febys.models.api.states.PostStatesResponse
 import com.hexagram.febys.network.DataState
@@ -17,14 +16,8 @@ interface IShippingAddressRepo {
         dispatcher: CoroutineDispatcher = Dispatchers.IO
     ): Flow<DataState<List<ShippingAddress>>>
 
-    suspend fun setAsDefault(shippingAddress: ShippingAddress)
-
-    suspend fun updateShippingAddress(
-        shippingAddress: PostShippingAddress, dispatcher: CoroutineDispatcher = Dispatchers.IO
-    ): Flow<DataState<Unit>>
-
-    suspend fun addShippingAddress(
-        shippingAddress: PostShippingAddress, dispatcher: CoroutineDispatcher = Dispatchers.IO
+    suspend fun addEditShippingAddress(
+        shippingAddress: ShippingAddress, dispatcher: CoroutineDispatcher = Dispatchers.IO
     ): Flow<DataState<Unit>>
 
     suspend fun deleteShippingAddress(

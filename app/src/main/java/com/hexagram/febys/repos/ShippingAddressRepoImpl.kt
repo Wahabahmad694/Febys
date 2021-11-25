@@ -4,7 +4,6 @@ import com.hexagram.febys.models.api.cities.PostCitiesResponse
 import com.hexagram.febys.models.api.countries.CountryResponse
 import com.hexagram.febys.models.api.request.GetCitiesRequest
 import com.hexagram.febys.models.api.request.GetStatesRequest
-import com.hexagram.febys.models.api.shippingAddress.PostShippingAddress
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
 import com.hexagram.febys.models.api.states.PostStatesResponse
 import com.hexagram.febys.network.DataState
@@ -30,7 +29,8 @@ class ShippingAddressRepoImpl @Inject constructor(
         if (authToken.isEmpty()) return@flow
         val response = backendService.fetchShippingAddress(authToken)
         response.onSuccess {
-            emit(DataState.Data(data!!.shippingDetails))
+            val shippingAddresses = sortShippingAddresses(data!!.shippingDetails)
+            emit(DataState.Data(shippingAddresses))
             val defaultShippingAddress = data.shippingDetails.firstOrNull {
                 it.shippingDetail.isDefault
             }
@@ -41,42 +41,19 @@ class ShippingAddressRepoImpl @Inject constructor(
             .onNetworkError { emit(DataState.NetworkError()) }
     }.flowOn(dispatcher)
 
-    override suspend fun setAsDefault(shippingAddress: ShippingAddress) {
-//        val shippingAddress = FakeApiService.setAsDefaultShippingAddress(id)
-        saveDefaultShippingAddress(shippingAddress)
-    }
-
-    override suspend fun updateShippingAddress(
-        shippingAddress: PostShippingAddress, dispatcher: CoroutineDispatcher
-    ): Flow<DataState<Unit>> = flow<DataState<Unit>> {
-//        val authToken = pref.getAccessToken()
-//        val response = backendService.updateShippingAddress(authToken, shippingAddress)
-//        response
-//            .onSuccess {
-//                emit(DataState.Data(Unit))
-//                if (shippingAddress.shippingDetail.default) {
-//                    saveDefaultShippingAddress(shippingAddress)
-//                }
-//            }
-//            .onError { emit(DataState.ApiError(message)) }
-//            .onException { emit(DataState.ExceptionError()) }
-//            .onNetworkError { emit(DataState.NetworkError()) }
-    }.flowOn(dispatcher)
-
-    override suspend fun addShippingAddress(
-        shippingAddress: PostShippingAddress, dispatcher: CoroutineDispatcher
+    override suspend fun addEditShippingAddress(
+        shippingAddress: ShippingAddress, dispatcher: CoroutineDispatcher
     ): Flow<DataState<Unit>> = flow<DataState<Unit>> {
         val authToken = pref.getAccessToken()
-        val response = backendService.addShippingAddress(authToken, shippingAddress)
+        val response = backendService.addEditShippingAddress(authToken, shippingAddress)
         response
             .onSuccess {
                 emit(DataState.Data(Unit))
-//                if (shippingAddress.shippingDetail.default) {
-//                    saveDefaultShippingAddress(shippingAddress)
-//                }
+                if (shippingAddress.shippingDetail.isDefault) {
+                    saveDefaultShippingAddress(shippingAddress)
+                }
             }
-            .onError {
-                emit(DataState.ApiError(message)) }
+            .onError { emit(DataState.ApiError(message)) }
             .onException { emit(DataState.ExceptionError()) }
             .onNetworkError { emit(DataState.NetworkError()) }
     }.flowOn(dispatcher)
@@ -87,16 +64,18 @@ class ShippingAddressRepoImpl @Inject constructor(
     ): Flow<DataState<Unit>> = flow<DataState<Unit>> {
         val authToken = getAuthToken()
         if (authToken.isEmpty()) return@flow
-        backendService.removeShippingAddress(authToken, shippingAddress.id)
-            .onSuccess {
-                emit(DataState.Data(Unit))
-                if (shippingAddress.shippingDetail.isDefault) {
-                    pref.removeShippingAddress()
+        shippingAddress.id?.let {
+            backendService.removeShippingAddress(authToken, it)
+                .onSuccess {
+                    emit(DataState.Data(Unit))
+                    if (shippingAddress.shippingDetail.isDefault) {
+                        pref.removeShippingAddress()
+                    }
                 }
-            }
-            .onError { emit(DataState.ApiError(message)) }
-            .onException { emit(DataState.ExceptionError()) }
-            .onNetworkError { emit(DataState.NetworkError()) }
+                .onError { emit(DataState.ApiError(message)) }
+                .onException { emit(DataState.ExceptionError()) }
+                .onNetworkError { emit(DataState.NetworkError()) }
+        }
 
     }.flowOn(dispatcher)
 
@@ -122,7 +101,7 @@ class ShippingAddressRepoImpl @Inject constructor(
     ): Flow<DataState<PostStatesResponse>> = flow<DataState<PostStatesResponse>> {
         val authToken = getAuthToken()
         if (authToken.isEmpty()) return@flow
-        backendService.getStates(authToken,getStatesRequest)
+        backendService.getStates(authToken, getStatesRequest)
             .onSuccess {
                 emit(DataState.Data(data!!))
             }
@@ -137,7 +116,7 @@ class ShippingAddressRepoImpl @Inject constructor(
     ): Flow<DataState<PostCitiesResponse>> = flow<DataState<PostCitiesResponse>> {
         val authToken = getAuthToken()
         if (authToken.isEmpty()) return@flow
-        backendService.getCities(authToken,getCitiesRequest)
+        backendService.getCities(authToken, getCitiesRequest)
             .onSuccess {
                 emit(DataState.Data(data!!))
             }
@@ -146,6 +125,16 @@ class ShippingAddressRepoImpl @Inject constructor(
             .onNetworkError { emit(DataState.NetworkError()) }
     }
 
+    private fun sortShippingAddresses(shippingAddresses: List<ShippingAddress>): List<ShippingAddress> {
+        val mutableShippingAddresses = shippingAddresses.toMutableList()
+        val defaultIndex = mutableShippingAddresses.indexOfFirst { it.shippingDetail.isDefault }
+        if (defaultIndex != -1) {
+            val defaultShippingAddress = mutableShippingAddresses.removeAt(defaultIndex)
+            mutableShippingAddresses.add(0, defaultShippingAddress)
+        }
+
+        return mutableShippingAddresses
+    }
 
     private fun saveDefaultShippingAddress(shippingAddress: ShippingAddress) {
         pref.saveDefaultShippingAddress(shippingAddress)

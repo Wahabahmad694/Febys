@@ -30,7 +30,7 @@ class SignupFragment : SocialMediaAuthFragment() {
     private var lastName: String = ""
     private var email: String = ""
     private var phone: String = ""
-    private var countryCode: String = "PK"
+    private var countryCode: String = ""
     private var password: String = ""
     private var confirmPassword: String = ""
 
@@ -46,8 +46,14 @@ class SignupFragment : SocialMediaAuthFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initUi()
         uiListeners()
         setupObserver()
+    }
+
+    private fun initUi() {
+        binding.ccpPhoneCode.setDefaultCountryUsingNameCode("GH")
+        binding.ccpPhoneCode.resetToDefaultCountry()
     }
 
     private fun uiListeners() {
@@ -106,7 +112,8 @@ class SignupFragment : SocialMediaAuthFragment() {
         }
 
         binding.etPhone.addTextChangedListener {
-            phone = it.toString()
+            val countryCode = binding.ccpPhoneCode.selectedCountryCodeWithPlus
+            phone = "$countryCode${it.toString()}"
             binding.etPhone.clearError()
         }
 
@@ -172,8 +179,9 @@ class SignupFragment : SocialMediaAuthFragment() {
     }
 
     private fun createSignupRequest(): RequestSignup {
+        val phoneCountryCode = binding.ccpPhoneCode.selectedCountryNameCode
         return RequestSignup(
-            firstName, lastName, email, phone, countryCode, password
+            firstName, lastName, email, phone, phoneCountryCode, password
         )
     }
 
