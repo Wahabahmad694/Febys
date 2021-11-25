@@ -345,8 +345,7 @@ class AddEditShippingAddressFragment : BaseFragment() {
 
         if (selectedCountry != null) {
             val index = countries.indexOf(selectedCountry)
-            (binding.bottomSheetRegion.rvSelectionList.layoutManager as? LinearLayoutManager)
-                ?.scrollToPosition(index)
+            binding.bottomSheetRegion.rvSelectionList.scrollToPosition(index)
 
             shippingAddressViewModel.fetchStates(GetStatesRequest(countryCodeISO))
         }
@@ -362,14 +361,14 @@ class AddEditShippingAddressFragment : BaseFragment() {
         binding.containerCity.isEnabled = selectedCountry != null
     }
 
+
     private fun updateSelectedState() {
         val selectedState =
             states.firstOrNull { state -> state.isoCode == stateISO }
 
         if (selectedState != null) {
             val index = states.indexOf(selectedState)
-            (binding.bottomSheetState.rvSelectionList.layoutManager as? LinearLayoutManager)
-                ?.scrollToPosition(index)
+            binding.bottomSheetState.rvSelectionList.scrollToPosition(index)
 
             shippingAddressViewModel.fetchCities(GetCitiesRequest(countryCodeISO, stateISO))
         }
@@ -389,8 +388,7 @@ class AddEditShippingAddressFragment : BaseFragment() {
 
         if (selectedCity != null) {
             val index = cities.indexOf(selectedCity)
-            (binding.bottomSheetCity.rvSelectionList.layoutManager as? LinearLayoutManager)
-                ?.scrollToPosition(index)
+            binding.bottomSheetCity.rvSelectionList.scrollToPosition(index)
         }
 
         val cityName = selectedCity?.name ?: ""
