@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.hexagram.febys.databinding.ItemRvAnswersBinding
 import com.hexagram.febys.models.api.chat.Chat
+import com.hexagram.febys.utils.Utils
 
 class AnswersAdapter : RecyclerView.Adapter<AnswersAdapter.AnswersVH>() {
     private var answers = mutableListOf<Chat>()
@@ -15,7 +16,7 @@ class AnswersAdapter : RecyclerView.Adapter<AnswersAdapter.AnswersVH>() {
         fun bind(item: Chat, position: Int) = binding.apply {
             answer.text = item.message
             name.text = item.sender.name
-            date.text = item.sentTime
+            date.text = Utils.DateTime.formatDate(item.sentTime)
         }
     }
 

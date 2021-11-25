@@ -98,7 +98,7 @@ class QAThreadsFragment : BaseBottomSheet() {
         }
 
         binding.bottomSheetReplyQuestion.btnPostAnswer.setOnClickListener {
-            val answer = binding.bottomSheetReplyQuestion.etAnswer.text.toString()
+            val answer = binding.bottomSheetReplyQuestion.etAnswer.text.toString().trim()
             val threadId = binding.thread?._id
             if (threadId == null || answer.isEmpty()) return@setOnClickListener
             productDetailViewModel.replyQuestion(args.productId, answer, threadId)

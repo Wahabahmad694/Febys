@@ -40,12 +40,12 @@ interface FebysBackendService {
         @Body request: PagingListRequest
     ): ApiResponse<Pagination>
 
-    @GET("/v1/top-performers/products/units")
+    @GET("v1/top-performers/products/units")
     suspend fun fetchTrendingProductsByUnits(
         @QueryMap queryMap: Map<String, String>
     ): ApiResponse<Trending>
 
-    @GET("/v1/top-performers/products/sale")
+    @GET("v1/top-performers/products/sale")
     suspend fun fetchTrendingProductsBySale(
         @QueryMap queryMap: Map<String, String>
     ): ApiResponse<Trending>

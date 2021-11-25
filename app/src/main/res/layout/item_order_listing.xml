@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_13sdp"
-                android:text="@{@string/label_order_id + `:`}"
+                android:text="@string/label_order_id"
                 android:textSize="@dimen/_11sdp"
                 tools:text="@string/label_order_id" />
 

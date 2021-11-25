@@ -10,7 +10,6 @@ import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.dataSource.ICartDataSource
 import com.hexagram.febys.dataSource.IUserDataSource
 import com.hexagram.febys.models.api.consumer.Consumer
-import com.hexagram.febys.network.response.User
 import com.hexagram.febys.utils.navigateTo
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -55,8 +54,7 @@ abstract class BaseFragment : Fragment() {
         }
 
         cartDataSource.observeCartCount().observe(viewLifecycleOwner) { cartCount ->
-            getTvCartCount()?.isVisible = cartCount != null && cartCount > 0
-            getTvCartCount()?.text = cartCount?.toString() ?: ""
+            getTvCartCount()?.text = cartCount?.toString() ?: "0"
         }
     }
 

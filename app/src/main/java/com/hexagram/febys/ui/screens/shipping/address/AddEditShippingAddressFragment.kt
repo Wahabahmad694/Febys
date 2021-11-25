@@ -54,12 +54,10 @@ class AddEditShippingAddressFragment : BaseFragment() {
     private var firstName: String = ""
     private var lastName: String = ""
     private var addressLabel: String = ""
-    private var countryCode: String = ""
     private var countryCodeISO: String = ""
     private var addressLine1: String = ""
     private var addressLine2: String = ""
     private var city: String = ""
-    private var state: String = ""
     private var stateISO: String = ""
     private var zipCode: String = ""
     private var phoneNo: String = ""
@@ -177,7 +175,6 @@ class AddEditShippingAddressFragment : BaseFragment() {
 
         binding.etAddressLine1.setText(shippingAddress.shippingDetail.address.street)
         binding.etPostalCode.setText(shippingAddress.shippingDetail.address.zipCode)
-        binding.etPhone.setText(shippingAddress.shippingDetail.contact.number)
 
         updateDefaultCCP(shippingAddress.shippingDetail.contact)
 

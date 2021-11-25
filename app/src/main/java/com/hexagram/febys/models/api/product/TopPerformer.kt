@@ -12,5 +12,5 @@ data class TopPerformer(
     @SerializedName("units_sold")
     val unitsSold: Int,
     val sales: Price,
-    val product: List<Product>
+    val product: Product
 ) : Parcelable

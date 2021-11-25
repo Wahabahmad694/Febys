@@ -13,7 +13,7 @@ object Utils {
     object DateTime {
         const val FORMAT_ISO = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
         const val FORMAT_MONTH_DATE_YEAR = "MMM dd, yyyy"
-        const val FORMAT_MONTH_DATE_YEAR_HOUR_MIN = "MMM dd.yyyy-hh:mm"
+        const val FORMAT_MONTH_DATE_YEAR_HOUR_MIN = "MMM dd, yyyy-hh:mm"
 
         fun formatDate(dateString: String, pattern: String = FORMAT_MONTH_DATE_YEAR): String {
             val dateFormat = SimpleDateFormat(FORMAT_ISO, Locale.US)

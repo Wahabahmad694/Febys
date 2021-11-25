@@ -109,25 +109,25 @@
                 tools:text="TCL 32-inch 3-Series 720p Roku Smart TV  (2018 Model)" />
 
             <TextView
-                android:id="@+id/label_item_id"
+                android:id="@+id/label_sku_id"
                 style="@style/TextTheme.Arial.TS14.Grey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_8dp"
-                android:text="@string/label_item_id"
+                android:text="@string/label_sku_id"
                 app:layout_constraintStart_toStartOf="@id/tv_product_name"
                 app:layout_constraintTop_toBottomOf="@id/tv_product_name" />
 
             <TextView
-                android:id="@+id/tv_item_id"
+                android:id="@+id/tv_sku_id"
                 style="@style/TextTheme.Arial.TS14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_4sdp"
                 android:layout_marginTop="@dimen/_16dp"
                 android:text="@{`` + cart.skuId}"
-                app:layout_constraintBaseline_toBaselineOf="@id/label_item_id"
-                app:layout_constraintStart_toEndOf="@id/label_item_id"
+                app:layout_constraintBaseline_toBaselineOf="@id/label_sku_id"
+                app:layout_constraintStart_toEndOf="@id/label_sku_id"
                 tools:text="123" />
 
             <LinearLayout
@@ -139,8 +139,8 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingHorizontal="@dimen/_4sdp"
-                app:layout_constraintStart_toStartOf="@id/label_item_id"
-                app:layout_constraintTop_toBottomOf="@id/label_item_id">
+                app:layout_constraintStart_toStartOf="@id/label_sku_id"
+                app:layout_constraintTop_toBottomOf="@id/label_sku_id">
 
 
                 <androidx.appcompat.widget.AppCompatImageView

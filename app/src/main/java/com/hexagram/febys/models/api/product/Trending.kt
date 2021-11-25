@@ -18,7 +18,7 @@ data class Trending(
     fun getAllProducts(): List<Product> {
         val list = mutableListOf<Product>()
         topPerformers.forEach {
-            list.addAll(it.product)
+            list.add(it.product)
         }
         return list
     }
