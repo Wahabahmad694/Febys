@@ -37,12 +37,6 @@ class CheckoutFragment : BaseFragment() {
         handleOrderInfoResponse(it)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        fetchOrderInfo()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -56,6 +50,8 @@ class CheckoutFragment : BaseFragment() {
         initUi()
         uiListener()
         setObserver()
+
+        fetchOrderInfo()
     }
 
     private fun initUi() {

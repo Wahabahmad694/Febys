@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentOrderListingBinding
 import com.hexagram.febys.models.api.order.Order
@@ -20,11 +21,12 @@ import dagger.hilt.android.AndroidEntryPoint
 class OrderListingFragment : BaseFragment() {
     private lateinit var binding: FragmentOrderListingBinding
     private val orderViewModel: OrderViewModel by viewModels()
+    private val args: OrderListingFragmentArgs by navArgs()
     private val orderListingAdapter = OrderListingAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        orderViewModel.fetchOrders()
+        fetchOrders()
     }
 
     override fun onCreateView(
@@ -70,5 +72,9 @@ class OrderListingFragment : BaseFragment() {
 
     private fun updateUi(orders: List<Order>) {
         orderListingAdapter.submitList(orders)
+    }
+
+    private fun fetchOrders() {
+        orderViewModel.fetchOrders(args.status)
     }
 }

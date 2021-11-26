@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface IOrderRepo {
     suspend fun fetchOrders(
-        filters: Map<String, String>?,
-        dispatcher: CoroutineDispatcher = Dispatchers.IO
+        filters: Array<String>? = null, dispatcher: CoroutineDispatcher = Dispatchers.IO
     ): Flow<DataState<List<Order>>>
 }

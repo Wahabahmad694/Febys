@@ -5,5 +5,5 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class OrderListingRequest constructor(
-    val filters: Map<String, String>?
+    val filters: Map<String, Map<String, Array<String>>>?,
 ) : Parcelable

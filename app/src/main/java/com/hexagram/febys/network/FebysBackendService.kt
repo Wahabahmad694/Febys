@@ -7,7 +7,10 @@ import com.hexagram.febys.models.api.pagination.Pagination
 import com.hexagram.febys.models.api.product.FeaturedCategory
 import com.hexagram.febys.models.api.product.Trending
 import com.hexagram.febys.models.api.request.*
-import com.hexagram.febys.models.api.response.*
+import com.hexagram.febys.models.api.response.OrderResponse
+import com.hexagram.febys.models.api.response.PaymentResponse
+import com.hexagram.febys.models.api.response.ProductDetailResponse
+import com.hexagram.febys.models.api.response.QuestionAnswersResponse
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddressResponse
 import com.hexagram.febys.models.api.states.PostStatesResponse
