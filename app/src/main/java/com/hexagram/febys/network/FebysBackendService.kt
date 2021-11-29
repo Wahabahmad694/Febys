@@ -218,6 +218,12 @@ interface FebysBackendService {
         @Header("Authorization") authToken: String, @Body orderListingRequest: OrderListingRequest
     ): ApiResponse<Pagination>
 
+    @GET("v1/orders/for-consumer/{orderId}")
+    suspend fun fetchOrder(
+        @Header("Authorization") authToken: String,
+        @Path("orderId") orderId: String
+    ): ApiResponse<OrderResponse>
+
     @POST("v1/consumers/save/shipping-detail")
     suspend fun addEditShippingAddress(
         @Header("Authorization") authToken: String,

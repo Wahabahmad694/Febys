@@ -14,6 +14,8 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Order(
+    @SerializedName("_id")
+    val id: String,
     @SerializedName("order_id")
     val orderId: String,
     @SerializedName("consumer_id")
@@ -32,7 +34,9 @@ data class Order(
     val transactions: List<Transaction>,
     val voucher: VoucherDetail?,
     @SerializedName("created_at")
-    val createdAt: String
+    val createdAt: String,
+    @SerializedName("updated_at")
+    val updatedAt: String
 ) : Parcelable {
     fun toListOfCartDTO(): List<CartDTO> {
         return CartMapper().mapFromVendorProducts(vendorProducts)
