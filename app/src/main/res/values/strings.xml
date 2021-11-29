@@ -130,8 +130,10 @@
     <string name="Ghana">GH</string>
     <string name="label_orders">Orders</string>
     <string name="label_my_orders">My Orders</string>
+    <string name="label_order_detail">Order Detail</string>
     <string name="label_return_orders">Return Orders</string>
     <string name="label_cancel_orders">Cancel Orders</string>
+    <string name="label_cancel">Cancel</string>
     <string name="label_product_review">Product Review</string>
     <string name="label_order_received">Order Received</string>
     <string name="label_my_location">My Location</string>

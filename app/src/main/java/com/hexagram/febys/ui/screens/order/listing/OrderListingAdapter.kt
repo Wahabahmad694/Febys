@@ -9,6 +9,7 @@ import com.hexagram.febys.utils.Utils
 
 class OrderListingAdapter : RecyclerView.Adapter<OrderListingAdapter.ViewHolder>() {
     private var orders = listOf<Order>()
+    var onItemClick: ((order: Order) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -39,6 +40,10 @@ class OrderListingAdapter : RecyclerView.Adapter<OrderListingAdapter.ViewHolder>
             tvOrderDate.text = Utils.DateTime.formatDate(
                 order.createdAt, Utils.DateTime.FORMAT_MONTH_DATE_YEAR_HOUR_MIN
             )
+
+            root.setOnClickListener {
+                onItemClick?.invoke((order))
+            }
         }
     }
 }
