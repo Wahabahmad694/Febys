@@ -19,7 +19,7 @@ class OrderViewModel @Inject constructor(
     private val _observerOrders = MutableLiveData<DataState<List<Order>>>()
     val observeOrders: LiveData<DataState<List<Order>>> = _observerOrders
 
-    fun fetchOrders(filters: Map<String, String>? = null) = viewModelScope.launch {
+    fun fetchOrders(filters: Array<String>? = null) = viewModelScope.launch {
         _observerOrders.postValue(DataState.Loading())
         orderRepo.fetchOrders(filters).collect {
             _observerOrders.postValue(it)

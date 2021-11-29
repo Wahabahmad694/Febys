@@ -403,7 +403,7 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/cartFragment"
+            app:popUpTo="@id/checkoutSuccessFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
@@ -490,5 +490,11 @@
         android:id="@+id/orderListingFragment"
         android:name="com.hexagram.febys.ui.screens.order.listing.OrderListingFragment"
         android:label="OrderListingFragment"
-        tools:layout="@layout/fragment_order_listing" />
+        tools:layout="@layout/fragment_order_listing">
+        <argument
+            android:name="status"
+            android:defaultValue="@null"
+            app:argType="string[]"
+            app:nullable="true" />
+    </fragment>
 </navigation>

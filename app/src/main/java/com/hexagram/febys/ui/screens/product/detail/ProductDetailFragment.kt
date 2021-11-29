@@ -34,6 +34,7 @@ import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.ui.screens.product.additional.AdditionalProductAdapter
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 @AndroidEntryPoint
 class ProductDetailFragment : SliderFragment() {
@@ -219,7 +220,7 @@ class ProductDetailFragment : SliderFragment() {
         }
 
         binding.bottomSheetReplyQuestion.btnPostAnswer.setOnClickListener {
-            val answer = binding.bottomSheetReplyQuestion.etAnswer.text.toString()
+            val answer = binding.bottomSheetReplyQuestion.etAnswer.text.toString().trim()
             val threadId = binding.thread?._id
             if (threadId == null || answer.isEmpty()) return@setOnClickListener
             productDetailViewModel.replyQuestion(args.productId, answer, threadId)
@@ -234,7 +235,7 @@ class ProductDetailFragment : SliderFragment() {
         }
 
         binding.bottomSheetAskQuestion.btnAskQuestion.setOnClickListener {
-            val question = binding.bottomSheetAskQuestion.etQuestion.text.toString()
+            val question = binding.bottomSheetAskQuestion.etQuestion.text.toString().trim()
             if (question.isNotEmpty()) {
                 productDetailViewModel.askQuestion(args.productId, question)
             }
@@ -536,6 +537,7 @@ class ProductDetailFragment : SliderFragment() {
         )
 
         productDescriptionsBinding.description = description
+        productDescriptionsBinding.labelDescription.text = description.title.capitalize()
 
         productDescriptionsBinding.productDescriptionToggle.setOnClickListener {
             productDescriptionsBinding.containerProductDescription.toggleVisibility()

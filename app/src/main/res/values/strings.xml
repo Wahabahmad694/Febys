@@ -87,6 +87,8 @@
     <string name="label_check_your_email">Check Your Email</string>
     <string name="label_email_sent">We’ve sent an email to the provided address</string>
     <string name="label_refine">Refine</string>
+    <string name="label_item">Item</string>
+    <string name="label_items">Items</string>
     <string name="label_no_item">No Item</string>
     <string name="label_add_to_cart">Add to Cart</string>
     <string name="label_sign_out">Sign Out</string>
@@ -94,8 +96,9 @@
     <string name="label_shopping_cart">Shopping Cart</string>
     <string name="label_subtotal">Subtotal</string>
     <string name="label_voucher">Voucher</string>
+    <string name="label_voucher_discount">Voucher Discount</string>
     <string name="label_shipping">Shipping</string>
-    <string name="label_item_id">Item ID:</string>
+    <string name="label_sku_id">SKU ID:</string>
     <string name="label_remove_from_wishlist">Remove from wishlist</string>
     <string name="label_add_to_wishlist">Add to wishlist</string>
 
@@ -184,7 +187,7 @@
     <string name="label_place_order">Place Order</string>
     <string name="label_message_for_the_seller">Message for the Seller:</string>
     <string name="label_total_amount">Totoal Amount</string>
-    <string name="label_order_summary_with_quantity">Order Summary (%1d)</string>
+    <string name="label_order_summary_with_quantity">Order Summary</string>
     <string name="label_vat">Vat %</string>
     <string name="msg_thank_you_for_purchase">Thank You For Your Purchase</string>
     <string name="msg_success_order">Your Order has been placed! We will email you on order confirmation with details and tracking number once your order has been successfully processed</string>

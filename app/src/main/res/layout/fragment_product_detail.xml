@@ -680,6 +680,7 @@
                                     android:layout_width="56dp"
                                     android:layout_height="56dp"
                                     app:actualImageScaleType="centerCrop"
+                                    app:placeholderImage="@drawable/placeholder_user"
                                     app:roundAsCircle="true"
                                     binding:image_url="@{product.vendor.businessInfo.logo}" />
 
@@ -694,14 +695,14 @@
                                         style="@style/TextTheme.Arial.TS14"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="@{product.vendor.contactDetails.name}" />
+                                        android:text="@{product.vendor.shopName}" />
 
                                     <TextView
                                         android:id="@+id/tv_store_type"
                                         style="@style/TextTheme.Arial.TS12"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="@{product.vendor.businessInfo.vendorType}"
+                                        android:text="@{product.vendor.role.name}"
                                         android:textColor="@color/red" />
                                 </LinearLayout>
 

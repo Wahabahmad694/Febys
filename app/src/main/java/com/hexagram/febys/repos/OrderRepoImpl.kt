@@ -19,12 +19,16 @@ class OrderRepoImpl @Inject constructor(
     private val backendService: FebysBackendService
 ) : IOrderRepo {
     override suspend fun fetchOrders(
-        filters: Map<String, String>?, dispatcher: CoroutineDispatcher
+        filters: Array<String>?, dispatcher: CoroutineDispatcher
     ) = flow<DataState<List<Order>>> {
         val authToken = pref.getAccessToken()
         if (authToken.isEmpty()) return@flow
 
-        val filtersBody = OrderListingRequest(filters)
+        var filterMap: Map<String, Map<String, Array<String>>>? = null
+        if (!filters.isNullOrEmpty()) {
+            filterMap = mapOf("vendor_products.status" to mapOf("\$in" to filters))
+        }
+        val filtersBody = OrderListingRequest(filterMap)
 
         backendService.fetchOrderListing(authToken, filtersBody)
             .onSuccess {

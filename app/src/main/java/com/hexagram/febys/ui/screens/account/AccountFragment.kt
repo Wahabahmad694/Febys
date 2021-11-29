@@ -10,6 +10,7 @@ import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentAccountBinding
 import com.hexagram.febys.models.api.consumer.Consumer
 import com.hexagram.febys.ui.screens.auth.AuthViewModel
+import com.hexagram.febys.utils.OrderStatus
 import com.hexagram.febys.utils.navigateTo
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -54,6 +55,20 @@ class AccountFragment : BaseFragment() {
             gotoOrderListing()
         }
 
+        binding.orders.orderReceived.setOnClickListener {
+            gotoOrderListing(arrayOf(OrderStatus.ACCEPTED))
+        }
+
+        binding.orders.cancelOrders.setOnClickListener {
+            gotoOrderListing(
+                arrayOf(
+                    OrderStatus.CANCELED,
+                    OrderStatus.CANCELLED_BY_VENDOR,
+                    OrderStatus.REJECTED
+                )
+            )
+        }
+
         binding.orders.wishlist.setOnClickListener {
             val navigateToWishlist =
                 AccountFragmentDirections.actionAccountFragmentToWishListFragment()
@@ -72,9 +87,9 @@ class AccountFragment : BaseFragment() {
         }
     }
 
-    private fun gotoOrderListing() {
+    private fun gotoOrderListing(status: Array<String>? = null) {
         val navigateToOrderListing =
-            AccountFragmentDirections.actionAccountFragmentToOrderListingFragment()
+            AccountFragmentDirections.actionAccountFragmentToOrderListingFragment(status)
         navigateTo(navigateToOrderListing)
     }
 

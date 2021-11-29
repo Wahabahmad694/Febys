@@ -24,6 +24,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.hexagram.febys.base.BaseActivity
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
+import java.util.*
 
 
 fun View.show() {
@@ -164,4 +165,15 @@ fun TextView.setDrawableRes(
     @DrawableRes bottom: Int = 0,
 ) {
     this.setCompoundDrawablesWithIntrinsicBounds(left, top, right, bottom)
+}
+
+fun String.capitalize(): String {
+    var capitalizeString = ""
+    this.split(" ").forEach { word ->
+        capitalizeString += word.replaceFirstChar {
+            if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
+        } + " "
+    }
+
+    return capitalizeString.trim()
 }
