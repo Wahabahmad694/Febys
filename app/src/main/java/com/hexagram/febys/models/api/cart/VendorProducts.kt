@@ -17,5 +17,7 @@ data class VendorProducts(
     val reverted: Boolean?,
     @SerializedName("_id")
     val id: String,
-    val courier: Courier?
+    val courier: Courier?,
+    @SerializedName("revert_details")
+    val revertDetails: RevertedDetail?
 ) : Parcelable

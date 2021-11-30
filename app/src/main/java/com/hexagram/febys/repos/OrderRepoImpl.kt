@@ -63,4 +63,22 @@ class OrderRepoImpl @Inject constructor(
                 .onNetworkError { emit(DataState.NetworkError()) }
         }
 
+    override fun cancelOrder(
+        orderId: String,
+        vendorId: String,
+        reason: String,
+        comment: String,
+        dispatcher: CoroutineDispatcher
+    ) = flow<DataState<Order>> {
+        val authToken = pref.getAccessToken()
+        val reqBody = mapOf("reason" to reason, "comments" to comment)
+
+        backendService.cancelOrder(authToken, orderId, vendorId, reqBody)
+            .onSuccess { emit(DataState.Data(data!!.order)) }
+            .onError { emit(DataState.ApiError(message)) }
+            .onException { emit(DataState.ExceptionError()) }
+            .onNetworkError { emit(DataState.NetworkError()) }
+    }
+
+
 }

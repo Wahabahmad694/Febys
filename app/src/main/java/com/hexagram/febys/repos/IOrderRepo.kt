@@ -16,5 +16,13 @@ interface IOrderRepo {
         orderId: String, dispatcher: CoroutineDispatcher = Dispatchers.IO
     ): Flow<DataState<Order>>
 
-    abstract fun fetchCancelReasons(dispatcher: CoroutineDispatcher = Dispatchers.IO): Flow<DataState<CancelReasons>>
+    fun fetchCancelReasons(dispatcher: CoroutineDispatcher = Dispatchers.IO): Flow<DataState<CancelReasons>>
+
+    fun cancelOrder(
+        orderId: String,
+        vendorId: String,
+        reason: String,
+        comment: String,
+        dispatcher: CoroutineDispatcher = Dispatchers.IO
+    ): Flow<DataState<Order>>
 }

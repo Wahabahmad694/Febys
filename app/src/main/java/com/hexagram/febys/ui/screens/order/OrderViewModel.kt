@@ -26,6 +26,9 @@ class OrderViewModel @Inject constructor(
     private val _observerCancelReasons = MutableLiveData<DataState<CancelReasons>>()
     val observeCancelReasons: LiveData<DataState<CancelReasons>> = _observerCancelReasons
 
+    private val _observerCancelOrder = MutableLiveData<DataState<Order>>()
+    val observeCancelOrder: LiveData<DataState<Order>> = _observerCancelOrder
+
     fun fetchOrders(filters: Array<String>? = null) = viewModelScope.launch {
         _observerOrders.postValue(DataState.Loading())
         orderRepo.fetchOrders(filters).collect {
@@ -44,6 +47,15 @@ class OrderViewModel @Inject constructor(
         _observerCancelReasons.postValue(DataState.Loading())
         orderRepo.fetchCancelReasons().collect {
             _observerCancelReasons.postValue(it)
+        }
+    }
+
+    fun cancelOrder(
+        orderId: String, vendorId: String, reason: String, comment: String
+    ) = viewModelScope.launch {
+        _observerCancelOrder.postValue(DataState.Loading())
+        orderRepo.cancelOrder(orderId, vendorId, reason, comment).collect {
+            _observerCancelOrder.postValue(it)
         }
     }
 }

@@ -15,7 +15,6 @@
         android:orientation="vertical"
         android:paddingHorizontal="@dimen/_8sdp">
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/container_vendor_detail"
             android:layout_width="match_parent"
@@ -192,6 +191,37 @@
                 app:actualImageScaleType="fitEnd"
                 app:placeholderImage="@drawable/placeholder_image"
                 app:placeholderImageScaleType="fitEnd" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/container_order_cancel_reason"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_44sdp"
+            android:layout_marginHorizontal="@dimen/_8sdp"
+            android:background="@color/red_opacity_1A"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/_8sdp">
+
+            <TextView
+                style="@style/TextTheme.Arial.TS14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{@string/label_order_cancel_reason + `:`}" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_1dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/order_cancel_reason"
+                style="@style/TextTheme.Arial.TS14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_4sdp"
+                android:textColor="@color/red"
+                tools:text="Change of Mind" />
         </LinearLayout>
 
         <View

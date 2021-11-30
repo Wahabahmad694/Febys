@@ -118,6 +118,7 @@
     <string name="error_enter_email">Please Enter Email</string>
     <string name="error_enter_valid_email">Please Enter Valid Email</string>
     <string name="error_enter_password">Please Enter Password</string>
+    <string name="error_select_cancel_reason">Please Select Cancel Reason</string>
     <string name="error_enter_confirm_password">Please Enter Password Again</string>
     <string name="error_confirm_password_not_match">Password doesn\'t match</string>
     <string name="error_enter_phone">Please Enter Phone No</string>

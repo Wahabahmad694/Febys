@@ -250,4 +250,12 @@ interface FebysBackendService {
 
     @GET("v1/order-settings/consumer/order/cancellation/reasons")
     suspend fun fetchCancelReasons(): ApiResponse<CancelReasonsResponse>
+
+    @PATCH("v1/orders/{orderId}/vendor/{vendorId}/cancel")
+    suspend fun cancelOrder(
+        @Header("Authorization") authToken: String,
+        @Path("orderId") orderId: String,
+        @Path("vendorId") vendorId: String,
+        @Body reqBody: Map<String, String>
+    ): ApiResponse<OrderResponse>
 }
