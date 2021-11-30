@@ -1,6 +1,7 @@
 package com.hexagram.febys.utils
 
 import android.app.Activity
+import android.graphics.drawable.GradientDrawable
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
@@ -165,6 +166,13 @@ fun TextView.setDrawableRes(
     @DrawableRes bottom: Int = 0,
 ) {
     this.setCompoundDrawablesWithIntrinsicBounds(left, top, right, bottom)
+}
+
+fun TextView.setBackgroundRoundedColor(color: Int, cornerRadius: Float = 16f) {
+    val shape = GradientDrawable()
+    shape.cornerRadius = cornerRadius
+    shape.setColor(color)
+    this.background = shape
 }
 
 fun String.capitalize(): String {
