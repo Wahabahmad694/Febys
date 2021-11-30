@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.hexagram.febys.base.BaseViewModel
+import com.hexagram.febys.models.api.order.CancelReasons
 import com.hexagram.febys.models.api.order.Order
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.repos.IOrderRepo
@@ -22,6 +23,9 @@ class OrderViewModel @Inject constructor(
     private val _observerOrder = MutableLiveData<DataState<Order>>()
     val observeOrder: LiveData<DataState<Order>> = _observerOrder
 
+    private val _observerCancelReasons = MutableLiveData<DataState<CancelReasons>>()
+    val observeCancelReasons: LiveData<DataState<CancelReasons>> = _observerCancelReasons
+
     fun fetchOrders(filters: Array<String>? = null) = viewModelScope.launch {
         _observerOrders.postValue(DataState.Loading())
         orderRepo.fetchOrders(filters).collect {
@@ -33,6 +37,13 @@ class OrderViewModel @Inject constructor(
         _observerOrder.postValue(DataState.Loading())
         orderRepo.fetchOrder(orderId).collect {
             _observerOrder.postValue(it)
+        }
+    }
+
+    fun fetchCancelReasons() = viewModelScope.launch {
+        _observerCancelReasons.postValue(DataState.Loading())
+        orderRepo.fetchCancelReasons().collect {
+            _observerCancelReasons.postValue(it)
         }
     }
 }

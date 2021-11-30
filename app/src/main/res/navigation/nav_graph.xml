@@ -512,5 +512,35 @@
         <argument
             android:name="orderId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_orderDetailFragment_to_cancelOrderBottomSheet"
+            app:destination="@id/cancelOrderBottomSheet" />
     </fragment>
+    <dialog
+        android:id="@+id/cancelOrderBottomSheet"
+        android:name="com.hexagram.febys.ui.screens.order.cancel.CancelOrderBottomSheet"
+        android:label="CancelOrderBottomSheet"
+        tools:layout="@layout/bottom_sheet_cancel_order">
+        <argument
+            android:name="orderId"
+            app:argType="string" />
+        <argument
+            android:name="vendorId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_cancelOrderBottomSheet_to_cancelOrderReasonsBottomSheet"
+            app:destination="@id/cancelOrderReasonsBottomSheet" />
+    </dialog>
+    <dialog
+        android:id="@+id/cancelOrderReasonsBottomSheet"
+        android:name="com.hexagram.febys.ui.screens.order.cancel.CancelOrderReasonsBottomSheet"
+        android:label="CancelOrderReasonsBottomSheet"
+        tools:layout="@layout/bottom_sheet_list_of_selection">
+        <argument
+            android:name="cancelReasons"
+            app:argType="string[]" />
+        <argument
+            android:name="selectedReason"
+            app:argType="string" />
+    </dialog>
 </navigation>

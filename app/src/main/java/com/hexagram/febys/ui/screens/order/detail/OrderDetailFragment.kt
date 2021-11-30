@@ -13,11 +13,8 @@ import com.hexagram.febys.models.api.order.Order
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.ui.screens.order.OrderViewModel
-import com.hexagram.febys.utils.Utils
+import com.hexagram.febys.utils.*
 import com.hexagram.febys.utils.Utils.DateTime.FORMAT_MONTH_DATE_YEAR_HOUR_MIN
-import com.hexagram.febys.utils.applySpaceItemDecoration
-import com.hexagram.febys.utils.hideLoader
-import com.hexagram.febys.utils.showLoader
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -43,12 +40,25 @@ class OrderDetailFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initUi()
+        uiListener()
         setObserver()
     }
 
     private fun initUi() {
         binding.rvVendorWithProducts.adapter = orderDetailVendorProductAdapter
         binding.rvVendorWithProducts.applySpaceItemDecoration(R.dimen._16sdp)
+    }
+
+    private fun uiListener() {
+        orderDetailVendorProductAdapter.onCancelOrderClick = { vendorId ->
+            gotoCancelOrder(args.orderId, vendorId)
+        }
+    }
+
+    private fun gotoCancelOrder(orderId: String, vendorId: String) {
+        val gotoCancelOrder = OrderDetailFragmentDirections
+            .actionOrderDetailFragmentToCancelOrderBottomSheet(orderId, vendorId)
+        navigateTo(gotoCancelOrder)
     }
 
     private fun setObserver() {

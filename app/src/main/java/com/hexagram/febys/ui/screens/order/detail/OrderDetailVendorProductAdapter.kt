@@ -14,6 +14,7 @@ import com.hexagram.febys.utils.setBackgroundRoundedColor
 
 class OrderDetailVendorProductAdapter : RecyclerView.Adapter<OrderDetailVendorProductAdapter.VH>() {
     private var vendors = listOf<VendorProducts>()
+    var onCancelOrderClick: ((vendorId: String) -> Unit)? = null
 
     inner class VH(
         private val binding: ItemOrderDetailVendorsBinding
@@ -47,6 +48,10 @@ class OrderDetailVendorProductAdapter : RecyclerView.Adapter<OrderDetailVendorPr
 
             btnCancelOrder.isVisible =
                 vendorProducts.status in arrayOf(OrderStatus.PENDING, OrderStatus.ACCEPTED)
+
+            btnCancelOrder.setOnClickListener {
+                onCancelOrderClick?.invoke(vendor._id)
+            }
         }
     }
 

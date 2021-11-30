@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btn_close"
+            android:layout_width="@dimen/_16dp"
+            android:layout_height="@dimen/_16dp"
+            android:layout_gravity="end"
+            android:layout_marginTop="@dimen/_24dp"
+            android:layout_marginEnd="@dimen/_24dp"
+            android:src="@drawable/ic_close" />
+
+        <TextView
+            android:id="@+id/label_cancel_order"
+            style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_39sdp"
+            android:gravity="center"
+            android:text="@string/label_cancel_order" />
+
+        <LinearLayout
+            android:id="@+id/container_order_cancel_reason"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_18sdp"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/_16sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_back">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/label_order_cancel_reason"
+                    style="@style/TextTheme.Arial.TS16"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/label_order_cancel_reason" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/arrow_order_cancel_reason"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_arrow_down" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_order_cancel_reason"
+                style="@style/TextTheme.Arial.TS16"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="2dp"
+                tools:text="Change of mind" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:background="@color/grey_e1e5e8" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/container_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_28sdp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/tv_product_price">
+
+            <TextView
+                style="@style/TextTheme.Arial.TS16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:text="@string/label_comment" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:background="@null"
+                android:imeOptions="actionNext"
+                android:inputType="textMultiLine"
+                android:minLines="3"
+                android:paddingVertical="@dimen/_8dp"
+                android:textAppearance="@style/TextTheme.Arial.TS16"
+                app:layout_constraintTop_toBottomOf="@id/label_email_address" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:background="@color/grey"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_cancel_order"
+            style="@style/ButtonTheme.Contained"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_17sdp"
+            android:layout_marginTop="@dimen/_42sdp"
+            android:layout_marginBottom="@dimen/_14sdp"
+            android:text="@string/label_confirm"
+            app:layout_constraintWidth_max="@dimen/_298sdp" />
+
+    </LinearLayout>
+</layout>

@@ -1,5 +1,6 @@
 package com.hexagram.febys.repos
 
+import com.hexagram.febys.models.api.order.CancelReasons
 import com.hexagram.febys.models.api.order.Order
 import com.hexagram.febys.network.DataState
 import kotlinx.coroutines.CoroutineDispatcher
@@ -14,4 +15,6 @@ interface IOrderRepo {
     suspend fun fetchOrder(
         orderId: String, dispatcher: CoroutineDispatcher = Dispatchers.IO
     ): Flow<DataState<Order>>
+
+    abstract fun fetchCancelReasons(dispatcher: CoroutineDispatcher = Dispatchers.IO): Flow<DataState<CancelReasons>>
 }
