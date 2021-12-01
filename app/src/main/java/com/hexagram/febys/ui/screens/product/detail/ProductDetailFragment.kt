@@ -81,8 +81,6 @@ class ProductDetailFragment : SliderFragment() {
         closeBottomSheet(askQuestionBottomSheet)
         closeBottomSheet(replyQuestionBottomSheet)
 
-        binding.containerAskAboutProduct.isVisible = isUserLoggedIn
-
         binding.bottomSheetVariantFirstAttr.rvProductVariant.apply {
             setHasFixedSize(true)
             adapter = productVariantFirstAttrAdapter
@@ -229,9 +227,9 @@ class ProductDetailFragment : SliderFragment() {
         binding.containerAskAboutProduct.setOnClickListener {
             if (!isUserLoggedIn) {
                 gotoLogin()
-                return@setOnClickListener
+            } else {
+                showBottomSheet(askQuestionBottomSheet)
             }
-            showBottomSheet(askQuestionBottomSheet)
         }
 
         binding.bottomSheetAskQuestion.btnAskQuestion.setOnClickListener {
