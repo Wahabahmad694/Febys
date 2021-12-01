@@ -14,6 +14,7 @@ import com.hexagram.febys.utils.setBackgroundRoundedColor
 
 class OrderDetailVendorProductAdapter : RecyclerView.Adapter<OrderDetailVendorProductAdapter.VH>() {
     private var vendors = listOf<VendorProducts>()
+    var onCancelOrderClick: ((vendorId: String) -> Unit)? = null
 
     inner class VH(
         private val binding: ItemOrderDetailVendorsBinding
@@ -21,6 +22,7 @@ class OrderDetailVendorProductAdapter : RecyclerView.Adapter<OrderDetailVendorPr
         fun bind(position: Int) = with(binding) {
             val vendorProducts = vendors[position]
             val vendor = vendorProducts.vendor
+            val reverted = vendorProducts.reverted == true
 
             vendorName.text = vendor.shopName
             vendorType.text = vendor.role.name
@@ -34,19 +36,24 @@ class OrderDetailVendorProductAdapter : RecyclerView.Adapter<OrderDetailVendorPr
             orderStatus.text = OrderStatus.getStatusForDisplay(vendorProducts.status)
             val color = OrderStatus.getStatusColor(vendorProducts.status)
             orderStatus.setBackgroundRoundedColor(color)
-            containerOrderStatus.isVisible = vendorProducts.status != null
+            containerOrderStatus.isVisible = vendorProducts.status != null && !reverted
 
             orderAmountByVendor.text = vendorProducts.amount?.getFormattedPrice()
-            containerOrderAmountByVendor.isVisible = vendorProducts.amount != null
+            containerOrderAmountByVendor.isVisible = vendorProducts.amount != null && !reverted
 
             orderTrackingCode.text = vendorProducts.courier?.trackingId
-            containerOrderTrackingCode.isVisible = vendorProducts.courier != null
+            containerOrderTrackingCode.isVisible = vendorProducts.courier != null && !reverted
 
             orderDeliveryService.load(vendorProducts.courier?.service?.logo)
-            containerOrderDeliveryService.isVisible = vendorProducts.courier != null
+            containerOrderDeliveryService.isVisible = vendorProducts.courier != null && !reverted
+
+            orderCancelReason.text = vendorProducts.revertDetails?.reason
+            containerOrderCancelReason.isVisible = vendorProducts.revertDetails != null && reverted
 
             btnCancelOrder.isVisible =
                 vendorProducts.status in arrayOf(OrderStatus.PENDING, OrderStatus.ACCEPTED)
+
+            btnCancelOrder.setOnClickListener { onCancelOrderClick?.invoke(vendor._id) }
         }
     }
 

@@ -201,6 +201,7 @@ class AddEditShippingAddressFragment : BaseFragment() {
         binding.ivBack.setOnClickListener {
             goBack()
         }
+
         binding.containerAddressLabel.setOnClickListener {
             showBottomSheet(addressLabelsBottomSheet)
         }

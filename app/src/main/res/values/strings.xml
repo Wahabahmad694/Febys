@@ -118,6 +118,7 @@
     <string name="error_enter_email">Please Enter Email</string>
     <string name="error_enter_valid_email">Please Enter Valid Email</string>
     <string name="error_enter_password">Please Enter Password</string>
+    <string name="error_select_cancel_reason">Please Select Cancel Reason</string>
     <string name="error_enter_confirm_password">Please Enter Password Again</string>
     <string name="error_confirm_password_not_match">Password doesn\'t match</string>
     <string name="error_enter_phone">Please Enter Phone No</string>
@@ -166,6 +167,7 @@
     <string name="label_add_shipping_address">Add new address</string>
     <string name="label_edit">Edit</string>
     <string name="label_address_label">Address Label</string>
+    <string name="label_order_cancel_reason">Order Cancel Reason</string>
     <string name="label_destination_or_region">Destination/Region</string>
     <string name="label_address_line_1">Address Line 1</string>
     <string name="label_address_line_2">Address Line 2 (Optional)</string>
@@ -189,6 +191,7 @@
     <string name="label_payment">Payment</string>
     <string name="label_place_order">Place Order</string>
     <string name="label_message_for_the_seller">Message for the Seller:</string>
+    <string name="label_comment">Comment</string>
     <string name="label_total_amount">Total Amount</string>
     <string name="label_tracking_code">Tracking Code</string>
     <string name="label_delivery_services">Delivery Services</string>
@@ -208,6 +211,8 @@
     <string name="label_by">By</string>
     <string name="label_see_more">See More</string>
     <string name="label_ask_about_product">Ask about the product</string>
+    <string name="label_cancel_order">Cancel Order</string>
+    <string name="label_confirm">Confirm</string>
     <string name="label_ask">Ask</string>
     <string name="label_payment_method">Payment Method</string>
     <string name="label_customer_recommend">Customer Recommend</string>
@@ -216,8 +221,6 @@
     <string name="label_question">Question</string>
     <string name="label_answer">Answer</string>
     <string name="error_please_select_shipping_address">Please select shipping address</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="label_order_date_and_time"><![CDATA[Order Date & Time]]></string>
     <string name="error_enter_valid_country">Please enter valid region</string>
 
