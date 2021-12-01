@@ -10,4 +10,8 @@ interface IOrderRepo {
     suspend fun fetchOrders(
         filters: Array<String>? = null, dispatcher: CoroutineDispatcher = Dispatchers.IO
     ): Flow<DataState<List<Order>>>
+
+    suspend fun fetchOrder(
+        orderId: String, dispatcher: CoroutineDispatcher = Dispatchers.IO
+    ): Flow<DataState<Order>>
 }

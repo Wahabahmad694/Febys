@@ -1,4 +1,4 @@
-package com.hexagram.febys.ui.screens.order.listing
+package com.hexagram.febys.ui.screens.order.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,34 +6,36 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
-import com.hexagram.febys.databinding.FragmentOrderListingBinding
+import com.hexagram.febys.databinding.FragmentOrderDetailBinding
 import com.hexagram.febys.models.api.order.Order
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.ui.screens.order.OrderViewModel
-import com.hexagram.febys.utils.goBack
+import com.hexagram.febys.utils.Utils
+import com.hexagram.febys.utils.Utils.DateTime.FORMAT_MONTH_DATE_YEAR_HOUR_MIN
+import com.hexagram.febys.utils.applySpaceItemDecoration
 import com.hexagram.febys.utils.hideLoader
-import com.hexagram.febys.utils.navigateTo
 import com.hexagram.febys.utils.showLoader
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class OrderListingFragment : BaseFragment() {
-    private lateinit var binding: FragmentOrderListingBinding
+class OrderDetailFragment : BaseFragment() {
+    private lateinit var binding: FragmentOrderDetailBinding
     private val orderViewModel: OrderViewModel by viewModels()
-    private val args: OrderListingFragmentArgs by navArgs()
-    private val orderListingAdapter = OrderListingAdapter()
+    private val args: OrderDetailFragmentArgs by navArgs()
+    private val orderDetailVendorProductAdapter = OrderDetailVendorProductAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        fetchOrders()
+        orderViewModel.fetchOrder(args.orderId)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        binding = FragmentOrderListingBinding.inflate(inflater, container, false)
+        binding = FragmentOrderDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -41,26 +43,16 @@ class OrderListingFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initUi()
-        uiListener()
-        setObservers()
+        setObserver()
     }
 
     private fun initUi() {
-        binding.rvOrders.adapter = orderListingAdapter
+        binding.rvVendorWithProducts.adapter = orderDetailVendorProductAdapter
+        binding.rvVendorWithProducts.applySpaceItemDecoration(R.dimen._16sdp)
     }
 
-    private fun uiListener() {
-        binding.ivBack.setOnClickListener { goBack() }
-
-        orderListingAdapter.onItemClick = {
-            val gotoOrderDetail =
-                OrderListingFragmentDirections.actionOrderListingFragmentToOrderDetailFragment(it.orderId)
-            navigateTo(gotoOrderDetail)
-        }
-    }
-
-    private fun setObservers() {
-        orderViewModel.observeOrders.observe(viewLifecycleOwner) {
+    private fun setObserver() {
+        orderViewModel.observeOrder.observe(viewLifecycleOwner) {
             when (it) {
                 is DataState.Loading -> {
                     showLoader()
@@ -77,11 +69,11 @@ class OrderListingFragment : BaseFragment() {
         }
     }
 
-    private fun updateUi(orders: List<Order>) {
-        orderListingAdapter.submitList(orders)
-    }
+    private fun updateUi(order: Order) = with(binding) {
+        tvOrderId.text = order.orderId
+        tvOrderDate.text =
+            Utils.DateTime.formatDate(order.createdAt, FORMAT_MONTH_DATE_YEAR_HOUR_MIN)
 
-    private fun fetchOrders() {
-        orderViewModel.fetchOrders(args.status)
+        orderDetailVendorProductAdapter.submitList(order.vendorProducts)
     }
 }
