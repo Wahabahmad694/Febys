@@ -100,7 +100,7 @@
                     style="@style/TextTheme.HelveticaNeue.TS14.Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{variant.fulfillmentByFebys ? @string/label_yes : @string/label_no}" />
+                    android:text="@{variant.fulfillmentByFebys ? @string/label_fulfilled_by_febys : @string/label_fulfilled_by_vendor}" />
 
             </LinearLayout>
 

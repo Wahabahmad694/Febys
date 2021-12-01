@@ -91,6 +91,7 @@
                 android:fillViewport="true"
                 android:paddingBottom="@dimen/_65sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/ll_add_to_cart"
                 app:layout_constraintTop_toBottomOf="@id/tv_product_brand_appbar">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -159,9 +160,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/_16dp"
                         android:layout_marginTop="@dimen/_8dp"
-                        android:ellipsize="end"
                         android:gravity="center"
-                        android:maxLines="2"
                         android:text="@{product.name}"
                         android:textAlignment="center"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -759,10 +758,13 @@
             </com.hexagram.febys.utils.ScrollView>
 
             <LinearLayout
+                android:id="@+id/ll_add_to_cart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_18sdp"
-                android:layout_marginBottom="@dimen/_14sdp"
+                android:layout_marginBottom="@dimen/_6sdp"
+                android:background="@color/white"
+                android:paddingVertical="@dimen/_8sdp"
                 app:layout_constraintBottom_toBottomOf="parent">
 
                 <com.google.android.material.button.MaterialButton

@@ -1,14 +1,21 @@
 package com.hexagram.febys.base
 
 import android.graphics.Rect
+import android.os.Bundle
 import android.view.MotionEvent
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.hexagram.febys.ui.screens.dialog.LoaderDialog
 import com.hexagram.febys.utils.hideKeyboard
 
 abstract class BaseActivity : AppCompatActivity() {
     private val loaderDialog = LoaderDialog()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+    }
 
     fun showLoader() {
         if (!loaderDialog.isAdded)

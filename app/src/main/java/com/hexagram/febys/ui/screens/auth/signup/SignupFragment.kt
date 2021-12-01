@@ -186,13 +186,19 @@ class SignupFragment : SocialMediaAuthFragment() {
     }
 
     private fun areAllFieldsValid(): Boolean {
-        if (!Validator.isValidName(firstName)) {
+        if (firstName.isEmpty()) {
             showErrorDialog(getString(R.string.error_enter_first_name))
+            return false
+        } else if (!Validator.isValidName(firstName)) {
+            showErrorDialog(getString(R.string.error_enter_valid_first_name))
             return false
         }
 
-        if (!Validator.isValidName(lastName)) {
+        if (lastName.isEmpty()) {
             showErrorDialog(getString(R.string.error_enter_last_name))
+            return false
+        } else if (!Validator.isValidName(lastName)) {
+            showErrorDialog(getString(R.string.error_enter_valid_last_name))
             return false
         }
 

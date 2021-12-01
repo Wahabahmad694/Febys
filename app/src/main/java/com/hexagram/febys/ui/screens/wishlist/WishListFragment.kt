@@ -55,6 +55,8 @@ class WishListFragment : BaseFragment() {
     }
 
     private fun uiListeners() {
+        binding.ivBack.setOnClickListener { goBack() }
+
         binding.btnGetInspired.setOnClickListener { goBack() }
 
         wishlistPagerAdapter.interaction = object : WishlistPagerAdapter.Interaction {
