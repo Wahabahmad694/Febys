@@ -16,14 +16,13 @@
         <View
             android:id="@+id/bg_top"
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
+            android:layout_height="@dimen/_48sdp"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/iv_febys"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8dp"
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_febys_small"
             app:layout_constraintBottom_toBottomOf="@id/bg_top"
@@ -59,13 +58,13 @@
             android:id="@+id/scroll_view_home"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/_16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/bg_top">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16dp">
 
                 <TextView
                     android:id="@+id/tv_unique_categories"
