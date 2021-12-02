@@ -54,424 +54,429 @@
             app:layout_constraintVertical_bias="0.8"
             tools:text="2" />
 
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/scroll_view_home"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/bg_top">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/scroll_view_home"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_16dp">
+                android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/tv_unique_categories"
-                    style="@style/TextTheme.HelveticaNeue.TS16.Bold"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_48dp"
-                    android:background="@color/grey"
-                    android:gravity="center"
-                    android:text="@string/label_unique_categories"
-                    android:textAlignment="center"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_unique_categories"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_16dp"
-                    android:clipToPadding="false"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="@dimen/_16dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintTop_toBottomOf="@id/tv_unique_categories"
-                    tools:listitem="@layout/item_unique_category" />
+                    android:layout_marginTop="@dimen/_12sdp">
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/iv_bg_scroll_unique_category"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_16dp"
-                    android:src="@drawable/bg_scroll_home"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/rv_unique_categories" />
+                    <TextView
+                        android:id="@+id/tv_unique_categories"
+                        style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_48dp"
+                        android:background="@color/grey"
+                        android:gravity="center"
+                        android:text="@string/label_unique_categories"
+                        android:textAlignment="center"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/iv_ic_scroll_unique_category"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_scroll_home"
-                    app:layout_constraintBottom_toBottomOf="@id/iv_bg_scroll_unique_category"
-                    app:layout_constraintEnd_toEndOf="@id/iv_bg_scroll_unique_category"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="@id/iv_bg_scroll_unique_category"
-                    app:layout_constraintTop_toTopOf="@id/iv_bg_scroll_unique_category" />
-
-                <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/image_slider_home"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginHorizontal="@dimen/_16dp"
-                    android:layout_marginTop="@dimen/_16dp"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintTop_toBottomOf="@id/iv_ic_scroll_unique_category" />
-
-                <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
-                    android:id="@+id/dots_indicator"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_24dp"
-                    app:dotsColor="@color/slider_dot_color"
-                    app:dotsCornerRadius="8dp"
-                    app:dotsSize="4dp"
-                    app:dotsSpacing="4dp"
-                    app:dotsWidthFactor="2.5"
-                    app:layout_constraintBottom_toBottomOf="@id/image_slider_home"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:progressMode="true"
-                    app:selectedDotColor="@color/slider_dot_selected_color" />
-
-                <!--region toady deals-->
-                <TextView
-                    android:id="@+id/tv_today_deals"
-                    style="@style/TextTheme.HelveticaNeue.TS16.Bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_16dp"
-                    android:text="@string/label_today_deals"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/image_slider_home" />
-
-                <TextView
-                    android:id="@+id/tv_today_deals_slogan"
-                    style="@style/TextTheme.Arial.TS12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_2dp"
-                    android:text="@string/label_today_deals_slogan"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_today_deals" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_today_deals"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_16dp"
-                    android:clipToPadding="false"
-                    android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintTop_toBottomOf="@id/tv_today_deals_slogan"
-                    tools:listitem="@layout/item_product_home" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_shop_now_today_deals"
-                    style="@style/ButtonTheme.OutLine.Full"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_16dp"
-                    android:layout_marginTop="@dimen/_16dp"
-                    android:text="@string/label_shop_now"
-                    app:backgroundTint="@android:color/transparent"
-                    app:layout_constraintTop_toBottomOf="@id/rv_today_deals" />
-                <!--endregion toady deals-->
-
-                <!--region featured categories-->
-                <TextView
-                    android:id="@+id/tv_featured_categories"
-                    style="@style/TextTheme.HelveticaNeue.TS16.Bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_16dp"
-                    android:text="@string/label_featured_categories"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/btn_shop_now_today_deals" />
-
-                <TextView
-                    android:id="@+id/tv_featured_categories_slogan"
-                    style="@style/TextTheme.Arial.TS12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_2dp"
-                    android:text="@string/label_featured_categories_slogan"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_featured_categories" />
-
-                <HorizontalScrollView
-                    android:id="@+id/scroll_view_featured_categories"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:scrollbars="none"
-                    app:layout_constraintTop_toBottomOf="@id/tv_featured_categories_slogan">
-
-                    <RadioGroup
-                        android:id="@+id/radio_group_featured_categories"
-                        android:layout_width="wrap_content"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_unique_categories"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_16dp"
                         android:clipToPadding="false"
                         android:orientation="horizontal"
                         android:paddingHorizontal="@dimen/_16dp"
-                        app:singleLine="true"
-                        app:singleSelection="true" />
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintTop_toBottomOf="@id/tv_unique_categories"
+                        tools:listitem="@layout/item_unique_category" />
 
-                </HorizontalScrollView>
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_bg_scroll_unique_category"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_16dp"
+                        android:src="@drawable/bg_scroll_home"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/rv_unique_categories" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_featured_category_products"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_16dp"
-                    android:clipToPadding="false"
-                    android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintTop_toBottomOf="@id/scroll_view_featured_categories"
-                    tools:listitem="@layout/item_product_home" />
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_ic_scroll_unique_category"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_scroll_home"
+                        app:layout_constraintBottom_toBottomOf="@id/iv_bg_scroll_unique_category"
+                        app:layout_constraintEnd_toEndOf="@id/iv_bg_scroll_unique_category"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="@id/iv_bg_scroll_unique_category"
+                        app:layout_constraintTop_toTopOf="@id/iv_bg_scroll_unique_category" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_shop_now_featured_categories"
-                    style="@style/ButtonTheme.OutLine.Full"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_16dp"
-                    android:layout_marginTop="@dimen/_16dp"
-                    android:text="@string/label_shop_now"
-                    app:layout_constraintTop_toBottomOf="@id/rv_featured_category_products" />
-                <!--endregion featured categories-->
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/image_slider_home"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginHorizontal="@dimen/_16dp"
+                        android:layout_marginTop="@dimen/_16dp"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintTop_toBottomOf="@id/iv_ic_scroll_unique_category" />
 
-                <!--region seasonal offers-->
-                <TextView
-                    android:id="@+id/tv_seasonal_offers"
-                    style="@style/TextTheme.HelveticaNeue.TS16.Bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_16dp"
-                    android:text="@string/label_seasonal_offers"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/btn_shop_now_featured_categories" />
+                    <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+                        android:id="@+id/dots_indicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_24dp"
+                        app:dotsColor="@color/slider_dot_color"
+                        app:dotsCornerRadius="8dp"
+                        app:dotsSize="4dp"
+                        app:dotsSpacing="4dp"
+                        app:dotsWidthFactor="2.5"
+                        app:layout_constraintBottom_toBottomOf="@id/image_slider_home"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:progressMode="true"
+                        app:selectedDotColor="@color/slider_dot_selected_color" />
 
-                <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/slider_seasonal_offer"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginHorizontal="@dimen/_16dp"
-                    android:layout_marginTop="@dimen/_2dp"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintTop_toBottomOf="@id/tv_seasonal_offers" />
+                    <!--region toady deals-->
+                    <TextView
+                        android:id="@+id/tv_today_deals"
+                        style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_16dp"
+                        android:text="@string/label_today_deals"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/image_slider_home" />
 
-                <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
-                    android:id="@+id/slider_seasonal_offer_dots_indicator"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_24dp"
-                    app:dotsColor="@color/slider_dot_color"
-                    app:dotsCornerRadius="8dp"
-                    app:dotsSize="4dp"
-                    app:dotsSpacing="4dp"
-                    app:dotsWidthFactor="2.5"
-                    app:layout_constraintBottom_toBottomOf="@id/slider_seasonal_offer"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:progressMode="true"
-                    app:selectedDotColor="@color/slider_dot_selected_color" />
-                <!--endregion seasonal offers-->
+                    <TextView
+                        android:id="@+id/tv_today_deals_slogan"
+                        style="@style/TextTheme.Arial.TS12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2dp"
+                        android:text="@string/label_today_deals_slogan"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_today_deals" />
 
-                <!--region trending products-->
-                <TextView
-                    android:id="@+id/tv_trending_products"
-                    style="@style/TextTheme.HelveticaNeue.TS16.Bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_16dp"
-                    android:text="@string/label_trending_products"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/slider_seasonal_offer" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_today_deals"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_16dp"
+                        android:clipToPadding="false"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintTop_toBottomOf="@id/tv_today_deals_slogan"
+                        tools:listitem="@layout/item_product_home" />
 
-                <TextView
-                    android:id="@+id/tv_trending_products_slogan"
-                    style="@style/TextTheme.Arial.TS12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_2dp"
-                    android:text="@string/label_trending_products_slogan"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_trending_products" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_shop_now_today_deals"
+                        style="@style/ButtonTheme.OutLine.Full"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_16dp"
+                        android:layout_marginTop="@dimen/_16dp"
+                        android:text="@string/label_shop_now"
+                        app:backgroundTint="@android:color/transparent"
+                        app:layout_constraintTop_toBottomOf="@id/rv_today_deals" />
+                    <!--endregion toady deals-->
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_trending_products"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_16dp"
-                    android:clipToPadding="false"
-                    android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintTop_toBottomOf="@id/tv_trending_products_slogan"
-                    tools:listitem="@layout/item_product_home" />
+                    <!--region featured categories-->
+                    <TextView
+                        android:id="@+id/tv_featured_categories"
+                        style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_16dp"
+                        android:text="@string/label_featured_categories"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/btn_shop_now_today_deals" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_shop_now_trending_products"
-                    style="@style/ButtonTheme.OutLine.Full"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_16dp"
-                    android:layout_marginTop="@dimen/_16dp"
-                    android:text="@string/label_shop_now"
-                    app:layout_constraintTop_toBottomOf="@id/rv_trending_products" />
-                <!--endregion trending products-->
+                    <TextView
+                        android:id="@+id/tv_featured_categories_slogan"
+                        style="@style/TextTheme.Arial.TS12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2dp"
+                        android:text="@string/label_featured_categories_slogan"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_featured_categories" />
 
-                <!--region store you follow-->
-                <TextView
-                    android:id="@+id/tv_store_you_follow"
-                    style="@style/TextTheme.HelveticaNeue.TS16.Bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_16dp"
-                    android:text="@string/label_store_you_follow"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/btn_shop_now_trending_products" />
+                    <HorizontalScrollView
+                        android:id="@+id/scroll_view_featured_categories"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:scrollbars="none"
+                        app:layout_constraintTop_toBottomOf="@id/tv_featured_categories_slogan">
 
-                <TextView
-                    android:id="@+id/tv_store_you_follow_slogan"
-                    style="@style/TextTheme.Arial.TS12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_2dp"
-                    android:text="@string/label_store_you_follow_slogan"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_store_you_follow" />
+                        <RadioGroup
+                            android:id="@+id/radio_group_featured_categories"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_16dp"
+                            android:clipToPadding="false"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="@dimen/_16dp"
+                            app:singleLine="true"
+                            app:singleSelection="true" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_store_you_follow"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_16dp"
-                    android:clipToPadding="false"
-                    android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintTop_toBottomOf="@id/tv_store_you_follow_slogan"
-                    tools:listitem="@layout/item_store_you_follow" />
+                    </HorizontalScrollView>
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_shop_now_store_you_follow"
-                    style="@style/ButtonTheme.OutLine.Full"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_16dp"
-                    android:layout_marginTop="@dimen/_16dp"
-                    android:text="@string/label_shop_now"
-                    app:layout_constraintTop_toBottomOf="@id/rv_store_you_follow" />
-                <!--endregion store you follow-->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_featured_category_products"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_16dp"
+                        android:clipToPadding="false"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintTop_toBottomOf="@id/scroll_view_featured_categories"
+                        tools:listitem="@layout/item_product_home" />
 
-                <!--region same day delivery-->
-                <com.facebook.drawee.view.SimpleDraweeView
-                    android:id="@+id/iv_bg_same_day_delivery"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    app:placeholderImage="@drawable/placeholder_image"
-                    android:layout_marginHorizontal="@dimen/_16dp"
-                    android:layout_marginTop="@dimen/_16dp"
-                    app:actualImageResource="@drawable/bg_same_day_delivery"
-                    app:layout_constraintDimensionRatio="93:44"
-                    app:layout_constraintTop_toBottomOf="@id/btn_shop_now_store_you_follow" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_shop_now_featured_categories"
+                        style="@style/ButtonTheme.OutLine.Full"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_16dp"
+                        android:layout_marginTop="@dimen/_16dp"
+                        android:text="@string/label_shop_now"
+                        app:layout_constraintTop_toBottomOf="@id/rv_featured_category_products" />
+                    <!--endregion featured categories-->
 
-                <com.facebook.drawee.view.SimpleDraweeView
-                    android:id="@+id/iv_bg_transparent_layer_same_day_delivery"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="@dimen/_16dp"
-                    app:actualImageResource="@drawable/bg_transparent_layer_same_day_delivery"
-                    app:actualImageScaleType="none"
-                    app:layout_constraintDimensionRatio="93:44"
-                    app:layout_constraintEnd_toEndOf="@id/iv_bg_same_day_delivery"
-                    app:layout_constraintStart_toStartOf="@id/iv_bg_same_day_delivery"
-                    app:layout_constraintTop_toBottomOf="@id/btn_shop_now_store_you_follow" />
+                    <!--region seasonal offers-->
+                    <TextView
+                        android:id="@+id/tv_seasonal_offers"
+                        style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_16dp"
+                        android:text="@string/label_seasonal_offers"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/btn_shop_now_featured_categories" />
 
-                <TextView
-                    android:id="@+id/tv_same_day_delivery"
-                    style="@style/TextTheme.HelveticaNeue.TS16.Bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/label_same_day_delivery"
-                    android:textColor="@color/white"
-                    app:layout_constraintBottom_toBottomOf="@id/iv_bg_same_day_delivery"
-                    app:layout_constraintEnd_toEndOf="@id/iv_bg_same_day_delivery"
-                    app:layout_constraintStart_toStartOf="@id/iv_bg_same_day_delivery"
-                    app:layout_constraintTop_toTopOf="@id/iv_bg_same_day_delivery"
-                    app:layout_constraintVertical_bias="0.4" />
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/slider_seasonal_offer"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginHorizontal="@dimen/_16dp"
+                        android:layout_marginTop="@dimen/_2dp"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintTop_toBottomOf="@id/tv_seasonal_offers" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_shop_now_same_day_delivery"
-                    style="@style/ButtonTheme.OutLine.Small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8dp"
-                    android:backgroundTint="@android:color/transparent"
-                    android:text="@string/label_shop_now"
-                    android:textColor="@color/white"
-                    app:layout_constraintEnd_toEndOf="@id/iv_bg_same_day_delivery"
-                    app:layout_constraintStart_toStartOf="@id/iv_bg_same_day_delivery"
-                    app:layout_constraintTop_toBottomOf="@id/tv_same_day_delivery"
-                    app:strokeColor="@color/white" />
-                <!--endregion same day delivery-->
+                    <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+                        android:id="@+id/slider_seasonal_offer_dots_indicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_24dp"
+                        app:dotsColor="@color/slider_dot_color"
+                        app:dotsCornerRadius="8dp"
+                        app:dotsSize="4dp"
+                        app:dotsSpacing="4dp"
+                        app:dotsWidthFactor="2.5"
+                        app:layout_constraintBottom_toBottomOf="@id/slider_seasonal_offer"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:progressMode="true"
+                        app:selectedDotColor="@color/slider_dot_selected_color" />
+                    <!--endregion seasonal offers-->
 
-                <!--region under $100 items-->
-                <TextView
-                    android:id="@+id/tv_label_under_100_dollars_items"
-                    style="@style/TextTheme.HelveticaNeue.TS16.Bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_16dp"
-                    android:text="@string/label_under_100_dollar_items"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/iv_bg_same_day_delivery" />
+                    <!--region trending products-->
+                    <TextView
+                        android:id="@+id/tv_trending_products"
+                        style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_16dp"
+                        android:text="@string/label_trending_products"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/slider_seasonal_offer" />
 
-                <TextView
-                    android:id="@+id/tv_label_under_100_dollars_items_slogan"
-                    style="@style/TextTheme.Arial.TS12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_2dp"
-                    android:text="@string/label_under_100_dollar_items_slogan"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_label_under_100_dollars_items" />
+                    <TextView
+                        android:id="@+id/tv_trending_products_slogan"
+                        style="@style/TextTheme.Arial.TS12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2dp"
+                        android:text="@string/label_trending_products_slogan"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_trending_products" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_under_100_dollars_items"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_16dp"
-                    android:clipToPadding="false"
-                    android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintTop_toBottomOf="@id/tv_label_under_100_dollars_items_slogan"
-                    tools:listitem="@layout/item_product_home" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_trending_products"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_16dp"
+                        android:clipToPadding="false"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintTop_toBottomOf="@id/tv_trending_products_slogan"
+                        tools:listitem="@layout/item_product_home" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_shop_now_under_100_dollars_items"
-                    style="@style/ButtonTheme.OutLine.Full"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_16dp"
-                    android:layout_marginTop="@dimen/_16dp"
-                    android:text="@string/label_shop_now"
-                    app:layout_constraintTop_toBottomOf="@id/rv_under_100_dollars_items" />
-                <!--endregion under $100 items-->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_shop_now_trending_products"
+                        style="@style/ButtonTheme.OutLine.Full"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_16dp"
+                        android:layout_marginTop="@dimen/_16dp"
+                        android:text="@string/label_shop_now"
+                        app:layout_constraintTop_toBottomOf="@id/rv_trending_products" />
+                    <!--endregion trending products-->
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.core.widget.NestedScrollView>
+                    <!--region store you follow-->
+                    <TextView
+                        android:id="@+id/tv_store_you_follow"
+                        style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_16dp"
+                        android:text="@string/label_store_you_follow"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/btn_shop_now_trending_products" />
+
+                    <TextView
+                        android:id="@+id/tv_store_you_follow_slogan"
+                        style="@style/TextTheme.Arial.TS12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2dp"
+                        android:text="@string/label_store_you_follow_slogan"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_store_you_follow" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_store_you_follow"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_16dp"
+                        android:clipToPadding="false"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintTop_toBottomOf="@id/tv_store_you_follow_slogan"
+                        tools:listitem="@layout/item_store_you_follow" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_shop_now_store_you_follow"
+                        style="@style/ButtonTheme.OutLine.Full"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_16dp"
+                        android:layout_marginTop="@dimen/_16dp"
+                        android:text="@string/label_shop_now"
+                        app:layout_constraintTop_toBottomOf="@id/rv_store_you_follow" />
+                    <!--endregion store you follow-->
+
+                    <!--region same day delivery-->
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/iv_bg_same_day_delivery"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        app:placeholderImage="@drawable/placeholder_image"
+                        android:layout_marginHorizontal="@dimen/_16dp"
+                        android:layout_marginTop="@dimen/_16dp"
+                        app:actualImageResource="@drawable/bg_same_day_delivery"
+                        app:layout_constraintDimensionRatio="93:44"
+                        app:layout_constraintTop_toBottomOf="@id/btn_shop_now_store_you_follow" />
+
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/iv_bg_transparent_layer_same_day_delivery"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="@dimen/_16dp"
+                        app:actualImageResource="@drawable/bg_transparent_layer_same_day_delivery"
+                        app:actualImageScaleType="none"
+                        app:layout_constraintDimensionRatio="93:44"
+                        app:layout_constraintEnd_toEndOf="@id/iv_bg_same_day_delivery"
+                        app:layout_constraintStart_toStartOf="@id/iv_bg_same_day_delivery"
+                        app:layout_constraintTop_toBottomOf="@id/btn_shop_now_store_you_follow" />
+
+                    <TextView
+                        android:id="@+id/tv_same_day_delivery"
+                        style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_same_day_delivery"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="@id/iv_bg_same_day_delivery"
+                        app:layout_constraintEnd_toEndOf="@id/iv_bg_same_day_delivery"
+                        app:layout_constraintStart_toStartOf="@id/iv_bg_same_day_delivery"
+                        app:layout_constraintTop_toTopOf="@id/iv_bg_same_day_delivery"
+                        app:layout_constraintVertical_bias="0.4" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_shop_now_same_day_delivery"
+                        style="@style/ButtonTheme.OutLine.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8dp"
+                        android:backgroundTint="@android:color/transparent"
+                        android:text="@string/label_shop_now"
+                        android:textColor="@color/white"
+                        app:layout_constraintEnd_toEndOf="@id/iv_bg_same_day_delivery"
+                        app:layout_constraintStart_toStartOf="@id/iv_bg_same_day_delivery"
+                        app:layout_constraintTop_toBottomOf="@id/tv_same_day_delivery"
+                        app:strokeColor="@color/white" />
+                    <!--endregion same day delivery-->
+
+                    <!--region under $100 items-->
+                    <TextView
+                        android:id="@+id/tv_label_under_100_dollars_items"
+                        style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_16dp"
+                        android:text="@string/label_under_100_dollar_items"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/iv_bg_same_day_delivery" />
+
+                    <TextView
+                        android:id="@+id/tv_label_under_100_dollars_items_slogan"
+                        style="@style/TextTheme.Arial.TS12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2dp"
+                        android:text="@string/label_under_100_dollar_items_slogan"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_label_under_100_dollars_items" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_under_100_dollars_items"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_16dp"
+                        android:clipToPadding="false"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintTop_toBottomOf="@id/tv_label_under_100_dollars_items_slogan"
+                        tools:listitem="@layout/item_product_home" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_shop_now_under_100_dollars_items"
+                        style="@style/ButtonTheme.OutLine.Full"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_16dp"
+                        android:layout_marginTop="@dimen/_16dp"
+                        android:text="@string/label_shop_now"
+                        app:layout_constraintTop_toBottomOf="@id/rv_under_100_dollars_items" />
+                    <!--endregion under $100 items-->
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.core.widget.NestedScrollView>
+        </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
