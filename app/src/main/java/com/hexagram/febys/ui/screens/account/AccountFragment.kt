@@ -56,7 +56,7 @@ class AccountFragment : BaseFragment() {
         }
 
         binding.orders.orderReceived.setOnClickListener {
-            gotoOrderListing(arrayOf(OrderStatus.ACCEPTED))
+            gotoOrderListing(arrayOf(OrderStatus.DELIVERED))
         }
 
         binding.orders.cancelOrders.setOnClickListener {

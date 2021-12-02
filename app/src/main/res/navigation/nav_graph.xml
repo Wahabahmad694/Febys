@@ -496,5 +496,51 @@
             android:defaultValue="@null"
             app:argType="string[]"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_orderListingFragment_to_orderDetailFragment"
+            app:destination="@id/orderDetailFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
+    <fragment
+        android:id="@+id/orderDetailFragment"
+        android:name="com.hexagram.febys.ui.screens.order.detail.OrderDetailFragment"
+        android:label="OrderDetailFragment"
+        tools:layout="@layout/fragment_order_detail">
+        <argument
+            android:name="orderId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_orderDetailFragment_to_cancelOrderBottomSheet"
+            app:destination="@id/cancelOrderBottomSheet" />
+    </fragment>
+    <dialog
+        android:id="@+id/cancelOrderBottomSheet"
+        android:name="com.hexagram.febys.ui.screens.order.cancel.CancelOrderBottomSheet"
+        android:label="CancelOrderBottomSheet"
+        tools:layout="@layout/bottom_sheet_cancel_order">
+        <argument
+            android:name="orderId"
+            app:argType="string" />
+        <argument
+            android:name="vendorId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_cancelOrderBottomSheet_to_cancelOrderReasonsBottomSheet"
+            app:destination="@id/cancelOrderReasonsBottomSheet" />
+    </dialog>
+    <dialog
+        android:id="@+id/cancelOrderReasonsBottomSheet"
+        android:name="com.hexagram.febys.ui.screens.order.cancel.CancelOrderReasonsBottomSheet"
+        android:label="CancelOrderReasonsBottomSheet"
+        tools:layout="@layout/bottom_sheet_list_of_selection">
+        <argument
+            android:name="cancelReasons"
+            app:argType="string[]" />
+        <argument
+            android:name="selectedReason"
+            app:argType="string" />
+    </dialog>
 </navigation>

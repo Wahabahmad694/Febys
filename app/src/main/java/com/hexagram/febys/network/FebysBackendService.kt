@@ -7,10 +7,7 @@ import com.hexagram.febys.models.api.pagination.Pagination
 import com.hexagram.febys.models.api.product.FeaturedCategory
 import com.hexagram.febys.models.api.product.Trending
 import com.hexagram.febys.models.api.request.*
-import com.hexagram.febys.models.api.response.OrderResponse
-import com.hexagram.febys.models.api.response.PaymentResponse
-import com.hexagram.febys.models.api.response.ProductDetailResponse
-import com.hexagram.febys.models.api.response.QuestionAnswersResponse
+import com.hexagram.febys.models.api.response.*
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddressResponse
 import com.hexagram.febys.models.api.states.PostStatesResponse
@@ -218,6 +215,12 @@ interface FebysBackendService {
         @Header("Authorization") authToken: String, @Body orderListingRequest: OrderListingRequest
     ): ApiResponse<Pagination>
 
+    @GET("v1/orders/for-consumer/{orderId}")
+    suspend fun fetchOrder(
+        @Header("Authorization") authToken: String,
+        @Path("orderId") orderId: String
+    ): ApiResponse<OrderResponse>
+
     @POST("v1/consumers/save/shipping-detail")
     suspend fun addEditShippingAddress(
         @Header("Authorization") authToken: String,
@@ -244,4 +247,15 @@ interface FebysBackendService {
         @Header("Authorization") authToken: String,
         @Body paymentRequest: PaymentRequest
     ): ApiResponse<PaymentResponse>
+
+    @GET("v1/order-settings/consumer/order/cancellation/reasons")
+    suspend fun fetchCancelReasons(): ApiResponse<CancelReasonsResponse>
+
+    @PATCH("v1/orders/{orderId}/vendor/{vendorId}/cancel")
+    suspend fun cancelOrder(
+        @Header("Authorization") authToken: String,
+        @Path("orderId") orderId: String,
+        @Path("vendorId") vendorId: String,
+        @Body reqBody: Map<String, String>
+    ): ApiResponse<OrderResponse>
 }

@@ -1,5 +1,6 @@
 package com.hexagram.febys.repos
 
+import com.hexagram.febys.models.api.order.CancelReasons
 import com.hexagram.febys.models.api.order.Order
 import com.hexagram.febys.models.api.request.OrderListingRequest
 import com.hexagram.febys.models.api.response.OrderListingResponse
@@ -39,4 +40,45 @@ class OrderRepoImpl @Inject constructor(
             .onException { emit(DataState.ExceptionError()) }
             .onNetworkError { emit(DataState.NetworkError()) }
     }
+
+    override suspend fun fetchOrder(
+        orderId: String, dispatcher: CoroutineDispatcher
+    ) = flow<DataState<Order>> {
+        val authToken = pref.getAccessToken()
+        if (authToken.isEmpty()) return@flow
+
+        backendService.fetchOrder(authToken, orderId)
+            .onSuccess { emit(DataState.Data(data!!.order)) }
+            .onError { emit(DataState.ApiError(message)) }
+            .onException { emit(DataState.ExceptionError()) }
+            .onNetworkError { emit(DataState.NetworkError()) }
+    }
+
+    override fun fetchCancelReasons(dispatcher: CoroutineDispatcher) =
+        flow<DataState<CancelReasons>> {
+            backendService.fetchCancelReasons()
+                .onSuccess { emit(DataState.Data(data!!.cancelReasons)) }
+                .onError { emit(DataState.ApiError(message)) }
+                .onException { emit(DataState.ExceptionError()) }
+                .onNetworkError { emit(DataState.NetworkError()) }
+        }
+
+    override fun cancelOrder(
+        orderId: String,
+        vendorId: String,
+        reason: String,
+        comment: String,
+        dispatcher: CoroutineDispatcher
+    ) = flow<DataState<Order>> {
+        val authToken = pref.getAccessToken()
+        val reqBody = mapOf("reason" to reason, "comments" to comment)
+
+        backendService.cancelOrder(authToken, orderId, vendorId, reqBody)
+            .onSuccess { emit(DataState.Data(data!!.order)) }
+            .onError { emit(DataState.ApiError(message)) }
+            .onException { emit(DataState.ExceptionError()) }
+            .onNetworkError { emit(DataState.NetworkError()) }
+    }
+
+
 }
