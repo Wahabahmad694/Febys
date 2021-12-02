@@ -54,18 +54,20 @@
 
         <TextView
             android:id="@+id/tv_product_name"
-            style="@style/TextTheme.Arial.TS12"
+            style="@style/TextTheme.Arial.TS12.Bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_16dp"
             android:text="@{product.name}"
             android:textAlignment="center"
+            android:maxLines="1"
+            android:ellipsize="end"
             app:layout_constraintTop_toBottomOf="@id/bg_image"
             tools:text="Ideas Running Shop" />
 
         <TextView
             android:id="@+id/tv_product_off_price"
-            style="@style/TextTheme.Arial.TS10"
+            style="@style/TextTheme.Arial.TS10.Grey"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{product.variants.get(0).price.getFormattedPrice()}"
@@ -91,7 +93,7 @@
 
         <TextView
             android:id="@+id/tv_product_price"
-            style="@style/TextTheme.Arial.TS12"
+            style="@style/TextTheme.Arial.TS12.Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_2dp"

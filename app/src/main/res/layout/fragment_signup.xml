@@ -65,7 +65,7 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:imeOptions="actionNext"
-                    android:inputType="textCapWords"
+                    android:inputType="textPersonName"
                     android:paddingVertical="@dimen/_8dp"
                     android:textAppearance="@style/TextTheme.Arial.TS16"
                     app:layout_constraintTop_toBottomOf="@id/label_first_name" />

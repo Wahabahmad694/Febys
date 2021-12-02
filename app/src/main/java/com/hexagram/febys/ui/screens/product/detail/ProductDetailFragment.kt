@@ -390,6 +390,7 @@ class ProductDetailFragment : SliderFragment() {
     }
 
     private fun updateQuestionAnswersThread(qaThreads: MutableList<QAThread>) {
+        binding.seeMoreQAndA.isVisible = qaThreads.isEmpty()
         if (qaThreads.isEmpty()) return
 
         binding.containerQAndAThread.removeAllViews()
@@ -489,8 +490,6 @@ class ProductDetailFragment : SliderFragment() {
             rvAdditionalProducts.apply {
                 setHasFixedSize(true)
                 isNestedScrollingEnabled = false
-                addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-                addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL))
                 layoutManager = GridLayoutManager(context, 2)
                 adapter = additionalAdapter
             }
