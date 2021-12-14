@@ -743,15 +743,14 @@
                                     style="?ratingBarStyleSmall"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:numStars="5"
-                                    android:progress="50" />
+                                    android:max="5"
+                                    android:numStars="5" />
 
                                 <TextView
                                     android:id="@+id/tv_store_rating"
                                     style="@style/TextTheme.Arial.TS14"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@{@string/store_rating(2.5)}" />
+                                    android:layout_height="wrap_content" />
 
                             </LinearLayout>
 

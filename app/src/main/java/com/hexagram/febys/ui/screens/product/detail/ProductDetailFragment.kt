@@ -418,6 +418,11 @@ class ProductDetailFragment : SliderFragment() {
         updateRating(product.stats.rating, product.scores)
 
         updateReviews(product.ratingsAndReviews)
+
+        val storeRating = product.stats.rating.score
+        binding.storeRatingBar.rating = storeRating.toFloat()
+        binding.storeRatingBar.stepSize = 0.5f
+        binding.tvStoreRating.text = getString(R.string.store_rating, storeRating)
     }
 
     private fun updateQuestionAnswersThread(qaThreads: MutableList<QAThread>) {
