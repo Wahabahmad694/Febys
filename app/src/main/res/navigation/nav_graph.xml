@@ -180,6 +180,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_productDetailFragment_to_RatingAndReviewsFragment"
+            app:destination="@id/ratingAndReviewsFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/accountFragment"
@@ -542,5 +549,27 @@
         <argument
             android:name="selectedReason"
             app:argType="string" />
+    </dialog>
+    <dialog
+        android:id="@+id/ratingAndReviewsFragment"
+        android:name="com.hexagram.febys.ui.screens.product.detail.RatingAndReviewsFragment"
+        android:label="RatingAndReviewsFragment"
+        tools:layout="@layout/fragment_rating_and_reviews">
+        <argument
+            android:name="userId"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="sorting"
+            app:argType="com.hexagram.febys.ui.screens.product.detail.ReviewsSorting" />
+        <argument
+            android:name="rating"
+            app:argType="com.hexagram.febys.models.api.rating.Rating" />
+        <argument
+            android:name="scores"
+            app:argType="com.hexagram.febys.models.api.rating.Rating[]" />
+        <argument
+            android:name="reviews"
+            app:argType="com.hexagram.febys.models.api.product.RatingAndReviews[]" />
     </dialog>
 </navigation>

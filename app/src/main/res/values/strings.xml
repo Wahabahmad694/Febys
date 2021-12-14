@@ -229,6 +229,7 @@
     <string name="error_enter_valid_country">Please enter valid region</string>
     <string name="label_average_rating">Average Rating:</string>
     <string name="average_rating_based_on">%1$.2f Based on %2$d ratings</string>
+    <string name="label_ratings_and_reviews">Ratings &amp; Reviews</string>
     <string name="_1">1</string>
     <string name="_2">2</string>
     <string name="_3">3</string>

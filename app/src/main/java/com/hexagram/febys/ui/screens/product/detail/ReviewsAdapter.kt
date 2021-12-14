@@ -16,8 +16,8 @@ class ReviewsAdapter : RecyclerView.Adapter<ReviewsAdapter.ReviewVH>() {
     // consumerId must be set before calling submitList
     var consumerId: String = ""
 
-    var upVote: ((thread: RatingAndReviews, isRevoke: Boolean) -> Unit)? = null
-    var downVote: ((thread: RatingAndReviews, isRevoke: Boolean) -> Unit)? = null
+    var upVote: ((ratingAndReviews: RatingAndReviews, isRevoke: Boolean) -> Unit)? = null
+    var downVote: ((ratingAndReviews: RatingAndReviews, isRevoke: Boolean) -> Unit)? = null
 
     inner class ReviewVH(
         private val binding: ItemReviewsBinding
@@ -76,4 +76,6 @@ class ReviewsAdapter : RecyclerView.Adapter<ReviewsAdapter.ReviewVH>() {
     override fun getItemCount(): Int {
         return ratingAndReviews.size
     }
+
+    fun getCurrentList() = ratingAndReviews
 }

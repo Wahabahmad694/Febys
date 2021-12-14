@@ -19,7 +19,7 @@
             android:text="@string/label_reviews" />
 
         <RadioGroup
-            android:id="@+id/radio_group_featured_categories"
+            android:id="@+id/radio_group_sorting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_16dp"

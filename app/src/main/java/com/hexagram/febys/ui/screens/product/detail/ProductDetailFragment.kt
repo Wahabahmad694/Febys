@@ -215,7 +215,28 @@ class ProductDetailFragment : SliderFragment() {
             gotoQAThreads(threads.toTypedArray())
         }
 
-        binding.containerRatingAndReviews.reviews.radioGroupFeaturedCategories.setOnCheckedChangeListener { _, checkedId ->
+        binding.seeMoreRatingAndReviews.setOnClickListener {
+            val product =
+                (productDetailViewModel.observeProductDetail.value as? DataState.Data)
+                    ?.data ?: return@setOnClickListener
+
+            val rating = product.stats.rating
+            val scores = product.scores
+            val ratingsAndReviews = product.ratingsAndReviews
+
+            val gotoRatingsAndReviews = ProductDetailFragmentDirections
+                .actionProductDetailFragmentToRatingAndReviewsFragment(
+                    consumer?.id?.toString(),
+                    reviewsSorting,
+                    rating,
+                    scores.toTypedArray(),
+                    ratingsAndReviews.toTypedArray()
+                )
+
+            navigateTo(gotoRatingsAndReviews)
+        }
+
+        binding.containerRatingAndReviews.reviews.radioGroupSorting.setOnCheckedChangeListener { _, checkedId ->
             val product = binding.product ?: return@setOnCheckedChangeListener
             when (checkedId) {
                 R.id.rb_most_recent -> {
@@ -258,6 +279,33 @@ class ProductDetailFragment : SliderFragment() {
 
             updateQuestionAnswersThread(updatedQAThreads.toMutableList())
             productDetailViewModel.updateQAThreads(updatedQAThreads)
+        }
+
+        setFragmentResultListener(RatingAndReviewsFragment.REQ_KEY_RATING_AND_REVIEWS_UPDATE) { _, bundle ->
+            val updatedReviews = bundle
+                .getParcelableArrayList<RatingAndReviews>(RatingAndReviewsFragment.REQ_KEY_RATING_AND_REVIEWS_UPDATE)
+                ?.toMutableList()
+                ?: return@setFragmentResultListener
+
+            updateReviews(updatedReviews)
+            productDetailViewModel.updateReviews(updatedReviews)
+        }
+
+        setFragmentResultListener(RatingAndReviewsFragment.REQ_KEY_REVIEW_SORTING_UPDATE) { _, bundle ->
+            val sorting = bundle
+                .getSerializable(RatingAndReviewsFragment.REQ_KEY_REVIEW_SORTING_UPDATE) as? ReviewsSorting
+                ?: return@setFragmentResultListener
+
+            val ratingsAndReviews =
+                binding.product?.ratingsAndReviews ?: return@setFragmentResultListener
+
+            reviewsSorting = sorting
+            val checkedId = when (reviewsSorting) {
+                ReviewsSorting.RECENT -> R.id.rb_most_recent
+                ReviewsSorting.RATING -> R.id.rb_top_reviews
+            }
+            binding.containerRatingAndReviews.reviews.radioGroupSorting.check(checkedId)
+            updateReviews(ratingsAndReviews)
         }
     }
 
@@ -407,8 +455,8 @@ class ProductDetailFragment : SliderFragment() {
 
                 productVariantSecondAttrAdapter.submitList(selectedSecondAttr, secondAttrList)
             }
-
         }
+
         updateVariant(variant)
 
         updateProductDescription(product.descriptions)
@@ -565,7 +613,7 @@ class ProductDetailFragment : SliderFragment() {
     }
 
     private fun updateReviews(reviews: List<RatingAndReviews>) {
-        binding.seeMoreRatingAndReviews.isVisible = reviews.isEmpty()
+        binding.seeMoreRatingAndReviews.isVisible = reviews.isNotEmpty()
 
         val sortedReviews = when (reviewsSorting) {
             ReviewsSorting.RECENT -> productDetailViewModel.reviewsByMostRecent(reviews)
@@ -578,7 +626,7 @@ class ProductDetailFragment : SliderFragment() {
             isVisible = list.isNotEmpty()
             if (list.isEmpty()) return@apply
 
-            val consumerId = consumer?.id ?: ""
+            val consumerId = consumer?.id?.toString() ?: ""
             list.forEach { item ->
                 val reviewBinding = ItemReviewsBinding.inflate(
                     layoutInflater, binding.containerReviews, false
