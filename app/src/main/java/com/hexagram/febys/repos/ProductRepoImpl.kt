@@ -3,6 +3,7 @@ package com.hexagram.febys.repos
 import com.hexagram.febys.models.api.product.Product
 import com.hexagram.febys.models.api.product.ProductPagingListing
 import com.hexagram.febys.models.api.product.QAThread
+import com.hexagram.febys.models.api.product.RatingAndReviews
 import com.hexagram.febys.models.api.request.AskQuestionRequest
 import com.hexagram.febys.models.api.request.PagingListRequest
 import com.hexagram.febys.models.api.request.ReplyQuestionRequest
@@ -110,15 +111,15 @@ open class ProductRepoImpl @Inject constructor(
             .onNetworkError { emit(DataState.NetworkError()) }
     }.flowOn(dispatcher)
 
-    override fun voteUp(
+    override fun questionVoteUp(
         productId: String, threadId: String, revoke: Boolean, dispatcher: CoroutineDispatcher
     ) = flow<DataState<MutableList<QAThread>>> {
         val authToken = pref.getAccessToken()
 
         val response = if (!revoke)
-            backendService.voteUp(authToken, productId, threadId)
+            backendService.questionVoteUp(authToken, productId, threadId)
         else
-            backendService.revokeVoteUp(authToken, productId, threadId)
+            backendService.revokeQuestionVoteUp(authToken, productId, threadId)
 
         response.onSuccess {
             emit(DataState.Data(data!!.questionAnswers.qaThreads))
@@ -128,15 +129,15 @@ open class ProductRepoImpl @Inject constructor(
             .onNetworkError { emit(DataState.NetworkError()) }
     }.flowOn(dispatcher)
 
-    override fun voteDown(
+    override fun questionVoteDown(
         productId: String, threadId: String, revoke: Boolean, dispatcher: CoroutineDispatcher
     ) = flow<DataState<MutableList<QAThread>>> {
         val authToken = pref.getAccessToken()
 
         val response = if (!revoke)
-            backendService.voteDown(authToken, productId, threadId)
+            backendService.questionVoteDown(authToken, productId, threadId)
         else
-            backendService.revokeVoteDown(authToken, productId, threadId)
+            backendService.revokeQuestionVoteDown(authToken, productId, threadId)
 
         response.onSuccess {
             emit(DataState.Data(data!!.questionAnswers.qaThreads))
@@ -152,6 +153,46 @@ open class ProductRepoImpl @Inject constructor(
         return (response as? ApiResponse.ApiSuccessResponse)
             ?.data?.getResponse<ProductPagingListing>()?.products ?: emptyList()
     }
+
+    override suspend fun reviewVoteUp(
+        reviewId: String,
+        revoke: Boolean,
+        dispatcher: CoroutineDispatcher
+    ) = flow<DataState<List<RatingAndReviews>>> {
+        val authToken = pref.getAccessToken()
+
+        val response = if (!revoke)
+            backendService.reviewVoteUp(authToken, reviewId)
+        else
+            backendService.revokeReviewVoteUp(authToken, reviewId)
+
+        response.onSuccess {
+            emit(DataState.Data(data!!.ratingAndReviews))
+        }
+            .onError { emit(DataState.ApiError(message)) }
+            .onException { emit(DataState.ExceptionError()) }
+            .onNetworkError { emit(DataState.NetworkError()) }
+    }.flowOn(dispatcher)
+
+    override suspend fun reviewVoteDown(
+        reviewId: String,
+        revoke: Boolean,
+        dispatcher: CoroutineDispatcher
+    ) = flow<DataState<List<RatingAndReviews>>> {
+        val authToken = pref.getAccessToken()
+
+        val response = if (!revoke)
+            backendService.reviewVoteDown(authToken, reviewId)
+        else
+            backendService.revokeReviewVoteDown(authToken, reviewId)
+
+        response.onSuccess {
+            emit(DataState.Data(data!!.ratingAndReviews))
+        }
+            .onError { emit(DataState.ApiError(message)) }
+            .onException { emit(DataState.ExceptionError()) }
+            .onNetworkError { emit(DataState.NetworkError()) }
+    }.flowOn(dispatcher)
 
     override suspend fun fetchSimilarProducts(
         productId: String, dispatcher: CoroutineDispatcher

@@ -535,6 +535,24 @@
                             android:orientation="vertical"
                             android:visibility="gone">
 
+                            <include
+                                android:id="@+id/container_rating_and_reviews"
+                                layout="@layout/layout_ratings_and_reviews" />
+
+                            <LinearLayout
+                                android:id="@+id/container_reviews"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_8sdp"
+                                android:orientation="vertical" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/see_more_rating_and_reviews"
+                                style="@style/ButtonTheme.OutLine.Full"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_39sdp"
+                                android:layout_marginTop="@dimen/_16sdp"
+                                android:text="@string/label_see_more" />
 
                         </LinearLayout>
 

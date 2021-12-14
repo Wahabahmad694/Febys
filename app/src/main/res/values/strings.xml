@@ -227,5 +227,14 @@
     <string name="error_please_select_shipping_address">Please select shipping address</string>
     <string name="label_order_date_and_time"><![CDATA[Order Date & Time]]></string>
     <string name="error_enter_valid_country">Please enter valid region</string>
+    <string name="label_average_rating">Average Rating:</string>
+    <string name="average_rating_based_on">%1$.2f Based on %2$d ratings</string>
+    <string name="_1">1</string>
+    <string name="_2">2</string>
+    <string name="_3">3</string>
+    <string name="_5">5</string>
+    <string name="_4">4</string>
+    <string name="label_most_recent">Most Recent</string>
+    <string name="label_top_reviews">Top Reviews</string>
 
 </resources>

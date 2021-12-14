@@ -6,6 +6,7 @@ import com.hexagram.febys.models.api.category.UniqueCategory
 import com.hexagram.febys.models.api.product.FeaturedCategory
 import com.hexagram.febys.models.api.product.Product
 import com.hexagram.febys.models.api.product.ProductPagingListing
+import com.hexagram.febys.models.api.product.Trending
 import com.hexagram.febys.models.api.request.PagingListRequest
 import com.hexagram.febys.network.FebysBackendService
 import com.hexagram.febys.network.FebysWebCustomizationService
@@ -53,7 +54,8 @@ class HomeRepoImpl @Inject constructor(
         val response = backendService.fetchTrendingProductsByUnits(
             pagingListRequest.createQueryMap()
         )
-        return (response as? ApiResponse.ApiSuccessResponse)?.data?.getAllProducts() ?: emptyList()
+        return (response as? ApiResponse.ApiSuccessResponse)
+            ?.data?.getResponse<Trending>()?.getAllProducts() ?: emptyList()
     }
 
     override suspend fun fetchTrendingProductsBySale(dispatcher: CoroutineDispatcher): List<Product> {
@@ -61,7 +63,8 @@ class HomeRepoImpl @Inject constructor(
         val response = backendService.fetchTrendingProductsBySale(
             pagingListRequest.createQueryMap()
         )
-        return (response as? ApiResponse.ApiSuccessResponse)?.data?.getAllProducts() ?: emptyList()
+        return (response as? ApiResponse.ApiSuccessResponse)
+            ?.data?.getResponse<Trending>()?.getAllProducts() ?: emptyList()
     }
 
     override suspend fun fetchStoresYouFollow(dispatcher: CoroutineDispatcher): List<String> {
