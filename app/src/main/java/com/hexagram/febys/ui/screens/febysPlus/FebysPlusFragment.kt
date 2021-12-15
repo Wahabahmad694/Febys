@@ -22,12 +22,7 @@ class FebysPlusFragment : BaseFragment() {
             }
         }
     }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
+    
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View {
@@ -42,7 +37,8 @@ class FebysPlusFragment : BaseFragment() {
 
     private fun uiListener() {
         binding.btnShow.setOnClickListener {
-            val goToFebysExplore = FebysPlusFragmentDirections.actionFebysPlusFragmentToFebysPlusFragmentPackages()
+            val goToFebysExplore =
+                FebysPlusFragmentDirections.actionFebysPlusFragmentToFebysPlusFragmentPackages()
             navigateTo(goToFebysExplore)
         }
         binding.ivBack.setOnClickListener { goBack() }

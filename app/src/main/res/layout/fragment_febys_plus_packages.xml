@@ -100,7 +100,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_35sdp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="@dimen/_30sdp"
                 android:layout_marginEnd="@dimen/_35sdp"
                 android:gravity="center"
                 android:text="@string/join_febys_plus_today_to_get_amazing_delivery_benefits_and_excluslve_ways_to_shop_stream_and_more_cancel_anytime"
