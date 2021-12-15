@@ -26,7 +26,7 @@
                 android:layout_height="?actionBarSize"
                 android:gravity="center"
                 android:paddingHorizontal="@dimen/_32dp"
-                android:text="Febys Plus "
+                android:text="@string/febys_plus"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -77,7 +77,7 @@
                     android:layout_marginStart="@dimen/_18sdp"
                     android:layout_marginTop="@dimen/_75sdp"
                     android:maxLines="1"
-                    android:text="All of E Services and more" />
+                    android:text="@string/all_of_e_services_and_more" />
 
                 <TextView
                     style="@style/TextTheme.HelveticaNeue.TS14"
@@ -88,7 +88,7 @@
                     android:layout_marginTop="@dimen/_110sdp"
                     android:background="@drawable/febys_bg_corner"
                     android:padding="@dimen/_4sdp"
-                    android:text="Try Febys Plus"
+                    android:text="@string/try_febys_plus"
                     android:textColor="@color/white"
                     app:layout_constraintStart_toStartOf="@id/febys_plus"
                     app:layout_constraintTop_toBottomOf="@id/tv_E_services" />
@@ -100,11 +100,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_35sdp"
-                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginTop="40dp"
                 android:layout_marginEnd="@dimen/_35sdp"
                 android:gravity="center"
                 android:text="@string/join_febys_plus_today_to_get_amazing_delivery_benefits_and_excluslve_ways_to_shop_stream_and_more_cancel_anytime"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_cardview" />
 
@@ -164,7 +165,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/_14sdp"
                 android:layout_marginTop="@dimen/_7sdp"
-                android:text="Get items the next day"
+                android:text="@string/get_items_the_next_day"
                 app:layout_constraintStart_toEndOf="@id/tv_image"
                 app:layout_constraintTop_toBottomOf="@id/tv_one" />
 
@@ -205,7 +206,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/_19sdp"
-                android:text="Free Same-Day Delivery"
+                android:text="@string/free_same_day_delivery"
                 app:layout_constraintStart_toEndOf="@id/tv_image1"
                 app:layout_constraintTop_toBottomOf="@id/bg_view" />
 
@@ -216,7 +217,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/_7sdp"
-                android:text="Get eligible orders before 9pm today"
+                android:text="@string/get_eligible_orders_before_9pm_today"
                 app:layout_constraintStart_toEndOf="@id/tv_image1"
                 app:layout_constraintTop_toBottomOf="@id/tv_one1" />
 
@@ -257,7 +258,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_19sdp"
-                android:text="Free 2-Hour Delivery"
+                android:text="@string/free_2_hour_delivery"
                 app:layout_constraintStart_toEndOf="@id/tv_image2"
                 app:layout_constraintTop_toBottomOf="@id/bg_view1" />
 
@@ -268,7 +269,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_7sdp"
-                android:text="Ultra-fast delivery on daily essentials and groceries with Ruby Now"
+                android:text="@string/ultra_fast_delivery_on_daily_essentials_and_groceries_with_ruby_now"
                 app:layout_constraintEnd_toStartOf="@id/tv_dropdown"
                 app:layout_constraintStart_toEndOf="@id/tv_image2"
                 app:layout_constraintTop_toBottomOf="@id/tv_one2" />
@@ -311,7 +312,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_19sdp"
-                android:text="e-Market day"
+                android:text="@string/e_market_day"
                 app:layout_constraintStart_toEndOf="@id/tv_image_cycle"
                 app:layout_constraintTop_toBottomOf="@id/bg_view2" />
 
@@ -322,7 +323,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_7sdp"
-                android:text="Add items throughout the week for free delivery on the day you choose"
+                android:text="@string/add_items_throughout_the_week_for_free_delivery_on_the_day_you_choose"
                 app:layout_constraintEnd_toStartOf="@id/tv_down_arrow"
                 app:layout_constraintStart_toEndOf="@id/tv_image_cycle"
                 app:layout_constraintTop_toBottomOf="@id/tv_febys_same_day" />
@@ -365,7 +366,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/_21sdp"
                 android:layout_marginTop="@dimen/_19sdp"
-                android:text="Free Release-Date Delivery"
+                android:text="@string/free_release_date_delivery"
                 app:layout_constraintStart_toEndOf="@id/tv_free_relaese_delivery"
                 app:layout_constraintTop_toBottomOf="@id/bg_view3" />
 
@@ -376,7 +377,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/_21sdp"
                 android:layout_marginTop="@dimen/_7sdp"
-                android:text="Be among the first to get new video games. music &amp; more"
+                android:text="@string/be_among_the_first_to_get_new_video_games_music_amp_more"
                 app:layout_constraintEnd_toStartOf="@id/tv_down_arr"
                 app:layout_constraintStart_toEndOf="@id/tv_free_relaese_delivery"
                 app:layout_constraintTop_toBottomOf="@id/tv_free_delivery" />

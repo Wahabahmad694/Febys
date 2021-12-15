@@ -27,7 +27,7 @@
                 android:layout_height="?actionBarSize"
                 android:gravity="center"
                 android:paddingHorizontal="@dimen/_32dp"
-                android:text="Febys Plus"
+                android:text="@string/febys_plus"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -78,7 +78,7 @@
                     android:layout_marginStart="@dimen/_18sdp"
                     android:layout_marginTop="@dimen/_75sdp"
                     android:maxLines="1"
-                    android:text="All of E Services and more"
+                    android:text="@string/all_of_e_services_and_more"
                     app:layout_constraintTop_toBottomOf="@id/tv_E_experience" />
 
                 <TextView
@@ -90,7 +90,7 @@
                     android:layout_marginTop="@dimen/_110sdp"
                     android:background="@drawable/febys_bg_corner"
                     android:padding="@dimen/_4sdp"
-                    android:text="Try Febys Plus"
+                    android:text="@string/try_febys_plus"
                     android:textColor="@color/white" />
             </androidx.cardview.widget.CardView>
 
@@ -103,7 +103,7 @@
                 android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginEnd="@dimen/_60sdp"
                 android:gravity="center"
-                android:text="Check Out what's Included with Your Febys Plus Membership"
+                android:text="@string/check_out_what_s_included_with_your_febys_plus_membership"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_cardview" />
@@ -125,19 +125,19 @@
                     style="@style/TextTheme.HelveticaNeue.TS14.Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Fast,Free Delivey" />
+                    android:text="@string/fast_free_delivey" />
 
                 <com.google.android.material.tabs.TabItem
                     style="@style/TextTheme.HelveticaNeue.TS14.Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Exclsive Deals and Offers" />
+                    android:text="@string/exclsive_deals_and_offers" />
 
                 <com.google.android.material.tabs.TabItem
                     style="@style/TextTheme.HelveticaNeue.TS14.Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Exclsive groceries Deals at Febys" />
+                    android:text="@string/exclsive_groceries_deals_at_febys" />
             </com.google.android.material.tabs.TabLayout>
 
             <View
@@ -319,8 +319,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
             </LinearLayout>
-
-            s
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_show"
