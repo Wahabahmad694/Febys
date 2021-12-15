@@ -29,7 +29,7 @@
     <string name="label_variant">Variant</string>
     <string name="label_select_variant">Select %1s</string>
     <string name="label_title">%1s</string>
-    <string name="variant_selected">%1s %2s</string>
+    <string name="variant_selected">%1s: %2s</string>
     <string name="only_one_variant">This product has only one variant</string>
     <string name="label_sign_up">Sign Up</string>
     <string name="label_sign_up_slogan">Create an account to FEBYS to get all features.</string>
@@ -89,13 +89,19 @@
     <string name="label_check_your_email">Check Your Email</string>
     <string name="label_email_sent">We’ve sent an email to the provided address</string>
     <string name="label_refine">Refine</string>
+    <string name="label_clear_all">Clear all</string>
+    <string name="label_clear">Clear </string>
+    <string name="label_new_items">New Items</string>
+    <string name="label_low_price">Price (low price)</string>
+    <string name="label_high_price">Price (high price)</string>
+    <string name="label_filter_by">Filter By</string>
     <string name="label_item">Item</string>
     <string name="label_items">Items</string>
     <string name="label_no_item">No Item</string>
-    <string name="label_add_to_cart">Add to Cart</string>
+    <string name="label_add_to_bag">Add to Bag</string>
     <string name="label_sign_out">Sign Out</string>
     <string name="label_pay_now">Pay Now</string>
-    <string name="label_shopping_cart">Shopping Cart</string>
+    <string name="label_shopping_bag">Shopping Bag</string>
     <string name="label_subtotal">Subtotal</string>
     <string name="label_voucher">Voucher</string>
     <string name="label_voucher_discount">Voucher Discount</string>
@@ -127,7 +133,7 @@
     <string name="error_confirm_password_not_match">Password doesn\'t match</string>
     <string name="error_enter_phone">Please Enter Phone No</string>
     <string name="error_enter_valid_phone">Please Enter Valid Phone No</string>
-    <string name="label_proceed_to_checkout">Proceed to checkout</string>
+    <string name="label_proceed_to_checkout">Proceed to Checkout</string>
     <string name="label_download_pdf">Download PDF</string>
     <string name="label_apply">Apply</string>
     <string name="label_enter_voucher_code">Enter Voucher Code</string>
@@ -136,7 +142,7 @@
     <string name="label_orders">Orders</string>
     <string name="label_my_orders">My Orders</string>
     <string name="label_orders_states">Order States</string>
-    <string name="label_order_detail">Order Detail</string>
+    <string name="label_order_detail">Order Details</string>
     <string name="label_return_orders">Return Orders</string>
     <string name="label_cancel_orders">Cancel Orders</string>
     <string name="label_cancel">Cancel</string>
@@ -180,6 +186,7 @@
     <string name="label_postal_code">Postal Code</string>
     <string name="label_set_as_default_shipping_address">Set as default shipping address</string>
     <string name="label_save_and_continue">Save and continue</string>
+    <string name="label_show_filter">Show 10 results</string>
     <string name="error_enter_valid_postal_code">Please enter valid postal code</string>
     <string name="error_enter_valid_state">Please enter valid state</string>
     <string name="error_enter_valid_city">Please enter valid city</string>
@@ -214,10 +221,11 @@
     <string name="label_reply">Reply</string>
     <string name="label_by">By</string>
     <string name="label_see_more">See More</string>
-    <string name="label_ask_about_product">Ask about the product</string>
+    <string name="label_ask_about_product">Ask about the product.</string>
     <string name="label_cancel_order">Cancel Order</string>
     <string name="label_confirm">Confirm</string>
     <string name="label_ask">Ask</string>
+    <string name="label_send">Send</string>
     <string name="label_payment_method">Payment Method</string>
     <string name="label_customer_recommend">Customers Recommend</string>
     <string name="label_compare_with_similar_items">Compare With Similar Items</string>
@@ -225,7 +233,7 @@
     <string name="label_question">Question</string>
     <string name="label_answer">Answer</string>
     <string name="error_please_select_shipping_address">Please select shipping address</string>
-    <string name="label_order_date_and_time"><![CDATA[Order Date & Time]]></string>
+    <string name="label_order_date_and_time"><![CDATA[Order Date & Time:]]></string>
     <string name="error_enter_valid_country">Please enter valid region</string>
 
 </resources>

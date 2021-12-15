@@ -3,9 +3,9 @@ package com.hexagram.febys.network
 import com.hexagram.febys.models.api.cart.CartResponse
 import com.hexagram.febys.models.api.cities.PostCitiesResponse
 import com.hexagram.febys.models.api.countries.CountryResponse
+import com.hexagram.febys.models.api.filters.SearchFilterResponse
 import com.hexagram.febys.models.api.pagination.Pagination
 import com.hexagram.febys.models.api.product.FeaturedCategory
-import com.hexagram.febys.models.api.product.Trending
 import com.hexagram.febys.models.api.request.*
 import com.hexagram.febys.models.api.response.*
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
@@ -43,12 +43,12 @@ interface FebysBackendService {
     @GET("v1/top-performers/products/units")
     suspend fun fetchTrendingProductsByUnits(
         @QueryMap queryMap: Map<String, String>
-    ): ApiResponse<Trending>
+    ): ApiResponse<Pagination>
 
     @GET("v1/top-performers/products/sale")
     suspend fun fetchTrendingProductsBySale(
         @QueryMap queryMap: Map<String, String>
-    ): ApiResponse<Trending>
+    ): ApiResponse<Pagination>
 
     @POST("v1/consumers/products/under100")
     suspend fun fetchUnder100DollarsItems(
@@ -212,10 +212,12 @@ interface FebysBackendService {
 
     @POST("v1/orders/for-consumer/list")
     suspend fun fetchOrderListing(
-        @Header("Authorization") authToken: String, @Body orderListingRequest: OrderListingRequest
+        @Header("Authorization") authToken: String,
+        @QueryMap queryMap: Map<String, String>,
+        @Body orderListingRequest: OrderListingRequest
     ): ApiResponse<Pagination>
 
-    @GET("v1/orders/for-consumer/{orderId}")
+    @POST("v1/orders/for-consumer/{orderId}")
     suspend fun fetchOrder(
         @Header("Authorization") authToken: String,
         @Path("orderId") orderId: String
@@ -258,4 +260,7 @@ interface FebysBackendService {
         @Path("vendorId") vendorId: String,
         @Body reqBody: Map<String, String>
     ): ApiResponse<OrderResponse>
+
+    @GET("v1/consumers/products/search/filters")
+    suspend fun fetchFilters(): ApiResponse<SearchFilterResponse>
 }

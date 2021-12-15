@@ -5,18 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
+import androidx.paging.LoadState
+import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentOrderListingBinding
-import com.hexagram.febys.models.api.order.Order
-import com.hexagram.febys.network.DataState
-import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.ui.screens.order.OrderViewModel
-import com.hexagram.febys.utils.goBack
-import com.hexagram.febys.utils.hideLoader
-import com.hexagram.febys.utils.navigateTo
-import com.hexagram.febys.utils.showLoader
+import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class OrderListingFragment : BaseFragment() {
@@ -24,11 +23,6 @@ class OrderListingFragment : BaseFragment() {
     private val orderViewModel: OrderViewModel by viewModels()
     private val args: OrderListingFragmentArgs by navArgs()
     private val orderListingAdapter = OrderListingAdapter()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        fetchOrders()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -46,7 +40,7 @@ class OrderListingFragment : BaseFragment() {
     }
 
     private fun initUi() {
-        binding.rvOrders.adapter = orderListingAdapter
+        setupOrderPagerAdapter()
     }
 
     private fun uiListener() {
@@ -59,29 +53,31 @@ class OrderListingFragment : BaseFragment() {
         }
     }
 
-    private fun setObservers() {
-        orderViewModel.observeOrders.observe(viewLifecycleOwner) {
-            when (it) {
-                is DataState.Loading -> {
+
+    private fun setupOrderPagerAdapter() {
+        binding.rvOrders.adapter = orderListingAdapter
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            orderListingAdapter.loadStateFlow.collectLatest {
+                val state = it.refresh
+                if (state is LoadState.Loading) {
                     showLoader()
-                }
-                is DataState.Error -> {
+                } else {
                     hideLoader()
-                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
                 }
-                is DataState.Data -> {
-                    hideLoader()
-                    updateUi(it.data)
+
+                if (state is LoadState.Error) {
+                    showToast(getString(R.string.error_something_went_wrong))
                 }
             }
         }
     }
 
-    private fun updateUi(orders: List<Order>) {
-        orderListingAdapter.submitList(orders)
-    }
-
-    private fun fetchOrders() {
-        orderViewModel.fetchOrders(args.status)
+    private fun setObservers() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            orderViewModel.fetchOrderList(args.status).collectLatest {
+                orderListingAdapter.submitData(it)
+            }
+        }
     }
 }

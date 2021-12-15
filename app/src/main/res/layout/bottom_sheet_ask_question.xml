@@ -55,7 +55,9 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1dp"
-            android:background="@color/grey_e1e5e8" />
+            android:background="@color/grey_e1e5e8"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_15sdp"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_ask_question"
@@ -65,7 +67,7 @@
             android:layout_marginHorizontal="@dimen/_17sdp"
             android:layout_marginTop="@dimen/_49sdp"
             android:layout_marginBottom="@dimen/_14sdp"
-            android:text="@string/label_ask"
+            android:text="@string/label_send"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

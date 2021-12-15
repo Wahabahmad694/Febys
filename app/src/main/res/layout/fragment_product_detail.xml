@@ -788,7 +788,7 @@
                     android:layout_weight="1"
                     android:maxWidth="@dimen/_146sdp"
                     android:minHeight="@dimen/_64dp"
-                    android:text="@string/label_add_to_cart" />
+                    android:text="@string/label_add_to_bag" />
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

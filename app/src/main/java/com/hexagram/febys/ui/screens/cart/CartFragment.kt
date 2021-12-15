@@ -104,6 +104,11 @@ class CartFragment : BaseFragment() {
         cartViewModel.observeCart().observe(viewLifecycleOwner) {
             updateUi(it)
         }
+
+        cartDataSource.observeCartCount().observe(viewLifecycleOwner) { cartCount ->
+            val cartCountSet = if (cartCount == null || cartCount == 0) "" else "($cartCount)"
+            binding.tvCartCount.text = cartCountSet
+        }
     }
 
     private fun updateBtnVisibilities(isVisible: Boolean) {

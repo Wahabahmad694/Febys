@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/_10sdp">
+
+            <TextView
+                android:id="@+id/label_refine"
+                style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="?actionBarSize"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/_32dp"
+                android:text="@string/label_refine"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_close"
+                android:layout_width="wrap_content"
+                android:layout_height="?actionBarSize"
+                android:padding="@dimen/_16dp"
+                android:src="@drawable/ic_close"
+                app:layout_constraintBottom_toBottomOf="@id/label_refine"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/label_refine" />
+
+            <TextView
+                android:id="@+id/label_clear"
+                style="@style/TextTheme.HelveticaNeue.TS14.Grey"
+                android:layout_width="wrap_content"
+                android:layout_height="?actionBarSize"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:gravity="center"
+                android:enabled="true"
+                android:text="@string/label_clear_all"
+                app:layout_constraintBottom_toBottomOf="@id/label_refine"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/label_refine" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/container_Options"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/_20sdp">
+
+            <RadioGroup
+                android:id="@+id/radio_btn_filter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/rd_newItem"
+                    style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:drawableEnd="@drawable/selector_radio_btn_customize"
+                    android:text="@string/label_new_items" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1dp"
+                    android:background="@color/grey_e1e5e8" />
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/rd_lowPrice"
+                    style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:drawableEnd="@drawable/selector_radio_btn_customize"
+                    android:text="@string/label_low_price" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1dp"
+                    android:background="@color/grey_e1e5e8" />
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/rd_highPrice"
+                    style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:drawableEnd="@drawable/selector_radio_btn_customize"
+                    android:text="@string/label_high_price" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1dp"
+                    android:background="@color/grey_e1e5e8" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/label_filter_by"
+                style="@style/TextTheme.HelveticaNeue.TS18.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_35sdp"
+                android:text="@string/label_filter_by" />
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_filters"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toTopOf="@id/btn_show"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:listitem="@layout/item_filters" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_show"
+                style="@style/ButtonTheme.Contained"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_17sdp"
+                android:layout_marginBottom="@dimen/_14sdp"
+                android:text="@string/label_show_filter"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintWidth_max="@dimen/_298sdp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+</layout>

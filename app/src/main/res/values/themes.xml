@@ -135,7 +135,7 @@
     <style name="ButtonTheme.OutLine" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:textAppearance">@style/TextTheme.HelveticaNeue.TS14</item>
         <item name="android:minWidth">@dimen/_96sdp</item>
-        <item name="strokeColor">@color/black</item>
+        <item name="strokeColor">@color/disable_button_color</item>
         <item name="backgroundTint">@color/selector_outlined_button</item>
     </style>
 

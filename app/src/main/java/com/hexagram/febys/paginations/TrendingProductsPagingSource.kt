@@ -2,6 +2,7 @@ package com.hexagram.febys.paginations
 
 import com.hexagram.febys.models.api.product.Product
 import com.hexagram.febys.models.api.product.ProductPagingListing
+import com.hexagram.febys.models.api.product.Trending
 import com.hexagram.febys.models.api.request.PagingListRequest
 import com.hexagram.febys.network.FebysBackendService
 import com.hexagram.febys.network.adapter.ApiResponse
@@ -17,7 +18,7 @@ class TrendingProductsPagingSource constructor(
         val queryMap = request.createQueryMap()
         return when (val response = service.fetchTrendingProductsByUnits(queryMap)) {
             is ApiResponse.ApiSuccessResponse -> {
-                val trending = response.data!!
+                val trending = response.data!!.getResponse<Trending>()
                 val trendingProductsResponse = ProductPagingListing(
                     trending.getAllProducts(), trending.pagingInfo, trending.totalRows
                 )

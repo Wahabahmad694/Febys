@@ -89,7 +89,8 @@ abstract class ProductListingFragment : BaseFragment() {
         }
 
         binding.btnRefine.setOnClickListener {
-            // goto filter screen
+            val gotoRefineProduct = NavGraphDirections.toProductFilterFragment()
+            navigateTo(gotoRefineProduct)
         }
 
         productListingPagerAdapter.interaction = object : ProductListingPagerAdapter.Interaction {

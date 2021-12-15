@@ -29,6 +29,14 @@
         app:popEnterAnim="@anim/cart_close_in"
         app:popExitAnim="@anim/cart_close_out" />
 
+    <action
+        android:id="@+id/to_product_filter_fragment"
+        app:destination="@id/searchFilterFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_right" />
+
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.hexagram.febys.ui.screens.splash.SplashFragment"
@@ -273,6 +281,28 @@
         <argument
             android:name="categoryId"
             app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFilterFragment"
+        android:name="com.hexagram.febys.ui.screens.product.filters.FiltersFragment"
+        android:label="SearchFilter"
+        tools:layout="@layout/fragment_filters">
+        <action
+            android:id="@+id/action_search_filter_fragment_to_filtersDetailListFragment"
+            app:destination="@id/filtersDetailListFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/filtersDetailListFragment"
+        android:name="com.hexagram.febys.ui.screens.product.filters.detailsList.FiltersDetailListFragment"
+        android:label="FilterDetailList"
+        tools:layout="@layout/fragment_filters_detail_list">
+        <argument
+            android:name="filter"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/todayDealsListingFragment"
