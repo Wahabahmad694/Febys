@@ -215,7 +215,7 @@ interface FebysBackendService {
         @Header("Authorization") authToken: String, @Body orderListingRequest: OrderListingRequest
     ): ApiResponse<Pagination>
 
-    @GET("v1/orders/for-consumer/{orderId}")
+    @POST("v1/orders/for-consumer/{orderId}")
     suspend fun fetchOrder(
         @Header("Authorization") authToken: String,
         @Path("orderId") orderId: String

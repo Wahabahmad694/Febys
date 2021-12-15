@@ -28,6 +28,14 @@
         app:exitAnim="@anim/cart_open_out"
         app:popEnterAnim="@anim/cart_close_in"
         app:popExitAnim="@anim/cart_close_out" />
+    <action
+        android:id="@+id/to_webViewFragment"
+        app:destination="@id/webViewFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_right" />
+
 
     <fragment
         android:id="@+id/splashFragment"
@@ -409,6 +417,11 @@
     </fragment>
 
     <fragment
+        android:id="@+id/webViewFragment"
+        android:name="com.hexagram.febys.ui.screens.webView.WebViewFragment"
+        android:label="WebViewFragment"
+        tools:layout="@layout/web_view_fragment" />
+    <fragment
         android:id="@+id/febysPlusFragment"
         android:name="com.hexagram.febys.ui.screens.febysPlus.FebysPlusFragment"
         android:label="FebysPlusFragment"
@@ -488,7 +501,6 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
-
 
     </fragment>
 
