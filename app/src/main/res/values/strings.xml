@@ -103,17 +103,13 @@
     <string name="label_sku_id">SKU ID:</string>
     <string name="label_remove_from_wishlist">Remove from wishlist</string>
     <string name="label_add_to_wishlist">Add to wishlist</string>
-
     <string name="menu_home">Home</string>
     <string name="menu_search">Search</string>
     <string name="menu_message">Message</string>
     <string name="menu_wishlist">Wishlist</string>
     <string name="menu_account">Account</string>
-
     <string name="hint_search">Search…</string>
-
     <string name="error_something_went_wrong">Something went wrong!</string>
-
     <string name="minus">-</string>
     <string name="error_enter_first_name">Please Enter First Name</string>
     <string name="error_enter_valid_first_name">Please Enter Valid First Name</string>
@@ -227,5 +223,35 @@
     <string name="error_please_select_shipping_address">Please select shipping address</string>
     <string name="label_order_date_and_time"><![CDATA[Order Date & Time]]></string>
     <string name="error_enter_valid_country">Please enter valid region</string>
-
+    <string name="febys_plus">Febys Plus</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="two_day_shipping">Two - Day Shipping</string>
+    <string name="one_day_shipping_in_select_cities">One - Day Shipping (in Select Cities)</string>
+    <string name="same_day_delivery_in_select_cities">Same - Day Delivery (in Select Cities)</string>
+    <string name="delivery_speed">Delivery Speed</string>
+    <string name="delivery_as_fast_as_today">Delivery as Fast as Today</string>
+    <string name="super_fast_shipping_on_tens_of_millions_of_items_and_flexible_delivery_options_to_fit_your_life">Super- fast shipping on tens of millions of items, and flexible delivery options to fit your life.</string>
+    <string name="explore_febys_plus_delivery">Explore Febys Plus Delivery</string>
+    <string name="here_s_a_little_more_about_febys_plus_that_we_think_you_ll_love">Here\'s a little more about Febys Plus that we think you\'ll love:</string>
+    <string name="fast_free_delivery_on_over_100_million_iteams">Fast, Free Delivery on Over 100 Million Iteams</string>
+    <string name="super_fast_shipping_tens_of_millions_of_items_and_flexible_delivery_option_to_fit_your_life">Super-fast shipping. tens of millions of items, and flexible delivery option to fit your life.</string>
+    <string name="the_best_of_shopping_amp_the_e_experience"><![CDATA[The Best of Shopping & the E experience]]></string>
+    <string name="join_febys_plus_today_to_get_amazing_delivery_benefits_and_excluslve_ways_to_shop_stream_and_more_cancel_anytime">Join Febys Plus today to get amazing delivery benefits and excluslve ways to shop. stream, and more cancel anytime</string>
+    <string name="free_one_day_shipping">Free One-Day Shipping</string>
+    <string name="check_out_what_s_included_with_your_febys_plus_membership">Check Out what\'s Included with Your Febys Plus Membership</string>
+    <string name="fast_free_delivey">Fast,Free Delivey</string>
+    <string name="exclsive_deals_and_offers">Exclsive Deals and Offers</string>
+    <string name="exclsive_groceries_deals_at_febys">Exclsive groceries Deals at Febys</string>
+    <string name="all_of_e_services_and_more">All of E Services and more</string>
+    <string name="try_febys_plus">Try Febys Plus</string>
+    <string name="get_items_the_next_day">Get items the next day</string>
+    <string name="free_same_day_delivery">Free Same-Day Delivery</string>
+    <string name="get_eligible_orders_before_9pm_today">Get eligible orders before 9pm today</string>
+    <string name="free_2_hour_delivery">Free 2-Hour Delivery</string>
+    <string name="ultra_fast_delivery_on_daily_essentials_and_groceries_with_ruby_now">Ultra-fast delivery on daily essentials and groceries with Ruby Now</string>
+    <string name="e_market_day">e-Market day</string>
+    <string name="add_items_throughout_the_week_for_free_delivery_on_the_day_you_choose">Add items throughout the week for free delivery on the day you choose</string>
+    <string name="free_release_date_delivery">Free Release-Date Delivery</string>
+    <string name="be_among_the_first_to_get_new_video_games_music_amp_more"><![CDATA[Be among the first to get new video games. music & more]]></string>
 </resources>
