@@ -103,17 +103,13 @@
     <string name="label_sku_id">SKU ID:</string>
     <string name="label_remove_from_wishlist">Remove from wishlist</string>
     <string name="label_add_to_wishlist">Add to wishlist</string>
-
     <string name="menu_home">Home</string>
     <string name="menu_search">Search</string>
     <string name="menu_message">Message</string>
     <string name="menu_wishlist">Wishlist</string>
     <string name="menu_account">Account</string>
-
     <string name="hint_search">Search…</string>
-
     <string name="error_something_went_wrong">Something went wrong!</string>
-
     <string name="minus">-</string>
     <string name="error_enter_first_name">Please Enter First Name</string>
     <string name="error_enter_valid_first_name">Please Enter Valid First Name</string>
@@ -242,16 +238,11 @@
     <string name="super_fast_shipping_tens_of_millions_of_items_and_flexible_delivery_option_to_fit_your_life">Super-fast shipping. tens of millions of items, and flexible delivery option to fit your life.</string>
     <string name="the_best_of_shopping_amp_the_e_experience"><![CDATA[The Best of Shopping & the E experience]]></string>
     <string name="join_febys_plus_today_to_get_amazing_delivery_benefits_and_excluslve_ways_to_shop_stream_and_more_cancel_anytime">Join Febys Plus today to get amazing delivery benefits and excluslve ways to shop. stream, and more cancel anytime</string>
-    <string name="try_febys_plus">Try Febys Plus</string>
     <string name="free_one_day_shipping">Free One-Day Shipping</string>
-    <string name="febys_plus">Febys Plus</string>
-    <string name="all_of_e_services_and_more">All of E Services and more</string>
-    <string name="try_febys_plus">Try Febys Plus</string>
     <string name="check_out_what_s_included_with_your_febys_plus_membership">Check Out what\'s Included with Your Febys Plus Membership</string>
     <string name="fast_free_delivey">Fast,Free Delivey</string>
     <string name="exclsive_deals_and_offers">Exclsive Deals and Offers</string>
     <string name="exclsive_groceries_deals_at_febys">Exclsive groceries Deals at Febys</string>
-    <string name="febys_plus">Febys Plus</string>
     <string name="all_of_e_services_and_more">All of E Services and more</string>
     <string name="try_febys_plus">Try Febys Plus</string>
     <string name="get_items_the_next_day">Get items the next day</string>
@@ -263,5 +254,4 @@
     <string name="add_items_throughout_the_week_for_free_delivery_on_the_day_you_choose">Add items throughout the week for free delivery on the day you choose</string>
     <string name="free_release_date_delivery">Free Release-Date Delivery</string>
     <string name="be_among_the_first_to_get_new_video_games_music_amp_more"><![CDATA[Be among the first to get new video games. music & more]]></string>
-
 </resources>
