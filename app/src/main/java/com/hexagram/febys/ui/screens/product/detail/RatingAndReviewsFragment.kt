@@ -38,6 +38,8 @@ class RatingAndReviewsFragment : BaseBottomSheet() {
     private val reviewsAdapter = ReviewsAdapter()
     private var reviewsSorting = ReviewsSorting.RECENT
 
+    private var originalReviewsList = listOf<RatingAndReviews>()
+
     private val isUserLoggedIn
         get() = !args.userId.isNullOrEmpty()
 
@@ -103,7 +105,7 @@ class RatingAndReviewsFragment : BaseBottomSheet() {
                     reviewsSorting = ReviewsSorting.RATING
                 }
             }
-            updateReviews(reviewsAdapter.getCurrentList())
+            updateReviews(originalReviewsList)
         }
     }
 
@@ -133,6 +135,7 @@ class RatingAndReviewsFragment : BaseBottomSheet() {
     }
 
     private fun updateReviews(reviews: List<RatingAndReviews>) {
+        originalReviewsList = reviews
         val sortedReviews = when (reviewsSorting) {
             ReviewsSorting.RECENT -> productDetailViewModel.reviewsByMostRecent(reviews)
             ReviewsSorting.RATING -> productDetailViewModel.reviewsByRating(reviews)
