@@ -157,6 +157,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_searchFragment_to_storeListFragment"
+            app:destination="@id/storeListFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/wishListFragment"
@@ -463,6 +470,11 @@
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
+    <fragment
+        android:id="@+id/storeListFragment"
+        android:name="com.hexagram.febys.ui.screens.store.menu.StoreListFragment"
+        android:label="StoreListFragment"
+        tools:layout="@layout/fragment_store_list" />
     <fragment
         android:id="@+id/vendorDetailFragment"
         android:name="com.hexagram.febys.ui.screens.vendor.VendorDetailFragment"
