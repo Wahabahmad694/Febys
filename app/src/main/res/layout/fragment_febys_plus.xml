@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+
+    <com.hexagram.febys.utils.ScrollView
+        android:id="@+id/scroll_view_home"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/_20sdp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".ui.screens.febysPlus.FebysPlusFragment">
+
+            <TextView
+                android:id="@+id/label_febys_plus"
+                style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/_32dp"
+                android:text="@string/febys_plus"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_16dp"
+                android:src="@drawable/ic_back"
+                app:layout_constraintBottom_toBottomOf="@id/label_febys_plus"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/label_febys_plus" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/tv_cardview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                app:cardCornerRadius="@dimen/_10sdp"
+                app:cardElevation="0dp"
+                app:layout_constraintTop_toBottomOf="@id/iv_back">
+
+                <ImageView
+                    android:id="@+id/febys_plus"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/image_febys_plus" />
+
+                <TextView
+                    android:id="@+id/tv_E_experience"
+                    style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+                    android:layout_width="@dimen/_160sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_40sdp"
+                    android:text="@string/the_best_of_shopping_amp_the_e_experience"
+                    android:textColor="@color/black"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_E_services"
+                    style="@style/TextTheme.Arial.TS14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_8sdp"
+                    android:layout_marginStart="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_75sdp"
+                    android:maxLines="1"
+                    android:text="@string/all_of_e_services_and_more"
+                    app:layout_constraintTop_toBottomOf="@id/tv_E_experience" />
+
+                <TextView
+                    style="@style/TextTheme.HelveticaNeue.TS14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginHorizontal="@dimen/_8sdp"
+                    android:layout_marginStart="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_110sdp"
+                    android:background="@drawable/febys_bg_corner"
+                    android:padding="@dimen/_4sdp"
+                    android:text="@string/try_febys_plus"
+                    android:textColor="@color/white" />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/tv_febys_membership"
+                style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_60sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_60sdp"
+                android:gravity="center"
+                android:text="@string/check_out_what_s_included_with_your_febys_plus_membership"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_cardview" />
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_Layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_28sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_febys_membership"
+                app:tabMode="scrollable"
+                app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget">
+
+                <com.google.android.material.tabs.TabItem
+                    style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fast_free_delivey" />
+
+                <com.google.android.material.tabs.TabItem
+                    style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/exclsive_deals_and_offers" />
+
+                <com.google.android.material.tabs.TabItem
+                    style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/exclsive_groceries_deals_at_febys" />
+            </com.google.android.material.tabs.TabLayout>
+
+            <View
+                android:id="@+id/bg_top"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginHorizontal="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_64sdp"
+                android:background="@color/grey_e1e5e8"
+                app:layout_constraintEnd_toEndOf="@id/tab_Layout"
+                app:layout_constraintStart_toStartOf="@id/tab_Layout"
+                app:layout_constraintTop_toBottomOf="@id/tv_febys_membership" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/tv_tab_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_28sdp"
+                android:background="@drawable/bg_border_dark_grey"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tab_Layout">
+
+
+                <LinearLayout
+                    android:id="@+id/label_delivery_speed"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_49sdp"
+                    android:background="@color/grey"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        style="@style/TextTheme.OpenSans.TS14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_17sdp"
+                        android:text="@string/delivery_speed"
+                        android:textSize="@dimen/_13sdp"
+                        tools:text="Delivery Speed" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_1dp"
+                        android:layout_weight="1" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_17sdp"
+                        android:src="@drawable/ic_frame" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/tv_same_day_delivery"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_49sdp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/label_delivery_speed">
+
+                    <TextView
+                        style="@style/TextTheme.Arial.TS14"
+                        android:layout_width="@dimen/_150sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_17sdp"
+                        android:text="@string/same_day_delivery_in_select_cities"
+                        android:textSize="@dimen/_13sdp"
+                        tools:text="Same - Day Delivery(in Select Cities)" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_1dp"
+                        android:layout_weight="1" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_17sdp"
+                        android:src="@drawable/ic_name_surname" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/tv_one_day_shipping"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_49sdp"
+                    android:background="@color/grey"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_same_day_delivery">
+
+                    <TextView
+                        style="@style/TextTheme.Arial.TS14"
+                        android:layout_width="@dimen/_150sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_17sdp"
+                        android:text="@string/one_day_shipping_in_select_cities"
+                        android:textSize="@dimen/_13sdp"
+                        tools:text="One - Day Shipping(in Select Cities)" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_1dp"
+                        android:layout_weight="1" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_17sdp"
+                        android:src="@drawable/ic_name_surname" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/tv_two_day_shipping"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_49sdp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_one_day_shipping">
+
+                    <TextView
+                        style="@style/TextTheme.Arial.TS14"
+                        android:layout_width="@dimen/_150sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_17sdp"
+                        android:text="@string/two_day_shipping"
+                        android:textSize="@dimen/_13sdp"
+                        tools:text="Two - Day Shipping" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_1dp"
+                        android:layout_weight="1" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_17sdp"
+                        android:src="@drawable/ic_name_surname" />
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:id="@+id/tv_fast_delivery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_28sdp"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@id/tv_tab_fragment">
+
+                <TextView
+                    style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_70sdp"
+                    android:layout_marginEnd="@dimen/_70sdp"
+                    android:gravity="center"
+                    android:text="@string/delivery_as_fast_as_today"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    style="@style/TextTheme.HelveticaNeue.TS14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginStart="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_30sdp"
+                    android:gravity="center"
+                    android:text="@string/super_fast_shipping_on_tens_of_millions_of_items_and_flexible_delivery_options_to_fit_your_life"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_show"
+                style="@style/ButtonTheme.Contained"
+                android:layout_width="@dimen/_272sdp"
+                android:layout_height="@dimen/_48sdp"
+                android:layout_marginHorizontal="@dimen/_17sdp"
+                android:layout_marginTop="@dimen/_28sdp"
+                android:text="@string/explore_febys_plus_delivery"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_fast_delivery" />
+
+            <TextView
+                android:id="@+id/label_info_last"
+                style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_38sdp"
+                android:layout_marginHorizontal="@dimen/_56sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:gravity="center"
+                android:text="@string/here_s_a_little_more_about_febys_plus_that_we_think_you_ll_love"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_show" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:background="@color/grey"
+                app:cardCornerRadius="@dimen/_10sdp"
+                app:cardElevation="0dp"
+                app:layout_constraintTop_toBottomOf="@id/label_info_last">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/grey"
+                    android:src="@drawable/ic_febys_plus_group" />
+
+                <TextView
+                    android:id="@+id/tv_items"
+                    style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+                    android:layout_width="@dimen/_139sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:text="@string/fast_free_delivery_on_over_100_million_iteams" />
+
+                <TextView
+                    style="@style/TextTheme.HelveticaNeue.TS14"
+                    android:layout_width="@dimen/_155sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_50sdp"
+                    android:text="@string/super_fast_shipping_tens_of_millions_of_items_and_flexible_delivery_option_to_fit_your_life" />
+
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.hexagram.febys.utils.ScrollView>
+</layout>

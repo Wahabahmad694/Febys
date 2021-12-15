@@ -128,6 +128,7 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
+
         <action
             android:id="@+id/action_searchFragment_to_categoryNameFragment"
             app:destination="@id/categoryNameFragment"
@@ -413,6 +414,25 @@
             app:popUpTo="@id/checkoutSuccessFragment"
             app:popUpToInclusive="true" />
     </fragment>
+
+    <fragment
+        android:id="@+id/febysPlusFragment"
+        android:name="com.hexagram.febys.ui.screens.febysPlus.FebysPlusFragment"
+        android:label="FebysPlusFragment"
+        tools:layout="@layout/fragment_febys_plus">
+        <action
+            android:id="@+id/action_febysPlusFragment_to_febysPlusFragmentPackages"
+            app:destination="@id/febysPlusFragmentPackages"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/febysPlusFragmentPackages"
+        android:name="com.hexagram.febys.ui.screens.febysPlus.FebysPlusPackages"
+        android:label="FebysPlusPackages"
+        tools:layout="@layout/fragment_febys_plus_packages" />
     <fragment
         android:id="@+id/celebrityDetailFragment"
         android:name="com.hexagram.febys.ui.screens.vendor.CelebrityDetailFragment"
@@ -466,7 +486,19 @@
         android:id="@+id/menuFragment"
         android:name="com.hexagram.febys.ui.screens.menu.MenuFragment"
         android:label="MenuFragment"
-        tools:layout="@layout/fragment_menu" />
+        tools:layout="@layout/fragment_menu">
+
+        <action
+            android:id="@+id/action_menuFragment_to_febysPlusFragment"
+            app:destination="@id/febysPlusFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+
+
+    </fragment>
+
     <dialog
         android:id="@+id/QAThreadsFragment"
         android:name="com.hexagram.febys.ui.screens.product.detail.QAThreadsFragment"
