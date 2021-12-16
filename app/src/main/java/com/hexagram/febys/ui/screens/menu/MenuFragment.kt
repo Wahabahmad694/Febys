@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentMenuBinding
-import com.hexagram.febys.ui.screens.search.SearchFragmentDirections
 import com.hexagram.febys.utils.navigateTo
 
 class MenuFragment : BaseFragment() {
@@ -32,19 +31,22 @@ class MenuFragment : BaseFragment() {
             navigateTo(gotofebysPlus)
         }
         binding.labelPawnShop.setOnClickListener {
-            val goToPawnShop = NavGraphDirections.toWebViewFragment("https://www.youtube.com/")
+            val goToPawnShop = NavGraphDirections.toWebViewFragment("", "https://www.youtube.com/")
             navigateTo(goToPawnShop)
         }
         binding.labelDiscountMall.setOnClickListener {
-            val goToDiscountMall = NavGraphDirections.toWebViewFragment("https://mail.google.com/")
+            val goToDiscountMall =
+                NavGraphDirections.toWebViewFragment("", "https://mail.google.com/")
             navigateTo(goToDiscountMall)
         }
         binding.labelAfricanMarket.setOnClickListener {
-            val goToAfricanMarket = NavGraphDirections.toWebViewFragment("https://www.google.com/")
+            val goToAfricanMarket =
+                NavGraphDirections.toWebViewFragment("", "https://www.google.com/")
             navigateTo(goToAfricanMarket)
         }
         binding.labelMadeInGhana.setOnClickListener {
-            val goToMadeInGhana = NavGraphDirections.toWebViewFragment("")
+            val goToMadeInGhana =
+                NavGraphDirections.toWebViewFragment("", "https://www.google.com/")
             navigateTo(goToMadeInGhana)
         }
     }

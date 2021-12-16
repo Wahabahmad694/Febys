@@ -8,6 +8,7 @@ import com.hexagram.febys.models.api.menu.StoreMenus
 
 class StoreListAdapter : RecyclerView.Adapter<StoreListAdapter.ViewHolder>() {
     private var storeMenus = listOf<StoreMenus>()
+    var itemClickCallback: ((StoreMenus) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -30,8 +31,10 @@ class StoreListAdapter : RecyclerView.Adapter<StoreListAdapter.ViewHolder>() {
         private val binding: ItemStoreListBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(position: Int) = with(binding) {
-            val menuList = storeMenus[position]
-            tvNameStore.text = menuList.name
+            val menu = storeMenus[position]
+            tvNameStore.text = menu.name
+
+            root.setOnClickListener { itemClickCallback?.invoke((menu)) }
         }
     }
 }

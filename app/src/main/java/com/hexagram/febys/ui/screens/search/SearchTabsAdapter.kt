@@ -12,7 +12,7 @@ class SearchTabsAdapter(fragment: Fragment, private val tabsList: List<String>) 
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            1 ->{
+            1 -> {
                 StoreListFragment.newInstance()
             }
             2 -> {

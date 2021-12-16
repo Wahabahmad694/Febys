@@ -172,6 +172,9 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_storeListFragment_to_storeLoadFragment"
+            app:destination="@id/storeLoadFragment" />
     </fragment>
     <fragment
         android:id="@+id/wishListFragment"
@@ -429,8 +432,15 @@
         android:label="WebViewFragment"
         tools:layout="@layout/web_view_fragment">
         <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
             android:name="url"
-            app:argType="string"/>
+            app:argType="string" />
+        <argument
+            android:name="isHtml"
+            android:defaultValue="false"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/febysPlusFragment"
@@ -491,7 +501,24 @@
         android:id="@+id/storeListFragment"
         android:name="com.hexagram.febys.ui.screens.store.menu.StoreListFragment"
         android:label="StoreListFragment"
-        tools:layout="@layout/fragment_store_list" />
+        tools:layout="@layout/fragment_store_list"/>
+    <fragment
+        android:id="@+id/storeLoadFragment"
+        android:name="com.hexagram.febys.ui.screens.store.menu.LoadStoreFragment"
+        android:label="StoreLoadFragment"
+        tools:layout="@layout/fragment_store_load">
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="storeId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_storeLoadFragment_to_webViewFragment"
+            app:destination="@id/webViewFragment"
+            app:popUpTo="@id/storeLoadFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/vendorDetailFragment"
         android:name="com.hexagram.febys.ui.screens.vendor.VendorDetailFragment"
@@ -509,7 +536,6 @@
         android:name="com.hexagram.febys.ui.screens.menu.MenuFragment"
         android:label="MenuFragment"
         tools:layout="@layout/fragment_menu">
-
         <action
             android:id="@+id/action_menuFragment_to_febysPlusFragment"
             app:destination="@id/febysPlusFragment"

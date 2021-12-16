@@ -10,7 +10,9 @@ import com.hexagram.febys.databinding.FragmentStoreListBinding
 import com.hexagram.febys.models.api.menu.StoreMenus
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
+import com.hexagram.febys.ui.screens.search.SearchFragmentDirections
 import com.hexagram.febys.utils.hideLoader
+import com.hexagram.febys.utils.navigateTo
 import com.hexagram.febys.utils.showLoader
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,14 +24,8 @@ class StoreListFragment : BaseFragment() {
     private val storeListAdapter = StoreListAdapter()
 
     companion object {
-        private const val KEY_IS_CELEBRITY = "keyIsCelebrity"
-
         @JvmStatic
-        fun newInstance(isStore: Boolean = false) = StoreListFragment().apply {
-            arguments = Bundle().apply {
-                putBoolean(KEY_IS_CELEBRITY, isStore)
-            }
-        }
+        fun newInstance() = StoreListFragment()
     }
 
     override fun onCreateView(
@@ -42,10 +38,25 @@ class StoreListFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         iniUi()
+        uiListeners()
         setObserver()
     }
+
     private fun iniUi() {
         binding.rvStoreList.adapter = storeListAdapter
+    }
+
+    private fun uiListeners() {
+        storeListAdapter.itemClickCallback = {
+            val title = it.template?.split(",")?.firstOrNull() ?: ""
+            val storeId = it.template?.split(",")?.lastOrNull() ?: ""
+
+            if (storeId.isNotEmpty()){
+                val toWebViewFragment = SearchFragmentDirections
+                    .actionStoreListFragmentToStoreLoadFragment(title, storeId)
+                navigateTo(toWebViewFragment)
+            }
+        }
     }
 
     private fun setObserver() {
@@ -69,6 +80,4 @@ class StoreListFragment : BaseFragment() {
     private fun updateUi(storeList: List<StoreMenus>) {
         storeListAdapter.submitList(storeList)
     }
-
-
 }
