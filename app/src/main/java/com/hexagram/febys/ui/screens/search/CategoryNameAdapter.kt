@@ -1,5 +1,6 @@
 package com.hexagram.febys.ui.screens.search
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -30,6 +31,7 @@ class CategoryNameAdapter :
             ItemCategoryNameBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
+
         )
     }
 

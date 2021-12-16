@@ -14,22 +14,19 @@ data class Social(
         get() {
             return when (name) {
                 "LinkedIn" -> {
-                    R.drawable.ic_social_link_fb
-                }
-                "Facebook" -> {
-                    R.drawable.ic_social_link_fb
+                    R.drawable.ic_social_link_linkedin
                 }
                 "Instagram" -> {
-                    R.drawable.ic_social_link_fb
+                    R.drawable.ic_social_link_instagram
                 }
                 "Youtube" -> {
-                    R.drawable.ic_social_link_fb
+                    R.drawable.ic_social_link_youtube
                 }
                 "Pinterest" -> {
-                    R.drawable.ic_social_link_fb
+                    R.drawable.ic_social_link_pinterest
                 }
                 "Twitter" -> {
-                    R.drawable.ic_social_link_fb
+                    R.drawable.ic_social_link_twitter
                 }
                 else -> {
                     R.drawable.ic_social_link_fb
