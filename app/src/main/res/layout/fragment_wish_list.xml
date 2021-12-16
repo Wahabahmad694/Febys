@@ -101,18 +101,6 @@
                     android:layout_marginTop="@dimen/_16dp"
                     android:text="@string/label_empty_wish_list_slogan" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_get_inspired"
-                    style="@style/ButtonTheme.Text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_24dp"
-                    android:drawablePadding="@dimen/_16dp"
-                    android:text="@string/label_get_inspired"
-                    app:icon="@drawable/ic_arrow_forward"
-                    app:iconGravity="end"
-                    app:iconPadding="@dimen/_8dp"
-                    app:iconSize="@dimen/_12dp" />
             </LinearLayout>
 
 

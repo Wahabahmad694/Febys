@@ -573,6 +573,8 @@ class ProductDetailFragment : SliderFragment() {
             additionalAdapter.submitList(products)
             rvAdditionalProducts.apply {
                 setHasFixedSize(true)
+                addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+                addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL))
                 isNestedScrollingEnabled = false
                 layoutManager = GridLayoutManager(context, 2)
                 adapter = additionalAdapter

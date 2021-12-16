@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentOrderListingBinding
 import com.hexagram.febys.models.api.order.Order
@@ -46,6 +47,7 @@ class OrderListingFragment : BaseFragment() {
     }
 
     private fun initUi() {
+        binding.labelOrders.text = args.title ?: getString(R.string.label_my_orders)
         binding.rvOrders.adapter = orderListingAdapter
     }
 
