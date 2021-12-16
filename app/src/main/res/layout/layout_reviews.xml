@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_reviews" />
+
+        <RadioGroup
+            android:id="@+id/radio_group_sorting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16dp"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            app:singleLine="true"
+            app:singleSelection="true">
+
+            <RadioButton
+                android:id="@+id/rb_most_recent"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_26sdp"
+                android:layout_marginHorizontal="@dimen/_2sdp"
+                android:background="@drawable/selector_chip_type_radio_btn"
+                android:button="@null"
+                android:checked="true"
+                android:paddingHorizontal="@dimen/_16dp"
+                android:stateListAnimator="@animator/selector_chip_text_style"
+                android:text="@string/label_most_recent"
+                android:textAppearance="@style/TextTheme.HelveticaNeue.TS12" />
+
+            <RadioButton
+                android:id="@+id/rb_top_reviews"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_26sdp"
+                android:layout_marginHorizontal="@dimen/_2sdp"
+                android:background="@drawable/selector_chip_type_radio_btn"
+                android:button="@null"
+                android:paddingHorizontal="@dimen/_16dp"
+                android:stateListAnimator="@animator/selector_chip_text_style"
+                android:text="@string/label_top_reviews"
+                android:textAppearance="@style/TextTheme.HelveticaNeue.TS12" />
+        </RadioGroup>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_reviews"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_weight="1"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="2"
+            tools:listitem="@layout/item_reviews" />
+
+    </LinearLayout>
+</layout>

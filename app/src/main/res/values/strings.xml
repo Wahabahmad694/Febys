@@ -103,13 +103,17 @@
     <string name="label_sku_id">SKU ID:</string>
     <string name="label_remove_from_wishlist">Remove from wishlist</string>
     <string name="label_add_to_wishlist">Add to wishlist</string>
+
     <string name="menu_home">Home</string>
     <string name="menu_search">Search</string>
     <string name="menu_message">Message</string>
     <string name="menu_wishlist">Wishlist</string>
     <string name="menu_account">Account</string>
+
     <string name="hint_search">Search…</string>
+
     <string name="error_something_went_wrong">Something went wrong!</string>
+
     <string name="minus">-</string>
     <string name="error_enter_first_name">Please Enter First Name</string>
     <string name="error_enter_valid_first_name">Please Enter Valid First Name</string>
@@ -223,9 +227,16 @@
     <string name="error_please_select_shipping_address">Please select shipping address</string>
     <string name="label_order_date_and_time"><![CDATA[Order Date & Time]]></string>
     <string name="error_enter_valid_country">Please enter valid region</string>
-    <string name="febys_plus">Febys Plus</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="label_average_rating">Average Rating:</string>
+    <string name="average_rating_based_on">%1$.2f Based on %2$d ratings</string>
+    <string name="label_ratings_and_reviews">Ratings &amp; Reviews</string>
+    <string name="_1">1</string>
+    <string name="_2">2</string>
+    <string name="_3">3</string>
+    <string name="_5">5</string>
+    <string name="_4">4</string>
+    <string name="label_most_recent">Most Recent</string>
+    <string name="label_top_reviews">Top Reviews</string>
     <string name="two_day_shipping">Two - Day Shipping</string>
     <string name="one_day_shipping_in_select_cities">One - Day Shipping (in Select Cities)</string>
     <string name="same_day_delivery_in_select_cities">Same - Day Delivery (in Select Cities)</string>
@@ -245,6 +256,7 @@
     <string name="exclsive_groceries_deals_at_febys">Exclsive groceries Deals at Febys</string>
     <string name="all_of_e_services_and_more">All of E Services and more</string>
     <string name="try_febys_plus">Try Febys Plus</string>
+    <string name="febys_plus">Febys Plus</string>
     <string name="get_items_the_next_day">Get items the next day</string>
     <string name="free_same_day_delivery">Free Same-Day Delivery</string>
     <string name="get_eligible_orders_before_9pm_today">Get eligible orders before 9pm today</string>

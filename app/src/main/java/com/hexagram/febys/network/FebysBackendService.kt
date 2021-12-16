@@ -5,7 +5,6 @@ import com.hexagram.febys.models.api.cities.PostCitiesResponse
 import com.hexagram.febys.models.api.countries.CountryResponse
 import com.hexagram.febys.models.api.pagination.Pagination
 import com.hexagram.febys.models.api.product.FeaturedCategory
-import com.hexagram.febys.models.api.product.Trending
 import com.hexagram.febys.models.api.request.*
 import com.hexagram.febys.models.api.response.*
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
@@ -159,32 +158,56 @@ interface FebysBackendService {
     ): ApiResponse<QuestionAnswersResponse>
 
     @POST("v1/products/{productId}/threads/{threadId}/up-vote")
-    suspend fun voteUp(
+    suspend fun questionVoteUp(
         @Header("Authorization") authToken: String,
         @Path("productId") productId: String,
         @Path("threadId") threadId: String
     ): ApiResponse<QuestionAnswersResponse>
 
     @DELETE("v1/products/{productId}/threads/{threadId}/up-vote")
-    suspend fun revokeVoteUp(
+    suspend fun revokeQuestionVoteUp(
         @Header("Authorization") authToken: String,
         @Path("productId") productId: String,
         @Path("threadId") threadId: String
     ): ApiResponse<QuestionAnswersResponse>
 
     @POST("v1/products/{productId}/threads/{threadId}/down-vote")
-    suspend fun voteDown(
+    suspend fun questionVoteDown(
         @Header("Authorization") authToken: String,
         @Path("productId") productId: String,
         @Path("threadId") threadId: String
     ): ApiResponse<QuestionAnswersResponse>
 
     @DELETE("v1/products/{productId}/threads/{threadId}/down-vote")
-    suspend fun revokeVoteDown(
+    suspend fun revokeQuestionVoteDown(
         @Header("Authorization") authToken: String,
         @Path("productId") productId: String,
         @Path("threadId") threadId: String
     ): ApiResponse<QuestionAnswersResponse>
+
+    @POST("v1/rating-review/{reviewId}/product/up-vote")
+    suspend fun reviewVoteUp(
+        @Header("Authorization") authToken: String,
+        @Path("reviewId") reviewId: String
+    ): ApiResponse<RatingAndReviewsResponse>
+
+    @DELETE("v1/rating-review/{reviewId}/product/up-vote")
+    suspend fun revokeReviewVoteUp(
+        @Header("Authorization") authToken: String,
+        @Path("reviewId") reviewId: String
+    ): ApiResponse<RatingAndReviewsResponse>
+
+    @POST("v1/rating-review/{reviewId}/product/down-vote")
+    suspend fun reviewVoteDown(
+        @Header("Authorization") authToken: String,
+        @Path("reviewId") reviewId: String
+    ): ApiResponse<RatingAndReviewsResponse>
+
+    @DELETE("v1/rating-review/{reviewId}/product/down-vote")
+    suspend fun revokeReviewVoteDown(
+        @Header("Authorization") authToken: String,
+        @Path("reviewId") reviewId: String
+    ): ApiResponse<RatingAndReviewsResponse>
 
     @POST("v1/vouchers/of-consumer/list")
     suspend fun fetchVouchers(@Header("Authorization") authKey: String): ApiResponse<VoucherResponse>

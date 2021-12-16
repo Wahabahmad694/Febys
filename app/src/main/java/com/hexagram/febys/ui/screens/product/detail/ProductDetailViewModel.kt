@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.hexagram.febys.models.api.product.Product
 import com.hexagram.febys.models.api.product.QAThread
+import com.hexagram.febys.models.api.product.RatingAndReviews
 import com.hexagram.febys.models.api.product.Variant
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.repos.IProductRepo
@@ -27,6 +28,9 @@ class ProductDetailViewModel @Inject constructor(
 
     private val _observeQAThreads = MutableLiveData<DataState<MutableList<QAThread>>>()
     val observeQAThreads: LiveData<DataState<MutableList<QAThread>>> = _observeQAThreads
+
+    private val _observeReviews = MutableLiveData<DataState<List<RatingAndReviews>>>()
+    val observeReviews: LiveData<DataState<List<RatingAndReviews>>> = _observeReviews
 
     private val _recommendProducts = MutableLiveData<DataState<List<Product>>>()
     val recommendProducts: LiveData<DataState<List<Product>>> = _recommendProducts
@@ -89,21 +93,23 @@ class ProductDetailViewModel @Inject constructor(
             }
         }
 
-    fun voteUp(productId: String, threadId: String, revoke: Boolean) = viewModelScope.launch {
-        this@ProductDetailViewModel._observeQAThreads.postValue(DataState.Loading())
-        productRepo.voteUp(productId, threadId, revoke).collect {
-            if (it is DataState.Data) updateQAThreads(it.data)
-            this@ProductDetailViewModel._observeQAThreads.postValue(it)
+    fun questionsVoteUp(productId: String, threadId: String, revoke: Boolean) =
+        viewModelScope.launch {
+            this@ProductDetailViewModel._observeQAThreads.postValue(DataState.Loading())
+            productRepo.questionVoteUp(productId, threadId, revoke).collect {
+                if (it is DataState.Data) updateQAThreads(it.data)
+                this@ProductDetailViewModel._observeQAThreads.postValue(it)
+            }
         }
-    }
 
-    fun voteDown(productId: String, threadId: String, revoke: Boolean) = viewModelScope.launch {
-        this@ProductDetailViewModel._observeQAThreads.postValue(DataState.Loading())
-        productRepo.voteDown(productId, threadId, revoke).collect {
-            if (it is DataState.Data) updateQAThreads(it.data)
-            this@ProductDetailViewModel._observeQAThreads.postValue(it)
+    fun questionVoteDown(productId: String, threadId: String, revoke: Boolean) =
+        viewModelScope.launch {
+            this@ProductDetailViewModel._observeQAThreads.postValue(DataState.Loading())
+            productRepo.questionVoteDown(productId, threadId, revoke).collect {
+                if (it is DataState.Data) updateQAThreads(it.data)
+                this@ProductDetailViewModel._observeQAThreads.postValue(it)
+            }
         }
-    }
 
     fun updateQAThreads(qaThread: MutableList<QAThread>) {
         val productState = _observeProductDetail.value
@@ -121,4 +127,33 @@ class ProductDetailViewModel @Inject constructor(
         val products = productRepo.fetchSimilarProducts(productId)
         _similarProducts.postValue(DataState.Data(products))
     }
+
+    fun reviewVoteUp(reviewId: String, revoke: Boolean) = viewModelScope.launch {
+        this@ProductDetailViewModel._observeReviews.postValue(DataState.Loading())
+        productRepo.reviewVoteUp(reviewId, revoke).collect {
+            if (it is DataState.Data) updateReviews(it.data)
+            this@ProductDetailViewModel._observeReviews.postValue(it)
+        }
+    }
+
+    fun reviewVoteDown(reviewId: String, revoke: Boolean) = viewModelScope.launch {
+        this@ProductDetailViewModel._observeReviews.postValue(DataState.Loading())
+        productRepo.reviewVoteDown(reviewId, revoke).collect {
+            if (it is DataState.Data) updateReviews(it.data)
+            this@ProductDetailViewModel._observeReviews.postValue(it)
+        }
+    }
+
+    fun updateReviews(reviews: List<RatingAndReviews>) {
+        val productState = _observeProductDetail.value
+        if (productState is DataState.Data) {
+            productState.data.ratingsAndReviews = reviews
+        }
+    }
+
+    fun reviewsByMostRecent(ratingsAndReviews: List<RatingAndReviews>) =
+        ratingsAndReviews.asReversed()
+
+    fun reviewsByRating(ratingsAndReviews: List<RatingAndReviews>, asc: Boolean = false) =
+        if (asc) ratingsAndReviews.sortedBy { it.score } else ratingsAndReviews.sortedByDescending { it.score }
 }
