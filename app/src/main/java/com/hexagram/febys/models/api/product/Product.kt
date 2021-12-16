@@ -2,6 +2,8 @@ package com.hexagram.febys.models.api.product
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import com.hexagram.febys.models.api.rating.Rating
+import com.hexagram.febys.models.api.stats.Stats
 import com.hexagram.febys.models.api.vendor.Vendor
 import kotlinx.parcelize.Parcelize
 
@@ -24,6 +26,10 @@ data class Product constructor(
     val vendorActive: Boolean,
     val variants: List<Variant>,
     val vendor: Vendor,
+    val stats: Stats,
+    val scores: List<Rating>,
+    @SerializedName("ratings_and_reviews")
+    var ratingsAndReviews: List<RatingAndReviews>,
     @SerializedName("question_answers")
     var _qaThreads: MutableList<QAThread>,
     @SerializedName("created_at")

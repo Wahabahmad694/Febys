@@ -17,17 +17,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
 import com.hexagram.febys.base.SliderFragment
-import com.hexagram.febys.databinding.FragmentProductDetailBinding
-import com.hexagram.febys.databinding.ItemQuestionAnswersThreadBinding
-import com.hexagram.febys.databinding.LayoutAdditionalProductBinding
-import com.hexagram.febys.databinding.LayoutProductDescriptionBinding
-import com.hexagram.febys.models.api.product.Description
-import com.hexagram.febys.models.api.product.Product
-import com.hexagram.febys.models.api.product.QAThread
-import com.hexagram.febys.models.api.product.Variant
+import com.hexagram.febys.databinding.*
+import com.hexagram.febys.models.api.product.*
+import com.hexagram.febys.models.api.rating.Rating
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.cart.CartViewModel
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
@@ -49,6 +45,8 @@ class ProductDetailFragment : SliderFragment() {
     private val variantSecondAttrBottomSheet get() = BottomSheetBehavior.from(binding.bottomSheetVariantSecondAttr.root)
     private val askQuestionBottomSheet get() = BottomSheetBehavior.from(binding.bottomSheetAskQuestion.root)
     private val replyQuestionBottomSheet get() = BottomSheetBehavior.from(binding.bottomSheetReplyQuestion.root)
+
+    private var reviewsSorting = ReviewsSorting.RECENT
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -217,6 +215,40 @@ class ProductDetailFragment : SliderFragment() {
             gotoQAThreads(threads.toTypedArray())
         }
 
+        binding.seeMoreRatingAndReviews.setOnClickListener {
+            val product =
+                (productDetailViewModel.observeProductDetail.value as? DataState.Data)
+                    ?.data ?: return@setOnClickListener
+
+            val rating = product.stats.rating
+            val scores = product.scores
+            val ratingsAndReviews = product.ratingsAndReviews
+
+            val gotoRatingsAndReviews = ProductDetailFragmentDirections
+                .actionProductDetailFragmentToRatingAndReviewsFragment(
+                    consumer?.id?.toString(),
+                    reviewsSorting,
+                    rating,
+                    scores.toTypedArray(),
+                    ratingsAndReviews.toTypedArray()
+                )
+
+            navigateTo(gotoRatingsAndReviews)
+        }
+
+        binding.containerRatingAndReviews.reviews.radioGroupSorting.setOnCheckedChangeListener { _, checkedId ->
+            val product = binding.product ?: return@setOnCheckedChangeListener
+            when (checkedId) {
+                R.id.rb_most_recent -> {
+                    reviewsSorting = ReviewsSorting.RECENT
+                }
+                R.id.rb_top_reviews -> {
+                    reviewsSorting = ReviewsSorting.RATING
+                }
+            }
+            updateReviews(product.ratingsAndReviews)
+        }
+
         binding.bottomSheetReplyQuestion.btnPostAnswer.setOnClickListener {
             val answer = binding.bottomSheetReplyQuestion.etAnswer.text.toString().trim()
             val threadId = binding.thread?._id
@@ -247,6 +279,33 @@ class ProductDetailFragment : SliderFragment() {
 
             updateQuestionAnswersThread(updatedQAThreads.toMutableList())
             productDetailViewModel.updateQAThreads(updatedQAThreads)
+        }
+
+        setFragmentResultListener(RatingAndReviewsFragment.REQ_KEY_RATING_AND_REVIEWS_UPDATE) { _, bundle ->
+            val updatedReviews = bundle
+                .getParcelableArrayList<RatingAndReviews>(RatingAndReviewsFragment.REQ_KEY_RATING_AND_REVIEWS_UPDATE)
+                ?.toMutableList()
+                ?: return@setFragmentResultListener
+
+            updateReviews(updatedReviews)
+            productDetailViewModel.updateReviews(updatedReviews)
+        }
+
+        setFragmentResultListener(RatingAndReviewsFragment.REQ_KEY_REVIEW_SORTING_UPDATE) { _, bundle ->
+            val sorting = bundle
+                .getSerializable(RatingAndReviewsFragment.REQ_KEY_REVIEW_SORTING_UPDATE) as? ReviewsSorting
+                ?: return@setFragmentResultListener
+
+            val ratingsAndReviews =
+                binding.product?.ratingsAndReviews ?: return@setFragmentResultListener
+
+            reviewsSorting = sorting
+            val checkedId = when (reviewsSorting) {
+                ReviewsSorting.RECENT -> R.id.rb_most_recent
+                ReviewsSorting.RATING -> R.id.rb_top_reviews
+            }
+            binding.containerRatingAndReviews.reviews.radioGroupSorting.check(checkedId)
+            updateReviews(ratingsAndReviews)
         }
     }
 
@@ -322,6 +381,22 @@ class ProductDetailFragment : SliderFragment() {
             }
         }
 
+        productDetailViewModel.observeReviews.observe(viewLifecycleOwner) {
+            when (it) {
+                is DataState.Loading -> {
+                    showLoader()
+                }
+                is DataState.Error -> {
+                    hideLoader()
+                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
+                }
+                is DataState.Data -> {
+                    hideLoader()
+                    updateReviews(it.data)
+                }
+            }
+        }
+
         productDetailViewModel.recommendProducts.observe(viewLifecycleOwner) {
             when (it) {
                 is DataState.Loading -> {
@@ -380,13 +455,22 @@ class ProductDetailFragment : SliderFragment() {
 
                 productVariantSecondAttrAdapter.submitList(selectedSecondAttr, secondAttrList)
             }
-
         }
+
         updateVariant(variant)
 
         updateProductDescription(product.descriptions)
 
         updateQuestionAnswersThread(product.qaThreads)
+
+        updateRating(product.stats.rating, product.scores)
+
+        updateReviews(product.ratingsAndReviews)
+
+        val storeRating = product.stats.rating.score
+        binding.storeRatingBar.rating = storeRating.toFloat()
+        binding.storeRatingBar.stepSize = 0.5f
+        binding.tvStoreRating.text = getString(R.string.store_rating, storeRating)
     }
 
     private fun updateQuestionAnswersThread(qaThreads: MutableList<QAThread>) {
@@ -442,7 +526,7 @@ class ProductDetailFragment : SliderFragment() {
 
         layoutQuestionAnswersThread.voteUp.setOnClickListener {
             if (isUserLoggedIn) {
-                productDetailViewModel.voteUp(
+                productDetailViewModel.questionsVoteUp(
                     args.productId,
                     qaThread._id,
                     qaThread.upVotes.contains(consumer?.id.toString())
@@ -454,7 +538,7 @@ class ProductDetailFragment : SliderFragment() {
 
         layoutQuestionAnswersThread.voteDown.setOnClickListener {
             if (isUserLoggedIn) {
-                productDetailViewModel.voteDown(
+                productDetailViewModel.questionVoteDown(
                     args.productId,
                     qaThread._id,
                     qaThread.downVotes.contains(consumer?.id.toString())
@@ -496,6 +580,110 @@ class ProductDetailFragment : SliderFragment() {
         }
 
         addView(parent, layoutAdditionalProductBinding.root, position)
+    }
+
+    private fun updateRating(rating: Rating, scores: List<Rating>) {
+        binding.containerRatingAndReviews.ratings.apply {
+            averageRating.text =
+                getString(R.string.average_rating_based_on, rating.score, rating.count)
+
+            fun updateRatingRow(
+                progressBar: LinearProgressIndicator, total: TextView, count: Int?
+            ) {
+                val avg = count?.times(100.0)?.div(rating.count)?.toInt() ?: 0
+                progressBar.progress = avg
+                total.text = (count ?: 0).toString()
+            }
+
+            val star1Count = scores.firstOrNull { it.score.toInt() == 1 }?.count
+            updateRatingRow(start1RatingBar, star1Total, star1Count)
+
+            val star2Count = scores.firstOrNull { it.score.toInt() == 2 }?.count
+            updateRatingRow(start2RatingBar, star2Total, star2Count)
+
+            val star3Count = scores.firstOrNull { it.score.toInt() == 3 }?.count
+            updateRatingRow(start3RatingBar, star3Total, star3Count)
+
+            val star4Count = scores.firstOrNull { it.score.toInt() == 4 }?.count
+            updateRatingRow(start4RatingBar, star4Total, star4Count)
+
+            val star5Count = scores.firstOrNull { it.score.toInt() == 5 }?.count
+            updateRatingRow(start5RatingBar, star5Total, star5Count)
+        }
+    }
+
+    private fun updateReviews(reviews: List<RatingAndReviews>) {
+        binding.seeMoreRatingAndReviews.isVisible = reviews.isNotEmpty()
+
+        val sortedReviews = when (reviewsSorting) {
+            ReviewsSorting.RECENT -> productDetailViewModel.reviewsByMostRecent(reviews)
+            ReviewsSorting.RATING -> productDetailViewModel.reviewsByRating(reviews)
+        }
+        val list = if (reviews.size > 3) sortedReviews.subList(0, 3) else sortedReviews
+
+        binding.containerReviews.apply {
+            removeAllViews()
+            isVisible = list.isNotEmpty()
+            if (list.isEmpty()) return@apply
+
+            val consumerId = consumer?.id?.toString() ?: ""
+            list.forEach { item ->
+                val reviewBinding = ItemReviewsBinding.inflate(
+                    layoutInflater, binding.containerReviews, false
+                )
+
+                reviewBinding.userName.text = item.consumer.firstName
+                reviewBinding.userRatingBar.progress = item.score.toInt()
+                reviewBinding.tvReview.text = item.review.comment
+                reviewBinding.date.text =
+                    Utils.DateTime.formatDate(
+                        item.createdAt,
+                        Utils.DateTime.FORMAT_MONTH_DATE_YEAR
+                    )
+
+                reviewBinding.tvReview.isVisible = item.review.comment.isNotEmpty()
+
+                reviewBinding.voteUp.text = item.upVotes.size.toString()
+                reviewBinding.voteDown.text = item.downVotes.size.toString()
+
+                val voteUpDrawable = if (item.upVotes.contains(consumerId)) {
+                    R.drawable.ic_vote_up_fill
+                } else {
+                    R.drawable.ic_vote_up
+                }
+                reviewBinding.voteUp.setDrawableRes(voteUpDrawable)
+
+                val voteDownDrawable = if (item.downVotes.contains(consumerId)) {
+                    R.drawable.ic_vote_down_fill
+                } else {
+                    R.drawable.ic_vote_down
+                }
+                reviewBinding.voteDown.setDrawableRes(voteDownDrawable)
+
+                reviewBinding.voteUp.setOnClickListener {
+                    if (isUserLoggedIn) {
+                        productDetailViewModel.reviewVoteUp(
+                            item._id,
+                            item.upVotes.contains(consumer?.id.toString())
+                        )
+                    } else {
+                        gotoLogin()
+                    }
+                }
+                reviewBinding.voteDown.setOnClickListener {
+                    if (isUserLoggedIn) {
+                        productDetailViewModel.reviewVoteDown(
+                            item._id,
+                            item.downVotes.contains(consumer?.id.toString())
+                        )
+                    } else {
+                        gotoLogin()
+                    }
+                }
+
+                addView(binding.containerReviews, reviewBinding.root)
+            }
+        }
     }
 
     private fun updateVariant(variant: Variant) {

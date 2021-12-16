@@ -12,6 +12,28 @@ data class Social(
 ) : Parcelable {
     val imageRes: Int
         get() {
-            return R.drawable.ic_social_link_fb
+            return when (name) {
+                "LinkedIn" -> {
+                    R.drawable.ic_social_link_fb
+                }
+                "Facebook" -> {
+                    R.drawable.ic_social_link_fb
+                }
+                "Instagram" -> {
+                    R.drawable.ic_social_link_fb
+                }
+                "Youtube" -> {
+                    R.drawable.ic_social_link_fb
+                }
+                "Pinterest" -> {
+                    R.drawable.ic_social_link_fb
+                }
+                "Twitter" -> {
+                    R.drawable.ic_social_link_fb
+                }
+                else -> {
+                    R.drawable.ic_social_link_fb
+                }
+            }
         }
 }

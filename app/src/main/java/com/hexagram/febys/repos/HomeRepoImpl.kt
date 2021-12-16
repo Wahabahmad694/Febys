@@ -55,7 +55,7 @@ class HomeRepoImpl @Inject constructor(
             pagingListRequest.createQueryMap()
         )
         return (response as? ApiResponse.ApiSuccessResponse)
-            ?.data?.getResponse<Trending>()?.getAllProducts() ?: emptyList() ?: emptyList()
+            ?.data?.getResponse<Trending>()?.getAllProducts() ?: emptyList()
     }
 
     override suspend fun fetchTrendingProductsBySale(dispatcher: CoroutineDispatcher): List<Product> {

@@ -18,7 +18,6 @@ import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class QAThreadsFragment : BaseBottomSheet() {
 
@@ -83,7 +82,7 @@ class QAThreadsFragment : BaseBottomSheet() {
 
         qaThreadsAdapter.upVote = { thread, isRevoke ->
             if (isUserLoggedIn) {
-                productDetailViewModel.voteUp(args.productId, thread._id, isRevoke)
+                productDetailViewModel.questionsVoteUp(args.productId, thread._id, isRevoke)
             } else {
                 gotoLogin()
             }
@@ -91,7 +90,7 @@ class QAThreadsFragment : BaseBottomSheet() {
 
         qaThreadsAdapter.downVote = { thread, isRevoke ->
             if (isUserLoggedIn) {
-                productDetailViewModel.voteDown(args.productId, thread._id, isRevoke)
+                productDetailViewModel.questionVoteDown(args.productId, thread._id, isRevoke)
             } else {
                 gotoLogin()
             }

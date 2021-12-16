@@ -28,7 +28,7 @@
             android:layout_width="@dimen/_42sdp"
             android:layout_height="@dimen/_42sdp"
             android:layout_marginStart="@dimen/_14sdp"
-            app:actualImageResource="@drawable/ic_store"
+            app:actualImageResource="@drawable/placeholder_user"
             app:actualImageScaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

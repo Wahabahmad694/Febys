@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <com.hexagram.febys.utils.ScrollView
+        android:id="@+id/scroll_view_home"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/_50sdp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".ui.screens.febysPlus.FebysPlusPackages">
+
+            <TextView
+                android:id="@+id/label_febys_plus"
+                style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/_32dp"
+                android:text="@string/febys_plus"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_16dp"
+                android:src="@drawable/ic_back"
+                app:layout_constraintBottom_toBottomOf="@id/label_febys_plus"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/label_febys_plus" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/tv_cardview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                app:cardCornerRadius="@dimen/_10sdp"
+                app:cardElevation="0dp"
+                app:layout_constraintTop_toBottomOf="@id/iv_back">
+
+                <ImageView
+                    android:id="@+id/febys_plus"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/image_febys_plus" />
+
+                <TextView
+                    android:id="@+id/tv_E_experience"
+                    style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+                    android:layout_width="198dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_40sdp"
+                    android:text="@string/the_best_of_shopping_amp_the_e_experience"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14sdp" />
+
+                <TextView
+                    android:id="@+id/tv_E_services"
+                    style="@style/TextTheme.Arial"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_8sdp"
+                    android:layout_marginStart="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_75sdp"
+                    android:maxLines="1"
+                    android:text="@string/all_of_e_services_and_more" />
+
+                <TextView
+                    style="@style/TextTheme.HelveticaNeue.TS14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginHorizontal="@dimen/_8sdp"
+                    android:layout_marginStart="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_110sdp"
+                    android:background="@drawable/febys_bg_corner"
+                    android:padding="@dimen/_4sdp"
+                    android:text="@string/try_febys_plus"
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toStartOf="@id/febys_plus"
+                    app:layout_constraintTop_toBottomOf="@id/tv_E_services" />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/tv_febys_membership"
+                style="@style/TextTheme.Arial.TS12.Bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_35sdp"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:layout_marginEnd="@dimen/_35sdp"
+                android:gravity="center"
+                android:text="@string/join_febys_plus_today_to_get_amazing_delivery_benefits_and_excluslve_ways_to_shop_stream_and_more_cancel_anytime"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_cardview" />
+
+            <TextView
+                android:id="@+id/tv_febys_btn"
+                style="@style/TextTheme.HelveticaNeue.TS14"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginStart="@dimen/_118sdp"
+                android:layout_marginTop="@dimen/_24sdp"
+                android:layout_marginEnd="@dimen/_118sdp"
+                android:layout_marginBottom="@dimen/_28sdp"
+                android:background="@drawable/febys_bg_corner"
+                android:gravity="center"
+                android:padding="@dimen/_4sdp"
+                android:text="@string/try_febys_plus"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_febys_membership" />
+
+            <View
+                android:id="@+id/bg_top"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginHorizontal="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_28sdp"
+                android:background="@color/grey_e1e5e8"
+                app:layout_constraintTop_toBottomOf="@id/tv_febys_btn" />
+
+            <ImageView
+                android:id="@+id/tv_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_17sdp"
+                android:layout_marginTop="@dimen/_14sdp"
+                android:src="@drawable/ic_febys_person"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/bg_top" />
+
+            <TextView
+                android:id="@+id/tv_one"
+                style="@style/TextTheme.HelveticaNeue.TS12.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_14sdp"
+                android:layout_marginTop="@dimen/_19sdp"
+                android:text="@string/free_one_day_shipping"
+                app:layout_constraintStart_toEndOf="@id/tv_image"
+                app:layout_constraintTop_toBottomOf="@id/bg_top" />
+
+            <TextView
+                style="@style/TextTheme.Arial.TS12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_14sdp"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:text="@string/get_items_the_next_day"
+                app:layout_constraintStart_toEndOf="@id/tv_image"
+                app:layout_constraintTop_toBottomOf="@id/tv_one" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_16dp"
+                android:src="@drawable/ic_down_arrow"
+                app:layout_constraintBottom_toBottomOf="@id/tv_image"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_image" />
+
+            <View
+                android:id="@+id/bg_view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginHorizontal="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_13sdp"
+                android:background="@color/grey_e1e5e8"
+                app:layout_constraintTop_toBottomOf="@id/tv_image" />
+
+            <ImageView
+                android:id="@+id/tv_image1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_17sdp"
+                android:layout_marginTop="@dimen/_14sdp"
+                android:src="@drawable/ic_febys_explore"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/bg_view" />
+
+            <TextView
+                android:id="@+id/tv_one1"
+                style="@style/TextTheme.HelveticaNeue.TS12.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_19sdp"
+                android:text="@string/free_same_day_delivery"
+                app:layout_constraintStart_toEndOf="@id/tv_image1"
+                app:layout_constraintTop_toBottomOf="@id/bg_view" />
+
+            <TextView
+                style="@style/TextTheme.Arial.TS12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:text="@string/get_eligible_orders_before_9pm_today"
+                app:layout_constraintStart_toEndOf="@id/tv_image1"
+                app:layout_constraintTop_toBottomOf="@id/tv_one1" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_16dp"
+                android:src="@drawable/ic_down_arrow"
+                app:layout_constraintBottom_toBottomOf="@id/tv_image1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_image1" />
+
+            <View
+                android:id="@+id/bg_view1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginHorizontal="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_13sdp"
+                android:background="@color/grey_e1e5e8"
+                app:layout_constraintTop_toBottomOf="@id/tv_image1" />
+
+            <ImageView
+                android:id="@+id/tv_image2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_17sdp"
+                android:layout_marginTop="@dimen/_14sdp"
+                android:src="@drawable/ic_free_delivery"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/bg_view1" />
+
+            <TextView
+                android:id="@+id/tv_one2"
+                style="@style/TextTheme.HelveticaNeue.TS12.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_19sdp"
+                android:text="@string/free_2_hour_delivery"
+                app:layout_constraintStart_toEndOf="@id/tv_image2"
+                app:layout_constraintTop_toBottomOf="@id/bg_view1" />
+
+            <TextView
+                style="@style/TextTheme.Arial.TS12"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:text="@string/ultra_fast_delivery_on_daily_essentials_and_groceries_with_ruby_now"
+                app:layout_constraintEnd_toStartOf="@id/tv_dropdown"
+                app:layout_constraintStart_toEndOf="@id/tv_image2"
+                app:layout_constraintTop_toBottomOf="@id/tv_one2" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/tv_dropdown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_16dp"
+                android:src="@drawable/ic_down_arrow"
+                app:layout_constraintBottom_toBottomOf="@id/tv_image2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_image2" />
+
+            <View
+                android:id="@+id/bg_view2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginHorizontal="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_13sdp"
+                android:background="@color/grey_e1e5e8"
+                app:layout_constraintTop_toBottomOf="@id/tv_image2" />
+
+            <ImageView
+                android:id="@+id/tv_image_cycle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_17sdp"
+                android:layout_marginTop="@dimen/_14sdp"
+                android:src="@drawable/febys_emarket_day"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/bg_view2" />
+
+            <TextView
+                android:id="@+id/tv_febys_same_day"
+                style="@style/TextTheme.HelveticaNeue.TS12.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_19sdp"
+                android:text="@string/e_market_day"
+                app:layout_constraintStart_toEndOf="@id/tv_image_cycle"
+                app:layout_constraintTop_toBottomOf="@id/bg_view2" />
+
+            <TextView
+                style="@style/TextTheme.Arial.TS12"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:text="@string/add_items_throughout_the_week_for_free_delivery_on_the_day_you_choose"
+                app:layout_constraintEnd_toStartOf="@id/tv_down_arrow"
+                app:layout_constraintStart_toEndOf="@id/tv_image_cycle"
+                app:layout_constraintTop_toBottomOf="@id/tv_febys_same_day" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/tv_down_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_16dp"
+                android:src="@drawable/ic_down_arrow"
+                app:layout_constraintBottom_toBottomOf="@id/tv_image_cycle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_image_cycle" />
+
+            <View
+                android:id="@+id/bg_view3"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginHorizontal="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_13sdp"
+                android:background="@color/grey_e1e5e8"
+                app:layout_constraintTop_toBottomOf="@id/tv_image_cycle" />
+
+            <ImageView
+                android:id="@+id/tv_free_relaese_delivery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_26sdp"
+                android:layout_marginTop="@dimen/_14sdp"
+                android:src="@drawable/febys_date_delivery"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/bg_view3" />
+
+            <TextView
+                android:id="@+id/tv_free_delivery"
+                style="@style/TextTheme.HelveticaNeue.TS12.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_21sdp"
+                android:layout_marginTop="@dimen/_19sdp"
+                android:text="@string/free_release_date_delivery"
+                app:layout_constraintStart_toEndOf="@id/tv_free_relaese_delivery"
+                app:layout_constraintTop_toBottomOf="@id/bg_view3" />
+
+            <TextView
+                style="@style/TextTheme.Arial.TS12"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_21sdp"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:text="@string/be_among_the_first_to_get_new_video_games_music_amp_more"
+                app:layout_constraintEnd_toStartOf="@id/tv_down_arr"
+                app:layout_constraintStart_toEndOf="@id/tv_free_relaese_delivery"
+                app:layout_constraintTop_toBottomOf="@id/tv_free_delivery" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/tv_down_arr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_16dp"
+                android:src="@drawable/ic_down_arrow"
+                app:layout_constraintBottom_toBottomOf="@id/tv_free_relaese_delivery"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_free_relaese_delivery" />
+
+            <View
+                android:id="@+id/bg_view4"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginHorizontal="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_13sdp"
+                android:background="@color/grey_e1e5e8"
+                app:layout_constraintTop_toBottomOf="@id/tv_free_relaese_delivery" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.hexagram.febys.utils.ScrollView>
+</layout>
