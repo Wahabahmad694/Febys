@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentMenuBinding
 import com.hexagram.febys.ui.screens.search.SearchFragmentDirections
@@ -29,6 +30,14 @@ class MenuFragment : BaseFragment() {
             val gotofebysPlus =
                 MenuFragmentDirections.actionMenuFragmentToFebysPlusFragment()
             navigateTo(gotofebysPlus)
+        }
+        binding.labelPawnShop.setOnClickListener {
+            val goToPawnShop = NavGraphDirections.toWebViewFragment()
+            navigateTo(goToPawnShop)
+        }
+        binding.labelDiscountMall.setOnClickListener {
+            val goToDiscountMall = NavGraphDirections.toWebViewFragment()
+            navigateTo(goToDiscountMall)
         }
     }
 }
