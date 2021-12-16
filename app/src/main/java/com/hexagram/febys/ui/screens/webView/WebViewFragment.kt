@@ -4,15 +4,30 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebResourceRequest
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import androidx.activity.OnBackPressedCallback
+import androidx.navigation.fragment.navArgs
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.WebViewFragmentBinding
-import com.hexagram.febys.utils.goBack
 
 
 class WebViewFragment : BaseFragment() {
-    lateinit var binding:WebViewFragmentBinding
+    lateinit var binding: WebViewFragmentBinding
+    private val args:WebViewFragmentArgs by navArgs()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (binding.webView.canGoBack()) {
+                    binding.webView.goBack()
+                } else {
+                    isEnabled = false
+                    activity?.onBackPressed()
+                }
+            }
+        })
     }
 
     override fun onCreateView(
@@ -28,8 +43,24 @@ class WebViewFragment : BaseFragment() {
     }
 
     private fun uiListener() {
-        binding.webView.loadUrl("https://www.google.com")
-        binding.ivBack.setOnClickListener { goBack() }
+        binding.webView.loadUrl(args.url)
+        binding.webView.webViewClient = MyWeb()
+        binding.ivBack.setOnClickListener { requireActivity().onBackPressed() }
+    }
+}
+
+class MyWeb : WebViewClient() {
+    override fun shouldOverrideUrlLoading(
+        view: WebView?, request: WebResourceRequest?,
+    ): Boolean {
+        view?.loadUrl(request?.url.toString())
+        return true
     }
 
+    override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+        if (url != null) {
+            view?.loadUrl(url)
+        }
+        return true
+    }
 }

@@ -420,7 +420,11 @@
         android:id="@+id/webViewFragment"
         android:name="com.hexagram.febys.ui.screens.webView.WebViewFragment"
         android:label="WebViewFragment"
-        tools:layout="@layout/web_view_fragment" />
+        tools:layout="@layout/web_view_fragment">
+        <argument
+            android:name="url"
+            app:argType="string"/>
+    </fragment>
     <fragment
         android:id="@+id/febysPlusFragment"
         android:name="com.hexagram.febys.ui.screens.febysPlus.FebysPlusFragment"
