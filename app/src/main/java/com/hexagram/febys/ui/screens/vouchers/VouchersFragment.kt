@@ -36,7 +36,7 @@ class VouchersFragment : BaseFragment() {
 
         initUi()
         uiListeners()
-        setObserver()
+
     }
 
     private fun initUi() {

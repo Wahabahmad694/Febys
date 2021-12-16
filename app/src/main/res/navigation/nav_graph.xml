@@ -28,6 +28,14 @@
         app:exitAnim="@anim/cart_open_out"
         app:popEnterAnim="@anim/cart_close_in"
         app:popExitAnim="@anim/cart_close_out" />
+    <action
+        android:id="@+id/to_webViewFragment"
+        app:destination="@id/webViewFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_right" />
+
 
     <fragment
         android:id="@+id/splashFragment"
@@ -157,6 +165,16 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_searchFragment_to_storeListFragment"
+            app:destination="@id/storeListFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_storeListFragment_to_storeLoadFragment"
+            app:destination="@id/storeLoadFragment" />
     </fragment>
     <fragment
         android:id="@+id/wishListFragment"
@@ -416,6 +434,22 @@
     </fragment>
 
     <fragment
+        android:id="@+id/webViewFragment"
+        android:name="com.hexagram.febys.ui.screens.webView.WebViewFragment"
+        android:label="WebViewFragment"
+        tools:layout="@layout/web_view_fragment">
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="url"
+            app:argType="string" />
+        <argument
+            android:name="isHtml"
+            android:defaultValue="false"
+            app:argType="boolean" />
+    </fragment>
+    <fragment
         android:id="@+id/febysPlusFragment"
         android:name="com.hexagram.febys.ui.screens.febysPlus.FebysPlusFragment"
         android:label="FebysPlusFragment"
@@ -471,6 +505,28 @@
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
+        android:id="@+id/storeListFragment"
+        android:name="com.hexagram.febys.ui.screens.store.menu.StoreListFragment"
+        android:label="StoreListFragment"
+        tools:layout="@layout/fragment_store_list"/>
+    <fragment
+        android:id="@+id/storeLoadFragment"
+        android:name="com.hexagram.febys.ui.screens.store.menu.LoadStoreFragment"
+        android:label="StoreLoadFragment"
+        tools:layout="@layout/fragment_store_load">
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="storeId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_storeLoadFragment_to_webViewFragment"
+            app:destination="@id/webViewFragment"
+            app:popUpTo="@id/storeLoadFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
         android:id="@+id/vendorDetailFragment"
         android:name="com.hexagram.febys.ui.screens.vendor.VendorDetailFragment"
         android:label="VendorDetailFragment"
@@ -487,7 +543,6 @@
         android:name="com.hexagram.febys.ui.screens.menu.MenuFragment"
         android:label="MenuFragment"
         tools:layout="@layout/fragment_menu">
-
         <action
             android:id="@+id/action_menuFragment_to_febysPlusFragment"
             app:destination="@id/febysPlusFragment"
@@ -495,7 +550,6 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
-
 
     </fragment>
 
