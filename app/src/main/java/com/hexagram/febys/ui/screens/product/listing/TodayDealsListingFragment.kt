@@ -1,6 +1,7 @@
 package com.hexagram.febys.ui.screens.product.listing
 
 import androidx.navigation.fragment.navArgs
+import com.hexagram.febys.ui.screens.product.filters.FiltersType
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -12,4 +13,6 @@ class TodayDealsListingFragment : ProductListingFragment() {
     override fun getProductPagingDate() = productListingViewModel.todayDealsListing {
         setProductItemCount(it.totalRows)
     }
+
+    override fun getFilterType() = FiltersType.TODAY_DEALS
 }

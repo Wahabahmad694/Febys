@@ -39,7 +39,7 @@
 
     <action
         android:id="@+id/to_product_filter_fragment"
-        app:destination="@id/searchFilterFragment"
+        app:destination="@id/filterFragment"
         app:enterAnim="@anim/slide_in_left"
         app:exitAnim="@anim/slide_out_left"
         app:popEnterAnim="@anim/slide_in_right"
@@ -309,10 +309,23 @@
             app:argType="integer" />
     </fragment>
     <fragment
-        android:id="@+id/searchFilterFragment"
+        android:id="@+id/filterFragment"
         android:name="com.hexagram.febys.ui.screens.product.filters.FiltersFragment"
-        android:label="SearchFilter"
+        android:label="Filters"
         tools:layout="@layout/fragment_filters">
+        <argument
+            android:name="filterType"
+            app:argType="com.hexagram.febys.ui.screens.product.filters.FiltersType" />
+        <argument
+            android:name="categoryId"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="vendorId"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
         <action
             android:id="@+id/action_search_filter_fragment_to_filtersDetailListFragment"
             app:destination="@id/filtersDetailListFragment"
@@ -323,12 +336,12 @@
     </fragment>
     <fragment
         android:id="@+id/filtersDetailListFragment"
-        android:name="com.hexagram.febys.ui.screens.product.filters.detailsList.FiltersDetailListFragment"
+        android:name="com.hexagram.febys.ui.screens.product.filters.detail.FiltersDetailListFragment"
         android:label="FilterDetailList"
         tools:layout="@layout/fragment_filters_detail_list">
         <argument
             android:name="filter"
-            app:argType="string" />
+            app:argType="com.hexagram.febys.models.api.product.Attr" />
     </fragment>
     <fragment
         android:id="@+id/todayDealsListingFragment"

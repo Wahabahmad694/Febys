@@ -16,6 +16,7 @@ import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentProductListingBinding
 import com.hexagram.febys.models.api.product.Product
+import com.hexagram.febys.ui.screens.product.filters.FiltersType
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.Flow
@@ -89,7 +90,8 @@ abstract class ProductListingFragment : BaseFragment() {
         }
 
         binding.btnRefine.setOnClickListener {
-            val gotoRefineProduct = NavGraphDirections.toProductFilterFragment()
+            val gotoRefineProduct = NavGraphDirections
+                .toProductFilterFragment(getFilterType(), getCategoryId(), getVendorId())
             navigateTo(gotoRefineProduct)
         }
 
@@ -128,4 +130,8 @@ abstract class ProductListingFragment : BaseFragment() {
     abstract fun getListingTitle(): String
 
     abstract fun getProductPagingDate(): Flow<PagingData<Product>>
+
+    abstract fun getFilterType(): FiltersType
+    open fun getVendorId(): String? = null
+    open fun getCategoryId(): String? = null
 }

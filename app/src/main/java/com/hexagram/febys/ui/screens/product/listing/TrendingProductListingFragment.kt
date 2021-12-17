@@ -1,6 +1,7 @@
 package com.hexagram.febys.ui.screens.product.listing
 
 import androidx.navigation.fragment.navArgs
+import com.hexagram.febys.ui.screens.product.filters.FiltersType
 
 class TrendingProductListingFragment : ProductListingFragment() {
     private val args: TrendingProductListingFragmentArgs by navArgs()
@@ -10,4 +11,6 @@ class TrendingProductListingFragment : ProductListingFragment() {
     override fun getProductPagingDate() = productListingViewModel.trendingProductsListing {
         setProductItemCount(it.totalRows)
     }
+
+    override fun getFilterType() = FiltersType.SEARCH
 }

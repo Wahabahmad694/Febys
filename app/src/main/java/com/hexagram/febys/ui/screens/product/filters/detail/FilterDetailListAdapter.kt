@@ -1,4 +1,4 @@
-package com.hexagram.febys.ui.screens.product.filters.detailsList
+package com.hexagram.febys.ui.screens.product.filters.detail
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

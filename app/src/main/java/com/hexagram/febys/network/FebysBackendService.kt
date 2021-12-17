@@ -62,7 +62,7 @@ interface FebysBackendService {
         @Body request: PagingListRequest
     ): ApiResponse<Pagination>
 
-    @GET("v1/products")
+    @POST("v1/consumers/products")
     suspend fun searchProducts(
         @QueryMap queryMap: Map<String, String>, @Body request: PagingListRequest
     ): ApiResponse<ResponseOfPagination>
@@ -286,5 +286,14 @@ interface FebysBackendService {
     ): ApiResponse<OrderResponse>
 
     @GET("v1/consumers/products/search/filters")
-    suspend fun fetchFilters(): ApiResponse<SearchFilterResponse>
+    suspend fun fetchSearchFilters(): ApiResponse<SearchFilterResponse>
+
+    @GET("v1/categories/{categoryId}/filters")
+    suspend fun fetchCategoryFilters(@Path("categoryId") categoryId: String): ApiResponse<SearchFilterResponse>
+
+    @GET("v1/consumers/today/deals/filters")
+    suspend fun fetchTodayDealsFilters(): ApiResponse<SearchFilterResponse>
+
+    @GET("v1/consumers/vendor/{vendorId}/category/list")
+    suspend fun fetchVendorCategoryFilters(@Path("vendorId") vendorId: String): ApiResponse<SearchFilterResponse>
 }

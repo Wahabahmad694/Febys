@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentFiltersBinding
@@ -19,9 +20,16 @@ import com.hexagram.febys.utils.showLoader
 
 class FiltersFragment : BaseFragment() {
     private lateinit var binding: FragmentFiltersBinding
-    private val searchViewModel by viewModels<SearchFilterViewModel>()
+    private val filtersViewModel by viewModels<FilterViewModel>()
+    private val args by navArgs<FiltersFragmentArgs>()
 
-    private val filterAdapter = SearchFilterAdapter()
+    private val filterAdapter = FiltersAdapter()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        filtersViewModel.fetchFilters(args.filterType, args.categoryId, args.vendorId)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -78,7 +86,7 @@ class FiltersFragment : BaseFragment() {
     }
 
     private fun setObserver() {
-        searchViewModel.observeFilters.observe(viewLifecycleOwner) {
+        filtersViewModel.observeFilters.observe(viewLifecycleOwner) {
             when (it) {
                 is DataState.Loading -> {
                     showLoader()
@@ -96,7 +104,7 @@ class FiltersFragment : BaseFragment() {
     }
 
     private fun updateUi(filters: Filters) {
-        val listOfNames = filters.attributes.getAttributeName()
-        filterAdapter.submitList(listOfNames)
+        val filters = filters.attributes.attributes
+        filterAdapter.submitList(filters)
     }
 }
