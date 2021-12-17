@@ -1,9 +1,11 @@
 package com.hexagram.febys.repos
 
+import androidx.paging.PagingData
 import com.hexagram.febys.models.api.order.CancelReasons
 import com.hexagram.febys.models.api.order.Order
 import com.hexagram.febys.network.DataState
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 
@@ -25,4 +27,10 @@ interface IOrderRepo {
         comment: String,
         dispatcher: CoroutineDispatcher = Dispatchers.IO
     ): Flow<DataState<Order>>
+
+    fun fetchOrderList(
+        filters: Array<String>?,
+        scope: CoroutineScope,
+        dispatcher: CoroutineDispatcher = Dispatchers.IO
+    ): Flow<PagingData<Order>>
 }

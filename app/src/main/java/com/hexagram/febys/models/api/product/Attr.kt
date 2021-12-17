@@ -7,5 +7,6 @@ import kotlinx.parcelize.Parcelize
 data class Attr(
     val _id: String,
     val name: String,
-    val value: String
+    val value: String,
+    val values: List<String>
 ) : Parcelable

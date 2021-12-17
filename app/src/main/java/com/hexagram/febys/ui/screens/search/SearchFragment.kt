@@ -13,6 +13,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentSearchBinding
+import com.hexagram.febys.utils.hideKeyboard
 import com.hexagram.febys.utils.navigateTo
 import com.hexagram.febys.utils.onSearch
 import dagger.hilt.android.AndroidEntryPoint
@@ -87,6 +88,7 @@ class SearchFragment : BaseFragment() {
 
     private fun uiListeners() {
         fun onSearchClick() {
+            hideKeyboard()
             val query = binding.etSearch.text.toString()
             if (query.isNotEmpty()) {
                 doSearch(query)

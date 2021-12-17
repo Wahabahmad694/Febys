@@ -3,6 +3,7 @@ package com.hexagram.febys.network
 import com.hexagram.febys.models.api.cart.CartResponse
 import com.hexagram.febys.models.api.cities.PostCitiesResponse
 import com.hexagram.febys.models.api.countries.CountryResponse
+import com.hexagram.febys.models.api.filters.SearchFilterResponse
 import com.hexagram.febys.models.api.pagination.Pagination
 import com.hexagram.febys.models.api.product.FeaturedCategory
 import com.hexagram.febys.models.api.request.*
@@ -61,7 +62,7 @@ interface FebysBackendService {
         @Body request: PagingListRequest
     ): ApiResponse<Pagination>
 
-    @GET("v1/products")
+    @POST("v1/consumers/products")
     suspend fun searchProducts(
         @QueryMap queryMap: Map<String, String>, @Body request: PagingListRequest
     ): ApiResponse<ResponseOfPagination>
@@ -235,7 +236,9 @@ interface FebysBackendService {
 
     @POST("v1/orders/for-consumer/list")
     suspend fun fetchOrderListing(
-        @Header("Authorization") authToken: String, @Body orderListingRequest: OrderListingRequest
+        @Header("Authorization") authToken: String,
+        @QueryMap queryMap: Map<String, String>,
+        @Body orderListingRequest: OrderListingRequest
     ): ApiResponse<Pagination>
 
     @POST("v1/orders/for-consumer/{orderId}")
@@ -281,4 +284,16 @@ interface FebysBackendService {
         @Path("vendorId") vendorId: String,
         @Body reqBody: Map<String, String>
     ): ApiResponse<OrderResponse>
+
+    @GET("v1/consumers/products/search/filters")
+    suspend fun fetchSearchFilters(): ApiResponse<SearchFilterResponse>
+
+    @GET("v1/categories/{categoryId}/filters")
+    suspend fun fetchCategoryFilters(@Path("categoryId") categoryId: String): ApiResponse<SearchFilterResponse>
+
+    @GET("v1/consumers/today/deals/filters")
+    suspend fun fetchTodayDealsFilters(): ApiResponse<SearchFilterResponse>
+
+    @GET("v1/consumers/vendor/{vendorId}/category/list")
+    suspend fun fetchVendorCategoryFilters(@Path("vendorId") vendorId: String): ApiResponse<SearchFilterResponse>
 }

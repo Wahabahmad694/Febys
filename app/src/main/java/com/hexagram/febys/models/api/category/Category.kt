@@ -2,6 +2,7 @@ package com.hexagram.febys.models.api.category
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import com.hexagram.febys.models.api.template.Template
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -25,7 +26,19 @@ data class Category(
     val childNames: String,
     @SerializedName("total_child")
     val totalChild: Int,
-    val children: List<Category>
+    val children: List<Category>,
+    @SerializedName("chain_id")
+    val chainId: String,
+    val commission: String,
+    @SerializedName("commission_type")
+    val commissionType: String,
+    val deleted: Int,
+    val templates: List<Template>,
+    @SerializedName("created_by")
+    val createdBy: String,
+    @SerializedName("updated_by")
+    val updatedBy: String
+
 ) : Parcelable {
     val isEnable
         get() = enable == 1

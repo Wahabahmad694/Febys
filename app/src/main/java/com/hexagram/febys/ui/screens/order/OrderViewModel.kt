@@ -3,12 +3,14 @@ package com.hexagram.febys.ui.screens.order
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
 import com.hexagram.febys.base.BaseViewModel
 import com.hexagram.febys.models.api.order.CancelReasons
 import com.hexagram.febys.models.api.order.Order
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.repos.IOrderRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -29,12 +31,7 @@ class OrderViewModel @Inject constructor(
     private val _observerCancelOrder = MutableLiveData<DataState<Order>>()
     val observeCancelOrder: LiveData<DataState<Order>> = _observerCancelOrder
 
-    fun fetchOrders(filters: Array<String>? = null) = viewModelScope.launch {
-        _observerOrders.postValue(DataState.Loading())
-        orderRepo.fetchOrders(filters).collect {
-            _observerOrders.postValue(it)
-        }
-    }
+    private var orderListOldOrderListing: Flow<PagingData<Order>>? = null
 
     fun fetchOrder(orderId: String) = viewModelScope.launch {
         _observerOrder.postValue(DataState.Loading())
@@ -57,5 +54,13 @@ class OrderViewModel @Inject constructor(
         orderRepo.cancelOrder(orderId, vendorId, reason, comment).collect {
             _observerCancelOrder.postValue(it)
         }
+    }
+
+    fun fetchOrderList(filters: Array<String>? = null): Flow<PagingData<Order>> {
+        if (orderListOldOrderListing == null) {
+            orderListOldOrderListing = orderRepo.fetchOrderList(filters, viewModelScope)
+        }
+
+        return orderListOldOrderListing!!
     }
 }

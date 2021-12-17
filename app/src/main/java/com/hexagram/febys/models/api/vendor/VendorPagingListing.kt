@@ -7,6 +7,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 class VendorPagingListing(
+    val key: String,
     @SerializedName("vendors", alternate = ["celebs", "stores"])
     val vendors: List<Vendor>,
     @SerializedName("pagingInfo", alternate = ["pagination_info"])
