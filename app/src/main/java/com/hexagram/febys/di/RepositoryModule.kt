@@ -62,4 +62,8 @@ abstract class RepositoryModule {
     @Singleton
     @Binds
     abstract fun bindFiltersRepo(repo: FiltersRepoImpl): IFiltersRepo
+
+    @Singleton
+    @Binds
+    abstract fun bindStoreMenuRepo(repo: StoreMenusRepoImpl): IStoreMenusRepo
 }
