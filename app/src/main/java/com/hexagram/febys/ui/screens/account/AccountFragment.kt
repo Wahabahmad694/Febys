@@ -56,7 +56,10 @@ class AccountFragment : BaseFragment() {
         }
 
         binding.orders.orderReceived.setOnClickListener {
-            gotoOrderListing(arrayOf(OrderStatus.DELIVERED))
+            gotoOrderListing(
+                arrayOf(OrderStatus.DELIVERED),
+                getString(R.string.label_order_received)
+            )
         }
 
         binding.orders.cancelOrders.setOnClickListener {
@@ -65,7 +68,8 @@ class AccountFragment : BaseFragment() {
                     OrderStatus.CANCELED,
                     OrderStatus.CANCELLED_BY_VENDOR,
                     OrderStatus.REJECTED
-                )
+                ),
+                getString(R.string.label_cancel_orders)
             )
         }
 
@@ -87,9 +91,9 @@ class AccountFragment : BaseFragment() {
         }
     }
 
-    private fun gotoOrderListing(status: Array<String>? = null) {
+    private fun gotoOrderListing(status: Array<String>? = null, title: String? = null) {
         val navigateToOrderListing =
-            AccountFragmentDirections.actionAccountFragmentToOrderListingFragment(status)
+            AccountFragmentDirections.actionAccountFragmentToOrderListingFragment(status, title)
         navigateTo(navigateToOrderListing)
     }
 
@@ -102,7 +106,7 @@ class AccountFragment : BaseFragment() {
 
     private fun updateUserUi(user: Consumer?) {
         binding.isUserLoggedIn = isUserLoggedIn
-        binding.userName.text = user?.firstName ?: getString(R.string.label_me)
+        binding.userName.text = user?.firstName?.split(" ")?.get(0) ?: getString(R.string.label_me)
     }
 
     override fun getIvCart() = binding.ivCart

@@ -127,7 +127,7 @@
                         android:id="@+id/dots_indicator"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/_24dp"
+                        android:layout_marginBottom="@dimen/_18sdp"
                         app:dotsColor="@color/slider_dot_color"
                         app:dotsCornerRadius="8dp"
                         app:dotsSize="4dp"
