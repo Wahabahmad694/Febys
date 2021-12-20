@@ -89,6 +89,10 @@ class AccountFragment : BaseFragment() {
             val gotoVouchers = AccountFragmentDirections.actionAccountFragmentToVouchersFragment()
             navigateTo(gotoVouchers)
         }
+       binding.settings.accountSettings.setOnClickListener {
+           val goToAccountSettings = AccountFragmentDirections.actionAccountFragmentToAccountSettingsFragment()
+           navigateTo(goToAccountSettings)
+       }
     }
 
     private fun gotoOrderListing(status: Array<String>? = null, title: String? = null) {
