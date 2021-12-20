@@ -11,7 +11,6 @@ import androidx.core.view.setPadding
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.hexagram.febys.NavGraphDirections
-import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentVendorDetailBinding
 import com.hexagram.febys.models.api.social.Social
@@ -94,28 +93,8 @@ class VendorDetailFragment : BaseFragment() {
             slogan.text = vendor.role.name
             type.isVisible = vendor.official
             address.text = vendor.contactDetails.address
-            addSocialLinks(vendor.socials)
-
-            binding.isFollowing = args.isFollow
-        }
-    }
-
-    private fun addSocialLinks(socialLinks: List<Social>?) {
-        if (socialLinks.isNullOrEmpty()) return
-
-        binding.containerSocialMediaFollow.removeAllViews()
-        socialLinks.forEach { socialLink ->
-            val imageView = ImageView(binding.containerSocialMediaFollow.context)
-            val layoutParam = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-            imageView.setBackgroundResource(R.drawable.bg_social_link)
-            imageView.setImageResource(socialLink.imageRes)
-            imageView.setPadding(16)
-            imageView.setOnClickListener {
-                Utils.openLink(it.context, socialLink.url)
-            }
-            binding.containerSocialMediaFollow.addView(imageView, layoutParam)
+            Social.addAllTo(vendor.socials, binding.containerSocialMediaFollow)
+            isFollowing = args.isFollow
         }
     }
 }

@@ -4,11 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.setPadding
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
@@ -149,37 +146,17 @@ class CelebrityDetailFragment : BaseFragment() {
         }
     }
 
-    private fun updateUi(vendor: Vendor) {
+    private fun updateUi(celebrity: Vendor) {
         binding.apply {
-            profileImg.load(vendor.businessInfo.logo)
-            vendor.templatePhoto?.let { headerImg.load(it) }
-            tvProductListingTitle.text = vendor.name
-            name.text = vendor.name
-            type.text = vendor.businessInfo.vendorType
-            address.text = vendor.contactDetails.address
-            addSocialLinks(vendor.socials)
-//            endorsementAdapter.submitList(vendorDetail.endorsements)
-
-            binding.isFollowing = args.isFollow
-        }
-    }
-
-    private fun addSocialLinks(socialLinks: List<Social>?) {
-        if (socialLinks.isNullOrEmpty()) return
-
-        binding.containerSocialMediaFollow.removeAllViews()
-        socialLinks.forEach { socialLink ->
-            val imageView = ImageView(binding.containerSocialMediaFollow.context)
-            val layoutParam = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-            imageView.setBackgroundResource(R.drawable.bg_social_link)
-            imageView.setImageResource(socialLink.imageRes)
-            imageView.setPadding(16)
-            imageView.setOnClickListener {
-                Utils.openLink(it.context, socialLink.url)
-            }
-            binding.containerSocialMediaFollow.addView(imageView, layoutParam)
+            profileImg.load(celebrity.businessInfo.logo)
+            celebrity.templatePhoto?.let { headerImg.load(it) }
+            tvProductListingTitle.text = celebrity.name
+            name.text = celebrity.name
+            type.text = celebrity.businessInfo.vendorType
+            address.text = celebrity.contactDetails.address
+            Social.addAllTo(celebrity.socials, binding.containerSocialMediaFollow)
+//            endorsementAdapter.submitList(vendor.endorsements)
+            isFollowing = args.isFollow
         }
     }
 
