@@ -274,4 +274,7 @@
     <string name="add_items_throughout_the_week_for_free_delivery_on_the_day_you_choose">Add items throughout the week for free delivery on the day you choose</string>
     <string name="free_release_date_delivery">Free Release-Date Delivery</string>
     <string name="be_among_the_first_to_get_new_video_games_music_amp_more"><![CDATA[Be among the first to get new video games. music & more]]></string>
+    <string name="account_settings">Account Settings</string>
+    <string name="phone_number">Phone Number</string>
+
 </resources>

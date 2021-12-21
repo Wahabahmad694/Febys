@@ -255,6 +255,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_accountFragment_to_accountSettingsFragment"
+            app:destination="@id/accountSettingsFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <dialog
@@ -622,6 +629,11 @@
         android:name="com.hexagram.febys.ui.screens.payment.method.PaymentMethodsFragment"
         android:label="PaymentMethodsFragment"
         tools:layout="@layout/fragment_payment_methods" />
+    <fragment
+        android:id="@+id/accountSettingsFragment"
+        android:name="com.hexagram.febys.ui.screens.profile.AccountSettingsFragment"
+        android:label="AccountSettingsFragment"
+        tools:layout="@layout/account_settings_fragment" />
     <fragment
         android:id="@+id/orderListingFragment"
         android:name="com.hexagram.febys.ui.screens.order.listing.OrderListingFragment"

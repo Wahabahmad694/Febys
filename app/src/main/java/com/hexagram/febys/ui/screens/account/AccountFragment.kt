@@ -52,7 +52,7 @@ class AccountFragment : BaseFragment() {
         }
 
         binding.orders.myOrders.setOnClickListener {
-            gotoOrderListing()
+            gotoOrderListing(arrayOf(),getString(R.string.label_my_orders))
         }
 
         binding.orders.orderReceived.setOnClickListener {
@@ -89,6 +89,10 @@ class AccountFragment : BaseFragment() {
             val gotoVouchers = AccountFragmentDirections.actionAccountFragmentToVouchersFragment()
             navigateTo(gotoVouchers)
         }
+       binding.settings.accountSettings.setOnClickListener {
+           val goToAccountSettings = AccountFragmentDirections.actionAccountFragmentToAccountSettingsFragment()
+           navigateTo(goToAccountSettings)
+       }
     }
 
     private fun gotoOrderListing(status: Array<String>? = null, title: String? = null) {

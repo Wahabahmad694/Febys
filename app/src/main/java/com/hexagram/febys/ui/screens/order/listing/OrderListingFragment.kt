@@ -41,6 +41,7 @@ class OrderListingFragment : BaseFragment() {
 
     private fun initUi() {
         setupOrderPagerAdapter()
+        binding.labelOrders.text = args.title
     }
 
     private fun uiListener() {
