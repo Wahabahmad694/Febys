@@ -52,7 +52,7 @@ class AccountFragment : BaseFragment() {
         }
 
         binding.orders.myOrders.setOnClickListener {
-            gotoOrderListing()
+            gotoOrderListing(null,getString(R.string.label_my_orders))
         }
 
         binding.orders.orderReceived.setOnClickListener {

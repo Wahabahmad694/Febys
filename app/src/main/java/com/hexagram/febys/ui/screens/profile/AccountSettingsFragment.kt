@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.AccountSettingsFragmentBinding
+import com.hexagram.febys.utils.goBack
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,6 +21,10 @@ class AccountSettingsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        iniUi()
+    }
 
+    private fun iniUi() {
+        binding.ivBack.setOnClickListener { goBack() }
     }
 }
