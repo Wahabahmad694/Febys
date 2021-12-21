@@ -483,7 +483,7 @@ class ProductDetailFragment : SliderFragment() {
     }
 
     private fun updateQuestionAnswersThread(qaThreads: MutableList<QAThread>) {
-        binding.seeMoreQAndA.isVisible = qaThreads.isEmpty()
+        binding.seeMoreQAndA.isVisible = qaThreads.isNotEmpty()
         if (qaThreads.isEmpty()) return
 
         binding.containerQAndAThread.removeAllViews()

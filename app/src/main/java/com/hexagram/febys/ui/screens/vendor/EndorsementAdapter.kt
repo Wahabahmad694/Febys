@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.hexagram.febys.databinding.ItemMyEndorsementsBinding
-import com.hexagram.febys.models.view.Endorsement
+import com.hexagram.febys.models.api.vendor.Endorsement
 import com.hexagram.febys.utils.load
 
 class EndorsementAdapter : RecyclerView.Adapter<EndorsementAdapter.EndorsementViewHolder>() {
@@ -13,9 +13,9 @@ class EndorsementAdapter : RecyclerView.Adapter<EndorsementAdapter.EndorsementVi
     inner class EndorsementViewHolder(
         private val binding: ItemMyEndorsementsBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(endorsement: Endorsement, position: Int) {
+        fun bind(endorsement: Endorsement) {
             binding.apply {
-                profileImg.load(endorsement.profileImage)
+                profileImg.load(endorsement.businessInfo.logo)
                 name.text = endorsement.name
             }
         }
@@ -32,7 +32,7 @@ class EndorsementAdapter : RecyclerView.Adapter<EndorsementAdapter.EndorsementVi
     }
 
     override fun onBindViewHolder(holder: EndorsementAdapter.EndorsementViewHolder, position: Int) {
-        holder.bind(endorsements[position], position)
+        holder.bind(endorsements[position])
     }
 
     fun submitList(list: List<Endorsement>) {

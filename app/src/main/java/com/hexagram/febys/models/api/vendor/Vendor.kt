@@ -21,7 +21,7 @@ data class Vendor @JvmOverloads constructor(
     @SerializedName("template_photo")
     val templatePhoto: String?,
     val role: Role,
-    val states: VendorStats,
+    val stats: VendorStats,
     @SerializedName("business_info")
     val businessInfo: BusinessInfo,
     @SerializedName("contact_details")

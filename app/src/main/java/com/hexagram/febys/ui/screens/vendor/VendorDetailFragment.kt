@@ -4,13 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import androidx.core.view.isVisible
-import androidx.core.view.setPadding
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.hexagram.febys.NavGraphDirections
+import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentVendorDetailBinding
 import com.hexagram.febys.models.api.social.Social
@@ -90,11 +87,17 @@ class VendorDetailFragment : BaseFragment() {
             vendor.templatePhoto?.let { headerImg.load(it) }
             title.text = vendor.name
             vendorName.text = vendor.name
-            slogan.text = vendor.role.name
-            type.isVisible = vendor.official
+            type.text = vendor.role.name
             address.text = vendor.contactDetails.address
-            Social.addAllTo(vendor.socials, binding.containerSocialMediaFollow)
+            Social.addAllTo(
+                vendor.socials, binding.containerSocialMediaFollow, binding.labelNoSocialLink
+            )
             isFollowing = args.isFollow
+
+            val storeRating = vendor.stats.rating.score
+            binding.storeRatingBar.rating = storeRating.toFloat()
+            binding.storeRatingBar.stepSize = 0.5f
+            binding.tvStoreRating.text = getString(R.string.store_rating, storeRating)
         }
     }
 }

@@ -5,6 +5,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.hexagram.febys.models.api.request.PagingListRequest
+import com.hexagram.febys.models.api.vendor.Endorsement
 import com.hexagram.febys.models.api.vendor.Vendor
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.FebysBackendService
@@ -60,6 +61,18 @@ class VendorRepoImpl @Inject constructor(
         val response = backendService.fetchVendorDetail(vendorId)
         response.onSuccess {
             emit(DataState.Data(data!!))
+        }
+            .onError { emit(DataState.ApiError(message)) }
+            .onException { emit(DataState.ExceptionError()) }
+            .onNetworkError { emit(DataState.NetworkError()) }
+    }.flowOn(dispatcher)
+
+    override fun fetchVendorEndorsement(
+        vendorId: String, dispatcher: CoroutineDispatcher
+    ): Flow<DataState<List<Endorsement>>> = flow<DataState<List<Endorsement>>> {
+        val response = backendService.fetchVendorEndorsements(vendorId)
+        response.onSuccess {
+            emit(DataState.Data(data!!.endorsement))
         }
             .onError { emit(DataState.ApiError(message)) }
             .onException { emit(DataState.ExceptionError()) }

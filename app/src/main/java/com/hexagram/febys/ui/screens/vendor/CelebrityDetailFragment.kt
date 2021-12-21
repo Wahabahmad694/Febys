@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
@@ -39,6 +40,7 @@ class CelebrityDetailFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         celebrityViewModel.fetchVendorDetail(args.id)
+        celebrityViewModel.fetchVendorEndorsement(args.id)
     }
 
     override fun onCreateView(
@@ -66,8 +68,7 @@ class CelebrityDetailFragment : BaseFragment() {
         }
 
         binding.rvMyEndorsements.apply {
-            setHasFixedSize(true)
-            applySpaceItemDecoration(horizontalDimenRes = R.dimen._24dp)
+            applySpaceItemDecoration(horizontalDimenRes = R.dimen._8sdp)
             adapter = endorsementAdapter
         }
     }
@@ -144,6 +145,23 @@ class CelebrityDetailFragment : BaseFragment() {
                 }
             }
         }
+
+        celebrityViewModel.observerVendorEndorsement.observe(viewLifecycleOwner) {
+            when (it) {
+                is DataState.Loading,
+                is DataState.Error -> {
+                    // do nothing
+                }
+                is DataState.Data -> {
+                    val endorsement = it.data
+                    binding.labelMyEndorsements.isVisible = endorsement.isNotEmpty()
+                    binding.rvMyEndorsements.isVisible = endorsement.isNotEmpty()
+                    binding.scrollBarEndorsements.isVisible = endorsement.isNotEmpty()
+
+                    endorsementAdapter.submitList(endorsement)
+                }
+            }
+        }
     }
 
     private fun updateUi(celebrity: Vendor) {
@@ -152,10 +170,11 @@ class CelebrityDetailFragment : BaseFragment() {
             celebrity.templatePhoto?.let { headerImg.load(it) }
             tvProductListingTitle.text = celebrity.name
             name.text = celebrity.name
-            type.text = celebrity.businessInfo.vendorType
-            address.text = celebrity.contactDetails.address
-            Social.addAllTo(celebrity.socials, binding.containerSocialMediaFollow)
-//            endorsementAdapter.submitList(vendor.endorsements)
+            type.text = celebrity.role.name
+            address.text = celebrity.businessInfo.address
+            Social.addAllTo(
+                celebrity.socials, binding.containerSocialMediaFollow, binding.labelNoSocialLink
+            )
             isFollowing = args.isFollow
         }
     }

@@ -126,6 +126,9 @@ interface FebysBackendService {
     @GET("v1/consumers/vendor-detail/{vendorId}")
     suspend fun fetchVendorDetail(@Path("vendorId") vendorId: String): ApiResponse<Vendor>
 
+    @POST("v1/vendors/{vendorId}/endorsements")
+    suspend fun fetchVendorEndorsements(@Path("vendorId") vendorId: String): ApiResponse<EndorsementResponse>
+
     @POST("v1/consumers/follow/{vendorId}")
     suspend fun followVendor(
         @Header("Authorization") authKey: String, @Path("vendorId") vendorId: String
