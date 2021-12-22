@@ -41,13 +41,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_18sdp">
 
-<!--            <View-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="@dimen/_1dp"-->
-<!--                android:background="@color/grey_e1e5e8"-->
-<!--                app:layout_constraintTop_toTopOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"/>-->
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_product_variant"
                 android:layout_width="match_parent"

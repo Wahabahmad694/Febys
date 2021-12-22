@@ -40,7 +40,11 @@ object Utils {
     }
 
     fun openLink(context: Context, link: String) {
-        val uri = Uri.parse(link)
+        var url = link
+        if (!url.startsWith("www.") && !url.startsWith("http")) url = "www.$url"
+        if (!url.startsWith("http")) url = "https://$url"
+
+        val uri = Uri.parse(url)
         val intent = Intent(Intent.ACTION_VIEW, uri)
         context.startActivity(intent)
     }

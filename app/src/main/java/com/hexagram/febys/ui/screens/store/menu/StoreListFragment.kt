@@ -48,7 +48,7 @@ class StoreListFragment : BaseFragment() {
 
     private fun uiListeners() {
         storeListAdapter.itemClickCallback = {
-            val title = it.template?.split(",")?.firstOrNull() ?: ""
+            val title = it.name
             val storeId = it.template?.split(",")?.lastOrNull() ?: ""
 
             if (storeId.isNotEmpty()){

@@ -68,9 +68,7 @@ object OrderStatus {
             REJECTED -> {
                 "#DE0407"
             }
-            RETURNED -> {
-                "#FF976B"
-            }
+            RETURNED,
             PENDING_RETURN -> {
                 "#FF976B"
             }

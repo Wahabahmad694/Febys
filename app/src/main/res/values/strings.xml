@@ -219,6 +219,7 @@
     <string name="label_pawn_shop">Pawn Shop</string>
     <string name="label_delete">Delete</string>
     <string name="label_reply">Reply</string>
+    <string name="reply_to_the_question">Reply to the question</string>
     <string name="label_by">By</string>
     <string name="label_see_more">See More</string>
     <string name="label_ask_about_product">Ask about the product.</string>
@@ -276,5 +277,7 @@
     <string name="be_among_the_first_to_get_new_video_games_music_amp_more"><![CDATA[Be among the first to get new video games. music & more]]></string>
     <string name="account_settings">Account Settings</string>
     <string name="phone_number">Phone Number</string>
+    <string name="label_no_social_link">No social link available</string>
+    <string name="label_no_reviews">No Reviews</string>
 
 </resources>

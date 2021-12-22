@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
 import com.hexagram.febys.base.SliderFragment
@@ -98,11 +97,7 @@ class ProductDetailFragment : SliderFragment() {
 
     private fun uiListeners() {
         binding.ivProductFav.setOnClickListener {
-            if (isUserLoggedIn) {
-                toggleFavAndUpdateIcon()
-            } else {
-                gotoLogin()
-            }
+            handleFavClick()
         }
 
         binding.containerProductVariantFirstAttr.setOnClickListener {
@@ -195,11 +190,7 @@ class ProductDetailFragment : SliderFragment() {
         }
 
         binding.btnAddToCart.setOnClickListener {
-            val product = binding.product
-            val skuId = binding.variant?.skuId
-            if (product != null && skuId != null) {
-                cartViewModel.addToCart(product, skuId)
-            }
+            handleAddToCartClick()
         }
 
         binding.ivBack.setOnClickListener {
@@ -237,38 +228,19 @@ class ProductDetailFragment : SliderFragment() {
         }
 
         binding.containerRatingAndReviews.reviews.radioGroupSorting.setOnCheckedChangeListener { _, checkedId ->
-            val product = binding.product ?: return@setOnCheckedChangeListener
-            when (checkedId) {
-                R.id.rb_most_recent -> {
-                    reviewsSorting = ReviewsSorting.RECENT
-                }
-                R.id.rb_top_reviews -> {
-                    reviewsSorting = ReviewsSorting.RATING
-                }
-            }
-            updateReviews(product.ratingsAndReviews)
+            handleReviewsSortingOrderCheckedChange(checkedId)
         }
 
         binding.bottomSheetReplyQuestion.btnPostAnswer.setOnClickListener {
-            val answer = binding.bottomSheetReplyQuestion.etAnswer.text.toString().trim()
-            val threadId = binding.thread?._id
-            if (threadId == null || answer.isEmpty()) return@setOnClickListener
-            productDetailViewModel.replyQuestion(args.productId, answer, threadId)
+            handlePostAnswerClick()
         }
 
         binding.containerAskAboutProduct.setOnClickListener {
-            if (!isUserLoggedIn) {
-                gotoLogin()
-            } else {
-                showBottomSheet(askQuestionBottomSheet)
-            }
+            handleAskAboutProductClick()
         }
 
         binding.bottomSheetAskQuestion.btnAskQuestion.setOnClickListener {
-            val question = binding.bottomSheetAskQuestion.etQuestion.text.toString().trim()
-            if (question.isNotEmpty()) {
-                productDetailViewModel.askQuestion(args.productId, question)
-            }
+            handleAskQuestionClick()
         }
 
         setFragmentResultListener(QAThreadsFragment.REQ_KEY_QA_THREAD_UPDATE) { _, bundle ->
@@ -300,12 +272,47 @@ class ProductDetailFragment : SliderFragment() {
                 binding.product?.ratingsAndReviews ?: return@setFragmentResultListener
 
             reviewsSorting = sorting
-            val checkedId = when (reviewsSorting) {
-                ReviewsSorting.RECENT -> R.id.rb_most_recent
-                ReviewsSorting.RATING -> R.id.rb_top_reviews
-            }
+            val checkedId = getCheckedIdOfReviewSorting()
             binding.containerRatingAndReviews.reviews.radioGroupSorting.check(checkedId)
             updateReviews(ratingsAndReviews)
+        }
+    }
+
+    private fun handleFavClick() {
+        if (isUserLoggedIn) toggleFavAndUpdateIcon() else gotoLogin()
+    }
+
+    private fun handleAddToCartClick() {
+        val product = binding.product ?: return
+        val skuId = binding.variant?.skuId ?: return
+        cartViewModel.addToCart(product, skuId)
+    }
+
+    private fun handleReviewsSortingOrderCheckedChange(checkedId: Int) {
+        val product = binding.product ?: return
+        reviewsSorting =
+            if (checkedId == R.id.rb_most_recent) ReviewsSorting.RECENT else ReviewsSorting.RATING
+        updateReviews(product.ratingsAndReviews)
+    }
+
+    private fun getCheckedIdOfReviewSorting() =
+        if (reviewsSorting == ReviewsSorting.RECENT) R.id.rb_most_recent else R.id.rb_top_reviews
+
+    private fun handlePostAnswerClick() {
+        val answer = binding.bottomSheetReplyQuestion.etAnswer.text.toString().trim()
+        val threadId = binding.thread?._id ?: return
+        if (answer.isEmpty()) return
+        productDetailViewModel.replyQuestion(args.productId, answer, threadId)
+    }
+
+    private fun handleAskAboutProductClick() {
+        if (!isUserLoggedIn) gotoLogin() else showBottomSheet(askQuestionBottomSheet)
+    }
+
+    private fun handleAskQuestionClick() {
+        val question = binding.bottomSheetAskQuestion.etQuestion.text.toString().trim()
+        if (question.isNotEmpty()) {
+            productDetailViewModel.askQuestion(args.productId, question)
         }
     }
 
@@ -463,7 +470,9 @@ class ProductDetailFragment : SliderFragment() {
 
         updateQuestionAnswersThread(product.qaThreads)
 
-        updateRating(product.stats.rating, product.scores)
+        Rating.addRatingToUi(
+            product.stats.rating, product.scores, binding.containerRatingAndReviews.ratings
+        )
 
         updateReviews(product.ratingsAndReviews)
 
@@ -474,7 +483,7 @@ class ProductDetailFragment : SliderFragment() {
     }
 
     private fun updateQuestionAnswersThread(qaThreads: MutableList<QAThread>) {
-        binding.seeMoreQAndA.isVisible = qaThreads.isEmpty()
+        binding.seeMoreQAndA.isVisible = qaThreads.isNotEmpty()
         if (qaThreads.isEmpty()) return
 
         binding.containerQAndAThread.removeAllViews()
@@ -584,52 +593,14 @@ class ProductDetailFragment : SliderFragment() {
         addView(parent, layoutAdditionalProductBinding.root, position)
     }
 
-    private fun updateRating(rating: Rating, scores: List<Rating>) {
-        binding.containerRatingAndReviews.ratings.apply {
-            averageRating.text =
-                getString(R.string.average_rating_based_on, rating.score, rating.count)
-
-            fun updateRatingRow(
-                progressBar: LinearProgressIndicator, total: TextView, count: Int?
-            ) {
-                val avg = count?.times(100.0)?.div(rating.count)?.toInt() ?: 0
-                progressBar.progress = avg
-                total.text = (count ?: 0).toString()
-            }
-
-            val star1Count = scores.firstOrNull { it.score.toInt() == 1 }?.count
-            updateRatingRow(start1RatingBar, star1Total, star1Count)
-
-            val star2Count = scores.firstOrNull { it.score.toInt() == 2 }?.count
-            updateRatingRow(start2RatingBar, star2Total, star2Count)
-
-            val star3Count = scores.firstOrNull { it.score.toInt() == 3 }?.count
-            updateRatingRow(start3RatingBar, star3Total, star3Count)
-
-            val star4Count = scores.firstOrNull { it.score.toInt() == 4 }?.count
-            updateRatingRow(start4RatingBar, star4Total, star4Count)
-
-            val star5Count = scores.firstOrNull { it.score.toInt() == 5 }?.count
-            updateRatingRow(start5RatingBar, star5Total, star5Count)
-        }
-    }
-
     private fun updateReviews(reviews: List<RatingAndReviews>) {
         binding.seeMoreRatingAndReviews.isVisible = reviews.isNotEmpty()
-
-        val sortedReviews = when (reviewsSorting) {
-            ReviewsSorting.RECENT -> productDetailViewModel.reviewsByMostRecent(reviews)
-            ReviewsSorting.RATING -> productDetailViewModel.reviewsByRating(reviews)
-        }
-        val list = if (reviews.size > 3) sortedReviews.subList(0, 3) else sortedReviews
-
+        val sortedReviews = getSortedReviews(reviews)
         binding.containerReviews.apply {
             removeAllViews()
-            isVisible = list.isNotEmpty()
-            if (list.isEmpty()) return@apply
-
+            isVisible = sortedReviews.isNotEmpty()
             val consumerId = consumer?.id?.toString() ?: ""
-            list.forEach { item ->
+            sortedReviews.forEach { item ->
                 val reviewBinding = ItemReviewsBinding.inflate(
                     layoutInflater, binding.containerReviews, false
                 )
@@ -648,44 +619,60 @@ class ProductDetailFragment : SliderFragment() {
                 reviewBinding.voteUp.text = item.upVotes.size.toString()
                 reviewBinding.voteDown.text = item.downVotes.size.toString()
 
-                val voteUpDrawable = if (item.upVotes.contains(consumerId)) {
-                    R.drawable.ic_vote_up_fill
-                } else {
-                    R.drawable.ic_vote_up
-                }
+                val isUserVoteUp = item.upVotes.contains(consumerId)
+                val voteUpDrawable = getDrawableForVoteUp(isUserVoteUp)
                 reviewBinding.voteUp.setDrawableRes(voteUpDrawable)
 
-                val voteDownDrawable = if (item.downVotes.contains(consumerId)) {
-                    R.drawable.ic_vote_down_fill
-                } else {
-                    R.drawable.ic_vote_down
-                }
+                val isUserVoteDown = item.downVotes.contains(consumerId)
+                val voteDownDrawable = getDrawableForVoteDown(isUserVoteDown)
                 reviewBinding.voteDown.setDrawableRes(voteDownDrawable)
 
                 reviewBinding.voteUp.setOnClickListener {
-                    if (isUserLoggedIn) {
-                        productDetailViewModel.reviewVoteUp(
-                            item._id,
-                            item.upVotes.contains(consumer?.id.toString())
-                        )
-                    } else {
-                        gotoLogin()
-                    }
+                    handleReviewVoteUpClick(item)
                 }
+
                 reviewBinding.voteDown.setOnClickListener {
-                    if (isUserLoggedIn) {
-                        productDetailViewModel.reviewVoteDown(
-                            item._id,
-                            item.downVotes.contains(consumer?.id.toString())
-                        )
-                    } else {
-                        gotoLogin()
-                    }
+                    handleReviewVoteDownClick(item)
                 }
 
                 addView(binding.containerReviews, reviewBinding.root)
             }
         }
+    }
+
+    private fun getDrawableForVoteDown(userVoteDown: Boolean): Int {
+        return if (userVoteDown) R.drawable.ic_vote_down_fill else R.drawable.ic_vote_down
+    }
+
+    private fun getDrawableForVoteUp(userVoteUp: Boolean): Int {
+        return if (userVoteUp) R.drawable.ic_vote_up_fill else R.drawable.ic_vote_up
+    }
+
+    private fun handleReviewVoteUpClick(review: RatingAndReviews) {
+        if (isUserLoggedIn) {
+            productDetailViewModel
+                .reviewVoteUp(review._id, review.upVotes.contains(consumer?.id.toString()))
+        } else {
+            gotoLogin()
+        }
+    }
+
+    private fun handleReviewVoteDownClick(review: RatingAndReviews) {
+        if (isUserLoggedIn) {
+            productDetailViewModel
+                .reviewVoteDown(review._id, review.downVotes.contains(consumer?.id.toString()))
+        } else {
+            gotoLogin()
+        }
+    }
+
+    private fun getSortedReviews(reviews: List<RatingAndReviews>): List<RatingAndReviews> {
+        val sortedReviews = when (reviewsSorting) {
+            ReviewsSorting.RECENT -> productDetailViewModel.reviewsByMostRecent(reviews)
+            ReviewsSorting.RATING -> productDetailViewModel.reviewsByRating(reviews)
+        }
+
+        return if (reviews.size > 3) sortedReviews.subList(0, 3) else sortedReviews
     }
 
     private fun updateVariant(variant: Variant) {

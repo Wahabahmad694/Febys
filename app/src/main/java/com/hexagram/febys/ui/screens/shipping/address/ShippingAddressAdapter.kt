@@ -41,13 +41,9 @@ class ShippingAddressAdapter :
         holder.bind(getItem(position), position)
     }
 
-    private fun setAsDefault(shippingAddress: ShippingAddress, position: Int) {
+    private fun setAsDefault(shippingAddress: ShippingAddress) {
         shippingAddress.shippingDetail.isDefault = true
         setAsDefault?.invoke(shippingAddress)
-    }
-
-    fun getDefaultShippingAddress(): ShippingAddress? {
-        return currentList.firstOrNull { it.shippingDetail.isDefault }
     }
 
     inner class ShippingAddressViewHolder(
@@ -59,7 +55,7 @@ class ShippingAddressAdapter :
 
             binding.root.setOnClickListener {
                 if (!shippingAddress.shippingDetail.isDefault) {
-                    setAsDefault(shippingAddress, position)
+                    setAsDefault(shippingAddress)
                 }
             }
 

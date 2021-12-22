@@ -178,11 +178,11 @@
                         android:layout_height="@dimen/_172sdp"
                         android:layout_marginHorizontal="@dimen/_16sdp"
                         app:actualImageScaleType="fitCenter"
-                        app:placeholderImage="@drawable/placeholder_image"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintWidth_max="@dimen/_300sdp" />
+                        app:layout_constraintWidth_max="@dimen/_300sdp"
+                        app:placeholderImage="@drawable/placeholder_image" />
 
                     <LinearLayout
                         android:layout_width="@dimen/_0dp"
@@ -208,11 +208,11 @@
                                 android:layout_width="@dimen/_48sdp"
                                 android:layout_height="@dimen/_48sdp"
                                 app:actualImageScaleType="fitCenter"
-                                app:placeholderImage="@drawable/placeholder_user"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
                                 app:layout_constraintWidth_max="@dimen/_300sdp"
+                                app:placeholderImage="@drawable/placeholder_user"
                                 app:roundAsCircle="true" />
 
                             <TextView
@@ -289,9 +289,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_36sdp"
                     android:layout_marginHorizontal="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_16sdp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/label_no_social_link"
+                        style="@style/TextTheme.Arial.TS14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_no_social_link"
+                        android:visibility="gone" />
 
                     <LinearLayout
                         android:id="@+id/container_social_media_follow"
@@ -304,7 +312,7 @@
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_toggle_follow"
                         style="@style/ButtonTheme.OutLine"
-                        android:layout_width="wrap_content"
+                        android:layout_width="@dimen/_75sdp"
                         android:layout_height="wrap_content"
                         android:text="@{isFollowing ? @string/label_following : @string/label_follow}" />
                 </LinearLayout>
@@ -314,26 +322,34 @@
                     style="@style/TextTheme.HelveticaNeue.TS16.Bold"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_34sdp"
-                    android:layout_marginTop="@dimen/_24sdp"
+                    android:layout_marginTop="@dimen/_16sdp"
                     android:background="@color/grey_e1e5e8"
                     android:gravity="center_vertical"
+                    android:visibility="gone"
+                    tools:visibility="visible"
                     android:paddingHorizontal="@dimen/_16sdp"
                     android:text="@string/label_my_endorsements" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_my_endorsements"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_96sdp"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:visibility="gone"
+                    tools:visibility="visible"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:itemCount="6"
+                    android:layout_marginTop="@dimen/_8sdp"
                     tools:listitem="@layout/item_my_endorsements" />
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/scroll_bar_endorsements"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/_16dp">
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    android:layout_marginVertical="@dimen/_8sdp">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_bg_scroll_bar"

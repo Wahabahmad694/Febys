@@ -96,9 +96,11 @@ class VendorListingAdapter(private val isCelebrity: Boolean) :
 
                 vendorName.text = item.name
                 vendorType.text = item.role.name
-                preferredVendorOrShopName.text = item.shopName
-                storeRatingBar.max = 100
-                storeRatingBar.progress = 50
+                preferredVendorOrShopName.text = item.businessInfo.address
+
+                val storeRating = item.stats.rating.score
+                binding.storeRatingBar.rating = storeRating.toFloat()
+                binding.storeRatingBar.stepSize = 0.5f
 
                 val imageUrl = item.businessInfo.logo
                 BindingAdapter.imageUrl(vendorImg, imageUrl)

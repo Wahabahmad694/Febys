@@ -4,11 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.setPadding
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
@@ -42,6 +40,7 @@ class CelebrityDetailFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         celebrityViewModel.fetchVendorDetail(args.id)
+        celebrityViewModel.fetchVendorEndorsement(args.id)
     }
 
     override fun onCreateView(
@@ -69,8 +68,7 @@ class CelebrityDetailFragment : BaseFragment() {
         }
 
         binding.rvMyEndorsements.apply {
-            setHasFixedSize(true)
-            applySpaceItemDecoration(horizontalDimenRes = R.dimen._24dp)
+            applySpaceItemDecoration(horizontalDimenRes = R.dimen._8sdp)
             adapter = endorsementAdapter
         }
     }
@@ -147,39 +145,37 @@ class CelebrityDetailFragment : BaseFragment() {
                 }
             }
         }
-    }
 
-    private fun updateUi(vendor: Vendor) {
-        binding.apply {
-            profileImg.load(vendor.businessInfo.logo)
-            vendor.templatePhoto?.let { headerImg.load(it) }
-            tvProductListingTitle.text = vendor.name
-            name.text = vendor.name
-            type.text = vendor.businessInfo.vendorType
-            address.text = vendor.contactDetails.address
-            addSocialLinks(vendor.socials)
-//            endorsementAdapter.submitList(vendorDetail.endorsements)
+        celebrityViewModel.observerVendorEndorsement.observe(viewLifecycleOwner) {
+            when (it) {
+                is DataState.Loading,
+                is DataState.Error -> {
+                    // do nothing
+                }
+                is DataState.Data -> {
+                    val endorsement = it.data
+                    binding.labelMyEndorsements.isVisible = endorsement.isNotEmpty()
+                    binding.rvMyEndorsements.isVisible = endorsement.isNotEmpty()
+                    binding.scrollBarEndorsements.isVisible = endorsement.isNotEmpty()
 
-            binding.isFollowing = args.isFollow
+                    endorsementAdapter.submitList(endorsement)
+                }
+            }
         }
     }
 
-    private fun addSocialLinks(socialLinks: List<Social>?) {
-        if (socialLinks.isNullOrEmpty()) return
-
-        binding.containerSocialMediaFollow.removeAllViews()
-        socialLinks.forEach { socialLink ->
-            val imageView = ImageView(binding.containerSocialMediaFollow.context)
-            val layoutParam = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
+    private fun updateUi(celebrity: Vendor) {
+        binding.apply {
+            profileImg.load(celebrity.businessInfo.logo)
+            celebrity.templatePhoto?.let { headerImg.load(it) }
+            tvProductListingTitle.text = celebrity.name
+            name.text = celebrity.name
+            type.text = celebrity.role.name
+            address.text = celebrity.businessInfo.address
+            Social.addAllTo(
+                celebrity.socials, binding.containerSocialMediaFollow, binding.labelNoSocialLink
             )
-            imageView.setBackgroundResource(R.drawable.bg_social_link)
-            imageView.setImageResource(socialLink.imageRes)
-            imageView.setPadding(16)
-            imageView.setOnClickListener {
-                Utils.openLink(it.context, socialLink.url)
-            }
-            binding.containerSocialMediaFollow.addView(imageView, layoutParam)
+            isFollowing = args.isFollow
         }
     }
 

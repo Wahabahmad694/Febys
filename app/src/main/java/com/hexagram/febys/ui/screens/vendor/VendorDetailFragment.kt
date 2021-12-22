@@ -4,10 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
 import androidx.core.view.isVisible
-import androidx.core.view.setPadding
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.hexagram.febys.NavGraphDirections
@@ -18,6 +15,7 @@ import com.hexagram.febys.models.api.social.Social
 import com.hexagram.febys.models.api.vendor.Vendor
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
+import com.hexagram.febys.ui.screens.product.detail.ReviewsAdapter
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,6 +24,8 @@ class VendorDetailFragment : BaseFragment() {
     private lateinit var binding: FragmentVendorDetailBinding
     private val vendorViewModel: VendorViewModel by viewModels()
     private val args: VendorDetailFragmentArgs by navArgs()
+
+    private val reviewsAdapter = ReviewsAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,8 +42,15 @@ class VendorDetailFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initUi()
         uiListener()
         setObserver()
+    }
+
+    private fun initUi() {
+        binding.rvReviews.isNestedScrollingEnabled = false
+        binding.rvReviews.adapter = reviewsAdapter
+        reviewsAdapter.consumerId = consumer?.id.toString() ?: ""
     }
 
     private fun uiListener() {
@@ -91,31 +98,20 @@ class VendorDetailFragment : BaseFragment() {
             vendor.templatePhoto?.let { headerImg.load(it) }
             title.text = vendor.name
             vendorName.text = vendor.name
-            slogan.text = vendor.role.name
-            type.isVisible = vendor.official
+            type.text = vendor.role.name
             address.text = vendor.contactDetails.address
-            addSocialLinks(vendor.socials)
-
-            binding.isFollowing = args.isFollow
-        }
-    }
-
-    private fun addSocialLinks(socialLinks: List<Social>?) {
-        if (socialLinks.isNullOrEmpty()) return
-
-        binding.containerSocialMediaFollow.removeAllViews()
-        socialLinks.forEach { socialLink ->
-            val imageView = ImageView(binding.containerSocialMediaFollow.context)
-            val layoutParam = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
+            Social.addAllTo(
+                vendor.socials, binding.containerSocialMediaFollow, binding.labelNoSocialLink
             )
-            imageView.setBackgroundResource(R.drawable.bg_social_link)
-            imageView.setImageResource(socialLink.imageRes)
-            imageView.setPadding(16)
-            imageView.setOnClickListener {
-                Utils.openLink(it.context, socialLink.url)
-            }
-            binding.containerSocialMediaFollow.addView(imageView, layoutParam)
+            isFollowing = args.isFollow
+
+            val storeRating = vendor.stats.rating.score
+            binding.storeRatingBar.rating = storeRating.toFloat()
+            binding.storeRatingBar.stepSize = 0.5f
+            binding.tvStoreRating.text = getString(R.string.store_rating, storeRating)
+
+            reviewsAdapter.submitList(vendor.ratingsAndReviews, false)
+            binding.noReviews.isVisible = vendor.ratingsAndReviews.isEmpty()
         }
     }
 }

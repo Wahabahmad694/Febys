@@ -4,11 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseBottomSheet
@@ -63,13 +61,13 @@ class RatingAndReviewsFragment : BaseBottomSheet() {
         binding.containerRatingAndReviews.reviews.rvReviews.adapter = reviewsAdapter
 
         reviewsSorting = args.sorting
-        val checkedId = when (reviewsSorting) {
-            ReviewsSorting.RECENT -> R.id.rb_most_recent
-            ReviewsSorting.RATING -> R.id.rb_top_reviews
-        }
+        val checkedId = getCheckedIdOfReviewSorting()
         binding.containerRatingAndReviews.reviews.radioGroupSorting.check(checkedId)
 
-        updateRating(args.rating, args.scores.toList())
+        Rating.addRatingToUi(
+            args.rating, args.scores.toList(), binding.containerRatingAndReviews.ratings
+        )
+
         updateReviews(args.reviews.toList())
     }
 
@@ -97,16 +95,14 @@ class RatingAndReviewsFragment : BaseBottomSheet() {
         }
 
         binding.containerRatingAndReviews.reviews.radioGroupSorting.setOnCheckedChangeListener { _, checkedId ->
-            when (checkedId) {
-                R.id.rb_most_recent -> {
-                    reviewsSorting = ReviewsSorting.RECENT
-                }
-                R.id.rb_top_reviews -> {
-                    reviewsSorting = ReviewsSorting.RATING
-                }
-            }
-            updateReviews(originalReviewsList)
+            handleReviewsSortingOrderCheckedChange(checkedId)
         }
+    }
+
+    private fun handleReviewsSortingOrderCheckedChange(checkedId: Int) {
+        reviewsSorting =
+            if (checkedId == R.id.rb_most_recent) ReviewsSorting.RECENT else ReviewsSorting.RATING
+        updateReviews(originalReviewsList)
     }
 
     private fun setupObserver() {
@@ -134,12 +130,12 @@ class RatingAndReviewsFragment : BaseBottomSheet() {
         }
     }
 
+    private fun getCheckedIdOfReviewSorting() =
+        if (reviewsSorting == ReviewsSorting.RECENT) R.id.rb_most_recent else R.id.rb_top_reviews
+
     private fun updateReviews(reviews: List<RatingAndReviews>) {
         originalReviewsList = reviews
-        val sortedReviews = when (reviewsSorting) {
-            ReviewsSorting.RECENT -> productDetailViewModel.reviewsByMostRecent(reviews)
-            ReviewsSorting.RATING -> productDetailViewModel.reviewsByRating(reviews)
-        }
+        val sortedReviews = getSortedReviews(reviews)
 
         reviewsAdapter.submitList(sortedReviews)
 
@@ -148,34 +144,10 @@ class RatingAndReviewsFragment : BaseBottomSheet() {
         setFragmentResult(REQ_KEY_REVIEW_SORTING_UPDATE, bundle)
     }
 
-
-    private fun updateRating(rating: Rating, scores: List<Rating>) {
-        binding.containerRatingAndReviews.ratings.apply {
-            averageRating.text =
-                getString(R.string.average_rating_based_on, rating.score, rating.count)
-
-            fun updateRatingRow(
-                progressBar: LinearProgressIndicator, total: TextView, count: Int?
-            ) {
-                val avg = count?.times(100.0)?.div(rating.count)?.toInt() ?: 0
-                progressBar.progress = avg
-                total.text = (count ?: 0).toString()
-            }
-
-            val star1Count = scores.firstOrNull { it.score.toInt() == 1 }?.count
-            updateRatingRow(start1RatingBar, star1Total, star1Count)
-
-            val star2Count = scores.firstOrNull { it.score.toInt() == 2 }?.count
-            updateRatingRow(start2RatingBar, star2Total, star2Count)
-
-            val star3Count = scores.firstOrNull { it.score.toInt() == 3 }?.count
-            updateRatingRow(start3RatingBar, star3Total, star3Count)
-
-            val star4Count = scores.firstOrNull { it.score.toInt() == 4 }?.count
-            updateRatingRow(start4RatingBar, star4Total, star4Count)
-
-            val star5Count = scores.firstOrNull { it.score.toInt() == 5 }?.count
-            updateRatingRow(start5RatingBar, star5Total, star5Count)
+    private fun getSortedReviews(reviews: List<RatingAndReviews>): List<RatingAndReviews> {
+        return when (reviewsSorting) {
+            ReviewsSorting.RECENT -> productDetailViewModel.reviewsByMostRecent(reviews)
+            ReviewsSorting.RATING -> productDetailViewModel.reviewsByRating(reviews)
         }
     }
 

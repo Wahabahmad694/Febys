@@ -1,6 +1,7 @@
 package com.hexagram.febys.repos
 
 import androidx.paging.PagingData
+import com.hexagram.febys.models.api.vendor.Endorsement
 import com.hexagram.febys.models.api.vendor.Vendor
 import com.hexagram.febys.network.DataState
 import kotlinx.coroutines.CoroutineDispatcher
@@ -22,4 +23,8 @@ interface IVendorRepo {
     fun fetchVendorDetail(
         vendorId: String, dispatcher: CoroutineDispatcher = Dispatchers.IO
     ): Flow<DataState<Vendor>>
+
+    fun fetchVendorEndorsement(
+        vendorId: String, dispatcher: CoroutineDispatcher = Dispatchers.IO
+    ): Flow<DataState<List<Endorsement>>>
 }

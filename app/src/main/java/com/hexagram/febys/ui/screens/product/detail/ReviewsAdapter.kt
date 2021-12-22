@@ -16,43 +16,56 @@ class ReviewsAdapter : RecyclerView.Adapter<ReviewsAdapter.ReviewVH>() {
     // consumerId must be set before calling submitList
     var consumerId: String = ""
 
+    var showUpAndDownVote: Boolean = true
     var upVote: ((ratingAndReviews: RatingAndReviews, isRevoke: Boolean) -> Unit)? = null
     var downVote: ((ratingAndReviews: RatingAndReviews, isRevoke: Boolean) -> Unit)? = null
 
     inner class ReviewVH(
         private val binding: ItemReviewsBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: RatingAndReviews, position: Int) = binding.apply {
+        fun bind(item: RatingAndReviews) = binding.apply {
             userName.text = item.consumer.firstName
-            userRatingBar.progress = item.score.toInt()
             tvReview.text = item.review.comment
             date.text =
                 Utils.DateTime.formatDate(item.createdAt, Utils.DateTime.FORMAT_MONTH_DATE_YEAR)
-
             tvReview.isVisible = item.review.comment.isNotEmpty()
 
-            voteUp.text = item.upVotes.size.toString()
-            voteDown.text = item.downVotes.size.toString()
+            userRatingBar.rating = item.score.toFloat()
+            userRatingBar.stepSize = 0.5f
 
-            val voteUpDrawable = if (item.upVotes.contains(consumerId)) {
-                R.drawable.ic_vote_up_fill
-            } else {
-                R.drawable.ic_vote_up
-            }
-            voteUp.setDrawableRes(voteUpDrawable)
+            setupReviewVotes(item)
+        }
 
-            val voteDownDrawable = if (item.downVotes.contains(consumerId)) {
-                R.drawable.ic_vote_down_fill
-            } else {
-                R.drawable.ic_vote_down
-            }
-            voteDown.setDrawableRes(voteDownDrawable)
+        private fun setupReviewVotes(item: RatingAndReviews) {
+            binding.voteUp.isVisible = showUpAndDownVote
+            binding.voteDown.isVisible = showUpAndDownVote
 
-            voteUp.setOnClickListener {
-                upVote?.invoke(item, item.upVotes.contains(consumerId))
-            }
-            voteDown.setOnClickListener {
-                downVote?.invoke(item, item.downVotes.contains(consumerId))
+            if (!showUpAndDownVote) return
+
+            binding.apply {
+                voteUp.text = item.upVotes.size.toString()
+                voteDown.text = item.downVotes.size.toString()
+
+                val voteUpDrawable = if (item.upVotes.contains(consumerId)) {
+                    R.drawable.ic_vote_up_fill
+                } else {
+                    R.drawable.ic_vote_up
+                }
+                voteUp.setDrawableRes(voteUpDrawable)
+
+                val voteDownDrawable = if (item.downVotes.contains(consumerId)) {
+                    R.drawable.ic_vote_down_fill
+                } else {
+                    R.drawable.ic_vote_down
+                }
+                voteDown.setDrawableRes(voteDownDrawable)
+
+                voteUp.setOnClickListener {
+                    upVote?.invoke(item, item.upVotes.contains(consumerId))
+                }
+                voteDown.setOnClickListener {
+                    downVote?.invoke(item, item.downVotes.contains(consumerId))
+                }
             }
         }
     }
@@ -65,10 +78,11 @@ class ReviewsAdapter : RecyclerView.Adapter<ReviewsAdapter.ReviewVH>() {
     }
 
     override fun onBindViewHolder(holder: ReviewVH, position: Int) {
-        holder.bind(ratingAndReviews[position], position)
+        holder.bind(ratingAndReviews[position])
     }
 
-    fun submitList(list: List<RatingAndReviews>) {
+    fun submitList(list: List<RatingAndReviews>, showUpAndDownVote: Boolean = true) {
+        this.showUpAndDownVote = showUpAndDownVote
         ratingAndReviews = list
         notifyItemRangeChanged(0, list.size)
     }
@@ -76,6 +90,4 @@ class ReviewsAdapter : RecyclerView.Adapter<ReviewsAdapter.ReviewVH>() {
     override fun getItemCount(): Int {
         return ratingAndReviews.size
     }
-
-    fun getCurrentList() = ratingAndReviews
 }
