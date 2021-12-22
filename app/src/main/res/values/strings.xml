@@ -278,5 +278,6 @@
     <string name="account_settings">Account Settings</string>
     <string name="phone_number">Phone Number</string>
     <string name="label_no_social_link">No social link available</string>
+    <string name="label_no_reviews">No Reviews</string>
 
 </resources>

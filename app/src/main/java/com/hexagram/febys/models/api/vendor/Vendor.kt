@@ -3,6 +3,8 @@ package com.hexagram.febys.models.api.vendor
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import com.hexagram.febys.models.api.contact.ContactDetails
+import com.hexagram.febys.models.api.product.RatingAndReviews
+import com.hexagram.febys.models.api.rating.Rating
 import com.hexagram.febys.models.api.role.Role
 import com.hexagram.febys.models.api.social.Social
 import com.hexagram.febys.models.api.template.Template
@@ -26,5 +28,13 @@ data class Vendor @JvmOverloads constructor(
     val businessInfo: BusinessInfo,
     @SerializedName("contact_details")
     val contactDetails: ContactDetails,
-    var isFollow: Boolean = false
+    var isFollow: Boolean = false,
+    @SerializedName("value_score")
+    val valueScore: List<Rating>,
+    @SerializedName("pricing_score")
+    val pricingScore: List<Rating>,
+    @SerializedName("quality_score")
+    val qualityScore: List<Rating>,
+    @SerializedName("ratings_and_reviews")
+    val ratingsAndReviews: List<RatingAndReviews>
 ) : Parcelable

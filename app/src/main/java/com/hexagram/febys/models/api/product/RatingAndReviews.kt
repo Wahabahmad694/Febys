@@ -28,4 +28,11 @@ data class RatingAndReviews(
     val createdAt: String,
     @SerializedName("updated_at")
     val updatedAt: String,
+    @SerializedName("pricing_score")
+    val pricingScore: Double,
+    @SerializedName("quality_score")
+    val qualityScore: Double,
+    @SerializedName("value_score")
+    val valueScore: Double,
+    val title: String,
 ) : Parcelable
