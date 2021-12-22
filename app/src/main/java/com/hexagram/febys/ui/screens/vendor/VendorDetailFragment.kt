@@ -29,7 +29,7 @@ class VendorDetailFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        vendorViewModel.fetchVendorDetail("6172837db3e7dcd13a99f6f6")
+        vendorViewModel.fetchVendorDetail(args.id)
     }
 
     override fun onCreateView(
