@@ -1,5 +1,6 @@
 package com.hexagram.febys.ui.screens.product.filters.detail
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -38,8 +39,16 @@ class FiltersDetailListFragment : BaseFragment() {
     private fun initUi() {
         binding.rvFiltersDetailList.adapter = filterDetailListAdapter
         binding.tvFilterName.text = args.filter.name
+        binding.labelClear.setOnClickListener {
+            disableClearOption()
+        }
 
         filterDetailListAdapter.submitList(args.filter.values)
+    }
+
+    private fun disableClearOption() {
+        binding.labelClear.setTextColor(Color.GRAY)
+        binding.labelClear.isEnabled = false
     }
 
     private fun initUiListener() {

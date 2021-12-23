@@ -10,8 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:layout_marginEnd="@dimen/_20sdp">
+        android:layout_marginHorizontal="@dimen/_15sdp">
 
         <TextView
             android:id="@+id/label_required_option"
