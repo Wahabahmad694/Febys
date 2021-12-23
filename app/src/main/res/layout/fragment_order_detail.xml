@@ -7,118 +7,135 @@
 
     </data>
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         tools:context=".ui.screens.order.detail.OrderDetailFragment">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/top_bar"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/label_orders"
-                style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/top_bar"
                 android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
-                android:gravity="center"
-                android:paddingHorizontal="@dimen/_32dp"
-                android:text="@string/label_order_detail"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/_16dp"
-                android:src="@drawable/ic_back"
-                app:layout_constraintBottom_toBottomOf="@id/label_orders"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/label_orders" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_60sdp"
-            android:layout_marginHorizontal="@dimen/_8sdp"
-            android:layout_marginVertical="@dimen/_4sdp"
-            android:layout_marginBottom="@dimen/_16sdp">
-
-            <LinearLayout
-                android:id="@+id/container_order_labels"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_13sdp"
-                android:orientation="vertical"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:ignore="MissingConstraints">
+                android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/label_order_id"
-                    style="@style/TextTheme.Arial.TS14.Grey"
+                    android:id="@+id/label_orders"
+                    style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="?actionBarSize"
+                    android:gravity="center"
+                    android:paddingHorizontal="@dimen/_32dp"
+                    android:text="@string/label_order_detail"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_back"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_13sdp"
-                    android:text="@string/label_order_id"
-                    android:textSize="@dimen/_11sdp"
-                    tools:text="@string/label_order_id" />
+                    android:padding="@dimen/_16dp"
+                    android:src="@drawable/ic_back"
+                    app:layout_constraintBottom_toBottomOf="@id/label_orders"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/label_orders" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <TextView
-                    android:id="@+id/label_date_time"
-                    style="@style/TextTheme.Arial.TS14.Grey"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_60sdp"
+                android:layout_marginHorizontal="@dimen/_8sdp"
+                android:layout_marginVertical="@dimen/_4sdp"
+                android:layout_marginBottom="@dimen/_16sdp">
+
+                <LinearLayout
+                    android:id="@+id/container_order_labels"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:layout_marginBottom="@dimen/_12sdp"
-                    android:text="@string/label_order_date_and_time"
-                    android:textSize="@dimen/_11sdp" />
-            </LinearLayout>
+                    android:layout_marginStart="@dimen/_13sdp"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:ignore="MissingConstraints">
 
-            <LinearLayout
-                android:id="@+id/container_order_data"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_13sdp"
-                android:gravity="end"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="@id/container_order_labels"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/container_order_labels"
-                app:layout_constraintTop_toTopOf="@id/container_order_labels">
+                    <TextView
+                        android:id="@+id/label_order_id"
+                        style="@style/TextTheme.Arial.TS14.Grey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_13sdp"
+                        android:text="@string/label_order_id"
+                        android:textSize="@dimen/_11sdp"
+                        tools:text="@string/label_order_id" />
 
-                <TextView
-                    android:id="@+id/tv_order_id"
-                    style="@style/TextTheme.Arial.TS14"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/label_date_time"
+                        style="@style/TextTheme.Arial.TS14.Grey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginBottom="@dimen/_12sdp"
+                        android:text="@string/label_order_date_and_time"
+                        android:textSize="@dimen/_11sdp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/container_order_data"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_13sdp"
-                    android:textSize="@dimen/_11sdp"
-                    tools:text="FT133659380093" />
+                    android:gravity="end"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="@id/container_order_labels"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/container_order_labels"
+                    app:layout_constraintTop_toTopOf="@id/container_order_labels">
 
-                <TextView
-                    android:id="@+id/tv_order_date"
-                    style="@style/TextTheme.Arial.TS14"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_9sdp"
-                    android:layout_marginEnd="@dimen/_13sdp"
-                    android:textSize="@dimen/_11sdp"
-                    tools:text="May 18.2021-12:49" />
-            </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:id="@+id/tv_order_id"
+                        style="@style/TextTheme.Arial.TS14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_13sdp"
+                        android:textSize="@dimen/_11sdp"
+                        tools:text="FT133659380093" />
+
+                    <TextView
+                        android:id="@+id/tv_order_date"
+                        style="@style/TextTheme.Arial.TS14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_9sdp"
+                        android:layout_marginEnd="@dimen/_13sdp"
+                        android:textSize="@dimen/_11sdp"
+                        tools:text="May 18.2021-12:49" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_vendor_with_products"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_order_detail_vendors" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_vendor_with_products"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_order_detail_vendors" />
 
-    </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_16sdp"/>
+
+            <include
+                android:id="@+id/container_order_summary"
+                layout="@layout/layout_order_summary" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_16sdp"/>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

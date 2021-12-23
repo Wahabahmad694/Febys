@@ -5,6 +5,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Review(
-    val comment: String,
-    val _id: String
+    var comment: String,
+    val _id: String? = null
 ) : Parcelable

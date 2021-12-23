@@ -558,7 +558,7 @@
         android:id="@+id/storeListFragment"
         android:name="com.hexagram.febys.ui.screens.store.menu.StoreListFragment"
         android:label="StoreListFragment"
-        tools:layout="@layout/fragment_store_list"/>
+        tools:layout="@layout/fragment_store_list" />
     <fragment
         android:id="@+id/storeLoadFragment"
         android:name="com.hexagram.febys.ui.screens.store.menu.LoadStoreFragment"
@@ -668,6 +668,25 @@
         <action
             android:id="@+id/action_orderDetailFragment_to_cancelOrderBottomSheet"
             app:destination="@id/cancelOrderBottomSheet" />
+        <action
+            android:id="@+id/action_orderDetailFragment_to_addEditReviewFragment"
+            app:destination="@id/addEditReviewFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/addEditReviewFragment"
+        android:name="com.hexagram.febys.ui.screens.order.review.AddEditReviewFragment"
+        android:label="AddEditReviewFragment"
+        tools:layout="@layout/fragment_add_edit_review">
+        <argument
+            android:name="orderId"
+            app:argType="string" />
+        <argument
+            android:name="vendorProducts"
+            app:argType="com.hexagram.febys.models.api.cart.VendorProducts" />
     </fragment>
     <dialog
         android:id="@+id/cancelOrderBottomSheet"

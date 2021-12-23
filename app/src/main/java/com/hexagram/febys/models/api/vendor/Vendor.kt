@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName
 import com.hexagram.febys.models.api.contact.ContactDetails
 import com.hexagram.febys.models.api.product.RatingAndReviews
 import com.hexagram.febys.models.api.rating.Rating
+import com.hexagram.febys.models.api.rating.VendorReview
 import com.hexagram.febys.models.api.role.Role
 import com.hexagram.febys.models.api.social.Social
 import com.hexagram.febys.models.api.template.Template
@@ -36,5 +37,7 @@ data class Vendor @JvmOverloads constructor(
     @SerializedName("quality_score")
     val qualityScore: List<Rating>,
     @SerializedName("ratings_and_reviews")
-    val ratingsAndReviews: List<RatingAndReviews>
+    val ratingsAndReviews: List<VendorReview>,
+    @SerializedName("rating_and_review")
+    val ratingAndReview: VendorReview? = null,
 ) : Parcelable

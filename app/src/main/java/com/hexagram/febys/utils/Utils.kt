@@ -6,6 +6,7 @@ import android.net.Uri
 import com.google.gson.Gson
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
 import com.hexagram.febys.models.view.PaymentMethod
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -16,10 +17,16 @@ object Utils {
         const val FORMAT_MONTH_DATE_YEAR_HOUR_MIN = "MMM dd, yyyy-hh:mm"
 
         fun formatDate(dateString: String, pattern: String = FORMAT_MONTH_DATE_YEAR): String {
-            val dateFormat = SimpleDateFormat(FORMAT_ISO, Locale.US)
-            val date = dateFormat.parse(dateString) ?: return ""
-            val requiredDateFormat = SimpleDateFormat(pattern, Locale.US)
-            return requiredDateFormat.format(date)
+            return try {
+                val utcDateFormat = SimpleDateFormat(FORMAT_ISO, Locale.getDefault())
+                utcDateFormat.timeZone = TimeZone.getTimeZone("UTC")
+                val date = utcDateFormat.parse(dateString)!!
+                val localTimeFormat = SimpleDateFormat(pattern, Locale.getDefault())
+                localTimeFormat.timeZone = TimeZone.getDefault()
+                localTimeFormat.format(date)
+            }catch (e: Exception){
+                ""
+            }
         }
     }
 

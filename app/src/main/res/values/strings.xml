@@ -29,6 +29,7 @@
     <string name="label_variant">Variant</string>
     <string name="label_select_variant">Select %1s</string>
     <string name="label_title">%1s</string>
+    <string name="title">Title</string>
     <string name="variant_selected">%1s: %2s</string>
     <string name="only_one_variant">This product has only one variant</string>
     <string name="label_sign_up">Sign Up</string>
@@ -107,6 +108,7 @@
     <string name="label_voucher_discount">Voucher Discount</string>
     <string name="label_shipping">Shipping</string>
     <string name="label_sku_id">SKU ID:</string>
+    <string name="label_quantity">Quantity:</string>
     <string name="label_remove_from_wishlist">Remove from wishlist</string>
     <string name="label_add_to_wishlist">Add to wishlist</string>
 
@@ -146,6 +148,8 @@
     <string name="label_return_orders">Return Orders</string>
     <string name="label_cancel_orders">Cancel Orders</string>
     <string name="label_cancel">Cancel</string>
+    <string name="label_add_review">Add Review</string>
+    <string name="label_return_item">Return Item</string>
     <string name="label_product_review">Product Review</string>
     <string name="label_order_received">Order Received</string>
     <string name="label_my_location">My Location</string>
@@ -279,5 +283,10 @@
     <string name="phone_number">Phone Number</string>
     <string name="label_no_social_link">No social link available</string>
     <string name="label_no_reviews">No Reviews</string>
+    <string name="label_add_seller_feedback">Add Seller Feedback</string>
+    <string name="label_price">Price</string>
+    <string name="label_value">Value</string>
+    <string name="label_quality">Quality</string>
+    <string name="label_your_overall_rating">Your Overall Rating</string>
 
 </resources>

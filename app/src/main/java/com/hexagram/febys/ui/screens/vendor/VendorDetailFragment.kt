@@ -15,7 +15,6 @@ import com.hexagram.febys.models.api.social.Social
 import com.hexagram.febys.models.api.vendor.Vendor
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
-import com.hexagram.febys.ui.screens.product.detail.ReviewsAdapter
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -25,7 +24,7 @@ class VendorDetailFragment : BaseFragment() {
     private val vendorViewModel: VendorViewModel by viewModels()
     private val args: VendorDetailFragmentArgs by navArgs()
 
-    private val reviewsAdapter = ReviewsAdapter()
+    private val reviewsAdapter = VendorReviewsAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +49,7 @@ class VendorDetailFragment : BaseFragment() {
     private fun initUi() {
         binding.rvReviews.isNestedScrollingEnabled = false
         binding.rvReviews.adapter = reviewsAdapter
-        reviewsAdapter.consumerId = consumer?.id.toString() ?: ""
+        binding.rvReviews.applySpaceItemDecoration(R.dimen._16sdp)
     }
 
     private fun uiListener() {
@@ -110,7 +109,7 @@ class VendorDetailFragment : BaseFragment() {
             binding.storeRatingBar.stepSize = 0.5f
             binding.tvStoreRating.text = getString(R.string.store_rating, storeRating)
 
-            reviewsAdapter.submitList(vendor.ratingsAndReviews, false)
+            reviewsAdapter.submitList(vendor.ratingsAndReviews)
             binding.noReviews.isVisible = vendor.ratingsAndReviews.isEmpty()
         }
     }

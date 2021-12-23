@@ -16,7 +16,6 @@ class ReviewsAdapter : RecyclerView.Adapter<ReviewsAdapter.ReviewVH>() {
     // consumerId must be set before calling submitList
     var consumerId: String = ""
 
-    var showUpAndDownVote: Boolean = true
     var upVote: ((ratingAndReviews: RatingAndReviews, isRevoke: Boolean) -> Unit)? = null
     var downVote: ((ratingAndReviews: RatingAndReviews, isRevoke: Boolean) -> Unit)? = null
 
@@ -37,12 +36,7 @@ class ReviewsAdapter : RecyclerView.Adapter<ReviewsAdapter.ReviewVH>() {
         }
 
         private fun setupReviewVotes(item: RatingAndReviews) {
-            binding.voteUp.isVisible = showUpAndDownVote
-            binding.voteDown.isVisible = showUpAndDownVote
-
-            if (!showUpAndDownVote) return
-
-            binding.apply {
+          binding.apply {
                 voteUp.text = item.upVotes.size.toString()
                 voteDown.text = item.downVotes.size.toString()
 
@@ -81,8 +75,7 @@ class ReviewsAdapter : RecyclerView.Adapter<ReviewsAdapter.ReviewVH>() {
         holder.bind(ratingAndReviews[position])
     }
 
-    fun submitList(list: List<RatingAndReviews>, showUpAndDownVote: Boolean = true) {
-        this.showUpAndDownVote = showUpAndDownVote
+    fun submitList(list: List<RatingAndReviews>) {
         ratingAndReviews = list
         notifyItemRangeChanged(0, list.size)
     }

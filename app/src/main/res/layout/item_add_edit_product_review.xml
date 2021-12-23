@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:binding="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="product"
+            type="com.hexagram.febys.models.api.product.Product" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_16sdp"
+        android:background="@drawable/bg_border_dark_grey"
+        android:padding="@dimen/_8sdp">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/iv_product"
+            android:layout_width="@dimen/_48sdp"
+            android:layout_height="@dimen/_48sdp"
+            android:layout_marginHorizontal="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            app:actualImageScaleType="fitCenter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:placeholderImage="@drawable/placeholder_image"
+            binding:image_url="@{product.variants.get(0).images.get(0)}" />
+
+        <TextView
+            android:id="@+id/tv_product_name"
+            style="@style/TextTheme.Arial.TS14"
+            android:layout_width="@dimen/_0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_8sdp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="@{product.name}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_product"
+            app:layout_constraintTop_toTopOf="@id/iv_product"
+            tools:text="TCL 32-inch 3-Series 720p Roku Smart TV  (2018 Model)" />
+
+
+        <TextView
+            android:id="@+id/label_sku_id"
+            style="@style/TextTheme.Arial.TS14.Grey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_sku_id"
+            app:layout_constraintStart_toStartOf="@id/tv_product_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_product_name" />
+
+        <TextView
+            android:id="@+id/tv_sku_id"
+            style="@style/TextTheme.Arial.TS14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_4sdp"
+            android:text="@{product.variants.get(0).skuId}"
+            app:layout_constraintBaseline_toBaselineOf="@id/label_sku_id"
+            app:layout_constraintStart_toEndOf="@id/label_sku_id"
+            tools:text="123" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/iv_product">
+
+            <include
+                android:id="@+id/product_rating"
+                layout="@layout/layout_get_rating"
+                app:title="@{@string/label_your_overall_rating}" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_16sdp" />
+
+            <TextView
+                android:id="@+id/label_rating_comment"
+                style="@style/TextTheme.Arial.TS16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_16sdp"
+                android:text="@string/label_comment" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:background="@null"
+                android:imeOptions="actionNext"
+                android:inputType="textMultiLine"
+                android:minLines="3"
+                android:textAppearance="@style/TextTheme.Arial.TS16" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -7,6 +7,7 @@ import androidx.paging.PagingData
 import com.hexagram.febys.base.BaseViewModel
 import com.hexagram.febys.models.api.order.CancelReasons
 import com.hexagram.febys.models.api.order.Order
+import com.hexagram.febys.models.api.rating.OrderReview
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.repos.IOrderRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,6 +31,9 @@ class OrderViewModel @Inject constructor(
 
     private val _observerCancelOrder = MutableLiveData<DataState<Order>>()
     val observeCancelOrder: LiveData<DataState<Order>> = _observerCancelOrder
+
+    private val _observerOrderReview = MutableLiveData<DataState<OrderReview>>()
+    val observeOrderReview: LiveData<DataState<OrderReview>> = _observerOrderReview
 
     private var orderListOldOrderListing: Flow<PagingData<Order>>? = null
 
@@ -62,5 +66,12 @@ class OrderViewModel @Inject constructor(
         }
 
         return orderListOldOrderListing!!
+    }
+
+    fun postReview(orderId: String, orderReview: OrderReview) = viewModelScope.launch {
+        _observerOrderReview.postValue(DataState.Loading())
+        orderRepo.postReview(orderId, orderReview).collect {
+            _observerOrderReview.postValue(it)
+        }
     }
 }

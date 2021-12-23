@@ -606,7 +606,8 @@ class ProductDetailFragment : SliderFragment() {
                 )
 
                 reviewBinding.userName.text = item.consumer.firstName
-                reviewBinding.userRatingBar.progress = item.score.toInt()
+                reviewBinding.userRatingBar.rating = item.score.toFloat()
+                reviewBinding.userRatingBar.stepSize = 0.5f
                 reviewBinding.tvReview.text = item.review.comment
                 reviewBinding.date.text =
                     Utils.DateTime.formatDate(

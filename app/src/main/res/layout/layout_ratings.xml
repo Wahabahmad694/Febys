@@ -37,7 +37,7 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_star" />
+                android:src="@drawable/ic_star_fill" />
 
             <TextView
                 style="@style/TextTheme.Arial.TS14"
@@ -75,7 +75,7 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_star" />
+                android:src="@drawable/ic_star_fill" />
 
             <TextView
                 style="@style/TextTheme.Arial.TS14"
@@ -113,7 +113,7 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_star" />
+                android:src="@drawable/ic_star_fill" />
 
             <TextView
                 style="@style/TextTheme.Arial.TS14"
@@ -151,7 +151,7 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_star" />
+                android:src="@drawable/ic_star_fill" />
 
             <TextView
                 style="@style/TextTheme.Arial.TS14"
@@ -189,7 +189,7 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_star" />
+                android:src="@drawable/ic_star_fill" />
 
             <TextView
                 style="@style/TextTheme.Arial.TS14"
