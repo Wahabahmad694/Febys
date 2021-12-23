@@ -16,6 +16,8 @@
             android:id="@+id/tv_product_name_with_quantity"
             style="@style/TextTheme.Arial.TS14.Grey"
             android:layout_width="0dp"
+            android:maxLines="2"
+            android:ellipsize="end"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             tools:text="TCL 32-inch 3-Series ..." />

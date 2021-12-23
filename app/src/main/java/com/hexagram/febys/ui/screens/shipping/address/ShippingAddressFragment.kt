@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import com.hexagram.febys.base.BaseFragment
@@ -93,6 +94,7 @@ class ShippingAddressFragment : BaseFragment() {
     }
 
     private fun updateUi(addresses: List<ShippingAddress>) {
+        binding.emptyView.root.isVisible = addresses.isEmpty()
         shippingAddressAdapter.submitList(addresses)
     }
 

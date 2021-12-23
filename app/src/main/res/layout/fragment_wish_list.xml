@@ -75,34 +75,10 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:listitem="@layout/item_wish_list" />
-
-            <LinearLayout
-                android:id="@+id/container_empty_wish_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:visibility="@{wishListCount > 0 ? View.GONE : View.VISIBLE, default = visible}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <TextView
-                    style="@style/TextTheme.HelveticaNeue.TS16"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/label_your_wish_list_is_empty" />
-
-                <TextView
-                    style="@style/TextTheme.Arial.TS14"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_16dp"
-                    android:text="@string/label_empty_wish_list_slogan" />
-
-            </LinearLayout>
-
+            <include
+                android:id="@+id/empty_view"
+                layout="@layout/layout_empty_view"
+                app:warningTitle="@{@string/label_wishlist}" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

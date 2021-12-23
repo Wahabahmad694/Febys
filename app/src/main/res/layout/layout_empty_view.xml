@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="warningTitle"
+            type="String" />
+
+    </data>
+
+    <TextView
+        android:id="@+id/label_empty_item"
+        style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@{String.format(@string/label_empty_view, warningTitle)}" />
+</layout>

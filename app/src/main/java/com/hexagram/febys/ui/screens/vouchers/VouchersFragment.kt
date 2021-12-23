@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
@@ -67,6 +68,7 @@ class VouchersFragment : BaseFragment() {
     }
 
     private fun updateUi(vouchers: List<Voucher>) {
+        binding.emptyView.root.isVisible = vouchers.isEmpty()
         vouchersAdapter.submitList(vouchers)
     }
 }
