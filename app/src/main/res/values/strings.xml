@@ -93,8 +93,8 @@
     <string name="label_clear_all">Clear all</string>
     <string name="label_clear">Clear </string>
     <string name="label_new_items">New Items</string>
-    <string name="label_low_price">Price (low price)</string>
-    <string name="label_high_price">Price (high price)</string>
+    <string name="label_low_price">Price (low first)</string>
+    <string name="label_high_price">Price (high first)</string>
     <string name="label_filter_by">Filter By</string>
     <string name="label_item">Item</string>
     <string name="label_items">Items</string>
@@ -190,7 +190,7 @@
     <string name="label_postal_code">Postal Code</string>
     <string name="label_set_as_default_shipping_address">Set as default shipping address</string>
     <string name="label_save_and_continue">Save and continue</string>
-    <string name="label_show_filter">Show 10 results</string>
+    <string name="label_show_filter">Show %1s results</string>
     <string name="error_enter_valid_postal_code">Please enter valid postal code</string>
     <string name="error_enter_valid_state">Please enter valid state</string>
     <string name="error_enter_valid_city">Please enter valid city</string>
@@ -288,5 +288,6 @@
     <string name="label_value">Value</string>
     <string name="label_quality">Quality</string>
     <string name="label_your_overall_rating">Your Overall Rating</string>
+    <string name="pricing">Pricing</string>
 
 </resources>
