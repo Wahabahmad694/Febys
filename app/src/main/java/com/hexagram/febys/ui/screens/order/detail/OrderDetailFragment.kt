@@ -18,6 +18,7 @@ import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.ui.screens.order.OrderViewModel
 import com.hexagram.febys.ui.screens.order.cancel.CancelOrderBottomSheet
+import com.hexagram.febys.ui.screens.order.review.AddEditReviewFragment
 import com.hexagram.febys.utils.*
 import com.hexagram.febys.utils.Utils.DateTime.FORMAT_MONTH_DATE_YEAR_HOUR_MIN
 import dagger.hilt.android.AndroidEntryPoint
@@ -71,6 +72,15 @@ class OrderDetailFragment : BaseFragment() {
             val isOrderCanceled =
                 bundle.getBoolean(CancelOrderBottomSheet.REQ_KEY_IS_ORDER_CANCELED)
             if (isOrderCanceled) orderViewModel.fetchOrder(args.orderId)
+        }
+
+        setFragmentResultListener(AddEditReviewFragment.REQ_KEY_REFRESH) { _, bundle ->
+            val refresh =
+                bundle.getBoolean(AddEditReviewFragment.REQ_KEY_REFRESH, false)
+
+            if (refresh) {
+                orderViewModel.fetchOrder(args.orderId)
+            }
         }
     }
 

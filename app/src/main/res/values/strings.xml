@@ -174,7 +174,7 @@
     <string name="label_me">Me</string>
     <string name="label_explore_stores">Explore Stores</string>
     <string name="label_explore_markets">Explore Markets</string>
-    <string name="label_following">Following</string>
+    <string name="label_following">Unfollow</string>
     <string name="label_follow">Follow</string>
     <string name="label_create_account_slogan">Create an account to FEBYS to get all features.</string>
     <string name="label_create_account">Create Account</string>
@@ -288,6 +288,7 @@
     <string name="label_value">Value</string>
     <string name="label_quality">Quality</string>
     <string name="label_your_overall_rating">Your Overall Rating</string>
-    <string name="pricing">Pricing</string>
+    <string name="label_pricing">Pricing</string>
+    <string name="vertical_separator">|</string>
 
 </resources>

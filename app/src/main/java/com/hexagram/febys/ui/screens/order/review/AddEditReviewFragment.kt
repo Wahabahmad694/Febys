@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.hexagram.febys.R
@@ -24,6 +26,10 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class AddEditReviewFragment : BaseFragment() {
+    companion object {
+        const val REQ_KEY_REFRESH = "reqKeyRefresh"
+    }
+
     private lateinit var binding: FragmentAddEditReviewBinding
     private val orderViewModel by viewModels<OrderViewModel>()
     private val args by navArgs<AddEditReviewFragmentArgs>()
@@ -74,17 +80,17 @@ class AddEditReviewFragment : BaseFragment() {
         }
 
         binding.priceRating.ratingBar.setOnRatingBarChangeListener { _, rating, fromUser ->
-            if (fromUser) orderReview.vendorReview.pricingScore = rating.toInt()
+            if (fromUser) orderReview.vendorReview.pricingScore = rating.toInt().toDouble()
         }
         binding.qualityRating.ratingBar.setOnRatingBarChangeListener { _, rating, fromUser ->
-            if (fromUser) orderReview.vendorReview.qualityScore = rating.toInt()
+            if (fromUser) orderReview.vendorReview.qualityScore = rating.toInt().toDouble()
         }
         binding.valueRating.ratingBar.setOnRatingBarChangeListener { _, rating, fromUser ->
-            if (fromUser) orderReview.vendorReview.valueScore = rating.toInt()
+            if (fromUser) orderReview.vendorReview.valueScore = rating.toInt().toDouble()
         }
 
         addEditReviewAdapter.ratingCallback = { skuId, rating ->
-            orderReview.productsRatings.firstOrNull { it.skuId == skuId }?.score = rating
+            orderReview.productsRatings.firstOrNull { it.skuId == skuId }?.score = rating.toDouble()
         }
 
         addEditReviewAdapter.commentCallback = { skuId, comment ->
@@ -111,6 +117,10 @@ class AddEditReviewFragment : BaseFragment() {
                 is DataState.Data -> {
                     hideLoader()
                     showToast("Review Posted")
+                    setFragmentResult(
+                        REQ_KEY_REFRESH,
+                        bundleOf(REQ_KEY_REFRESH to true)
+                    )
                 }
             }
         }
@@ -122,9 +132,9 @@ class AddEditReviewFragment : BaseFragment() {
         binding.etTitle.setText(orderReview.vendorReview.title)
         binding.etComment.setText(orderReview.vendorReview.review.comment)
 
-        binding.priceRating.ratingBar.progress = orderReview.vendorReview.pricingScore
-        binding.qualityRating.ratingBar.progress = orderReview.vendorReview.qualityScore
-        binding.valueRating.ratingBar.progress = orderReview.vendorReview.valueScore
+        binding.priceRating.ratingBar.progress = orderReview.vendorReview.pricingScore.toInt()
+        binding.qualityRating.ratingBar.progress = orderReview.vendorReview.qualityScore.toInt()
+        binding.valueRating.ratingBar.progress = orderReview.vendorReview.valueScore.toInt()
 
         products.forEach { cartProduct ->
             val productReview = orderReview.productsRatings
@@ -134,7 +144,7 @@ class AddEditReviewFragment : BaseFragment() {
                 orderId = args.orderId,
                 productId = cartProduct.product._id,
                 skuId = cartProduct.product.variants[0].skuId,
-                score = productReview?.score ?: 5,
+                score = productReview?.score ?: 5.0,
                 review = Review(productReview?.review?.comment ?: "")
             )
         }
@@ -155,7 +165,7 @@ class AddEditReviewFragment : BaseFragment() {
                 upVotes = it.ratingAndReview?.upVotes,
                 downVotes = it.ratingAndReview?.downVotes,
                 review = it.ratingAndReview?.review ?: Review(""),
-                score = it.ratingAndReview?.score ?: 5,
+                score = it.ratingAndReview?.score ?: 5.0,
                 createdAt = it.ratingAndReview?.createdAt,
                 updatedAt = it.ratingAndReview?.updatedAt
             )
@@ -169,9 +179,9 @@ class AddEditReviewFragment : BaseFragment() {
             consumer = vendorProducts.ratingAndReview?.consumer,
             orderId = vendorProducts.ratingAndReview?.orderId ?: args.orderId,
             vendorId = vendorProducts.ratingAndReview?.orderId ?: vendorProducts.vendor._id,
-            valueScore = vendorProducts.ratingAndReview?.valueScore ?: 5,
-            pricingScore = vendorProducts.ratingAndReview?.pricingScore ?: 5,
-            qualityScore = vendorProducts.ratingAndReview?.qualityScore ?: 5,
+            valueScore = vendorProducts.ratingAndReview?.valueScore ?: 5.0,
+            pricingScore = vendorProducts.ratingAndReview?.pricingScore ?: 5.0,
+            qualityScore = vendorProducts.ratingAndReview?.qualityScore ?: 5.0,
             review = vendorProducts.ratingAndReview?.review ?: Review(""),
             createdAt = vendorProducts.ratingAndReview?.createdAt,
             updatedAt = vendorProducts.ratingAndReview?.updatedAt

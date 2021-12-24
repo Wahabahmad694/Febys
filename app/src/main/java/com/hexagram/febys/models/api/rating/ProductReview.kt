@@ -20,7 +20,7 @@ data class ProductReview constructor(
     @SerializedName("down_votes")
     val downVotes: MutableSet<String>? = null,
     val review: Review,
-    var score: Int,
+    var score: Double,
     @SerializedName("created_at")
     val createdAt: String? = null,
     @SerializedName("updated_at")

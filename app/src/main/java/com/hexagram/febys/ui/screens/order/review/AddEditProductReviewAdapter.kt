@@ -21,7 +21,7 @@ class AddEditProductReviewAdapter : RecyclerView.Adapter<AddEditProductReviewAda
             val variant = cartProduct.product.variants[0]
 
             product = cartProduct.product
-            productRating.ratingBar.progress = cartProduct.ratingAndReview?.score ?: 5
+            productRating.ratingBar.progress = cartProduct.ratingAndReview?.score?.toInt() ?: 5
             etComment.setText(cartProduct.ratingAndReview?.review?.comment)
 
             productRating.ratingBar.setOnRatingBarChangeListener { _, rating, fromUser ->

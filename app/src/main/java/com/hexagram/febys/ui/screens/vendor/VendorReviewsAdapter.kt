@@ -16,12 +16,16 @@ class VendorReviewsAdapter : RecyclerView.Adapter<VendorReviewsAdapter.ReviewVH>
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: VendorReview) = binding.apply {
             userName.text = item.consumer?.firstName
+            tvTitle.text = item.title
+            ratingPrice.text = item.pricingScore.toString()
+            ratingValue.text = item.valueScore.toString()
+            ratingQuality.text = item.qualityScore.toString()
             tvReview.text = item.review.comment
+            tvReview.isVisible = item.review.comment.isNotEmpty()
             date.text =
                 Utils.DateTime.formatDate(
                     item.createdAt ?: "", Utils.DateTime.FORMAT_MONTH_DATE_YEAR
                 )
-            tvReview.isVisible = item.review.comment.isNotEmpty()
         }
     }
 

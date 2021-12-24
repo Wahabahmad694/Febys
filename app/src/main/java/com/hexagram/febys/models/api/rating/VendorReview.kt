@@ -17,11 +17,11 @@ data class VendorReview constructor(
     @SerializedName("vendor_id")
     val vendorId: String,
     @SerializedName("value_score")
-    var valueScore: Int = 5,
+    var valueScore: Double = 5.0,
     @SerializedName("pricing_score")
-    var pricingScore: Int = 5,
+    var pricingScore: Double = 5.0,
     @SerializedName("quality_score")
-    var qualityScore: Int = 5,
+    var qualityScore: Double = 5.0,
     var review: Review,
     @SerializedName("created_at")
     val createdAt: String? = null,
