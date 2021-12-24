@@ -279,5 +279,6 @@
     <string name="phone_number">Phone Number</string>
     <string name="label_no_social_link">No social link available</string>
     <string name="label_no_reviews">No Reviews</string>
+    <string name="pricing">Pricing</string>
 
 </resources>
