@@ -57,7 +57,8 @@ class OrderDetailVendorProductAdapter : RecyclerView.Adapter<OrderDetailVendorPr
             btnCancelOrder.isVisible = cancelableOrder
                     && vendorProducts.status in arrayOf(OrderStatus.PENDING, OrderStatus.ACCEPTED)
 
-            btnAddReview.isVisible = !vendorProducts.hasReviewed
+            btnAddReview.isVisible =
+                !vendorProducts.hasReviewed && vendorProducts.status in arrayOf(OrderStatus.DELIVERED)
 
             btnReturnItems.isVisible =
                 vendorProducts.status in arrayOf(OrderStatus.DELIVERED) && !reverted

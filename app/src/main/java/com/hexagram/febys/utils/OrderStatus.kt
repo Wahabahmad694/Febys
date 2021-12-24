@@ -40,7 +40,7 @@ object OrderStatus {
                 "Pending return"
             }
             DELIVERED -> {
-                "Delivered"
+                "Received"
             }
             else -> {
                 ""

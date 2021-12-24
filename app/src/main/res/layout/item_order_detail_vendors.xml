@@ -92,7 +92,7 @@
                 style="@style/TextTheme.Arial.TS14.Grey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/label_orders_states" />
+                android:text="@string/label_orders_status" />
 
             <View
                 android:layout_width="0dp"
