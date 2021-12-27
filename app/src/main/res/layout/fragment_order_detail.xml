@@ -115,7 +115,6 @@
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_vendor_with_products"
                 android:layout_width="match_parent"
@@ -126,7 +125,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_16sdp"/>
+                android:layout_height="@dimen/_16sdp" />
 
             <include
                 android:id="@+id/container_order_summary"
@@ -134,7 +133,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_16sdp"/>
+                android:layout_height="@dimen/_16sdp" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

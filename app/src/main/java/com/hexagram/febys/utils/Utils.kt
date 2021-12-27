@@ -6,7 +6,6 @@ import android.net.Uri
 import com.google.gson.Gson
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
 import com.hexagram.febys.models.view.PaymentMethod
-import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -24,7 +23,7 @@ object Utils {
                 val localTimeFormat = SimpleDateFormat(pattern, Locale.getDefault())
                 localTimeFormat.timeZone = TimeZone.getDefault()
                 localTimeFormat.format(date)
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 ""
             }
         }
