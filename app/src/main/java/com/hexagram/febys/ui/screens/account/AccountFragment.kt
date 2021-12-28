@@ -69,6 +69,13 @@ class AccountFragment : BaseFragment() {
             )
         }
 
+        binding.orders.myReview.setOnClickListener {
+            gotoOrderListing(
+                arrayOf(OrderStatus.REVIEWED),
+                getString(R.string.label_my_review)
+            )
+        }
+
         binding.orders.cancelOrders.setOnClickListener {
             gotoOrderListing(
                 arrayOf(
