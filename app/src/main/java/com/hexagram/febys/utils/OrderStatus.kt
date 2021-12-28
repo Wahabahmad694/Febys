@@ -40,7 +40,7 @@ object OrderStatus {
                 "Pending return"
             }
             DELIVERED -> {
-                "Delivered"
+                "Received"
             }
             else -> {
                 ""
@@ -51,32 +51,32 @@ object OrderStatus {
     fun getStatusColor(status: String?): Int {
         val color = when (status) {
             PENDING -> {
-                "#888888"
+                "#FFF5D3"
             }
             ACCEPTED -> {
-                "#70ACF2"
+                "#CEE5FF"
             }
             CANCELLED_BY_VENDOR -> {
-                "#FFA24A"
+                "#FFDBB9"
             }
             SHIPPED -> {
-                "#FF976B"
+                "#FFFBA5"
             }
             CANCELED -> {
-                "#FF4545"
+                "#DBDBDB"
             }
             REJECTED -> {
-                "#DE0407"
+                "#FFCFCF"
             }
             RETURNED,
             PENDING_RETURN -> {
-                "#FF976B"
+                "#E0E7FF"
             }
             DELIVERED -> {
-                "#78D971"
+                "#B2FFDA"
             }
             else -> {
-                "#00000000"
+                "#000000"
             }
         }
 

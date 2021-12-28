@@ -108,7 +108,7 @@ class VendorListingFragment : BaseFragment() {
     private fun gotoVendorDetail(vendor: Vendor, isFollow: Boolean) {
         val direction = SearchFragmentDirections
             .actionSearchFragmentToProductListingByVendorFragment(
-                vendor._id, vendor.name, vendor.role.name, isFollow
+                vendor._id, vendor.shopName, vendor.role.name, isFollow
             )
         navigateTo(direction)
     }

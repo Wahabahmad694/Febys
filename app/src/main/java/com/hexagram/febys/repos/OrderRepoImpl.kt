@@ -6,6 +6,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.hexagram.febys.models.api.order.CancelReasons
 import com.hexagram.febys.models.api.order.Order
+import com.hexagram.febys.models.api.rating.OrderReview
 import com.hexagram.febys.models.api.request.OrderListingRequest
 import com.hexagram.febys.models.api.request.PagingListRequest
 import com.hexagram.febys.network.DataState
@@ -27,27 +28,6 @@ class OrderRepoImpl @Inject constructor(
     private val pref: IPrefManger,
     private val backendService: FebysBackendService
 ) : IOrderRepo {
-    override suspend fun fetchOrders(
-        filters: Array<String>?, dispatcher: CoroutineDispatcher
-    ) = flow<DataState<List<Order>>> {
-        val authToken = pref.getAccessToken()
-        if (authToken.isEmpty()) return@flow
-
-        var filterMap: Map<String, Map<String, Array<String>>>? = null
-        if (!filters.isNullOrEmpty()) {
-            filterMap = mapOf("vendor_products.status" to mapOf("\$in" to filters))
-        }
-        val filtersBody = OrderListingRequest(filterMap)
-
-//        backendService.fetchOrderListing(authToken, filtersBody)
-//            .onSuccess {
-//                val orderResponse = data!!.getResponse<OrderListingResponse>()
-//                emit(DataState.Data(orderResponse.orders))
-//            }
-//            .onError { emit(DataState.ApiError(message)) }
-//            .onException { emit(DataState.ExceptionError()) }
-//            .onNetworkError { emit(DataState.NetworkError()) }
-    }
 
     override fun fetchOrderList(
         filters: Array<String>?,
@@ -64,7 +44,7 @@ class OrderRepoImpl @Inject constructor(
             }
             val filtersBody = OrderListingRequest(filterMap)
             OrderListPagingSource(
-                backendService, authToken, PagingListRequest(),  filtersBody
+                backendService, authToken, PagingListRequest(), filtersBody
             )
         }.flow
             .flowOn(dispatcher)
@@ -84,7 +64,7 @@ class OrderRepoImpl @Inject constructor(
             .onNetworkError { emit(DataState.NetworkError()) }
     }
 
-    override fun fetchCancelReasons(dispatcher: CoroutineDispatcher) =
+    override suspend fun fetchCancelReasons(dispatcher: CoroutineDispatcher) =
         flow<DataState<CancelReasons>> {
             backendService.fetchCancelReasons()
                 .onSuccess { emit(DataState.Data(data!!.cancelReasons)) }
@@ -93,7 +73,7 @@ class OrderRepoImpl @Inject constructor(
                 .onNetworkError { emit(DataState.NetworkError()) }
         }
 
-    override fun cancelOrder(
+    override suspend fun cancelOrder(
         orderId: String,
         vendorId: String,
         reason: String,
@@ -110,5 +90,16 @@ class OrderRepoImpl @Inject constructor(
             .onNetworkError { emit(DataState.NetworkError()) }
     }
 
-
+    override suspend fun postReview(
+        orderId: String,
+        orderReview: OrderReview,
+        dispatcher: CoroutineDispatcher
+    ): Flow<DataState<OrderReview>> = flow<DataState<OrderReview>> {
+        val authToken = pref.getAccessToken()
+        backendService.postOrderReview(authToken, orderId, orderReview)
+            .onSuccess { emit(DataState.Data(data!!)) }
+            .onError { emit(DataState.ApiError(message)) }
+            .onException { emit(DataState.ExceptionError()) }
+            .onNetworkError { emit(DataState.NetworkError()) }
+    }
 }

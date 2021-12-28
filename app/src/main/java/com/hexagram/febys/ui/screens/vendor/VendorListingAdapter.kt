@@ -94,7 +94,7 @@ class VendorListingAdapter(private val isCelebrity: Boolean) :
                     gotoDetailPage(item)
                 }
 
-                vendorName.text = item.name
+                vendorName.text = if (isCelebrity!!) item.name else item.shopName
                 vendorType.text = item.role.name
                 preferredVendorOrShopName.text = item.businessInfo.address
 

@@ -166,8 +166,11 @@ class CelebrityDetailFragment : BaseFragment() {
 
     private fun updateUi(celebrity: Vendor) {
         binding.apply {
-            profileImg.load(celebrity.businessInfo.logo)
+            profileImg.load(celebrity.templatePhoto)
             celebrity.templatePhoto?.let { headerImg.load(it) }
+            celebrity.template
+                ?.firstOrNull { it.section == "topBanner" }
+                ?.images?.firstOrNull()?.url?.let { headerImg.load(it) }
             tvProductListingTitle.text = celebrity.name
             name.text = celebrity.name
             type.text = celebrity.role.name

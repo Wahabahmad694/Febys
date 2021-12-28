@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="quantity"
+            type="String" />
     </data>
 
     <LinearLayout
@@ -45,8 +48,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="?actionBarSize"
                 android:layout_marginEnd="@dimen/_10sdp"
-                android:gravity="center"
                 android:enabled="true"
+                android:gravity="center"
                 android:text="@string/label_clear_all"
                 app:layout_constraintBottom_toBottomOf="@id/label_refine"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -138,7 +141,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_17sdp"
                 android:layout_marginBottom="@dimen/_14sdp"
-                android:text="@string/label_show_filter"
+                android:text="@{@string/label_show_filter(quantity)}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

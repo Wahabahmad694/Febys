@@ -483,7 +483,7 @@ class ProductDetailFragment : SliderFragment() {
     }
 
     private fun updateQuestionAnswersThread(qaThreads: MutableList<QAThread>) {
-        binding.seeMoreQAndA.isVisible = qaThreads.isNotEmpty()
+        binding.seeMoreQAndA.isVisible = qaThreads.size > 3
         if (qaThreads.isEmpty()) return
 
         binding.containerQAndAThread.removeAllViews()
@@ -606,7 +606,8 @@ class ProductDetailFragment : SliderFragment() {
                 )
 
                 reviewBinding.userName.text = item.consumer.firstName
-                reviewBinding.userRatingBar.progress = item.score.toInt()
+                reviewBinding.userRatingBar.rating = item.score.toFloat()
+                reviewBinding.userRatingBar.stepSize = 0.5f
                 reviewBinding.tvReview.text = item.review.comment
                 reviewBinding.date.text =
                     Utils.DateTime.formatDate(

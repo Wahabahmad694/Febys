@@ -187,4 +187,17 @@
         <item name="shapeAppearance">@style/TextInputLayout.ShapeAppearance</item>
     </style>
 
+    <style name="RatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/bg_rating_bar</item>
+        <item name="android:isIndicator">true</item>
+        <item name="android:minHeight">@dimen/_13sdp</item>
+        <item name="android:maxHeight">@dimen/_20sdp</item>
+    </style>
+
+    <style name="RatingBar.Editable">
+        <item name="android:isIndicator">false</item>
+        <item name="android:width">@dimen/_50sdp</item>
+        <item name="android:height">@dimen/_20sdp</item>
+    </style>
+
 </resources>

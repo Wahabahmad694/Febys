@@ -16,9 +16,9 @@ data class RatingAndReviews(
     @SerializedName("sku_id")
     val skuId: String,
     @SerializedName("down_votes")
-    val downVotes: MutableList<String>,
+    val downVotes: MutableSet<String>,
     @SerializedName("up_votes")
-    val upVotes: MutableList<String>,
+    val upVotes: MutableSet<String>,
     @SerializedName("product_id")
     val productId: String,
     val score: Double,

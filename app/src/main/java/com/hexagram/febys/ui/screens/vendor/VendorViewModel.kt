@@ -22,7 +22,7 @@ class VendorViewModel @Inject constructor(
     productListingRepo: IProductListingRepo
 ) : ProductListingViewModel(productListingRepo) {
 
-    private var allCategoryPagingData: Flow<PagingData<Any>>? = null
+    private var allVendorsPagingData: Flow<PagingData<Any>>? = null
     private val _observerVendorDetail = MutableLiveData<DataState<Vendor>>()
     val observerVendorDetail: LiveData<DataState<Vendor>> = _observerVendorDetail
 
@@ -31,11 +31,11 @@ class VendorViewModel @Inject constructor(
         _observerVendorEndorsement
 
     fun fetchVendors(isCelebrity: Boolean): Flow<PagingData<Any>> {
-        if (allCategoryPagingData == null) {
-            allCategoryPagingData = vendorRepo.fetchVendors(isCelebrity, viewModelScope)
+        if (allVendorsPagingData == null) {
+            allVendorsPagingData = vendorRepo.fetchVendors(isCelebrity, viewModelScope)
         }
 
-        return allCategoryPagingData!!
+        return allVendorsPagingData!!
     }
 
     fun followVendor(vendorId: String) =
