@@ -33,3 +33,7 @@ data class Consumer(
     @SerializedName("updated_at")
     val updatedAt: String
 ) : Parcelable
+    {
+        val fullName
+        get() = "$firstName $lastName"
+    }

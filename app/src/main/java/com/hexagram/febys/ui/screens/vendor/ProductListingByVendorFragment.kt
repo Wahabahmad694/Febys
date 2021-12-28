@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.paging.LoadState
+import androidx.paging.filter
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import com.hexagram.febys.NavGraphDirections
@@ -103,6 +105,7 @@ class ProductListingByVendorFragment : BaseFragment() {
             celebrityViewModel.vendorProductListing(args.id) {
                 setProductItemCount(it.totalRows)
             }.collectLatest { pagingData ->
+                val list = pagingData.filter { false }
                 productListingPagerAdapter.submitData(pagingData)
             }
         }
@@ -119,6 +122,8 @@ class ProductListingByVendorFragment : BaseFragment() {
                 if (state is LoadState.Error) {
                     showToast(getString(R.string.error_something_went_wrong))
                 }
+                binding.emptyView.root.isVisible =
+                    it.refresh is LoadState.NotLoading && productListingPagerAdapter.itemCount < 1
             }
         }
     }

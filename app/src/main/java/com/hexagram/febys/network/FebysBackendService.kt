@@ -7,6 +7,7 @@ import com.hexagram.febys.models.api.filters.SearchFilterResponse
 import com.hexagram.febys.models.api.pagination.Pagination
 import com.hexagram.febys.models.api.product.FeaturedCategory
 import com.hexagram.febys.models.api.rating.OrderReview
+import com.hexagram.febys.models.api.profile.Profile
 import com.hexagram.febys.models.api.request.*
 import com.hexagram.febys.models.api.response.*
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
@@ -300,6 +301,11 @@ interface FebysBackendService {
 
     @GET("v1/consumers/vendor/{vendorId}/category/list")
     suspend fun fetchVendorCategoryFilters(@Path("vendorId") vendorId: String): ApiResponse<SearchFilterResponse>
+
+    @GET("v1/cart")
+    suspend fun fetchProfile(
+        @Header("Authorization") authToken: String
+    ): ApiResponse<Profile>
 
     @POST("v1/rating-review/save/{orderId}")
     suspend fun postOrderReview(

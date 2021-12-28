@@ -7,12 +7,14 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.hexagram.febys.NavGraphDirections
+import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentCartBinding
 import com.hexagram.febys.models.api.price.Price
 import com.hexagram.febys.models.db.CartDTO
 import com.hexagram.febys.utils.goBack
 import com.hexagram.febys.utils.navigateTo
+import com.hexagram.febys.utils.showWarningDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -74,7 +76,15 @@ class CartFragment : BaseFragment() {
             }
 
             override fun removeFromCart(cartDTO: CartDTO) {
-                cartViewModel.removeFromCart(cartDTO)
+
+                val resId = R.drawable.bg_warning
+                val title = getString(R.string.label_delete_warning)
+                val msg = getString(R.string.msg_for_delete_item_bag)
+
+                showWarningDialog(resId, title, msg) {
+                    cartViewModel.removeFromCart(cartDTO)
+                }
+
             }
 
             override fun openProductDetail(cartDTO: CartDTO) {
@@ -106,8 +116,7 @@ class CartFragment : BaseFragment() {
         }
 
         cartDataSource.observeCartCount().observe(viewLifecycleOwner) { cartCount ->
-            val cartCountSet = if (cartCount == null || cartCount == 0) "" else "($cartCount)"
-            binding.tvCartCount.text = cartCountSet
+            binding.tvCartCount.text = if (cartCount == null || cartCount == 0) "" else "($cartCount)"
         }
     }
 
@@ -134,6 +143,4 @@ class CartFragment : BaseFragment() {
         binding.tvSubtotalAmount.text = formattedTotalPrice
         binding.tvTotalAmount.text = formattedTotalPrice
     }
-
-    override fun getTvCartCount() = binding.tvCartCount
 }
