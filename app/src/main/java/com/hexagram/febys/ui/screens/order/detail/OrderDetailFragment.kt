@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -68,6 +69,10 @@ class OrderDetailFragment : BaseFragment() {
             gotoAddReview(vendorProducts)
         }
 
+        orderDetailVendorProductAdapter.onItemClick = { vendorProducts ->
+            gotoAddReview(vendorProducts)
+        }
+
         setFragmentResultListener(CancelOrderBottomSheet.REQ_KEY_IS_ORDER_CANCELED) { _, bundle ->
             val isOrderCanceled =
                 bundle.getBoolean(CancelOrderBottomSheet.REQ_KEY_IS_ORDER_CANCELED)
@@ -119,12 +124,13 @@ class OrderDetailFragment : BaseFragment() {
         tvOrderDate.text =
             Utils.DateTime.formatDate(order.createdAt, FORMAT_MONTH_DATE_YEAR_HOUR_MIN)
 
-        orderDetailVendorProductAdapter.submitList(order.vendorProducts)
+        orderDetailVendorProductAdapter.submitList(order.vendorProducts, args.review)
 
         createOrderSummary(order)
     }
 
     private fun createOrderSummary(order: Order) {
+        binding.containerOrderSummary.root.isVisible = !args.review
         binding.containerOrderSummary.containerOrderSummaryProducts.removeAllViews()
 
         val cartItems = order.toListOfCartDTO()

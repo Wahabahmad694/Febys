@@ -48,8 +48,9 @@ class OrderListingFragment : BaseFragment() {
         binding.ivBack.setOnClickListener { goBack() }
 
         orderListingAdapter.onItemClick = {
-            val gotoOrderDetail =
-                OrderListingFragmentDirections.actionOrderListingFragmentToOrderDetailFragment(it.orderId)
+            val review = args.status?.firstOrNull() == OrderStatus.REVIEWED
+            val gotoOrderDetail = OrderListingFragmentDirections
+                .actionOrderListingFragmentToOrderDetailFragment(it.orderId, review)
             navigateTo(gotoOrderDetail)
         }
     }

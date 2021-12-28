@@ -136,22 +136,8 @@ class AddEditReviewFragment : BaseFragment() {
         binding.qualityRating.ratingBar.progress = orderReview.vendorReview.qualityScore.toInt()
         binding.valueRating.ratingBar.progress = orderReview.vendorReview.valueScore.toInt()
 
-        products.forEach { cartProduct ->
-            val productReview = orderReview.productsRatings
-                .firstOrNull { it.skuId == cartProduct.product.variants[0].skuId }
-
-            cartProduct.ratingAndReview = ProductReview(
-                orderId = args.orderId,
-                productId = cartProduct.product._id,
-                skuId = cartProduct.product.variants[0].skuId,
-                score = productReview?.score ?: 5.0,
-                review = Review(productReview?.review?.comment ?: "")
-            )
-        }
-
         addEditReviewAdapter.submitList(products)
     }
-
 
     private fun createAddEditReviewRequest(vendorProducts: VendorProducts): OrderReview {
         val listOfProductReviews = mutableListOf<ProductReview>()
