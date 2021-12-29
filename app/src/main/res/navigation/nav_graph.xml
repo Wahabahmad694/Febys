@@ -665,6 +665,10 @@
         <argument
             android:name="orderId"
             app:argType="string" />
+        <argument
+            android:name="review"
+            android:defaultValue="false"
+            app:argType="boolean" />
         <action
             android:id="@+id/action_orderDetailFragment_to_cancelOrderBottomSheet"
             app:destination="@id/cancelOrderBottomSheet" />

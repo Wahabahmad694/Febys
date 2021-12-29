@@ -1,5 +1,6 @@
 package com.hexagram.febys.network
 
+import com.google.gson.JsonObject
 import com.hexagram.febys.models.api.cart.CartResponse
 import com.hexagram.febys.models.api.cities.PostCitiesResponse
 import com.hexagram.febys.models.api.countries.CountryResponse
@@ -242,7 +243,7 @@ interface FebysBackendService {
     suspend fun fetchOrderListing(
         @Header("Authorization") authToken: String,
         @QueryMap queryMap: Map<String, String>,
-        @Body orderListingRequest: OrderListingRequest
+        @Body orderListingRequest: JsonObject
     ): ApiResponse<Pagination>
 
     @POST("v1/orders/for-consumer/{orderId}")

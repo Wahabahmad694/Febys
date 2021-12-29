@@ -12,6 +12,7 @@ object OrderStatus {
     const val RETURNED = "RETURNED"
     const val PENDING_RETURN = "PENDING_RETURN"
     const val DELIVERED = "DELIVERED"
+    const val REVIEWED = "REVIEWED"
 
     fun getStatusForDisplay(status: String?): String {
         return when (status) {
