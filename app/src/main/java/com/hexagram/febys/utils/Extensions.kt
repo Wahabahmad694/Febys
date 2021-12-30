@@ -25,6 +25,8 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.hexagram.febys.base.BaseActivity
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
+import com.hexagram.febys.ui.screens.dialog.InfoDialog
+import com.hexagram.febys.ui.screens.dialog.WarningDialog
 import java.util.*
 
 
@@ -184,4 +186,10 @@ fun String.capitalize(): String {
     }
 
     return capitalizeString.trim()
+}
+
+fun Fragment.showWarningDialog(
+    @DrawableRes resId: Int, title: String, msg: String, onOkayClick: () -> Unit
+) {
+    WarningDialog(resId, title, msg) { onOkayClick() }.show(childFragmentManager, InfoDialog.TAG)
 }

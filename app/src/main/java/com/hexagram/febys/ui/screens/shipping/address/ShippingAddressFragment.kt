@@ -4,17 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentShippingAddressBinding
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
-import com.hexagram.febys.utils.goBack
-import com.hexagram.febys.utils.hideLoader
-import com.hexagram.febys.utils.navigateTo
-import com.hexagram.febys.utils.showLoader
+import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -53,7 +52,13 @@ class ShippingAddressFragment : BaseFragment() {
             gotoAddEditShippingAddress(shippingAddress)
         }
         shippingAddressAdapter.deleteShippingAddress = { shippingAddress ->
-            shippingAddressViewModel.deleteShippingAddresses(shippingAddress)
+            val resId = R.drawable.bg_warning
+            val title = getString(R.string.label_delete_warning)
+            val msg = getString(R.string.msg_for_delete_shipping_address)
+
+            showWarningDialog(resId, title, msg) {
+                shippingAddressViewModel.deleteShippingAddresses(shippingAddress)
+            }
         }
 
         binding.labelAddNewShippingAddress.setOnClickListener {
@@ -93,6 +98,7 @@ class ShippingAddressFragment : BaseFragment() {
     }
 
     private fun updateUi(addresses: List<ShippingAddress>) {
+        binding.emptyView.root.isVisible = addresses.isEmpty()
         shippingAddressAdapter.submitList(addresses)
     }
 

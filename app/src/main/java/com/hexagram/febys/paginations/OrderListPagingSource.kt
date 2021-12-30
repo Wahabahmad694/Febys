@@ -13,7 +13,7 @@ class OrderListPagingSource constructor(
     private val authToken: String,
     private val request: PagingListRequest,
     private val orderListingRequest: OrderListingRequest
-) :  BasePagingSource<Int, Order>() {
+) : BasePagingSource<Int, Order>() {
 
     override fun getRefreshKey(state: PagingState<Int, Order>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
@@ -25,8 +25,10 @@ class OrderListPagingSource constructor(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Order> {
         request.pageNo = params.key ?: 1
         val queryMap = request.createQueryMap()
-        return when (val response =
-            service.fetchOrderListing(authToken, queryMap, orderListingRequest)) {
+
+        val response =
+            service.fetchOrderListing(authToken, queryMap, orderListingRequest.createRequest())
+        return when (response) {
             is ApiResponse.ApiSuccessResponse -> {
                 val orders = response.data!!.getResponse<OrderListingResponse>()
                 val (prevKey, nextKey) = getPagingKeys(orders.pagingInfo)

@@ -8,7 +8,6 @@
     </data>
 
 
-
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -44,6 +43,16 @@
                     app:layout_constraintBottom_toBottomOf="@id/label_add_review"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/label_add_review" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_edit"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    android:src="@drawable/ic_edit"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    app:layout_constraintBottom_toBottomOf="@id/label_add_review"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/label_add_review"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -97,8 +106,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_16sdp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_add_edit_product_review"
-                tools:itemCount="1"/>
+                tools:itemCount="1"
+                tools:listitem="@layout/item_add_edit_product_review" />
 
             <TextView
                 style="@style/TextTheme.HelveticaNeue.TS16.Bold"
@@ -107,35 +116,6 @@
                 android:layout_marginHorizontal="@dimen/_16sdp"
                 android:layout_marginTop="@dimen/_16sdp"
                 android:text="@string/label_add_seller_feedback" />
-
-            <TextView
-                android:id="@+id/label_review_title"
-                style="@style/TextTheme.Arial.TS16"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_16sdp"
-                android:layout_marginTop="@dimen/_16sdp"
-                android:text="@string/title"
-                app:layout_constraintTop_toBottomOf="@id/label_login_slogan" />
-
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/et_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_16sdp"
-                android:background="@null"
-                android:imeOptions="actionNext"
-                android:inputType="textShortMessage"
-                android:paddingVertical="@dimen/_8dp"
-                android:textAppearance="@style/TextTheme.Arial.TS16"
-                app:layout_constraintTop_toBottomOf="@id/label_review_title" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_1dp"
-                android:layout_marginHorizontal="@dimen/_16sdp"
-                android:background="@color/grey_e1e5e8"
-                app:layout_constraintTop_toBottomOf="@id/et_title" />
 
             <View
                 android:layout_width="match_parent"

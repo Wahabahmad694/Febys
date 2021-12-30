@@ -5,8 +5,10 @@
     <string name="label_today_deals">Today\'s Deals</string>
     <string name="label_today_deals_slogan">Discover new deal\'s, just for you</string>
     <string name="label_featured_categories">Featured Categories</string>
+    <string name="label_categories">Categories</string>
     <string name="label_featured_categories_slogan">We think you\'ll love these</string>
     <string name="label_trending_products">Trending Products</string>
+    <string name="label_products">Products</string>
     <string name="label_trending_products_slogan">Discover the top selling products</string>
     <string name="label_under_100_dollar_items">Under $100 Items</string>
     <string name="label_under_100_dollar_items_slogan">Discover new deal\'s, just for you</string>
@@ -29,7 +31,6 @@
     <string name="label_variant">Variant</string>
     <string name="label_select_variant">Select %1s</string>
     <string name="label_title">%1s</string>
-    <string name="title">Title</string>
     <string name="variant_selected">%1s: %2s</string>
     <string name="only_one_variant">This product has only one variant</string>
     <string name="label_sign_up">Sign Up</string>
@@ -150,7 +151,7 @@
     <string name="label_cancel">Cancel</string>
     <string name="label_add_review">Add Review</string>
     <string name="label_return_item">Return Item</string>
-    <string name="label_product_review">Product Review</string>
+    <string name="label_my_review">My Review</string>
     <string name="label_order_received">Order Received</string>
     <string name="label_my_location">My Location</string>
     <string name="label_my_location_description">This location defines your language and currency</string>
@@ -173,6 +174,7 @@
     <string name="label_notifications">Notifications</string>
     <string name="label_me">Me</string>
     <string name="label_explore_stores">Explore Stores</string>
+    <string name="label_stores">Stores</string>
     <string name="label_explore_markets">Explore Markets</string>
     <string name="label_following">Unfollow</string>
     <string name="label_follow">Follow</string>
@@ -190,6 +192,7 @@
     <string name="label_postal_code">Postal Code</string>
     <string name="label_set_as_default_shipping_address">Set as default shipping address</string>
     <string name="label_save_and_continue">Save and continue</string>
+    <string name="label_save">Save</string>
     <string name="label_show_filter">Show %1s results</string>
     <string name="error_enter_valid_postal_code">Please enter valid postal code</string>
     <string name="error_enter_valid_state">Please enter valid state</string>
@@ -223,7 +226,6 @@
     <string name="label_pawn_shop">Pawn Shop</string>
     <string name="label_delete">Delete</string>
     <string name="label_reply">Reply</string>
-    <string name="reply_to_the_question">Reply to the question</string>
     <string name="label_by">By</string>
     <string name="label_see_more">See More</string>
     <string name="label_ask_about_product">Ask about the product.</string>
@@ -270,6 +272,7 @@
     <string name="all_of_e_services_and_more">All of E Services and more</string>
     <string name="try_febys_plus">Try Febys Plus</string>
     <string name="febys_plus">Febys Plus</string>
+    <string name="title">Title</string>
     <string name="get_items_the_next_day">Get items the next day</string>
     <string name="free_same_day_delivery">Free Same-Day Delivery</string>
     <string name="get_eligible_orders_before_9pm_today">Get eligible orders before 9pm today</string>
@@ -283,6 +286,11 @@
     <string name="phone_number">Phone Number</string>
     <string name="label_no_social_link">No social link available</string>
     <string name="label_no_reviews">No Reviews</string>
+    <string name="label_empty_view">No %1s found</string>
+    <string name="label_delete_warning">Are You Sure?</string>
+    <string name="msg_for_delete_item_bag">Do you want to delete this item from bag?</string>
+    <string name="msg_for_unfollow_vendor">Do you want to unfollow this vendor?</string>
+    <string name="msg_for_delete_shipping_address">Do you want to delete this shipping address?</string>
     <string name="label_add_seller_feedback">Add Seller Feedback</string>
     <string name="label_price">Price</string>
     <string name="label_value">Value</string>

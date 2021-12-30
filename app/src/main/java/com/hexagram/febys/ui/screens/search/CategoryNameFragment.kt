@@ -5,11 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.paging.LoadState
-import androidx.paging.PagingData
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hexagram.febys.R
@@ -100,6 +100,7 @@ class CategoryNameFragment : BaseFragment() {
     private fun setupCategorySimpleAdapter(categories: List<Category>) {
         binding.rvCategoryName.adapter = simpleAdapter
         simpleAdapter.submitList(categories)
+        binding.emptyView.root.isVisible=categories.isEmpty()
     }
 
     private fun setupCategoryPagerAdapter() {
@@ -123,6 +124,8 @@ class CategoryNameFragment : BaseFragment() {
                 if (state is LoadState.Error) {
                     showToast(getString(R.string.error_something_went_wrong))
                 }
+                binding.emptyView.root.isVisible=
+                    it.refresh is LoadState.NotLoading && pagerAdapter.itemCount < 1
             }
         }
     }

@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.hexagram.febys.R
+import com.hexagram.febys.databinding.ItemOrderDetailVendorForReviewBinding
 import com.hexagram.febys.databinding.ItemOrderDetailVendorsBinding
 import com.hexagram.febys.models.api.cart.VendorProducts
 import com.hexagram.febys.utils.OrderStatus
@@ -12,16 +13,42 @@ import com.hexagram.febys.utils.applySpaceItemDecoration
 import com.hexagram.febys.utils.load
 import com.hexagram.febys.utils.setBackgroundRoundedColor
 
-class OrderDetailVendorProductAdapter : RecyclerView.Adapter<OrderDetailVendorProductAdapter.VH>() {
+class OrderDetailVendorProductAdapter : RecyclerView.Adapter<IBindViewHolder>() {
     private var vendors = listOf<VendorProducts>()
     var onCancelOrderClick: ((vendorId: String) -> Unit)? = null
     var onAddReviewClick: ((vendorProducts: VendorProducts) -> Unit)? = null
+    var onItemClick: ((vendorProducts: VendorProducts) -> Unit)? = null
     var cancelableOrder: Boolean = true
+    private var review: Boolean = false
+
+    inner class ReviewVH(
+        private val binding: ItemOrderDetailVendorForReviewBinding
+    ) : IBindViewHolder(binding.root) {
+        override fun bind(position: Int) = with(binding) {
+            val vendorProducts = vendors[position]
+            val vendor = vendorProducts.vendor
+
+            vendorName.text = vendor.shopName
+            vendorType.text = vendor.role.name
+            vendorImg.load(vendor.businessInfo.logo)
+
+            val orderDetailProductAdapter = OrderDetailProductAdapter()
+            rvOrderDetailProducts.adapter = orderDetailProductAdapter
+            orderDetailProductAdapter.submitList(vendorProducts.products, review)
+            orderDetailProductAdapter.onItemClick = {
+                onItemClick?.invoke(vendorProducts)
+            }
+
+            root.setOnClickListener {
+                onItemClick?.invoke(vendorProducts)
+            }
+        }
+    }
 
     inner class VH(
         private val binding: ItemOrderDetailVendorsBinding
-    ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(position: Int) = with(binding) {
+    ) : IBindViewHolder(binding.root) {
+        override fun bind(position: Int) = with(binding) {
             val vendorProducts = vendors[position]
             val vendor = vendorProducts.vendor
             val reverted = vendorProducts.reverted == true
@@ -68,15 +95,23 @@ class OrderDetailVendorProductAdapter : RecyclerView.Adapter<OrderDetailVendorPr
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
-        return VH(
-            ItemOrderDetailVendorsBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IBindViewHolder {
+        return if (review) {
+            ReviewVH(
+                ItemOrderDetailVendorForReviewBinding.inflate(
+                    LayoutInflater.from(parent.context), parent, false
+                )
             )
-        )
+        } else {
+            VH(
+                ItemOrderDetailVendorsBinding.inflate(
+                    LayoutInflater.from(parent.context), parent, false
+                )
+            )
+        }
     }
 
-    override fun onBindViewHolder(holder: VH, position: Int) {
+    override fun onBindViewHolder(holder: IBindViewHolder, position: Int) {
         holder.bind(position)
     }
 
@@ -84,7 +119,8 @@ class OrderDetailVendorProductAdapter : RecyclerView.Adapter<OrderDetailVendorPr
         return vendors.size
     }
 
-    fun submitList(list: List<VendorProducts>) {
+    fun submitList(list: List<VendorProducts>, review: Boolean = false) {
+        this.review = review
         vendors = list
         notifyItemRangeChanged(0, vendors.size)
     }

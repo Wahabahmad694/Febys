@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
@@ -48,8 +49,9 @@ class OrderListingFragment : BaseFragment() {
         binding.ivBack.setOnClickListener { goBack() }
 
         orderListingAdapter.onItemClick = {
-            val gotoOrderDetail =
-                OrderListingFragmentDirections.actionOrderListingFragmentToOrderDetailFragment(it.orderId)
+            val review = args.status?.firstOrNull() == OrderStatus.REVIEWED
+            val gotoOrderDetail = OrderListingFragmentDirections
+                .actionOrderListingFragmentToOrderDetailFragment(it.orderId, review)
             navigateTo(gotoOrderDetail)
         }
     }
@@ -70,6 +72,8 @@ class OrderListingFragment : BaseFragment() {
                 if (state is LoadState.Error) {
                     showToast(getString(R.string.error_something_went_wrong))
                 }
+                binding.emptyView.root.isVisible =
+                    it.refresh is LoadState.NotLoading && orderListingAdapter.itemCount < 1
             }
         }
     }

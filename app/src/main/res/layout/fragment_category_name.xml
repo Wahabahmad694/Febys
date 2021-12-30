@@ -89,8 +89,13 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:context=".ui.screens.search.CategoryNameFragment"
                 tools:listitem="@layout/item_category_name" />
+
         </LinearLayout>
 
+        <include
+            android:id="@+id/empty_view"
+            layout="@layout/layout_empty_view"
+            app:warningTitle="@{@string/label_categories}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

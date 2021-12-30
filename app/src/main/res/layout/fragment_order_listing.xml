@@ -47,5 +47,10 @@
             android:layout_weight="1"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_order_listing" />
+
+        <include
+            android:id="@+id/empty_view"
+            layout="@layout/layout_empty_view"
+            app:warningTitle="@{@string/label_orders}" />
     </LinearLayout>
 </layout>

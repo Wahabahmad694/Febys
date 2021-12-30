@@ -17,6 +17,7 @@ import com.hexagram.febys.network.adapter.onNetworkError
 import com.hexagram.febys.network.adapter.onSuccess
 import com.hexagram.febys.paginations.OrderListPagingSource
 import com.hexagram.febys.prefs.IPrefManger
+import com.hexagram.febys.utils.OrderStatus
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -38,11 +39,12 @@ class OrderRepoImpl @Inject constructor(
             PagingConfig(pageSize = 10)
         ) {
             val authToken = pref.getAccessToken()
-            var filterMap: Map<String, Map<String, Array<String>>>? = null
+            val filtersBody = OrderListingRequest()
+            var hasReview = false
             if (!filters.isNullOrEmpty()) {
-                filterMap = mapOf("vendor_products.status" to mapOf("\$in" to filters))
+                filtersBody.hasReviewed = filters.first() == OrderStatus.REVIEWED
+                filtersBody.filters = filters.toList()
             }
-            val filtersBody = OrderListingRequest(filterMap)
             OrderListPagingSource(
                 backendService, authToken, PagingListRequest(), filtersBody
             )

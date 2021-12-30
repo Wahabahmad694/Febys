@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
@@ -68,6 +69,8 @@ abstract class ProductListingFragment : BaseFragment() {
                 if (state is LoadState.Error) {
                     showToast(getString(R.string.error_something_went_wrong))
                 }
+                binding.emptyView.root.isVisible =
+                    it.refresh is LoadState.NotLoading && productListingPagerAdapter.itemCount < 1
             }
         }
     }
