@@ -8,7 +8,6 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class VendorReview constructor(
     val _id: String? = null,
-    var title: String = "",
     @SerializedName("consumer_id")
     val consumerId: Int? = null,
     val consumer: Consumer? = null,
