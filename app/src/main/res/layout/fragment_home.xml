@@ -119,15 +119,16 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_marginHorizontal="@dimen/_16dp"
-                        android:layout_marginTop="@dimen/_16dp"
+                        android:layout_marginTop="4dp"
                         app:layout_constraintDimensionRatio="1:1"
-                        app:layout_constraintTop_toBottomOf="@id/iv_ic_scroll_unique_category" />
+                        app:layout_constraintTop_toBottomOf="@id/iv_ic_scroll_unique_category"
+                        tools:layout_editor_absoluteX="177dp" />
 
                     <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
                         android:id="@+id/dots_indicator"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/_18sdp"
+                        android:layout_marginBottom="@dimen/_7sdp"
                         app:dotsColor="@color/slider_dot_color"
                         app:dotsCornerRadius="8dp"
                         app:dotsSize="4dp"
@@ -275,7 +276,7 @@
                         android:id="@+id/slider_seasonal_offer_dots_indicator"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/_24dp"
+                        android:layout_marginBottom="@dimen/_7sdp"
                         app:dotsColor="@color/slider_dot_color"
                         app:dotsCornerRadius="8dp"
                         app:dotsSize="4dp"
