@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
@@ -54,10 +55,9 @@ class AddEditReviewFragment : BaseFragment() {
 
     private fun initUi() {
         val vendor = args.vendorProducts.vendor
-        val products = args.vendorProducts.products
 
         orderReview = createAddEditReviewRequest(args.vendorProducts)
-        updateUi(orderReview, products)
+        updateUi(orderReview)
 
         binding.vendorName.text = vendor.shopName
         binding.vendorType.text = vendor.role.name
@@ -70,11 +70,10 @@ class AddEditReviewFragment : BaseFragment() {
 
     private fun uiListener() {
         binding.ivBack.setOnClickListener { goBack() }
+        binding.ivEdit.setOnClickListener {
+            updateFieldAndReviewsAdapter(true)
 
-        binding.etTitle.doAfterTextChanged {
-            orderReview.vendorReview.title = it.toString()
         }
-
         binding.etComment.doAfterTextChanged {
             orderReview.vendorReview.review.comment = it.toString()
         }
@@ -117,6 +116,7 @@ class AddEditReviewFragment : BaseFragment() {
                 is DataState.Data -> {
                     hideLoader()
                     showToast("Review Posted")
+                    updateFieldAndReviewsAdapter(false)
                     setFragmentResult(
                         REQ_KEY_REFRESH,
                         bundleOf(REQ_KEY_REFRESH to true)
@@ -126,17 +126,43 @@ class AddEditReviewFragment : BaseFragment() {
         }
     }
 
-    private fun updateUi(
-        orderReview: OrderReview, products: MutableList<CartProduct>
-    ) {
-        binding.etTitle.setText(orderReview.vendorReview.title)
-        binding.etComment.setText(orderReview.vendorReview.review.comment)
+    private fun updateUi(orderReview: OrderReview) {
+        val hasReviewed = args.vendorProducts.hasReviewed
+        updateFieldAndReviewsAdapter(isEnable = !hasReviewed)
 
+        binding.etComment.setText(orderReview.vendorReview.review.comment)
         binding.priceRating.ratingBar.progress = orderReview.vendorReview.pricingScore.toInt()
         binding.qualityRating.ratingBar.progress = orderReview.vendorReview.qualityScore.toInt()
         binding.valueRating.ratingBar.progress = orderReview.vendorReview.valueScore.toInt()
+    }
 
-        addEditReviewAdapter.submitList(products)
+    private fun addReviewsToProduct(products: MutableList<CartProduct>): MutableList<CartProduct> {
+        products.forEach { cartProduct ->
+            val productReview = orderReview.productsRatings
+                .firstOrNull { it.skuId == cartProduct.product.variants[0].skuId }
+
+            cartProduct.ratingAndReview = ProductReview(
+                orderId = productReview?.orderId ?: args.orderId,
+                productId = productReview?.productId ?: cartProduct.product._id,
+                skuId = productReview?.skuId ?: cartProduct.product.variants[0].skuId,
+                score = productReview?.score ?: 5.0,
+                review = productReview?.review ?: Review("")
+            )
+        }
+
+        return products
+    }
+
+    fun updateFieldAndReviewsAdapter(isEnable: Boolean) {
+        binding.ivEdit.isVisible = !isEnable
+        binding.btnSubmitReview.isVisible = isEnable
+        binding.priceRating.ratingBar.setIsIndicator(isEnable)
+        binding.qualityRating.ratingBar.setIsIndicator(isEnable)
+        binding.valueRating.ratingBar.setIsIndicator(isEnable)
+        binding.etComment.isEnabled = isEnable
+
+        val productsWithReviews = addReviewsToProduct(args.vendorProducts.products)
+        addEditReviewAdapter.submitList(productsWithReviews, isEnable)
     }
 
     private fun createAddEditReviewRequest(vendorProducts: VendorProducts): OrderReview {
@@ -160,11 +186,10 @@ class AddEditReviewFragment : BaseFragment() {
 
         val vendorRating = VendorReview(
             _id = vendorProducts.ratingAndReview?._id,
-            title = vendorProducts.ratingAndReview?.title ?: "",
             consumerId = vendorProducts.ratingAndReview?.consumerId,
             consumer = vendorProducts.ratingAndReview?.consumer,
             orderId = vendorProducts.ratingAndReview?.orderId ?: args.orderId,
-            vendorId = vendorProducts.ratingAndReview?.orderId ?: vendorProducts.vendor._id,
+            vendorId = vendorProducts.ratingAndReview?.vendorId ?: vendorProducts.vendor._id,
             valueScore = vendorProducts.ratingAndReview?.valueScore ?: 5.0,
             pricingScore = vendorProducts.ratingAndReview?.pricingScore ?: 5.0,
             qualityScore = vendorProducts.ratingAndReview?.qualityScore ?: 5.0,

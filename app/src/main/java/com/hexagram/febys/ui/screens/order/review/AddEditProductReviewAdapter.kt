@@ -10,6 +10,7 @@ import com.hexagram.febys.models.api.cart.CartProduct
 class AddEditProductReviewAdapter : RecyclerView.Adapter<AddEditProductReviewAdapter.VH>() {
     private var products = listOf<CartProduct>()
 
+    var isEnable:Boolean = true
     var ratingCallback: ((skuId: String, rating: Int) -> Unit)? = null
     var commentCallback: ((skuId: String, comment: String) -> Unit)? = null
 
@@ -50,7 +51,8 @@ class AddEditProductReviewAdapter : RecyclerView.Adapter<AddEditProductReviewAda
         return products.size
     }
 
-    fun submitList(list: List<CartProduct>) {
+    fun submitList(list: List<CartProduct>,isEnable:Boolean) {
+        this.isEnable = isEnable
         products = list
         notifyItemRangeChanged(0, products.size)
     }
