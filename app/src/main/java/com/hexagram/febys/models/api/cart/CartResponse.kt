@@ -6,4 +6,4 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class CartResponse(
     val cart: Cart
-):Parcelable
+) : Parcelable

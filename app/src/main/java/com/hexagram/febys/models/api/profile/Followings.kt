@@ -17,4 +17,4 @@ data class Followings(
     val followings: List<String>,
     @SerializedName("updated_at")
     val updatedAt: String
-):Parcelable
+) : Parcelable

@@ -9,4 +9,4 @@ data class Cart(
     val _id: String,
     @SerializedName("vendor_products")
     val vendorProducts: MutableList<VendorProducts>
-):Parcelable
+) : Parcelable

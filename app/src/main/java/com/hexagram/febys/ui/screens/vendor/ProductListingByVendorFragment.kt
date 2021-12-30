@@ -9,7 +9,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.paging.LoadState
-import androidx.paging.filter
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import com.hexagram.febys.NavGraphDirections
@@ -105,7 +104,6 @@ class ProductListingByVendorFragment : BaseFragment() {
             celebrityViewModel.vendorProductListing(args.id) {
                 setProductItemCount(it.totalRows)
             }.collectLatest { pagingData ->
-                val list = pagingData.filter { false }
                 productListingPagerAdapter.submitData(pagingData)
             }
         }
