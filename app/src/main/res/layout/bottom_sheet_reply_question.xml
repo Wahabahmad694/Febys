@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -35,6 +36,9 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_39sdp"
+            android:text="@{thread.chat.get(0).message}"
+            android:textAlignment="center"
+            tools:text="@string/label_ask_about_product" />
             android:gravity="center"
             android:text="@string/reply_to_the_question" />
 
@@ -72,7 +76,7 @@
             android:layout_marginHorizontal="@dimen/_17sdp"
             android:layout_marginTop="@dimen/_49sdp"
             android:layout_marginBottom="@dimen/_14sdp"
-            android:text="@string/label_answer"
+            android:text="@string/label_send"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

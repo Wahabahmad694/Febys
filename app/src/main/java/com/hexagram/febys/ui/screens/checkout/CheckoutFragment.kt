@@ -19,7 +19,6 @@ import com.hexagram.febys.models.db.CartDTO
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.cart.CartAdapter
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
-import com.hexagram.febys.ui.screens.dialog.InfoDialog
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -212,12 +211,11 @@ class CheckoutFragment : BaseFragment() {
     }
 
     private fun showChangeShippingAddressWarningDialog() {
-        val resId = R.drawable.ic_shipping_address
-        val title = getString(R.string.label_shipping_address)
+        val resId = R.drawable.bg_warning
+        val title = getString(R.string.label_delete_warning)
         val msg = getString(R.string.msg_for_change_shipping_address)
 
-        InfoDialog(resId, title, msg) { gotoShippingAddress() }
-            .show(childFragmentManager, InfoDialog.TAG)
+        this.showWarningDialog(resId, title, msg) { gotoShippingAddress() }
     }
 
     private fun updateFav() {

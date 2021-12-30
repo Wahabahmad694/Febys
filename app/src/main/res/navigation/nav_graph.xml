@@ -633,7 +633,7 @@
         android:id="@+id/accountSettingsFragment"
         android:name="com.hexagram.febys.ui.screens.profile.AccountSettingsFragment"
         android:label="AccountSettingsFragment"
-        tools:layout="@layout/account_settings_fragment" />
+        tools:layout="@layout/fragment_account_settings" />
     <fragment
         android:id="@+id/orderListingFragment"
         android:name="com.hexagram.febys.ui.screens.order.listing.OrderListingFragment"

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentStoreListBinding
@@ -78,6 +79,7 @@ class StoreListFragment : BaseFragment() {
     }
 
     private fun updateUi(storeList: List<StoreMenus>) {
+        binding.emptyView.root.isVisible=storeList.isEmpty()
         storeListAdapter.submitList(storeList)
     }
 }

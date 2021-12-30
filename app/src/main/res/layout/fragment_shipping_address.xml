@@ -7,79 +7,94 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.screens.shipping.address.ShippingAddressFragment">
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/label_shipping_address"
-            style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            android:gravity="center"
-            android:paddingHorizontal="@dimen/_32dp"
-            android:text="@string/label_shipping_address"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="match_parent"
+            tools:context=".ui.screens.shipping.address.ShippingAddressFragment">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/_16dp"
-            android:src="@drawable/ic_back"
-            app:layout_constraintBottom_toBottomOf="@id/label_shipping_address"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/label_shipping_address" />
+            <TextView
+                android:id="@+id/label_shipping_address"
+                style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/_32dp"
+                android:text="@string/label_shipping_address"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_8sdp"
-            android:src="@drawable/ic_add"
-            app:layout_constraintBottom_toBottomOf="@id/label_add_new_shipping_address"
-            app:layout_constraintEnd_toEndOf="@id/label_add_new_shipping_address"
-            app:layout_constraintTop_toTopOf="@id/label_add_new_shipping_address" />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_16dp"
+                android:src="@drawable/ic_back"
+                app:layout_constraintBottom_toBottomOf="@id/label_shipping_address"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/label_shipping_address" />
 
-        <TextView
-            android:id="@+id/label_add_new_shipping_address"
-            style="@style/TextTheme.HelveticaNeue.TS16.Bold"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_31sdp"
-            android:layout_marginHorizontal="@dimen/_16sdp"
-            android:layout_marginTop="@dimen/_16sdp"
-            android:background="@drawable/bg_border_dark_grey"
-            android:gravity="center"
-            android:text="@string/label_add_shipping_address"
-            app:layout_constraintTop_toBottomOf="@id/label_shipping_address" />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_8sdp"
+                android:src="@drawable/ic_add"
+                app:layout_constraintBottom_toBottomOf="@id/label_add_new_shipping_address"
+                app:layout_constraintEnd_toEndOf="@id/label_add_new_shipping_address"
+                app:layout_constraintTop_toTopOf="@id/label_add_new_shipping_address" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_shipping_address"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_0dp"
-            android:layout_marginHorizontal="@dimen/_16sdp"
-            android:clipToPadding="false"
-            android:paddingBottom="@dimen/_65sdp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/label_add_new_shipping_address"
-            tools:listitem="@layout/item_shipping_address" />
+            <TextView
+                android:id="@+id/label_add_new_shipping_address"
+                style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_31sdp"
+                android:layout_marginHorizontal="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:background="@drawable/bg_border_dark_grey"
+                android:gravity="center"
+                android:text="@string/label_add_shipping_address"
+                app:layout_constraintTop_toBottomOf="@id/label_shipping_address" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_save"
-            style="@style/ButtonTheme.Contained"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_17sdp"
-            android:layout_marginTop="@dimen/_32sdp"
-            android:layout_marginBottom="@dimen/_14sdp"
-            android:text="@string/label_save_and_continue"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintWidth_max="@dimen/_298sdp" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_shipping_address"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_0dp"
+                android:layout_marginHorizontal="@dimen/_16sdp"
+                android:clipToPadding="false"
+                android:paddingBottom="@dimen/_65sdp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/label_add_new_shipping_address"
+                tools:listitem="@layout/item_shipping_address" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_save"
+                style="@style/ButtonTheme.Contained"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_17sdp"
+                android:layout_marginTop="@dimen/_32sdp"
+                android:layout_marginBottom="@dimen/_14sdp"
+                android:text="@string/label_save_and_continue"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintWidth_max="@dimen/_298sdp" />
+
+            <include
+                android:id="@+id/empty_view"
+                layout="@layout/layout_empty_view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/label_add_new_shipping_address"
+                app:warningTitle="@{@string/label_shipping_address}" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
 </layout>

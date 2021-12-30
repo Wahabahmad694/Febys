@@ -9,4 +9,7 @@ data class PhoneNo(
     @SerializedName("country_code")
     val countryCode: String,
     val number: String
-) : Parcelable
+) : Parcelable {
+    val noWithCountryCode
+        get() = "$number"
+}

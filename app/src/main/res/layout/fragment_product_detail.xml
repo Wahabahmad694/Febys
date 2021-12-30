@@ -103,7 +103,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_320sdp"
                         android:background="@drawable/bg_grey_fill"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:layout_editor_absoluteX="0dp" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_product_fav"

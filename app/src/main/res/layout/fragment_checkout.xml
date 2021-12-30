@@ -104,9 +104,9 @@
                     android:id="@+id/rv_cart"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:itemCount="2"
                     android:layout_marginTop="@dimen/_14sdp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="2"
                     tools:listitem="@layout/item_cart" />
 
                 <include

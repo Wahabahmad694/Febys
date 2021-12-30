@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
@@ -66,8 +67,17 @@ class VendorListingFragment : BaseFragment() {
         vendorListingAdapter.followVendor =
             { vendorId -> vendorViewModel.followVendor(vendorId) }
 
-        vendorListingAdapter.unFollowVendor =
-            { vendorId -> vendorViewModel.unFollowVendor(vendorId) }
+        vendorListingAdapter.unFollowVendor = { vendorId ->
+
+            val resId = R.drawable.ic_error
+            val title = getString(R.string.label_delete_warning)
+            val msg = getString(R.string.msg_for_unfollow_vendor)
+
+            showWarningDialog(resId, title, msg) {
+                vendorViewModel.unFollowVendor(vendorId)
+            }
+
+        }
 
         vendorListingAdapter.gotoCelebrityDetail =
             { vendor -> gotoCelebrityDetail(vendor._id, vendor.isFollow) }
@@ -95,6 +105,8 @@ class VendorListingFragment : BaseFragment() {
                 if (state is LoadState.Error) {
                     showToast(getString(R.string.error_something_went_wrong))
                 }
+                binding.emptyView.root.isVisible =
+                    it.refresh is LoadState.NotLoading && vendorListingAdapter.itemCount < 1
             }
         }
     }
