@@ -1,6 +1,10 @@
 package com.hexagram.febys.ui.screens.profile
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +22,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class AccountSettingsFragment : BaseFragment() {
     private lateinit var binding: FragmentAccountSettingsBinding
+    private val pickImage = 100
+    private var imageUri: Uri? =null
     private val accountSettingViewModel by viewModels<AccountSettingViewModel>()
 
     override fun onCreateView(
@@ -35,12 +41,20 @@ class AccountSettingsFragment : BaseFragment() {
     }
 
     private fun uiListeners() {
+        binding.camera.setOnClickListener {
+            loadImage()
+        }
         binding.tvProfileName.setText(consumer?.fullName)
         binding.ivBack.setOnClickListener { goBack() }
         binding.btnEdit.setOnClickListener {
             enableFields()
         }
 
+    }
+
+    private fun loadImage() {
+        val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+        startActivityForResult(gallery, pickImage)
     }
 
     private fun enableFields() {
@@ -50,6 +64,14 @@ class AccountSettingsFragment : BaseFragment() {
         binding.etPhone.isEnabled = true
         binding.btnEdit.setText(getString(R.string.label_save))
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK && requestCode == pickImage) {
+            imageUri = data?.data
+            binding.profileImg.setImageURI(imageUri)
+        }
     }
 
     private fun setObserver() {
