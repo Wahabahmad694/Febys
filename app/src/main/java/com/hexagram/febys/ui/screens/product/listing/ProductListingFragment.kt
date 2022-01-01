@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.view.isVisible
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
@@ -17,6 +18,10 @@ import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentProductListingBinding
 import com.hexagram.febys.models.api.product.Product
+import com.hexagram.febys.models.api.request.ProductListingRequest
+import com.hexagram.febys.network.DataState
+import com.hexagram.febys.ui.screens.product.filters.FilterViewModel
+import com.hexagram.febys.ui.screens.product.filters.FiltersFragment
 import com.hexagram.febys.ui.screens.product.filters.FiltersType
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,6 +33,7 @@ import kotlinx.coroutines.launch
 abstract class ProductListingFragment : BaseFragment() {
     protected lateinit var binding: FragmentProductListingBinding
     protected val productListingViewModel: ProductListingViewModel by viewModels()
+    private val filtersViewModel by viewModels<FilterViewModel>()
 
     private val productListingPagerAdapter = ProductListingPagerAdapter()
 
@@ -43,36 +49,9 @@ abstract class ProductListingFragment : BaseFragment() {
 
         initUi()
         uiListeners()
+        setObserver()
         setupPagerAdapter()
-    }
-
-    private fun setupPagerAdapter() {
-        binding.rvProductList.adapter = productListingPagerAdapter
-        val fav = productListingViewModel.getFav()
-        productListingPagerAdapter.submitFav(fav)
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            getProductPagingDate().collectLatest { pagingData ->
-                productListingPagerAdapter.submitData(pagingData)
-            }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            productListingPagerAdapter.loadStateFlow.collectLatest {
-                val state = it.refresh
-                if (state is LoadState.Loading) {
-                    showLoader()
-                } else {
-                    hideLoader()
-                }
-
-                if (state is LoadState.Error) {
-                    showToast(getString(R.string.error_something_went_wrong))
-                }
-                binding.emptyView.root.isVisible =
-                    it.refresh is LoadState.NotLoading && productListingPagerAdapter.itemCount < 1
-            }
-        }
+        fetchFilters()
     }
 
     private fun initUi() {
@@ -93,9 +72,13 @@ abstract class ProductListingFragment : BaseFragment() {
         }
 
         binding.btnRefine.setOnClickListener {
-            val gotoRefineProduct = NavGraphDirections
-                .toProductFilterFragment(getFilterType(), getCategoryId(), getVendorId())
-            navigateTo(gotoRefineProduct)
+            if (filtersViewModel.filters != null) {
+                val gotoRefineProduct = NavGraphDirections
+                    .toProductFilterFragment(
+                        filtersViewModel.filters!!, productListingViewModel.filters
+                    )
+                navigateTo(gotoRefineProduct)
+            }
         }
 
         productListingPagerAdapter.interaction = object : ProductListingPagerAdapter.Interaction {
@@ -118,13 +101,71 @@ abstract class ProductListingFragment : BaseFragment() {
         }
     }
 
-    fun setProductItemCount(count: Int) {
-        binding.tvProductListingCount.text =
-            if (count == 0) {
+    private fun setObserver() {
+        filtersViewModel.observeFilters.observe(viewLifecycleOwner) {
+            binding.containerFilter.isVisible = it is DataState.Data
+        }
+
+        productListingViewModel.observeItemCount.observe(viewLifecycleOwner) {
+            binding.tvProductListingCount.text = if (it == 0) {
                 resources.getString(R.string.label_no_item)
             } else {
-                resources.getQuantityString(R.plurals.items_count, count, count)
+                resources.getQuantityString(R.plurals.items_count, it, it)
             }
+        }
+
+        setFragmentResultListener(FiltersFragment.KEY_APPLY_FILTER) { _, bundle ->
+            val filters =
+                bundle.getParcelable<ProductListingRequest>(FiltersFragment.KEY_APPLY_FILTER)
+
+            if (filters != null) {
+                productListingViewModel.filters = filters
+                updateProductListingPagingData(true)
+            }
+        }
+    }
+
+    private fun setupPagerAdapter() {
+        binding.rvProductList.adapter = productListingPagerAdapter
+        val fav = productListingViewModel.getFav()
+        productListingPagerAdapter.submitFav(fav)
+
+        updateProductListingPagingData()
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            productListingPagerAdapter.loadStateFlow.collectLatest {
+                val state = it.refresh
+                if (state is LoadState.Loading) {
+                    showLoader()
+                } else {
+                    hideLoader()
+                }
+
+                if (state is LoadState.Error) {
+                    showToast(getString(R.string.error_something_went_wrong))
+                }
+                binding.emptyView.root.isVisible =
+                    it.refresh is LoadState.NotLoading && productListingPagerAdapter.itemCount < 1
+            }
+        }
+    }
+
+    private fun updateProductListingPagingData(refresh: Boolean = false) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            getProductPagingData(refresh).collectLatest { pagingData ->
+                productListingPagerAdapter.submitData(pagingData)
+            }
+        }
+    }
+
+    private fun fetchFilters() {
+        filtersViewModel.appliedFilters.categoryId = getCategoryId()
+        filtersViewModel.appliedFilters.vendorId = getVendorId()
+        filtersViewModel.fetchFilters(getFilterType())
+    }
+
+    fun setProductItemCount(count: Int) {
+        productListingViewModel.updateItemCount(count)
     }
 
     override fun getTvCartCount(): TextView = binding.tvCartCount
@@ -132,9 +173,9 @@ abstract class ProductListingFragment : BaseFragment() {
 
     abstract fun getListingTitle(): String
 
-    abstract fun getProductPagingDate(): Flow<PagingData<Product>>
+    abstract fun getProductPagingData(refresh: Boolean): Flow<PagingData<Product>>
 
     abstract fun getFilterType(): FiltersType
     open fun getVendorId(): String? = null
-    open fun getCategoryId(): String? = null
+    open fun getCategoryId(): Int? = null
 }

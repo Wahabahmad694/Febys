@@ -1,9 +1,12 @@
 package com.hexagram.febys.ui.screens.product.listing
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import com.hexagram.febys.models.api.product.Product
 import com.hexagram.febys.models.api.product.ProductPagingListing
+import com.hexagram.febys.models.api.request.ProductListingRequest
 import com.hexagram.febys.repos.IProductListingRepo
 import com.hexagram.febys.ui.screens.product.ProductViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,13 +24,18 @@ open class ProductListingViewModel @Inject constructor(
     private var searchProductsListing: Flow<PagingData<Product>>? = null
     private var vendorProductsListing: Flow<PagingData<Product>>? = null
 
+    private val _observeItemCount = MutableLiveData<Int>()
+    val observeItemCount: LiveData<Int> = _observeItemCount
+
+    var filters = ProductListingRequest()
+
     fun todayDealsListing(
-        onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
+        refresh: Boolean, onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
     ): Flow<PagingData<Product>> {
-        if (todayDealsListing == null) {
+        if (todayDealsListing == null || refresh) {
             todayDealsListing =
                 productListingRepo.fetchTodayDealsListing(
-                    viewModelScope, onProductListingResponse = onProductListingResponse
+                    filters, viewModelScope, onProductListingResponse = onProductListingResponse
                 )
         }
 
@@ -35,12 +43,12 @@ open class ProductListingViewModel @Inject constructor(
     }
 
     fun trendingProductsListing(
-        onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
+        refresh: Boolean, onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
     ): Flow<PagingData<Product>> {
-        if (trendingProductsListing == null) {
+        if (trendingProductsListing == null || refresh) {
             trendingProductsListing =
                 productListingRepo.fetchTrendingProductsListing(
-                    viewModelScope, onProductListingResponse = onProductListingResponse
+                    filters, viewModelScope, onProductListingResponse = onProductListingResponse
                 )
         }
 
@@ -48,12 +56,12 @@ open class ProductListingViewModel @Inject constructor(
     }
 
     fun under100DollarsItemsListing(
-        onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
+        refresh: Boolean, onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
     ): Flow<PagingData<Product>> {
-        if (under100DollarsItemsListing == null) {
+        if (under100DollarsItemsListing == null || refresh) {
             under100DollarsItemsListing =
                 productListingRepo.fetchUnder100DollarsItemsListing(
-                    viewModelScope, onProductListingResponse = onProductListingResponse
+                    filters, viewModelScope, onProductListingResponse = onProductListingResponse
                 )
         }
 
@@ -61,12 +69,18 @@ open class ProductListingViewModel @Inject constructor(
     }
 
     fun categoryProductsListing(
-        categoryId: Int, onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
+        categoryId: Int,
+        refresh: Boolean,
+        onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
     ): Flow<PagingData<Product>> {
-        if (categoryProductsListing == null) {
+        if (categoryProductsListing == null || refresh) {
+            filters.categoryId = categoryId
             categoryProductsListing =
                 productListingRepo.fetchCategoryProductsListing(
-                    categoryId, viewModelScope, onProductListingResponse = onProductListingResponse
+                    categoryId,
+                    filters,
+                    viewModelScope,
+                    onProductListingResponse = onProductListingResponse
                 )
         }
 
@@ -74,12 +88,15 @@ open class ProductListingViewModel @Inject constructor(
     }
 
     fun searchProductsListing(
-        query: String, onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
+        query: String,
+        refresh: Boolean,
+        onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
     ): Flow<PagingData<Product>> {
-        if (searchProductsListing == null) {
+        if (searchProductsListing == null || refresh) {
+            filters.searchStr = query
             searchProductsListing =
                 productListingRepo.searchProductListing(
-                    query, viewModelScope, onProductListingResponse = onProductListingResponse
+                    filters, viewModelScope, onProductListingResponse = onProductListingResponse
                 )
         }
 
@@ -87,15 +104,25 @@ open class ProductListingViewModel @Inject constructor(
     }
 
     fun vendorProductListing(
-        vendorId: String, onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
+        vendorId: String,
+        refresh: Boolean,
+        onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
     ): Flow<PagingData<Product>> {
-        if (vendorProductsListing == null) {
+        if (vendorProductsListing == null || refresh) {
+            filters.vendorId = vendorId
             vendorProductsListing =
                 productListingRepo.vendorProductListing(
-                    vendorId, viewModelScope, onProductListingResponse = onProductListingResponse
+                    vendorId,
+                    filters,
+                    viewModelScope,
+                    onProductListingResponse = onProductListingResponse
                 )
         }
 
         return vendorProductsListing!!
+    }
+
+    fun updateItemCount(count: Int) {
+        _observeItemCount.postValue(count)
     }
 }

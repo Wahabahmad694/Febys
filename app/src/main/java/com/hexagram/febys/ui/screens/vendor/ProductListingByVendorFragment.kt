@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
@@ -16,6 +17,11 @@ import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentProductListingByVendorBinding
 import com.hexagram.febys.models.api.product.Product
+import com.hexagram.febys.models.api.request.ProductListingRequest
+import com.hexagram.febys.network.DataState
+import com.hexagram.febys.ui.screens.product.filters.FilterViewModel
+import com.hexagram.febys.ui.screens.product.filters.FiltersFragment
+import com.hexagram.febys.ui.screens.product.filters.FiltersType
 import com.hexagram.febys.ui.screens.product.listing.ProductListingPagerAdapter
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,7 +31,8 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class ProductListingByVendorFragment : BaseFragment() {
     private lateinit var binding: FragmentProductListingByVendorBinding
-    private val celebrityViewModel: VendorViewModel by viewModels()
+    private val vendorViewModel: VendorViewModel by viewModels()
+    private val filtersViewModel by viewModels<FilterViewModel>()
     private val args: ProductListingByVendorFragmentArgs by navArgs()
 
     private val productListingPagerAdapter = ProductListingPagerAdapter()
@@ -43,6 +50,7 @@ class ProductListingByVendorFragment : BaseFragment() {
         initUi()
         uiListener()
         setObserver()
+        fetchFilters()
     }
 
     private fun initUi() {
@@ -81,7 +89,7 @@ class ProductListingByVendorFragment : BaseFragment() {
             override fun toggleFavIfUserLoggedIn(skuId: String): Boolean {
                 return isUserLoggedIn.also {
                     if (it) {
-                        celebrityViewModel.toggleFav(skuId)
+                        vendorViewModel.toggleFav(skuId)
                     } else {
                         val navigateToLogin = NavGraphDirections.actionToLoginFragment()
                         navigateTo(navigateToLogin)
@@ -93,20 +101,41 @@ class ProductListingByVendorFragment : BaseFragment() {
 
     private fun setObserver() {
         setupPagerAdapter()
+
+        vendorViewModel.observeItemCount.observe(viewLifecycleOwner) {
+            binding.tvProductListingCount.text = if (it == 0) {
+                resources.getString(R.string.label_no_item)
+            } else {
+                resources.getQuantityString(R.plurals.items_count, it, it)
+            }
+        }
+
+        filtersViewModel.observeFilters.observe(viewLifecycleOwner) {
+            binding.containerFilter.isVisible = it is DataState.Data
+        }
+
+        setFragmentResultListener(FiltersFragment.KEY_APPLY_FILTER) { _, bundle ->
+            val filters =
+                bundle.getParcelable<ProductListingRequest>(FiltersFragment.KEY_APPLY_FILTER)
+
+            if (filters != null) {
+                vendorViewModel.filters = filters
+                updateProductListingPagingData(true)
+            }
+        }
+    }
+
+    private fun fetchFilters() {
+        filtersViewModel.appliedFilters.vendorId = args.id
+        filtersViewModel.fetchFilters(FiltersType.VENDOR_CATEGORY)
     }
 
     private fun setupPagerAdapter() {
         binding.rvProductList.adapter = productListingPagerAdapter
-        val fav = celebrityViewModel.getFav()
+        val fav = vendorViewModel.getFav()
         productListingPagerAdapter.submitFav(fav)
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            celebrityViewModel.vendorProductListing(args.id) {
-                setProductItemCount(it.totalRows)
-            }.collectLatest { pagingData ->
-                productListingPagerAdapter.submitData(pagingData)
-            }
-        }
+        updateProductListingPagingData()
 
         viewLifecycleOwner.lifecycleScope.launch {
             productListingPagerAdapter.loadStateFlow.collectLatest {
@@ -126,13 +155,18 @@ class ProductListingByVendorFragment : BaseFragment() {
         }
     }
 
-    private fun setProductItemCount(count: Int) {
-        binding.tvProductListingCount.text =
-            if (count == 0) {
-                resources.getString(R.string.label_no_item)
-            } else {
-                resources.getQuantityString(R.plurals.items_count, count, count)
+    private fun updateProductListingPagingData(refresh: Boolean = false) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            vendorViewModel.vendorProductListing(args.id, refresh) {
+                setProductItemCount(it.totalRows)
+            }.collectLatest { pagingData ->
+                productListingPagerAdapter.submitData(pagingData)
             }
+        }
+    }
+
+    private fun setProductItemCount(count: Int) {
+        vendorViewModel.updateItemCount(count)
     }
 
     private fun gotoVendorDetail(vendorId: String) {

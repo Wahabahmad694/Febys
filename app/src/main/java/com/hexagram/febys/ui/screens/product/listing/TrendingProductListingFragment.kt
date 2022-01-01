@@ -8,9 +8,10 @@ class TrendingProductListingFragment : ProductListingFragment() {
 
     override fun getListingTitle(): String = args.productListTitle
 
-    override fun getProductPagingDate() = productListingViewModel.trendingProductsListing {
-        setProductItemCount(it.totalRows)
-    }
+    override fun getProductPagingData(refresh: Boolean) =
+        productListingViewModel.trendingProductsListing(refresh) {
+            setProductItemCount(it.totalRows)
+        }
 
     override fun getFilterType() = FiltersType.SEARCH
 }

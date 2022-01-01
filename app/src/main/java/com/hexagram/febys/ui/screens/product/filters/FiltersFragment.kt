@@ -5,30 +5,31 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.navArgs
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentFiltersBinding
 import com.hexagram.febys.models.api.filters.Filters
-import com.hexagram.febys.network.DataState
-import com.hexagram.febys.ui.screens.dialog.ErrorDialog
+import com.hexagram.febys.models.api.request.ProductListingRequest
 import com.hexagram.febys.utils.goBack
-import com.hexagram.febys.utils.hideLoader
 import com.hexagram.febys.utils.navigateTo
-import com.hexagram.febys.utils.showLoader
 
 class FiltersFragment : BaseFragment() {
+    companion object {
+        const val KEY_APPLY_FILTER = "keyApplyFilter"
+    }
+
     private lateinit var binding: FragmentFiltersBinding
-    private val filtersViewModel by viewModels<FilterViewModel>()
     private val args by navArgs<FiltersFragmentArgs>()
 
     private val filterAdapter = FiltersAdapter()
+    private lateinit var filters: ProductListingRequest
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        filtersViewModel.fetchFilters(args.filterType, args.categoryId, args.vendorId)
+        filters = args.appliedFilters.deepCopy()
     }
 
     override fun onCreateView(
@@ -43,18 +44,28 @@ class FiltersFragment : BaseFragment() {
 
         initUi()
         initUiListener()
-        setObserver()
     }
 
     private fun initUi() {
         binding.rvFilters.adapter = filterAdapter
+        val isClearBtnVisible = filters.variantAttrs.isNotEmpty()
+        if (isClearBtnVisible) enableClearOption() else disableClearOption()
+        updateUi(args.filters)
     }
 
     private fun initUiListener() {
         binding.ivClose.setOnClickListener { goBack() }
+
         binding.labelClear.setOnClickListener {
             disableClearOption()
+            filters.variantAttrs.clear()
         }
+
+        binding.btnShow.setOnClickListener {
+            setFragmentResult(KEY_APPLY_FILTER, bundleOf(KEY_APPLY_FILTER to filters))
+            goBack()
+        }
+
         binding.radioBtnFilter.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.rd_newItem -> {
@@ -68,9 +79,10 @@ class FiltersFragment : BaseFragment() {
                 }
             }
         }
+
         filterAdapter.onItemClick = {
             val gotoFilterDetailList = FiltersFragmentDirections
-                .actionSearchFilterFragmentToFiltersDetailListFragment(it)
+                .actionSearchFilterFragmentToFiltersDetailListFragment(it, filters)
             navigateTo(gotoFilterDetailList)
         }
     }
@@ -78,6 +90,7 @@ class FiltersFragment : BaseFragment() {
     private fun disableClearOption() {
         binding.radioBtnFilter.clearCheck()
         binding.labelClear.setTextColor(Color.GRAY)
+        filters.variantAttrs.clear()
     }
 
     private fun enableClearOption() {
@@ -85,26 +98,8 @@ class FiltersFragment : BaseFragment() {
         binding.labelClear.isEnabled = true
     }
 
-    private fun setObserver() {
-        filtersViewModel.observeFilters.observe(viewLifecycleOwner) {
-            when (it) {
-                is DataState.Loading -> {
-                    showLoader()
-                }
-                is DataState.Error -> {
-                    hideLoader()
-                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
-                }
-                is DataState.Data -> {
-                    hideLoader()
-                    updateUi(it.data)
-                }
-            }
-        }
-    }
-
     private fun updateUi(filters: Filters) {
-        val filters = filters.attributes.attributes
-        filterAdapter.submitList(filters)
+        val filterList = filters.attributes.attributes.sortedBy { it.name }
+        filterAdapter.submitList(filterList)
     }
 }

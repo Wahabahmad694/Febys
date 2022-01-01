@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 interface IFiltersRepo {
     fun fetchAllFilters(
         filterType: FiltersType,
-        categoryId: String?,
+        categoryId: Int?,
         vendorId: String?,
         dispatcher: CoroutineDispatcher = Dispatchers.IO
     ): Flow<DataState<Filters>>

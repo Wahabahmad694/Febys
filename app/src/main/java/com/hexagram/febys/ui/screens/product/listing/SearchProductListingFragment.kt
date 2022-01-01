@@ -8,8 +8,8 @@ class SearchProductListingFragment : ProductListingFragment() {
 
     override fun getListingTitle(): String = args.query
 
-    override fun getProductPagingDate() =
-        productListingViewModel.searchProductsListing(args.query) {
+    override fun getProductPagingData(refresh: Boolean) =
+        productListingViewModel.searchProductsListing(args.query, refresh) {
             setProductItemCount(it.totalRows)
         }
 

@@ -8,12 +8,12 @@ class CategoryProductListingFragment : ProductListingFragment() {
 
     override fun getListingTitle(): String = args.productListTitle
 
-    override fun getProductPagingDate() =
-        productListingViewModel.categoryProductsListing(args.categoryId) {
+    override fun getProductPagingData(refresh: Boolean) =
+        productListingViewModel.categoryProductsListing(args.categoryId, refresh) {
             setProductItemCount(it.totalRows)
         }
 
     override fun getFilterType() = FiltersType.CATEGORY
 
-    override fun getCategoryId() = args.categoryId.toString()
+    override fun getCategoryId() = args.categoryId
 }

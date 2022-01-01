@@ -35,12 +35,9 @@ class AccountSettingsFragment : BaseFragment() {
     }
 
     private fun uiListeners() {
-        binding.tvProfileName.setText(consumer?.fullName)
+        binding.tvProfileName.text = consumer?.fullName
         binding.ivBack.setOnClickListener { goBack() }
-        binding.btnEdit.setOnClickListener {
-            enableFields()
-        }
-
+        binding.btnEdit.setOnClickListener { enableFields() }
     }
 
     private fun enableFields() {
@@ -48,7 +45,7 @@ class AccountSettingsFragment : BaseFragment() {
         binding.etFirstName.isEnabled = true
         binding.etLastName.isEnabled = true
         binding.etPhone.isEnabled = true
-        binding.btnEdit.setText(getString(R.string.label_save))
+        binding.btnEdit.text = getString(R.string.label_save)
 
     }
 

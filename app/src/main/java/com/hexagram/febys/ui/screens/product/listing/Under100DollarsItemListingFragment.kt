@@ -8,9 +8,10 @@ class Under100DollarsItemListingFragment : ProductListingFragment() {
 
     override fun getListingTitle(): String = args.productListTitle
 
-    override fun getProductPagingDate() = productListingViewModel.under100DollarsItemsListing {
-        setProductItemCount(it.totalRows)
-    }
+    override fun getProductPagingData(refresh: Boolean) =
+        productListingViewModel.under100DollarsItemsListing(refresh) {
+            setProductItemCount(it.totalRows)
+        }
 
     override fun getFilterType() = FiltersType.SEARCH
 }

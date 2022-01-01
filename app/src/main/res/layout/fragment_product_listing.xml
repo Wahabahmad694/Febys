@@ -103,7 +103,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_16sdp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone"
+            tools:visibility="visible">
 
             <LinearLayout
                 android:id="@+id/btn_refine"
@@ -172,6 +174,6 @@
         <include
             android:id="@+id/empty_view"
             layout="@layout/layout_empty_view"
-            app:warningTitle="@{@string/label_products}"/>
+            app:warningTitle="@{@string/label_products}" />
     </LinearLayout>
 </layout>

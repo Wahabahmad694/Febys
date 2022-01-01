@@ -16,7 +16,7 @@ import javax.inject.Inject
 class FiltersRepoImpl @Inject constructor(val backendService: FebysBackendService) : IFiltersRepo {
     override fun fetchAllFilters(
         filterType: FiltersType,
-        categoryId: String?,
+        categoryId: Int?,
         vendorId: String?,
         dispatcher: CoroutineDispatcher
     ) = flow<DataState<Filters>> {

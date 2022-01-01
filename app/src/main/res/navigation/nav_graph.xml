@@ -321,18 +321,11 @@
         android:label="Filters"
         tools:layout="@layout/fragment_filters">
         <argument
-            android:name="filterType"
-            app:argType="com.hexagram.febys.ui.screens.product.filters.FiltersType" />
+            android:name="filters"
+            app:argType="com.hexagram.febys.models.api.filters.Filters" />
         <argument
-            android:name="categoryId"
-            android:defaultValue="@null"
-            app:argType="string"
-            app:nullable="true" />
-        <argument
-            android:name="vendorId"
-            android:defaultValue="@null"
-            app:argType="string"
-            app:nullable="true" />
+            android:name="appliedFilters"
+            app:argType="com.hexagram.febys.models.api.request.ProductListingRequest" />
         <action
             android:id="@+id/action_search_filter_fragment_to_filtersDetailListFragment"
             app:destination="@id/filtersDetailListFragment"
@@ -349,6 +342,9 @@
         <argument
             android:name="filter"
             app:argType="com.hexagram.febys.models.api.product.Attr" />
+        <argument
+            android:name="appliedFilters"
+            app:argType="com.hexagram.febys.models.api.request.ProductListingRequest" />
     </fragment>
     <fragment
         android:id="@+id/todayDealsListingFragment"

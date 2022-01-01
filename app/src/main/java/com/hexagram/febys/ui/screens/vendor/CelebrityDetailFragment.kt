@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
@@ -18,10 +19,14 @@ import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentCelebrityDetailBinding
 import com.hexagram.febys.models.api.product.Product
+import com.hexagram.febys.models.api.request.ProductListingRequest
 import com.hexagram.febys.models.api.social.Social
 import com.hexagram.febys.models.api.vendor.Vendor
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
+import com.hexagram.febys.ui.screens.product.filters.FilterViewModel
+import com.hexagram.febys.ui.screens.product.filters.FiltersFragment
+import com.hexagram.febys.ui.screens.product.filters.FiltersType
 import com.hexagram.febys.ui.screens.product.listing.ProductListingPagerAdapter
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,6 +37,7 @@ import kotlinx.coroutines.launch
 class CelebrityDetailFragment : BaseFragment() {
     private lateinit var binding: FragmentCelebrityDetailBinding
     private val celebrityViewModel: VendorViewModel by viewModels()
+    private val filtersViewModel by viewModels<FilterViewModel>()
     private val args: CelebrityDetailFragmentArgs by navArgs()
 
     private val productListingPagerAdapter = ProductListingPagerAdapter()
@@ -56,6 +62,7 @@ class CelebrityDetailFragment : BaseFragment() {
         initUi()
         uiListener()
         setObserver()
+        fetchFilters()
     }
 
     private fun initUi() {
@@ -162,6 +169,33 @@ class CelebrityDetailFragment : BaseFragment() {
                 }
             }
         }
+
+        celebrityViewModel.observeItemCount.observe(viewLifecycleOwner) {
+            binding.tvProductListingCount.text = if (it == 0) {
+                resources.getString(R.string.label_no_item)
+            } else {
+                resources.getQuantityString(R.plurals.items_count, it, it)
+            }
+        }
+
+        filtersViewModel.observeFilters.observe(viewLifecycleOwner) {
+            binding.containerFilter.isVisible = it is DataState.Data
+        }
+
+        setFragmentResultListener(FiltersFragment.KEY_APPLY_FILTER) { _, bundle ->
+            val filters =
+                bundle.getParcelable<ProductListingRequest>(FiltersFragment.KEY_APPLY_FILTER)
+
+            if (filters != null) {
+                celebrityViewModel.filters = filters
+                updateProductListingPagingData(true)
+            }
+        }
+    }
+
+    private fun fetchFilters() {
+        filtersViewModel.appliedFilters.vendorId = args.id
+        filtersViewModel.fetchFilters(FiltersType.VENDOR_CATEGORY)
     }
 
     private fun updateUi(celebrity: Vendor) {
@@ -187,13 +221,7 @@ class CelebrityDetailFragment : BaseFragment() {
         val fav = celebrityViewModel.getFav()
         productListingPagerAdapter.submitFav(fav)
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            celebrityViewModel.vendorProductListing(args.id) {
-                setProductItemCount(it.totalRows)
-            }.collectLatest { pagingData ->
-                productListingPagerAdapter.submitData(pagingData)
-            }
-        }
+        updateProductListingPagingData()
 
         viewLifecycleOwner.lifecycleScope.launch {
             productListingPagerAdapter.loadStateFlow.collectLatest {
@@ -206,13 +234,18 @@ class CelebrityDetailFragment : BaseFragment() {
         }
     }
 
-    private fun setProductItemCount(count: Int) {
-        binding.tvProductListingCount.text =
-            if (count == 0) {
-                resources.getString(R.string.label_no_item)
-            } else {
-                resources.getQuantityString(R.plurals.items_count, count, count)
+    private fun updateProductListingPagingData(refresh: Boolean = false) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            celebrityViewModel.vendorProductListing(args.id, refresh) {
+                setProductItemCount(it.totalRows)
+            }.collectLatest { pagingData ->
+                productListingPagerAdapter.submitData(pagingData)
             }
+        }
+    }
+
+    private fun setProductItemCount(count: Int) {
+        celebrityViewModel.updateItemCount(count)
     }
 
     override fun getTvCartCount(): TextView = binding.tvCartCount
