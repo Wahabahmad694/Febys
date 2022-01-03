@@ -32,8 +32,8 @@
             android:maxLines="1"
             app:layout_constraintBottom_toTopOf="@id/user_rating_bar"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/user_image"
-            app:layout_constraintTop_toTopOf="@+id/user_image"
+            app:layout_constraintStart_toEndOf="@id/user_image"
+            app:layout_constraintTop_toTopOf="@id/user_image"
             app:layout_constraintVertical_chainStyle="packed"
             tools:text="Jessica Newberry" />
 
