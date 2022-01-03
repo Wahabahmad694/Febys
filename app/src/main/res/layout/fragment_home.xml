@@ -121,8 +121,7 @@
                         android:layout_marginHorizontal="@dimen/_16dp"
                         android:layout_marginTop="4dp"
                         app:layout_constraintDimensionRatio="1:1"
-                        app:layout_constraintTop_toBottomOf="@id/iv_ic_scroll_unique_category"
-                        tools:layout_editor_absoluteX="177dp" />
+                        app:layout_constraintTop_toBottomOf="@id/iv_ic_scroll_unique_category" />
 
                     <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
                         android:id="@+id/dots_indicator"
