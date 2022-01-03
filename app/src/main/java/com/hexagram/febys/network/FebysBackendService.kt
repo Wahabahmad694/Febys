@@ -292,13 +292,16 @@ interface FebysBackendService {
     ): ApiResponse<OrderResponse>
 
     @GET("v1/consumers/products/search/filters")
-    suspend fun fetchSearchFilters(): ApiResponse<SearchFilterResponse>
+    suspend fun fetchSearchFilters(@Query("searchStr") searchStr: String): ApiResponse<SearchFilterResponse>
 
     @GET("v1/categories/{categoryId}/filters")
     suspend fun fetchCategoryFilters(@Path("categoryId") categoryId: Int): ApiResponse<SearchFilterResponse>
 
     @GET("v1/consumers/today/deals/filters")
     suspend fun fetchTodayDealsFilters(): ApiResponse<SearchFilterResponse>
+
+    @GET("v1/consumers/under/100/filters")
+    suspend fun fetchUnderHundredFilters(): ApiResponse<SearchFilterResponse>
 
     @GET("v1/consumers/vendor/{vendorId}/category/list")
     suspend fun fetchVendorCategoryFilters(@Path("vendorId") vendorId: String): ApiResponse<SearchFilterResponse>

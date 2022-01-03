@@ -17,6 +17,7 @@ data class PagingListRequest constructor(
     @SerializedName("end_date")
     var endDate: String = "2022-12-04T14:59:17.238Z",
     var filters: JsonObject? = null,
+    var sorter: JsonObject? = null,
 ) {
     fun createQueryMap() = mapOf(
         "chunkSize" to chunkSize.toString(),

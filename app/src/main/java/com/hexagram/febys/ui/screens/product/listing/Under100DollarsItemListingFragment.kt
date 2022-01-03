@@ -13,5 +13,5 @@ class Under100DollarsItemListingFragment : ProductListingFragment() {
             setProductItemCount(it.totalRows)
         }
 
-    override fun getFilterType() = FiltersType.SEARCH
+    override fun getFilterType() = FiltersType.UNDER_HUNDRED
 }

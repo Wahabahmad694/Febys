@@ -108,6 +108,12 @@ fun Fragment.showErrorDialog(msg: String) {
     ErrorDialog<String>(DataState.ApiError(msg)).show(childFragmentManager, ErrorDialog.TAG)
 }
 
+fun Fragment.showWarningDialog(
+    @DrawableRes resId: Int, title: String, msg: String, onOkayClick: () -> Unit
+) {
+    WarningDialog(resId, title, msg) { onOkayClick() }.show(childFragmentManager, InfoDialog.TAG)
+}
+
 fun RecyclerView.applySpaceItemDecoration(
     @DimenRes verticalDimenRes: Int? = null,
     @DimenRes horizontalDimenRes: Int? = null
@@ -188,8 +194,11 @@ fun String.capitalize(): String {
     return capitalizeString.trim()
 }
 
-fun Fragment.showWarningDialog(
-    @DrawableRes resId: Int, title: String, msg: String, onOkayClick: () -> Unit
-) {
-    WarningDialog(resId, title, msg) { onOkayClick() }.show(childFragmentManager, InfoDialog.TAG)
+fun String.toAscii(): Int {
+    var ascii = 0
+    this.forEach {
+        ascii += it.code
+    }
+
+    return ascii
 }

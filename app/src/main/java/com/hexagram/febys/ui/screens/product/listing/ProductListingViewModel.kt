@@ -74,7 +74,6 @@ open class ProductListingViewModel @Inject constructor(
         onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
     ): Flow<PagingData<Product>> {
         if (categoryProductsListing == null || refresh) {
-            filters.categoryId = categoryId
             categoryProductsListing =
                 productListingRepo.fetchCategoryProductsListing(
                     categoryId,
@@ -109,7 +108,6 @@ open class ProductListingViewModel @Inject constructor(
         onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
     ): Flow<PagingData<Product>> {
         if (vendorProductsListing == null || refresh) {
-            filters.vendorId = vendorId
             vendorProductsListing =
                 productListingRepo.vendorProductListing(
                     vendorId,

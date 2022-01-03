@@ -12,6 +12,7 @@ interface IFiltersRepo {
         filterType: FiltersType,
         categoryId: Int?,
         vendorId: String?,
+        searchStr: String?,
         dispatcher: CoroutineDispatcher = Dispatchers.IO
     ): Flow<DataState<Filters>>
 }

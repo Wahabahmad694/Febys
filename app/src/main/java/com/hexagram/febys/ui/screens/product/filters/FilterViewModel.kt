@@ -23,11 +23,11 @@ class FilterViewModel @Inject constructor(
     private val _observeFilters = MutableLiveData<DataState<Filters>>()
     val observeFilters: LiveData<DataState<Filters>> = _observeFilters
 
-    fun fetchFilters(filterType: FiltersType) = viewModelScope.launch {
+    fun fetchFilters(
+        filterType: FiltersType, categoryId: Int?, vendorId: String?, searchStr: String? = null
+    ) = viewModelScope.launch {
         _observeFilters.postValue(DataState.Loading())
-        val categoryId = appliedFilters.categoryId
-        val vendorId = appliedFilters.vendorId
-        filterRepo.fetchAllFilters(filterType, categoryId, vendorId).collect {
+        filterRepo.fetchAllFilters(filterType, categoryId, vendorId, searchStr).collect {
             _observeFilters.postValue(it)
             updateAvailableFilters(it)
         }

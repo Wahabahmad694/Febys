@@ -14,4 +14,6 @@ class SearchProductListingFragment : ProductListingFragment() {
         }
 
     override fun getFilterType() = FiltersType.SEARCH
+
+    override fun getSearchStr(): String = args.query
 }
