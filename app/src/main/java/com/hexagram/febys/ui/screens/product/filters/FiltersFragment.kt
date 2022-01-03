@@ -56,6 +56,10 @@ class FiltersFragment : BaseFragment() {
     private fun initUiListener() {
         binding.ivClose.setOnClickListener { goBack() }
 
+        binding.itemPriceRange.root.setOnClickListener {
+            val gotoPriceFilter = FiltersFragmentDirections.actionSearchFilterFragmentToPriceRangeFilterFragment()
+            navigateTo(gotoPriceFilter)
+        }
         binding.labelClear.setOnClickListener {
             disableClearOption()
             filters.variantAttrs.clear()

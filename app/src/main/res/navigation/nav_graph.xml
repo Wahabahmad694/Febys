@@ -333,6 +333,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_search_filter_fragment_to_priceRangeFilterFragment"
+            app:destination="@id/priceRangeFilterFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/filtersDetailListFragment"
@@ -346,6 +353,11 @@
             android:name="appliedFilters"
             app:argType="com.hexagram.febys.models.api.request.ProductListingRequest" />
     </fragment>
+    <fragment
+        android:id="@+id/priceRangeFilterFragment"
+        android:name="com.hexagram.febys.ui.screens.product.filters.priceRange.PriceRangeFilterFragment"
+        android:label="PriceRangeFilterFragment"
+        tools:layout="@layout/fragment_price_range_filter" />
     <fragment
         android:id="@+id/todayDealsListingFragment"
         android:name="com.hexagram.febys.ui.screens.product.listing.TodayDealsListingFragment"

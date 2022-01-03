@@ -299,5 +299,8 @@
     <string name="label_your_overall_rating">Your Overall Rating</string>
     <string name="label_pricing">Pricing</string>
     <string name="vertical_separator">|</string>
+    <string name="label_price_range">Price Range</string>
+    <string name="label_min">Min</string>
+    <string name="label_max">Max</string>
 
 </resources>
