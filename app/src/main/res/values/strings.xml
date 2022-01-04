@@ -194,6 +194,7 @@
     <string name="label_save_and_continue">Save and Continue</string>
     <string name="label_save">Save</string>
     <string name="label_show_filter">Show %1s results</string>
+    <string name="label_apply_filter">Apply Filters</string>
     <string name="error_enter_valid_postal_code">Please enter valid postal code</string>
     <string name="error_enter_valid_state">Please enter valid state</string>
     <string name="error_enter_valid_city">Please enter valid city</string>
@@ -298,5 +299,8 @@
     <string name="label_your_overall_rating">Your Overall Rating</string>
     <string name="label_pricing">Pricing</string>
     <string name="vertical_separator">|</string>
+    <string name="label_price_range">Price Range</string>
+    <string name="label_min">Min</string>
+    <string name="label_max">Max</string>
 
 </resources>

@@ -5,11 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentFiltersDetailListBinding
-import com.hexagram.febys.ui.screens.product.filters.FilterViewModel
 import com.hexagram.febys.utils.goBack
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -17,8 +15,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class FiltersDetailListFragment : BaseFragment() {
     private lateinit var binding: FragmentFiltersDetailListBinding
     private val filterDetailListAdapter = FilterDetailListAdapter()
-
-    private val searchViewModel by viewModels<FilterViewModel>()
 
     private val args: FiltersDetailListFragmentArgs by navArgs()
 
@@ -39,23 +35,38 @@ class FiltersDetailListFragment : BaseFragment() {
     private fun initUi() {
         binding.rvFiltersDetailList.adapter = filterDetailListAdapter
         binding.tvFilterName.text = args.filter.name
-        binding.labelClear.setOnClickListener {
-            disableClearOption()
-        }
 
-        filterDetailListAdapter.submitList(args.filter.values)
-    }
+        val appliedFilter = args.appliedFilters.variantAttrs[args.filter.name] ?: ""
+        val filters = args.filter.values.sortedBy { it }
+        filterDetailListAdapter.submitList(filters, appliedFilter)
 
-    private fun disableClearOption() {
-        binding.labelClear.setTextColor(Color.GRAY)
-        binding.labelClear.isEnabled = false
+
+        val isClearBtnVisible = appliedFilter.isNotEmpty()
+        if (isClearBtnVisible) enableClearOption() else disableClearOption()
     }
 
     private fun initUiListener() {
         binding.ivBack.setOnClickListener { goBack() }
 
         filterDetailListAdapter.filterClickCallback = {
-
+            args.appliedFilters.variantAttrs[args.filter.name] = it
+            enableClearOption()
         }
+
+        binding.labelClear.setOnClickListener {
+            disableClearOption()
+        }
+    }
+
+    private fun disableClearOption() {
+        binding.labelClear.setTextColor(Color.GRAY)
+        binding.labelClear.isEnabled = false
+        filterDetailListAdapter.updateSelectedFilter("")
+        args.appliedFilters.variantAttrs.remove(args.filter.name)
+    }
+
+    private fun enableClearOption() {
+        binding.labelClear.setTextColor(Color.BLACK)
+        binding.labelClear.isEnabled = true
     }
 }

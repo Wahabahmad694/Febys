@@ -5,9 +5,6 @@
 
     <data>
 
-        <variable
-            name="quantity"
-            type="String" />
     </data>
 
     <LinearLayout
@@ -124,6 +121,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <include
+                android:id="@+id/item_price_range"
+                layout="@layout/item_price_range"
+                app:layout_constraintStart_toStartOf="@id/rv_filters"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_filters"
                 android:layout_width="match_parent"
@@ -131,7 +134,7 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toTopOf="@id/btn_show"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/item_price_range"
                 tools:listitem="@layout/item_filters" />
 
             <com.google.android.material.button.MaterialButton
@@ -141,7 +144,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_17sdp"
                 android:layout_marginBottom="@dimen/_14sdp"
-                android:text="@{@string/label_show_filter(quantity)}"
+                android:text="@string/label_apply_filter"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

@@ -27,7 +27,8 @@ class FilterDetailListAdapter : RecyclerView.Adapter<FilterDetailListAdapter.Vie
         return detailList.size
     }
 
-    fun submitList(values: List<String>) {
+    fun submitList(values: List<String>, filter: String = "") {
+        selectedFilter = filter
         this.detailList = values
         notifyItemRangeChanged(0, values.size)
     }

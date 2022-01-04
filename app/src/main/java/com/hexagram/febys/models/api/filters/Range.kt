@@ -5,6 +5,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Range(
-    val max: Int,
-    val min: Int
+    val max: Double,
+    val min: Double
 ) : Parcelable

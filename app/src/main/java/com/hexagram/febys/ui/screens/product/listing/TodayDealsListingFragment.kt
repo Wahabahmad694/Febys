@@ -10,9 +10,10 @@ class TodayDealsListingFragment : ProductListingFragment() {
 
     override fun getListingTitle(): String = args.productListTitle
 
-    override fun getProductPagingDate() = productListingViewModel.todayDealsListing {
-        setProductItemCount(it.totalRows)
-    }
+    override fun getProductPagingData(refresh: Boolean) =
+        productListingViewModel.todayDealsListing(refresh) {
+            setProductItemCount(it.totalRows)
+        }
 
     override fun getFilterType() = FiltersType.TODAY_DEALS
 }
