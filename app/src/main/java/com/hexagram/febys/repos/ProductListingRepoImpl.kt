@@ -143,7 +143,9 @@ class ProductListingRepoImpl @Inject constructor(
     private fun createReq(filters: ProductListingRequest): PagingListRequest {
         val req = PagingListRequest()
         req.searchStr = filters.searchStr ?: ""
-        req.filters = filters.createRequest()
+        req.queryStr = filters.searchStr ?: ""
+        req.filters = filters.createFilters()
+        req.sorter = filters.createSorter()
         return req
     }
 

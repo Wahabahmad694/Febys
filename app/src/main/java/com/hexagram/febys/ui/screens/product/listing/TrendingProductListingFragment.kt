@@ -13,5 +13,5 @@ class TrendingProductListingFragment : ProductListingFragment() {
             setProductItemCount(it.totalRows)
         }
 
-    override fun getFilterType() = FiltersType.SEARCH
+    override fun getFilterType() = FiltersType.TRENDING
 }

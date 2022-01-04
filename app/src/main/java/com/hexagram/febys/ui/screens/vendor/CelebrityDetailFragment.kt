@@ -194,8 +194,7 @@ class CelebrityDetailFragment : BaseFragment() {
     }
 
     private fun fetchFilters() {
-        filtersViewModel.appliedFilters.vendorId = args.id
-        filtersViewModel.fetchFilters(FiltersType.VENDOR_CATEGORY)
+        filtersViewModel.fetchFilters(FiltersType.VENDOR_CATEGORY, null, args.id)
     }
 
     private fun updateUi(celebrity: Vendor) {

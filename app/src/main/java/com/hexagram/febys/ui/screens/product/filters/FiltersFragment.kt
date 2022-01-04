@@ -48,7 +48,7 @@ class FiltersFragment : BaseFragment() {
 
     private fun initUi() {
         binding.rvFilters.adapter = filterAdapter
-        val isClearBtnVisible = filters.variantAttrs.isNotEmpty()
+        val isClearBtnVisible = filters.variantAttrs.isNotEmpty() || filters.sortByPrice != null
         if (isClearBtnVisible) enableClearOption() else disableClearOption()
         updateUi(args.filters)
     }
@@ -74,12 +74,15 @@ class FiltersFragment : BaseFragment() {
             when (checkedId) {
                 R.id.rd_newItem -> {
                     enableClearOption()
+                    filters.sortByPrice = null
                 }
                 R.id.rd_lowPrice -> {
                     enableClearOption()
+                    filters.sortByPrice = ProductListingRequest.KEY_ASC
                 }
                 R.id.rd_highPrice -> {
                     enableClearOption()
+                    filters.sortByPrice = ProductListingRequest.KEY_DESC
                 }
             }
         }
@@ -95,6 +98,7 @@ class FiltersFragment : BaseFragment() {
         binding.radioBtnFilter.clearCheck()
         binding.labelClear.setTextColor(Color.GRAY)
         filters.variantAttrs.clear()
+        filters.sortByPrice = null
     }
 
     private fun enableClearOption() {
@@ -105,5 +109,13 @@ class FiltersFragment : BaseFragment() {
     private fun updateUi(filters: Filters) {
         val filterList = filters.attributes.attributes.sortedBy { it.name }
         filterAdapter.submitList(filterList)
+
+        if (this.filters.sortByPrice == ProductListingRequest.KEY_ASC) {
+            binding.radioBtnFilter.check(R.id.rd_lowPrice)
+        }
+
+        if (this.filters.sortByPrice == ProductListingRequest.KEY_DESC) {
+            binding.radioBtnFilter.check(R.id.rd_highPrice)
+        }
     }
 }

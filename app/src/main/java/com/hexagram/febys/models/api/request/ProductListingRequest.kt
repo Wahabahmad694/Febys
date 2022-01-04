@@ -4,17 +4,20 @@ import android.os.Parcelable
 import com.google.gson.Gson
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
+import com.hexagram.febys.ui.screens.product.filters.FiltersType
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class ProductListingRequest constructor(
+    var filterType: FiltersType? = null,
     var searchStr: String? = null,
     var isDefault: Boolean = false,
-    var categoryId: Int? = null,
-    var vendorId: String? = null,
+    var categoryIds: MutableSet<Int> = mutableSetOf(),
+    var vendorIds: MutableSet<String> = mutableSetOf(),
     var variantAttrs: MutableMap<String, String> = mutableMapOf(),
     var minPrice: Int? = null,
-    var maxPrice: Int? = null
+    var maxPrice: Int? = null,
+    var sortByPrice: String? = null
 ) : Parcelable {
     companion object {
         private const val KEY_DEFAULT = "variants.default"
@@ -26,24 +29,29 @@ data class ProductListingRequest constructor(
         private const val KEY_LT = "\$lt" // less than
         private const val KEY_IN = "\$in"
         private const val KEY_OR = "\$or"
+        const val KEY_ASC = "asc"
+        const val KEY_DESC = "desc"
     }
 
-    fun createRequest(): JsonObject {
+    fun createFilters(): JsonObject {
         val filters = JsonObject()
 
+        isDefault = variantAttrs.isEmpty()
+                && filterType != FiltersType.TODAY_DEALS
+                && filterType != FiltersType.UNDER_HUNDRED
         if (isDefault) filters.addProperty(KEY_DEFAULT, isDefault)
 
-        if (categoryId != null) {
+        if (categoryIds.isNotEmpty()) {
             val ids = JsonArray()
-            ids.add(categoryId)
+            categoryIds.forEach { ids.add(it) }
             val category = JsonObject()
             category.add(KEY_IN, ids)
             filters.add(KEY_CATEGORY_IDS, category)
         }
 
-        if (vendorId != null) {
+        if (vendorIds.isNotEmpty()) {
             val ids = JsonArray()
-            ids.add(vendorId)
+            vendorIds.forEach { ids.add(it) }
             val vendors = JsonObject()
             vendors.add(KEY_IN, ids)
             filters.add(KEY_VENDOR_IDS, vendors)
@@ -72,6 +80,16 @@ data class ProductListingRequest constructor(
         }
 
         return filters
+    }
+
+    fun createSorter(): JsonObject {
+        val sorter = JsonObject()
+
+        if (sortByPrice != null) {
+            sorter.addProperty(KEY_PRICE, sortByPrice)
+        }
+
+        return sorter
     }
 
     fun deepCopy(): ProductListingRequest {

@@ -144,14 +144,13 @@
                 android:scrollbars="none"
                 app:layout_constraintTop_toBottomOf="@id/tv_featured_categories_slogan">
 
-                <RadioGroup
-                    android:id="@+id/radio_group_filters"
+                <LinearLayout
+                    android:id="@+id/filters_vendor_or_categories"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:clipToPadding="false"
-                    android:orientation="horizontal"
-                    app:singleLine="true"
-                    app:singleSelection="true" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal" />
 
             </HorizontalScrollView>
 
