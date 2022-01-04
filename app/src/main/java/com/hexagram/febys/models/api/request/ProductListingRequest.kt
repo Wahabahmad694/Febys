@@ -65,10 +65,11 @@ data class ProductListingRequest constructor(
             filters.add(KEY_ATTR, variantsAttr)
         }
 
-        if (minPrice != null && maxPrice != null) {
+        if (minPrice != null || maxPrice != null) {
             val priceRange = JsonObject()
-            priceRange.addProperty(KEY_GTE, maxPrice)
-            priceRange.addProperty(KEY_LT, maxPrice)
+
+            if (minPrice != null) priceRange.addProperty(KEY_GTE, minPrice)
+            if (maxPrice != null) priceRange.addProperty(KEY_LT, maxPrice)
 
             val price = JsonObject()
             price.add(KEY_PRICE, priceRange)

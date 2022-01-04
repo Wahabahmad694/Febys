@@ -48,7 +48,9 @@ class FiltersFragment : BaseFragment() {
 
     private fun initUi() {
         binding.rvFilters.adapter = filterAdapter
-        val isClearBtnVisible = filters.variantAttrs.isNotEmpty() || filters.sortByPrice != null
+
+        val isClearBtnVisible =
+            filters.variantAttrs.isNotEmpty() || filters.sortByPrice != null || filters.minPrice != -1 || filters.maxPrice != -1
         if (isClearBtnVisible) enableClearOption() else disableClearOption()
         updateUi(args.filters)
     }
@@ -57,7 +59,10 @@ class FiltersFragment : BaseFragment() {
         binding.ivClose.setOnClickListener { goBack() }
 
         binding.itemPriceRange.root.setOnClickListener {
-            val gotoPriceFilter = FiltersFragmentDirections.actionSearchFilterFragmentToPriceRangeFilterFragment()
+            val gotoPriceFilter =
+                FiltersFragmentDirections.actionSearchFilterFragmentToPriceRangeFilterFragment(
+                    filters
+                )
             navigateTo(gotoPriceFilter)
         }
         binding.labelClear.setOnClickListener {
@@ -99,6 +104,8 @@ class FiltersFragment : BaseFragment() {
         binding.labelClear.setTextColor(Color.GRAY)
         filters.variantAttrs.clear()
         filters.sortByPrice = null
+        filters.minPrice = null
+        filters.maxPrice = null
     }
 
     private fun enableClearOption() {

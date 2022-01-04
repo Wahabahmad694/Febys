@@ -55,9 +55,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginHorizontal="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginHorizontal="@dimen/_14sdp"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
@@ -70,12 +70,14 @@
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/et_min_price"
-                style="@style/ButtonTheme.OutLine.Full"
-                android:layout_width="wrap_content"
+                style="@style/TextTheme.HelveticaNeue.TS18"
+                android:layout_width="@dimen/_100sdp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:background="@drawable/bg_border_dark_grey"
                 android:hint="@string/label_min"
+                android:inputType="number"
+                android:padding="@dimen/_5sdp"
                 android:textAlignment="textStart" />
 
             <TextView
@@ -88,19 +90,22 @@
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/et_max_price"
-                style="@style/ButtonTheme.OutLine"
-                android:layout_width="wrap_content"
+                style="@style/TextTheme.HelveticaNeue.TS18"
+                android:layout_width="@dimen/_100sdp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:background="@drawable/bg_border_dark_grey"
                 android:hint="@string/label_max"
+                android:inputType="number"
+                android:padding="@dimen/_5sdp"
                 android:textAlignment="textStart" />
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_show"
             style="@style/ButtonTheme.Contained"
@@ -108,7 +113,6 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_17sdp"
             android:layout_marginBottom="@dimen/_14sdp"
-            android:text="@string/label_apply_filter"
-            />
+            android:text="@string/label_apply_filter" />
     </LinearLayout>
 </layout>

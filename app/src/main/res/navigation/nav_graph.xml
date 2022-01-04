@@ -357,7 +357,11 @@
         android:id="@+id/priceRangeFilterFragment"
         android:name="com.hexagram.febys.ui.screens.product.filters.priceRange.PriceRangeFilterFragment"
         android:label="PriceRangeFilterFragment"
-        tools:layout="@layout/fragment_price_range_filter" />
+        tools:layout="@layout/fragment_price_range_filter">
+        <argument
+            android:name="filters"
+            app:argType="com.hexagram.febys.models.api.request.ProductListingRequest" />
+    </fragment>
     <fragment
         android:id="@+id/todayDealsListingFragment"
         android:name="com.hexagram.febys.ui.screens.product.listing.TodayDealsListingFragment"
