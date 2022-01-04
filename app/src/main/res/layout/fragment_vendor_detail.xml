@@ -136,7 +136,7 @@
                                 android:id="@+id/container_rating"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginHorizontal="@dimen/_12dp"
+                                android:layout_marginHorizontal="@dimen/_5sdp"
                                 android:layout_weight="1"
                                 android:gravity="center"
                                 android:orientation="horizontal"
@@ -157,7 +157,7 @@
 
                                 <TextView
                                     android:id="@+id/tv_store_rating"
-                                    style="@style/TextTheme.Arial.TS12"
+                                    style="@style/TextTheme.Arial.TS14"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="@dimen/_4sdp"
@@ -227,7 +227,7 @@
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_toggle_follow"
                         style="@style/ButtonTheme.OutLine"
-                        android:layout_width="@dimen/_75sdp"
+                        android:layout_width="@dimen/_65sdp"
                         android:layout_height="wrap_content"
                         android:text="@{isFollowing ? @string/label_following : @string/label_follow}" />
                 </LinearLayout>

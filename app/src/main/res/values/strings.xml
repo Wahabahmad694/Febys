@@ -191,7 +191,7 @@
     <string name="label_state">State</string>
     <string name="label_postal_code">Postal Code</string>
     <string name="label_set_as_default_shipping_address">Set as default shipping address</string>
-    <string name="label_save_and_continue">Save and continue</string>
+    <string name="label_save_and_continue">Save and Continue</string>
     <string name="label_save">Save</string>
     <string name="label_show_filter">Show %1s results</string>
     <string name="label_apply_filter">Apply Filters</string>

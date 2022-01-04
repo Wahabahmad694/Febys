@@ -228,8 +228,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_1sdp"
-                android:layout_marginTop="@dimen/_14sdp"
                 android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_14sdp"
                 android:layout_marginEnd="@dimen/_20sdp"
                 android:background="@color/grey"
                 app:layout_constraintTop_toBottomOf="@id/tv_product_price" />
@@ -259,19 +259,17 @@
                     android:background="@null"
                     android:imeOptions="actionNext"
                     android:inputType="textMultiLine"
-                    android:minLines="1"
+                    android:minLines="3"
                     android:paddingVertical="@dimen/_8dp"
                     android:textAppearance="@style/TextTheme.Arial.TS16"
                     app:layout_constraintTop_toBottomOf="@id/label_email_address" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1sdp"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:layout_marginStart="@dimen/_20sdp"
-                    android:layout_marginEnd="@dimen/_20sdp"
-                    android:background="@color/grey"
-                    app:layout_constraintBottom_toBottomOf="parent" />
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@color/grey_e1e5e8" />
 
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
