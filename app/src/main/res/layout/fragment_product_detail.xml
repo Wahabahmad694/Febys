@@ -741,7 +741,7 @@
 
                                 <androidx.appcompat.widget.AppCompatRatingBar
                                     android:id="@+id/store_rating_bar"
-                                    style="?ratingBarStyleSmall"
+                                    style="@style/RatingBar"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:max="5"
