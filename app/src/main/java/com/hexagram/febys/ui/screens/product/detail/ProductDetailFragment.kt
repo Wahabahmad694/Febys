@@ -723,10 +723,8 @@ class ProductDetailFragment : SliderFragment() {
         }
 
         if (openByDefault) {
-            productDescriptionsBinding.containerProductDescription.toggleVisibility()
-            productDescriptionsBinding.ivDescriptionArrow.updateArrowByVisibility(
-                productDescriptionsBinding.containerProductDescription.isVisible
-            )
+            productDescriptionsBinding.containerProductDescription.isVisible = true
+            productDescriptionsBinding.ivDescriptionArrow.updateArrowByVisibility(true)
         }
 
         addView(binding.containerProductDescriptions, productDescriptionsBinding.root)
