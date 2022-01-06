@@ -31,10 +31,7 @@ class VendorViewModel @Inject constructor(
         _observerVendorEndorsement
 
     fun fetchVendors(isCelebrity: Boolean): Flow<PagingData<Any>> {
-        if (allVendorsPagingData == null) {
-            allVendorsPagingData = vendorRepo.fetchVendors(isCelebrity, viewModelScope)
-        }
-
+        allVendorsPagingData = vendorRepo.fetchVendors(isCelebrity, viewModelScope)
         return allVendorsPagingData!!
     }
 

@@ -17,18 +17,26 @@ class VendorListingAdapter(private val isCelebrity: Boolean) :
     companion object {
         private val diffCallback = object : DiffUtil.ItemCallback<Any>() {
 
-            override fun areItemsTheSame(oldItem: Any, newItem: Any): Boolean {
-                return if (oldItem is Vendor && newItem is Vendor) {
+            override fun areItemsTheSame(oldItem: Any, newItem: Any) = when {
+                oldItem is Vendor && newItem is Vendor -> {
                     oldItem._id == newItem._id
-                } else {
+                }
+                oldItem is ListingHeader && newItem is ListingHeader -> {
+                    oldItem.title == newItem.title
+                }
+                else -> {
                     false
                 }
             }
 
-            override fun areContentsTheSame(oldItem: Any, newItem: Any): Boolean {
-                return if (oldItem is Vendor && newItem is Vendor) {
-                    oldItem == newItem
-                } else {
+            override fun areContentsTheSame(oldItem: Any, newItem: Any) = when {
+                oldItem is Vendor && newItem is Vendor -> {
+                    (oldItem as Vendor) == (newItem as Vendor)
+                }
+                oldItem is ListingHeader && newItem is ListingHeader -> {
+                    (oldItem as ListingHeader) == (newItem as ListingHeader)
+                }
+                else -> {
                     false
                 }
             }
@@ -38,8 +46,8 @@ class VendorListingAdapter(private val isCelebrity: Boolean) :
         private const val VIEW_TYPE_VENDOR = 2
     }
 
-    var followVendor: ((vendor: String) -> Unit)? = null
-    var unFollowVendor: ((vendor: String) -> Unit)? = null
+    var followVendor: ((vendor: Vendor, position: Int) -> Unit)? = null
+    var unFollowVendor: ((vendor: Vendor, position: Int) -> Unit)? = null
     var gotoCelebrityDetail: ((vendor: Vendor) -> Unit)? = null
     var gotoVendorDetail: ((vendor: Vendor) -> Unit)? = null
 
@@ -110,12 +118,8 @@ class VendorListingAdapter(private val isCelebrity: Boolean) :
                 btnToggleFollow.setOnClickListener {
                     if (isFollowing == null) return@setOnClickListener
 
-                    isFollowing = !isFollowing!!
-                    item.isFollow = isFollowing!!
-                    notifyItemChanged(position)
-
-                    if (isFollowing!!)
-                        followVendor?.invoke(item._id) else unFollowVendor?.invoke(item._id)
+                    if (isFollowing!!.not()) followVendor?.invoke(item, position)
+                    else unFollowVendor?.invoke(item, position)
                 }
             }
         }
