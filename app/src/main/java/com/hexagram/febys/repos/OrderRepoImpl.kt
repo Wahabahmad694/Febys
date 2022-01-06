@@ -40,7 +40,6 @@ class OrderRepoImpl @Inject constructor(
         ) {
             val authToken = pref.getAccessToken()
             val filtersBody = OrderListingRequest()
-            var hasReview = false
             if (!filters.isNullOrEmpty()) {
                 filtersBody.hasReviewed = filters.first() == OrderStatus.REVIEWED
                 filtersBody.filters = filters.toList()
