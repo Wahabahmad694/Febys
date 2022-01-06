@@ -298,5 +298,13 @@
     <string name="label_your_overall_rating">Your Overall Rating</string>
     <string name="label_pricing">Pricing</string>
     <string name="vertical_separator">|</string>
+    <string name="wallet">Wallet</string>
+    <string name="available">available</string>
+    <string name="_100">$100</string>
+    <string name="momo_bank_card">Momo_Bank_Card</string>
+    <string name="pay_via_momo_or_bank_card">Pay_via_Momo_or_Bank_Card</string>
+    <string name="paypal">Paypal</string>
+    <string name="pay_via_paypal">Pay_via_paypal</string>
+    <string name="ghs_100_06">GHS_100_06</string>
 
 </resources>

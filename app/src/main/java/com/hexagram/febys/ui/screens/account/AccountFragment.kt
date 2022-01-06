@@ -34,6 +34,7 @@ class AccountFragment : BaseFragment() {
     }
 
     private fun uiListeners() {
+        binding.orders.walletImg.setImageResource(R.drawable.ic_wallet)
         binding.btnLogin.setOnClickListener {
             val navigateToLogin = AccountFragmentDirections.actionToLoginFragment()
             navigateTo(navigateToLogin)
