@@ -15,6 +15,8 @@ object Utils {
         const val FORMAT_MONTH_DATE_YEAR = "MMM dd, yyyy"
         const val FORMAT_MONTH_DATE_YEAR_HOUR_MIN = "MMM dd, yyyy-hh:mm"
 
+        const val MIN_30_IN_MILLI = 30 * 60 * 1000
+
         fun formatDate(dateString: String, pattern: String = FORMAT_MONTH_DATE_YEAR): String {
             return try {
                 val utcDateFormat = SimpleDateFormat(FORMAT_ISO, Locale.getDefault())
@@ -26,6 +28,31 @@ object Utils {
             } catch (e: Exception) {
                 ""
             }
+        }
+
+        fun getRemainingMilliFrom30Min(dateString: String): Long {
+            return try {
+                val utcToLocal = formatDate(dateString, FORMAT_ISO)
+                val utcDateFormat = SimpleDateFormat(FORMAT_ISO, Locale.getDefault())
+                utcDateFormat.timeZone = TimeZone.getTimeZone("UTC")
+                val time = utcDateFormat.parse(utcToLocal)!!.time
+                val currentTime = System.currentTimeMillis()
+                val difference = currentTime - time
+//                return if (difference > 0) MIN_30_IN_MILLI - difference else -1
+                return 80 * 1000
+            } catch (e: Exception) {
+                -1
+            }
+        }
+
+        fun milliToMin(milli: Long): String {
+            var sec = milli.div(1000)
+            val min = sec.div(60)
+            sec = sec.rem(60)
+
+            val secFixed = String.format("%02d", sec)
+            val minFixed = String.format("%02d", min)
+            return "$minFixed:$secFixed"
         }
     }
 

@@ -117,6 +117,13 @@ class OrderDetailFragment : BaseFragment() {
                 }
             }
         }
+
+        orderViewModel.observeTimer.observe(viewLifecycleOwner) {
+            val showTimer = it.isNullOrEmpty().not()
+            orderDetailVendorProductAdapter.updateCancelable(showTimer)
+            binding.containerTimer.isVisible = showTimer
+            binding.tvTimer.text = it
+        }
     }
 
     private fun updateUi(order: Order) = with(binding) {
