@@ -162,7 +162,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tab_Layout">
 
-
                 <LinearLayout
                     android:id="@+id/label_delivery_speed"
                     android:layout_width="match_parent"
