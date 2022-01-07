@@ -17,7 +17,7 @@
     <string name="label_seasonal_offers">Seasonal Offers</string>
     <string name="label_same_day_delivery">Same day delivery</string>
     <string name="label_store_you_follow">Stores You Follow</string>
-    <string name="label_market_you_follow">Markets You Follow</string>
+    <string name="label_market_you_follow">Celebrity You Follow</string>
     <string name="label_store_you_follow_slogan">This week\'s highlights</string>
     <string name="label_add_protection">Add Protection</string>
     <string name="label_mobile_payment_offer">Mobile Money Payments accepted across all networks <b>Read More</b></string>
@@ -175,7 +175,7 @@
     <string name="label_me">Me</string>
     <string name="label_explore_stores">Explore Stores</string>
     <string name="label_stores">Stores</string>
-    <string name="label_explore_markets">Explore Markets</string>
+    <string name="label_explore_markets">Explore Celebrity</string>
     <string name="label_following">Unfollow</string>
     <string name="label_follow">Follow</string>
     <string name="label_create_account_slogan">Create an account to FEBYS to get all features.</string>
@@ -215,7 +215,8 @@
     <string name="label_tracking_code">Tracking Code</string>
     <string name="label_delivery_services">Delivery Services</string>
     <string name="label_order_summary_with_quantity">Order Summary</string>
-    <string name="label_vat">Vat %</string>
+    <string name="label_vat_percentage">Vat %</string>
+    <string name="label_vat">Vat</string>
     <string name="msg_thank_you_for_purchase">Thank You For Your Purchase</string>
     <string name="msg_success_order">Your Order has been placed! We will email you on order confirmation with details and tracking number once your order has been successfully processed</string>
     <string name="label_order_id">Order ID:</string>
@@ -302,6 +303,8 @@
     <string name="label_price_range">Price Range</string>
     <string name="label_min">Min</string>
     <string name="label_max">Max</string>
+    <string name="label_voucher_applied">Voucher Applied</string>
+    <string name="label_voucher_removed">Voucher Removed</string>
     <string name="wallet">Wallet</string>
     <string name="available">available</string>
     <string name="_100">$100</string>

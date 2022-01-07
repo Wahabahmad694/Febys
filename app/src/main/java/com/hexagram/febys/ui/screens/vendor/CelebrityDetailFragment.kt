@@ -200,7 +200,6 @@ class CelebrityDetailFragment : BaseFragment() {
     private fun updateUi(celebrity: Vendor) {
         binding.apply {
             profileImg.load(celebrity.templatePhoto)
-            celebrity.templatePhoto?.let { headerImg.load(it) }
             celebrity.template
                 ?.firstOrNull { it.section == "topBanner" }
                 ?.images?.firstOrNull()?.url?.let { headerImg.load(it) }
@@ -227,7 +226,7 @@ class CelebrityDetailFragment : BaseFragment() {
                 val state = it.refresh
 
                 if (state is LoadState.Error) {
-                    showToast(getString(R.string.error_something_went_wrong))
+                    showErrorToast(state)
                 }
             }
         }

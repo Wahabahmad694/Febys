@@ -79,13 +79,22 @@ class AddEditReviewFragment : BaseFragment() {
         }
 
         binding.priceRating.ratingBar.setOnRatingBarChangeListener { _, rating, fromUser ->
-            if (fromUser) orderReview.vendorReview.pricingScore = rating.toInt().toDouble()
+            if (fromUser) {
+                if (rating < 1f) binding.priceRating.ratingBar.progress = 1
+                orderReview.vendorReview.pricingScore = rating.toInt().toDouble()
+            }
         }
         binding.qualityRating.ratingBar.setOnRatingBarChangeListener { _, rating, fromUser ->
-            if (fromUser) orderReview.vendorReview.qualityScore = rating.toInt().toDouble()
+            if (fromUser) {
+                if (rating < 1f) binding.qualityRating.ratingBar.progress = 1
+                orderReview.vendorReview.qualityScore = rating.toInt().toDouble()
+            }
         }
         binding.valueRating.ratingBar.setOnRatingBarChangeListener { _, rating, fromUser ->
-            if (fromUser) orderReview.vendorReview.valueScore = rating.toInt().toDouble()
+            if (fromUser) {
+                if (rating < 1f) binding.valueRating.ratingBar.progress = 1
+                orderReview.vendorReview.valueScore = rating.toInt().toDouble()
+            }
         }
 
         addEditReviewAdapter.ratingCallback = { skuId, rating ->
@@ -153,12 +162,12 @@ class AddEditReviewFragment : BaseFragment() {
         return products
     }
 
-    fun updateFieldAndReviewsAdapter(isEnable: Boolean) {
+    private fun updateFieldAndReviewsAdapter(isEnable: Boolean) {
         binding.ivEdit.isVisible = !isEnable
         binding.btnSubmitReview.isVisible = isEnable
-        binding.priceRating.ratingBar.setIsIndicator(isEnable)
-        binding.qualityRating.ratingBar.setIsIndicator(isEnable)
-        binding.valueRating.ratingBar.setIsIndicator(isEnable)
+        binding.priceRating.ratingBar.setIsIndicator(!isEnable)
+        binding.qualityRating.ratingBar.setIsIndicator(!isEnable)
+        binding.valueRating.ratingBar.setIsIndicator(!isEnable)
         binding.etComment.isEnabled = isEnable
 
         val productsWithReviews = addReviewsToProduct(args.vendorProducts.products)

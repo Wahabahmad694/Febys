@@ -706,7 +706,7 @@ class ProductDetailFragment : SliderFragment() {
         binding.containerProductVariantSecondAttr.isVisible = false
     }
 
-    private fun updateProductDescription(description: Description) {
+    private fun updateProductDescription(description: Description, openByDefault: Boolean = false) {
         val productDescriptionsBinding = LayoutProductDescriptionBinding.inflate(
             layoutInflater, binding.containerProductDescriptions, false
         )
@@ -722,12 +722,17 @@ class ProductDetailFragment : SliderFragment() {
             binding.scrollView.scrollToDescendant(productDescriptionsBinding.containerProductDescription)
         }
 
+        if (openByDefault) {
+            productDescriptionsBinding.containerProductDescription.isVisible = true
+            productDescriptionsBinding.ivDescriptionArrow.updateArrowByVisibility(true)
+        }
+
         addView(binding.containerProductDescriptions, productDescriptionsBinding.root)
     }
 
     private fun updateProductDescription(descriptions: List<Description>) {
-        descriptions.forEach {
-            updateProductDescription(it)
+        for ((index, description) in descriptions.withIndex()) {
+            updateProductDescription(description, index == 0)
         }
     }
 

@@ -28,20 +28,20 @@ data class Rating(
                     total.text = (count ?: 0).toString()
                 }
 
-                val star1Count = scores.firstOrNull { it.score.toInt() == 1 }?.count
-                updateRatingRow(start1RatingBar, star1Total, star1Count)
-
-                val star2Count = scores.firstOrNull { it.score.toInt() == 2 }?.count
-                updateRatingRow(start2RatingBar, star2Total, star2Count)
-
-                val star3Count = scores.firstOrNull { it.score.toInt() == 3 }?.count
-                updateRatingRow(start3RatingBar, star3Total, star3Count)
+                val star5Count = scores.firstOrNull { it.score.toInt() == 5 }?.count
+                updateRatingRow(start5RatingBar, star5Total, star5Count)
 
                 val star4Count = scores.firstOrNull { it.score.toInt() == 4 }?.count
                 updateRatingRow(start4RatingBar, star4Total, star4Count)
 
-                val star5Count = scores.firstOrNull { it.score.toInt() == 5 }?.count
-                updateRatingRow(start5RatingBar, star5Total, star5Count)
+                val star3Count = scores.firstOrNull { it.score.toInt() == 3 }?.count
+                updateRatingRow(start3RatingBar, star3Total, star3Count)
+
+                val star2Count = scores.firstOrNull { it.score.toInt() == 2 }?.count
+                updateRatingRow(start2RatingBar, star2Total, star2Count)
+
+                val star1Count = scores.firstOrNull { it.score.toInt() == 1 }?.count
+                updateRatingRow(start1RatingBar, star1Total, star1Count)
             }
         }
     }

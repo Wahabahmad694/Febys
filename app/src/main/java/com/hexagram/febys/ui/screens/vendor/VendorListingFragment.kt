@@ -64,19 +64,23 @@ class VendorListingFragment : BaseFragment() {
     }
 
     private fun uiListener() {
-        vendorListingAdapter.followVendor =
-            { vendorId -> vendorViewModel.followVendor(vendorId) }
+        vendorListingAdapter.followVendor = { vendor, position ->
+            vendorViewModel.followVendor(vendor._id)
+            vendor.isFollow = !vendor.isFollow
+            vendorListingAdapter.notifyItemChanged(position)
+        }
 
-        vendorListingAdapter.unFollowVendor = { vendorId ->
+        vendorListingAdapter.unFollowVendor = { vendor, position ->
 
             val resId = R.drawable.ic_error
             val title = getString(R.string.label_delete_warning)
             val msg = getString(R.string.msg_for_unfollow_vendor)
 
             showWarningDialog(resId, title, msg) {
-                vendorViewModel.unFollowVendor(vendorId)
+                vendorViewModel.unFollowVendor(vendor._id)
+                vendor.isFollow = !vendor.isFollow
+                vendorListingAdapter.notifyItemChanged(position)
             }
-
         }
 
         vendorListingAdapter.gotoCelebrityDetail =
@@ -103,7 +107,7 @@ class VendorListingFragment : BaseFragment() {
                 }
 
                 if (state is LoadState.Error) {
-                    showToast(getString(R.string.error_something_went_wrong))
+                    showErrorToast(state)
                 }
                 binding.emptyView.root.isVisible =
                     it.refresh is LoadState.NotLoading && vendorListingAdapter.itemCount < 1
