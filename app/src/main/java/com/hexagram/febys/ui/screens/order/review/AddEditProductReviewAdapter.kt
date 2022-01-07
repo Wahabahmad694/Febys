@@ -10,7 +10,7 @@ import com.hexagram.febys.models.api.cart.CartProduct
 class AddEditProductReviewAdapter : RecyclerView.Adapter<AddEditProductReviewAdapter.VH>() {
     private var products = listOf<CartProduct>()
 
-    var isEnable:Boolean = true
+    var isEnable: Boolean = true
     var ratingCallback: ((skuId: String, rating: Int) -> Unit)? = null
     var commentCallback: ((skuId: String, comment: String) -> Unit)? = null
 
@@ -26,12 +26,18 @@ class AddEditProductReviewAdapter : RecyclerView.Adapter<AddEditProductReviewAda
             etComment.setText(cartProduct.ratingAndReview?.review?.comment)
 
             productRating.ratingBar.setOnRatingBarChangeListener { _, rating, fromUser ->
-                if (fromUser) ratingCallback?.invoke(variant.skuId, rating.toInt())
+                if (fromUser) {
+                    if (rating < 1f) productRating.ratingBar.progress = 1
+                    ratingCallback?.invoke(variant.skuId, rating.toInt())
+                }
             }
 
             etComment.doAfterTextChanged {
                 commentCallback?.invoke(variant.skuId, it.toString())
             }
+
+            etComment.isEnabled = isEnable
+            productRating.ratingBar.setIsIndicator(!isEnable)
         }
     }
 
@@ -51,7 +57,7 @@ class AddEditProductReviewAdapter : RecyclerView.Adapter<AddEditProductReviewAda
         return products.size
     }
 
-    fun submitList(list: List<CartProduct>,isEnable:Boolean) {
+    fun submitList(list: List<CartProduct>, isEnable: Boolean) {
         this.isEnable = isEnable
         products = list
         notifyItemRangeChanged(0, products.size)

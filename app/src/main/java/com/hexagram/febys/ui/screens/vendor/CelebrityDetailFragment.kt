@@ -226,7 +226,7 @@ class CelebrityDetailFragment : BaseFragment() {
                 val state = it.refresh
 
                 if (state is LoadState.Error) {
-                    showToast(getString(R.string.error_something_went_wrong))
+                    showErrorToast(state)
                 }
             }
         }

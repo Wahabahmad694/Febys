@@ -107,7 +107,7 @@ class VendorListingFragment : BaseFragment() {
                 }
 
                 if (state is LoadState.Error) {
-                    showToast(getString(R.string.error_something_went_wrong))
+                    showErrorToast(state)
                 }
                 binding.emptyView.root.isVisible =
                     it.refresh is LoadState.NotLoading && vendorListingAdapter.itemCount < 1

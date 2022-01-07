@@ -16,17 +16,20 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.Fade
 import androidx.transition.Transition
 import androidx.transition.TransitionManager
 import com.facebook.drawee.view.SimpleDraweeView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseActivity
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.ui.screens.dialog.InfoDialog
 import com.hexagram.febys.ui.screens.dialog.WarningDialog
+import java.io.IOException
 import java.util.*
 
 
@@ -77,6 +80,26 @@ fun Activity.hideKeyboard() {
 }
 
 fun Fragment.showToast(msg: String, length: Int = Toast.LENGTH_SHORT) {
+    activity?.showToast(msg, length)
+}
+
+fun <T> Fragment.showErrorToast(error: DataState.Error<T>, length: Int = Toast.LENGTH_SHORT) {
+    val msg = when (error) {
+        is DataState.ApiError -> error.message
+        is DataState.NetworkError -> getString(R.string.label_no_internet)
+        else -> getString(R.string.error_something_went_wrong)
+    }
+    activity?.showToast(msg, length)
+}
+
+fun Fragment.showErrorToast(error: LoadState.Error, length: Int = Toast.LENGTH_SHORT) {
+    val msg = if (error.error.cause is IOException) {
+        getString(R.string.label_no_internet)
+    } else {
+        error.error.localizedMessage
+            ?: error.error.message
+            ?: getString(R.string.error_something_went_wrong)
+    }
     activity?.showToast(msg, length)
 }
 
