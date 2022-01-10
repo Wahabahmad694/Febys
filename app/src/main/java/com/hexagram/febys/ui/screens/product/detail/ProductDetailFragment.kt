@@ -25,6 +25,7 @@ import com.hexagram.febys.models.api.product.*
 import com.hexagram.febys.models.api.rating.Rating
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.cart.CartViewModel
+import com.hexagram.febys.ui.screens.checkout.CheckoutFragmentDirections
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.ui.screens.product.additional.AdditionalProductAdapter
 import com.hexagram.febys.utils.*

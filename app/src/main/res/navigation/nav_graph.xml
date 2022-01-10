@@ -612,7 +612,6 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
-
     </fragment>
 
     <dialog
@@ -640,7 +639,7 @@
         android:id="@+id/paymentMethodsFragment"
         android:name="com.hexagram.febys.ui.screens.payment.method.PaymentMethodsFragment"
         android:label="PaymentMethodsFragment"
-        tools:layout="@layout/fragment_payment_methods" />
+        tools:layout="@layout/payment_method_fragment" />
     <fragment
         android:id="@+id/accountSettingsFragment"
         android:name="com.hexagram.febys.ui.screens.profile.AccountSettingsFragment"

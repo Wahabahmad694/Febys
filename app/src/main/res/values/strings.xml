@@ -310,5 +310,8 @@
     <string name="paypal">Paypal</string>
     <string name="pay_via_paypal">Pay_via_paypal</string>
     <string name="ghs_100_06">GHS_100_06</string>
+    <string name="insufficient_wallet_balance">Insufficient Wallet Balance</string>
+    <string name="pay_the_difference_using_a_different_payment_method_by_selecting_split_pay">Pay the difference using a different payment method by selecting split pay.</string>
+    <string name="split_pay">Split Pay</string>
 
 </resources>
