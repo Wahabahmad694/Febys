@@ -61,7 +61,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/label_wallet"
+                android:id="@+id/tv_wallet"
                 style="@style/TextTheme.Arial.TS16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -78,8 +78,8 @@
                 android:layout_marginTop="@dimen/_5sdp"
                 android:text="@string/_100"
                 android:textColor="@color/red"
-                app:layout_constraintStart_toStartOf="@id/label_wallet"
-                app:layout_constraintTop_toBottomOf="@id/label_wallet" />
+                app:layout_constraintStart_toStartOf="@id/tv_wallet"
+                app:layout_constraintTop_toBottomOf="@id/tv_wallet" />
 
             <TextView
                 android:id="@+id/tv_availble"
@@ -90,7 +90,7 @@
                 android:layout_marginTop="@dimen/_5sdp"
                 android:text="@string/available"
                 app:layout_constraintStart_toEndOf="@id/label_price"
-                app:layout_constraintTop_toBottomOf="@id/label_wallet" />
+                app:layout_constraintTop_toBottomOf="@id/tv_wallet" />
 
             <ImageView
                 android:id="@+id/wallet_filled_tick"

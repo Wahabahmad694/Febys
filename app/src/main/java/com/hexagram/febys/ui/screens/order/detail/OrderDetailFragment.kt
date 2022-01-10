@@ -145,8 +145,7 @@ class OrderDetailFragment : BaseFragment() {
 
         val shippingFee = Price("", 0.0, order.productsAmount.currency)
         addProductToOrderSummary(getString(R.string.label_shipping_fee), 1, shippingFee, true)
-        val vat = Price("", 0.0, order.productsAmount.currency)
-        addProductToOrderSummary(getString(R.string.label_vat), 1, vat, true)
+        addVatToOrderSummary(order.vatPercentage, order.productsAmount)
 
         if (order.voucher != null) {
             val voucherDiscount = order.voucher.discount ?: 0.0
@@ -157,6 +156,25 @@ class OrderDetailFragment : BaseFragment() {
         }
 
         updateTotalAmount(order.billAmount)
+    }
+
+    private fun addVatToOrderSummary(vatPercentage: Double, total: Price) {
+        val productSummary = LayoutOrderSummaryProductBinding.inflate(
+            layoutInflater,
+            binding.containerOrderSummary.containerOrderSummaryProducts,
+            false
+        )
+
+        val vatLabel = getString(R.string.label_vat)
+        val vatWithPercentage = "$vatLabel $vatPercentage%"
+        productSummary.tvProductNameWithQuantity.text = vatWithPercentage
+
+        val vatAmount =
+            if (vatPercentage > 0) total.value.times(vatPercentage).div(100.0) else 0.0
+        val vatPrice = Price("", vatAmount, total.currency)
+
+        productSummary.tvTotalPrice.text = vatPrice.getFormattedPrice()
+        binding.containerOrderSummary.containerOrderSummaryProducts.addView(productSummary.root)
     }
 
     private fun addProductToOrderSummary(

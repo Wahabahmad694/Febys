@@ -60,9 +60,10 @@
             android:gravity="center_vertical"
             android:maxLines="3"
             android:visibility="@{isCelebrity ? View.VISIBLE : View.GONE, default = gone}"
+            app:layout_constraintBottom_toBottomOf="@id/vendor_type"
             app:layout_constraintEnd_toStartOf="@id/btn_toggle_follow"
             app:layout_constraintStart_toEndOf="@id/vendor_img"
-            app:layout_constraintTop_toBottomOf="@id/vendor_name"
+            app:layout_constraintTop_toTopOf="@id/vendor_type"
             tools:text="Beauty Store, Accra, Ghana, Share" />
 
         <TextView
@@ -79,13 +80,13 @@
 
         <androidx.appcompat.widget.AppCompatRatingBar
             android:id="@+id/store_rating_bar"
-            style="?ratingBarStyleSmall"
+            style="@style/RatingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_4sdp"
             android:max="5"
             android:numStars="5"
-            android:visibility="@{isCelebrity ? View.INVISIBLE : View.VISIBLE}"
+            android:visibility="@{isCelebrity ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/vendor_name"
             app:layout_constraintTop_toBottomOf="@id/vendor_type"

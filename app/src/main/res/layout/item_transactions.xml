@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_115sdp"
+        android:layout_marginHorizontal="@dimen/_8sdp"
+        android:layout_marginVertical="@dimen/_6sdp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/_10sdp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/_10sdp"
+            android:background="@color/grey">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/background"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:actualImageScaleType="none"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:roundedCornerRadius="@dimen/_8sdp" />
+
+            <LinearLayout
+                android:id="@+id/container_transaction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_22sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/label_voucher_type"
+                    style="@style/TextTheme.Arial.TS14.Grey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_transaction_id" />
+
+                <TextView
+                    android:id="@+id/voucher_type"
+                    style="@style/TextTheme.Arial.TS16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="FT13365679077412" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/container_date_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_19sdp"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="@id/container_transaction"
+                app:layout_constraintTop_toBottomOf="@id/container_transaction">
+
+                <TextView
+                    android:id="@+id/tv_date_time"
+                    style="@style/TextTheme.Arial.TS14.Grey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_date_amp_time" />
+
+                <TextView
+                    android:id="@+id/label_date_time"
+                    style="@style/TextTheme.Arial.TS16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="May 18.2021-12:49" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/container_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_22sdp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@id/container_transaction"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/container_transaction">
+
+                <TextView
+                    android:id="@+id/label_amount"
+                    style="@style/TextTheme.HelveticaNeue.TS14.Grey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_amount" />
+
+                <TextView
+                    android:id="@+id/amount"
+                    style="@style/TextTheme.Arial.TS16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="$600.50" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/container_purpose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@id/container_date_time"
+                app:layout_constraintStart_toStartOf="@id/container_amount"
+                app:layout_constraintTop_toTopOf="@id/container_date_time">
+
+                <TextView
+                    android:id="@+id/label_Purpose"
+                    style="@style/TextTheme.Arial.TS14.Grey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_purpose" />
+
+                <TextView
+                    android:id="@+id/tv_purpose"
+                    style="@style/TextTheme.Arial.TS16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Return" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

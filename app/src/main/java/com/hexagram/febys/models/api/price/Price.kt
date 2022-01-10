@@ -12,6 +12,7 @@ data class Price(
     val currency: String
 ) : Parcelable {
     fun getFormattedPrice(): String {
+        if (currency.isEmpty()) return value.toString()
         val format = NumberFormat.getCurrencyInstance()
         format.maximumFractionDigits = 2
         format.currency = Currency.getInstance(currency)
@@ -19,6 +20,7 @@ data class Price(
     }
 
     fun getFormattedPrice(multiplyBy: Int): String {
+        if (currency.isEmpty()) return (value * multiplyBy).toString()
         val format = NumberFormat.getCurrencyInstance()
         format.maximumFractionDigits = 2
         format.currency = Currency.getInstance(currency)
