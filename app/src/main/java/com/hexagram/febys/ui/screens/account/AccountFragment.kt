@@ -51,6 +51,10 @@ class AccountFragment : BaseFragment() {
                 super.signOut()
             }
         }
+        binding.orders.labelWallet.setOnClickListener {
+            val gotoWallet = AccountFragmentDirections.actionAccountFragmentToWalletFragment()
+            navigateTo(gotoWallet)
+        }
 
         binding.orders.myOrders.setOnClickListener {
             gotoOrderListing(

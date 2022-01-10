@@ -31,7 +31,9 @@ data class Consumer(
     @SerializedName("created_at")
     val createdAt: String,
     @SerializedName("updated_at")
-    val updatedAt: String
+    val updatedAt: String,
+    @SerializedName("profile_image")
+    val profileImage: String?
 ) : Parcelable {
     val fullName
         get() = "$firstName $lastName"

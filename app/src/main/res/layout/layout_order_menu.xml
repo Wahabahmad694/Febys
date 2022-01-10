@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -14,7 +15,7 @@
         android:paddingHorizontal="@dimen/_16dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/label_wallet_payment"
+            android:id="@+id/label_wallet"
             android:layout_width="match_parent"
             android:layout_height="104dp"
             android:layout_marginTop="@dimen/_5sdp"
@@ -32,7 +33,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/label_wallet"
+                android:id="@+id/tv_wallet"
                 style="@style/TextTheme.HelveticaNeue.TS14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -46,9 +47,9 @@
                 style="@style/TextTheme.HelveticaNeue.TS16.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/ghs_100_06"
-                app:layout_constraintStart_toStartOf="@id/label_wallet"
-                app:layout_constraintTop_toBottomOf="@id/label_wallet" />
+                tools:text="GHS 100.06"
+                app:layout_constraintStart_toStartOf="@id/tv_wallet"
+                app:layout_constraintTop_toBottomOf="@id/tv_wallet" />
 
             <TextView
                 style="@style/TextTheme.HelveticaNeue.TS14"

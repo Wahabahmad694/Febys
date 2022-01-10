@@ -262,6 +262,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_accountFragment_to_walletFragment"
+            app:destination="@id/walletDetailFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <dialog
@@ -424,6 +431,15 @@
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
+    <fragment
+        android:id="@+id/walletDetailFragment"
+        android:name="com.hexagram.febys.ui.screens.wallet.WalletDetailFragment"
+        android:label="WalletDetailFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_right"
+        tools:layout="@layout/fragment_wallet_detail" />
     <fragment
         android:id="@+id/vendorListingFragment"
         android:name="com.hexagram.febys.ui.screens.vendor.VendorListingFragment"
