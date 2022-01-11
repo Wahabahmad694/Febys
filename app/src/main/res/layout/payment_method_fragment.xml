@@ -55,7 +55,7 @@
                 android:layout_width="@dimen/_42sdp"
                 android:layout_height="@dimen/_42sdp"
                 android:layout_marginStart="@dimen/_14sdp"
-                android:src="@drawable/ic_wallet_payment"
+                android:src="@drawable/ic_febys_wallet"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -250,8 +250,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/_24sdp"
                 android:textStyle="bold"
-                app:layout_constraintBaseline_toBaselineOf="@id/label_total_amount"
-                app:layout_constraintEnd_toEndOf="@id/btn_place_order"
+                app:layout_constraintTop_toTopOf="@id/label_total_amount"
+                app:layout_constraintBottom_toBottomOf="@id/label_total_amount"
+                app:layout_constraintEnd_toEndOf="@id/btn_checkout"
                 tools:text="$323.00" />
 
             <TextView
@@ -260,12 +261,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/label_total_amount"
-                app:layout_constraintBottom_toTopOf="@id/btn_place_order"
-                app:layout_constraintStart_toStartOf="@id/btn_place_order"
+                app:layout_constraintBottom_toTopOf="@id/btn_checkout"
+                app:layout_constraintStart_toStartOf="@id/btn_checkout"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_place_order"
+                android:id="@+id/btn_checkout"
                 style="@style/ButtonTheme.Contained"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -281,8 +282,8 @@
 
         <include
             android:id="@+id/container_insufficient_balance"
-            layout="@layout/insufficient_balance_dialog"
-            android:visibility="gone"/>
+            layout="@layout/fragment_insufficient_balance"
+            android:visibility="gone" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -25,7 +25,6 @@ import com.hexagram.febys.models.api.product.*
 import com.hexagram.febys.models.api.rating.Rating
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.cart.CartViewModel
-import com.hexagram.febys.ui.screens.checkout.CheckoutFragmentDirections
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.ui.screens.product.additional.AdditionalProductAdapter
 import com.hexagram.febys.utils.*
@@ -105,6 +104,12 @@ class ProductDetailFragment : SliderFragment() {
             binding.variant?.let {
                 showBottomSheet(variantFirstAttrBottomSheet)
             }
+        }
+        binding.btnPayNow.setOnClickListener {
+            handleAddToCartClick()
+            val gotoCheckout =
+                ProductDetailFragmentDirections.actionProductDetailFragmentToCheckoutFragment()
+            navigateTo(gotoCheckout)
         }
 
         binding.containerProductVariantSecondAttr.setOnClickListener {
