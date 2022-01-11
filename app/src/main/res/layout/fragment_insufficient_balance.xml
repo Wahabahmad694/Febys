@@ -12,7 +12,8 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="@dimen/_300sdp"
+        android:layout_width="wrap_content"
+        android:padding="@dimen/_20sdp"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_white_rounded_corner"
         tools:context=".ui.screens.dialog.InsufficientBalanceDialog">
@@ -54,7 +55,7 @@
             app:layout_constraintTop_toBottomOf="@id/tv_info_msg">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_yes"
+                android:id="@+id/btn_split_pay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_36sdp"
@@ -64,7 +65,7 @@
                 android:textAppearance="@style/TextTheme.HelveticaNeue.TS16" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_no"
+                android:id="@+id/btn_cancel"
                 style="@style/ButtonTheme.OutLines"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

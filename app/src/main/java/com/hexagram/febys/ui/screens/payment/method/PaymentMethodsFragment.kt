@@ -6,15 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.facebook.drawee.view.SimpleDraweeView
+import androidx.navigation.fragment.navArgs
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.PaymentMethodFragmentBinding
+import com.hexagram.febys.ui.screens.checkout.CheckoutSuccessFragmentArgs
+import com.hexagram.febys.utils.goBack
+import com.hexagram.febys.utils.navigateTo
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class PaymentMethodsFragment : BaseFragment() {
     private lateinit var binding: PaymentMethodFragmentBinding
+    private val args: CheckoutSuccessFragmentArgs by navArgs()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View {
@@ -30,17 +35,31 @@ class PaymentMethodsFragment : BaseFragment() {
 
     private fun initUi() {
         binding.labelWalletPayment.setOnClickListener {
-
             changeBackground(binding.labelWalletPayment, binding.walletFilledTick)
+            val gotoSplit =
+                PaymentMethodsFragmentDirections.actionPaymentMethodsFragmentToInsufficientScreenFragment()
+            navigateTo(gotoSplit)
         }
+
+        binding.ivBack.setOnClickListener { goBack() }
 
         binding.labelMomoPayment.setOnClickListener {
             changeBackground(binding.labelMomoPayment, binding.momoFilledTick)
         }
 
+        binding.btnCheckout.setOnClickListener {
+            goSuccessScreen()
+        }
+
         binding.labelPaypalPayment.setOnClickListener {
             changeBackground(binding.labelPaypalPayment, binding.paypalFilledTick)
         }
+    }
+
+    private fun goSuccessScreen() {
+        val gotoSuccessCheckout =
+            PaymentMethodsFragmentDirections.actionPaymentMethodsFragmentToCheckoutSuccessFragment("FE-300")
+        navigateTo(gotoSuccessCheckout)
     }
 
     private fun changeBackground(constraintLayout: ConstraintLayout, imageView: ImageView) {

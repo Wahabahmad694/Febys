@@ -214,6 +214,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_productDetailFragment_to_checkoutFragment"
+            app:destination="@id/checkoutFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/accountFragment"
@@ -475,15 +482,7 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
-        <action
-            android:id="@+id/action_checkoutFragment_to_checkoutSuccessFragment"
-            app:destination="@id/checkoutSuccessFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/cartFragment"
-            app:popUpToInclusive="true" />
+
         <action
             android:id="@+id/action_checkoutFragment_to_paymentMethodsFragment"
             app:destination="@id/paymentMethodsFragment"
@@ -655,7 +654,29 @@
         android:id="@+id/paymentMethodsFragment"
         android:name="com.hexagram.febys.ui.screens.payment.method.PaymentMethodsFragment"
         android:label="PaymentMethodsFragment"
-        tools:layout="@layout/payment_method_fragment" />
+        tools:layout="@layout/payment_method_fragment">
+        <action
+            android:id="@+id/action_paymentMethodsFragment_to_insufficientScreenFragment"
+            app:destination="@id/insufficientScreenFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_paymentMethodsFragment_to_checkoutSuccessFragment"
+            app:destination="@id/checkoutSuccessFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/cartFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/insufficientScreenFragment"
+        android:name="com.hexagram.febys.ui.screens.payment.method.splitScreen.SplitScreenFragment"
+        android:label="SplitScreenFragment"
+        tools:layout="@layout/fragment_insufficient_balance" />
     <fragment
         android:id="@+id/accountSettingsFragment"
         android:name="com.hexagram.febys.ui.screens.profile.AccountSettingsFragment"
