@@ -229,8 +229,8 @@ class CheckoutFragment : BaseFragment() {
     }
 
     private fun showChangeShippingAddressWarningDialog() {
-        val resId = R.drawable.bg_warning
-        val title = getString(R.string.label_delete_warning)
+        val resId = R.drawable.ic_shipping_address
+        val title = getString(R.string.label_shipping_address)
         val msg = getString(R.string.msg_for_change_shipping_address)
 
         this.showWarningDialog(resId, title, msg) { gotoShippingAddress() }
