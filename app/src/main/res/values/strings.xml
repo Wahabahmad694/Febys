@@ -307,15 +307,13 @@
     <string name="label_price_range">Price Range</string>
     <string name="label_min">Min</string>
     <string name="label_max">Max</string>
-    <string name="label_voucher_applied">Voucher Applied</string>
-    <string name="label_voucher_removed">Voucher Removed</string>
     <string name="wallet">Wallet</string>
     <string name="available">available</string>
     <string name="_100">$100</string>
-    <string name="momo_bank_card">Momo_Bank_Card</string>
-    <string name="pay_via_momo_or_bank_card">Pay_via_Momo_or_Bank_Card</string>
+    <string name="momo_bank_card">Momo | Bank Card</string>
+    <string name="pay_via_momo_or_bank_card">Pay via Momo or Bank Card</string>
     <string name="paypal">Paypal</string>
-    <string name="pay_via_paypal">Pay_via_paypal</string>
+    <string name="pay_via_paypal">Pay via paypal</string>
     <string name="ghs_100_06">GHS_100_06</string>
     <string name="label_current_balance">Current balance</string>
     <string name="label_withdraw">Withdraw</string>
@@ -324,5 +322,9 @@
     <string name="label_amount">Amount</string>
     <string name="label_date_amp_time"><![CDATA[Date & time]]></string>
     <string name="label_purpose">Purpose</string>
+    <string name="insufficient_wallet_balance">Insufficient Wallet Balance</string>
+    <string name="pay_the_difference_using_a_different_payment_method_by_selecting_split_pay">Pay the difference using a different payment method by selecting split pay.</string>
+    <string name="split_pay">Split Pay</string>
+    <string name="you_have_30_minutes_to_cancel_your_order">You have 30 minutes to cancel your order</string>
 
 </resources>

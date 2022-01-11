@@ -24,7 +24,7 @@
 
                 <TextView
                     android:id="@+id/label_add_review"
-                    style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+                    style="@style/TextTheme.HelveticaNeue.TS16.Bold"
                     android:layout_width="match_parent"
                     android:layout_height="?actionBarSize"
                     android:gravity="center"
@@ -32,14 +32,15 @@
                     android:text="@string/label_add_review"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/iv_back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/_16dp"
+                    android:layout_width="20dp"
+                    android:layout_height="18dp"
                     android:src="@drawable/ic_close"
+                    android:layout_marginStart="@dimen/_16sdp"
                     app:layout_constraintBottom_toBottomOf="@id/label_add_review"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/label_add_review" />
@@ -104,7 +105,7 @@
                 android:id="@+id/rv_add_edit_product_reviews"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_4sdp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:itemCount="1"
                 tools:listitem="@layout/item_add_edit_product_review" />

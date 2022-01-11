@@ -16,8 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_16sdp"
-        android:background="@drawable/bg_border_dark_grey"
-        android:padding="@dimen/_8sdp">
+        android:background="@drawable/bg_border_dark_grey">
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_product"

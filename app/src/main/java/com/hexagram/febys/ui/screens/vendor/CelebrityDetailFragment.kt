@@ -131,6 +131,8 @@ class CelebrityDetailFragment : BaseFragment() {
                 (binding.ivIcScrollBar.layoutParams as ConstraintLayout.LayoutParams)
             param.horizontalBias = horizontalScrollPosition
             binding.ivIcScrollBar.layoutParams = param
+            binding.ivIcScrollBar.visibility=if(endorsementAdapter.itemCount >= 6)View.VISIBLE else View.GONE
+            binding.ivBgScrollBar.visibility=if(endorsementAdapter.itemCount >= 6)View.VISIBLE else View.GONE
         }
     }
 

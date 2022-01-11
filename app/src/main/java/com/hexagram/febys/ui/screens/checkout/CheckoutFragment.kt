@@ -73,8 +73,12 @@ class CheckoutFragment : BaseFragment() {
         binding.btnPlaceOrder.setOnClickListener {
             if (checkoutViewModel.getDefaultShippingAddress() == null) {
                 showToast(getString(R.string.error_please_select_shipping_address))
+
             } else {
                 doPayment()
+                val gotoPayment =
+                    CheckoutFragmentDirections.actionCheckoutFragmentToPaymentMethodsFragment()
+                navigateTo(gotoPayment)
             }
         }
 
@@ -138,9 +142,9 @@ class CheckoutFragment : BaseFragment() {
 
     private fun setObserver() {
         checkoutViewModel.observeCart().observe(viewLifecycleOwner) {
+            hideLoader()
             val sortedListForCart = checkoutViewModel.sortListForCart(it)
             cartAdapter.submitList(sortedListForCart)
-            if (sortedListForCart.isNullOrEmpty()) goBack()
         }
     }
 
@@ -229,8 +233,8 @@ class CheckoutFragment : BaseFragment() {
     }
 
     private fun showChangeShippingAddressWarningDialog() {
-        val resId = R.drawable.bg_warning
-        val title = getString(R.string.label_delete_warning)
+        val resId = R.drawable.ic_shipping_address
+        val title = getString(R.string.label_shipping_address)
         val msg = getString(R.string.msg_for_change_shipping_address)
 
         this.showWarningDialog(resId, title, msg) { gotoShippingAddress() }
@@ -281,16 +285,9 @@ class CheckoutFragment : BaseFragment() {
                 is DataState.Data -> {
                     hideLoader()
                     checkoutViewModel.clearCart()
-                    gotoCheckoutSuccessScreen(it.data.orderId)
                 }
             }
         }
-    }
-
-    private fun gotoCheckoutSuccessScreen(orderId: String) {
-        val destination = CheckoutFragmentDirections
-            .actionCheckoutFragmentToCheckoutSuccessFragment(orderId)
-        navigateTo(destination)
     }
 
     override fun onDestroy() {
