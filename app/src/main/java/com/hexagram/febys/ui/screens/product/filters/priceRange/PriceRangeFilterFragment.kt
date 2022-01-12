@@ -43,7 +43,7 @@ class PriceRangeFilterFragment : BaseFragment() {
             binding.etMaxPrice.setText("${args.filters.maxPrice}")
         }
 
-        val enableClearOption = max != -1 || max != -1
+        val enableClearOption = min != -1 || max != -1
         if (enableClearOption) enableClearOption() else disableClearOption()
     }
 

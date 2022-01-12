@@ -46,6 +46,10 @@
                     app:layout_constraintTop_toTopOf="@id/label_orders" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <include
+                android:id="@+id/container_timer"
+                layout="@layout/layout_timer_cancel_order"/>
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_60sdp"

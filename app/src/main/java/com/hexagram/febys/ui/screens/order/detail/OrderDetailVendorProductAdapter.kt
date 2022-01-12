@@ -18,7 +18,7 @@ class OrderDetailVendorProductAdapter : RecyclerView.Adapter<IBindViewHolder>() 
     var onCancelOrderClick: ((vendorId: String) -> Unit)? = null
     var onAddReviewClick: ((vendorProducts: VendorProducts) -> Unit)? = null
     var onItemClick: ((vendorProducts: VendorProducts) -> Unit)? = null
-    var cancelableOrder: Boolean = true
+    private var cancelableOrder: Boolean = true
     private var review: Boolean = false
 
     inner class ReviewVH(
@@ -123,5 +123,12 @@ class OrderDetailVendorProductAdapter : RecyclerView.Adapter<IBindViewHolder>() 
         this.review = review
         vendors = list
         notifyItemRangeChanged(0, vendors.size)
+    }
+
+    fun updateCancelable(cancelable: Boolean) {
+        if (cancelableOrder != cancelable) {
+            cancelableOrder = cancelable
+            notifyItemRangeChanged(0, vendors.size)
+        }
     }
 }

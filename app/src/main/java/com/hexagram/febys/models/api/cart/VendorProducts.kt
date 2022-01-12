@@ -15,7 +15,7 @@ data class VendorProducts(
     val status: String?,
     val hasReviewed: Boolean,
     @SerializedName("return_fee_percentage")
-    val return_fee_percentage: Double?,
+    val returnFeePercentage: Double?,
     val reverted: Boolean?,
     @SerializedName("_id")
     val id: String,
