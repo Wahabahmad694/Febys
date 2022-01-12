@@ -1,19 +1,19 @@
 package com.hexagram.febys.network.domain.util
 
-import com.hexagram.febys.models.api.cart.CartResponse
+import com.hexagram.febys.models.api.cart.Cart
 import com.hexagram.febys.models.api.cart.VendorProducts
 import com.hexagram.febys.models.db.CartDTO
 import java.util.*
 import javax.inject.Inject
 
-class CartMapper @Inject constructor() : DomainMapper<List<CartDTO>, CartResponse?> {
+class CartMapper @Inject constructor() : DomainMapper<List<CartDTO>, Cart?> {
 
-    override fun mapToDomainModel(model: List<CartDTO>): CartResponse? {
+    override fun mapToDomainModel(model: List<CartDTO>): Cart? {
         return null
     }
 
-    override fun mapFromDomainModel(domainModel: CartResponse?): List<CartDTO> {
-        return mapFromVendorProducts(domainModel?.cart?.vendorProducts)
+    override fun mapFromDomainModel(domainModel: Cart?): List<CartDTO> {
+        return mapFromVendorProducts(domainModel?.vendorProducts)
     }
 
     fun mapFromVendorProducts(vendorProducts: MutableList<VendorProducts>?): List<CartDTO> {

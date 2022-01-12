@@ -2,6 +2,7 @@ package com.hexagram.febys.dataSource
 
 import androidx.lifecycle.LiveData
 import com.hexagram.febys.db.dao.CartDao
+import com.hexagram.febys.models.api.cart.Cart
 import com.hexagram.febys.models.api.cart.CartResponse
 import com.hexagram.febys.models.db.CartDTO
 import com.hexagram.febys.network.domain.util.CartMapper
@@ -16,7 +17,7 @@ class CartDataSourceImpl @Inject constructor(
     }
 
     override suspend fun insertCart(cart: CartResponse) {
-        val listOfCartDTO = cartMapper.mapFromDomainModel(cart)
+        val listOfCartDTO = cartMapper.mapFromDomainModel(cart.cart)
         cartDao.insert(listOfCartDTO)
     }
 
@@ -49,11 +50,11 @@ class CartDataSourceImpl @Inject constructor(
     }
 
     override fun mergeCart(cart: CartResponse) {
-        val listOfCartDTO = cartMapper.mapFromDomainModel(cart)
+        val listOfCartDTO = cartMapper.mapFromDomainModel(cart.cart)
         cartDao.insertAndIgnoreIfAlreadyExist(listOfCartDTO)
     }
 
-    override fun updateCart(cart: CartResponse) {
+    override fun updateCart(cart: Cart) {
         val listOfCartDTO = cartMapper.mapFromDomainModel(cart)
         updateCart(listOfCartDTO)
     }

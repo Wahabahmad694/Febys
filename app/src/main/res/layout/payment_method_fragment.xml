@@ -250,9 +250,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/_24sdp"
                 android:textStyle="bold"
-                app:layout_constraintTop_toTopOf="@id/label_total_amount"
                 app:layout_constraintBottom_toBottomOf="@id/label_total_amount"
                 app:layout_constraintEnd_toEndOf="@id/btn_checkout"
+                app:layout_constraintTop_toTopOf="@id/label_total_amount"
                 tools:text="$323.00" />
 
             <TextView

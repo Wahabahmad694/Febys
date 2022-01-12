@@ -39,8 +39,8 @@
             android:text="@{thread.chat.get(0).message}"
             android:textAlignment="center"
             tools:text="@string/label_ask_about_product" />
-            android:gravity="center"
-            android:text="@string/reply_to_the_question" />
+        android:gravity="center"
+        android:text="@string/reply_to_the_question" />
 
         <TextView
             android:id="@+id/label_answer"
