@@ -1,7 +1,6 @@
 package com.hexagram.febys.network
 
 import com.hexagram.febys.models.api.profile.Profile
-import com.hexagram.febys.models.api.request.PagingListRequest
 import com.hexagram.febys.network.adapter.ApiResponse
 import com.hexagram.febys.network.requests.RequestSignup
 import com.hexagram.febys.network.response.ResponseLogin
@@ -27,12 +26,6 @@ interface AuthService {
     suspend fun resetCredentials(
         @Body email: Map<String, String>
     ): ApiResponse<Unit>
-
-    @POST
-    @FormUrlEncoded
-    suspend fun refreshToken(
-        @Url url: String, @FieldMap fields: Map<String, String>
-    ): ApiResponse<ResponseRefreshToken>
 
     @GET("v1/social/login")
     suspend fun socialLogin(@QueryMap reqLogin: Map<String, String>): ApiResponse<ResponseLogin>

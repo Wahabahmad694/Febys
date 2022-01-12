@@ -32,11 +32,11 @@ class SplashFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupObservers()
-        authViewModel.refreshToken()
+        authViewModel.fetchProfile()
     }
 
     private fun setupObservers() {
-        authViewModel.observeRefreshTokenResponse.observe(viewLifecycleOwner) {
+        authViewModel.observeProfileResponse.observe(viewLifecycleOwner) {
             when (it) {
                 is DataState.Error -> {
                     val closeAppCallback = { closeApp() }

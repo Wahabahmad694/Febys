@@ -47,9 +47,7 @@ class AccountFragment : BaseFragment() {
         }
 
         binding.btnSignOut.setOnClickListener {
-            authViewModel.signOut {
-                super.signOut()
-            }
+            authViewModel.signOut { signOut() }
         }
         binding.orders.labelWallet.setOnClickListener {
             val gotoWallet = AccountFragmentDirections.actionAccountFragmentToWalletFragment()

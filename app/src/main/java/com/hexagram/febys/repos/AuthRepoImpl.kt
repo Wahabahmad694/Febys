@@ -1,22 +1,24 @@
 package com.hexagram.febys.repos
 
-import com.hexagram.febys.BuildConfig
 import com.hexagram.febys.dataSource.IUserDataSource
 import com.hexagram.febys.enum.SocialLogin
 import com.hexagram.febys.models.api.cart.Cart
 import com.hexagram.febys.models.api.consumer.Consumer
+import com.hexagram.febys.models.api.profile.Profile
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
 import com.hexagram.febys.network.AuthService
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.adapter.*
 import com.hexagram.febys.network.requests.RequestSignup
-import com.hexagram.febys.network.response.*
+import com.hexagram.febys.network.response.ResponseLogin
+import com.hexagram.febys.network.response.ResponseOtpVerification
+import com.hexagram.febys.network.response.ResponseSignup
+import com.hexagram.febys.network.response.User
 import com.hexagram.febys.prefs.IPrefManger
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import java.util.*
 import javax.inject.Inject
 
 class AuthRepoImpl @Inject constructor(
@@ -34,7 +36,7 @@ class AuthRepoImpl @Inject constructor(
                 .onSuccess {
                     data!!.apply {
                         saveUserAndToken(user)
-                        fetchUserDataOnLogin()
+                        fetchUserProfile(dispatcher)
                         emit(DataState.Data(this))
                     }
                 }
@@ -68,7 +70,7 @@ class AuthRepoImpl @Inject constructor(
             authService.login(loginReq).onSuccess {
                 data!!.apply {
                     saveUserAndToken(user)
-                    fetchUserDataOnLogin()
+                    fetchUserProfile(dispatcher)
                     emit(DataState.Data(data))
                 }
             }
@@ -91,42 +93,6 @@ class AuthRepoImpl @Inject constructor(
         }.flowOn(dispatcher)
     }
 
-    override fun refreshToken(dispatcher: CoroutineDispatcher): Flow<DataState<Unit>> {
-        return flow<DataState<Unit>> {
-            val refreshToken = userDataSource.getRefreshToken()
-            if (refreshToken.isEmpty()) {
-                emit(DataState.Data(Unit))
-                return@flow
-            }
-
-            val fields = mapOf(
-                "grant_type" to "refresh_token",
-                "client_id" to BuildConfig.keycloakClientId,
-                "refresh_token" to refreshToken,
-                "client_secret" to BuildConfig.keycloakClientSecret
-            )
-            val baseUrl = BuildConfig.backendBaseUrl.replace("/api", "/auth")
-            val url = "${baseUrl}realms/febys-consumers/protocol/openid-connect/token"
-
-            authService.refreshToken(url, fields)
-                .onSuccess {
-                    data!!.apply {
-                        userDataSource.saveAccessToken(accessToken)
-                        userDataSource.saveRefreshToken(this.refreshToken)
-                        fetchUserDataOnLogin()
-                        emit(DataState.Data(Unit))
-                    }
-                }
-                .onError {
-                    signOut()
-                    // for go to home screen, no need to display error msg
-                    emit(DataState.Data(Unit))
-                }
-                .onException { emit(DataState.ExceptionError()) }
-                .onNetworkError { emit(DataState.NetworkError()) }
-        }.flowOn(dispatcher)
-    }
-
     override fun socialLogin(
         token: String, socialLogin: SocialLogin, dispatcher: CoroutineDispatcher
     ): Flow<DataState<ResponseLogin>> {
@@ -140,7 +106,7 @@ class AuthRepoImpl @Inject constructor(
             authService.socialLogin(socialLoginReq).onSuccess {
                 data!!.apply {
                     saveUserAndToken(user)
-                    fetchUserDataOnLogin()
+                    fetchUserProfile(dispatcher)
                     emit(DataState.Data(this))
                 }
             }
@@ -156,7 +122,7 @@ class AuthRepoImpl @Inject constructor(
         userDataSource.saveRefreshToken(user.refreshToken ?: "")
     }
 
-    private suspend fun fetchUserDataOnLogin() {
+    override suspend fun fetchUserProfile(dispatcher: CoroutineDispatcher): Flow<DataState<Profile?>> {
         val authKey = pref.getAccessToken()
         val response = authService.me(authKey)
         if (response is ApiResponse.ApiSuccessResponse) {
@@ -166,6 +132,18 @@ class AuthRepoImpl @Inject constructor(
             updateShippingAddress(profile.shippingAddresses)
             updateCart(profile.cart)
         }
+
+        return flow<DataState<Profile?>> {
+            if (authKey.isEmpty()) {
+                emit(DataState.Data(null))
+                return@flow
+            }
+            response
+                .onSuccess { emit(DataState.Data(data!!)) }
+                .onError { emit(DataState.ApiError(message)) }
+                .onException { emit(DataState.ExceptionError()) }
+                .onNetworkError { emit(DataState.NetworkError()) }
+        }.flowOn(dispatcher)
     }
 
     private suspend fun updateCart(cart: Cart) {
