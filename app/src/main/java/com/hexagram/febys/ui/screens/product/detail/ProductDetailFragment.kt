@@ -106,10 +106,15 @@ class ProductDetailFragment : SliderFragment() {
             }
         }
         binding.btnPayNow.setOnClickListener {
-            handleAddToCartClick()
-            val gotoCheckout =
-                ProductDetailFragmentDirections.actionProductDetailFragmentToCheckoutFragment()
-            navigateTo(gotoCheckout)
+            if (isUserLoggedIn) {
+                handleAddToCartClick()
+                val gotoCheckout =
+                    ProductDetailFragmentDirections.actionProductDetailFragmentToCheckoutFragment()
+                navigateTo(gotoCheckout)
+            } else {
+                gotoLogin()
+            }
+
         }
 
         binding.containerProductVariantSecondAttr.setOnClickListener {

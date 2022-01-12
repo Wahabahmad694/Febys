@@ -9,7 +9,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.fragment.navArgs
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
-import com.hexagram.febys.databinding.PaymentMethodFragmentBinding
+import com.hexagram.febys.databinding.FragmentPaymentMethodsBinding
 import com.hexagram.febys.ui.screens.checkout.CheckoutSuccessFragmentArgs
 import com.hexagram.febys.utils.goBack
 import com.hexagram.febys.utils.navigateTo
@@ -17,13 +17,13 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class PaymentMethodsFragment : BaseFragment() {
-    private lateinit var binding: PaymentMethodFragmentBinding
+    private lateinit var binding: FragmentPaymentMethodsBinding
     private val args: CheckoutSuccessFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View {
-        binding = PaymentMethodFragmentBinding.inflate(inflater, container, false)
+        binding = FragmentPaymentMethodsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -36,9 +36,6 @@ class PaymentMethodsFragment : BaseFragment() {
     private fun initUi() {
         binding.labelWalletPayment.setOnClickListener {
             changeBackground(binding.labelWalletPayment, binding.walletFilledTick)
-            val gotoSplit =
-                PaymentMethodsFragmentDirections.actionPaymentMethodsFragmentToInsufficientScreenFragment()
-            navigateTo(gotoSplit)
         }
 
         binding.ivBack.setOnClickListener { goBack() }
@@ -81,3 +78,4 @@ class PaymentMethodsFragment : BaseFragment() {
     }
 
 }
+
