@@ -307,7 +307,6 @@
     <string name="label_price_range">Price Range</string>
     <string name="label_min">Min</string>
     <string name="label_max">Max</string>
-    <string name="wallet">Wallet</string>
     <string name="available">available</string>
     <string name="_100">$100</string>
     <string name="momo_bank_card">Momo | Bank Card</string>
@@ -326,6 +325,5 @@
     <string name="pay_the_difference_using_a_different_payment_method_by_selecting_split_pay">Pay the difference using a different payment method by selecting split pay.</string>
     <string name="split_pay">Split Pay</string>
     <string name="you_have_30_minutes_to_cancel_your_order">You have 30 minutes to cancel your order</string>
-    <string name="you_have_30_minutes_to_cancel_your_order">You have 30 mins to cancel you order</string>
 
 </resources>
