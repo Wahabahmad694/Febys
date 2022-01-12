@@ -313,5 +313,6 @@
     <string name="paypal">Paypal</string>
     <string name="pay_via_paypal">Pay_via_paypal</string>
     <string name="ghs_100_06">GHS_100_06</string>
+    <string name="you_have_30_minutes_to_cancel_your_order">You have 30 mins to cancel you order</string>
 
 </resources>

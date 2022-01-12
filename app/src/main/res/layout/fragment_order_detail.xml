@@ -45,36 +45,9 @@
                     app:layout_constraintTop_toTopOf="@id/label_orders" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <LinearLayout
+            <include
                 android:id="@+id/container_timer"
-                android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
-                android:layout_marginHorizontal="@dimen/_8sdp"
-                android:paddingHorizontal="@dimen/_8sdp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/label_timer"
-                    style="@style/TextTheme.Arial.TS14.Grey"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_13sdp"
-                    android:text="@string/label_order_id"
-                    android:textSize="@dimen/_11sdp" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="1dp" />
-                <TextView
-                    android:id="@+id/tv_timer"
-                    style="@style/TextTheme.Arial.TS14.Grey"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_13sdp"
-                    android:text="@string/label_order_id"
-                    android:textSize="@dimen/_11sdp" />
-            </LinearLayout>
+                layout="@layout/layout_timer_cancel_order"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
