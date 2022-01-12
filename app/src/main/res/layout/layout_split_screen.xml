@@ -59,6 +59,7 @@
                 android:layout_marginTop="@dimen/_36sdp"
                 android:minWidth="@dimen/_108sdp"
                 android:text="@string/split_pay"
+                android:textAllCaps="false"
                 android:textAppearance="@style/TextTheme.HelveticaNeue.TS16" />
 
             <com.google.android.material.button.MaterialButton
@@ -70,6 +71,7 @@
                 android:layout_marginTop="@dimen/_36sdp"
                 android:minWidth="@dimen/_108sdp"
                 android:text="@string/label_cancel"
+                android:textAllCaps="false"
                 android:textAppearance="@style/TextTheme.HelveticaNeue.TS16" />
         </LinearLayout>
 

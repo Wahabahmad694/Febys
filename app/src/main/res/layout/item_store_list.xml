@@ -20,10 +20,10 @@
             android:layout_weight="1"
             android:paddingTop="@dimen/_8dp"
             android:paddingBottom="@dimen/_8dp"
+            app:drawableEndCompat="@drawable/ic_right"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Electronics"
-            app:drawableEndCompat="@drawable/ic_right" />
+            tools:text="Electronics" />
 
         <View
             android:layout_width="match_parent"

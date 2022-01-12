@@ -307,7 +307,6 @@
     <string name="label_price_range">Price Range</string>
     <string name="label_min">Min</string>
     <string name="label_max">Max</string>
-    <string name="wallet">Wallet</string>
     <string name="available">available</string>
     <string name="_100">$100</string>
     <string name="momo_bank_card">Momo | Bank Card</string>

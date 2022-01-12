@@ -75,6 +75,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:listitem="@layout/item_wish_list" />
+
             <include
                 android:id="@+id/empty_view"
                 layout="@layout/layout_empty_view"

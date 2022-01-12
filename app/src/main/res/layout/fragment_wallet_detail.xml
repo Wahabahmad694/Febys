@@ -144,10 +144,10 @@
                         android:layout_width="@dimen/_80sdp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/_8sdp"
+                        android:backgroundTint="@color/white"
                         android:text="@string/label_withdraw"
                         android:textStyle="bold"
                         app:cornerRadius="@dimen/_6sdp"
-                        android:backgroundTint="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />

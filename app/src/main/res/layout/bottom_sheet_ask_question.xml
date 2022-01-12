@@ -55,9 +55,9 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1dp"
-            android:background="@color/grey_e1e5e8"
             android:layout_marginStart="@dimen/_15sdp"
-            android:layout_marginEnd="@dimen/_15sdp"/>
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:background="@color/grey_e1e5e8" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_ask_question"

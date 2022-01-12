@@ -12,8 +12,8 @@
     <TextView
         android:id="@+id/label_empty_item"
         style="@style/TextTheme.HelveticaNeue.TS16.Bold"
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center"
         android:text="@{String.format(@string/label_empty_view, warningTitle)}" />
 </layout>

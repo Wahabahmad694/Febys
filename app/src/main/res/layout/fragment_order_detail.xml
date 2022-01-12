@@ -30,10 +30,10 @@
                     android:gravity="center"
                     android:paddingHorizontal="@dimen/_32dp"
                     android:text="@string/label_order_detail"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/iv_back"
@@ -45,6 +45,10 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/label_orders" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <include
+                android:id="@+id/container_timer"
+                layout="@layout/layout_timer_cancel_order" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

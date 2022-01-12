@@ -29,11 +29,11 @@
                     android:ellipsize="start"
                     android:gravity="center"
                     android:maxLines="1"
-                    tools:text="Title"
                     android:textAlignment="center"
                     app:layout_constraintEnd_toStartOf="@id/label_clear"
                     app:layout_constraintStart_toEndOf="@id/iv_back"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Title" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/iv_back"
