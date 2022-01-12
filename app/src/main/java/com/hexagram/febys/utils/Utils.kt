@@ -38,8 +38,7 @@ object Utils {
                 val time = utcDateFormat.parse(utcToLocal)!!.time
                 val currentTime = System.currentTimeMillis()
                 val difference = currentTime - time
-//                return if (difference > 0) MIN_30_IN_MILLI - difference else -1
-                return 80 * 1000
+                return if (difference > 0) MIN_30_IN_MILLI - difference else -1
             } catch (e: Exception) {
                 -1
             }
