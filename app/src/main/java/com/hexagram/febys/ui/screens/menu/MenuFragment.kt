@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentMenuBinding
+import com.hexagram.febys.ui.screens.checkout.CheckoutFragmentDirections
 import com.hexagram.febys.utils.navigateTo
 
 class MenuFragment : BaseFragment() {

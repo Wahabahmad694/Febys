@@ -39,7 +39,9 @@
             android:layout_height="@dimen/_0dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_constraintBottom_toTopOf="@id/container_bottom_bar"
-            app:layout_constraintTop_toBottomOf="@id/iv_back">
+            app:layout_constraintTop_toBottomOf="@id/iv_back"
+            app:layout_constraintVertical_bias="0.0"
+            tools:layout_editor_absoluteX="16dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -66,7 +68,7 @@
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="@dimen/_11sdp"
                         android:layout_height="@dimen/_11sdp"
-                        android:src="@drawable/ic_arrow_forward"
+                        android:src="@drawable/ic_right_arrow"
                         app:layout_constraintBottom_toBottomOf="@id/label_shipping_address"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@id/label_shipping_address" />
@@ -76,7 +78,7 @@
                         style="@style/TextTheme.Arial.TS14"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginTop="@dimen/_6sdp"
                         app:layout_constraintStart_toStartOf="@id/label_shipping_address"
                         app:layout_constraintTop_toBottomOf="@id/label_shipping_address"
                         tools:text="Virtual Incubator, Busy Internet, Accra-north\n23321, Ghana" />
@@ -123,43 +125,43 @@
             android:id="@+id/container_bottom_bar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_120sdp"
-            android:elevation="16dp"
             android:background="@color/white"
-            app:layout_constraintStart_toStartOf="parent"
+            android:elevation="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
             <TextView
                 android:id="@+id/tv_total_amount"
+                style="@style/TextTheme.HelveticaNeue.TS18"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                style="@style/TextTheme.HelveticaNeue.TS18"
                 android:layout_marginVertical="@dimen/_24sdp"
+                android:textStyle="bold"
                 app:layout_constraintBaseline_toBaselineOf="@id/label_total_amount"
                 app:layout_constraintEnd_toEndOf="@id/btn_place_order"
                 tools:text="$3333.00" />
 
             <TextView
                 android:id="@+id/label_total_amount"
+                style="@style/TextTheme.Arial.TS14.Grey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/TextTheme.Arial.TS14.Grey"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="@id/btn_place_order"
+                android:text="@string/label_total_amount"
                 app:layout_constraintBottom_toTopOf="@id/btn_place_order"
-                android:text="@string/label_total_amount" />
+                app:layout_constraintStart_toStartOf="@id/btn_place_order"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_place_order"
                 style="@style/ButtonTheme.Contained"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_17sdp"
                 android:layout_marginBottom="@dimen/_14sdp"
-                android:text="@string/label_place_order"
+                android:text="@string/label_proceed_to_checkout"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginHorizontal="@dimen/_17sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintWidth_max="@dimen/_298sdp" />
 

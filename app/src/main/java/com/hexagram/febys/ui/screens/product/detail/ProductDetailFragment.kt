@@ -105,6 +105,12 @@ class ProductDetailFragment : SliderFragment() {
                 showBottomSheet(variantFirstAttrBottomSheet)
             }
         }
+        binding.btnPayNow.setOnClickListener {
+            handleAddToCartClick()
+            val gotoCheckout =
+                ProductDetailFragmentDirections.actionProductDetailFragmentToCheckoutFragment()
+            navigateTo(gotoCheckout)
+        }
 
         binding.containerProductVariantSecondAttr.setOnClickListener {
             binding.variant?.let {
