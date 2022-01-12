@@ -2,7 +2,7 @@ package com.hexagram.febys.repos
 
 import androidx.lifecycle.LiveData
 import com.hexagram.febys.dataSource.ICartDataSource
-import com.hexagram.febys.models.api.cart.CartResponse
+import com.hexagram.febys.models.api.cart.Cart
 import com.hexagram.febys.models.api.order.Order
 import com.hexagram.febys.models.api.request.OrderRequest
 import com.hexagram.febys.models.api.request.PaymentRequest
@@ -53,11 +53,11 @@ class CartRepoImpl @Inject constructor(
         val response = backendService.pushCart(authToken, requestPushCart)
         if (response is ApiResponse.ApiSuccessResponse) {
             val updatedCart = response.data!!
-            cartDataSource.updateCart(updatedCart)
+            cartDataSource.updateCart(updatedCart.cart)
         }
     }
 
-    override suspend fun updateCart(cart: CartResponse) {
+    override suspend fun updateCart(cart: Cart) {
         cartDataSource.updateCart(cart)
     }
 

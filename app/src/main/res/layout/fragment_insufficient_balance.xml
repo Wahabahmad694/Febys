@@ -13,9 +13,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
-        android:padding="@dimen/_20sdp"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_white_rounded_corner"
+        android:padding="@dimen/_20sdp"
         tools:context=".ui.screens.dialog.InsufficientBalanceDialog">
 
         <TextView

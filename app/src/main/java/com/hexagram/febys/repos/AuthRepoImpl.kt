@@ -3,12 +3,11 @@ package com.hexagram.febys.repos
 import com.hexagram.febys.BuildConfig
 import com.hexagram.febys.dataSource.IUserDataSource
 import com.hexagram.febys.enum.SocialLogin
-import com.hexagram.febys.models.api.cart.CartResponse
+import com.hexagram.febys.models.api.cart.Cart
 import com.hexagram.febys.models.api.consumer.Consumer
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
 import com.hexagram.febys.network.AuthService
 import com.hexagram.febys.network.DataState
-import com.hexagram.febys.network.FebysBackendService
 import com.hexagram.febys.network.adapter.*
 import com.hexagram.febys.network.requests.RequestSignup
 import com.hexagram.febys.network.response.*
@@ -22,7 +21,6 @@ import javax.inject.Inject
 
 class AuthRepoImpl @Inject constructor(
     private val authService: AuthService,
-    private val backendService: FebysBackendService,
     private val pref: IPrefManger,
     private val userDataSource: IUserDataSource,
     private val cartRepo: ICartRepo
@@ -170,7 +168,7 @@ class AuthRepoImpl @Inject constructor(
         }
     }
 
-    private suspend fun updateCart(cart: CartResponse) {
+    private suspend fun updateCart(cart: Cart) {
         cartRepo.updateCart(cart)
     }
 

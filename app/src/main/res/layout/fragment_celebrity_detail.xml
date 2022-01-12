@@ -101,10 +101,10 @@
             android:id="@+id/container_filter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            tools:visibility="visible"
             android:layout_marginTop="@dimen/_16sdp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone"
+            tools:visibility="visible">
 
             <LinearLayout
                 android:id="@+id/btn_refine"
@@ -184,8 +184,8 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintWidth_max="@dimen/_300sdp"
-                        app:placeholderImageScaleType="centerCrop"
-                        app:placeholderImage="@drawable/placeholder_image" />
+                        app:placeholderImage="@drawable/placeholder_image"
+                        app:placeholderImageScaleType="centerCrop" />
 
                     <LinearLayout
                         android:layout_width="@dimen/_0dp"
@@ -328,31 +328,31 @@
                     android:layout_marginTop="@dimen/_16sdp"
                     android:background="@color/grey_e1e5e8"
                     android:gravity="center_vertical"
-                    android:visibility="gone"
-                    tools:visibility="visible"
                     android:paddingHorizontal="@dimen/_16sdp"
-                    android:text="@string/label_my_endorsements" />
+                    android:text="@string/label_my_endorsements"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_my_endorsements"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
                     android:orientation="horizontal"
                     android:visibility="gone"
-                    tools:visibility="visible"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:itemCount="6"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    tools:listitem="@layout/item_my_endorsements" />
+                    tools:listitem="@layout/item_my_endorsements"
+                    tools:visibility="visible" />
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/scroll_bar_endorsements"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/_8sdp"
                     android:visibility="gone"
-                    tools:visibility="visible"
-                    android:layout_marginVertical="@dimen/_8sdp">
+                    tools:visibility="visible">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_bg_scroll_bar"

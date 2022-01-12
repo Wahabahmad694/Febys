@@ -19,8 +19,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingVertical="@dimen/_10sdp"
-            android:background="@color/grey">
+            android:background="@color/grey"
+            android:paddingVertical="@dimen/_10sdp">
 
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/background"

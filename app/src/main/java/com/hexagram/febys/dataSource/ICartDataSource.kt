@@ -1,6 +1,7 @@
 package com.hexagram.febys.dataSource
 
 import androidx.lifecycle.LiveData
+import com.hexagram.febys.models.api.cart.Cart
 import com.hexagram.febys.models.api.cart.CartResponse
 import com.hexagram.febys.models.db.CartDTO
 import com.hexagram.febys.network.requests.SkuIdAndQuantity
@@ -26,7 +27,7 @@ interface ICartDataSource {
 
     fun mergeCart(cart: CartResponse)
 
-    fun updateCart(cart: CartResponse)
+    fun updateCart(cart: Cart)
 
     fun updateCart(listOfCartDTO: List<CartDTO>)
 
