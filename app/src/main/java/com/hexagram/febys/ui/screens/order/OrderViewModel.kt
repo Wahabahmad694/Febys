@@ -12,6 +12,7 @@ import com.hexagram.febys.network.DataState
 import com.hexagram.febys.repos.IOrderRepo
 import com.hexagram.febys.utils.Utils
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
@@ -38,14 +39,18 @@ class OrderViewModel @Inject constructor(
     val observeTimer: LiveData<String?> = _observerTimer
 
     private var orderListOldOrderListing: Flow<PagingData<Order>>? = null
+    private var timerJob: Job? = null
 
     fun fetchOrder(orderId: String) = viewModelScope.launch {
         _observerOrder.postValue(DataState.Loading())
         orderRepo.fetchOrder(orderId).collect {
             _observerOrder.postValue(it)
             if (it is DataState.Data) {
-                val remainingTime = Utils.DateTime.getRemainingMilliFrom30Min(it.data.createdAt)
-                startTimer(remainingTime)
+                // showTimer if any item can be cancelled
+                val showTimer = it.data.vendorProducts.any { item -> item.reverted == false }
+                val remainingTime =
+                    if (showTimer) Utils.DateTime.getRemainingMilliFrom30Min(it.data.createdAt) else -1
+                timerJob = startTimer(remainingTime)
             }
         }
     }
@@ -81,18 +86,21 @@ class OrderViewModel @Inject constructor(
         }
     }
 
-    fun startTimer(time: Long) = viewModelScope.launch {
-        if (time <= 0) {
+    fun startTimer(time: Long): Job {
+        timerJob?.cancel()
+        return viewModelScope.launch {
+            if (time <= 0) {
+                _observerTimer.postValue(null)
+                return@launch
+            }
+
+            for (i in time downTo 0 step 1000) {
+                val timeInMinAndSec = Utils.DateTime.milliToMin(i)
+                _observerTimer.postValue(timeInMinAndSec)
+                delay(1000)
+            }
+
             _observerTimer.postValue(null)
-            return@launch
         }
-
-        for (i in time downTo 0 step 1000) {
-            val timeInMinAndSec = Utils.DateTime.milliToMin(i)
-            _observerTimer.postValue(timeInMinAndSec)
-            delay(1000)
-        }
-
-        _observerTimer.postValue(null)
     }
 }

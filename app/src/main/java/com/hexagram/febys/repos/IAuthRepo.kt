@@ -2,12 +2,11 @@ package com.hexagram.febys.repos
 
 import com.hexagram.febys.enum.SocialLogin
 import com.hexagram.febys.models.api.consumer.Consumer
+import com.hexagram.febys.models.api.profile.Profile
 import com.hexagram.febys.network.DataState
+import com.hexagram.febys.network.adapter.ApiResponse
 import com.hexagram.febys.network.requests.RequestSignup
-import com.hexagram.febys.network.response.ResponseLogin
-import com.hexagram.febys.network.response.ResponseOtpVerification
-import com.hexagram.febys.network.response.ResponseSignup
-import com.hexagram.febys.network.response.User
+import com.hexagram.febys.network.response.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -30,7 +29,7 @@ interface IAuthRepo {
         email: String, dispatcher: CoroutineDispatcher = Dispatchers.IO
     ): Flow<DataState<Unit>>
 
-    fun refreshToken(dispatcher: CoroutineDispatcher = Dispatchers.IO): Flow<DataState<Unit>>
+    suspend fun fetchUserProfile(dispatcher: CoroutineDispatcher = Dispatchers.IO): Flow<DataState<Profile?>>
 
     fun socialLogin(
         token: String, socialLogin: SocialLogin, dispatcher: CoroutineDispatcher = Dispatchers.IO

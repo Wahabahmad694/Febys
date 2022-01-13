@@ -1,18 +1,16 @@
 package com.hexagram.febys.di
 
 import com.hexagram.febys.BuildConfig
-import com.hexagram.febys.network.AuthService
-import com.hexagram.febys.network.FebysBackendService
-import com.hexagram.febys.network.FebysWebCustomizationService
+import com.hexagram.febys.dataSource.ICartDataSource
+import com.hexagram.febys.dataSource.IUserDataSource
+import com.hexagram.febys.network.*
 import com.hexagram.febys.network.adapter.ApiResponseCallAdapterFactory
 import com.hexagram.febys.prefs.IPrefManger
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -23,16 +21,40 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
+    private val interceptor =
+        HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
+
     @Provides
     @Singleton
-    fun provideOkHttpClient(): OkHttpClient {
-        val interceptor = HttpLoggingInterceptor()
-        interceptor.apply { interceptor.level = HttpLoggingInterceptor.Level.BODY }
+    fun provideTokenAuthenticator(
+        pref: IPrefManger,
+        userDataSource: IUserDataSource,
+        cartDataSource: ICartDataSource
+    ): AuthenticationInterceptor {
+        val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor(interceptor)
+            .connectTimeout(1, TimeUnit.MINUTES)
+            .readTimeout(1, TimeUnit.MINUTES)
+            .build()
 
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BuildConfig.backendBaseUrl)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(ApiResponseCallAdapterFactory())
+            .build()
+
+        val service = retrofit.create(TokenRefreshService::class.java)
+
+        return AuthenticationInterceptor(pref, userDataSource, cartDataSource, service)
+    }
+
+    @Provides
+    @Singleton
+    fun provideOkHttpClient(authenticator: AuthenticationInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor().apply {
-                level = HttpLoggingInterceptor.Level.BODY
-            })
+            .addInterceptor(interceptor)
+            .addInterceptor(authenticator)
             .connectTimeout(1, TimeUnit.MINUTES)
             .readTimeout(1, TimeUnit.MINUTES)
             .build()
@@ -43,7 +65,7 @@ object NetworkModule {
     @BackendClient
     fun provideBackendClient(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(com.hexagram.febys.BuildConfig.backendBaseUrl)
+            .baseUrl(BuildConfig.backendBaseUrl)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(ApiResponseCallAdapterFactory())
@@ -55,7 +77,7 @@ object NetworkModule {
     @WebCustomizationClient
     fun provideWebCustomizationClient(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(com.hexagram.febys.BuildConfig.webCustomizationBaseUrl)
+            .baseUrl(BuildConfig.webCustomizationBaseUrl)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(ApiResponseCallAdapterFactory())
