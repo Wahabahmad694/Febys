@@ -38,7 +38,7 @@ class SplashFragment : BaseFragment() {
     private fun setupObservers() {
         authViewModel.observeProfileResponse.observe(viewLifecycleOwner) {
             when (it) {
-                is DataState.Error -> {
+                is DataState.NetworkError -> {
                     val closeAppCallback = { closeApp() }
                     ErrorDialog(
                         it, onOkayClick = closeAppCallback, onCloseClick = closeAppCallback
