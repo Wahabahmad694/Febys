@@ -33,9 +33,9 @@ object Utils {
         fun getRemainingMilliFrom30Min(dateString: String): Long {
             return try {
                 val utcToLocal = formatDate(dateString, FORMAT_ISO)
-                val utcDateFormat = SimpleDateFormat(FORMAT_ISO, Locale.getDefault())
-                utcDateFormat.timeZone = TimeZone.getTimeZone("UTC")
-                val time = utcDateFormat.parse(utcToLocal)!!.time
+                val localTimeFormat = SimpleDateFormat(FORMAT_ISO, Locale.getDefault())
+                localTimeFormat.timeZone = TimeZone.getDefault()
+                val time = localTimeFormat.parse(utcToLocal)!!.time
                 val currentTime = System.currentTimeMillis()
                 val difference = currentTime - time
                 return if (difference > 0) MIN_30_IN_MILLI - difference else -1

@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.hexagram.febys.base.BaseViewModel
 import com.hexagram.febys.enum.SocialLogin
 import com.hexagram.febys.models.api.consumer.Consumer
+import com.hexagram.febys.models.api.profile.Profile
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.requests.RequestSignup
 import com.hexagram.febys.network.response.ResponseLogin
@@ -32,8 +33,8 @@ class AuthViewModel @Inject constructor(
     private val _observeLoginResponse = MutableLiveData<Event<DataState<ResponseLogin>>>()
     val observeLoginResponse: LiveData<Event<DataState<ResponseLogin>>> = _observeLoginResponse
 
-    private val _observeRefreshTokenResponse = MutableLiveData<DataState<Unit>>()
-    val observeRefreshTokenResponse: LiveData<DataState<Unit>> = _observeRefreshTokenResponse
+    private val _observeProfileResponse = MutableLiveData<DataState<Profile?>>()
+    val observeProfileResponse: LiveData<DataState<Profile?>> = _observeProfileResponse
 
     private val _observeResetCredentialResponse =
         MutableLiveData<DataState<Unit>>()
@@ -68,10 +69,10 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    fun refreshToken() = viewModelScope.launch {
+    fun fetchProfile() = viewModelScope.launch {
         delay(1000)
-        authRepo.refreshToken().collect {
-            _observeRefreshTokenResponse.postValue(it)
+        authRepo.fetchUserProfile().collect {
+            _observeProfileResponse.postValue(it)
         }
     }
 
