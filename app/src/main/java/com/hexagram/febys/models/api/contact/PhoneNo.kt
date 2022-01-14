@@ -8,8 +8,5 @@ import kotlinx.parcelize.Parcelize
 data class PhoneNo(
     @SerializedName("country_code")
     val countryCode: String,
-    val number: String
-) : Parcelable {
-    val noWithCountryCode
-        get() = "$number"
-}
+    var number: String
+) : Parcelable

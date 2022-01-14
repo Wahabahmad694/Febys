@@ -29,6 +29,15 @@ class WalletDetailFragment : BaseFragment() {
 
     private fun uiListeners() {
         binding.ivBack.setOnClickListener { goBack() }
+        binding.btnTopUp.setOnClickListener {
+            val resId = R.drawable.ic_wallet
+            val title = getString(R.string.label_delete_warning)
+            val msg = getString(R.string.msg_for_withdraw)
+
+            showWarningDialog(resId, title, msg) {
+                //todo nothing
+            }
+        }
         binding.btnWithDraw.setOnClickListener {
             val resId = R.drawable.ic_wallet
             val title = getString(R.string.label_delete_warning)

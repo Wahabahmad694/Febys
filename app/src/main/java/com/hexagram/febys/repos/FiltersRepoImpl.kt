@@ -1,7 +1,6 @@
 package com.hexagram.febys.repos
 
 import com.hexagram.febys.models.api.filters.Filters
-import com.hexagram.febys.models.api.rating.OrderReview
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.FebysBackendService
 import com.hexagram.febys.network.adapter.*

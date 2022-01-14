@@ -7,8 +7,10 @@ import com.hexagram.febys.network.adapter.onError
 import com.hexagram.febys.network.adapter.onException
 import com.hexagram.febys.network.adapter.onNetworkError
 import com.hexagram.febys.network.adapter.onSuccess
+import com.hexagram.febys.network.requests.RequestUpdateUser
 import com.hexagram.febys.prefs.IPrefManger
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
@@ -29,4 +31,20 @@ class ProfileRepoImp @Inject constructor(
                 .onException { emit(DataState.ExceptionError()) }
                 .onNetworkError { emit(DataState.NetworkError()) }
         }.flowOn(dispatcher)
+
+    override suspend fun updateProfile(
+        requestUpdateUser: RequestUpdateUser, dispatcher: CoroutineDispatcher
+    ): Flow<DataState<Consumer>> = flow<DataState<Consumer>> {
+        val authToken = pref.getAccessToken()
+        val response = backendService.updateProfile(authToken, requestUpdateUser)
+        response
+            .onSuccess {
+                pref.saveConsumer(data!!.user)
+                emit(DataState.Data(data.user))
+            }
+            .onError { emit(DataState.ApiError(message)) }
+            .onException { emit(DataState.ExceptionError()) }
+            .onNetworkError { emit(DataState.NetworkError()) }
+    }.flowOn(dispatcher)
+
 }

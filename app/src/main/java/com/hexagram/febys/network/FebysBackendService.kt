@@ -21,6 +21,8 @@ import com.hexagram.febys.models.api.wishlist.FavSkuIds
 import com.hexagram.febys.models.api.wishlist.WishlistSkuIds
 import com.hexagram.febys.network.adapter.ApiResponse
 import com.hexagram.febys.network.requests.RequestPushCart
+import com.hexagram.febys.network.requests.RequestUpdateUser
+import com.hexagram.febys.network.requests.ResponseUpdateUser
 import com.hexagram.febys.network.response.ResponseOfPagination
 import retrofit2.http.*
 
@@ -317,4 +319,10 @@ interface FebysBackendService {
         @Path("orderId") orderId: String,
         @Body orderReview: OrderReview,
     ): ApiResponse<OrderReview>
+
+    @PUT("v1/consumers")
+    suspend fun updateProfile(
+        @Header("Authorization") authToken: String,
+        @Body reqUpdateUser: RequestUpdateUser
+    ): ApiResponse<ResponseUpdateUser>
 }
