@@ -52,7 +52,7 @@
             android:layout_height="@dimen/_154sdp"
             android:layout_marginHorizontal="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_20sdp"
-            app:cardCornerRadius="@dimen/_4sdp"
+            app:cardCornerRadius="@dimen/_6sdp"
             app:layout_constraintTop_toBottomOf="@id/container_top_bar">
 
             <ImageView
@@ -68,33 +68,6 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tv_name"
-                    style="@style/TextTheme.HelveticaNeue.TS18.Bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_20sdp"
-                    android:layout_marginTop="@dimen/_20sdp"
-                    android:text="@{String.format(@string/label_person_name, personName)}"
-                    android:textColor="@color/white"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Hi Hillary" />
-
-                <TextView
-                    android:id="@+id/tv_amount_info"
-                    style="@style/TextTheme.Arial"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_20sdp"
-                    android:text="@string/label_wallet_info"
-                    android:textColor="@color/white" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/container_wallet_withdraw_detail"
                     android:layout_width="match_parent"
@@ -102,30 +75,18 @@
                     android:layout_marginTop="@dimen/_20sdp"
                     android:layout_marginBottom="@dimen/_24sdp"
                     android:background="@drawable/flag_transparent"
-                    android:paddingStart="@dimen/_8sdp"
-                    android:paddingEnd="@dimen/_10sdp">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/iv_wallet"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/_16dp"
-                        android:src="@drawable/icon_wallet"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                    android:paddingHorizontal="@dimen/_20sdp">
 
                     <TextView
                         android:id="@+id/current_balance"
-                        style="@style/TextTheme.HelveticaNeue.TS14"
+                        style="@style/TextTheme.HelveticaNeue.TS14.Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_current_balance"
                         android:textColor="@color/white"
                         app:layout_constraintBottom_toTopOf="@id/tv_amount"
-                        app:layout_constraintStart_toEndOf="@id/iv_wallet"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_chainStyle="packed" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/tv_amount"
@@ -138,21 +99,50 @@
                         app:layout_constraintTop_toBottomOf="@id/current_balance"
                         tools:text="GHS 100.06" />
 
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_wallet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:src="@drawable/icon_wallet"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_amount"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/current_balance" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_14sdp">
+
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_withDraw"
                         style="@style/ButtonTheme.OutLine"
                         android:layout_width="@dimen/_80sdp"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/_8sdp"
+                        android:layout_marginHorizontal="@dimen/_6sdp"
                         android:backgroundTint="@color/white"
                         android:text="@string/label_withdraw"
                         android:textStyle="bold"
                         app:cornerRadius="@dimen/_6sdp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintEnd_toEndOf="parent" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_top_up"
+                        style="@style/ButtonTheme.OutLine"
+                        android:layout_width="@dimen/_80sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_6sdp"
+                        android:text="@string/label_topUp"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        app:cornerRadius="@dimen/_6sdp"
+                        app:strokeColor="@color/white" />
+                </LinearLayout>
+
+                app:layout_constraintTop_toTopOf="parent" />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>

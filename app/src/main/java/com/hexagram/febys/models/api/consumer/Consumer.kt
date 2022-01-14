@@ -9,16 +9,16 @@ import kotlinx.parcelize.Parcelize
 data class Consumer(
     val id: Int,
     @SerializedName("first_name")
-    val firstName: String,
+    var firstName: String,
     @SerializedName("last_name")
-    val lastName: String,
+    var lastName: String,
     val email: String,
     @SerializedName("keycloak_id")
     val keycloakId: String,
     @SerializedName("country_code")
-    val countryCode: String,
+    val countryCode: String?,
     @SerializedName("phone_number")
-    val phoneNumber: PhoneNo,
+    var phoneNumber: PhoneNo,
     @SerializedName("units_purchased")
     val unitsPurchased: Int,
     @SerializedName("sale_value")

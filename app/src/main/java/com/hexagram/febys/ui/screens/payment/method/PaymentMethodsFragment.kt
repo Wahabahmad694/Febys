@@ -6,11 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.navigation.fragment.navArgs
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentPaymentMethodsBinding
-import com.hexagram.febys.ui.screens.checkout.CheckoutSuccessFragmentArgs
 import com.hexagram.febys.utils.goBack
 import com.hexagram.febys.utils.navigateTo
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,8 +16,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class PaymentMethodsFragment : BaseFragment() {
     private lateinit var binding: FragmentPaymentMethodsBinding
-    private val args: CheckoutSuccessFragmentArgs by navArgs()
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View {
