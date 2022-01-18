@@ -36,7 +36,7 @@ class FiltersDetailListFragment : BaseFragment() {
         binding.rvFiltersDetailList.adapter = filterDetailListAdapter
         binding.tvFilterName.text = args.filter.name
 
-        val appliedFilter = args.appliedFilters.variantAttrs[args.filter.name] ?: ""
+        val appliedFilter = args.appliedFilters.variantAttrs
         val filters = args.filter.values.sortedBy { it }
         filterDetailListAdapter.submitList(filters, appliedFilter)
 
@@ -49,7 +49,6 @@ class FiltersDetailListFragment : BaseFragment() {
         binding.ivBack.setOnClickListener { goBack() }
 
         filterDetailListAdapter.filterClickCallback = {
-            args.appliedFilters.variantAttrs[args.filter.name] = it
             enableClearOption()
         }
 
@@ -61,7 +60,7 @@ class FiltersDetailListFragment : BaseFragment() {
     private fun disableClearOption() {
         binding.labelClear.setTextColor(Color.GRAY)
         binding.labelClear.isEnabled = false
-        filterDetailListAdapter.updateSelectedFilter("")
+        filterDetailListAdapter.clearSelectedFilter(args.filter.values)
         args.appliedFilters.variantAttrs.remove(args.filter.name)
     }
 

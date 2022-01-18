@@ -8,7 +8,7 @@ import com.hexagram.febys.databinding.ItemFiltersDetailListBinding
 
 class FilterDetailListAdapter : RecyclerView.Adapter<FilterDetailListAdapter.ViewHolder>() {
     private var detailList = listOf<String>()
-    var selectedFilter = ""
+    var selectedFilter = mutableSetOf<String>()
     var filterClickCallback: ((filter: String) -> Unit)? = null
 
     override fun onCreateViewHolder(
@@ -27,14 +27,23 @@ class FilterDetailListAdapter : RecyclerView.Adapter<FilterDetailListAdapter.Vie
         return detailList.size
     }
 
-    fun submitList(values: List<String>, filter: String = "") {
+    fun submitList(values: List<String>, filter: MutableSet<String> = mutableSetOf("")) {
         selectedFilter = filter
         this.detailList = values
         notifyItemRangeChanged(0, values.size)
     }
 
     fun updateSelectedFilter(filter: String) {
-        selectedFilter = filter
+        if (selectedFilter.contains(filter)) {
+            selectedFilter.remove(filter)
+        } else {
+            selectedFilter.add(filter)
+        }
+        notifyItemRangeChanged(0, detailList.size)
+    }
+
+    fun clearSelectedFilter(filters: List<String>) {
+        selectedFilter.removeAll(filters)
         notifyItemRangeChanged(0, detailList.size)
     }
 
@@ -46,7 +55,7 @@ class FilterDetailListAdapter : RecyclerView.Adapter<FilterDetailListAdapter.Vie
             val filterValue = detailList[position]
             labelRequiredOption.text = filterValue
 
-            ivSelect.isVisible = filterValue == selectedFilter
+            ivSelect.isVisible = filterValue in selectedFilter
 
             root.setOnClickListener {
                 updateSelectedFilter(filterValue)

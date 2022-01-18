@@ -336,6 +336,7 @@
         tools:layout="@layout/fragment_filters">
         <argument
             android:name="filters"
+            app:nullable="true"
             app:argType="com.hexagram.febys.models.api.filters.Filters" />
         <argument
             android:name="appliedFilters"

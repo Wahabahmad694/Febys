@@ -53,4 +53,5 @@ class VendorViewModel @Inject constructor(
             _observerVendorEndorsement.postValue(it)
         }
     }
+
 }

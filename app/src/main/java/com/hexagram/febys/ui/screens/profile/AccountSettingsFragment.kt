@@ -181,6 +181,7 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
     }
 
     private fun setData(consumer: Consumer?) {
+        binding.tvProfileName.setText(consumer?.fullName)
         binding.etFirstName.setText(consumer?.firstName)
         binding.etLastName.setText(consumer?.lastName)
         binding.etEmail.setText(consumer?.email)

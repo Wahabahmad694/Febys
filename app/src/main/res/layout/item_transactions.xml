@@ -10,7 +10,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_115sdp"
+        android:layout_height="@dimen/_180sdp"
         android:layout_marginHorizontal="@dimen/_8sdp"
         android:layout_marginVertical="@dimen/_6sdp"
         app:cardBackgroundColor="@color/white"
@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/grey"
-            android:paddingVertical="@dimen/_10sdp">
+            android:paddingVertical="@dimen/_16sdp">
 
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/background"
@@ -83,7 +83,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/container_amount"
+                android:id="@+id/container_source"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_22sdp"
@@ -93,31 +93,55 @@
                 app:layout_constraintTop_toTopOf="@id/container_transaction">
 
                 <TextView
-                    android:id="@+id/label_amount"
+                    android:id="@+id/label_source"
                     style="@style/TextTheme.HelveticaNeue.TS14.Grey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_source" />
+
+                <TextView
+                    android:id="@+id/tv_source"
+                    style="@style/TextTheme.Arial.TS16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Wallet" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/container_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@id/container_date_time"
+                app:layout_constraintStart_toStartOf="@id/container_source"
+                app:layout_constraintTop_toTopOf="@id/container_date_time">
+
+                <TextView
+                    android:id="@+id/label_amount"
+                    style="@style/TextTheme.Arial.TS14.Grey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_amount" />
 
                 <TextView
-                    android:id="@+id/amount"
+                    android:id="@+id/tv_amount"
                     style="@style/TextTheme.Arial.TS16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="$600.50" />
+                    tools:text="GHS 100.06" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/container_purpose"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_19sdp"
                 android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="@id/container_date_time"
-                app:layout_constraintStart_toStartOf="@id/container_amount"
-                app:layout_constraintTop_toTopOf="@id/container_date_time">
+                app:layout_constraintStart_toStartOf="@id/container_date_time"
+                app:layout_constraintTop_toBottomOf="@id/container_date_time">
 
                 <TextView
-                    android:id="@+id/label_Purpose"
+                    android:id="@+id/label_purpose"
                     style="@style/TextTheme.Arial.TS14.Grey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -129,6 +153,31 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="Return" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/container_statuse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_22sdp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@id/container_purpose"
+                app:layout_constraintStart_toStartOf="@id/container_amount"
+                app:layout_constraintTop_toTopOf="@id/container_purpose">
+
+                <TextView
+                    android:id="@+id/label_status"
+                    style="@style/TextTheme.HelveticaNeue.TS14.Grey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_status" />
+
+                <TextView
+                    android:id="@+id/tv_status"
+                    style="@style/TextTheme.Arial.TS16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Claimed" />
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
