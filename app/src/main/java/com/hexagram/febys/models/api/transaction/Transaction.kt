@@ -19,6 +19,8 @@ data class Transaction(
     @SerializedName("billing_amount")
     val billingAmount: Double,
     val source: String,
+    @SerializedName("external_ref_no")
+    val externalRefNo: String?,
     val status: String,
     val purpose: String,
     val _id: String,

@@ -47,8 +47,4 @@ interface IPrefManger {
     fun getDefaultShippingAddress(): ShippingAddress?
 
     fun saveDefaultShippingAddress(shippingAddress: ShippingAddress)
-
-    fun getDefaultPaymentMethod(): PaymentMethod?
-
-    fun saveDefaultPaymentMethod(paymentMethod: PaymentMethod)
 }

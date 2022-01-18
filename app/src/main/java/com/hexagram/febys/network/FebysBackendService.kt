@@ -276,12 +276,6 @@ interface FebysBackendService {
         @Body getCitiesRequest: GetCitiesRequest
     ): ApiResponse<PostCitiesResponse>
 
-    @POST("v1/payments/transaction/wallet")
-    suspend fun doWalletPayment(
-        @Header("Authorization") authToken: String,
-        @Body paymentRequest: PaymentRequest
-    ): ApiResponse<PaymentResponse>
-
     @GET("v1/order-settings/consumer/order/cancellation/reasons")
     suspend fun fetchCancelReasons(): ApiResponse<CancelReasonsResponse>
 

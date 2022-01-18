@@ -484,8 +484,8 @@
             app:popExitAnim="@anim/slide_out_right" />
 
         <action
-            android:id="@+id/action_checkoutFragment_to_paymentMethodsFragment"
-            app:destination="@id/paymentMethodsFragment"
+            android:id="@+id/action_checkoutFragment_to__paymentFragment"
+            app:destination="@id/_paymentFragment"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
@@ -651,19 +651,13 @@
         android:label="VouchersFragment"
         tools:layout="@layout/fragment_vouchers" />
     <fragment
-        android:id="@+id/paymentMethodsFragment"
-        android:name="com.hexagram.febys.ui.screens.payment.method.PaymentMethodsFragment"
-        android:label="PaymentMethodsFragment"
-        tools:layout="@layout/fragment_payment_methods">
-        <action
-            android:id="@+id/action_paymentMethodsFragment_to_checkoutSuccessFragment"
-            app:destination="@id/checkoutSuccessFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/cartFragment"
-            app:popUpToInclusive="true" />
+        android:id="@+id/_paymentFragment"
+        android:name="com.hexagram.febys.ui.screens.payment.PaymentFragment"
+        android:label="PaymentFragment"
+        tools:layout="@layout/fragment_payment">
+        <argument
+            android:name="paymentRequest"
+            app:argType="com.hexagram.febys.models.api.request.PaymentRequest" />
     </fragment>
     <fragment
         android:id="@+id/accountSettingsFragment"

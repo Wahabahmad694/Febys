@@ -330,5 +330,8 @@
     <string name="permission_denied">Permission denied</string>
     <string name="label_chose_option">Choose an Option</string>
     <string name="label_oops">OOPs!</string>
+    <string name="label_please_choose_following_one_of_them">Please choose following one of them</string>
+    <string name="label_choose_payment_for_remaining">Choose Payment for remaining %1s</string>
+    <string name="please_select_a_payment_method">Please select a payment method</string>
 
 </resources>

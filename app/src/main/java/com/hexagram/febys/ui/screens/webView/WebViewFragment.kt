@@ -9,7 +9,7 @@ import androidx.navigation.fragment.navArgs
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.bindings.BindingAdapter
 import com.hexagram.febys.databinding.WebViewFragmentBinding
-import com.hexagram.febys.utils.FebysWebviewClient
+import com.hexagram.febys.utils.FebysWebViewClient
 import com.hexagram.febys.utils.goBack
 
 
@@ -38,7 +38,7 @@ class WebViewFragment : BaseFragment() {
             BindingAdapter.loadHtml(binding.webView, args.url)
         } else {
             binding.webView.loadUrl(args.url)
-            binding.webView.webViewClient = FebysWebviewClient()
+            binding.webView.webViewClient = FebysWebViewClient()
         }
     }
 

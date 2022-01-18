@@ -5,7 +5,6 @@ import com.hexagram.febys.dataSource.ICartDataSource
 import com.hexagram.febys.models.api.cart.Cart
 import com.hexagram.febys.models.api.order.Order
 import com.hexagram.febys.models.api.request.OrderRequest
-import com.hexagram.febys.models.api.request.PaymentRequest
 import com.hexagram.febys.models.api.transaction.Transaction
 import com.hexagram.febys.models.api.vendor.VendorMessage
 import com.hexagram.febys.models.db.CartDTO
@@ -83,14 +82,14 @@ class CartRepoImpl @Inject constructor(
     }
 
     override suspend fun placeOrder(
-        transactionId: String,
+        transactions: List<Transaction>,
         voucher: String?,
         vendorMessages: List<VendorMessage>
     ) = flow<DataState<Order>> {
         val authToken = pref.getAccessToken()
         if (authToken.isEmpty()) return@flow
 
-        val orderRequest = getOrderRequest(voucher, transactionId, vendorMessages)
+        val orderRequest = getOrderRequest(voucher, transactions, vendorMessages)
         if (orderRequest.items.isEmpty()) return@flow
 
         backendService.placeOrder(authToken, orderRequest)
@@ -102,30 +101,17 @@ class CartRepoImpl @Inject constructor(
             .onNetworkError { emit(DataState.NetworkError()) }
     }
 
-    override suspend fun doPayment(paymentRequest: PaymentRequest) = flow<DataState<Transaction>> {
-        val authToken = pref.getAccessToken()
-        if (authToken.isEmpty()) return@flow
-
-        backendService.doWalletPayment(authToken, paymentRequest)
-            .onSuccess {
-                emit(DataState.Data(data!!.transaction))
-            }
-            .onError { emit(DataState.ApiError(message)) }
-            .onException { emit(DataState.ExceptionError()) }
-            .onNetworkError { emit(DataState.NetworkError()) }
-    }
-
     private fun getOrderRequest(
         voucher: String?,
-        transactionId: String? = null,
+        transactions: List<Transaction>? = null,
         vendorMessages: List<VendorMessage>
     ): OrderRequest {
         val shippingAddress = pref.getDefaultShippingAddress()
         val items: List<SkuIdAndQuantity> = cartDataSource.getCartSkuIdsAndQuantity()
-        val transaction = if (transactionId == null) null else listOf(transactionId)
+        val transactionIds = transactions?.map { it._id }
 
         return OrderRequest(
-            shippingAddress?.shippingDetail, voucher, items, vendorMessages, transaction
+            shippingAddress?.shippingDetail, voucher, items, vendorMessages, transactionIds
         )
     }
 

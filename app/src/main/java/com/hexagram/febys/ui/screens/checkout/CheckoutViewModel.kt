@@ -17,8 +17,4 @@ class CheckoutViewModel @Inject constructor(
     fun getDefaultShippingAddress(): ShippingAddress? {
         return checkoutRepo.getDefaultShippingAddress()
     }
-
-    fun getDefaultPaymentMethod(): PaymentMethod? {
-        return checkoutRepo.getDefaultPaymentMethod()
-    }
 }
