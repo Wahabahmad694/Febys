@@ -14,7 +14,7 @@ data class ProductListingRequest constructor(
     var isDefault: Boolean = false,
     var categoryIds: MutableSet<Int> = mutableSetOf(),
     var vendorIds: MutableSet<String> = mutableSetOf(),
-    var variantAttrs: MutableMap<String, String> = mutableMapOf(),
+    var variantAttrs: MutableSet<String> = mutableSetOf(),
     var minPrice: Int? = null,
     var maxPrice: Int? = null,
     var sortByPrice: String? = null
@@ -59,7 +59,7 @@ data class ProductListingRequest constructor(
 
         if (variantAttrs.isNotEmpty()) {
             val attrs = JsonArray()
-            variantAttrs.forEach { attrs.add(it.value) }
+            variantAttrs.forEach { attrs.add(it) }
             val variantsAttr = JsonObject()
             variantsAttr.add(KEY_IN, attrs)
             filters.add(KEY_ATTR, variantsAttr)

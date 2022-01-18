@@ -113,9 +113,11 @@ class FiltersFragment : BaseFragment() {
         binding.labelClear.isEnabled = true
     }
 
-    private fun updateUi(filters: Filters) {
-        val filterList = filters.attributes.attributes.sortedBy { it.name }
-        filterAdapter.submitList(filterList)
+    private fun updateUi(filters: Filters?) {
+        val filterList = filters?.attributes?.attributes?.sortedBy { it.name }
+        if (filterList != null) {
+            filterAdapter.submitList(filterList)
+        }
 
         if (this.filters.sortByPrice == ProductListingRequest.KEY_ASC) {
             binding.radioBtnFilter.check(R.id.rd_lowPrice)
