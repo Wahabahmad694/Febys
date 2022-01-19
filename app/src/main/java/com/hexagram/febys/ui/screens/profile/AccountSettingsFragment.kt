@@ -1,14 +1,17 @@
 package com.hexagram.febys.ui.screens.profile
 
 import android.app.Activity
+import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import com.hexagram.febys.R
@@ -22,6 +25,8 @@ import com.hexagram.febys.utils.MediaFileUtils
 import com.hexagram.febys.utils.goBack
 import com.hexagram.febys.utils.hideLoader
 import com.hexagram.febys.utils.showLoader
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -72,6 +77,20 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
                 accountSettingViewModel.uploadedFilePath
             )
         }
+    }
+
+    private fun startCrop(imageUri:Uri) {
+
+        // start cropping activity for pre-acquired image saved on the device and customize settings
+        CropImage.activity()
+            .setAllowRotation(false)
+            .setGuidelines(CropImageView.Guidelines.ON)
+            .setAllowFlipping(false)
+            .setInitialCropWindowPaddingRatio(0.0f)
+            .setCropMenuCropButtonTitle("Done")
+            .setAspectRatio(1, 1)
+            .setOutputCompressQuality(50)
+            .start(requireContext(), this)
     }
 
     private fun updateField() {
@@ -135,6 +154,7 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
             if (result.resultCode == Activity.RESULT_OK) {
                 result.data?.data?.let {
                     val filePath = MediaFileUtils.handleUri(requireContext(), it)
+                    startCrop(it!!)
                     binding.profileImg.setImageURI(it)
                     accountSettingViewModel.updateProfileImage(filePath!!)
                 }
@@ -148,6 +168,7 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
                 result.data?.data?.let {
                     val filePath = MediaFileUtils.handleUri(requireContext(), it)
                     binding.profileImg.setImageURI(it)
+                    startCrop(it!!)
                     accountSettingViewModel.updateProfileImage(filePath!!)
                 }
             }
@@ -206,7 +227,20 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
 
 
     }
-
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            val result = CropImage.getActivityResult(data)
+            if (resultCode == RESULT_OK) {
+                val resultUri: Uri = result.uri
+                val filePath = MediaFileUtils.handleUri(requireContext(), resultUri)
+                binding.profileImg.setImageURI(resultUri)
+                accountSettingViewModel.updateProfileImage(filePath!!)
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                val error = result.error
+                Toast.makeText(requireContext(), "$error", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
     private fun setData(consumer: Consumer?) {
         binding.profileImg.setImageURI(consumer?.profileImage)
         binding.tvProfileName.setText(consumer?.fullName)
