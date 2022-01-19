@@ -275,7 +275,9 @@ class CheckoutFragment : BaseFragment() {
                 is DataState.Data -> {
                     hideLoader()
                     checkoutViewModel.clearCart()
-                    showToast("order placed: ${it.data.orderId}")
+                    val toCheckoutSuccess = CheckoutFragmentDirections
+                        .actionCheckoutFragmentToCheckoutSuccessFragment(it.data.orderId)
+                    navigateTo(toCheckoutSuccess)
                 }
             }
         }

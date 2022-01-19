@@ -482,14 +482,14 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
-
         <action
-            android:id="@+id/action_checkoutFragment_to__paymentFragment"
-            app:destination="@id/_paymentFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right" />
+            android:id="@+id/action_checkoutFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment" />
+        <action
+            android:id="@+id/action_checkoutFragment_to_checkoutSuccessFragment"
+            app:destination="@id/checkoutSuccessFragment"
+            app:popUpTo="@id/cartFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/checkoutSuccessFragment"
@@ -651,7 +651,7 @@
         android:label="VouchersFragment"
         tools:layout="@layout/fragment_vouchers" />
     <fragment
-        android:id="@+id/_paymentFragment"
+        android:id="@+id/paymentFragment"
         android:name="com.hexagram.febys.ui.screens.payment.PaymentFragment"
         android:label="PaymentFragment"
         tools:layout="@layout/fragment_payment">
