@@ -104,7 +104,6 @@
                         style="@style/TextTheme.Arial.TS14"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/_13sdp"
                         android:textSize="@dimen/_11sdp"
                         tools:text="FT133659380093" />
 
@@ -114,7 +113,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_9sdp"
-                        android:layout_marginEnd="@dimen/_13sdp"
                         android:textSize="@dimen/_11sdp"
                         tools:text="May 18.2021-12:49" />
                 </LinearLayout>

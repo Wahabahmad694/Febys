@@ -70,7 +70,7 @@
             style="@style/TextTheme.Arial.TS10.Grey"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{product.variants.get(0).price.getFormattedPrice()}"
+            android:text="@{product.variants.get(0).originalPrice.getFormattedPrice()}"
             app:layout_constraintBaseline_toBaselineOf="@id/tv_product_price"
             app:layout_constraintEnd_toStartOf="@id/tv_product_off_price_separator"
             app:layout_constraintHorizontal_chainStyle="packed"

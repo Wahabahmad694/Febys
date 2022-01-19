@@ -36,12 +36,8 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_39sdp"
-            android:text="@{thread.chat.get(0).message}"
-            android:textAlignment="center"
-            tools:text="@string/label_ask_about_product" />
-        android:gravity="center"
-        android:text="@string/reply_to_the_question" />
-
+            android:text="@string/label_reply_to_the_question"
+            android:textAlignment="center" />
         <TextView
             android:id="@+id/label_answer"
             style="@style/TextTheme.Arial.TS16"

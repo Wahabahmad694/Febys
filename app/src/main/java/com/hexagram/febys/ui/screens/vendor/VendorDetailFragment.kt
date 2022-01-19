@@ -11,6 +11,8 @@ import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentVendorDetailBinding
+import com.hexagram.febys.models.api.rating.Rating
+
 import com.hexagram.febys.models.api.social.Social
 import com.hexagram.febys.models.api.vendor.Vendor
 import com.hexagram.febys.network.DataState
@@ -32,7 +34,7 @@ class VendorDetailFragment : BaseFragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View {
         binding = FragmentVendorDetailBinding.inflate(inflater, container, false)
         return binding.root
@@ -112,6 +114,7 @@ class VendorDetailFragment : BaseFragment() {
 
             reviewsAdapter.submitList(vendor.ratingsAndReviews)
             binding.noReviews.isVisible = vendor.ratingsAndReviews.isEmpty()
+
         }
     }
 }

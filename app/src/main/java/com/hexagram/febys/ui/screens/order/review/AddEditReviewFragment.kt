@@ -163,6 +163,9 @@ class AddEditReviewFragment : BaseFragment() {
     }
 
     private fun updateFieldAndReviewsAdapter(isEnable: Boolean) {
+        if(isEnable){
+            binding.labelAddReview.setText(getText(R.string.label_edit_review))
+        }
         binding.ivEdit.isVisible = !isEnable
         binding.btnSubmitReview.isVisible = isEnable
         binding.priceRating.ratingBar.setIsIndicator(!isEnable)
