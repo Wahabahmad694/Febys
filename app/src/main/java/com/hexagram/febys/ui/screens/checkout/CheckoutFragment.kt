@@ -20,7 +20,7 @@ import com.hexagram.febys.models.db.CartDTO
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.cart.CartAdapter
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
-import com.hexagram.febys.ui.screens.payment.PaymentFragment
+import com.hexagram.febys.ui.screens.payment.BasePaymentFragment
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -119,9 +119,9 @@ class CheckoutFragment : BaseFragment() {
             }
         }
 
-        setFragmentResultListener(PaymentFragment.TRANSACTIONS) { requestKey, bundle ->
-            val transactions =
-                bundle.getParcelableArrayList<Transaction>(PaymentFragment.TRANSACTIONS)?.toList()
+        setFragmentResultListener(BasePaymentFragment.TRANSACTIONS) { _, bundle ->
+            val transactions = bundle
+                .getParcelableArrayList<Transaction>(BasePaymentFragment.TRANSACTIONS)?.toList()
 
             if (!transactions.isNullOrEmpty()) {
                 placeOrder(transactions)

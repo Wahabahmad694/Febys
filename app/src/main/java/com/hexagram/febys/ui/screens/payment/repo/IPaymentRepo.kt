@@ -29,4 +29,8 @@ interface IPaymentRepo {
         reference: String,
         dispatcher: CoroutineDispatcher = Dispatchers.IO
     ): Flow<DataState<Transaction>>
+
+    fun notifyPaypalPayment(
+        orderId: String, purpose: String, dispatcher: CoroutineDispatcher = Dispatchers.IO
+    ): Flow<DataState<Transaction>>
 }

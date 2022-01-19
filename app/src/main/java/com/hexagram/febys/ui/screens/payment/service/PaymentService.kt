@@ -35,4 +35,10 @@ interface PaymentService {
         @Header("Authorization") authToken: String,
         @Path("ref") reference: String
     ): ApiResponse<PaymentResponse>
+
+    @POST("v1/payments/transaction/paypal")
+    suspend fun notifyPaypalPayment(
+        @Header("Authorization") authToken: String,
+        @Body req: Map<String, String>
+    ): ApiResponse<PaymentResponse>
 }

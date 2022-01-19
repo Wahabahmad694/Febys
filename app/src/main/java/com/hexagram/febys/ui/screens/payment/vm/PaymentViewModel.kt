@@ -12,7 +12,6 @@ import com.hexagram.febys.ui.screens.payment.models.PayStackTransactionRequest
 import com.hexagram.febys.ui.screens.payment.models.Wallet
 import com.hexagram.febys.ui.screens.payment.repo.IPaymentRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -35,6 +34,8 @@ class PaymentViewModel @Inject constructor(
 
     var listenPayStack = false
 
+    var amountPaidFromWallet = 0.0
+
     fun refreshWallet() = paymentRepo.fetchWallet(paymentRequest.currency).onEach {
         if (it is DataState.Data) wallet = it.data
     }.asLiveData()
@@ -44,12 +45,15 @@ class PaymentViewModel @Inject constructor(
         val paymentRequest =
             if (isSplitMode) this.paymentRequest.copy(amount = wallet.amount) else this.paymentRequest
         return paymentRepo.doWalletPayment(paymentRequest).onEach {
-            if (it is DataState.Data) transactions.add(it.data)
+            if (it is DataState.Data) {
+                amountPaidFromWallet = paymentRequest.amount
+                transactions.add(it.data)
+            }
         }.asLiveData()
     }
 
     fun getRemainingPriceForSplit(): Price {
-        val remainingAmount = paymentRequest.amount - wallet.amount
+        val remainingAmount = paymentRequest.amount - amountPaidFromWallet
         return Price("", remainingAmount, paymentRequest.currency)
     }
 
@@ -59,7 +63,6 @@ class PaymentViewModel @Inject constructor(
         return paymentRepo.doPayStackPayment(paymentRequest).asLiveData()
     }
 
-    @ExperimentalCoroutinesApi
     fun listenToPayStackVerification(reference: String) = channelFlow {
         listenPayStack = true
         while (listenPayStack) {
@@ -81,6 +84,11 @@ class PaymentViewModel @Inject constructor(
         }
 
     }.asLiveData()
+
+    fun notifyPapalPayment(orderId: String, purpose: String) =
+        paymentRepo.notifyPaypalPayment(orderId, purpose).onEach {
+            if (it is DataState.Data) transactions.add(it.data)
+        }.asLiveData()
 
     fun getTransactions(): List<Transaction> = transactions
 }

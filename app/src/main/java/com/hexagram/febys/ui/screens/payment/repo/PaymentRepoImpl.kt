@@ -23,13 +23,16 @@ class PaymentRepoImpl @Inject constructor(
             val authToken = pref.getAccessToken()
             val walletResponse = paymentService.fetchWallet(authToken)
             if (conversionCurrency != null && walletResponse is ApiResponse.ApiSuccessResponse) {
-                val wallet = walletResponse.data!!.wallet
-                val conversionRequest = mapOf("from" to conversionCurrency, "to" to wallet.currency)
-                val conversionResponse =
-                    paymentService.fetchCurrencyConversionRate(authToken, conversionRequest)
-                if (conversionResponse is ApiResponse.ApiSuccessResponse) {
-                    wallet.conversionCurrency = conversionCurrency
-                    wallet.conversionRate = 1.div(conversionResponse.data!!.conversionRate)
+                if (!conversionCurrency.equals(walletResponse.data!!.wallet.currency, true)) {
+                    val wallet = walletResponse.data.wallet
+                    val conversionRequest =
+                        mapOf("from" to conversionCurrency, "to" to wallet.currency)
+                    val conversionResponse =
+                        paymentService.fetchCurrencyConversionRate(authToken, conversionRequest)
+                    if (conversionResponse is ApiResponse.ApiSuccessResponse) {
+                        wallet.conversionCurrency = conversionCurrency
+                        wallet.conversionRate = 1.div(conversionResponse.data!!.conversionRate)
+                    }
                 }
             }
             walletResponse
@@ -69,6 +72,19 @@ class PaymentRepoImpl @Inject constructor(
         emit(DataState.Loading())
         val authToken = pref.getAccessToken()
         paymentService.listenToPayStackVerification(authToken, reference)
+            .onSuccess { emit(DataState.Data(data!!.transaction)) }
+            .onError { emit(DataState.ApiError(message)) }
+            .onException { emit(DataState.ExceptionError()) }
+            .onNetworkError { emit(DataState.NetworkError()) }
+    }.flowOn(dispatcher)
+
+    override fun notifyPaypalPayment(
+        orderId: String, purpose: String, dispatcher: CoroutineDispatcher
+    ) = flow<DataState<Transaction>> {
+        emit(DataState.Loading())
+        val authToken = pref.getAccessToken()
+        val req = mapOf("order_id" to orderId, "purpose" to purpose)
+        paymentService.notifyPaypalPayment(authToken, req)
             .onSuccess { emit(DataState.Data(data!!.transaction)) }
             .onError { emit(DataState.ApiError(message)) }
             .onException { emit(DataState.ExceptionError()) }

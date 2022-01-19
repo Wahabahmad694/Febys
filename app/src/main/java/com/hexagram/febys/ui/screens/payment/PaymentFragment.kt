@@ -1,41 +1,40 @@
 package com.hexagram.febys.ui.screens.payment
 
 import android.annotation.SuppressLint
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebResourceRequest
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
-import androidx.fragment.app.setFragmentResult
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import com.hexagram.febys.BuildConfig
 import com.hexagram.febys.R
-import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentPaymentBinding
 import com.hexagram.febys.models.api.price.Price
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.ui.screens.payment.methods.PaymentMethod
 import com.hexagram.febys.ui.screens.payment.models.PayStackTransactionRequest
-import com.hexagram.febys.ui.screens.payment.vm.PaymentViewModel
+import com.hexagram.febys.ui.screens.payment.utils.PayStackWebViewClient
 import com.hexagram.febys.utils.goBack
 import com.hexagram.febys.utils.hideLoader
 import com.hexagram.febys.utils.showLoader
 import com.hexagram.febys.utils.showToast
+import com.paypal.checkout.PayPalCheckout
+import com.paypal.checkout.approve.OnApprove
+import com.paypal.checkout.cancel.OnCancel
+import com.paypal.checkout.createorder.CreateOrder
+import com.paypal.checkout.createorder.CurrencyCode
+import com.paypal.checkout.createorder.OrderIntent
+import com.paypal.checkout.createorder.UserAction
+import com.paypal.checkout.error.OnError
+import com.paypal.checkout.order.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PaymentFragment : BaseFragment() {
+class PaymentFragment : BasePaymentFragment() {
     private lateinit var binding: FragmentPaymentBinding
-    private val paymentViewModel by viewModels<PaymentViewModel>()
     private val args by navArgs<PaymentFragmentArgs>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -126,24 +125,108 @@ class PaymentFragment : BaseFragment() {
         }
     }
 
-    private fun handlePayNowClick() {
-        when (paymentViewModel.paymentMethod) {
-            PaymentMethod.WALLET -> {
-                doWalletPayment()
-            }
-            PaymentMethod.PAYPAL -> {
+    override fun doWalletPayment() {
+        if (paymentViewModel.showSplitMethod) {
+            showSplitScreen()
+        } else {
+            proceedWithWalletPayment()
+        }
+    }
 
-            }
-            PaymentMethod.PAY_STACK -> {
-                doPayStackPayment()
-            }
-            null -> {
-                showToast(getString(R.string.please_select_a_payment_method))
+    private fun proceedWithWalletPayment() {
+        paymentViewModel.doWalletPayment().observe(viewLifecycleOwner) {
+            when (it) {
+                is DataState.Loading -> {
+                    showLoader()
+                }
+                is DataState.Error -> {
+                    hideLoader()
+                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
+                    paymentViewModel.isSplitMode = false
+                }
+                is DataState.Data -> {
+                    hideLoader()
+                    refreshWallet()
+                    handleWalletPaymentSuccessResponse()
+                }
             }
         }
     }
 
-    private fun doPayStackPayment() {
+    private fun handleWalletPaymentSuccessResponse() {
+        paymentViewModel.paymentMethod = null
+        if (paymentViewModel.isSplitMode) {
+            updateUi(binding.containerWalletPayment, binding.walletFilledTick)
+        } else {
+            onAllDone()
+        }
+    }
+
+    override fun doPaypalPayment() {
+        val amount =
+            if (paymentViewModel.isSplitMode) paymentViewModel.getRemainingPriceForSplit().value else args.paymentRequest.amount
+        val createOrder = CreateOrder {
+            val order = Order(
+                intent = OrderIntent.CAPTURE,
+                appContext = AppContext(userAction = UserAction.PAY_NOW),
+                purchaseUnitList = listOf(
+                    PurchaseUnit(
+                        amount = Amount(
+                            currencyCode = CurrencyCode.valueOf(args.paymentRequest.currency),
+                            value = amount.toString()
+                        )
+                    )
+                )
+            )
+            it.create(order)
+        }
+
+        val onApprove = OnApprove { approval ->
+            approval.orderActions.capture { captureOrderResult ->
+                when (captureOrderResult) {
+                    is CaptureOrderResult.Success -> {
+                        handlePaypalSuccessResponse(
+                            captureOrderResult.orderResponse?.id ?: return@capture
+                        )
+                    }
+                    is CaptureOrderResult.Error -> {
+                        showToast(captureOrderResult.reason)
+                    }
+                }
+            }
+        }
+
+        val onCancel = OnCancel {
+            // do nothing
+        }
+
+        val onError = OnError { errorInfo ->
+            showToast(errorInfo.reason)
+        }
+
+        PayPalCheckout.start(createOrder, onApprove, null, onCancel, onError)
+    }
+
+    private fun handlePaypalSuccessResponse(orderId: String) {
+        paymentViewModel.notifyPapalPayment(orderId, args.paymentRequest.purpose)
+            .observe(viewLifecycleOwner) {
+                when (it) {
+                    is DataState.Loading -> {
+                        showLoader()
+                    }
+                    is DataState.Error -> {
+                        hideLoader()
+                        ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
+                    }
+                    is DataState.Data -> {
+                        hideLoader()
+                        onAllDone()
+                    }
+                }
+            }
+    }
+
+    override fun doPayStackPayment() {
         paymentViewModel.doPayStackPayment().observe(viewLifecycleOwner) {
             when (it) {
                 is DataState.Loading -> {
@@ -161,10 +244,18 @@ class PaymentFragment : BaseFragment() {
         }
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private fun handlePayStackPaymentRequestResponse(transactionRequest: PayStackTransactionRequest) {
-        openPayStackWebView(transactionRequest.authorizationUrl, transactionRequest.reference)
-        paymentViewModel
-            .listenToPayStackVerification(transactionRequest.reference)
+        binding.webView.apply {
+            isVisible = true
+            settings.javaScriptEnabled = true
+            webViewClient = PayStackWebViewClient(transactionRequest.reference)
+            settings.javaScriptCanOpenWindowsAutomatically = true
+            settings.domStorageEnabled = true
+            binding.webView.loadUrl(transactionRequest.authorizationUrl)
+        }
+
+        paymentViewModel.listenToPayStackVerification(transactionRequest.reference)
             .observe(viewLifecycleOwner) {
                 when (it) {
                     is DataState.Loading -> {
@@ -178,96 +269,11 @@ class PaymentFragment : BaseFragment() {
                     is DataState.Data -> {
                         hideLoader()
                         binding.webView.isVisible = false
-                        handlePayStackPaymentSuccessResponse()
+                        paymentViewModel.paymentMethod = null
+                        onAllDone()
                     }
                 }
             }
-    }
-
-    @SuppressLint("SetJavaScriptEnabled")
-    fun openPayStackWebView(url: String, reference: String) {
-        binding.webView.apply {
-            isVisible = true
-            settings.javaScriptEnabled = true
-            webViewClient = PayStackWebViewClient(reference)
-            settings.javaScriptEnabled = true
-            settings.javaScriptCanOpenWindowsAutomatically = true
-            settings.domStorageEnabled = true
-            binding.webView.loadUrl(url)
-        }
-    }
-
-    inner class PayStackWebViewClient(refId: String) : WebViewClient() {
-        private val callbackUrl = BuildConfig.backendBaseUrl + "v1/payments/transaction/paystack/callback"
-        private val redirectURL = "$callbackUrl?reference=$refId"
-        override fun shouldOverrideUrlLoading(
-            view: WebView?,
-            request: WebResourceRequest?
-        ): Boolean {
-            val url: Uri? = request?.url
-            if (url?.host == callbackUrl) {
-                return true
-            } else if (url.toString() == "https://standard.paystack.co/close") {
-                binding.webView.loadUrl(redirectURL)
-                return false
-            }
-
-            return super.shouldOverrideUrlLoading(view, request)
-        }
-    }
-
-    private fun handlePayStackPaymentSuccessResponse() {
-        paymentViewModel.paymentMethod = null
-        binding.webView.isVisible = false
-        onAllDone()
-    }
-
-    private fun doWalletPayment() {
-        if (paymentViewModel.showSplitMethod) {
-            showSplitScreen()
-        } else {
-            proceedWithWalletPayment()
-        }
-    }
-
-    private fun showSplitScreen() {
-        binding.containerSplit.root.isVisible = true
-        binding.containerPayment.isVisible = false
-    }
-
-    private fun hideSplitScreen() {
-        binding.containerSplit.root.isVisible = false
-        binding.containerPayment.isVisible = true
-    }
-
-    private fun proceedWithWalletPayment() {
-        paymentViewModel.doWalletPayment().observe(viewLifecycleOwner) {
-            when (it) {
-                is DataState.Loading -> {
-                    showLoader()
-                }
-                is DataState.Error -> {
-                    hideLoader()
-                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
-                    paymentViewModel.isSplitMode = false
-                }
-                is DataState.Data -> {
-                    hideLoader()
-                    showToast("payment success: ${it.data._id}")
-                    refreshWallet()
-                    handleWalletPaymentSuccessResponse()
-                }
-            }
-        }
-    }
-
-    private fun handleWalletPaymentSuccessResponse() {
-        paymentViewModel.paymentMethod = null
-        if (paymentViewModel.isSplitMode) {
-            updateUi(binding.containerWalletPayment, binding.walletFilledTick)
-        } else {
-            onAllDone()
-        }
     }
 
     private fun updateUi(selectedBackground: View, filledTick: View) {
@@ -287,6 +293,26 @@ class PaymentFragment : BaseFragment() {
         }
     }
 
+    override fun onPaypalNotSupported() {
+        binding.containerPaypalPayment.isVisible = false
+    }
+
+    override fun onPayStackNotSupported() {
+        binding.containerMomoPayment.isVisible = false
+    }
+
+    override fun getCurrency() = args.paymentRequest.currency
+
+    private fun showSplitScreen() {
+        binding.containerSplit.root.isVisible = true
+        binding.containerPayment.isVisible = false
+    }
+
+    private fun hideSplitScreen() {
+        binding.containerSplit.root.isVisible = false
+        binding.containerPayment.isVisible = true
+    }
+
     private fun markAsSelected(backgroundView: View, tickView: View) {
         backgroundView.background =
             ContextCompat.getDrawable(requireContext(), R.drawable.bg_border_red)
@@ -297,19 +323,6 @@ class PaymentFragment : BaseFragment() {
         backgroundView.background =
             ContextCompat.getDrawable(requireContext(), R.drawable.bg_border_grey)
         tickView.isVisible = false
-    }
-
-
-    private fun onAllDone() {
-        setFragmentResult(
-            TRANSACTIONS,
-            bundleOf(TRANSACTIONS to paymentViewModel.getTransactions())
-        )
-        goBack()
-    }
-
-    companion object {
-        const val TRANSACTIONS = "reqKeyTransactions"
     }
 }
 
