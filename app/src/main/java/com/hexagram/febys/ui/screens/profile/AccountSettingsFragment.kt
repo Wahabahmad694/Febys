@@ -18,6 +18,7 @@ import com.hexagram.febys.models.api.consumer.Consumer
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.requests.RequestUpdateUser
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
+import com.hexagram.febys.utils.MediaFileUtils
 import com.hexagram.febys.utils.goBack
 import com.hexagram.febys.utils.hideLoader
 import com.hexagram.febys.utils.showLoader
@@ -30,7 +31,6 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
     private val accountSettingViewModel by viewModels<AccountSettingViewModel>()
 
     private var isInEditMode = false
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View {
@@ -69,7 +69,7 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
                 binding.etLastName.text.toString(),
                 binding.etPhone.text.toString(),
                 "PK",
-                null
+                accountSettingViewModel.uploadedFilePath
             )
         }
     }
@@ -109,7 +109,9 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
         }
 
         val dialog: AlertDialog = builder.create()
-        dialog.show()
+        if (isInEditMode) {
+            dialog.show()
+        }
     }
 
     private fun captureImage() {
@@ -131,7 +133,11 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
     private val resultGalleryLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                //todo nothing
+                result.data?.data?.let {
+                    val filePath = MediaFileUtils.handleUri(requireContext(), it)
+                    binding.profileImg.setImageURI(it)
+                    accountSettingViewModel.updateProfileImage(filePath!!)
+                }
             }
         }
 
@@ -139,7 +145,11 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
     private val resultCameraLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                //todo nothing
+                result.data?.data?.let {
+                    val filePath = MediaFileUtils.handleUri(requireContext(), it)
+                    binding.profileImg.setImageURI(it)
+                    accountSettingViewModel.updateProfileImage(filePath!!)
+                }
             }
         }
 
@@ -177,10 +187,29 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
             }
         }
 
+        accountSettingViewModel.updateProfileImage.observe(viewLifecycleOwner) {
+            when (it) {
+                is DataState.Loading -> {
+                    showLoader()
+                }
+                is DataState.Error -> {
+                    hideLoader()
+                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
+                }
+                is DataState.Data -> {
+                    hideLoader()
+                    it.data
+                    accountSettingViewModel.uploadedFilePath = it.data.firstOrNull()
+                }
+            }
+        }
+
 
     }
 
     private fun setData(consumer: Consumer?) {
+        binding.profileImg.setImageURI(consumer?.profileImage)
+        binding.tvProfileName.setText(consumer?.fullName)
         binding.etFirstName.setText(consumer?.firstName)
         binding.etLastName.setText(consumer?.lastName)
         binding.etEmail.setText(consumer?.email)

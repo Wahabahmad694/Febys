@@ -72,7 +72,11 @@ class ProductListingByVendorFragment : BaseFragment() {
         }
 
         binding.btnRefine.setOnClickListener {
-            // goto filter screen
+            val gotoRefineProduct = NavGraphDirections
+                .toProductFilterFragment(
+                    filtersViewModel.filters, filtersViewModel.appliedFilters
+                )
+            navigateTo(gotoRefineProduct)
         }
 
         binding.tvVendorName.setOnClickListener {
@@ -111,7 +115,7 @@ class ProductListingByVendorFragment : BaseFragment() {
         }
 
         filtersViewModel.observeFilters.observe(viewLifecycleOwner) {
-            binding.containerFilter.isVisible = it is DataState.Data
+            binding.radioGroupFilters.isVisible = it is DataState.Data
         }
 
         setFragmentResultListener(FiltersFragment.KEY_APPLY_FILTER) { _, bundle ->

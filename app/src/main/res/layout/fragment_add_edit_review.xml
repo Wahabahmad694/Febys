@@ -29,7 +29,7 @@
                     android:layout_height="?actionBarSize"
                     android:gravity="center"
                     android:paddingHorizontal="@dimen/_32dp"
-                    android:text="@string/label_add_review"
+                    android:text="@string/label_my_review"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
