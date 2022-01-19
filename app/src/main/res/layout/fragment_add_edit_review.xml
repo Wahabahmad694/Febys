@@ -29,7 +29,7 @@
                     android:layout_height="?actionBarSize"
                     android:gravity="center"
                     android:paddingHorizontal="@dimen/_32dp"
-                    android:text="My Review"
+                    android:text="@string/label_my_review"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -185,7 +185,7 @@
                 android:layout_marginHorizontal="@dimen/_16sdp"
                 android:layout_marginVertical="@dimen/_14sdp"
                 android:maxWidth="@dimen/_298sdp"
-                android:text="@string/label_save" />
+                android:text="@string/label_send" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>

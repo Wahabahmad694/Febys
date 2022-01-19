@@ -13,4 +13,8 @@ interface IProfileRepo {
     suspend fun updateProfile(
        requestUpdateUser: RequestUpdateUser, dispatcher: CoroutineDispatcher = Dispatchers.IO
     ): Flow<DataState<Consumer>>
+
+    suspend fun updateProfileImage(
+        filePath: String, dispatcher: CoroutineDispatcher = Dispatchers.IO
+    ): Flow<DataState<List<String>>>
 }

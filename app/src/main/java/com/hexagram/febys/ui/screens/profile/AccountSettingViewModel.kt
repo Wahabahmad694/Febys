@@ -23,6 +23,11 @@ class AccountSettingViewModel @Inject constructor(
     private val _updateProfile = MutableLiveData<DataState<Consumer>>()
     val updateProfile: LiveData<DataState<Consumer>> = _updateProfile
 
+    private val _updateProfileImage = MutableLiveData<DataState<List<String>>>()
+    val updateProfileImage: LiveData<DataState<List<String>>> = _updateProfileImage
+
+    var uploadedFilePath: String? = null
+
     init {
         fetchProfile()
     }
@@ -38,6 +43,13 @@ class AccountSettingViewModel @Inject constructor(
         _updateProfile.postValue(DataState.Loading())
         profileRepo.updateProfile(requestUpdateUser).collect {
             _updateProfile.postValue(it)
+        }
+    }
+
+    fun updateProfileImage(filePath: String) = viewModelScope.launch {
+        _updateProfileImage.postValue(DataState.Loading())
+        profileRepo.updateProfileImage(filePath).collect {
+            _updateProfileImage.postValue(it)
         }
     }
 }

@@ -13,7 +13,12 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
 import javax.inject.Inject
+
 
 class ProfileRepoImp @Inject constructor(
     private val backendService: FebysBackendService,
@@ -47,4 +52,29 @@ class ProfileRepoImp @Inject constructor(
             .onNetworkError { emit(DataState.NetworkError()) }
     }.flowOn(dispatcher)
 
+    override suspend fun updateProfileImage(
+        filePath: String, dispatcher: CoroutineDispatcher
+    ): Flow<DataState<List<String>>> = flow<DataState<List<String>>> {
+        val fileToUpload = File(filePath)
+        val filePart: MultipartBody.Part = MultipartBody.Part.createFormData(
+            "media",
+            fileToUpload.getName(),
+            RequestBody.create("image/*".toMediaTypeOrNull(), fileToUpload)
+        )
+        val authToken = pref.getAccessToken()
+        val response = backendService.uploadImage(authToken, filePart)
+        response
+            .onSuccess {
+                emit(DataState.Data(data!!))
+                try {
+                    fileToUpload.delete()
+                }
+                catch (e:Exception){
+
+                }
+            }
+            .onError { emit(DataState.ApiError(message)) }
+            .onException { emit(DataState.ExceptionError()) }
+            .onNetworkError {emit(DataState.NetworkError()) }
+    }.flowOn(dispatcher)
 }

@@ -141,8 +141,6 @@
                         app:cornerRadius="@dimen/_6sdp"
                         app:strokeColor="@color/white" />
                 </LinearLayout>
-
-                app:layout_constraintTop_toTopOf="parent" />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>

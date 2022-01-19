@@ -24,6 +24,7 @@ import com.hexagram.febys.network.requests.RequestPushCart
 import com.hexagram.febys.network.requests.RequestUpdateUser
 import com.hexagram.febys.network.requests.ResponseUpdateUser
 import com.hexagram.febys.network.response.ResponseOfPagination
+import okhttp3.MultipartBody
 import retrofit2.http.*
 
 interface FebysBackendService {
@@ -325,4 +326,11 @@ interface FebysBackendService {
         @Header("Authorization") authToken: String,
         @Body reqUpdateUser: RequestUpdateUser
     ): ApiResponse<ResponseUpdateUser>
+
+    @Multipart
+    @POST("v1/media/upload/consumer_profile")
+    suspend fun uploadImage(
+        @Header("Authorization") authToken: String,
+        @Part file: MultipartBody.Part
+    ): ApiResponse<List<String>>
 }
