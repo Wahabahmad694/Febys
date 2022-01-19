@@ -88,13 +88,13 @@
                     tools:text="$100" />
 
                 <TextView
-                    android:id="@+id/tv_availble"
+                    android:id="@+id/tv_wallet_payment_msg"
                     style="@style/TextTheme.Arial.TS16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_4sdp"
                     android:layout_marginTop="@dimen/_5sdp"
-                    android:text="@string/available"
+                    tools:text="@string/available"
                     app:layout_constraintStart_toEndOf="@id/tv_wallet_price"
                     app:layout_constraintTop_toBottomOf="@id/tv_wallet" />
 

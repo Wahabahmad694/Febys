@@ -119,7 +119,14 @@ class PaymentFragment : BasePaymentFragment() {
                 }
                 is DataState.Data -> {
                     hideLoader()
-                    binding.tvWalletPrice.text = it.data.getPrice().getFormattedPrice()
+                    if (paymentViewModel.isSplitMode) {
+                        binding.tvWalletPrice.text =
+                            paymentViewModel.amountPaidFromWallet!!.getFormattedPrice()
+                        binding.tvWalletPaymentMsg.text = getString(R.string.taken_from_wallet)
+                    } else {
+                        binding.tvWalletPrice.text = it.data.getPrice().getFormattedPrice()
+                        binding.tvWalletPaymentMsg.text = getString(R.string.available)
+                    }
                 }
             }
         }

@@ -34,7 +34,7 @@ class PaymentViewModel @Inject constructor(
 
     var listenPayStack = false
 
-    var amountPaidFromWallet = 0.0
+    var amountPaidFromWallet: Price? = null
 
     fun refreshWallet() = paymentRepo.fetchWallet(paymentRequest.currency).onEach {
         if (it is DataState.Data) wallet = it.data
@@ -46,14 +46,14 @@ class PaymentViewModel @Inject constructor(
             if (isSplitMode) this.paymentRequest.copy(amount = wallet.amount) else this.paymentRequest
         return paymentRepo.doWalletPayment(paymentRequest).onEach {
             if (it is DataState.Data) {
-                amountPaidFromWallet = paymentRequest.amount
+                amountPaidFromWallet = Price("", paymentRequest.amount, paymentRequest.currency)
                 transactions.add(it.data)
             }
         }.asLiveData()
     }
 
     fun getRemainingPriceForSplit(): Price {
-        val remainingAmount = paymentRequest.amount - amountPaidFromWallet
+        val remainingAmount = paymentRequest.amount - amountPaidFromWallet!!.value
         return Price("", remainingAmount, paymentRequest.currency)
     }
 

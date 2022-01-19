@@ -309,6 +309,7 @@
     <string name="label_min">Min</string>
     <string name="label_max">Max</string>
     <string name="available">available</string>
+    <string name="taken_from_wallet">taken from wallet</string>
     <string name="_100">$100</string>
     <string name="momo_bank_card">Momo | Bank Card</string>
     <string name="pay_via_momo_or_bank_card">Pay via Momo or Bank Card</string>
