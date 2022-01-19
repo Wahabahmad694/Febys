@@ -25,6 +25,7 @@ import com.hexagram.febys.models.api.product.*
 import com.hexagram.febys.models.api.rating.Rating
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.cart.CartViewModel
+import com.hexagram.febys.ui.screens.checkout.CheckoutFragmentDirections
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.ui.screens.product.additional.AdditionalProductAdapter
 import com.hexagram.febys.utils.*
@@ -717,7 +718,7 @@ class ProductDetailFragment : SliderFragment() {
         binding.containerProductVariantSecondAttr.isVisible = false
     }
 
-    private fun updateProductDescription(description: Description, openByDefault: Boolean = false) {
+    private fun updateProductDescription(description: Description) {
         val productDescriptionsBinding = LayoutProductDescriptionBinding.inflate(
             layoutInflater, binding.containerProductDescriptions, false
         )
@@ -733,17 +734,12 @@ class ProductDetailFragment : SliderFragment() {
             binding.scrollView.scrollToDescendant(productDescriptionsBinding.containerProductDescription)
         }
 
-        if (openByDefault) {
-            productDescriptionsBinding.containerProductDescription.isVisible = true
-            productDescriptionsBinding.ivDescriptionArrow.updateArrowByVisibility(true)
-        }
-
         addView(binding.containerProductDescriptions, productDescriptionsBinding.root)
     }
 
     private fun updateProductDescription(descriptions: List<Description>) {
-        for ((index, description) in descriptions.withIndex()) {
-            updateProductDescription(description, index == 0)
+        descriptions.forEach {
+            updateProductDescription(it)
         }
     }
 

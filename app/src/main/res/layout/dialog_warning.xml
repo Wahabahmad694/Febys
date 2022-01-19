@@ -31,14 +31,14 @@
             android:id="@+id/iv_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/bg_warning"
+            android:src="@drawable/ic_bg_warning"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_close" />
 
         <TextView
             android:id="@+id/tv_info_title"
-            style="@style/TextTheme.HelveticaNeue.TS32"
+            style="@style/TextTheme.HelveticaNeue.TS32.Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_16dp"
@@ -49,7 +49,7 @@
 
         <TextView
             android:id="@+id/tv_info_msg"
-            style="@style/TextTheme.Arial.TS14"
+            style="@style/TextTheme.Arial.TS14.Bold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_32dp"
@@ -74,7 +74,7 @@
                 android:id="@+id/btn_yes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_36sdp"
+                android:layout_marginTop="@dimen/_23sdp"
                 android:minWidth="@dimen/_108sdp"
                 android:text="@string/label_yes"
                 android:textAllCaps="false"
@@ -82,20 +82,21 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_no"
-                style="@style/ButtonTheme.OutLine"
+                style="@style/ButtonTheme.OutLines"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_36sdp"
+                android:layout_marginTop="@dimen/_23sdp"
                 android:minWidth="@dimen/_108sdp"
                 android:text="@string/label_no"
+                android:textStyle="bold"
                 android:textAllCaps="false"
                 android:textAppearance="@style/TextTheme.HelveticaNeue.TS16" />
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_48dp"
+            android:layout_height="@dimen/_30sdp"
             app:layout_constraintTop_toBottomOf="@id/container_buttons" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

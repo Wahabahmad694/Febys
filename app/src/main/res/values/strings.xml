@@ -208,7 +208,7 @@
     <string name="label_checkout">Checkout</string>
     <string name="msg_for_no_shipping_address">Please add shipping address before placing the order</string>
     <string name="msg_for_no_payment">Please add payment method before placing the order</string>
-    <string name="msg_for_change_shipping_address">if you change the shipping address that will be effected on shipping cost.</string>
+    <string name="msg_for_change_shipping_address">Do you change the shipping address that will be effected on shipping cost.</string>
     <string name="label_payment">Payment</string>
     <string name="label_place_order">Place Order</string>
     <string name="label_message_for_the_seller">Message for the Seller:</string>
@@ -309,7 +309,6 @@
     <string name="label_min">Min</string>
     <string name="label_max">Max</string>
     <string name="available">available</string>
-    <string name="taken_from_wallet">taken from wallet</string>
     <string name="_100">$100</string>
     <string name="momo_bank_card">Momo | Bank Card</string>
     <string name="pay_via_momo_or_bank_card">Pay via Momo or Bank Card</string>
@@ -337,5 +336,12 @@
     <string name="label_please_choose_following_one_of_them">Please choose following one of them</string>
     <string name="label_choose_payment_for_remaining">Choose Payment for remaining %1s</string>
     <string name="please_select_a_payment_method">Please select a payment method</string>
+    <string name="_4_7">4.7</string>
+    <string name="label_reply_to_the_question">Reply to the question</string>
+    <string name="label_94_positive_feedback">94% positive feedback</string>
+    <string name="label_average_price_rating_4.5">Average Price Rating: 4.5</string>
+    <string name="label_average_value_rating_4.5">Average Value Rating: 4.5</string>
+    <string name="label_average_quality_rating_4.5">Average Quality Rating: 4.5</string>
+    <string name="label_reviews_and_rating">Reviews &amp; Rating</string>
 
 </resources>

@@ -245,7 +245,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_16sdp"
                     android:layout_marginTop="@dimen/_12sdp"
-                    android:text="@string/label_reviews" />
+                    android:text="@string/label_reviews_and_rating" />
+
+                <include
+                    android:id="@+id/container_vendor_store_rating"
+                    layout="@layout/layout_vendor_store_rating" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_reviews"

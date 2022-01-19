@@ -66,7 +66,7 @@ class CartAdapter(private val isInCheckout: Boolean = false) :
                     removeCartItemAndNotifyNext(cartDTO)
                 }
 
-                ivProduct.setOnClickListener {
+                root.setOnClickListener {
                     interaction?.openProductDetail(cartDTO)
                 }
 
