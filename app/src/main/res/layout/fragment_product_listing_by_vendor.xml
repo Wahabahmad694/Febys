@@ -21,22 +21,21 @@
 
             <LinearLayout
                 android:id="@+id/container_product_listing_title_and_count"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_8dp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:gravity="center"
                 android:minHeight="?actionBarSize"
                 android:orientation="vertical"
-                app:layout_constraintEnd_toStartOf="@id/tv_cart_count"
-                app:layout_constraintStart_toEndOf="@id/iv_back"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/tv_vendor_type"
                     style="@style/TextTheme.Arial.TS12"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/_4sdp"
                     android:ellipsize="start"
                     android:gravity="center"
                     android:maxLines="1"
@@ -49,7 +48,8 @@
                     style="@style/TextTheme.HelveticaNeue.TS16.Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawablePadding="@dimen/_4sdp"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_4sdp"
                     android:ellipsize="start"
                     android:gravity="center"
                     android:maxLines="1"
@@ -77,7 +77,6 @@
                 android:paddingStart="@dimen/_16dp"
                 android:paddingEnd="0dp"
                 android:src="@drawable/ic_back"
-                app:layout_constraintBottom_toBottomOf="@id/container_product_listing_title_and_count"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/container_product_listing_title_and_count" />
 
@@ -87,7 +86,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_16dp"
                 android:src="@drawable/ic_cart"
-                app:layout_constraintBottom_toBottomOf="@id/container_product_listing_title_and_count"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/container_product_listing_title_and_count" />
 

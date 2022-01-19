@@ -45,7 +45,7 @@ class ProductListingPagerAdapter :
     }
 
     inner class ProductPagerViewHolder(
-        private val binding: ItemProductListBinding
+        private val binding: ItemProductListBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Product, position: Int) {

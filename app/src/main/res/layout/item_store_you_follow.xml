@@ -18,6 +18,8 @@
             name="storeSlogan"
             type="String" />
 
+
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,7 +42,7 @@
 
         <TextView
             android:id="@+id/tv_store_name"
-            style="@style/TextTheme.HelveticaNeue.TS16"
+            style="@style/TextTheme.HelveticaNeue.TS16.Bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_24dp"
@@ -53,16 +55,24 @@
 
         <TextView
             android:id="@+id/tv_store_slogan"
-            style="@style/TextTheme.Arial.TS12"
+            style="@style/TextTheme.Arial.TS12.Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_2dp"
             android:text="@{storeSlogan}"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/iv_stores_image"
             app:layout_constraintStart_toStartOf="@id/iv_stores_image"
             app:layout_constraintTop_toBottomOf="@id/tv_store_name"
             tools:text="Patch belted denim dress" />
 
+        <TextView
+            android:id="@+id/tv_product_price"
+            style="@style/TextTheme.Arial.TS12.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_3sdp"
+            app:layout_constraintEnd_toEndOf="@id/tv_store_slogan"
+            app:layout_constraintStart_toStartOf="@id/tv_store_slogan"
+            app:layout_constraintTop_toBottomOf="@id/tv_store_slogan"
+            android:text="$14" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

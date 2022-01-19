@@ -151,6 +151,7 @@
     <string name="label_cancel">Cancel</string>
     <string name="label_add_review">Add Review</string>
     <string name="label_return_item">Return Item</string>
+    <string name="label_my_review">My Review</string>
     <string name="label_order_received">Order Received</string>
     <string name="label_my_location">My Location</string>
     <string name="label_my_location_description">This location defines your language and currency</string>
@@ -182,8 +183,6 @@
     <string name="label_create_account">Create Account</string>
     <string name="label_add_shipping_address">Add new address</string>
     <string name="label_edit">Edit</string>
-    <string name="label_my_review">My Review</string>
-    <string name="label_edit_review">Edit Review</string>
     <string name="label_address_label">Address Label</string>
     <string name="label_order_cancel_reason">Order Cancel Reason</string>
     <string name="label_destination_or_region">Destination/Region</string>
@@ -208,7 +207,7 @@
     <string name="label_checkout">Checkout</string>
     <string name="msg_for_no_shipping_address">Please add shipping address before placing the order</string>
     <string name="msg_for_no_payment">Please add payment method before placing the order</string>
-    <string name="msg_for_change_shipping_address">if you change the shipping address that will be effected on shipping cost.</string>
+    <string name="msg_for_change_shipping_address">Do you change the shipping address that will be effected on shipping cost.</string>
     <string name="label_payment">Payment</string>
     <string name="label_place_order">Place Order</string>
     <string name="label_message_for_the_seller">Message for the Seller:</string>
@@ -333,5 +332,12 @@
     <string name="label_oops">OOPs!</string>
     <string name="label_source">Source</string>
     <string name="label_status">Status</string>
+    <string name="_4_7">4.7</string>
+    <string name="label_reply_to_the_question">Reply to the question</string>
+    <string name="label_94_positive_feedback">94% positive feedback</string>
+    <string name="label_average_price_rating_4.5">Average Price Rating: 4.5</string>
+    <string name="label_average_value_rating_4.5">Average Value Rating: 4.5</string>
+    <string name="label_average_quality_rating_4.5">Average Quality Rating: 4.5</string>
+    <string name="label_reviews_and_rating">Reviews &amp; Rating</string>
 
 </resources>

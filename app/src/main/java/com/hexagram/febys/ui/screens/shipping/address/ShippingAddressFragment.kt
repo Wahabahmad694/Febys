@@ -52,7 +52,7 @@ class ShippingAddressFragment : BaseFragment() {
             gotoAddEditShippingAddress(shippingAddress)
         }
         shippingAddressAdapter.deleteShippingAddress = { shippingAddress ->
-            val resId = R.drawable.bg_warning
+            val resId = R.drawable.ic_bg_warning
             val title = getString(R.string.label_delete_warning)
             val msg = getString(R.string.msg_for_delete_shipping_address)
 

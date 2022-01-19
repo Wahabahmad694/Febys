@@ -171,7 +171,7 @@
 
                     <TextView
                         android:id="@+id/tv_product_off_price"
-                        style="@style/TextTheme.Arial.TS10"
+                        style="@style/TextTheme.Arial.TS10.Grey"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@{variant.originalPrice.getFormattedPrice()}"
@@ -197,7 +197,7 @@
 
                     <TextView
                         android:id="@+id/tv_product_price"
-                        style="@style/TextTheme.Arial.TS12"
+                        style="@style/TextTheme.Arial.TS12.Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_2dp"
@@ -737,7 +737,7 @@
                                 android:layout_margin="@dimen/_16dp"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:orientation="vertical">
+                                android:orientation="horizontal">
 
                                 <androidx.appcompat.widget.AppCompatRatingBar
                                     android:id="@+id/store_rating_bar"
@@ -749,7 +749,8 @@
 
                                 <TextView
                                     android:id="@+id/tv_store_rating"
-                                    style="@style/TextTheme.Arial.TS14"
+                                    style="@style/TextTheme.Arial.TS14.Bold"
+                                    android:layout_marginStart="@dimen/_5sdp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content" />
 

@@ -615,6 +615,7 @@
         <argument
             android:name="isFollow"
             app:argType="boolean" />
+
     </fragment>
     <fragment
         android:id="@+id/menuFragment"

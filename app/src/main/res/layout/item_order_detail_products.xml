@@ -22,11 +22,12 @@
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_product"
-            android:layout_width="@dimen/_84sdp"
-            android:layout_height="@dimen/_72sdp"
-            android:layout_marginHorizontal="@dimen/_8sdp"
+            android:layout_width="@dimen/_83sdp"
+            android:layout_height="@dimen/_86sdp"
+            android:layout_marginStart="@dimen/_8sdp"
             android:layout_marginTop="@dimen/_18sdp"
             app:actualImageScaleType="fitCenter"
+            android:background="@color/grey"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:placeholderImage="@drawable/placeholder_image"

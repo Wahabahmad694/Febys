@@ -47,6 +47,7 @@ class HomeStoresAdapter :
             binding.imageUrl = item
             binding.storeName = "Deal-Train store"
             binding.storeSlogan = "Patch belted denim dress"
+            binding.tvProductPrice.text="$14"
         }
     }
 
