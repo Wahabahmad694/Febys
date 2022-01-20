@@ -204,6 +204,9 @@ dependencies {
 
     // paypal
     implementation('com.paypal.checkout:android-sdk:0.5.2')
+
+    //crop image
+    api 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
 }
 
 def getCredentials() {
