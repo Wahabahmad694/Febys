@@ -336,8 +336,8 @@
         tools:layout="@layout/fragment_filters">
         <argument
             android:name="filters"
-            app:nullable="true"
-            app:argType="com.hexagram.febys.models.api.filters.Filters" />
+            app:argType="com.hexagram.febys.models.api.filters.Filters"
+            app:nullable="true" />
         <argument
             android:name="appliedFilters"
             app:argType="com.hexagram.febys.models.api.request.ProductListingRequest" />
@@ -489,7 +489,7 @@
         <action
             android:id="@+id/action_checkoutFragment_to_checkoutSuccessFragment"
             app:destination="@id/checkoutSuccessFragment"
-            app:popUpTo="@id/cartFragment"
+            app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
