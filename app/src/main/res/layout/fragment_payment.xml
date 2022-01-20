@@ -280,7 +280,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_17sdp"
                     android:layout_marginBottom="@dimen/_14sdp"
-                    android:text="@string/label_proceed_to_checkout"
+                    android:text="@string/label_pay"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />

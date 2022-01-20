@@ -137,6 +137,8 @@
     <string name="error_enter_phone">Please Enter Phone No</string>
     <string name="error_enter_valid_phone">Please Enter Valid Phone No</string>
     <string name="label_proceed_to_checkout">Proceed to Checkout</string>
+    <string name="label_proceed_to_payment">Proceed to Payment</string>
+    <string name="label_pay">Pay</string>
     <string name="label_download_pdf">Download PDF</string>
     <string name="label_apply">Apply</string>
     <string name="label_enter_voucher_code">Enter Voucher Code</string>
