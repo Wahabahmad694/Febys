@@ -332,12 +332,12 @@
     <string name="label_oops">OOPs!</string>
     <string name="label_source">Source</string>
     <string name="label_status">Status</string>
-    <string name="_4_7">4.7</string>
+    <string name="_4_7">%1f</string>
     <string name="label_reply_to_the_question">Reply to the question</string>
-    <string name="label_94_positive_feedback">94% positive feedback</string>
-    <string name="label_average_price_rating_4.5">Average Price Rating: 4.5</string>
-    <string name="label_average_value_rating_4.5">Average Value Rating: 4.5</string>
-    <string name="label_average_quality_rating_4.5">Average Quality Rating: 4.5</string>
+    <string name="label_94_positive_feedback">%1d% positive feedback</string>
+    <string name="label_average_price_rating_4.5">Average Price Rating: %1f</string>
+    <string name="label_average_value_rating_4.5">Average Value Rating: %1f</string>
+    <string name="label_average_quality_rating_4.5">Average Quality Rating: %1f</string>
     <string name="label_reviews_and_rating">Reviews &amp; Rating</string>
 
 </resources>

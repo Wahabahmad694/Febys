@@ -617,7 +617,7 @@ class ProductDetailFragment : SliderFragment() {
                     layoutInflater, binding.containerReviews, false
                 )
 
-                reviewBinding.userName.text = item.consumer.firstName
+                reviewBinding.userName.text = item.consumer.fullName
                 reviewBinding.userRatingBar.rating = item.score.toFloat()
                 reviewBinding.userRatingBar.stepSize = 0.5f
                 reviewBinding.tvReview.text = item.review.comment

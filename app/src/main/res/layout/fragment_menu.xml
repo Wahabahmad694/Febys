@@ -23,11 +23,25 @@
             android:text="@string/menu_menu" />
 
         <TextView
-            android:id="@+id/label_discount_mall"
+            android:id="@+id/label_febys_plus"
             style="@style/TextTheme.HelveticaNeue.TS12.Bold"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_32sdp"
             android:layout_marginTop="@dimen/_18sdp"
+            android:gravity="center_vertical"
+            android:text="@string/febys_plus"
+            app:drawableEndCompat="@drawable/ic_right" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1dp"
+            android:background="@color/grey_e1e5e8" />
+
+        <TextView
+            android:id="@+id/label_discount_mall"
+            style="@style/TextTheme.HelveticaNeue.TS12.Bold"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_32sdp"
             android:gravity="center_vertical"
             android:text="@string/label_discount_mall"
             app:drawableEndCompat="@drawable/ic_right" />
@@ -79,18 +93,6 @@
             android:layout_height="@dimen/_1dp"
             android:background="@color/grey_e1e5e8" />
 
-        <TextView
-            android:id="@+id/label_febys_plus"
-            style="@style/TextTheme.HelveticaNeue.TS12.Bold"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_32sdp"
-            android:gravity="center_vertical"
-            android:text="@string/febys_plus"
-            app:drawableEndCompat="@drawable/ic_right" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_1dp"
-            android:background="@color/grey_e1e5e8" />
     </LinearLayout>
 </layout>

@@ -750,9 +750,9 @@
                                 <TextView
                                     android:id="@+id/tv_store_rating"
                                     style="@style/TextTheme.Arial.TS14.Bold"
-                                    android:layout_marginStart="@dimen/_5sdp"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content" />
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="@dimen/_5sdp" />
 
                             </LinearLayout>
 

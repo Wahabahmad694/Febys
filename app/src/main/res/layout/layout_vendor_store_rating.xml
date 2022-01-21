@@ -104,6 +104,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_8sdp"
                         android:layout_weight="1"
+                        app:trackCornerRadius="@dimen/_10sdp"
                         tools:progress="30" />
 
                 </LinearLayout>
@@ -134,6 +135,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_8sdp"
                         android:layout_weight="1"
+                        app:trackCornerRadius="@dimen/_10sdp"
                         tools:progress="30" />
 
                 </LinearLayout>
@@ -164,6 +166,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_8sdp"
                         android:layout_weight="1"
+                        app:trackCornerRadius="@dimen/_10sdp"
                         tools:progress="30" />
 
                 </LinearLayout>
@@ -194,6 +197,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_8sdp"
                         android:layout_weight="1"
+                        app:trackCornerRadius="@dimen/_10sdp"
                         tools:progress="30" />
 
                 </LinearLayout>
@@ -224,6 +228,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_8sdp"
                         android:layout_weight="1"
+                        app:trackCornerRadius="@dimen/_10sdp"
                         tools:progress="30" />
 
                 </LinearLayout>
@@ -275,6 +280,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_8sdp"
                         android:layout_weight="1"
+                        app:trackCornerRadius="@dimen/_10sdp"
                         tools:progress="30" />
 
                 </LinearLayout>
@@ -305,6 +311,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_8sdp"
                         android:layout_weight="1"
+                        app:trackCornerRadius="@dimen/_10sdp"
                         tools:progress="30" />
 
                 </LinearLayout>
@@ -335,6 +342,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_8sdp"
                         android:layout_weight="1"
+                        app:trackCornerRadius="@dimen/_10sdp"
                         tools:progress="30" />
 
                 </LinearLayout>
@@ -365,6 +373,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_8sdp"
                         android:layout_weight="1"
+                        app:trackCornerRadius="@dimen/_10sdp"
                         tools:progress="30" />
 
                 </LinearLayout>
@@ -395,6 +404,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_8sdp"
                         android:layout_weight="1"
+                        app:trackCornerRadius="@dimen/_10sdp"
                         tools:progress="30" />
 
                 </LinearLayout>
@@ -445,6 +455,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_8sdp"
                         android:layout_weight="1"
+                        app:trackCornerRadius="@dimen/_10sdp"
                         tools:progress="30" />
 
                 </LinearLayout>
@@ -475,6 +486,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_8sdp"
                         android:layout_weight="1"
+                        app:trackCornerRadius="@dimen/_10sdp"
                         tools:progress="30" />
 
                 </LinearLayout>
@@ -505,6 +517,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_8sdp"
                         android:layout_weight="1"
+                        app:trackCornerRadius="@dimen/_10sdp"
                         tools:progress="30" />
 
                 </LinearLayout>
@@ -535,6 +548,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_8sdp"
                         android:layout_weight="1"
+                        app:trackCornerRadius="@dimen/_10sdp"
                         tools:progress="30" />
 
                 </LinearLayout>
@@ -565,6 +579,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_8sdp"
                         android:layout_weight="1"
+                        app:trackCornerRadius="@dimen/_10sdp"
                         tools:progress="30" />
 
                 </LinearLayout>

@@ -38,7 +38,7 @@
                 android:checked="true"
                 android:paddingHorizontal="@dimen/_16dp"
                 android:stateListAnimator="@animator/selector_chip_text_style"
-                android:text="@string/label_most_recent"
+                android:text="@string/label_top_reviews"
                 android:textAppearance="@style/TextTheme.HelveticaNeue.TS12" />
 
             <RadioButton
@@ -50,7 +50,7 @@
                 android:button="@null"
                 android:paddingHorizontal="@dimen/_16dp"
                 android:stateListAnimator="@animator/selector_chip_text_style"
-                android:text="@string/label_top_reviews"
+                android:text="@string/label_most_recent"
                 android:textAppearance="@style/TextTheme.HelveticaNeue.TS12" />
         </RadioGroup>
 
