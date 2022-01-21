@@ -79,24 +79,15 @@ open class CartViewModel @Inject constructor(
         }
     }
 
-    fun doPayment(paymentRequest: PaymentRequest, onPayment: (DataState<Transaction>) -> Unit) {
-        onPayment(DataState.Loading())
-        viewModelScope.launch {
-            cartRepo.doPayment(paymentRequest).collect {
-                launch(Dispatchers.Main) { onPayment(it) }
-            }
-        }
-    }
-
     fun placeOrder(
-        transactionId: String,
+        transactions: List<Transaction>,
         voucher: String?,
         vendorMessages: List<VendorMessage>,
         onPlaceOrderResponse: (DataState<Order>) -> Unit
     ) {
         onPlaceOrderResponse(DataState.Loading())
         viewModelScope.launch {
-            cartRepo.placeOrder(transactionId, voucher, vendorMessages).collect {
+            cartRepo.placeOrder(transactions, voucher, vendorMessages).collect {
                 launch(Dispatchers.Main) { onPlaceOrderResponse(it) }
             }
         }

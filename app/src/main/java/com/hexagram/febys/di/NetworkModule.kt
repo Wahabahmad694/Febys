@@ -6,6 +6,7 @@ import com.hexagram.febys.dataSource.IUserDataSource
 import com.hexagram.febys.network.*
 import com.hexagram.febys.network.adapter.ApiResponseCallAdapterFactory
 import com.hexagram.febys.prefs.IPrefManger
+import com.hexagram.febys.ui.screens.payment.service.PaymentService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -100,5 +101,11 @@ object NetworkModule {
     @Singleton
     fun provideAuthService(@BackendClient retrofit: Retrofit): AuthService {
         return retrofit.create(AuthService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun providePaymentService(@BackendClient retrofit: Retrofit): PaymentService {
+        return retrofit.create(PaymentService::class.java)
     }
 }

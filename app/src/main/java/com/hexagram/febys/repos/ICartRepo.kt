@@ -34,10 +34,8 @@ interface ICartRepo {
     ): Flow<DataState<Order>>
 
     suspend fun placeOrder(
-        transactionId: String,
+        transactions: List<Transaction>,
         voucher: String?,
         vendorMessages: List<VendorMessage>
     ): Flow<DataState<Order>>
-
-    suspend fun doPayment(paymentRequest: PaymentRequest): Flow<DataState<Transaction>>
 }

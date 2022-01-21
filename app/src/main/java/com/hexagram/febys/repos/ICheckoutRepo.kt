@@ -5,5 +5,4 @@ import com.hexagram.febys.models.view.PaymentMethod
 
 interface ICheckoutRepo {
     fun getDefaultShippingAddress(): ShippingAddress?
-    fun getDefaultPaymentMethod(): PaymentMethod?
 }

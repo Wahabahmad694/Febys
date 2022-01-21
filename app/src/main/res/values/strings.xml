@@ -137,6 +137,8 @@
     <string name="error_enter_phone">Please Enter Phone No</string>
     <string name="error_enter_valid_phone">Please Enter Valid Phone No</string>
     <string name="label_proceed_to_checkout">Proceed to Checkout</string>
+    <string name="label_proceed_to_payment">Proceed to Payment</string>
+    <string name="label_pay">Pay</string>
     <string name="label_download_pdf">Download PDF</string>
     <string name="label_apply">Apply</string>
     <string name="label_enter_voucher_code">Enter Voucher Code</string>
@@ -151,7 +153,6 @@
     <string name="label_cancel">Cancel</string>
     <string name="label_add_review">Add Review</string>
     <string name="label_return_item">Return Item</string>
-    <string name="label_my_review">My Review</string>
     <string name="label_order_received">Order Received</string>
     <string name="label_my_location">My Location</string>
     <string name="label_my_location_description">This location defines your language and currency</string>
@@ -183,6 +184,8 @@
     <string name="label_create_account">Create Account</string>
     <string name="label_add_shipping_address">Add new address</string>
     <string name="label_edit">Edit</string>
+    <string name="label_my_review">My Review</string>
+    <string name="label_edit_review">Edit Review</string>
     <string name="label_address_label">Address Label</string>
     <string name="label_order_cancel_reason">Order Cancel Reason</string>
     <string name="label_destination_or_region">Destination/Region</string>
@@ -308,6 +311,7 @@
     <string name="label_min">Min</string>
     <string name="label_max">Max</string>
     <string name="available">available</string>
+    <string name="taken_from_wallet">taken from wallet</string>
     <string name="_100">$100</string>
     <string name="momo_bank_card">Momo | Bank Card</string>
     <string name="pay_via_momo_or_bank_card">Pay via Momo or Bank Card</string>
@@ -332,6 +336,9 @@
     <string name="label_oops">OOPs!</string>
     <string name="label_source">Source</string>
     <string name="label_status">Status</string>
+    <string name="label_please_choose_following_one_of_them">Please choose following one of them</string>
+    <string name="label_choose_payment_for_remaining">Choose Payment for remaining %1s</string>
+    <string name="please_select_a_payment_method">Please select a payment method</string>
     <string name="_4_7">4.7</string>
     <string name="label_reply_to_the_question">Reply to the question</string>
     <string name="label_94_positive_feedback">94% positive feedback</string>

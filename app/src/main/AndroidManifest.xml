@@ -41,7 +41,9 @@
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/app_name" />
+            android:exported="true"
+            android:label="@string/app_name"
+            android:permission="" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
