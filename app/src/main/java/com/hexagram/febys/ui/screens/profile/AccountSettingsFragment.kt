@@ -79,7 +79,7 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
         }
     }
 
-    private fun startCrop(imageUri:Uri) {
+    private fun startCrop(imageUri: Uri) {
 
         // start cropping activity for pre-acquired image saved on the device and customize settings
         CropImage.activity()
@@ -227,6 +227,7 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
 
 
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             val result = CropImage.getActivityResult(data)
@@ -241,6 +242,7 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
             }
         }
     }
+
     private fun setData(consumer: Consumer?) {
         binding.profileImg.setImageURI(consumer?.profileImage)
         binding.tvProfileName.setText(consumer?.fullName)

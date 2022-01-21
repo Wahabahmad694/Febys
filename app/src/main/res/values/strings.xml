@@ -125,6 +125,7 @@
 
     <string name="minus">-</string>
     <string name="error_enter_first_name">Please Enter First Name</string>
+    <string name="error_enter_address_label">Please Enter Address label</string>
     <string name="error_enter_valid_first_name">Please Enter Valid First Name</string>
     <string name="error_enter_last_name">Please Enter Last Name</string>
     <string name="error_enter_valid_last_name">Please Enter Valid Last Name</string>
