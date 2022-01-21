@@ -80,8 +80,6 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
     }
 
     private fun startCrop(imageUri: Uri) {
-
-        // start cropping activity for pre-acquired image saved on the device and customize settings
         CropImage.activity()
             .setAllowRotation(false)
             .setGuidelines(CropImageView.Guidelines.ON)
