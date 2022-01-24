@@ -1,14 +1,22 @@
 package com.hexagram.febys.ui.screens.payment.repo
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.hexagram.febys.models.api.request.PagingListRequest
 import com.hexagram.febys.models.api.request.PaymentRequest
 import com.hexagram.febys.models.api.transaction.Transaction
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.adapter.*
+import com.hexagram.febys.paginations.TransactionPagingSource
 import com.hexagram.febys.prefs.IPrefManger
 import com.hexagram.febys.ui.screens.payment.models.PayStackTransactionRequest
 import com.hexagram.febys.ui.screens.payment.models.Wallet
 import com.hexagram.febys.ui.screens.payment.service.PaymentService
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
@@ -90,4 +98,17 @@ class PaymentRepoImpl @Inject constructor(
             .onException { emit(DataState.ExceptionError()) }
             .onNetworkError { emit(DataState.NetworkError()) }
     }.flowOn(dispatcher)
+
+    override fun fetchTransactions(
+        scope: CoroutineScope, dispatcher: CoroutineDispatcher
+    ): Flow<PagingData<Transaction>> {
+        return Pager(
+            PagingConfig(pageSize = 10)
+        ) {
+            val authToken = pref.getAccessToken()
+            TransactionPagingSource(paymentService, authToken, PagingListRequest())
+        }.flow
+            .flowOn(dispatcher)
+            .cachedIn(scope)
+    }
 }

@@ -2,9 +2,10 @@ package com.hexagram.febys.network
 
 import com.hexagram.febys.BuildConfig
 import com.hexagram.febys.dataSource.ICartDataSource
-import com.hexagram.febys.dataSource.IUserDataSource
 import com.hexagram.febys.network.adapter.ApiResponse
 import com.hexagram.febys.prefs.IPrefManger
+import com.hexagram.febys.repos.IAuthRepo
+import com.hexagram.febys.repos.ICartRepo
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Request
@@ -13,7 +14,6 @@ import java.io.IOException
 
 class AuthenticationInterceptor(
     private val pref: IPrefManger,
-    private val userDataSource: IUserDataSource,
     private val cartDataSource: ICartDataSource,
     private val tokenRefreshService: TokenRefreshService
 ) : Interceptor {
@@ -47,11 +47,7 @@ class AuthenticationInterceptor(
                     origResponse.close()
                     return@runBlocking chain.proceed(newReq)
                 } else if (tokenResponse is ApiResponse.ApiFailureResponse.Error) {
-                    pref.clearFav()
-                    cartDataSource.clear()
-                    userDataSource.clearUserState()
-                    userDataSource.clearUserData()
-                    userDataSource.clearConsumerData()
+                    IAuthRepo.signOut(pref, cartDataSource)
                 }
             }
             origResponse

@@ -13,6 +13,7 @@ import com.hexagram.febys.network.response.ResponseLogin
 import com.hexagram.febys.network.response.ResponseOtpVerification
 import com.hexagram.febys.network.response.ResponseSignup
 import com.hexagram.febys.repos.IAuthRepo
+import com.hexagram.febys.ui.screens.payment.models.Wallet
 import com.hexagram.febys.utils.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -89,4 +90,6 @@ class AuthViewModel @Inject constructor(
     }
 
     fun getConsumer(): Consumer? = authRepo.getConsumer()
+
+    fun getWallet(): Wallet? = authRepo.getWallet()
 }
