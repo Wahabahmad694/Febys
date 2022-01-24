@@ -14,6 +14,7 @@
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -47,52 +48,35 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="@id/label_shipping_address" />
 
-                    <LinearLayout
-                        android:id="@+id/container_address_label"
+                    <TextView
+                        android:id="@+id/address_label"
+                        style="@style/TextTheme.Arial.TS16"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_18sdp"
-                        android:orientation="vertical"
-                        android:paddingHorizontal="@dimen/_16sdp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/iv_back">
+                        android:layout_marginHorizontal="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_32sdp"
+                        android:text="@string/label_address_label"
+                        app:layout_constraintTop_toBottomOf="@id/iv_back" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/et_address_label"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_16sdp"
+                        android:background="@null"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPersonName"
+                        android:paddingVertical="@dimen/_8dp"
+                        android:textAppearance="@style/TextTheme.Arial.TS16"
+                        app:layout_constraintTop_toBottomOf="@id/address_label" />
 
-                            <TextView
-                                android:id="@+id/label_address_label"
-                                style="@style/TextTheme.Arial.TS16"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="@string/label_address_label" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1dp"
+                        android:layout_marginHorizontal="@dimen/_16sdp"
+                        android:background="@color/grey_e1e5e8"
+                        app:layout_constraintTop_toBottomOf="@id/et_address_label" />
 
-                            <androidx.appcompat.widget.AppCompatImageView
-                                android:id="@+id/office_label_arrow"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_arrow_down" />
-
-                        </LinearLayout>
-
-                        <TextView
-                            android:id="@+id/tv_address_label"
-                            style="@style/TextTheme.Arial.TS16"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="2dp"
-                            tools:text="Office" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginTop="@dimen/_8sdp"
-                            android:background="@color/grey_e1e5e8" />
-                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/label_first_name"
@@ -102,7 +86,7 @@
                         android:layout_marginHorizontal="@dimen/_16sdp"
                         android:layout_marginTop="@dimen/_32sdp"
                         android:text="@string/label_first_name"
-                        app:layout_constraintTop_toBottomOf="@id/container_address_label" />
+                        app:layout_constraintTop_toBottomOf="@id/et_address_label" />
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/et_first_name"
@@ -478,12 +462,9 @@
             android:id="@+id/bg_dim"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="?color_dim" />
-
-        <include
-            android:id="@+id/bottom_sheet_address_labels"
-            layout="@layout/bottom_sheet_list_of_selection"
-            app:title="@{@string/label_select_address_label}" />
+            android:background="?color_dim"
+            app:layout_anchor="@+id/constraintLayout"
+            app:layout_anchorGravity="center" />
 
         <include
             android:id="@+id/bottom_sheet_region"

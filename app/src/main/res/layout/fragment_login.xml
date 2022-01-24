@@ -14,12 +14,13 @@
         tools:context=".ui.screens.auth.login.LoginFragment">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_back"
+            android:id="@+id/febys_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_gravity="center"
             android:padding="@dimen/_16dp"
-            android:src="@drawable/ic_back"
-            android:visibility="invisible" />
+            android:src="@drawable/febys_header" />
 
         <com.hexagram.febys.utils.ScrollView
             android:layout_width="match_parent"
