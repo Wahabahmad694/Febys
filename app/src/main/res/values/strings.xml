@@ -254,7 +254,7 @@
     <string name="_5">5</string>
     <string name="_4">4</string>
     <string name="label_most_recent">Most Recent</string>
-    <string name="label_top_reviews">Top Reviews</string>
+    <string name="label_top_review">Top Review</string>
     <string name="two_day_shipping">Two - Day Shipping</string>
     <string name="one_day_shipping_in_select_cities">One - Day Shipping (in Select Cities)</string>
     <string name="same_day_delivery_in_select_cities">Same - Day Delivery (in Select Cities)</string>

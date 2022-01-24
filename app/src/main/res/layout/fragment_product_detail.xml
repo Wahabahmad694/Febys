@@ -552,7 +552,7 @@
                                 style="@style/ButtonTheme.OutLine.Full"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_39sdp"
-                                android:layout_marginTop="@dimen/_16sdp"
+                                android:layout_marginTop="@dimen/_13sdp"
                                 android:text="@string/label_see_more" />
 
                         </LinearLayout>

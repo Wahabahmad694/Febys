@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.addCallback
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
@@ -25,7 +26,6 @@ import com.hexagram.febys.models.api.product.*
 import com.hexagram.febys.models.api.rating.Rating
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.cart.CartViewModel
-import com.hexagram.febys.ui.screens.checkout.CheckoutFragmentDirections
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.ui.screens.product.additional.AdditionalProductAdapter
 import com.hexagram.febys.utils.*
@@ -56,7 +56,7 @@ class ProductDetailFragment : SliderFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentProductDetailBinding.inflate(inflater, container, false)
         return binding.root
@@ -217,7 +217,6 @@ class ProductDetailFragment : SliderFragment() {
 
             gotoQAThreads(threads.toTypedArray())
         }
-
         binding.seeMoreRatingAndReviews.setOnClickListener {
             val product =
                 (productDetailViewModel.observeProductDetail.value as? DataState.Data)
@@ -606,7 +605,14 @@ class ProductDetailFragment : SliderFragment() {
     }
 
     private fun updateReviews(reviews: List<RatingAndReviews>) {
-        binding.seeMoreRatingAndReviews.isVisible = reviews.isNotEmpty()
+        if (reviews.size >= 3) {
+            binding.seeMoreRatingAndReviews.isVisible = reviews.isNotEmpty()
+             true
+        }
+        else{
+            binding.seeMoreRatingAndReviews.isInvisible = reviews.isNotEmpty()
+            false
+        }
         val sortedReviews = getSortedReviews(reviews)
         binding.containerReviews.apply {
             removeAllViews()
@@ -828,7 +834,7 @@ class ProductDetailFragment : SliderFragment() {
     override fun getIvCart(): View = binding.ivCart
 
     private inner class ProductSliderPageAdapter(
-        val images: List<String>, fa: Fragment
+        val images: List<String>, fa: Fragment,
     ) :
         FragmentStateAdapter(fa) {
         override fun getItemCount(): Int = images.size

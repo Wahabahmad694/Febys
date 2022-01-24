@@ -132,8 +132,8 @@
 
             <LinearLayout
                 android:id="@+id/container_quantity"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/_24sdp"
+                android:layout_width="@dimen/_68sdp"
+                android:layout_height="@dimen/_26sdp"
                 android:layout_marginTop="@dimen/_12dp"
                 android:background="@drawable/bg_border_dark_grey"
                 android:gravity="center_vertical"
@@ -144,28 +144,28 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/iv_minus"
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/_7sdp"
                     android:layout_height="@dimen/_18sdp"
                     android:src="@drawable/ic_remove" />
 
                 <TextView
                     android:id="@+id/tv_quantity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/_9sdp"
+                    android:layout_height="@dimen/_18sdp"
                     android:layout_marginStart="@dimen/_16sdp"
                     android:gravity="center"
                     android:text="@{`` + cart.quantity}"
                     android:textAlignment="center"
                     android:textColor="@color/fillblack"
-                    tools:text="5" />
+                    tools:text="5"
+                    android:textStyle="bold"/>
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/iv_add"
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/_7sdp"
                     android:layout_height="@dimen/_18sdp"
                     android:layout_marginStart="@dimen/_16sdp"
                     android:src="@drawable/ic_adds" />
-
 
             </LinearLayout>
 

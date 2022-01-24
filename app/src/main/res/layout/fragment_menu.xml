@@ -30,7 +30,7 @@
             android:layout_marginTop="@dimen/_18sdp"
             android:gravity="center_vertical"
             android:text="@string/febys_plus"
-            app:drawableEndCompat="@drawable/ic_right" />
+            app:drawableEndCompat="@drawable/ic_right_arrow" />
 
         <View
             android:layout_width="match_parent"
@@ -44,7 +44,7 @@
             android:layout_height="@dimen/_32sdp"
             android:gravity="center_vertical"
             android:text="@string/label_discount_mall"
-            app:drawableEndCompat="@drawable/ic_right" />
+            app:drawableEndCompat="@drawable/ic_right_arrow" />
 
         <View
             android:layout_width="match_parent"
@@ -58,7 +58,7 @@
             android:layout_height="@dimen/_32sdp"
             android:gravity="center_vertical"
             android:text="@string/label_pawn_shop"
-            app:drawableEndCompat="@drawable/ic_right" />
+            app:drawableEndCompat="@drawable/ic_right_arrow" />
 
         <View
             android:layout_width="match_parent"
@@ -72,7 +72,7 @@
             android:layout_height="@dimen/_32sdp"
             android:gravity="center_vertical"
             android:text="@string/label_made_in_ghana"
-            app:drawableEndCompat="@drawable/ic_right" />
+            app:drawableEndCompat="@drawable/ic_right_arrow" />
 
         <View
             android:layout_width="match_parent"
@@ -86,7 +86,7 @@
             android:layout_height="@dimen/_32sdp"
             android:gravity="center_vertical"
             android:text="@string/label_african_market"
-            app:drawableEndCompat="@drawable/ic_right" />
+            app:drawableEndCompat="@drawable/ic_right_arrow" />
 
         <View
             android:layout_width="match_parent"

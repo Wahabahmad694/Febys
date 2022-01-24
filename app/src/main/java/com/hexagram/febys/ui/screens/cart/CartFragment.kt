@@ -19,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class CartFragment : BaseFragment() {
-    private lateinit var binding: FragmentCartBinding
+    private lateinit var binding:FragmentCartBinding
     private val cartViewModel: CartViewModel by viewModels()
     private val cartAdapter = CartAdapter()
 
