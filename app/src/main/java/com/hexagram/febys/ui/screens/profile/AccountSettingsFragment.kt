@@ -167,8 +167,8 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
             if (result.resultCode == Activity.RESULT_OK) {
                 result.data?.data?.let {
                     val filePath = MediaFileUtils.handleUri(requireContext(), it)
-                    binding.profileImg.setImageURI(it)
                     startCrop(it!!)
+                    binding.profileImg.setImageURI(it)
                     accountSettingViewModel.updateProfileImage(filePath!!)
                 }
             }

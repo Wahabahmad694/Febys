@@ -55,6 +55,16 @@ class CartFragment : BaseFragment() {
             goBack()
         }
 
+        binding.btnDownloadPdf.setOnClickListener {
+            val resId = R.drawable.ic_pdf
+            val title = getString(R.string.label_delete_warning)
+            val msg = getString(R.string.msg_for_download_pdf)
+
+            showWarningDialog(resId, title, msg) {
+                //todo nothing
+            }
+        }
+
         binding.btnProceedToCheckout.setOnClickListener {
             if (isUserLoggedIn) gotoCheckout() else gotoLogin()
         }
@@ -116,7 +126,8 @@ class CartFragment : BaseFragment() {
         }
 
         cartDataSource.observeCartCount().observe(viewLifecycleOwner) { cartCount ->
-            binding.tvCartCount.text = if (cartCount == null || cartCount == 0) "" else "($cartCount)"
+            binding.tvCartCount.text =
+                if (cartCount == null || cartCount == 0) "" else "($cartCount)"
         }
     }
 
