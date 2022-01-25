@@ -72,6 +72,7 @@ class AddEditReviewFragment : BaseFragment() {
         binding.ivBack.setOnClickListener { goBack() }
         binding.ivEdit.setOnClickListener {
             updateFieldAndReviewsAdapter(true)
+            binding.labelAddReview.setText(getString(R.string.label_edit_review))
 
         }
         binding.etComment.doAfterTextChanged {
@@ -108,6 +109,7 @@ class AddEditReviewFragment : BaseFragment() {
 
         binding.btnSubmitReview.setOnClickListener {
             orderViewModel.postReview(args.orderId, orderReview)
+            binding.labelAddReview.setText(getString(R.string.label_my_review))
         }
     }
 

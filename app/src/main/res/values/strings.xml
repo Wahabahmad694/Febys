@@ -125,6 +125,7 @@
 
     <string name="minus">-</string>
     <string name="error_enter_first_name">Please Enter First Name</string>
+    <string name="error_enter_address_label">Please Enter Address label</string>
     <string name="error_enter_valid_first_name">Please Enter Valid First Name</string>
     <string name="error_enter_last_name">Please Enter Last Name</string>
     <string name="error_enter_valid_last_name">Please Enter Valid Last Name</string>
@@ -137,6 +138,8 @@
     <string name="error_enter_phone">Please Enter Phone No</string>
     <string name="error_enter_valid_phone">Please Enter Valid Phone No</string>
     <string name="label_proceed_to_checkout">Proceed to Checkout</string>
+    <string name="label_proceed_to_payment">Proceed to Payment</string>
+    <string name="label_pay">Pay</string>
     <string name="label_download_pdf">Download PDF</string>
     <string name="label_apply">Apply</string>
     <string name="label_enter_voucher_code">Enter Voucher Code</string>
@@ -183,6 +186,8 @@
     <string name="label_create_account">Create Account</string>
     <string name="label_add_shipping_address">Add new address</string>
     <string name="label_edit">Edit</string>
+    <string name="label_my_review">My Review</string>
+    <string name="label_edit_review">Edit Review</string>
     <string name="label_address_label">Address Label</string>
     <string name="label_order_cancel_reason">Order Cancel Reason</string>
     <string name="label_destination_or_region">Destination/Region</string>
@@ -254,7 +259,7 @@
     <string name="_5">5</string>
     <string name="_4">4</string>
     <string name="label_most_recent">Most Recent</string>
-    <string name="label_top_review">Top Review</string>
+    <string name="label_top_reviews">Top Reviews</string>
     <string name="two_day_shipping">Two - Day Shipping</string>
     <string name="one_day_shipping_in_select_cities">One - Day Shipping (In Select Cities)</string>
     <string name="same_day_delivery_in_select_cities">Same - Day Delivery (In Select Cities)</string>
@@ -311,6 +316,7 @@
     <string name="label_min">Min</string>
     <string name="label_max">Max</string>
     <string name="available">available</string>
+    <string name="taken_from_wallet">taken from wallet</string>
     <string name="_100">$100</string>
     <string name="momo_bank_card">Momo | Bank Card</string>
     <string name="pay_via_momo_or_bank_card">Pay via Momo or Bank Card</string>
@@ -336,6 +342,13 @@
     <string name="label_source">Source:</string>
     <string name="label_status">Status:</string>
     <string name="_4_7">%1f</string>
+    <string name="label_oops">OOPs!</string>
+    <string name="label_source">Source</string>
+    <string name="label_status">Status</string>
+    <string name="label_please_choose_following_one_of_them">Please choose following one of them</string>
+    <string name="label_choose_payment_for_remaining">Choose Payment for remaining %1s</string>
+    <string name="please_select_a_payment_method">Please select a payment method</string>
+    <string name="_4_7">4.7</string>
     <string name="label_reply_to_the_question">Reply to the question</string>
     <string name="label_94_positive_feedback">%1d% positive feedback</string>
     <string name="label_average_price_rating_4.5">Average Price Rating: %1f</string>

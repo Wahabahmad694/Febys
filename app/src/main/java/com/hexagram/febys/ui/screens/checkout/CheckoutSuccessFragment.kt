@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
+import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentCheckoutSuccessBinding
+import com.hexagram.febys.utils.OrderStatus
 import com.hexagram.febys.utils.goBack
 import com.hexagram.febys.utils.navigateTo
 
@@ -43,8 +45,15 @@ class CheckoutSuccessFragment : BaseFragment() {
     }
 
     private fun gotoOrderListing() {
-        val gotoOrderListing =
-            CheckoutSuccessFragmentDirections.actionCheckoutSuccessFragmentToOrderListingFragment()
+        val gotoOrderListing = CheckoutSuccessFragmentDirections
+            .actionCheckoutSuccessFragmentToOrderListingFragment(
+                arrayOf(
+                    OrderStatus.PENDING,
+                    OrderStatus.ACCEPTED,
+                    OrderStatus.SHIPPED
+                ),
+                getString(R.string.label_my_orders)
+            )
         navigateTo(gotoOrderListing)
     }
 }

@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentAccountBinding
 import com.hexagram.febys.models.api.consumer.Consumer
+import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.auth.AuthViewModel
+import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.utils.OrderStatus
 import com.hexagram.febys.utils.navigateTo
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,6 +21,11 @@ import dagger.hilt.android.AndroidEntryPoint
 class AccountFragment : BaseFragment() {
     private lateinit var binding: FragmentAccountBinding
     private val authViewModel: AuthViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        authViewModel.fetchProfile()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -29,8 +37,13 @@ class AccountFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initUi()
         uiListeners()
         setupObserver()
+    }
+
+    private fun initUi() {
+        updateWalletUi()
     }
 
     private fun uiListeners() {
@@ -49,7 +62,7 @@ class AccountFragment : BaseFragment() {
         binding.btnSignOut.setOnClickListener {
             authViewModel.signOut { signOut() }
         }
-        binding.orders.labelWallet.setOnClickListener {
+        binding.orders.containerWallet.setOnClickListener {
             val gotoWallet = AccountFragmentDirections.actionAccountFragmentToWalletFragment()
             navigateTo(gotoWallet)
         }
@@ -123,7 +136,28 @@ class AccountFragment : BaseFragment() {
         observesUserLoggedIn.observe(viewLifecycleOwner) {
             val user = authViewModel.getConsumer()
             updateUserUi(user)
+            updateWalletUi()
         }
+
+        authViewModel.observeProfileResponse.observe(viewLifecycleOwner) {
+            when (it) {
+                is DataState.Loading -> {
+                    // no need to show loader
+                }
+                is DataState.Error -> {
+                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
+                }
+                is DataState.Data -> {
+                    updateWalletUi()
+                }
+            }
+        }
+    }
+
+    private fun updateWalletUi() {
+        val wallet = authViewModel.getWallet()
+        binding.orders.labelPrice.text = wallet?.getPrice()?.getFormattedPrice()
+        binding.orders.containerWallet.isVisible = wallet != null
     }
 
     private fun updateUserUi(user: Consumer?) {

@@ -4,7 +4,7 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 
-class FebysWebviewClient : WebViewClient() {
+class FebysWebViewClient : WebViewClient() {
     override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
         view?.loadUrl(request?.url.toString())
         return true

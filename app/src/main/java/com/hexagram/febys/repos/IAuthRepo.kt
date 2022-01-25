@@ -1,12 +1,17 @@
 package com.hexagram.febys.repos
 
+import com.hexagram.febys.dataSource.ICartDataSource
 import com.hexagram.febys.enum.SocialLogin
 import com.hexagram.febys.models.api.consumer.Consumer
 import com.hexagram.febys.models.api.profile.Profile
 import com.hexagram.febys.network.DataState
-import com.hexagram.febys.network.adapter.ApiResponse
 import com.hexagram.febys.network.requests.RequestSignup
-import com.hexagram.febys.network.response.*
+import com.hexagram.febys.network.response.ResponseLogin
+import com.hexagram.febys.network.response.ResponseOtpVerification
+import com.hexagram.febys.network.response.ResponseSignup
+import com.hexagram.febys.network.response.User
+import com.hexagram.febys.prefs.IPrefManger
+import com.hexagram.febys.ui.screens.payment.models.Wallet
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -40,4 +45,18 @@ interface IAuthRepo {
     fun getUser(): User?
 
     fun getConsumer(): Consumer?
+
+    fun getWallet(): Wallet?
+
+    companion object {
+        fun signOut(pref: IPrefManger, cartRepo: ICartRepo) {
+            cartRepo.clearCart()
+            pref.clear()
+        }
+
+        fun signOut(pref: IPrefManger, cartDataSource: ICartDataSource) {
+            cartDataSource.clear()
+            pref.clear()
+        }
+    }
 }

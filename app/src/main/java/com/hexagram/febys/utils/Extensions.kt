@@ -31,6 +31,8 @@ import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.ui.screens.dialog.InfoDialog
 import com.hexagram.febys.ui.screens.dialog.WarningDialog
 import java.io.IOException
+import java.math.RoundingMode
+import java.text.DecimalFormat
 import java.util.*
 
 
@@ -183,6 +185,12 @@ fun <T : View> BottomSheetBehavior<T>.onStateChange(callback: (state: Int) -> Un
 
 fun Double.toFixedDecimal(decimalCount: Int): String {
     return String.format("%.${decimalCount}f", this)
+}
+
+fun Double.roundOffDecimal(): Double {
+    val df = DecimalFormat("#.##")
+    df.roundingMode = RoundingMode.FLOOR
+    return df.format(this).toDouble()
 }
 
 fun SimpleDraweeView.load(imageUrl: String?) {

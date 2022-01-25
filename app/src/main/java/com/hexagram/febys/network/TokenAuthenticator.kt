@@ -5,6 +5,7 @@ import com.hexagram.febys.dataSource.ICartDataSource
 import com.hexagram.febys.dataSource.IUserDataSource
 import com.hexagram.febys.network.adapter.ApiResponse
 import com.hexagram.febys.prefs.IPrefManger
+import com.hexagram.febys.repos.IAuthRepo
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
 import okhttp3.Request
@@ -13,7 +14,6 @@ import okhttp3.Route
 
 class TokenAuthenticator(
     private val pref: IPrefManger,
-    private val userDataSource: IUserDataSource,
     private val cartDataSource: ICartDataSource,
     private val tokenRefreshService: TokenRefreshService
 ) : Authenticator {
@@ -39,11 +39,7 @@ class TokenAuthenticator(
                 return@runBlocking response.request.newBuilder()
                     .header("Authorization", newAccessToken).build()
             } else if (tokenResponse is ApiResponse.ApiFailureResponse.Error) {
-                pref.clearFav()
-                cartDataSource.clear()
-                userDataSource.clearUserState()
-                userDataSource.clearUserData()
-                userDataSource.clearConsumerData()
+                IAuthRepo.signOut(pref, cartDataSource)
             }
             null
         }

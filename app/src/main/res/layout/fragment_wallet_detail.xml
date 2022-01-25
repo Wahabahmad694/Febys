@@ -146,6 +146,7 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
+            android:id="@+id/label_transaction_history"
             style="@style/TextTheme.HelveticaNeue.TS16.Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

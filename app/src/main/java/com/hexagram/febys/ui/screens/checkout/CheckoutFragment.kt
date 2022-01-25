@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
@@ -19,6 +20,7 @@ import com.hexagram.febys.models.db.CartDTO
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.cart.CartAdapter
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
+import com.hexagram.febys.ui.screens.payment.BasePaymentFragment
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,10 +33,6 @@ class CheckoutFragment : BaseFragment() {
     private var orderPrice: Price? = null
 
     private var voucher = ""
-
-    private val handleVoucherResponse: (voucherResponse: DataState<Order>) -> Unit = {
-        handleOrderInfoResponse(it)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -73,11 +71,10 @@ class CheckoutFragment : BaseFragment() {
         binding.btnPlaceOrder.setOnClickListener {
             if (checkoutViewModel.getDefaultShippingAddress() == null) {
                 showToast(getString(R.string.error_please_select_shipping_address))
-
             } else {
-                doPayment()
-                val gotoPayment =
-                    CheckoutFragmentDirections.actionCheckoutFragmentToPaymentMethodsFragment()
+                val paymentRequest = PaymentRequest(orderPrice!!.value, orderPrice!!.currency)
+                val gotoPayment = CheckoutFragmentDirections
+                    .actionCheckoutFragmentToPaymentFragment(paymentRequest)
                 navigateTo(gotoPayment)
             }
         }
@@ -122,13 +119,24 @@ class CheckoutFragment : BaseFragment() {
                 navigateTo(navigateToProductDetail)
             }
         }
+
+        setFragmentResultListener(BasePaymentFragment.TRANSACTIONS) { _, bundle ->
+            val transactions = bundle
+                .getParcelableArrayList<Transaction>(BasePaymentFragment.TRANSACTIONS)?.toList()
+
+            if (!transactions.isNullOrEmpty()) {
+                placeOrder(transactions)
+            }
+        }
     }
 
     private fun fetchOrderInfo() {
-        checkoutViewModel.fetchOrderInfo(voucher, handleVoucherResponse)
+        checkoutViewModel
+            .fetchOrderInfo(voucher)
+            .observe(viewLifecycleOwner) { handleOrderInfoResponse(it) }
     }
 
-    private fun handleOrderInfoResponse(orderInfoResponse: DataState<Order>) {
+    private fun handleOrderInfoResponse(orderInfoResponse: DataState<Order?>) {
         when (orderInfoResponse) {
             is DataState.Loading -> {
                 showLoader()
@@ -140,6 +148,10 @@ class CheckoutFragment : BaseFragment() {
             }
             is DataState.Data -> {
                 hideLoader()
+                if (orderInfoResponse.data == null) {
+                    goBack()
+                    return
+                }
                 createOrderSummary(orderInfoResponse.data)
             }
         }
@@ -256,29 +268,9 @@ class CheckoutFragment : BaseFragment() {
         navigateTo(gotoShippingAddress)
     }
 
-    private fun doPayment() {
-        if (orderPrice == null) return
-        val paymentRequest = PaymentRequest(orderPrice!!.value, orderPrice!!.currency)
-        checkoutViewModel.doPayment(paymentRequest) {
-            when (it) {
-                is DataState.Loading -> {
-                    showLoader()
-                }
-                is DataState.Error -> {
-                    hideLoader()
-                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
-                }
-                is DataState.Data -> {
-                    hideLoader()
-                    placeOrder(it.data)
-                }
-            }
-        }
-    }
-
-    private fun placeOrder(transaction: Transaction) {
+    private fun placeOrder(transactions: List<Transaction>) {
         val vendorMessages = cartAdapter.getVendorMessages()
-        checkoutViewModel.placeOrder(transaction._id, voucher, vendorMessages) {
+        checkoutViewModel.placeOrder(transactions, voucher, vendorMessages) {
             when (it) {
                 is DataState.Loading -> {
                     showLoader()
@@ -289,7 +281,9 @@ class CheckoutFragment : BaseFragment() {
                 }
                 is DataState.Data -> {
                     hideLoader()
-                    checkoutViewModel.clearCart()
+                    val toCheckoutSuccess = CheckoutFragmentDirections
+                        .actionCheckoutFragmentToCheckoutSuccessFragment(it.data.orderId)
+                    navigateTo(toCheckoutSuccess)
                 }
             }
         }

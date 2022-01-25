@@ -52,7 +52,7 @@ class StoreListFragment : BaseFragment() {
             val title = it.name
             val storeId = it.template?.split(",")?.lastOrNull() ?: ""
 
-            if (storeId.isNotEmpty()){
+            if (storeId.isNotEmpty()) {
                 val toWebViewFragment = SearchFragmentDirections
                     .actionStoreListFragmentToStoreLoadFragment(title, storeId)
                 navigateTo(toWebViewFragment)
@@ -79,7 +79,9 @@ class StoreListFragment : BaseFragment() {
     }
 
     private fun updateUi(storeList: List<StoreMenus>) {
-        binding.emptyView.root.isVisible=storeList.isEmpty()
-        storeListAdapter.submitList(storeList)
+        val storeListWithTemplate =
+            storeList.filter { it.template?.split(",")?.lastOrNull().isNullOrEmpty().not() }
+        binding.emptyView.root.isVisible = storeListWithTemplate.isEmpty()
+        storeListAdapter.submitList(storeListWithTemplate)
     }
 }

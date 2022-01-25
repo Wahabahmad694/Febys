@@ -8,14 +8,14 @@ plugins {
 }
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 30
 
     defaultConfig {
         applicationId "com.hexagram.febys"
         minSdkVersion 23
-        targetSdkVersion 31
+        targetSdkVersion 30
         versionCode 1
-        versionName "1.0.8"
+        versionName "1.0.10"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -202,8 +202,8 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
 
-    // jwt token
-    implementation 'com.auth0.android:jwtdecode:2.0.1'
+    // paypal
+    implementation('com.paypal.checkout:android-sdk:0.5.2')
 
     //crop image
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.0'

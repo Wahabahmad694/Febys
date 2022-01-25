@@ -15,6 +15,7 @@ import com.hexagram.febys.network.response.ResponseOtpVerification
 import com.hexagram.febys.network.response.ResponseSignup
 import com.hexagram.febys.network.response.User
 import com.hexagram.febys.prefs.IPrefManger
+import com.hexagram.febys.ui.screens.payment.models.Wallet
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -131,6 +132,7 @@ class AuthRepoImpl @Inject constructor(
             updateWishlist(profile.wishlist.skuIds.toMutableSet())
             updateShippingAddress(profile.shippingAddresses)
             updateCart(profile.cart)
+            updateWallet(profile.wallet)
         }
 
         return flow<DataState<Profile?>> {
@@ -150,6 +152,10 @@ class AuthRepoImpl @Inject constructor(
         cartRepo.updateCart(cart)
     }
 
+    private fun updateWallet(wallet: Wallet) {
+        pref.saveWallet(wallet)
+    }
+
     private fun updateWishlist(skuIds: MutableSet<String>) {
         pref.saveFav(skuIds)
     }
@@ -162,11 +168,7 @@ class AuthRepoImpl @Inject constructor(
     }
 
     override fun signOut() {
-        pref.clearFav()
-        cartRepo.clearCart()
-        userDataSource.clearUserState()
-        userDataSource.clearUserData()
-        userDataSource.clearConsumerData()
+        IAuthRepo.signOut(pref, cartRepo)
     }
 
     override fun getUser(): User? {
@@ -175,5 +177,9 @@ class AuthRepoImpl @Inject constructor(
 
     override fun getConsumer(): Consumer? {
         return userDataSource.getConsumer()
+    }
+
+    override fun getWallet(): Wallet? {
+        return pref.getWallet()
     }
 }

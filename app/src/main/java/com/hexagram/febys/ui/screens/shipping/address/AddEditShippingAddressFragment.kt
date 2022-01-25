@@ -40,12 +40,10 @@ class AddEditShippingAddressFragment : BaseFragment() {
     private val shippingAddressViewModel: ShippingAddressViewModel by viewModels()
     private val args: AddEditShippingAddressFragmentArgs by navArgs()
 
-    private val addressLabelsBottomSheet get() = BottomSheetBehavior.from(binding.bottomSheetAddressLabels.root)
     private val regionBottomSheet get() = BottomSheetBehavior.from(binding.bottomSheetRegion.root)
     private val stateBottomSheet get() = BottomSheetBehavior.from(binding.bottomSheetState.root)
     private val cityBottomSheet get() = BottomSheetBehavior.from(binding.bottomSheetCity.root)
 
-    private val addressLabelsAdapter = ListSelectionAdapter()
     private val regionsAdapter = ListSelectionAdapter()
     private val statesAdapter = ListSelectionAdapter()
     private val citiesAdapter = ListSelectionAdapter()
@@ -83,22 +81,9 @@ class AddEditShippingAddressFragment : BaseFragment() {
     }
 
     private fun initUi() {
-        closeBottomSheet(addressLabelsBottomSheet)
         closeBottomSheet(regionBottomSheet)
         closeBottomSheet(stateBottomSheet)
         closeBottomSheet(cityBottomSheet)
-
-        binding.bottomSheetAddressLabels.rvSelectionList.apply {
-            setHasFixedSize(true)
-            adapter = addressLabelsAdapter
-            addItemDecoration(
-                DividerItemDecoration(context, (layoutManager as LinearLayoutManager).orientation)
-            )
-        }
-
-        binding.bottomSheetAddressLabels.btnClose.setOnClickListener {
-            closeBottomSheet(addressLabelsBottomSheet)
-        }
 
         binding.bottomSheetRegion.rvSelectionList.apply {
             setHasFixedSize(true)
@@ -136,9 +121,6 @@ class AddEditShippingAddressFragment : BaseFragment() {
             closeBottomSheet(cityBottomSheet)
         }
 
-        val addressLabels = resources.getStringArray(R.array.address_labels).toMutableList()
-        addressLabelsAdapter.submitList(addressLabels)
-
         updateUi(args.shippingAddress)
     }
 
@@ -150,7 +132,6 @@ class AddEditShippingAddressFragment : BaseFragment() {
             binding.switchSetAsDefault.isChecked = args.forceSetAsDefault
             binding.switchSetAsDefault.isEnabled = !args.forceSetAsDefault
 
-            binding.tvAddressLabel.text = addressLabelsAdapter.getSelectedItem()
             binding.tvRegion.text = regionsAdapter.getSelectedItem()
             binding.tvState.text = statesAdapter.getSelectedItem()
             binding.tvCity.text = citiesAdapter.getSelectedItem()
@@ -163,9 +144,7 @@ class AddEditShippingAddressFragment : BaseFragment() {
 
         binding.labelShippingAddress.setText(R.string.label_edit_shipping_address)
 
-        addressLabelsAdapter.updateSelectedItem(shippingAddress.shippingDetail.label)
-        binding.tvAddressLabel.text = shippingAddress.shippingDetail.label
-
+        binding.etAddressLabel.setText(shippingAddress.shippingDetail.label)
         binding.etFirstName.setText(shippingAddress.shippingDetail.firstName)
         binding.etLastName.setText(shippingAddress.shippingDetail.lastName)
 
@@ -202,10 +181,6 @@ class AddEditShippingAddressFragment : BaseFragment() {
             goBack()
         }
 
-        binding.containerAddressLabel.setOnClickListener {
-            showBottomSheet(addressLabelsBottomSheet)
-        }
-
         binding.containerRegion.setOnClickListener {
             showBottomSheet(regionBottomSheet)
         }
@@ -215,12 +190,6 @@ class AddEditShippingAddressFragment : BaseFragment() {
         binding.containerCity.setOnClickListener {
             showBottomSheet(cityBottomSheet)
         }
-
-        addressLabelsAdapter.interaction = { selectedItem ->
-            binding.tvAddressLabel.text = selectedItem
-            closeBottomSheet(addressLabelsBottomSheet)
-        }
-
         regionsAdapter.interaction = { selectedItem ->
             countryCodeISO = countries.firstOrNull { it.name == selectedItem }?.isoCode ?: ""
             updateSelectedCountry()
@@ -239,10 +208,6 @@ class AddEditShippingAddressFragment : BaseFragment() {
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             closeBottomsSheetElseGoBack()
-        }
-
-        addressLabelsBottomSheet.onStateChange { state ->
-            onBottomSheetStateChange(state)
         }
 
         regionBottomSheet.onStateChange { state ->
@@ -438,7 +403,7 @@ class AddEditShippingAddressFragment : BaseFragment() {
     private fun initFields() {
         firstName = binding.etFirstName.text.toString()
         lastName = binding.etLastName.text.toString()
-        addressLabel = binding.tvAddressLabel.text.toString()
+        addressLabel = binding.etAddressLabel.text.toString()
         city = binding.tvCity.text.toString()
         addressLine1 = binding.etAddressLine1.text.toString()
         addressLine2 = binding.etAddressLine2.text.toString()
@@ -449,6 +414,10 @@ class AddEditShippingAddressFragment : BaseFragment() {
     }
 
     private fun areAllFieldsValid(): Boolean {
+        if (!Validator.isValidName(addressLabel)) {
+            showErrorDialog(getString(R.string.error_enter_address_label))
+            return false
+        }
         if (!Validator.isValidName(firstName)) {
             showErrorDialog(getString(R.string.error_enter_first_name))
             return false
@@ -512,7 +481,6 @@ class AddEditShippingAddressFragment : BaseFragment() {
 
     private fun closeBottomsSheetElseGoBack() {
         listOf(
-            addressLabelsBottomSheet,
             regionBottomSheet,
             stateBottomSheet,
             cityBottomSheet

@@ -1,10 +1,10 @@
 package com.hexagram.febys.ui.screens.cart
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.hexagram.febys.models.api.order.Order
 import com.hexagram.febys.models.api.product.Product
-import com.hexagram.febys.models.api.request.PaymentRequest
 import com.hexagram.febys.models.api.transaction.Transaction
 import com.hexagram.febys.models.api.vendor.VendorMessage
 import com.hexagram.febys.models.db.CartDTO
@@ -70,33 +70,18 @@ open class CartViewModel @Inject constructor(
 
     fun clearCart() = viewModelScope.launch(Dispatchers.IO) { cartRepo.clearCart() }
 
-    fun fetchOrderInfo(voucher: String? = null, onVoucherResponse: (DataState<Order>) -> Unit) {
-        onVoucherResponse(DataState.Loading())
-        viewModelScope.launch {
-            cartRepo.fetchOrderInfo(voucher).collect {
-                launch(Dispatchers.Main) { onVoucherResponse(it) }
-            }
-        }
-    }
-
-    fun doPayment(paymentRequest: PaymentRequest, onPayment: (DataState<Transaction>) -> Unit) {
-        onPayment(DataState.Loading())
-        viewModelScope.launch {
-            cartRepo.doPayment(paymentRequest).collect {
-                launch(Dispatchers.Main) { onPayment(it) }
-            }
-        }
-    }
+    fun fetchOrderInfo(voucher: String? = null) = cartRepo.fetchOrderInfo(voucher).asLiveData()
 
     fun placeOrder(
-        transactionId: String,
+        transactions: List<Transaction>,
         voucher: String?,
         vendorMessages: List<VendorMessage>,
         onPlaceOrderResponse: (DataState<Order>) -> Unit
     ) {
         onPlaceOrderResponse(DataState.Loading())
         viewModelScope.launch {
-            cartRepo.placeOrder(transactionId, voucher, vendorMessages).collect {
+            cartRepo.placeOrder(transactions, voucher, vendorMessages).collect {
+                if (it is DataState.Data) clearCart()
                 launch(Dispatchers.Main) { onPlaceOrderResponse(it) }
             }
         }

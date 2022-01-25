@@ -15,7 +15,7 @@
         android:paddingHorizontal="@dimen/_16dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/label_wallet"
+            android:id="@+id/container_wallet"
             android:layout_width="match_parent"
             android:layout_height="104dp"
             android:layout_marginTop="@dimen/_5sdp"
@@ -38,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_14sdp"
-                android:text="@string/current_balance"
+                android:text="@string/label_current_balance"
                 app:layout_constraintStart_toEndOf="@id/wallet_img"
                 app:layout_constraintTop_toTopOf="@id/wallet_img" />
 
