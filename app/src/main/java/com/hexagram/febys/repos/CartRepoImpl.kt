@@ -62,15 +62,13 @@ class CartRepoImpl @Inject constructor(
 
     override suspend fun refreshCart() = pushCart()
 
-    override suspend fun fetchOrderInfo(
+    override fun fetchOrderInfo(
         voucher: String?, dispatcher: CoroutineDispatcher
-    ): Flow<DataState<Order>> = flow<DataState<Order>> {
+    ): Flow<DataState<Order?>> = flow<DataState<Order?>> {
+        emit(DataState.Loading())
         val authToken = pref.getAccessToken()
-        if (authToken.isEmpty()) return@flow
-
         val orderRequest = getOrderRequest(voucher, null, listOf())
-        if (orderRequest.items.isEmpty()) return@flow
-
+        if (orderRequest.items.isEmpty()) emit(DataState.Data(null))
         backendService.fetchOrderInfo(authToken, orderRequest)
             .onSuccess {
                 cartDataSource.updateCart(data!!.order.toListOfCartDTO())

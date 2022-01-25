@@ -4,6 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.google.gson.JsonObject
 import com.hexagram.febys.models.api.request.PagingListRequest
 import com.hexagram.febys.models.api.request.PaymentRequest
 import com.hexagram.febys.models.api.transaction.Transaction
@@ -106,9 +107,26 @@ class PaymentRepoImpl @Inject constructor(
             PagingConfig(pageSize = 10)
         ) {
             val authToken = pref.getAccessToken()
-            TransactionPagingSource(paymentService, authToken, PagingListRequest())
+            val pagingListRequest = getPagingListRequestForTransaction()
+            TransactionPagingSource(paymentService, authToken, pagingListRequest)
         }.flow
             .flowOn(dispatcher)
             .cachedIn(scope)
+    }
+
+    private fun getPagingListRequestForTransaction(): PagingListRequest {
+        val pagingListRequest = PagingListRequest()
+
+        val sorter = JsonObject()
+        sorter.addProperty("created_at", "desc")
+        pagingListRequest.sorter = sorter
+
+        val filters = JsonObject()
+        val status = JsonObject()
+        status.addProperty("\$ne", "REFUND")
+        filters.add("status", status)
+        pagingListRequest.filters = filters
+
+        return pagingListRequest
     }
 }

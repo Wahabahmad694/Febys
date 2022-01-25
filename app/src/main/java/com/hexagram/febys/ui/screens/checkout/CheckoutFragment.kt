@@ -34,10 +34,6 @@ class CheckoutFragment : BaseFragment() {
 
     private var voucher = ""
 
-    private val handleVoucherResponse: (voucherResponse: DataState<Order>) -> Unit = {
-        handleOrderInfoResponse(it)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -130,10 +126,12 @@ class CheckoutFragment : BaseFragment() {
     }
 
     private fun fetchOrderInfo() {
-        checkoutViewModel.fetchOrderInfo(voucher, handleVoucherResponse)
+        checkoutViewModel
+            .fetchOrderInfo(voucher)
+            .observe(viewLifecycleOwner) { handleOrderInfoResponse(it) }
     }
 
-    private fun handleOrderInfoResponse(orderInfoResponse: DataState<Order>) {
+    private fun handleOrderInfoResponse(orderInfoResponse: DataState<Order?>) {
         when (orderInfoResponse) {
             is DataState.Loading -> {
                 showLoader()
@@ -145,6 +143,10 @@ class CheckoutFragment : BaseFragment() {
             }
             is DataState.Data -> {
                 hideLoader()
+                if (orderInfoResponse.data == null) {
+                    goBack()
+                    return
+                }
                 createOrderSummary(orderInfoResponse.data)
             }
         }
@@ -274,7 +276,6 @@ class CheckoutFragment : BaseFragment() {
                 }
                 is DataState.Data -> {
                     hideLoader()
-                    checkoutViewModel.clearCart()
                     val toCheckoutSuccess = CheckoutFragmentDirections
                         .actionCheckoutFragmentToCheckoutSuccessFragment(it.data.orderId)
                     navigateTo(toCheckoutSuccess)

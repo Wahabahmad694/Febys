@@ -489,8 +489,7 @@
         <action
             android:id="@+id/action_checkoutFragment_to_checkoutSuccessFragment"
             app:destination="@id/checkoutSuccessFragment"
-            app:popUpTo="@id/homeFragment"
-            app:popUpToInclusive="true" />
+            app:popUpTo="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/checkoutSuccessFragment"
@@ -507,8 +506,7 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/checkoutSuccessFragment"
-            app:popUpToInclusive="true" />
+            app:popUpTo="@id/homeFragment" />
     </fragment>
 
     <fragment

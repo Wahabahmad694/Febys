@@ -13,7 +13,6 @@ import com.hexagram.febys.models.api.consumer.Consumer
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.auth.AuthViewModel
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
-import com.hexagram.febys.ui.screens.payment.models.Wallet
 import com.hexagram.febys.utils.OrderStatus
 import com.hexagram.febys.utils.navigateTo
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,7 +43,7 @@ class AccountFragment : BaseFragment() {
     }
 
     private fun initUi() {
-        updateWalletUi(authViewModel.getWallet())
+        updateWalletUi()
     }
 
     private fun uiListeners() {
@@ -137,23 +136,26 @@ class AccountFragment : BaseFragment() {
         observesUserLoggedIn.observe(viewLifecycleOwner) {
             val user = authViewModel.getConsumer()
             updateUserUi(user)
+            updateWalletUi()
         }
 
         authViewModel.observeProfileResponse.observe(viewLifecycleOwner) {
             when (it) {
                 is DataState.Loading -> {
+                    // no need to show loader
                 }
                 is DataState.Error -> {
                     ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
                 }
                 is DataState.Data -> {
-                    updateWalletUi(it.data!!.wallet)
+                    updateWalletUi()
                 }
             }
         }
     }
 
-    private fun updateWalletUi(wallet: Wallet?) {
+    private fun updateWalletUi() {
+        val wallet = authViewModel.getWallet()
         binding.orders.labelPrice.text = wallet?.getPrice()?.getFormattedPrice()
         binding.orders.containerWallet.isVisible = wallet != null
     }

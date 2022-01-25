@@ -8,8 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hexagram.febys.databinding.ItemTransactionsBinding
 import com.hexagram.febys.models.api.price.Price
 import com.hexagram.febys.models.api.transaction.Transaction
+import com.hexagram.febys.utils.OrderStatus
 import com.hexagram.febys.utils.Utils
 import com.hexagram.febys.utils.Utils.DateTime.FORMAT_MONTH_DATE_YEAR_HOUR_MIN
+import com.hexagram.febys.utils.setBackgroundRoundedColor
 
 class TransactionPagerAdapter :
     PagingDataAdapter<Transaction, TransactionPagerAdapter.TransactionsViewHolder>(diffCallback) {
@@ -58,6 +60,7 @@ class TransactionPagerAdapter :
                 Price("", item.requestedAmount, item.requestedCurrency).getFormattedPrice()
             tvPurpose.text = item.purpose
             tvStatus.text = item.status
+            tvStatus.setBackgroundRoundedColor(item.statusColor)
         }
     }
 

@@ -29,9 +29,9 @@ interface ICartRepo {
 
     suspend fun refreshCart()
 
-    suspend fun fetchOrderInfo(
+    fun fetchOrderInfo(
         voucher: String?, dispatcher: CoroutineDispatcher = Dispatchers.IO
-    ): Flow<DataState<Order>>
+    ): Flow<DataState<Order?>>
 
     suspend fun placeOrder(
         transactions: List<Transaction>,
