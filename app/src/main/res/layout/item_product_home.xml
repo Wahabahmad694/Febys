@@ -43,8 +43,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_fav"
-            android:layout_width="@dimen/_16dp"
-            android:layout_height="@dimen/_16dp"
+            android:layout_width="@dimen/_26sdp"
+            android:layout_height="@dimen/_26sdp"
             android:layout_marginTop="@dimen/_16dp"
             android:layout_marginEnd="@dimen/_16dp"
             android:src="@{isFav ? @drawable/ic_fav: @drawable/ic_un_fav}"

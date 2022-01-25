@@ -34,11 +34,11 @@
 
             <TextView
                 android:id="@+id/tv_wallet"
-                style="@style/TextTheme.HelveticaNeue.TS14"
+                style="@style/TextTheme.HelveticaNeue.TS14.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_14sdp"
-                android:text="Current_Balance"
+                android:text="@string/current_balance"
                 app:layout_constraintStart_toEndOf="@id/wallet_img"
                 app:layout_constraintTop_toTopOf="@id/wallet_img" />
 

@@ -236,7 +236,7 @@
     <string name="label_confirm">Confirm</string>
     <string name="label_ask">Ask</string>
     <string name="label_send">Send</string>
-    <string name="label_payment_method">Payment Method</string>
+    <string name="label_payment_method">Payment Methods</string>
     <string name="label_customer_recommend">Customers Recommend</string>
     <string name="label_compare_with_similar_items">Compare With Similar Items</string>
     <string name="label_no_answer">---</string>
@@ -315,14 +315,13 @@
     <string name="paypal">Paypal</string>
     <string name="pay_via_paypal">Pay via paypal</string>
     <string name="ghs_100_06">GHS_100_06</string>
-    <string name="label_current_balance">Current balance</string>
     <string name="label_withdraw">Withdraw</string>
     <string name="label_topUp">Top-Up</string>
     <string name="label_transactions_history">Transactions History</string>
-    <string name="label_transaction_id">Transaction ID</string>
-    <string name="label_amount">Amount</string>
-    <string name="label_date_amp_time"><![CDATA[Date & time]]></string>
-    <string name="label_purpose">Purpose</string>
+    <string name="label_transaction_id">Transaction ID:</string>
+    <string name="label_amount">Amount:</string>
+    <string name="label_date_amp_time"><![CDATA[Date & Time:]]></string>
+    <string name="label_purpose">Purpose:</string>
     <string name="insufficient_wallet_balance">Insufficient Wallet Balance</string>
     <string name="pay_the_difference_using_a_different_payment_method_by_selecting_split_pay">Pay the difference using a different payment method by selecting split pay.</string>
     <string name="split_pay">Split Pay</string>
@@ -331,8 +330,8 @@
     <string name="permission_denied">Permission denied</string>
     <string name="label_chose_option">Choose an Option</string>
     <string name="label_oops">Oops!</string>
-    <string name="label_source">Source</string>
-    <string name="label_status">Status</string>
+    <string name="label_source">Source:</string>
+    <string name="label_status">Status:</string>
     <string name="_4_7">%1f</string>
     <string name="label_reply_to_the_question">Reply to the question</string>
     <string name="label_94_positive_feedback">%1d% positive feedback</string>
@@ -343,5 +342,8 @@
     <string name="label_average_price_rating">Average Price Rating:</string>
     <string name="label_average_value_rating">Average Value Rating:</string>
     <string name="label_average_quality_rating">Average Quality Rating:</string>
+    <string name="label_to">To</string>
+    <string name="label_from">From</string>
+    <string name="current_balance">Current Balance</string>
 
 </resources>
