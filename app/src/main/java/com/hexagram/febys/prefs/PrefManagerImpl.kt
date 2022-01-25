@@ -5,9 +5,9 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.google.gson.Gson
 import com.hexagram.febys.models.api.consumer.Consumer
-import com.hexagram.febys.models.view.PaymentMethod
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
 import com.hexagram.febys.network.response.User
+import com.hexagram.febys.ui.screens.payment.models.Wallet
 import com.hexagram.febys.utils.Utils
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
@@ -22,6 +22,7 @@ class PrefManagerImpl @Inject constructor(
         private const val KEY_REFRESH_TOKEN = "refreshToken"
         private const val KEY_FAV = "fav"
         private const val KEY_DEF_SHIPPING_ADDRESS = "defShippingAddress"
+        private const val KEY_WALLET = "wallet"
     }
 
     private val pref: SharedPreferences by lazy {
@@ -66,22 +67,6 @@ class PrefManagerImpl @Inject constructor(
         return getString(KEY_REFRESH_TOKEN, defValue)
     }
 
-    override fun clearUser() {
-        remove(KEY_USER)
-    }
-
-    override fun clearConsumer() {
-        remove(KEY_CONSUMER)
-    }
-
-    override fun clearAccessToken() {
-        remove(KEY_ACCESS_TOKEN)
-    }
-
-    override fun clearRefreshToken() {
-        remove(KEY_REFRESH_TOKEN)
-    }
-
     override fun toggleFav(skuId: String): Boolean {
         val set = getFav()
         val addToFav = skuId !in set
@@ -118,10 +103,6 @@ class PrefManagerImpl @Inject constructor(
         saveStringSet(KEY_FAV, set)
     }
 
-    override fun clearFav() {
-        remove(KEY_FAV)
-    }
-
     override fun removeShippingAddress(): Boolean {
         getDefaultShippingAddress() ?: return false
         remove(KEY_DEF_SHIPPING_ADDRESS)
@@ -137,6 +118,17 @@ class PrefManagerImpl @Inject constructor(
     override fun saveDefaultShippingAddress(shippingAddress: ShippingAddress) {
         val shippingAddressAsString = Utils.jsonFromShippingAddress(shippingAddress)
         saveString(KEY_DEF_SHIPPING_ADDRESS, shippingAddressAsString)
+    }
+
+    override fun saveWallet(wallet: Wallet) {
+        val walletAsString = Utils.jsonFromWallet(wallet)
+        saveString(KEY_WALLET, walletAsString)
+    }
+
+    override fun getWallet(): Wallet? {
+        val wallet = getString(KEY_WALLET, "")
+        if (wallet.isEmpty()) return null
+        return Utils.jsonToWallet(wallet)
     }
 
     private fun saveString(key: String, value: String) {
@@ -164,4 +156,6 @@ class PrefManagerImpl @Inject constructor(
             remove(key)
         }
     }
+
+    override fun clear() = pref.edit { clear() }
 }

@@ -1,5 +1,7 @@
 package com.hexagram.febys.ui.screens.payment.service
 
+import com.hexagram.febys.models.api.pagination.Pagination
+import com.hexagram.febys.models.api.request.PagingListRequest
 import com.hexagram.febys.models.api.request.PaymentRequest
 import com.hexagram.febys.models.api.response.PaymentResponse
 import com.hexagram.febys.network.adapter.ApiResponse
@@ -41,4 +43,11 @@ interface PaymentService {
         @Header("Authorization") authToken: String,
         @Body req: Map<String, String>
     ): ApiResponse<PaymentResponse>
+
+    @POST("v1/payments/transactions/listing")
+    suspend fun fetchTransactions(
+        @Header("Authorization") authToken: String,
+        @QueryMap queryMap: Map<String, String>,
+        @Body req: Map<String, PagingListRequest>
+    ): ApiResponse<Pagination>
 }

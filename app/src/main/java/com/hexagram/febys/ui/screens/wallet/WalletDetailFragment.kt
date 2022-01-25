@@ -4,14 +4,29 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentWalletDetailBinding
-import com.hexagram.febys.utils.goBack
-import com.hexagram.febys.utils.showWarningDialog
+import com.hexagram.febys.models.api.price.Price
+import com.hexagram.febys.network.DataState
+import com.hexagram.febys.ui.screens.dialog.ErrorDialog
+import com.hexagram.febys.ui.screens.payment.TransactionPagerAdapter
+import com.hexagram.febys.ui.screens.payment.models.Wallet
+import com.hexagram.febys.ui.screens.payment.vm.PaymentViewModel
+import com.hexagram.febys.utils.*
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class WalletDetailFragment : BaseFragment() {
     private lateinit var binding: FragmentWalletDetailBinding
+    private val paymentViewModel by viewModels<PaymentViewModel>()
+    private val transactionPagerAdapter = TransactionPagerAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -24,7 +39,59 @@ class WalletDetailFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         uiListeners()
+        refreshWallet()
+        setupTransactionPagerAdapter()
+    }
 
+    private fun setupTransactionPagerAdapter() {
+        binding.rvTransactions.adapter = transactionPagerAdapter
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            paymentViewModel.allTransactions.collectLatest { pagingData ->
+                transactionPagerAdapter.submitData(pagingData)
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            transactionPagerAdapter.loadStateFlow.collectLatest {
+                val state = it.refresh
+
+                if (state is LoadState.Error) {
+                    showErrorToast(state)
+                }
+
+                val isEmpty =
+                    it.refresh is LoadState.NotLoading && transactionPagerAdapter.itemCount < 1
+                binding.emptyView.root.isVisible = isEmpty
+                binding.rvTransactions.isVisible = !isEmpty
+                binding.labelTransactionHistory.isVisible = !isEmpty
+
+            }
+        }
+    }
+
+    private fun refreshWallet() {
+        paymentViewModel.refreshWallet().observe(viewLifecycleOwner) {
+            when (it) {
+                is DataState.Loading -> {
+                    showLoader()
+                }
+                is DataState.Error -> {
+                    hideLoader()
+                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
+                }
+                is DataState.Data -> {
+                    hideLoader()
+                    updateWalletUi(it.data)
+                }
+            }
+        }
+    }
+
+    private fun updateWalletUi(wallet: Wallet) {
+        binding.apply {
+            tvAmount.text = Price("", wallet.amount, wallet.currency).getFormattedPrice()
+        }
     }
 
     private fun uiListeners() {
@@ -35,7 +102,7 @@ class WalletDetailFragment : BaseFragment() {
             val msg = getString(R.string.msg_for_withdraw)
 
             showWarningDialog(resId, title, msg) {
-                //todo nothing
+                //todo top-up
             }
         }
         binding.btnWithDraw.setOnClickListener {
@@ -44,7 +111,7 @@ class WalletDetailFragment : BaseFragment() {
             val msg = getString(R.string.msg_for_withdraw)
 
             showWarningDialog(resId, title, msg) {
-                //todo nothing
+                //todo withdraw amount
             }
         }
         binding.personName = consumer?.firstName?.split(" ")?.get(0) ?: getString(R.string.label_me)

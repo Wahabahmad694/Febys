@@ -6,6 +6,7 @@ import com.hexagram.febys.dataSource.IUserDataSource
 import com.hexagram.febys.network.*
 import com.hexagram.febys.network.adapter.ApiResponseCallAdapterFactory
 import com.hexagram.febys.prefs.IPrefManger
+import com.hexagram.febys.repos.ICartRepo
 import com.hexagram.febys.ui.screens.payment.service.PaymentService
 import dagger.Module
 import dagger.Provides
@@ -29,7 +30,6 @@ object NetworkModule {
     @Singleton
     fun provideTokenAuthenticator(
         pref: IPrefManger,
-        userDataSource: IUserDataSource,
         cartDataSource: ICartDataSource
     ): AuthenticationInterceptor {
         val okHttpClient = OkHttpClient.Builder()
@@ -47,7 +47,7 @@ object NetworkModule {
 
         val service = retrofit.create(TokenRefreshService::class.java)
 
-        return AuthenticationInterceptor(pref, userDataSource, cartDataSource, service)
+        return AuthenticationInterceptor(pref, cartDataSource, service)
     }
 
     @Provides

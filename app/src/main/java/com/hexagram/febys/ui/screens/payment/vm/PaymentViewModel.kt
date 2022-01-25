@@ -2,6 +2,8 @@ package com.hexagram.febys.ui.screens.payment.vm
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
 import com.hexagram.febys.base.BaseViewModel
 import com.hexagram.febys.models.api.price.Price
 import com.hexagram.febys.models.api.request.PaymentRequest
@@ -13,6 +15,7 @@ import com.hexagram.febys.ui.screens.payment.models.Wallet
 import com.hexagram.febys.ui.screens.payment.repo.IPaymentRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.onEach
@@ -26,6 +29,9 @@ class PaymentViewModel @Inject constructor(
     lateinit var paymentRequest: PaymentRequest
     private lateinit var wallet: Wallet
 
+    /**
+     * for the single order payment
+     */
     private val transactions = mutableListOf<Transaction>()
 
     var isSplitMode: Boolean = false
@@ -36,9 +42,18 @@ class PaymentViewModel @Inject constructor(
 
     var amountPaidFromWallet: Price? = null
 
-    fun refreshWallet() = paymentRepo.fetchWallet(paymentRequest.currency).onEach {
-        if (it is DataState.Data) wallet = it.data
-    }.asLiveData()
+    /**
+     * history of all transactions
+     */
+    val allTransactions: Flow<PagingData<Transaction>> =
+        paymentRepo.fetchTransactions(viewModelScope)
+
+    fun refreshWallet() =
+        paymentRepo.fetchWallet(
+            if (::paymentRequest.isInitialized) paymentRequest.currency else null
+        ).onEach {
+            if (it is DataState.Data) wallet = it.data
+        }.asLiveData()
 
 
     fun doWalletPayment(): LiveData<DataState<Transaction>> {

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebChromeClient
 import androidx.activity.addCallback
 import androidx.navigation.fragment.navArgs
 import com.hexagram.febys.base.BaseFragment
@@ -38,8 +39,11 @@ class WebViewFragment : BaseFragment() {
             BindingAdapter.loadHtml(binding.webView, args.url)
         } else {
             binding.webView.loadUrl(args.url)
-            binding.webView.webViewClient = FebysWebViewClient()
         }
+
+        binding.webView.webViewClient = FebysWebViewClient()
+        binding.webView.webChromeClient = WebChromeClient()
+        binding.webView.settings.apply { javaScriptEnabled = true }
     }
 
     private fun uiListener() {

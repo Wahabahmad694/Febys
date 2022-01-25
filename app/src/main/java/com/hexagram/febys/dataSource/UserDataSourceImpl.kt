@@ -39,17 +39,4 @@ class UserDataSourceImpl @Inject constructor(
     override fun getRefreshToken(): String {
         return pref.getRefreshToken()
     }
-
-    override fun clearUserData() {
-        pref.clearUser()
-    }
-
-    override fun clearConsumerData() {
-        pref.clearConsumer()
-    }
-
-    override fun clearUserState() {
-        pref.clearAccessToken()
-        pref.clearRefreshToken()
-    }
 }

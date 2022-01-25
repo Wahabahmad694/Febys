@@ -4,6 +4,7 @@ import com.hexagram.febys.models.api.consumer.Consumer
 import com.hexagram.febys.models.view.PaymentMethod
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
 import com.hexagram.febys.network.response.User
+import com.hexagram.febys.ui.screens.payment.models.Wallet
 
 interface IPrefManger {
     fun saveAccessToken(accessToken: String)
@@ -22,14 +23,6 @@ interface IPrefManger {
 
     fun getConsumer(): Consumer?
 
-    fun clearUser()
-
-    fun clearConsumer()
-
-    fun clearAccessToken()
-
-    fun clearRefreshToken()
-
     fun toggleFav(skuId: String): Boolean
 
     fun addToFav(skuId: String): Boolean
@@ -42,9 +35,13 @@ interface IPrefManger {
 
     fun saveFav(set: MutableSet<String>)
 
-    fun clearFav()
-
     fun getDefaultShippingAddress(): ShippingAddress?
 
     fun saveDefaultShippingAddress(shippingAddress: ShippingAddress)
+
+    fun saveWallet(wallet: Wallet)
+
+    fun getWallet(): Wallet?
+
+    fun clear()
 }

@@ -19,10 +19,4 @@ interface IUserDataSource {
     fun saveRefreshToken(token: String)
 
     fun getRefreshToken(): String
-
-    fun clearUserData()
-
-    fun clearConsumerData()
-
-    fun clearUserState()
 }

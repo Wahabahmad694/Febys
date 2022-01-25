@@ -1,5 +1,6 @@
 package com.hexagram.febys.models.api.transaction
 
+import android.graphics.Color
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
@@ -28,4 +29,17 @@ data class Transaction(
     val updatedAt: String,
     @SerializedName("created_at")
     val createdAt: String,
-) : Parcelable
+) : Parcelable {
+    val statusColor
+        get() = when (status) {
+            "REJECTED" -> {
+                Color.parseColor("#FFCFCF")
+            }
+            "REVERSAL_CLAIMED" -> {
+                Color.parseColor("#FFDBB9")
+            }
+            else -> {
+                Color.parseColor("#D1FFB5")  // "CLAIMED"
+            }
+        }
+}

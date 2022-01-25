@@ -65,6 +65,8 @@ class PaymentFragment : BasePaymentFragment() {
     }
 
     private fun uiListeners() {
+        binding.ivBack.setOnClickListener { goBack() }
+
         binding.btnCheckout.setOnClickListener {
             handlePayNowClick()
         }
@@ -74,6 +76,8 @@ class PaymentFragment : BasePaymentFragment() {
             hideSplitScreen()
             proceedWithWalletPayment()
         }
+
+        binding.containerSplit.btnCancel.setOnClickListener { hideSplitScreen() }
 
         binding.containerWalletPayment.setOnClickListener {
             if (!paymentViewModel.isSplitMode) {
@@ -190,6 +194,7 @@ class PaymentFragment : BasePaymentFragment() {
 
         val onApprove = OnApprove { approval ->
             approval.orderActions.capture { captureOrderResult ->
+                hideLoader()
                 when (captureOrderResult) {
                     is CaptureOrderResult.Success -> {
                         handlePaypalSuccessResponse(
@@ -203,14 +208,14 @@ class PaymentFragment : BasePaymentFragment() {
             }
         }
 
-        val onCancel = OnCancel {
-            // do nothing
-        }
-
         val onError = OnError { errorInfo ->
+            hideLoader()
             showToast(errorInfo.reason)
         }
 
+        val onCancel = OnCancel { hideLoader() }
+
+        showLoader()
         PayPalCheckout.start(createOrder, onApprove, null, onCancel, onError)
     }
 
