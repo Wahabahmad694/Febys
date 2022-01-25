@@ -605,14 +605,7 @@ class ProductDetailFragment : SliderFragment() {
     }
 
     private fun updateReviews(reviews: List<RatingAndReviews>) {
-        if (reviews.size >= 3) {
-            binding.seeMoreRatingAndReviews.isVisible = reviews.isNotEmpty()
-             true
-        }
-        else{
-            binding.seeMoreRatingAndReviews.isInvisible = reviews.isNotEmpty()
-            false
-        }
+        binding.seeMoreRatingAndReviews.isInvisible = reviews.size < 3
         val sortedReviews = getSortedReviews(reviews)
         binding.containerReviews.apply {
             removeAllViews()

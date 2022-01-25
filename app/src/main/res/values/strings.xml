@@ -236,7 +236,7 @@
     <string name="label_confirm">Confirm</string>
     <string name="label_ask">Ask</string>
     <string name="label_send">Send</string>
-    <string name="label_payment_method">Payment Method</string>
+    <string name="label_payment_methods">Payment Methods</string>
     <string name="label_customer_recommend">Customers Recommend</string>
     <string name="label_compare_with_similar_items">Compare With Similar Items</string>
     <string name="label_no_answer">---</string>
@@ -268,6 +268,7 @@
     <string name="the_best_of_shopping_amp_the_e_experience"><![CDATA[The Best of Shopping & the E experience]]></string>
     <string name="join_febys_plus_today_to_get_amazing_delivery_benefits_and_excluslve_ways_to_shop_stream_and_more_cancel_anytime">Join Febys Plus today to get amazing delivery benefits and excluslve ways to shop. stream, and more cancel anytime</string>
     <string name="free_one_day_shipping">Free One-Day Shipping</string>
+    <string name="free_two_day_shipping">Free Two-Day Shipping</string>
     <string name="check_out_what_s_included_with_your_febys_plus_membership">Check Out what\'s Included with Your Febys Plus Membership</string>
     <string name="fast_free_delivey">Fast, Free Delivey</string>
     <string name="exclusive_deals_and_offers">Exclusive Deals and Offers</string>
@@ -279,6 +280,7 @@
     <string name="title">Title</string>
     <string name="get_items_the_next_day">Get items the next day</string>
     <string name="free_same_day_delivery">Free Same-Day Delivery</string>
+    <string name="free_two_day_delivery">Over 100 million items that arrive two business days after they ship</string>
     <string name="get_eligible_orders_before_9pm_today">Get eligible orders before 9pm today</string>
     <string name="free_2_hour_delivery">Free 2-Hour Delivery</string>
     <string name="ultra_fast_delivery_on_daily_essentials_and_groceries_with_ruby_now">Ultra-fast delivery on daily essentials and groceries with Ruby Now</string>
