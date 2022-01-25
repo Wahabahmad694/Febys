@@ -22,10 +22,10 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_fav_toggle"
-            android:layout_width="@dimen/_16dp"
-            android:layout_height="@dimen/_16dp"
-            android:layout_marginTop="@dimen/_16dp"
-            android:layout_marginEnd="@dimen/_16dp"
+            android:layout_width="@dimen/_26sdp"
+            android:layout_height="@dimen/_26sdp"
+            android:layout_marginTop="@dimen/_13sdp"
+            android:layout_marginEnd="@dimen/_13sdp"
             android:src="@{isFav ? @drawable/ic_fav : @drawable/ic_un_fav}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

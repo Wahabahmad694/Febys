@@ -82,7 +82,7 @@
                         style="@style/TextTheme.HelveticaNeue.TS14.Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/label_current_balance"
+                        android:text="@string/current_balance"
                         android:textColor="@color/white"
                         app:layout_constraintBottom_toTopOf="@id/tv_amount"
                         app:layout_constraintStart_toStartOf="parent"

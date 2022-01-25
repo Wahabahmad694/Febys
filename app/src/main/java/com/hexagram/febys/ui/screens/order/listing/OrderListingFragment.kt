@@ -51,7 +51,7 @@ class OrderListingFragment : BaseFragment() {
         orderListingAdapter.onItemClick = {
             val review = args.status?.firstOrNull() == OrderStatus.REVIEWED
             val gotoOrderDetail = OrderListingFragmentDirections
-                .actionOrderListingFragmentToOrderDetailFragment(it.orderId, review)
+                .actionOrderListingFragmentToOrderDetailFragment(args.title, it.orderId, review)
             navigateTo(gotoOrderDetail)
         }
     }

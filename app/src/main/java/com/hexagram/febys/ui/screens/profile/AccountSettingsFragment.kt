@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragmentWithPermission
@@ -21,10 +22,7 @@ import com.hexagram.febys.models.api.consumer.Consumer
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.requests.RequestUpdateUser
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
-import com.hexagram.febys.utils.MediaFileUtils
-import com.hexagram.febys.utils.goBack
-import com.hexagram.febys.utils.hideLoader
-import com.hexagram.febys.utils.showLoader
+import com.hexagram.febys.utils.*
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import dagger.hilt.android.AndroidEntryPoint
@@ -61,6 +59,7 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
             if (!isInEditMode) {
                 val updateUser = getUpdatedConsumer()
                 updateUser?.let { accountSettingViewModel.updateProfile(it) }
+                showToast("User Profile updated")
 
             }
         }
@@ -96,6 +95,7 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
         binding.etFirstName.isEnabled = isInEditMode
         binding.etLastName.isEnabled = isInEditMode
         binding.etPhone.isEnabled = isInEditMode
+        binding.camera.isVisible = isInEditMode
 
         binding.btnEdit.text =
             if (isInEditMode) getString(R.string.label_save) else getString(R.string.label_edit)
@@ -167,6 +167,7 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
                     val filePath = MediaFileUtils.handleUri(requireContext(), it)
                     binding.profileImg.setImageURI(it)
                     startCrop(it!!)
+                    binding.profileImg.setImageURI(it)
                     accountSettingViewModel.updateProfileImage(filePath!!)
                 }
             }
@@ -240,7 +241,6 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
             }
         }
     }
-
     private fun setData(consumer: Consumer?) {
         binding.profileImg.setImageURI(consumer?.profileImage)
         binding.tvProfileName.setText(consumer?.fullName)

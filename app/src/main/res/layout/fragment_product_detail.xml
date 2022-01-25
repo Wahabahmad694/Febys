@@ -108,8 +108,8 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_product_fav"
-                        android:layout_width="@dimen/_19sdp"
-                        android:layout_height="@dimen/_19sdp"
+                        android:layout_width="@dimen/_26sdp"
+                        android:layout_height="@dimen/_26sdp"
                         android:layout_marginTop="@dimen/_16dp"
                         android:layout_marginEnd="@dimen/_16dp"
                         android:src="@drawable/ic_un_fav"
@@ -552,7 +552,7 @@
                                 style="@style/ButtonTheme.OutLine.Full"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_39sdp"
-                                android:layout_marginTop="@dimen/_16sdp"
+                                android:layout_marginTop="@dimen/_13sdp"
                                 android:text="@string/label_see_more" />
 
                         </LinearLayout>
@@ -750,9 +750,9 @@
                                 <TextView
                                     android:id="@+id/tv_store_rating"
                                     style="@style/TextTheme.Arial.TS14.Bold"
-                                    android:layout_marginStart="@dimen/_5sdp"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content" />
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="@dimen/_5sdp" />
 
                             </LinearLayout>
 

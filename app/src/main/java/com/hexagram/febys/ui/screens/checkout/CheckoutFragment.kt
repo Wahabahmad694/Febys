@@ -104,8 +104,13 @@ class CheckoutFragment : BaseFragment() {
             }
 
             override fun removeFromCart(cartDTO: CartDTO) {
-                checkoutViewModel.removeFromCart(cartDTO)
-                fetchOrderInfo()
+                val resId = R.drawable.bg_warning
+                val title = getString(R.string.label_delete_warning)
+                val msg = getString(R.string.msg_for_delete_item_bag)
+                showWarningDialog(resId, title, msg) {
+                    checkoutViewModel.removeFromCart(cartDTO)
+                    fetchOrderInfo()
+                }
             }
 
             override fun openProductDetail(cartDTO: CartDTO) {

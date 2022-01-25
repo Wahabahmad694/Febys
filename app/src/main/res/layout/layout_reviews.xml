@@ -38,8 +38,8 @@
                 android:checked="true"
                 android:paddingHorizontal="@dimen/_16dp"
                 android:stateListAnimator="@animator/selector_chip_text_style"
-                android:text="@string/label_most_recent"
-                android:textAppearance="@style/TextTheme.HelveticaNeue.TS12" />
+                android:text="@string/label_top_reviews"
+                android:textAppearance="@style/TextTheme.HelveticaNeue.TS12.Bold" />
 
             <RadioButton
                 android:id="@+id/rb_top_reviews"
@@ -50,8 +50,8 @@
                 android:button="@null"
                 android:paddingHorizontal="@dimen/_16dp"
                 android:stateListAnimator="@animator/selector_chip_text_style"
-                android:text="@string/label_top_reviews"
-                android:textAppearance="@style/TextTheme.HelveticaNeue.TS12" />
+                android:text="@string/label_most_recent"
+                android:textAppearance="@style/TextTheme.HelveticaNeue.TS12.Bold" />
         </RadioGroup>
 
         <androidx.recyclerview.widget.RecyclerView
