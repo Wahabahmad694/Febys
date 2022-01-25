@@ -14,7 +14,8 @@
         android:layout_marginHorizontal="@dimen/_8sdp"
         android:layout_marginVertical="@dimen/_6sdp"
         app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="@dimen/_10sdp">
+        app:cardCornerRadius="@dimen/_10sdp"
+        app:rippleColor="@android:color/transparent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
