@@ -19,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class CartFragment : BaseFragment() {
-    private lateinit var binding: FragmentCartBinding
+    private lateinit var binding:FragmentCartBinding
     private val cartViewModel: CartViewModel by viewModels()
     private val cartAdapter = CartAdapter()
 
@@ -55,6 +55,16 @@ class CartFragment : BaseFragment() {
             goBack()
         }
 
+        binding.btnDownloadPdf.setOnClickListener {
+            val resId = R.drawable.ic_pdf
+            val title = getString(R.string.label_delete_warning)
+            val msg = getString(R.string.msg_for_download_pdf)
+
+            showWarningDialog(resId, title, msg) {
+                //todo nothing
+            }
+        }
+
         binding.btnProceedToCheckout.setOnClickListener {
             if (isUserLoggedIn) gotoCheckout() else gotoLogin()
         }
@@ -76,7 +86,6 @@ class CartFragment : BaseFragment() {
             }
 
             override fun removeFromCart(cartDTO: CartDTO) {
-
                 val resId = R.drawable.bg_warning
                 val title = getString(R.string.label_delete_warning)
                 val msg = getString(R.string.msg_for_delete_item_bag)
@@ -84,7 +93,6 @@ class CartFragment : BaseFragment() {
                 showWarningDialog(resId, title, msg) {
                     cartViewModel.removeFromCart(cartDTO)
                 }
-
             }
 
             override fun openProductDetail(cartDTO: CartDTO) {
@@ -116,7 +124,8 @@ class CartFragment : BaseFragment() {
         }
 
         cartDataSource.observeCartCount().observe(viewLifecycleOwner) { cartCount ->
-            binding.tvCartCount.text = if (cartCount == null || cartCount == 0) "" else "($cartCount)"
+            binding.tvCartCount.text =
+                if (cartCount == null || cartCount == 0) "" else "($cartCount)"
         }
     }
 

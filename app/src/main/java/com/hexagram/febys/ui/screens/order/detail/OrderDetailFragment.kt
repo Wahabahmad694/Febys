@@ -54,6 +54,7 @@ class OrderDetailFragment : BaseFragment() {
     }
 
     private fun initUi() {
+        binding.labelOrders.text = args.title ?: getString(R.string.label_order_detail)
         binding.rvVendorWithProducts.isNestedScrollingEnabled = false
         binding.rvVendorWithProducts.adapter = orderDetailVendorProductAdapter
         binding.rvVendorWithProducts.applySpaceItemDecoration(R.dimen._16sdp)

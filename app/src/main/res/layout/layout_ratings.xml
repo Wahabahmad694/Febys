@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -52,7 +53,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_weight="1"
-                tools:progress="30" />
+                tools:progress="30"
+                app:trackCornerRadius="@dimen/_10sdp"/>
 
             <TextView
                 android:id="@+id/star_5_total"
@@ -90,7 +92,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_weight="1"
-                tools:progress="30" />
+                tools:progress="30"
+                app:trackCornerRadius="@dimen/_10sdp"/>
 
             <TextView
                 android:id="@+id/star_4_total"
@@ -128,7 +131,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_weight="1"
-                tools:progress="30" />
+                tools:progress="30"
+                app:trackCornerRadius="@dimen/_10sdp"/>
 
             <TextView
                 android:id="@+id/star_3_total"
@@ -166,7 +170,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_weight="1"
-                tools:progress="30" />
+                tools:progress="30"
+                app:trackCornerRadius="@dimen/_10sdp"/>
 
             <TextView
                 android:id="@+id/star_2_total"
@@ -204,7 +209,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_weight="1"
-                tools:progress="30" />
+                tools:progress="30"
+                app:trackCornerRadius="@dimen/_10sdp"/>
 
             <TextView
                 android:id="@+id/star_1_total"

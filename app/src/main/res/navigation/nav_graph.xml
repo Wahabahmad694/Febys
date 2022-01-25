@@ -692,6 +692,11 @@
         android:name="com.hexagram.febys.ui.screens.order.detail.OrderDetailFragment"
         android:label="OrderDetailFragment"
         tools:layout="@layout/fragment_order_detail">
+
+        <argument
+            android:name="title"
+            app:nullable="true"
+            app:argType="string" />
         <argument
             android:name="orderId"
             app:argType="string" />

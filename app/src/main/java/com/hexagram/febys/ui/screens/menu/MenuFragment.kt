@@ -31,24 +31,5 @@ class MenuFragment : BaseFragment() {
                 MenuFragmentDirections.actionMenuFragmentToFebysPlusFragment()
             navigateTo(gotofebysPlus)
         }
-        binding.labelPawnShop.setOnClickListener {
-            val goToPawnShop = NavGraphDirections.toWebViewFragment("", "https://www.youtube.com/")
-            navigateTo(goToPawnShop)
-        }
-        binding.labelDiscountMall.setOnClickListener {
-            val goToDiscountMall =
-                NavGraphDirections.toWebViewFragment("", "https://mail.google.com/")
-            navigateTo(goToDiscountMall)
-        }
-        binding.labelAfricanMarket.setOnClickListener {
-            val goToAfricanMarket =
-                NavGraphDirections.toWebViewFragment("", "https://www.google.com/")
-            navigateTo(goToAfricanMarket)
-        }
-        binding.labelMadeInGhana.setOnClickListener {
-            val goToMadeInGhana =
-                NavGraphDirections.toWebViewFragment("", "https://www.google.com/")
-            navigateTo(goToMadeInGhana)
-        }
     }
 }
