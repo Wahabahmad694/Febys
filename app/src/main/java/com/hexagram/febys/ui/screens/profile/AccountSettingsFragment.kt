@@ -22,10 +22,7 @@ import com.hexagram.febys.models.api.consumer.Consumer
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.requests.RequestUpdateUser
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
-import com.hexagram.febys.utils.MediaFileUtils
-import com.hexagram.febys.utils.goBack
-import com.hexagram.febys.utils.hideLoader
-import com.hexagram.febys.utils.showLoader
+import com.hexagram.febys.utils.*
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import dagger.hilt.android.AndroidEntryPoint
