@@ -340,12 +340,11 @@
     <string name="label_please_choose_following_one_of_them">Please choose following one of them</string>
     <string name="label_choose_payment_for_remaining">Choose Payment for remaining %1s</string>
     <string name="please_select_a_payment_method">Please select a payment method</string>
-    <string name="_4_7">4.7</string>
     <string name="label_reply_to_the_question">Reply to the question</string>
     <string name="label_94_positive_feedback">94% positive feedback</string>
-    <string name="label_average_price_rating_4.5">Average Price Rating: 4.5</string>
-    <string name="label_average_value_rating_4.5">Average Value Rating: 4.5</string>
-    <string name="label_average_quality_rating_4.5">Average Quality Rating: 4.5</string>
+    <string name="label_average_price_rating">Average Price Rating: %1s</string>
+    <string name="label_average_value_rating">Average Value Rating: %1s</string>
+    <string name="label_average_quality_rating">Average Quality Rating: %1s</string>
     <string name="label_reviews_and_rating">Reviews &amp; Rating</string>
 
 </resources>
