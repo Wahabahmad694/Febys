@@ -132,7 +132,9 @@ class OrderDetailFragment : BaseFragment() {
         tvOrderDate.text =
             Utils.DateTime.formatDate(order.createdAt, FORMAT_MONTH_DATE_YEAR_HOUR_MIN)
 
-        orderDetailVendorProductAdapter.submitList(order.vendorProducts, args.review)
+        val vendorProducts =
+            if (!args.review) order.vendorProducts else order.vendorProducts.filter { it.hasReviewed }
+        orderDetailVendorProductAdapter.submitList(vendorProducts, args.review)
 
         createOrderSummary(order)
     }
@@ -144,11 +146,7 @@ class OrderDetailFragment : BaseFragment() {
         val cartItems = order.toListOfCartDTO()
 
         updateOrderSummaryQuantity(cartItems.size)
-
-        cartItems.forEach {
-            addProductToOrderSummary(it.productName, it.quantity, it.price)
-        }
-
+        cartItems.forEach { addProductToOrderSummary(it.productName, it.quantity, it.price) }
         addProductToOrderSummary(getString(R.string.label_subtotal), 1, order.productsAmount, true)
 
         val shippingFee = Price("", 0.0, order.productsAmount.currency)
