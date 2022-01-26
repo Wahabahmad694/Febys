@@ -346,7 +346,6 @@
     <string name="label_choose_payment_for_remaining">Choose Payment for remaining <b>%1s</b></string>
     <string name="please_select_a_payment_method">Please select a payment method</string>
     <string name="label_reply_to_the_question">Reply to the question</string>
-    <string name="label_94_positive_feedback">94% positive feedback</string>
     <string name="label_average_price_rating">Average Price Rating: %1s</string>
     <string name="label_average_value_rating">Average Value Rating: %1s</string>
     <string name="label_average_quality_rating">Average Quality Rating: %1s</string>
