@@ -22,11 +22,6 @@ class AccountFragment : BaseFragment() {
     private lateinit var binding: FragmentAccountBinding
     private val authViewModel: AuthViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        authViewModel.fetchProfile()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -40,6 +35,7 @@ class AccountFragment : BaseFragment() {
         initUi()
         uiListeners()
         setupObserver()
+        authViewModel.fetchProfile()
     }
 
     private fun initUi() {

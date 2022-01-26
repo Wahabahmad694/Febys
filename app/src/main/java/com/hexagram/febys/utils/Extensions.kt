@@ -2,6 +2,8 @@ package com.hexagram.febys.utils
 
 import android.app.Activity
 import android.graphics.drawable.GradientDrawable
+import android.os.Build
+import android.text.Html
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
@@ -10,7 +12,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
-import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
@@ -34,7 +35,6 @@ import java.io.IOException
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.util.*
-
 
 fun View.show() {
     visibility = View.VISIBLE
@@ -213,6 +213,15 @@ fun TextView.setBackgroundRoundedColor(color: Int, cornerRadius: Float = 16f) {
     shape.cornerRadius = cornerRadius
     shape.setColor(color)
     this.background = shape
+}
+
+fun TextView.showHtml(html: String) {
+    val spannedText = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        Html.fromHtml(html, Html.FROM_HTML_MODE_COMPACT)
+    } else {
+        Html.fromHtml(html)
+    }
+    this.setText(spannedText, TextView.BufferType.SPANNABLE)
 }
 
 fun String.capitalize(): String {

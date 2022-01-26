@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import com.hexagram.febys.NavGraphDirections
@@ -125,6 +126,7 @@ class CheckoutFragment : BaseFragment() {
                 .getParcelableArrayList<Transaction>(BasePaymentFragment.TRANSACTIONS)?.toList()
 
             if (!transactions.isNullOrEmpty()) {
+                checkoutViewModel.cancelAllRunningJobs()
                 placeOrder(transactions)
             }
         }
@@ -269,24 +271,36 @@ class CheckoutFragment : BaseFragment() {
     }
 
     private fun placeOrder(transactions: List<Transaction>) {
+        hideLoader()
         val vendorMessages = cartAdapter.getVendorMessages()
-        checkoutViewModel.placeOrder(transactions, voucher, vendorMessages) {
-            when (it) {
-                is DataState.Loading -> {
-                    showLoader()
-                }
-                is DataState.Error -> {
-                    hideLoader()
-                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
-                }
-                is DataState.Data -> {
-                    hideLoader()
-                    val toCheckoutSuccess = CheckoutFragmentDirections
-                        .actionCheckoutFragmentToCheckoutSuccessFragment(it.data.orderId)
-                    navigateTo(toCheckoutSuccess)
+        checkoutViewModel
+            .placeOrder(transactions, voucher, vendorMessages)
+            .observe(viewLifecycleOwner) {
+                when (it) {
+                    is DataState.Loading -> {
+                        showOrderPlacingUi()
+                    }
+                    is DataState.Error -> {
+                        hideOrderPlacingUi()
+                        ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
+                    }
+                    is DataState.Data -> {
+                        if (it.data == null) return@observe
+                        binding.tvPlacingOrder.isVisible = false
+                        val toCheckoutSuccess = CheckoutFragmentDirections
+                            .actionCheckoutFragmentToCheckoutSuccessFragment(it.data.orderId)
+                        navigateTo(toCheckoutSuccess)
+                    }
                 }
             }
-        }
+    }
+
+    private fun showOrderPlacingUi() {
+        binding.containerPlacingOrder.isVisible = true
+    }
+
+    private fun hideOrderPlacingUi() {
+        binding.containerPlacingOrder.isVisible = false
     }
 
     override fun onDestroy() {

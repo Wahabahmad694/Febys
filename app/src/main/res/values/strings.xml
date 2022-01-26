@@ -139,7 +139,6 @@
     <string name="error_enter_valid_phone">Please Enter Valid Phone No</string>
     <string name="label_proceed_to_checkout">Proceed to Checkout</string>
     <string name="label_proceed_to_payment">Proceed to Payment</string>
-    <string name="label_pay">Pay</string>
     <string name="label_download_pdf">Download PDF</string>
     <string name="label_apply">Apply</string>
     <string name="label_enter_voucher_code">Enter Voucher Code</string>
@@ -341,7 +340,7 @@
     <string name="label_source">Source:</string>
     <string name="label_status">Status:</string>
     <string name="label_please_choose_following_one_of_them">Please choose following one of them</string>
-    <string name="label_choose_payment_for_remaining">Choose Payment for remaining %1s</string>
+    <string name="label_choose_payment_for_remaining">Choose Payment for remaining <b>%1s</b></string>
     <string name="please_select_a_payment_method">Please select a payment method</string>
     <string name="label_reply_to_the_question">Reply to the question</string>
     <string name="label_94_positive_feedback">94% positive feedback</string>
@@ -352,5 +351,6 @@
     <string name="label_to">To</string>
     <string name="label_from">From</string>
     <string name="current_balance">Current Balance</string>
+    <string name="placing_order">Placing Order…</string>
 
 </resources>

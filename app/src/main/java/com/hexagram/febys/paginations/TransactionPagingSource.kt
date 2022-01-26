@@ -21,9 +21,8 @@ class TransactionPagingSource constructor(
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Transaction> {
         request.pageNo = params.key ?: 1
-        val req = mapOf("listing" to request)
         val queryMap = request.createQueryMap()
-        return when (val response = service.fetchTransactions(authToken, queryMap, req)) {
+        return when (val response = service.fetchTransactions(authToken, queryMap, request)) {
             is ApiResponse.ApiSuccessResponse -> {
                 val transactions = response.data!!.getResponse<TransactionPagingListing>()
                 val (prevKey, nextKey) = getPagingKeys(transactions.pagingInfo)

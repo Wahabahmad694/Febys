@@ -17,10 +17,7 @@ import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.ui.screens.payment.methods.PaymentMethod
 import com.hexagram.febys.ui.screens.payment.models.PayStackTransactionRequest
 import com.hexagram.febys.ui.screens.payment.utils.PayStackWebViewClient
-import com.hexagram.febys.utils.goBack
-import com.hexagram.febys.utils.hideLoader
-import com.hexagram.febys.utils.showLoader
-import com.hexagram.febys.utils.showToast
+import com.hexagram.febys.utils.*
 import com.paypal.checkout.PayPalCheckout
 import com.paypal.checkout.approve.OnApprove
 import com.paypal.checkout.cancel.OnCancel
@@ -128,6 +125,7 @@ class PaymentFragment : BasePaymentFragment() {
                             paymentViewModel.amountPaidFromWallet!!.getFormattedPrice()
                         binding.tvWalletPaymentMsg.text = getString(R.string.taken_from_wallet)
                     } else {
+                        binding.containerWalletPayment.isVisible = it.data.amount > 0.0
                         binding.tvWalletPrice.text = it.data.getPrice().getFormattedPrice()
                         binding.tvWalletPaymentMsg.text = getString(R.string.available)
                     }
@@ -300,8 +298,10 @@ class PaymentFragment : BasePaymentFragment() {
             markAsSelected(binding.containerWalletPayment, binding.walletFilledTick)
 
             val remainingPrice = paymentViewModel.getRemainingPriceForSplit().getFormattedPrice()
-            binding.tvRemainingAmount.text =
+            val remainingPriceMsg =
                 getString(R.string.label_choose_payment_for_remaining, remainingPrice)
+            binding.tvRemainingAmount.showHtml(remainingPriceMsg)
+
         }
     }
 
