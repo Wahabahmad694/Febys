@@ -23,24 +23,15 @@
             android:background="@color/grey"
             android:paddingVertical="@dimen/_16sdp">
 
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/background"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:actualImageScaleType="none"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:roundedCornerRadius="@dimen/_8sdp" />
-
             <LinearLayout
                 android:id="@+id/container_transaction"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_22sdp"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_2sdp"
                 android:orientation="vertical"
+                app:layout_constraintEnd_toStartOf="@id/container_source"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -56,15 +47,46 @@
                     style="@style/TextTheme.Arial.TS16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     tools:text="FT13365679077412" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/container_source"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@id/container_transaction"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/container_status"
+                app:layout_constraintTop_toTopOf="@id/container_transaction">
+
+                <TextView
+                    android:id="@+id/label_source"
+                    style="@style/TextTheme.HelveticaNeue.TS14.Grey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_source" />
+
+                <TextView
+                    android:id="@+id/tv_source"
+                    style="@style/TextTheme.Arial.TS16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    tools:text="Wallet" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/container_date_time"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_19sdp"
+                android:layout_marginEnd="@dimen/_2sdp"
                 android:orientation="vertical"
+                app:layout_constraintEnd_toStartOf="@id/container_amount"
                 app:layout_constraintStart_toStartOf="@id/container_transaction"
                 app:layout_constraintTop_toBottomOf="@id/container_transaction">
 
@@ -80,41 +102,19 @@
                     style="@style/TextTheme.Arial.TS16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     tools:text="May 18.2021-12:49" />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/container_source"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_22sdp"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="@id/container_transaction"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/container_transaction">
-
-                <TextView
-                    android:id="@+id/label_source"
-                    style="@style/TextTheme.HelveticaNeue.TS14.Grey"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/label_source" />
-
-                <TextView
-                    android:id="@+id/tv_source"
-                    style="@style/TextTheme.Arial.TS16"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="Wallet" />
-            </LinearLayout>
-
-            <LinearLayout
                 android:id="@+id/container_amount"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="@id/container_date_time"
-                app:layout_constraintStart_toStartOf="@id/container_source"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/container_status"
                 app:layout_constraintTop_toTopOf="@id/container_date_time">
 
                 <TextView
@@ -129,15 +129,19 @@
                     style="@style/TextTheme.Arial.TS16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="GHS 100.06" />
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    tools:text="GHS 10000.06" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/container_purpose"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_19sdp"
+                android:layout_marginEnd="@dimen/_2sdp"
                 android:orientation="vertical"
+                app:layout_constraintEnd_toStartOf="@id/container_status"
                 app:layout_constraintStart_toStartOf="@id/container_date_time"
                 app:layout_constraintTop_toBottomOf="@id/container_date_time">
 
@@ -153,17 +157,19 @@
                     style="@style/TextTheme.Arial.TS16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     tools:text="Return" />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/container_statuse"
+                android:id="@+id/container_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_22sdp"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="@id/container_purpose"
-                app:layout_constraintStart_toStartOf="@id/container_amount"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/container_purpose">
 
                 <TextView

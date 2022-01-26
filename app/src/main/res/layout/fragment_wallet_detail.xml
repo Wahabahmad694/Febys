@@ -30,10 +30,10 @@
                 android:gravity="center"
                 android:paddingHorizontal="@dimen/_32dp"
                 android:text="@string/label_wallet"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_back"
@@ -74,7 +74,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_20sdp"
-                    android:layout_marginBottom="@dimen/_24sdp"
                     android:background="@drawable/flag_transparent"
                     android:paddingHorizontal="@dimen/_20sdp">
 
@@ -111,17 +110,23 @@
                         app:layout_constraintTop_toTopOf="@id/current_balance" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_14sdp"
                     android:orientation="horizontal"
-                    android:padding="@dimen/_14sdp">
+                    android:paddingHorizontal="@dimen/_14sdp">
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_withDraw"
                         style="@style/ButtonTheme.OutLine"
                         android:layout_width="@dimen/_80sdp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/_36sdp"
                         android:layout_marginHorizontal="@dimen/_6sdp"
                         android:backgroundTint="@color/white"
                         android:text="@string/label_withdraw"
@@ -134,7 +139,7 @@
                         android:id="@+id/btn_top_up"
                         style="@style/ButtonTheme.OutLine"
                         android:layout_width="@dimen/_80sdp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/_36sdp"
                         android:layout_marginHorizontal="@dimen/_6sdp"
                         android:text="@string/label_topUp"
                         android:textColor="@color/white"
