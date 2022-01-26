@@ -70,6 +70,7 @@
                     style="@style/TextTheme.HelveticaNeue.TS14.Bold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
                     android:button="@null"
                     android:drawableEnd="@drawable/selector_radio_btn_customize"
                     android:text="@string/label_new_items" />
@@ -84,6 +85,7 @@
                     style="@style/TextTheme.HelveticaNeue.TS14.Bold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
                     android:button="@null"
                     android:drawableEnd="@drawable/selector_radio_btn_customize"
                     android:text="@string/label_low_price" />
@@ -98,6 +100,7 @@
                     style="@style/TextTheme.HelveticaNeue.TS14.Bold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
                     android:button="@null"
                     android:drawableEnd="@drawable/selector_radio_btn_customize"
                     android:text="@string/label_high_price" />
@@ -126,9 +129,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:itemCount="3"
-                app:layout_constraintStart_toStartOf="parent"
                 tools:listitem="@layout/item_filters" />
 
             <include
@@ -136,9 +139,9 @@
                 layout="@layout/item_price_range"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_20sdp"
                 app:layout_constraintStart_toStartOf="@id/rv_filters"
-                app:layout_constraintTop_toBottomOf="@id/rv_filters"
-                android:layout_marginHorizontal="@dimen/_20sdp"/>
+                app:layout_constraintTop_toBottomOf="@id/rv_filters" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_show"
