@@ -90,7 +90,7 @@ class WalletDetailFragment : BaseFragment() {
 
     private fun updateWalletUi(wallet: Wallet) {
         binding.apply {
-            tvAmount.text = Price("", wallet.amount, wallet.currency).getFormattedPrice()
+            tvAmount.text = wallet.getPrice().getFormattedPrice()
         }
     }
 

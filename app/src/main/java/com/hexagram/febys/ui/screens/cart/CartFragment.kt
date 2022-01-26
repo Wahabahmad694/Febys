@@ -12,6 +12,7 @@ import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentCartBinding
 import com.hexagram.febys.models.api.price.Price
 import com.hexagram.febys.models.db.CartDTO
+import com.hexagram.febys.utils.Utils
 import com.hexagram.febys.utils.goBack
 import com.hexagram.febys.utils.navigateTo
 import com.hexagram.febys.utils.showWarningDialog
@@ -44,7 +45,7 @@ class CartFragment : BaseFragment() {
         binding.rvCart.isNestedScrollingEnabled = false
         binding.rvCart.adapter = cartAdapter
 
-        val shippingPrice = Price("", 0.0, "GHS")
+        val shippingPrice = Price("", 0.0, Utils.DEFAULT_CURRENCY)
         binding.tvShippingAmount.text = shippingPrice.getFormattedPrice()
 
         updateFav()
