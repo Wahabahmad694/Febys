@@ -185,7 +185,7 @@
                 android:layout_marginHorizontal="@dimen/_16sdp"
                 android:layout_marginVertical="@dimen/_14sdp"
                 android:maxWidth="@dimen/_298sdp"
-                android:text="@string/label_send" />
+                android:text="@string/label_save" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>
