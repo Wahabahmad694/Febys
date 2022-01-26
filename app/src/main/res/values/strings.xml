@@ -94,8 +94,8 @@
     <string name="label_clear_all">Clear all</string>
     <string name="label_clear">Clear </string>
     <string name="label_new_items">New Items</string>
-    <string name="label_low_price">Price (low first)</string>
-    <string name="label_high_price">Price (high first)</string>
+    <string name="label_low_price">Price ( low first )</string>
+    <string name="label_high_price">Price ( high first )</string>
     <string name="label_filter_by">Filter By</string>
     <string name="label_item">Item</string>
     <string name="label_items">Items</string>
@@ -198,7 +198,7 @@
     <string name="label_save_and_continue">Save and Continue</string>
     <string name="label_save">Save</string>
     <string name="label_show_filter">Show %1s results</string>
-    <string name="label_apply_filter">Apply Filters</string>
+    <string name="label_apply_filter">Apply Now</string>
     <string name="error_enter_valid_postal_code">Please enter valid postal code</string>
     <string name="error_enter_valid_state">Please enter valid state</string>
     <string name="error_enter_valid_city">Please enter valid city</string>
@@ -298,11 +298,14 @@
     <string name="label_empty_view">No %1s found</string>
     <string name="label_person_name">Hi %1s</string>
     <string name="label_delete_warning">Are You Sure?</string>
+    <string name="label_coming_soon">Coming Soon</string>
     <string name="msg_for_delete_item_bag">Do you want to delete this item from bag?</string>
     <string name="msg_for_download_pdf">You want to download the PDF.</string>
     <string name="msg_for_unfollow_vendor">Do you want to unfollow this vendor?</string>
+    <string name="msg_for_unfollow_celebrity">Do you want to unfollow this celebrity?</string>
     <string name="msg_for_delete_shipping_address">Do you want to delete this shipping address?</string>
     <string name="msg_for_withdraw">Do you want to withdraw amount?</string>
+    <string name="msg_for_coming_soon">This feature is under progress</string>
     <string name="label_add_seller_feedback">Add Seller Feedback</string>
     <string name="label_price">Price</string>
     <string name="label_value">Value</string>

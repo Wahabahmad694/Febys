@@ -14,13 +14,14 @@
 
         <TextView
             android:id="@+id/tv_name_store"
-            style="@style/TextTheme.HelveticaNeue.TS12.Bold"
+            style="@style/TextTheme.HelveticaNeue.TS16.Bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:paddingTop="@dimen/_8dp"
             android:paddingBottom="@dimen/_8dp"
-            app:drawableEndCompat="@drawable/ic_right"
+            app:drawableEndCompat="@drawable/ic_right_arrow"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Electronics" />

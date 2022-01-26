@@ -105,7 +105,7 @@ class CheckoutFragment : BaseFragment() {
             }
 
             override fun removeFromCart(cartDTO: CartDTO) {
-                val resId = R.drawable.bg_warning
+                val resId = R.drawable.ic_warning
                 val title = getString(R.string.label_delete_warning)
                 val msg = getString(R.string.msg_for_delete_item_bag)
                 showWarningDialog(resId, title, msg) {
