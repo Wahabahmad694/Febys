@@ -33,9 +33,9 @@ interface ICartRepo {
         voucher: String?, dispatcher: CoroutineDispatcher = Dispatchers.IO
     ): Flow<DataState<Order?>>
 
-    suspend fun placeOrder(
+    fun placeOrder(
         transactions: List<Transaction>,
         voucher: String?,
         vendorMessages: List<VendorMessage>
-    ): Flow<DataState<Order>>
+    ): Flow<DataState<Order?>>
 }

@@ -82,10 +82,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_5sdp"
+                    android:ellipsize="end"
+                    android:maxWidth="@dimen/_96sdp"
+                    android:maxLines="1"
                     android:textColor="@color/red"
                     app:layout_constraintStart_toStartOf="@id/tv_wallet"
                     app:layout_constraintTop_toBottomOf="@id/tv_wallet"
-                    tools:text="$100" />
+                    tools:text="$1986767" />
 
                 <TextView
                     android:id="@+id/tv_wallet_payment_msg"
@@ -94,9 +97,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_4sdp"
                     android:layout_marginTop="@dimen/_5sdp"
-                    tools:text="@string/available"
                     app:layout_constraintStart_toEndOf="@id/tv_wallet_price"
-                    app:layout_constraintTop_toBottomOf="@id/tv_wallet" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_wallet"
+                    tools:text="@string/available" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/wallet_filled_tick"
@@ -247,6 +250,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_120sdp"
                 android:background="@color/white"
+                android:elevation="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
@@ -280,7 +284,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_17sdp"
                     android:layout_marginBottom="@dimen/_14sdp"
-                    android:text="@string/label_pay"
+                    android:text="@string/label_pay_now"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -298,9 +302,9 @@
 
         <WebView
             android:id="@+id/web_view"
-            android:visibility="gone"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:visibility="gone" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

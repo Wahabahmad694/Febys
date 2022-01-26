@@ -139,7 +139,6 @@
     <string name="error_enter_valid_phone">Please Enter Valid Phone No</string>
     <string name="label_proceed_to_checkout">Proceed to Checkout</string>
     <string name="label_proceed_to_payment">Proceed to Payment</string>
-    <string name="label_pay">Pay</string>
     <string name="label_download_pdf">Download PDF</string>
     <string name="label_apply">Apply</string>
     <string name="label_enter_voucher_code">Enter Voucher Code</string>
@@ -340,21 +339,18 @@
     <string name="label_oops">Oops!</string>
     <string name="label_source">Source:</string>
     <string name="label_status">Status:</string>
-    <string name="_4_7">%1f</string>
     <string name="label_please_choose_following_one_of_them">Please choose following one of them</string>
-    <string name="label_choose_payment_for_remaining">Choose Payment for remaining %1s</string>
+    <string name="label_choose_payment_for_remaining">Choose Payment for remaining <b>%1s</b></string>
     <string name="please_select_a_payment_method">Please select a payment method</string>
     <string name="label_reply_to_the_question">Reply to the question</string>
-    <string name="label_94_positive_feedback">%1d% positive feedback</string>
-    <string name="label_average_price_rating_4.5">Average Price Rating: %1f</string>
-    <string name="label_average_value_rating_4.5">Average Value Rating: %1f</string>
-    <string name="label_average_quality_rating_4.5">Average Quality Rating: %1f</string>
+    <string name="label_94_positive_feedback">94% positive feedback</string>
+    <string name="label_average_price_rating">Average Price Rating: %1s</string>
+    <string name="label_average_value_rating">Average Value Rating: %1s</string>
+    <string name="label_average_quality_rating">Average Quality Rating: %1s</string>
     <string name="label_reviews_and_rating">Reviews &amp; Rating</string>
-    <string name="label_average_price_rating">Average Price Rating:</string>
-    <string name="label_average_value_rating">Average Value Rating:</string>
-    <string name="label_average_quality_rating">Average Quality Rating:</string>
     <string name="label_to">To</string>
     <string name="label_from">From</string>
     <string name="current_balance">Current Balance</string>
+    <string name="placing_order">Placing Order…</string>
 
 </resources>

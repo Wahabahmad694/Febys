@@ -48,6 +48,6 @@ interface PaymentService {
     suspend fun fetchTransactions(
         @Header("Authorization") authToken: String,
         @QueryMap queryMap: Map<String, String>,
-        @Body req: Map<String, PagingListRequest>
+        @Body req: PagingListRequest
     ): ApiResponse<Pagination>
 }

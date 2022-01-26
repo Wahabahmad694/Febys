@@ -38,13 +38,12 @@
                 app:layout_constraintTop_toBottomOf="@id/average_rating" />
 
             <TextView
-                android:id="@+id/tv_rating"
+                android:id="@+id/tv_average_rating"
                 style="@style/TextTheme.HelveticaNeue.TS16.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_marginEnd="@dimen/_18sdp"
-                android:text="@string/_4_7"
                 app:layout_constraintBottom_toBottomOf="@id/average"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/average" />
@@ -54,11 +53,11 @@
                 android:layout_height="20dp"
                 android:layout_marginEnd="@dimen/_6sdp"
                 android:src="@drawable/ic_star_fill"
-                app:layout_constraintEnd_toStartOf="@id/tv_rating"
+                app:layout_constraintEnd_toStartOf="@id/tv_average_rating"
                 app:layout_constraintTop_toTopOf="@id/average" />
 
             <LinearLayout
-                android:id="@+id/label_price_rating"
+                android:id="@+id/container_price_rating"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_16sdp"
@@ -73,12 +72,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_1sdp"
-                    android:text="@string/label_average_price_rating"
+                    tools:text="@string/label_average_price_rating"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <LinearLayout
-                    android:id="@+id/label_price_rating_bar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -235,14 +233,14 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/label_value_rating"
+                android:id="@+id/container_value_rating"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_16sdp"
                 android:background="@drawable/bg_grey"
                 android:orientation="vertical"
                 android:padding="@dimen/_16sdp"
-                app:layout_constraintTop_toBottomOf="@id/label_price_rating">
+                app:layout_constraintTop_toBottomOf="@id/container_price_rating">
 
                 <TextView
                     android:id="@+id/average_value_rating"
@@ -250,7 +248,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_1sdp"
-                    android:text="@string/label_average_value_rating"
+                    tools:text="@string/label_average_value_rating"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -411,13 +409,14 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/container_quality_rating"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_16sdp"
                 android:background="@drawable/bg_grey"
                 android:orientation="vertical"
                 android:padding="@dimen/_16sdp"
-                app:layout_constraintTop_toBottomOf="@id/label_value_rating">
+                app:layout_constraintTop_toBottomOf="@id/container_value_rating">
 
                 <TextView
                     android:id="@+id/average_quality_rating"
@@ -425,7 +424,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_1sdp"
-                    android:text="@string/label_average_quality_rating"
+                    tools:text="@string/label_average_quality_rating"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 

@@ -15,6 +15,7 @@ import com.hexagram.febys.network.requests.RequestPushCart
 import com.hexagram.febys.network.requests.SkuIdAndQuantity
 import com.hexagram.febys.prefs.IPrefManger
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -79,16 +80,16 @@ class CartRepoImpl @Inject constructor(
             .onNetworkError { emit(DataState.NetworkError()) }
     }
 
-    override suspend fun placeOrder(
+    override fun placeOrder(
         transactions: List<Transaction>,
         voucher: String?,
         vendorMessages: List<VendorMessage>
-    ) = flow<DataState<Order>> {
+    ) = flow<DataState<Order?>> {
+        emit(DataState.Loading())
+        delay(1000)
         val authToken = pref.getAccessToken()
-        if (authToken.isEmpty()) return@flow
-
         val orderRequest = getOrderRequest(voucher, transactions, vendorMessages)
-        if (orderRequest.items.isEmpty()) return@flow
+        if (orderRequest.items.isEmpty()) emit(DataState.Data(null))
 
         backendService.placeOrder(authToken, orderRequest)
             .onSuccess {

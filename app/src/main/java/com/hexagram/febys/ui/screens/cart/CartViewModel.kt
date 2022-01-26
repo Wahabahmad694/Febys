@@ -14,7 +14,7 @@ import com.hexagram.febys.repos.IProductRepo
 import com.hexagram.febys.ui.screens.product.ProductViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -75,15 +75,9 @@ open class CartViewModel @Inject constructor(
     fun placeOrder(
         transactions: List<Transaction>,
         voucher: String?,
-        vendorMessages: List<VendorMessage>,
-        onPlaceOrderResponse: (DataState<Order>) -> Unit
-    ) {
-        onPlaceOrderResponse(DataState.Loading())
-        viewModelScope.launch {
-            cartRepo.placeOrder(transactions, voucher, vendorMessages).collect {
-                if (it is DataState.Data) clearCart()
-                launch(Dispatchers.Main) { onPlaceOrderResponse(it) }
-            }
-        }
-    }
+        vendorMessages: List<VendorMessage>
+    ): LiveData<DataState<Order?>> =
+        cartRepo.placeOrder(transactions, voucher, vendorMessages).onEach {
+            if (it is DataState.Data) clearCart()
+        }.asLiveData()
 }
