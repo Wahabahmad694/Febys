@@ -14,8 +14,7 @@ import com.hexagram.febys.network.adapter.*
 import com.hexagram.febys.network.requests.RequestPushCart
 import com.hexagram.febys.network.requests.SkuIdAndQuantity
 import com.hexagram.febys.prefs.IPrefManger
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -114,7 +113,8 @@ class CartRepoImpl @Inject constructor(
         )
     }
 
-    override fun clearCart() {
+    override fun clearCart(push: Boolean) {
         cartDataSource.clear()
+        if (push) GlobalScope.launch(Dispatchers.IO) { pushCart() }
     }
 }

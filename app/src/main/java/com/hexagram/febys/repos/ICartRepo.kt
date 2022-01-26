@@ -23,7 +23,7 @@ interface ICartRepo {
 
     suspend fun addCartItem(cartDTO: CartDTO)
 
-    fun clearCart()
+    fun clearCart(push: Boolean = false)
 
     suspend fun updateCart(cart: Cart)
 

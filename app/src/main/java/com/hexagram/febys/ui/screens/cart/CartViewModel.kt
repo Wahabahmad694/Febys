@@ -68,7 +68,7 @@ open class CartViewModel @Inject constructor(
 
     fun refreshCart() = viewModelScope.launch { cartRepo.refreshCart() }
 
-    fun clearCart() = viewModelScope.launch(Dispatchers.IO) { cartRepo.clearCart() }
+    fun clearCart() = cartRepo.clearCart(true)
 
     fun fetchOrderInfo(voucher: String? = null) = cartRepo.fetchOrderInfo(voucher).asLiveData()
 
