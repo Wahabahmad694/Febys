@@ -153,7 +153,7 @@ class AccountFragment : BaseFragment() {
     private fun updateWalletUi() {
         val wallet = authViewModel.getWallet()
         binding.orders.labelPrice.text = wallet?.getPrice()?.getFormattedPrice()
-        binding.orders.containerWallet.isVisible = wallet != null
+        binding.orders.containerWallet.isVisible = wallet?.isWalletCreated == true
     }
 
     private fun updateUserUi(user: Consumer?) {

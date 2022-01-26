@@ -1,6 +1,7 @@
 package com.hexagram.febys.models.api.price
 
 import android.os.Parcelable
+import com.hexagram.febys.utils.Utils
 import kotlinx.parcelize.Parcelize
 import java.text.NumberFormat
 import java.util.*
@@ -30,7 +31,7 @@ data class Price(
     fun getFormattedPriceByLocale(): String {
         val format = NumberFormat.getCurrencyInstance()
         format.maximumFractionDigits = 2
-        format.currency = Currency.getInstance("GHS")
+        format.currency = Currency.getInstance(Utils.DEFAULT_CURRENCY)
         return format.format(value)
     }
 }

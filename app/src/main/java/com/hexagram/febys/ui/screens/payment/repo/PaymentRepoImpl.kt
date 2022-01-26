@@ -31,11 +31,15 @@ class PaymentRepoImpl @Inject constructor(
             emit(DataState.Loading())
             val authToken = pref.getAccessToken()
             val walletResponse = paymentService.fetchWallet(authToken)
-            if (conversionCurrency != null && walletResponse is ApiResponse.ApiSuccessResponse) {
-                if (!conversionCurrency.equals(walletResponse.data!!.wallet.currency, true)) {
+            if (
+                conversionCurrency != null
+                && walletResponse is ApiResponse.ApiSuccessResponse
+                && walletResponse.data?.wallet?.isWalletCreated == true
+            ) {
+                if (!conversionCurrency.equals(walletResponse.data.wallet.currency, true)) {
                     val wallet = walletResponse.data.wallet
                     val conversionRequest =
-                        mapOf("from" to conversionCurrency, "to" to wallet.currency)
+                        mapOf("from" to conversionCurrency, "to" to wallet.currency!!)
                     val conversionResponse =
                         paymentService.fetchCurrencyConversionRate(authToken, conversionRequest)
                     if (conversionResponse is ApiResponse.ApiSuccessResponse) {

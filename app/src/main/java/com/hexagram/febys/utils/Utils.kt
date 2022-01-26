@@ -11,6 +11,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 object Utils {
+    const val DEFAULT_CURRENCY = "GHS"
+
     object DateTime {
         const val FORMAT_ISO = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
         const val FORMAT_MONTH_DATE_YEAR = "MMMM dd, yyyy"
