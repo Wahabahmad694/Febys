@@ -10,6 +10,7 @@ import com.hexagram.febys.models.api.order.Order
 import com.hexagram.febys.models.api.rating.OrderReview
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.repos.IOrderRepo
+import com.hexagram.febys.utils.OrderStatus
 import com.hexagram.febys.utils.Utils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -47,7 +48,10 @@ class OrderViewModel @Inject constructor(
             _observerOrder.postValue(it)
             if (it is DataState.Data) {
                 // showTimer if any item can be cancelled
-                val showTimer = it.data.vendorProducts.any { item -> item.reverted == false }
+                val showTimer = it.data.vendorProducts.any { item ->
+                    item.reverted == false
+                            && item.status in arrayOf(OrderStatus.PENDING, OrderStatus.ACCEPTED)
+                }
                 val remainingTime =
                     if (showTimer) Utils.DateTime.getRemainingMilliFrom30Min(it.data.createdAt) else -1
                 timerJob = startTimer(remainingTime)
