@@ -24,7 +24,7 @@
 
             <TextView
                 android:id="@+id/tv_wallet"
-                style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+                style="@style/TextTheme.HelveticaNeue.TS16.Bold"
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
                 android:gravity="center"
@@ -32,7 +32,8 @@
                 android:text="@string/label_wallet"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_back"
