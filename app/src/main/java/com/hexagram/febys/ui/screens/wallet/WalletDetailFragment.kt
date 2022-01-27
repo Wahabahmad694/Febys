@@ -11,7 +11,6 @@ import androidx.paging.LoadState
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentWalletDetailBinding
-import com.hexagram.febys.models.api.price.Price
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.ui.screens.payment.TransactionPagerAdapter
@@ -38,9 +37,14 @@ class WalletDetailFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initUi()
         uiListeners()
         refreshWallet()
         setupTransactionPagerAdapter()
+    }
+
+    private fun initUi() {
+        binding.rvTransactions.isNestedScrollingEnabled = false
     }
 
     private fun setupTransactionPagerAdapter() {
@@ -64,7 +68,6 @@ class WalletDetailFragment : BaseFragment() {
                     it.refresh is LoadState.NotLoading && transactionPagerAdapter.itemCount < 1
                 binding.emptyView.root.isVisible = isEmpty
                 binding.rvTransactions.isVisible = !isEmpty
-                binding.labelTransactionHistory.isVisible = !isEmpty
 
             }
         }

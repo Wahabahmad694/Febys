@@ -46,135 +46,151 @@
                 app:layout_constraintTop_toTopOf="@id/tv_wallet" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_154sdp"
-            android:layout_marginHorizontal="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_20sdp"
-            app:cardCornerRadius="@dimen/_6sdp"
-            app:layout_constraintTop_toBottomOf="@id/container_top_bar">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-            <ImageView
-                android:id="@+id/iv_wallet_background"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/bg_wallet_background" />
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/container_wallet_component"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+               <androidx.cardview.widget.CardView
+                   android:id="@+id/card"
+                   android:layout_width="match_parent"
+                   android:layout_height="@dimen/_154sdp"
+                   android:layout_marginHorizontal="@dimen/_20sdp"
+                   android:layout_marginTop="@dimen/_20sdp"
+                   app:cardCornerRadius="@dimen/_6sdp"
+                   app:layout_constraintTop_toBottomOf="@id/container_top_bar">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/container_wallet_withdraw_detail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_20sdp"
-                    android:background="@drawable/flag_transparent"
-                    android:paddingHorizontal="@dimen/_20sdp">
+                   <ImageView
+                       android:id="@+id/iv_wallet_background"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:scaleType="centerCrop"
+                       android:src="@drawable/bg_wallet_background" />
 
-                    <TextView
-                        android:id="@+id/current_balance"
-                        style="@style/TextTheme.HelveticaNeue.TS14.Bold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/current_balance"
-                        android:textColor="@color/white"
-                        app:layout_constraintBottom_toTopOf="@id/tv_amount"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                   <LinearLayout
+                       android:id="@+id/container_wallet_component"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tv_amount"
-                        style="@style/TextTheme.Arial.TS16.bold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="@id/current_balance"
-                        app:layout_constraintTop_toBottomOf="@id/current_balance"
-                        tools:text="GHS 100.06" />
+                       <androidx.constraintlayout.widget.ConstraintLayout
+                           android:id="@+id/container_wallet_withdraw_detail"
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:layout_marginTop="@dimen/_20sdp"
+                           android:background="@drawable/flag_transparent"
+                           android:paddingHorizontal="@dimen/_20sdp">
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/iv_wallet"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/_5sdp"
-                        android:src="@drawable/icon_wallet"
-                        app:layout_constraintBottom_toBottomOf="@id/tv_amount"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/current_balance" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                           <TextView
+                               android:id="@+id/current_balance"
+                               style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:text="@string/current_balance"
+                               android:textColor="@color/white"
+                               app:layout_constraintBottom_toTopOf="@id/tv_amount"
+                               app:layout_constraintStart_toStartOf="parent"
+                               app:layout_constraintTop_toTopOf="parent" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
+                           <TextView
+                               android:id="@+id/tv_amount"
+                               style="@style/TextTheme.Arial.TS16.bold"
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:textColor="@color/white"
+                               app:layout_constraintBottom_toBottomOf="parent"
+                               app:layout_constraintStart_toStartOf="@id/current_balance"
+                               app:layout_constraintTop_toBottomOf="@id/current_balance"
+                               tools:text="GHS 100.06" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_14sdp"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="@dimen/_14sdp">
+                           <androidx.appcompat.widget.AppCompatImageView
+                               android:id="@+id/iv_wallet"
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:layout_marginEnd="@dimen/_5sdp"
+                               android:src="@drawable/icon_wallet"
+                               app:layout_constraintBottom_toBottomOf="@id/tv_amount"
+                               app:layout_constraintEnd_toEndOf="parent"
+                               app:layout_constraintTop_toTopOf="@id/current_balance" />
+                       </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_withDraw"
-                        style="@style/ButtonTheme.OutLine"
-                        android:layout_width="@dimen/_80sdp"
-                        android:layout_height="@dimen/_36sdp"
-                        android:layout_marginHorizontal="@dimen/_6sdp"
-                        android:backgroundTint="@color/white"
-                        android:text="@string/label_withdraw"
-                        android:textStyle="bold"
-                        app:cornerRadius="@dimen/_6sdp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                       <View
+                           android:layout_width="match_parent"
+                           android:layout_height="0dp"
+                           android:layout_weight="1" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_top_up"
-                        style="@style/ButtonTheme.OutLine"
-                        android:layout_width="@dimen/_80sdp"
-                        android:layout_height="@dimen/_36sdp"
-                        android:layout_marginHorizontal="@dimen/_6sdp"
-                        android:text="@string/label_topUp"
-                        android:textColor="@color/white"
-                        android:textStyle="bold"
-                        app:cornerRadius="@dimen/_6sdp"
-                        app:strokeColor="@color/white" />
-                </LinearLayout>
-            </LinearLayout>
+                       <LinearLayout
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_marginBottom="@dimen/_14sdp"
+                           android:orientation="horizontal"
+                           android:paddingHorizontal="@dimen/_14sdp">
 
-        </androidx.cardview.widget.CardView>
+                           <com.google.android.material.button.MaterialButton
+                               android:id="@+id/btn_withDraw"
+                               style="@style/ButtonTheme.OutLine"
+                               android:layout_width="@dimen/_80sdp"
+                               android:layout_height="@dimen/_36sdp"
+                               android:layout_marginHorizontal="@dimen/_6sdp"
+                               android:backgroundTint="@color/white"
+                               android:text="@string/label_withdraw"
+                               android:textStyle="bold"
+                               app:cornerRadius="@dimen/_6sdp"
+                               app:layout_constraintBottom_toBottomOf="parent"
+                               app:layout_constraintEnd_toEndOf="parent" />
 
-        <TextView
-            android:id="@+id/label_transaction_history"
-            style="@style/TextTheme.HelveticaNeue.TS16.Bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_20sdp"
-            android:layout_marginVertical="@dimen/_15sdp"
-            android:text="@string/label_transactions_history"
-            android:textColor="@color/black" />
+                           <com.google.android.material.button.MaterialButton
+                               android:id="@+id/btn_top_up"
+                               style="@style/ButtonTheme.OutLine"
+                               android:layout_width="@dimen/_80sdp"
+                               android:layout_height="@dimen/_36sdp"
+                               android:layout_marginHorizontal="@dimen/_6sdp"
+                               android:text="@string/label_topUp"
+                               android:textColor="@color/white"
+                               android:textStyle="bold"
+                               app:cornerRadius="@dimen/_6sdp"
+                               app:strokeColor="@color/white" />
+                       </LinearLayout>
+                   </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_transactions"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_horizontal"
-            android:paddingHorizontal="@dimen/_10sdp"
-            app:layoutManager="LinearLayoutManager"
-            tools:context="ui.screens.wallet.WalletDetailFragment"
-            tools:itemCount="2"
-            tools:listitem="@layout/item_transactions" />
+               </androidx.cardview.widget.CardView>
 
-        <include
-            android:id="@+id/empty_view"
-            layout="@layout/layout_empty_view"
-            app:warningTitle="@{@string/label_transactions_history}" />
+               <TextView
+                   android:id="@+id/label_transaction_history"
+                   style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginHorizontal="@dimen/_20sdp"
+                   android:layout_marginVertical="@dimen/_15sdp"
+                   android:text="@string/label_transactions_history"
+                   android:textColor="@color/black" />
+
+               <androidx.recyclerview.widget.RecyclerView
+                   android:id="@+id/rv_transactions"
+                   android:layout_width="match_parent"
+                   android:layout_height="0dp"
+                   android:layout_weight="1"
+                   android:gravity="center_horizontal"
+                   android:paddingHorizontal="@dimen/_10sdp"
+                   app:layoutManager="LinearLayoutManager"
+                   tools:context="ui.screens.wallet.WalletDetailFragment"
+                   tools:itemCount="2"
+                   tools:listitem="@layout/item_transactions" />
+
+               <include
+                   android:id="@+id/empty_view"
+                   layout="@layout/layout_empty_view"
+                   android:layout_width="match_parent"
+                   android:layout_height="0dp"
+                   android:layout_weight="1"
+                   app:warningTitle="@{@string/label_transactions_history}" />
+           </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
     </LinearLayout>
 </layout>

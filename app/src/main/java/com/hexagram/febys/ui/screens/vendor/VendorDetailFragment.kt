@@ -22,7 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class VendorDetailFragment : BaseFragment() {
-    private lateinit var binding: FragmentVendorDetailBinding
+    private lateinit var binding: com.hexagram.febys.databinding.FragmentVendorDetailBinding
     private val vendorViewModel: VendorViewModel by viewModels()
     private val args: VendorDetailFragmentArgs by navArgs()
 

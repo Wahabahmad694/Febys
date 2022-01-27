@@ -33,14 +33,23 @@
             app:layout_constraintBottom_toBottomOf="@id/label_account_settings"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/label_account_settings" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_edit"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_18sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:src="@drawable/ic_edit"
+            app:layout_constraintBottom_toBottomOf="@id/label_account_settings"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/label_account_settings" />
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/label_account_settings"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/label_account_settings">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -66,10 +75,10 @@
                     android:layout_marginEnd="@dimen/_minus6sdp"
                     android:layout_marginBottom="@dimen/_10sdp"
                     android:background="@null"
-                    android:visibility="invisible"
                     android:elevation="4dp"
                     android:scaleType="fitXY"
                     android:src="@drawable/ic_camera"
+                    android:visibility="invisible"
                     app:layout_constraintBottom_toBottomOf="@+id/profile_img"
                     app:layout_constraintEnd_toEndOf="@id/profile_img" />
 
@@ -219,19 +228,6 @@
                     android:layout_marginTop="@dimen/_6sdp"
                     android:background="@color/grey_e1e5e8"
                     app:layout_constraintTop_toBottomOf="@id/et_phone" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_edit"
-                    style="@style/ButtonTheme.Contained"
-                    android:layout_width="@dimen/_272sdp"
-                    android:layout_height="@dimen/_48sdp"
-                    android:layout_marginHorizontal="@dimen/_17sdp"
-                    android:layout_marginTop="@dimen/_32sdp"
-                    android:text="@string/label_edit"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/et_phone" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>

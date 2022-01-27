@@ -32,7 +32,7 @@ class AddEditReviewFragment : BaseFragment() {
         const val REQ_KEY_REFRESH = "reqKeyRefresh"
     }
 
-    private lateinit var binding: FragmentAddEditReviewBinding
+    private lateinit var binding: com.hexagram.febys.databinding.FragmentAddEditReviewBinding
     private val orderViewModel by viewModels<OrderViewModel>()
     private val args by navArgs<AddEditReviewFragmentArgs>()
 
