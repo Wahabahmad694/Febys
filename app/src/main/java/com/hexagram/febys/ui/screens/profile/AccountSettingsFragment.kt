@@ -106,7 +106,7 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
         binding.camera.isVisible = isInEditMode
 
         binding.ivEdit.setImageResource(
-            if (isInEditMode) R.drawable.ic_tic_black else R.drawable.ic_edit
+            if (isInEditMode) R.drawable.ic_mark_tic else R.drawable.ic_edit
         )
 
 

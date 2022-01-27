@@ -22,7 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class VendorDetailFragment : BaseFragment() {
-    private lateinit var binding: com.hexagram.febys.databinding.FragmentVendorDetailBinding
+    private lateinit var binding: FragmentVendorDetailBinding
     private val vendorViewModel: VendorViewModel by viewModels()
     private val args: VendorDetailFragmentArgs by navArgs()
 
@@ -169,10 +169,8 @@ class VendorDetailFragment : BaseFragment() {
         }
         val qualityAverage = totalQualityScore.div(totalQualityScoreCount)
 
-        val totalCountAverage =
-            totalPriceScoreCount.plus(totalValueScoreCount).plus(totalQualityScoreCount).div(3)
         val totalAverage =
-            priceAverage.plus(valueAverage).plus(qualityAverage).div(totalCountAverage)
+            priceAverage.plus(valueAverage).plus(qualityAverage).div(3)
 
         binding.containerVendorStoreRating.apply {
             tvAverageRating.text = totalAverage.toFixedDecimal(1)
