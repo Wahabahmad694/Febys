@@ -43,7 +43,11 @@ class VouchersAdapter : RecyclerView.Adapter<VouchersAdapter.ViewHolder>() {
             voucherCode.text = voucher.voucher.code
             voucherExpirationDate.text = Utils.DateTime.formatDate(voucher.voucher.endingTime)
             voucherAmount.text =
-                Price("", voucher.voucher.amount, "").getFormattedPriceByLocale()
+                Price(
+                    "",
+                    voucher.voucher.amount,
+                    Utils.DEFAULT_CURRENCY
+                ).getFormattedPrice()
 
             background.setImageURI("res:///${R.drawable.bg_voucher}")
         }
