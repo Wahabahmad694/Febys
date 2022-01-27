@@ -15,7 +15,7 @@ class VendorReviewsAdapter : RecyclerView.Adapter<VendorReviewsAdapter.ReviewVH>
         private val binding: ItemVendorReviewBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: VendorReview) = binding.apply {
-            userName.text = item.consumer?.firstName
+            userName.text = item.consumer?.fullName
             ratingPrice.text = item.pricingScore.toInt().toString()
             ratingValue.text = item.valueScore.toInt().toString()
             ratingQuality.text = item.qualityScore.toInt().toString()

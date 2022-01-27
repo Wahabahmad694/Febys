@@ -19,4 +19,5 @@
     <color name="bg_border_grey">#D2D6D8</color>
     <color name="bg_border_red">#C41429</color>
     <color name="progress_bar">#FFC70C</color>
+    <color name="progress_bar_track">#E3E3E3</color>
 </resources>

@@ -54,7 +54,7 @@
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_weight="1"
                 app:indicatorColor="@color/progress_bar"
-                app:trackColor="@color/white"
+                app:trackColor="@color/progress_bar_track"
                 app:trackCornerRadius="@dimen/_10sdp"
                 tools:progress="30" />
 
@@ -95,7 +95,7 @@
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_weight="1"
                 app:indicatorColor="@color/progress_bar"
-                app:trackColor="@color/white"
+                app:trackColor="@color/grey_e1e5e8"
                 app:trackCornerRadius="@dimen/_10sdp"
                 tools:progress="30" />
 
@@ -136,7 +136,7 @@
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_weight="1"
                 app:indicatorColor="@color/progress_bar"
-                app:trackColor="@color/white"
+                app:trackColor="@color/grey_e1e5e8"
                 app:trackCornerRadius="@dimen/_10sdp"
                 tools:progress="30" />
 
@@ -177,7 +177,7 @@
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_weight="1"
                 app:indicatorColor="@color/progress_bar"
-                app:trackColor="@color/white"
+                app:trackColor="@color/grey_e1e5e8"
                 app:trackCornerRadius="@dimen/_10sdp"
                 tools:progress="30" />
 
@@ -218,7 +218,7 @@
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_weight="1"
                 app:indicatorColor="@color/progress_bar"
-                app:trackColor="@color/white"
+                app:trackColor="@color/grey_e1e5e8"
                 app:trackCornerRadius="@dimen/_10sdp"
                 tools:progress="30" />
 
