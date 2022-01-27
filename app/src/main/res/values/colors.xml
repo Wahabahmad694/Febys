@@ -18,4 +18,5 @@
     <color name="red_opacity_1A">#1AC41429</color>
     <color name="bg_border_grey">#D2D6D8</color>
     <color name="bg_border_red">#C41429</color>
+    <color name="progress_bar">#FFC70C</color>
 </resources>
