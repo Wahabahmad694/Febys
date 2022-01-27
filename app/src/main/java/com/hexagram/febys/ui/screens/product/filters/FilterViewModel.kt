@@ -38,4 +38,10 @@ class FilterViewModel @Inject constructor(
             this.filters = filters.data
         }
     }
+
+    fun notifyFilters() {
+        val value = _observeFilters.value ?: return
+        _observeFilters.postValue(value)
+        updateAvailableFilters(value)
+    }
 }

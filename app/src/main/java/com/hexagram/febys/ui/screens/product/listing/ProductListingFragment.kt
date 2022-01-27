@@ -78,7 +78,7 @@ abstract class ProductListingFragment : BaseFragment() {
             if (filtersViewModel.filters != null) {
                 val gotoRefineProduct = NavGraphDirections
                     .toProductFilterFragment(
-                        filtersViewModel.filters!!, productListingViewModel.filters
+                        filtersViewModel.filters!!, filtersViewModel.appliedFilters
                     )
                 navigateTo(gotoRefineProduct)
             }
@@ -129,7 +129,8 @@ abstract class ProductListingFragment : BaseFragment() {
                 bundle.getParcelable<ProductListingRequest>(FiltersFragment.KEY_APPLY_FILTER)
 
             if (filters != null) {
-                productListingViewModel.filters = filters
+                filtersViewModel.appliedFilters = filters
+                filtersViewModel.notifyFilters()
                 updateProductListingPagingData(true)
             }
         }
@@ -217,10 +218,8 @@ abstract class ProductListingFragment : BaseFragment() {
 
     private fun updateProductListingPagingData(refresh: Boolean = false) {
         viewLifecycleOwner.lifecycleScope.launch {
+            productListingViewModel.filters = filtersViewModel.appliedFilters
             productListingViewModel.filters.filterType = getFilterType()
-            productListingViewModel.filters.vendorIds = filtersViewModel.appliedFilters.vendorIds
-            productListingViewModel.filters.categoryIds =
-                filtersViewModel.appliedFilters.categoryIds
 
             getProductPagingData(refresh).collectLatest { pagingData ->
                 productListingPagerAdapter.submitData(pagingData)

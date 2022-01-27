@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
@@ -18,6 +19,7 @@ import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentCelebrityDetailBinding
+import com.hexagram.febys.models.api.category.Category
 import com.hexagram.febys.models.api.product.Product
 import com.hexagram.febys.models.api.request.ProductListingRequest
 import com.hexagram.febys.models.api.social.Social
@@ -86,7 +88,13 @@ class CelebrityDetailFragment : BaseFragment() {
         }
 
         binding.btnRefine.setOnClickListener {
-            // goto filter screen
+            if (filtersViewModel.filters != null) {
+                val gotoRefineProduct = NavGraphDirections
+                    .toProductFilterFragment(
+                        filtersViewModel.filters!!, filtersViewModel.appliedFilters
+                    )
+                navigateTo(gotoRefineProduct)
+            }
         }
 
         binding.btnToggleFollow.setOnClickListener {
@@ -131,8 +139,10 @@ class CelebrityDetailFragment : BaseFragment() {
                 (binding.ivIcScrollBar.layoutParams as ConstraintLayout.LayoutParams)
             param.horizontalBias = horizontalScrollPosition
             binding.ivIcScrollBar.layoutParams = param
-            binding.ivIcScrollBar.visibility=if(endorsementAdapter.itemCount >= 6)View.VISIBLE else View.GONE
-            binding.ivBgScrollBar.visibility=if(endorsementAdapter.itemCount >= 6)View.VISIBLE else View.GONE
+            binding.ivIcScrollBar.visibility =
+                if (endorsementAdapter.itemCount >= 6) View.VISIBLE else View.GONE
+            binding.ivBgScrollBar.visibility =
+                if (endorsementAdapter.itemCount >= 6) View.VISIBLE else View.GONE
         }
     }
 
@@ -182,6 +192,9 @@ class CelebrityDetailFragment : BaseFragment() {
 
         filtersViewModel.observeFilters.observe(viewLifecycleOwner) {
             binding.containerFilter.isVisible = it is DataState.Data
+            if (it is DataState.Data) {
+                updateCategoriesFilter(it.data.availableCategories ?: return@observe)
+            }
         }
 
         setFragmentResultListener(FiltersFragment.KEY_APPLY_FILTER) { _, bundle ->
@@ -189,14 +202,48 @@ class CelebrityDetailFragment : BaseFragment() {
                 bundle.getParcelable<ProductListingRequest>(FiltersFragment.KEY_APPLY_FILTER)
 
             if (filters != null) {
-                celebrityViewModel.filters = filters
+                filtersViewModel.appliedFilters = filters
+                filtersViewModel.notifyFilters()
                 updateProductListingPagingData(true)
             }
         }
     }
 
     private fun fetchFilters() {
-        filtersViewModel.fetchFilters(FiltersType.VENDOR_CATEGORY, null, args.id)
+        filtersViewModel.fetchFilters(FiltersType.VENDOR, null, args.id)
+    }
+
+    private fun updateCategoriesFilter(categories: List<Category>) {
+        binding.filtersVendorOrCategories.removeAllViews()
+        categories.forEach { category ->
+            if (category.name.isNotEmpty()) {
+                val checkBox = makeCheckBox(category.id, category.name)
+                checkBox.isChecked =
+                    filtersViewModel.appliedFilters.categoryIds.contains(category.id)
+                checkBox.setOnCheckedChangeListener { _, isChecked ->
+                    if (isChecked) {
+                        filtersViewModel.appliedFilters.categoryIds.add(category.id)
+                    } else {
+                        filtersViewModel.appliedFilters.categoryIds.remove(category.id)
+                    }
+
+                    updateProductListingPagingData(true)
+                }
+                binding.filtersVendorOrCategories.addView(checkBox)
+            }
+        }
+    }
+
+    private fun makeCheckBox(id: Int, text: String): CheckBox {
+        val checkButton =
+            layoutInflater.inflate(
+                R.layout.layout_chip_type_check_box, binding.filtersVendorOrCategories, false
+            ) as CheckBox
+
+        checkButton.id = id
+        checkButton.text = text
+
+        return checkButton
     }
 
     private fun updateUi(celebrity: Vendor) {
@@ -236,6 +283,9 @@ class CelebrityDetailFragment : BaseFragment() {
 
     private fun updateProductListingPagingData(refresh: Boolean = false) {
         viewLifecycleOwner.lifecycleScope.launch {
+            celebrityViewModel.filters = filtersViewModel.appliedFilters
+            celebrityViewModel.filters.filterType = FiltersType.VENDOR
+
             celebrityViewModel.vendorProductListing(args.id, refresh) {
                 setProductItemCount(it.totalRows)
             }.collectLatest { pagingData ->
