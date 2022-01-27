@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
@@ -72,8 +73,6 @@ class AddEditReviewFragment : BaseFragment() {
         binding.ivBack.setOnClickListener { goBack() }
         binding.ivEdit.setOnClickListener {
             updateFieldAndReviewsAdapter(true)
-            binding.labelAddReview.setText(getString(R.string.label_edit_review))
-
         }
         binding.etComment.doAfterTextChanged {
             orderReview.vendorReview.review.comment = it.toString()
@@ -107,9 +106,12 @@ class AddEditReviewFragment : BaseFragment() {
                 .firstOrNull { it.skuId == skuId }?.review?.comment = comment
         }
 
-        binding.btnSubmitReview.setOnClickListener {
+        binding.icTick.setOnClickListener {
             orderViewModel.postReview(args.orderId, orderReview)
-            binding.labelAddReview.setText(getString(R.string.label_my_review))
+        }
+
+        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner) {
+            if (binding.icTick.isVisible) updateFieldAndReviewsAdapter(false) else goBack()
         }
     }
 
@@ -165,14 +167,17 @@ class AddEditReviewFragment : BaseFragment() {
     }
 
     private fun updateFieldAndReviewsAdapter(isEnable: Boolean) {
-        if(isEnable){
-            binding.labelAddReview.setText(getText(R.string.label_edit))
+        if (isEnable) {
+            binding.labelAddReview.text = getText(R.string.label_edit_review)
         }
         binding.ivEdit.isVisible = !isEnable
-        if (isEnable) {
-            binding.labelAddReview.setText(getText(R.string.label_my_review))
+        binding.icTick.isVisible = isEnable
+
+        if (!isEnable) {
+            binding.labelAddReview.text = getText(R.string.label_my_review)
         }
-        binding.btnSubmitReview.isVisible = isEnable
+
+        binding.icTick.isVisible = isEnable
         binding.priceRating.ratingBar.setIsIndicator(!isEnable)
         binding.qualityRating.ratingBar.setIsIndicator(!isEnable)
         binding.valueRating.ratingBar.setIsIndicator(!isEnable)
