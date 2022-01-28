@@ -19,6 +19,9 @@ class VouchersViewModel @Inject constructor(
     private val _observeVouchers = MutableLiveData<DataState<List<Voucher>>>()
     val observeVouchers: LiveData<DataState<List<Voucher>>> = _observeVouchers
 
+    private val _observeCollectVoucher = MutableLiveData<DataState<Voucher>>()
+    val observeCollectVoucher: LiveData<DataState<Voucher>> = _observeCollectVoucher
+
     init {
         fetchVouchers()
     }
@@ -27,6 +30,14 @@ class VouchersViewModel @Inject constructor(
         _observeVouchers.postValue(DataState.Loading())
         vouchersRepo.fetchVouchers().collect {
             _observeVouchers.postValue(it)
+        }
+    }
+
+    fun collectVoucher(voucher: String) = viewModelScope.launch {
+        _observeCollectVoucher.postValue(DataState.Loading())
+        vouchersRepo.collectVouchers(voucher).collect {
+            if (it is DataState.Data) fetchVouchers()
+            _observeCollectVoucher.postValue(it)
         }
     }
 }

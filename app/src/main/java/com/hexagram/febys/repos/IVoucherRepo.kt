@@ -8,4 +8,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface IVoucherRepo {
     suspend fun fetchVouchers(dispatcher: CoroutineDispatcher = Dispatchers.IO): Flow<DataState<List<Voucher>>>
+
+    fun collectVouchers(
+        voucher: String,
+        dispatcher: CoroutineDispatcher = Dispatchers.IO
+    ): Flow<DataState<Voucher>>
 }

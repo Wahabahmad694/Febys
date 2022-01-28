@@ -16,6 +16,7 @@ import com.hexagram.febys.models.api.shippingAddress.ShippingAddressResponse
 import com.hexagram.febys.models.api.states.PostStatesResponse
 import com.hexagram.febys.models.api.vendor.Vendor
 import com.hexagram.febys.models.api.vendor.VendorPagingListing
+import com.hexagram.febys.models.api.vouchers.CollectVoucherResponse
 import com.hexagram.febys.models.api.vouchers.VoucherResponse
 import com.hexagram.febys.models.api.wishlist.FavSkuIds
 import com.hexagram.febys.models.api.wishlist.WishlistSkuIds
@@ -220,7 +221,16 @@ interface FebysBackendService {
     ): ApiResponse<RatingAndReviewsResponse>
 
     @POST("v1/vouchers/of-consumer/list")
-    suspend fun fetchVouchers(@Header("Authorization") authKey: String): ApiResponse<VoucherResponse>
+    suspend fun fetchVouchers(
+        @Header("Authorization") authKey: String,
+        @Body filters: JsonObject
+    ): ApiResponse<VoucherResponse>
+
+    @POST("v1/vouchers/collect/{voucher}")
+    suspend fun collectVouchers(
+        @Header("Authorization") authKey: String,
+        @Path("voucher") voucher: String
+    ): ApiResponse<CollectVoucherResponse>
 
     @POST("v1/consumers/shipping-details/list")
     suspend fun fetchShippingAddress(

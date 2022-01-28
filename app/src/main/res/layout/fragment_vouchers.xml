@@ -51,10 +51,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:clipToPadding="false"
                 android:gravity="center_horizontal"
+                android:paddingBottom="@dimen/_2sdp"
                 app:layoutManager="LinearLayoutManager"
                 tools:context=".ui.screens.vouchers.VouchersFragment"
                 tools:listitem="@layout/item_voucher" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_add_voucher"
+                style="@style/ButtonTheme.Contained"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_17sdp"
+                android:layout_marginBottom="@dimen/_14sdp"
+                android:text="@string/add_voucher" />
 
         </LinearLayout>
 

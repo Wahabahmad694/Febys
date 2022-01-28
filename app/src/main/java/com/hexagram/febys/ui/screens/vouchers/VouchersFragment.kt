@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
@@ -12,10 +13,7 @@ import com.hexagram.febys.databinding.FragmentVouchersBinding
 import com.hexagram.febys.models.api.vouchers.Voucher
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
-import com.hexagram.febys.utils.applySpaceItemDecoration
-import com.hexagram.febys.utils.goBack
-import com.hexagram.febys.utils.hideLoader
-import com.hexagram.febys.utils.showLoader
+import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -47,6 +45,17 @@ class VouchersFragment : BaseFragment() {
 
     private fun uiListeners() {
         binding.ivBack.setOnClickListener { goBack() }
+
+        binding.btnAddVoucher.setOnClickListener {
+            val gotoAddVoucher =
+                VouchersFragmentDirections.actionVoucherFragmentToAddVoucherBottomSheet()
+            navigateTo(gotoAddVoucher)
+        }
+
+        setFragmentResultListener(AddVoucherBottomSheet.REQ_KEY_ADD_VOUCHER) { _, bundle ->
+            val voucher = bundle.getString(AddVoucherBottomSheet.REQ_KEY_ADD_VOUCHER)
+            voucher?.let { voucherViewModel.collectVoucher(it) }
+        }
     }
 
     private fun setObserver() {
@@ -62,6 +71,21 @@ class VouchersFragment : BaseFragment() {
                 is DataState.Data -> {
                     hideLoader()
                     updateUi(it.data)
+                }
+            }
+        }
+
+        voucherViewModel.observeCollectVoucher.observe(viewLifecycleOwner) {
+            when (it) {
+                is DataState.Loading -> {
+                    showLoader()
+                }
+                is DataState.Error -> {
+                    hideLoader()
+                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
+                }
+                is DataState.Data -> {
+                    // do nothing
                 }
             }
         }
