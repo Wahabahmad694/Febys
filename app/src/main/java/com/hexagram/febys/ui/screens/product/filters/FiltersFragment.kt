@@ -7,12 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.navArgs
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentFiltersBinding
 import com.hexagram.febys.models.api.filters.Filters
 import com.hexagram.febys.models.api.request.ProductListingRequest
+import com.hexagram.febys.ui.screens.product.filters.detail.FiltersDetailListFragment
 import com.hexagram.febys.utils.goBack
 import com.hexagram.febys.utils.navigateTo
 
@@ -25,11 +27,11 @@ class FiltersFragment : BaseFragment() {
     private val args by navArgs<FiltersFragmentArgs>()
 
     private val filterAdapter = FiltersAdapter()
-    private lateinit var filters: ProductListingRequest
+    private lateinit var appliedFilters: ProductListingRequest
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        filters = args.appliedFilters.deepCopy()
+        appliedFilters = args.appliedFilters.deepCopy()
     }
 
     override fun onCreateView(
@@ -50,7 +52,12 @@ class FiltersFragment : BaseFragment() {
         binding.rvFilters.adapter = filterAdapter
 
         val isClearBtnVisible =
-            filters.variantAttrs.isNotEmpty() || filters.sortByPrice != null || filters.minPrice != -1 || filters.maxPrice != -1
+            appliedFilters.variantAttrs.isNotEmpty()
+                    || appliedFilters.vendorIds.isNotEmpty()
+                    || appliedFilters.categoryIds.isNotEmpty()
+                    || appliedFilters.sortByPrice != null
+                    || (appliedFilters.minPrice != null && appliedFilters.minPrice != -1)
+                    || (appliedFilters.maxPrice != null && appliedFilters.maxPrice != -1)
         if (isClearBtnVisible) enableClearOption() else disableClearOption()
         updateUi(args.filters)
     }
@@ -61,17 +68,17 @@ class FiltersFragment : BaseFragment() {
         binding.itemPriceRange.root.setOnClickListener {
             val gotoPriceFilter =
                 FiltersFragmentDirections.actionSearchFilterFragmentToPriceRangeFilterFragment(
-                    filters
+                    appliedFilters
                 )
             navigateTo(gotoPriceFilter)
         }
         binding.labelClear.setOnClickListener {
             disableClearOption()
-            filters.variantAttrs.clear()
+            appliedFilters.variantAttrs.clear()
         }
 
         binding.btnShow.setOnClickListener {
-            setFragmentResult(KEY_APPLY_FILTER, bundleOf(KEY_APPLY_FILTER to filters))
+            setFragmentResult(KEY_APPLY_FILTER, bundleOf(KEY_APPLY_FILTER to appliedFilters))
             goBack()
         }
 
@@ -79,33 +86,40 @@ class FiltersFragment : BaseFragment() {
             when (checkedId) {
                 R.id.rd_newItem -> {
                     enableClearOption()
-                    filters.sortByPrice = null
+                    appliedFilters.sortByPrice = null
                 }
                 R.id.rd_lowPrice -> {
                     enableClearOption()
-                    filters.sortByPrice = ProductListingRequest.KEY_ASC
+                    appliedFilters.sortByPrice = ProductListingRequest.KEY_ASC
                 }
                 R.id.rd_highPrice -> {
                     enableClearOption()
-                    filters.sortByPrice = ProductListingRequest.KEY_DESC
+                    appliedFilters.sortByPrice = ProductListingRequest.KEY_DESC
                 }
             }
         }
 
         filterAdapter.onItemClick = {
             val gotoFilterDetailList = FiltersFragmentDirections
-                .actionSearchFilterFragmentToFiltersDetailListFragment(it, filters)
+                .actionSearchFilterFragmentToFiltersDetailListFragment(it, appliedFilters)
             navigateTo(gotoFilterDetailList)
+        }
+
+        setFragmentResultListener(FiltersDetailListFragment.KEY_APPLY_SUB_FILTER) { _, bundle ->
+            val filters =
+                bundle.getParcelable<ProductListingRequest>(FiltersDetailListFragment.KEY_APPLY_SUB_FILTER)
+
+            if (filters != null) {
+                appliedFilters = filters
+                initUi()
+            }
         }
     }
 
     private fun disableClearOption() {
         binding.radioBtnFilter.clearCheck()
         binding.labelClear.setTextColor(Color.GRAY)
-        filters.variantAttrs.clear()
-        filters.sortByPrice = null
-        filters.minPrice = null
-        filters.maxPrice = null
+        appliedFilters = ProductListingRequest()
     }
 
     private fun enableClearOption() {
@@ -119,11 +133,11 @@ class FiltersFragment : BaseFragment() {
             filterAdapter.submitList(filterList)
         }
 
-        if (this.filters.sortByPrice == ProductListingRequest.KEY_ASC) {
+        if (this.appliedFilters.sortByPrice == ProductListingRequest.KEY_ASC) {
             binding.radioBtnFilter.check(R.id.rd_lowPrice)
         }
 
-        if (this.filters.sortByPrice == ProductListingRequest.KEY_DESC) {
+        if (this.appliedFilters.sortByPrice == ProductListingRequest.KEY_DESC) {
             binding.radioBtnFilter.check(R.id.rd_highPrice)
         }
     }

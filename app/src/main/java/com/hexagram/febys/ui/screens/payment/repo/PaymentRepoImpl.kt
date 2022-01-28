@@ -124,7 +124,7 @@ class PaymentRepoImpl @Inject constructor(
         pagingListRequest.orderByType = "desc"
 
         val sorter = JsonObject()
-        sorter.addProperty("created_at", "asc")
+        sorter.addProperty("created_at", "desc")
         pagingListRequest.sorter = sorter
 
         val filters = JsonObject()

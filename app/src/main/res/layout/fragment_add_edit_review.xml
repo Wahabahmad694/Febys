@@ -54,6 +54,16 @@
                     app:layout_constraintBottom_toBottomOf="@id/label_add_review"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/label_add_review" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ic_tick"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:src="@drawable/ic_mark_tic"
+                    app:layout_constraintBottom_toBottomOf="@id/label_add_review"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/label_add_review" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -176,16 +186,6 @@
                 android:layout_marginHorizontal="@dimen/_16sdp"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:background="@color/grey_e1e5e8" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_submit_review"
-                style="@style/ButtonTheme.Contained"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_16sdp"
-                android:layout_marginVertical="@dimen/_14sdp"
-                android:maxWidth="@dimen/_298sdp"
-                android:text="@string/label_send" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>

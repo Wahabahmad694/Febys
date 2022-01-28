@@ -148,5 +148,4 @@ class ProductListingRepoImpl @Inject constructor(
         req.sorter = filters.createSorter()
         return req
     }
-
 }

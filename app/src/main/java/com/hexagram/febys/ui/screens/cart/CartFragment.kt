@@ -146,7 +146,7 @@ class CartFragment : BaseFragment() {
             sortedListForCart?.sumOf { it.price.value.times(it.quantity) } ?: 0.0
         val priceCurrency = sortedListForCart?.firstOrNull()?.price?.currency ?: ""
         val formattedTotalPrice = if (priceCurrency.isEmpty())
-            Price("", itemsTotal, "").getFormattedPriceByLocale()
+            Price("", itemsTotal, Utils.DEFAULT_CURRENCY).getFormattedPrice()
         else
             Price("", itemsTotal, priceCurrency).getFormattedPrice()
 

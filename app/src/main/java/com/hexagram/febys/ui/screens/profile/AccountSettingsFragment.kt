@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -53,15 +54,22 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
             choseOption()
         }
         binding.ivBack.setOnClickListener { goBack() }
-        binding.btnEdit.setOnClickListener {
+        binding.ivEdit.setOnClickListener {
             isInEditMode = !isInEditMode
             updateField()
             if (!isInEditMode) {
                 val updateUser = getUpdatedConsumer()
                 updateUser?.let { accountSettingViewModel.updateProfile(it) }
                 showToast("User Profile updated")
-
             }
+        }
+
+        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner) {
+            if (isInEditMode) {
+                isInEditMode = false
+                setData(consumer)
+                updateField()
+            } else goBack()
         }
     }
 
@@ -97,8 +105,10 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
         binding.etPhone.isEnabled = isInEditMode
         binding.camera.isVisible = isInEditMode
 
-        binding.btnEdit.text =
-            if (isInEditMode) getString(R.string.label_save) else getString(R.string.label_edit)
+        binding.ivEdit.setImageResource(
+            if (isInEditMode) R.drawable.ic_mark_tic else R.drawable.ic_edit
+        )
+
 
         val color = if (isInEditMode) Color.GRAY else Color.BLACK
         binding.etEmail.setTextColor(color)
@@ -241,9 +251,10 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
             }
         }
     }
+
     private fun setData(consumer: Consumer?) {
         binding.profileImg.setImageURI(consumer?.profileImage)
-        binding.tvProfileName.setText(consumer?.fullName)
+        binding.tvProfileName.text = consumer?.fullName
         binding.etFirstName.setText(consumer?.firstName)
         binding.etLastName.setText(consumer?.lastName)
         binding.etEmail.setText(consumer?.email)

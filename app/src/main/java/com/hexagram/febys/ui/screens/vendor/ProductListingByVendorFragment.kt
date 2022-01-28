@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
@@ -16,6 +17,7 @@ import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentProductListingByVendorBinding
+import com.hexagram.febys.models.api.category.Category
 import com.hexagram.febys.models.api.product.Product
 import com.hexagram.febys.models.api.request.ProductListingRequest
 import com.hexagram.febys.network.DataState
@@ -72,11 +74,13 @@ class ProductListingByVendorFragment : BaseFragment() {
         }
 
         binding.btnRefine.setOnClickListener {
-            val gotoRefineProduct = NavGraphDirections
-                .toProductFilterFragment(
-                    filtersViewModel.filters, filtersViewModel.appliedFilters
-                )
-            navigateTo(gotoRefineProduct)
+            if (filtersViewModel.filters != null) {
+                val gotoRefineProduct = NavGraphDirections
+                    .toProductFilterFragment(
+                        filtersViewModel.filters!!, filtersViewModel.appliedFilters
+                    )
+                navigateTo(gotoRefineProduct)
+            }
         }
 
         binding.tvVendorName.setOnClickListener {
@@ -115,7 +119,10 @@ class ProductListingByVendorFragment : BaseFragment() {
         }
 
         filtersViewModel.observeFilters.observe(viewLifecycleOwner) {
-            binding.radioGroupFilters.isVisible = it is DataState.Data
+            binding.containerFilter.isVisible = it is DataState.Data
+            if (it is DataState.Data) {
+                updateCategoriesFilter(it.data.availableCategories ?: return@observe)
+            }
         }
 
         setFragmentResultListener(FiltersFragment.KEY_APPLY_FILTER) { _, bundle ->
@@ -123,14 +130,48 @@ class ProductListingByVendorFragment : BaseFragment() {
                 bundle.getParcelable<ProductListingRequest>(FiltersFragment.KEY_APPLY_FILTER)
 
             if (filters != null) {
-                vendorViewModel.filters = filters
+                filtersViewModel.appliedFilters = filters
+                filtersViewModel.notifyFilters()
                 updateProductListingPagingData(true)
             }
         }
     }
 
     private fun fetchFilters() {
-        filtersViewModel.fetchFilters(FiltersType.VENDOR_CATEGORY, null, args.id)
+        filtersViewModel.fetchFilters(FiltersType.VENDOR, null, args.id)
+    }
+
+    private fun updateCategoriesFilter(categories: List<Category>) {
+        binding.filtersVendorOrCategories.removeAllViews()
+        categories.forEach { category ->
+            if (category.name.isNotEmpty()) {
+                val checkBox = makeCheckBox(category.id, category.name)
+                checkBox.isChecked =
+                    filtersViewModel.appliedFilters.categoryIds.contains(category.id)
+                checkBox.setOnCheckedChangeListener { _, isChecked ->
+                    if (isChecked) {
+                        filtersViewModel.appliedFilters.categoryIds.add(category.id)
+                    } else {
+                        filtersViewModel.appliedFilters.categoryIds.remove(category.id)
+                    }
+
+                    updateProductListingPagingData(true)
+                }
+                binding.filtersVendorOrCategories.addView(checkBox)
+            }
+        }
+    }
+
+    private fun makeCheckBox(id: Int, text: String): CheckBox {
+        val checkButton =
+            layoutInflater.inflate(
+                R.layout.layout_chip_type_check_box, binding.filtersVendorOrCategories, false
+            ) as CheckBox
+
+        checkButton.id = id
+        checkButton.text = text
+
+        return checkButton
     }
 
     private fun setupPagerAdapter() {
@@ -160,6 +201,9 @@ class ProductListingByVendorFragment : BaseFragment() {
 
     private fun updateProductListingPagingData(refresh: Boolean = false) {
         viewLifecycleOwner.lifecycleScope.launch {
+            vendorViewModel.filters = filtersViewModel.appliedFilters
+            vendorViewModel.filters.filterType = FiltersType.VENDOR
+
             vendorViewModel.vendorProductListing(args.id, refresh) {
                 setProductItemCount(it.totalRows)
             }.collectLatest { pagingData ->

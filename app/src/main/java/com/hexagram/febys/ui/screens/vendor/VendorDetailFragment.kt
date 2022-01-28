@@ -169,10 +169,8 @@ class VendorDetailFragment : BaseFragment() {
         }
         val qualityAverage = totalQualityScore.div(totalQualityScoreCount)
 
-        val totalCountAverage =
-            totalPriceScoreCount.plus(totalValueScoreCount).plus(totalQualityScoreCount).div(3)
         val totalAverage =
-            priceAverage.plus(valueAverage).plus(qualityAverage).div(totalCountAverage)
+            priceAverage.plus(valueAverage).plus(qualityAverage).div(3)
 
         binding.containerVendorStoreRating.apply {
             tvAverageRating.text = totalAverage.toFixedDecimal(1)
