@@ -220,7 +220,16 @@ interface FebysBackendService {
     ): ApiResponse<RatingAndReviewsResponse>
 
     @POST("v1/vouchers/of-consumer/list")
-    suspend fun fetchVouchers(@Header("Authorization") authKey: String): ApiResponse<VoucherResponse>
+    suspend fun fetchVouchers(
+        @Header("Authorization") authKey: String,
+        @Body filters: JsonObject
+    ): ApiResponse<VoucherResponse>
+
+    @POST("v1/vouchers/collect/{voucher}")
+    suspend fun collectVouchers(
+        @Header("Authorization") authKey: String,
+        @Path("voucher") voucher: String
+    ): ApiResponse<Unit>
 
     @POST("v1/consumers/shipping-details/list")
     suspend fun fetchShippingAddress(

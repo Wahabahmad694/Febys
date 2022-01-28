@@ -354,5 +354,8 @@
     <string name="label_from">From</string>
     <string name="current_balance">Current Balance</string>
     <string name="placing_order">Placing Order…</string>
+    <string name="add_voucher">Add Voucher</string>
+    <string name="label_add">Add</string>
+    <string name="toast_enter_voucher_code">Please enter voucher code</string>
 
 </resources>

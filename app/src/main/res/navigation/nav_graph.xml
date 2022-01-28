@@ -649,7 +649,11 @@
         android:id="@+id/vouchersFragment"
         android:name="com.hexagram.febys.ui.screens.vouchers.VouchersFragment"
         android:label="VouchersFragment"
-        tools:layout="@layout/fragment_vouchers" />
+        tools:layout="@layout/fragment_vouchers">
+        <action
+            android:id="@+id/action_voucherFragment_to_addVoucherBottomSheet"
+            app:destination="@id/addVoucherBottomSheet" />
+    </fragment>
     <fragment
         android:id="@+id/paymentFragment"
         android:name="com.hexagram.febys.ui.screens.payment.PaymentFragment"
@@ -695,8 +699,8 @@
 
         <argument
             android:name="title"
-            app:nullable="true"
-            app:argType="string" />
+            app:argType="string"
+            app:nullable="true" />
         <argument
             android:name="orderId"
             app:argType="string" />
@@ -727,6 +731,11 @@
             android:name="vendorProducts"
             app:argType="com.hexagram.febys.models.api.cart.VendorProducts" />
     </fragment>
+    <dialog
+        android:id="@+id/addVoucherBottomSheet"
+        android:name="com.hexagram.febys.ui.screens.vouchers.AddVoucherBottomSheet"
+        android:label="AddVoucherBottomSheet"
+        tools:layout="@layout/bottom_sheet_add_voucher" />
     <dialog
         android:id="@+id/cancelOrderBottomSheet"
         android:name="com.hexagram.febys.ui.screens.order.cancel.CancelOrderBottomSheet"
