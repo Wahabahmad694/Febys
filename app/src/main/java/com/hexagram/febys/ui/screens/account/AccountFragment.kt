@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentAccountBinding
@@ -119,6 +120,22 @@ class AccountFragment : BaseFragment() {
             val goToAccountSettings =
                 AccountFragmentDirections.actionAccountFragmentToAccountSettingsFragment()
             navigateTo(goToAccountSettings)
+        }
+        binding.support.aboutFebys.setOnClickListener {
+            val goToAboutFebys = NavGraphDirections.toWebViewFragment("","https://www.facebook.com/")
+            navigateTo(goToAboutFebys)
+        }
+        binding.support.helpCenter.setOnClickListener {
+            val goToHelpCenter = NavGraphDirections.toWebViewFragment("","https://www.facebook.com/")
+            navigateTo(goToHelpCenter)
+        }
+        binding.support.privacyPolicy.setOnClickListener {
+            val goToPrivacyPolicy = NavGraphDirections.toWebViewFragment("","https://www.facebook.com/")
+            navigateTo(goToPrivacyPolicy)
+        }
+        binding.support.termsAndConditions.setOnClickListener {
+            val goToTermsAndConditions = NavGraphDirections.toWebViewFragment("","https://www.facebook.com/")
+            navigateTo(goToTermsAndConditions)
         }
     }
 
