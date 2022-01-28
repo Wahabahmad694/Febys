@@ -12,5 +12,5 @@ interface IVoucherRepo {
     fun collectVouchers(
         voucher: String,
         dispatcher: CoroutineDispatcher = Dispatchers.IO
-    ): Flow<DataState<Voucher>>
+    ): Flow<DataState<Unit>>
 }

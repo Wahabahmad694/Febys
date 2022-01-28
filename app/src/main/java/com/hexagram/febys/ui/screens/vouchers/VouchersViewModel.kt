@@ -19,8 +19,8 @@ class VouchersViewModel @Inject constructor(
     private val _observeVouchers = MutableLiveData<DataState<List<Voucher>>>()
     val observeVouchers: LiveData<DataState<List<Voucher>>> = _observeVouchers
 
-    private val _observeCollectVoucher = MutableLiveData<DataState<Voucher>>()
-    val observeCollectVoucher: LiveData<DataState<Voucher>> = _observeCollectVoucher
+    private val _observeCollectVoucher = MutableLiveData<DataState<Unit>>()
+    val observeCollectVoucher: LiveData<DataState<Unit>> = _observeCollectVoucher
 
     init {
         fetchVouchers()
@@ -37,7 +37,7 @@ class VouchersViewModel @Inject constructor(
         _observeCollectVoucher.postValue(DataState.Loading())
         vouchersRepo.collectVouchers(voucher).collect {
             if (it is DataState.Data) fetchVouchers()
-            _observeCollectVoucher.postValue(it)
+            else _observeCollectVoucher.postValue(it)
         }
     }
 }

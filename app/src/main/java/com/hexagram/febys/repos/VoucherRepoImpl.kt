@@ -36,12 +36,12 @@ class VoucherRepoImpl @Inject constructor(
         }.flowOn(dispatcher)
 
     override fun collectVouchers(voucher: String, dispatcher: CoroutineDispatcher) =
-        flow<DataState<Voucher>> {
+        flow<DataState<Unit>> {
             val authToken = pref.getAccessToken()
             if (authToken.isEmpty()) return@flow
             val response = backendService.collectVouchers(authToken, voucher)
             response.onSuccess {
-                emit(DataState.Data(data!!.voucher))
+                emit(DataState.Data(Unit))
             }
                 .onError { emit(DataState.ApiError(message)) }
                 .onException { emit(DataState.ExceptionError()) }
