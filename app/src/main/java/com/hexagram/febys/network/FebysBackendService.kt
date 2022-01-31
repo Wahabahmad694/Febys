@@ -23,8 +23,10 @@ import com.hexagram.febys.network.adapter.ApiResponse
 import com.hexagram.febys.network.requests.RequestPushCart
 import com.hexagram.febys.network.requests.RequestUpdateUser
 import com.hexagram.febys.network.requests.ResponseUpdateUser
+import com.hexagram.febys.network.requests.SkuIdAndQuantity
 import com.hexagram.febys.network.response.ResponseOfPagination
 import okhttp3.MultipartBody
+import okhttp3.ResponseBody
 import retrofit2.http.*
 
 interface FebysBackendService {
@@ -336,4 +338,10 @@ interface FebysBackendService {
         @Header("Authorization") authToken: String,
         @Part file: MultipartBody.Part
     ): ApiResponse<List<String>>
+
+    @POST("v1/cart/export/pdf")
+    suspend fun downloadPdf(
+        @Header("Authorization") authToken: String,
+        @Body orderRequest: SkuIdAndQuantity
+    ): ApiResponse<ResponseBody>
 }

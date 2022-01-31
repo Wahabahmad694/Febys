@@ -1,6 +1,8 @@
 package com.hexagram.febys.utils
 
 import android.app.Activity
+import android.app.DownloadManager
+import android.database.Cursor
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.text.Html
@@ -242,4 +244,24 @@ fun String.toAscii(): Int {
     }
 
     return ascii
+}
+
+fun DownloadManager.queryById(id: Long): Cursor =
+    query(DownloadManager.Query().apply {
+        setFilterById(id)
+    })
+
+fun Cursor.getInt(columnName: String): Int {
+    val index = getColumnIndex(columnName)
+    return getInt(index)
+}
+
+fun Cursor.getLong(columnName: String): Long {
+    val index = getColumnIndex(columnName)
+    return getLong(index)
+}
+
+fun Cursor.getString(columnName: String): String {
+    val index = getColumnIndex(columnName)
+    return getString(index)
 }

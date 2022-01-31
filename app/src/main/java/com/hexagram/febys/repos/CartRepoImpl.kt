@@ -17,6 +17,7 @@ import com.hexagram.febys.prefs.IPrefManger
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import okhttp3.ResponseBody
 import javax.inject.Inject
 
 class CartRepoImpl @Inject constructor(
@@ -78,6 +79,19 @@ class CartRepoImpl @Inject constructor(
             .onException { emit(DataState.ExceptionError()) }
             .onNetworkError { emit(DataState.NetworkError()) }
     }
+
+    override suspend fun downloadPdf(
+        orderRequest: SkuIdAndQuantity,dispatcher: CoroutineDispatcher
+    ): Flow<DataState<ResponseBody>> =
+        flow<DataState<ResponseBody>> {
+            val authToken = pref.getAccessToken()
+            if (authToken.isEmpty())return@flow
+                backendService.downloadPdf(authToken,orderRequest)
+                    .onSuccess { emit(DataState.Data(data!!)) }
+                    .onError { emit(DataState.ApiError(message)) }
+                    .onException { emit(DataState.ExceptionError()) }
+                    .onNetworkError { emit(DataState.NetworkError()) }
+        }
 
     override fun placeOrder(
         transactions: List<Transaction>,

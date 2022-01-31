@@ -1,27 +1,31 @@
 package com.hexagram.febys.ui.screens.cart
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import com.hexagram.febys.BuildConfig
 import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentCartBinding
 import com.hexagram.febys.models.api.price.Price
 import com.hexagram.febys.models.db.CartDTO
-import com.hexagram.febys.utils.Utils
-import com.hexagram.febys.utils.goBack
-import com.hexagram.febys.utils.navigateTo
-import com.hexagram.febys.utils.showWarningDialog
+import com.hexagram.febys.network.DataState
+import com.hexagram.febys.ui.screens.dialog.ErrorDialog
+import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class CartFragment : BaseFragment() {
-    private lateinit var binding:FragmentCartBinding
+    private lateinit var binding: FragmentCartBinding
     private val cartViewModel: CartViewModel by viewModels()
+    private val downloadViewModel: AppUtils by viewModels()
+
     private val cartAdapter = CartAdapter()
 
     override fun onCreateView(
@@ -51,6 +55,26 @@ class CartFragment : BaseFragment() {
         updateFav()
     }
 
+//    private fun downloadPdfObserver() {
+//        downloadViewModel.observerDownloadPdf.observe(this, {
+//            when (it) {
+//                DownloadState.DOWNLOADING -> {
+//
+//                }
+//                DownloadState.ERROR -> {
+//                    hideDownloadProgress()
+//                    showToast(getString(R.string.message_something_went_wrong_str))
+//                }
+//                DownloadState.COMPLETED -> {
+//                    hideDownloadProgress()
+//                }
+//                DownloadState.NOT_STARTED -> {
+//                    hideDownloadProgress()
+//                }
+//            }
+//        })
+//    }
+
     private fun uiListener() {
         binding.ivClose.setOnClickListener {
             goBack()
@@ -62,7 +86,11 @@ class CartFragment : BaseFragment() {
             val msg = getString(R.string.msg_for_download_pdf)
 
             showWarningDialog(resId, title, msg) {
-                //todo nothing
+//              cartViewModel.exportPdf()
+                val uri = Uri.parse("${BuildConfig.backendBaseUrl}v1/cart/export/pdf")
+                downloadViewModel.startMessageMediaDownload(uri.toString())
+
+
             }
         }
 
@@ -127,6 +155,21 @@ class CartFragment : BaseFragment() {
         cartDataSource.observeCartCount().observe(viewLifecycleOwner) { cartCount ->
             binding.tvCartCount.text =
                 if (cartCount == null || cartCount == 0) "" else "($cartCount)"
+        }
+        cartViewModel.observerDownloadPdf.observe(viewLifecycleOwner) {
+            when (it) {
+                is DataState.Loading -> {
+                    showLoader()
+                }
+                is DataState.Error -> {
+                    hideLoader()
+                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
+                }
+                is DataState.Data -> {
+                    hideLoader()
+                    it.data
+                }
+            }
         }
     }
 
