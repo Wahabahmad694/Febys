@@ -222,7 +222,7 @@
                         app:ccpDialog_keyboardAutoPopup="false"
                         app:ccp_arrowColor="@color/black"
                         app:ccp_contentColor="@color/black"
-                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginStart="@dimen/_20sdp"
                         app:ccp_hintExampleNumber="true"
                         app:ccp_textSize="@style/TextTheme.Arial.TS16" />
 
@@ -234,6 +234,7 @@
                         android:imeOptions="actionNext"
                         android:inputType="phone"
                         android:paddingVertical="@dimen/_8dp"
+                        android:layout_marginEnd="@dimen/_20sdp"
                         android:textAppearance="@style/TextTheme.Arial.TS16"
                         app:layout_constraintTop_toBottomOf="@id/label_phone" />
 

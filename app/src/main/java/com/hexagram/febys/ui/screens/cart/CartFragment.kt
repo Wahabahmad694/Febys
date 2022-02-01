@@ -1,30 +1,32 @@
 package com.hexagram.febys.ui.screens.cart
 
-import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import com.hexagram.febys.BuildConfig
 import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentCartBinding
 import com.hexagram.febys.models.api.price.Price
+import com.hexagram.febys.models.api.request.OrderRequest
 import com.hexagram.febys.models.db.CartDTO
 import com.hexagram.febys.network.DataState
+import com.hexagram.febys.network.requests.SkuIdAndQuantity
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.ResponseBody
+import java.io.*
 
 
 @AndroidEntryPoint
 class CartFragment : BaseFragment() {
     private lateinit var binding: FragmentCartBinding
     private val cartViewModel: CartViewModel by viewModels()
-    private val downloadViewModel: AppUtils by viewModels()
 
     private val cartAdapter = CartAdapter()
 
@@ -55,26 +57,6 @@ class CartFragment : BaseFragment() {
         updateFav()
     }
 
-//    private fun downloadPdfObserver() {
-//        downloadViewModel.observerDownloadPdf.observe(this, {
-//            when (it) {
-//                DownloadState.DOWNLOADING -> {
-//
-//                }
-//                DownloadState.ERROR -> {
-//                    hideDownloadProgress()
-//                    showToast(getString(R.string.message_something_went_wrong_str))
-//                }
-//                DownloadState.COMPLETED -> {
-//                    hideDownloadProgress()
-//                }
-//                DownloadState.NOT_STARTED -> {
-//                    hideDownloadProgress()
-//                }
-//            }
-//        })
-//    }
-
     private fun uiListener() {
         binding.ivClose.setOnClickListener {
             goBack()
@@ -86,11 +68,15 @@ class CartFragment : BaseFragment() {
             val msg = getString(R.string.msg_for_download_pdf)
 
             showWarningDialog(resId, title, msg) {
-//              cartViewModel.exportPdf()
-                val uri = Uri.parse("${BuildConfig.backendBaseUrl}v1/cart/export/pdf")
-                downloadViewModel.startMessageMediaDownload(uri.toString())
-
-
+                cartViewModel.observeCart().observe(viewLifecycleOwner) { cart ->
+                    val skus = cart.map { SkuIdAndQuantity(it.skuId, it.quantity) }.toList()
+                    val orderRequest = OrderRequest(
+                        shippingDetail = null, voucherCode = null, items = skus,
+                        listOf(), null
+                    )
+                    cartViewModel.exportPdf(orderRequest)
+                    showToast("PDF download Successfully.....")
+                }
             }
         }
 
@@ -167,9 +153,44 @@ class CartFragment : BaseFragment() {
                 }
                 is DataState.Data -> {
                     hideLoader()
-                    it.data
+                    writeResponseBodyToDisk(it.data)
                 }
             }
+        }
+    }
+
+    private fun writeResponseBodyToDisk(body: ResponseBody): Boolean {
+        return try {
+            val febysCartPdf =
+                File(context?.cacheDir?.path + File.separator.toString() + "feybs.pdf")
+            var inputStream: InputStream? = null
+            var outputStream: OutputStream? = null
+            try {
+                val fileReader = ByteArray(4096)
+                val fileSize = body.contentLength()
+                var fileSizeDownloaded: Long = 0
+                inputStream = body.byteStream()
+                outputStream = FileOutputStream(febysCartPdf)
+                while (true) {
+                    val read: Int = inputStream.read(fileReader)
+                    if (read == -1) {
+                        break
+                    }
+                    outputStream.write(fileReader, 0, read)
+                    fileSizeDownloaded += read.toLong()
+                    Log.d("febys_test_file", "file download: $fileSizeDownloaded of $fileSize")
+                }
+                outputStream.flush()
+                true
+            } catch (e: IOException) {
+                false
+            } finally {
+                inputStream?.close()
+                outputStream?.close()
+
+            }
+        } catch (e: IOException) {
+            false
         }
     }
 

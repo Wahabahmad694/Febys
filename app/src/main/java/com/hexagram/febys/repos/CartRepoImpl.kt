@@ -81,16 +81,17 @@ class CartRepoImpl @Inject constructor(
     }
 
     override suspend fun downloadPdf(
-        orderRequest: SkuIdAndQuantity,dispatcher: CoroutineDispatcher
+        orderRequest: OrderRequest, dispatcher: CoroutineDispatcher
     ): Flow<DataState<ResponseBody>> =
         flow<DataState<ResponseBody>> {
             val authToken = pref.getAccessToken()
-            if (authToken.isEmpty())return@flow
-                backendService.downloadPdf(authToken,orderRequest)
-                    .onSuccess { emit(DataState.Data(data!!)) }
-                    .onError { emit(DataState.ApiError(message)) }
-                    .onException { emit(DataState.ExceptionError()) }
-                    .onNetworkError { emit(DataState.NetworkError()) }
+            if (authToken.isEmpty()) return@flow
+            try {
+                val body = backendService.downloadPdf(authToken, orderRequest)
+                emit(DataState.Data(body))
+            } catch (e: Exception) {
+                emit(DataState.ExceptionError())
+            }
         }
 
     override fun placeOrder(
