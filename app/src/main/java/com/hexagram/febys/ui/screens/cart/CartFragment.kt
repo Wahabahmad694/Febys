@@ -1,7 +1,7 @@
 package com.hexagram.febys.ui.screens.cart
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,15 +12,11 @@ import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentCartBinding
 import com.hexagram.febys.models.api.price.Price
-import com.hexagram.febys.models.api.request.OrderRequest
 import com.hexagram.febys.models.db.CartDTO
 import com.hexagram.febys.network.DataState
-import com.hexagram.febys.network.requests.SkuIdAndQuantity
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
-import okhttp3.ResponseBody
-import java.io.*
 
 
 @AndroidEntryPoint
@@ -68,15 +64,7 @@ class CartFragment : BaseFragment() {
             val msg = getString(R.string.msg_for_download_pdf)
 
             showWarningDialog(resId, title, msg) {
-                cartViewModel.observeCart().observe(viewLifecycleOwner) { cart ->
-                    val skus = cart.map { SkuIdAndQuantity(it.skuId, it.quantity) }.toList()
-                    val orderRequest = OrderRequest(
-                        shippingDetail = null, voucherCode = null, items = skus,
-                        listOf(), null
-                    )
-                    cartViewModel.exportPdf(orderRequest)
-                    showToast("PDF download Successfully.....")
-                }
+                cartViewModel.exportPdf()
             }
         }
 
@@ -153,44 +141,16 @@ class CartFragment : BaseFragment() {
                 }
                 is DataState.Data -> {
                     hideLoader()
-                    writeResponseBodyToDisk(it.data)
-                }
-            }
-        }
-    }
-
-    private fun writeResponseBodyToDisk(body: ResponseBody): Boolean {
-        return try {
-            val febysCartPdf =
-                File(context?.cacheDir?.path + File.separator.toString() + "feybs.pdf")
-            var inputStream: InputStream? = null
-            var outputStream: OutputStream? = null
-            try {
-                val fileReader = ByteArray(4096)
-                val fileSize = body.contentLength()
-                var fileSizeDownloaded: Long = 0
-                inputStream = body.byteStream()
-                outputStream = FileOutputStream(febysCartPdf)
-                while (true) {
-                    val read: Int = inputStream.read(fileReader)
-                    if (read == -1) {
-                        break
+                    val pdfFile =
+                        FileUtils.writeResponseToFile(requireContext(), it.data)
+                    if (pdfFile != null) {
+                        showToast("Pdf download successfully at ${pdfFile.path}")
+                        val intent = Intent(Intent.ACTION_VIEW)
+                    } else {
+                        showToast("fail to write file")
                     }
-                    outputStream.write(fileReader, 0, read)
-                    fileSizeDownloaded += read.toLong()
-                    Log.d("febys_test_file", "file download: $fileSizeDownloaded of $fileSize")
                 }
-                outputStream.flush()
-                true
-            } catch (e: IOException) {
-                false
-            } finally {
-                inputStream?.close()
-                outputStream?.close()
-
             }
-        } catch (e: IOException) {
-            false
         }
     }
 

@@ -81,11 +81,12 @@ class CartRepoImpl @Inject constructor(
     }
 
     override suspend fun downloadPdf(
-        orderRequest: OrderRequest, dispatcher: CoroutineDispatcher
+        dispatcher: CoroutineDispatcher
     ): Flow<DataState<ResponseBody>> =
-        flow<DataState<ResponseBody>> {
+        flow {
             val authToken = pref.getAccessToken()
             if (authToken.isEmpty()) return@flow
+            val orderRequest = getOrderRequest(null, null, listOf())
             try {
                 val body = backendService.downloadPdf(authToken, orderRequest)
                 emit(DataState.Data(body))

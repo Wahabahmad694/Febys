@@ -6,7 +6,6 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.hexagram.febys.models.api.order.Order
 import com.hexagram.febys.models.api.product.Product
-import com.hexagram.febys.models.api.request.OrderRequest
 import com.hexagram.febys.models.api.transaction.Transaction
 import com.hexagram.febys.models.api.vendor.VendorMessage
 import com.hexagram.febys.models.db.CartDTO
@@ -86,8 +85,9 @@ open class CartViewModel @Inject constructor(
             if (it is DataState.Data) clearCart()
         }.asLiveData()
 
-    fun exportPdf(orderRequest: OrderRequest) = viewModelScope.launch {
-        cartRepo.downloadPdf(orderRequest).collect {
+    fun exportPdf() = viewModelScope.launch {
+        _downloadPdf.postValue(DataState.Loading())
+        cartRepo.downloadPdf().collect {
             _downloadPdf.value = it
         }
     }
