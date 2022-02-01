@@ -23,7 +23,7 @@ class ReviewsAdapter : RecyclerView.Adapter<ReviewsAdapter.ReviewVH>() {
         private val binding: ItemReviewsBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: RatingAndReviews) = binding.apply {
-            userName.text = item.consumer.firstName
+            userName.text = item.consumer.fullName
             tvReview.text = item.review.comment
             date.text =
                 Utils.DateTime.formatDate(item.createdAt, Utils.DateTime.FORMAT_MONTH_DATE_YEAR)
