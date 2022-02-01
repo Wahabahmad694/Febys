@@ -162,22 +162,6 @@
 
         </LinearLayout>
         <!--endregion filter-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:padding="@dimen/_7sdp"
-            android:background="@color/grey">
-            <TextView
-                android:id="@+id/label_new"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/TextTheme.HelveticaNeue.TS16.Bold"
-                android:textAlignment="center"
-                android:text="@string/label_new_in"/>
-
-        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_product_list"
