@@ -7,5 +7,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Stats(
     @SerializedName("used_count")
-    val usedCount: Int
-):Parcelable
+    val usedCount: Int,
+    @SerializedName("last_used_at")
+    val lastUsedAt: String?
+) : Parcelable

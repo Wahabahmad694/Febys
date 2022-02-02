@@ -1,8 +1,6 @@
 package com.hexagram.febys.network.response
 
 import com.google.gson.annotations.SerializedName
-import com.hexagram.febys.models.view.QuestionAnswersThread
-import com.hexagram.febys.network.FakeApiService
 
 data class OldProduct constructor(
     @SerializedName("id")
