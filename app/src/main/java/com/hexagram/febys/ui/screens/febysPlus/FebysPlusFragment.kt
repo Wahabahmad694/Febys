@@ -19,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class FebysPlusFragment : BaseFragment() {
     private lateinit var binding: FragmentFebysPlusBinding
     private val febysPlusViewModel by viewModels<FebysPlusViewModel>()
-    private val febysPackageAdapter = FebysPlusAdapter(requireContext())
+    private val febysPackageAdapter = FebysPlusAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,

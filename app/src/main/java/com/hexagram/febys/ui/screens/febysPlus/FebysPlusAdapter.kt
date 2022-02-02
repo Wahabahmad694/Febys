@@ -1,6 +1,5 @@
 package com.hexagram.febys.ui.screens.febysPlus
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,7 @@ import com.hexagram.febys.databinding.ItemsFebysPlusBinding
 import com.hexagram.febys.models.api.febysPlusPackage.Package
 import com.hexagram.febys.utils.load
 
-class FebysPlusAdapter(private val context: Context) :
+class FebysPlusAdapter() :
     RecyclerView.Adapter<FebysPlusAdapter.ViewHolder>() {
     private var packages = listOf<Package>()
 
@@ -75,21 +74,4 @@ class FebysPlusAdapter(private val context: Context) :
         backgroundView.background =
             ContextCompat.getDrawable(backgroundView.context, R.drawable.bg_border_dark_red)
     }
-//
-//    private fun updateUi(selectedBackground: View) {
-//        markAsSelected(selectedBackground)
-//        markAsNotSelected(selectedBackground)
-//
-//    }
-//
-//    fun markAsSelected(backgroundView: View) {
-//        backgroundView.background =
-//            ContextCompat.getDrawable(backgroundView.context, R.drawable.bg_border_dark_red)
-//    }
-//
-//    fun markAsNotSelected(backgroundView: View) {
-//        backgroundView.background =
-//            ContextCompat.getDrawable(backgroundView.context, R.drawable.bg_border_dark_grey)
-//    }
-
 }
