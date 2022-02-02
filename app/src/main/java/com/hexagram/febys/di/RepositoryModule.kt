@@ -1,6 +1,8 @@
 package com.hexagram.febys.di
 
 import com.hexagram.febys.repos.*
+import com.hexagram.febys.repos.FebysPlusRepoImpl
+import com.hexagram.febys.repos.IFebysPlusRepo
 import com.hexagram.febys.ui.screens.payment.repo.IPaymentRepo
 import com.hexagram.febys.ui.screens.payment.repo.PaymentRepoImpl
 import dagger.Binds
@@ -72,4 +74,8 @@ abstract class RepositoryModule {
     @Singleton
     @Binds
     abstract fun bindProfileRepo(repo: ProfileRepoImp): IProfileRepo
+
+    @Singleton
+    @Binds
+    abstract fun febysPlusRepo(repo: FebysPlusRepoImpl): IFebysPlusRepo
 }

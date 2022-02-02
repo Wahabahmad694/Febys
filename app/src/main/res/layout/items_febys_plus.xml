@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container_basic_free_delivery"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_85sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:background="@drawable/bg_border_dark_grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/iv_febys_plus"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:layout_marginStart="@dimen/_14sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:placeholderImage="@drawable/img_basic_free_delivery"
+                app:placeholderImageScaleType="fitCenter" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                style="@style/TextTheme.HelveticaNeue.TS18.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_14sdp"
+                app:layout_constraintStart_toEndOf="@id/iv_febys_plus"
+                app:layout_constraintTop_toTopOf="@id/iv_febys_plus"
+                tools:text="Basic" />
+
+            <TextView
+                android:id="@+id/tv_feature"
+                style="@style/TextTheme.HelveticaNeue.TS14.Grey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minLines="1"
+                app:layout_constraintStart_toStartOf="@id/tv_title"
+                app:layout_constraintTop_toBottomOf="@id/tv_title"
+                tools:text="Free Delivery" />
+
+            <TextView
+                android:id="@+id/tv_days"
+                style="@style/TextTheme.HelveticaNeue.TS14.Grey"
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="wrap_content"
+                android:minLines="1"
+                app:layout_constraintStart_toStartOf="@id/tv_feature"
+                app:layout_constraintTop_toBottomOf="@id/tv_feature"
+                android:text="@string/days" />
+
+            <TextView
+                android:id="@+id/tv_price"
+                style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_14sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="$/199" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
