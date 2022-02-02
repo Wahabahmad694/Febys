@@ -24,7 +24,7 @@ class AccountFragment : BaseFragment() {
     private val authViewModel: AuthViewModel by viewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View {
         binding = FragmentAccountBinding.inflate(inflater, container, false)
         return binding.root
@@ -122,19 +122,23 @@ class AccountFragment : BaseFragment() {
             navigateTo(goToAccountSettings)
         }
         binding.support.aboutFebys.setOnClickListener {
-            val goToAboutFebys = NavGraphDirections.toWebViewFragment("","https://www.facebook.com/")
+            val goToAboutFebys =
+                NavGraphDirections.toWebViewFragment("", "https://qa.febys.com/about-us")
             navigateTo(goToAboutFebys)
         }
         binding.support.helpCenter.setOnClickListener {
-            val goToHelpCenter = NavGraphDirections.toWebViewFragment("","https://www.facebook.com/")
+            val goToHelpCenter =
+                NavGraphDirections.toWebViewFragment("", "https://qa.febys.com/helpcenter")
             navigateTo(goToHelpCenter)
         }
         binding.support.privacyPolicy.setOnClickListener {
-            val goToPrivacyPolicy = NavGraphDirections.toWebViewFragment("","https://www.facebook.com/")
+            val goToPrivacyPolicy =
+                NavGraphDirections.toWebViewFragment("", "https://www.facebook.com/")
             navigateTo(goToPrivacyPolicy)
         }
         binding.support.termsAndConditions.setOnClickListener {
-            val goToTermsAndConditions = NavGraphDirections.toWebViewFragment("","https://www.facebook.com/")
+            val goToTermsAndConditions =
+                NavGraphDirections.toWebViewFragment("", "https://www.facebook.com/")
             navigateTo(goToTermsAndConditions)
         }
     }

@@ -4,6 +4,7 @@ import com.google.gson.JsonObject
 import com.hexagram.febys.models.api.cart.CartResponse
 import com.hexagram.febys.models.api.cities.PostCitiesResponse
 import com.hexagram.febys.models.api.countries.CountryResponse
+import com.hexagram.febys.models.api.febysPlusPackage.FebysPackageResponse
 import com.hexagram.febys.models.api.filters.SearchFilterResponse
 import com.hexagram.febys.models.api.pagination.Pagination
 import com.hexagram.febys.models.api.product.FeaturedCategory
@@ -33,7 +34,7 @@ interface FebysBackendService {
 
     @POST("v1/consumers/products/today-deals")
     suspend fun fetchTodayDeals(
-        @QueryMap queryMap: Map<String, String>, @Body request: PagingListRequest
+        @QueryMap queryMap: Map<String, String>, @Body request: PagingListRequest,
     ): ApiResponse<Pagination>
 
     @GET("v1/categories/featured")
@@ -43,34 +44,34 @@ interface FebysBackendService {
     suspend fun fetchCategoryProducts(
         @Path("categoryId") categoryId: Int,
         @QueryMap queryMap: Map<String, String>,
-        @Body request: PagingListRequest
+        @Body request: PagingListRequest,
     ): ApiResponse<Pagination>
 
     @GET("v1/top-performers/products/units")
     suspend fun fetchTrendingProductsByUnits(
-        @QueryMap queryMap: Map<String, String>
+        @QueryMap queryMap: Map<String, String>,
     ): ApiResponse<Pagination>
 
     @GET("v1/top-performers/products/sale")
     suspend fun fetchTrendingProductsBySale(
-        @QueryMap queryMap: Map<String, String>
+        @QueryMap queryMap: Map<String, String>,
     ): ApiResponse<Pagination>
 
     @POST("v1/consumers/products/under100")
     suspend fun fetchUnder100DollarsItems(
-        @QueryMap queryMap: Map<String, String>, @Body request: PagingListRequest
+        @QueryMap queryMap: Map<String, String>, @Body request: PagingListRequest,
     ): ApiResponse<Pagination>
 
     @POST("v1/consumers/products/vendor/{vendorId}")
     suspend fun fetchVendorProducts(
         @Path("vendorId") vendorId: String,
         @QueryMap queryMap: Map<String, String>,
-        @Body request: PagingListRequest
+        @Body request: PagingListRequest,
     ): ApiResponse<Pagination>
 
     @POST("v1/consumers/products")
     suspend fun searchProducts(
-        @QueryMap queryMap: Map<String, String>, @Body request: PagingListRequest
+        @QueryMap queryMap: Map<String, String>, @Body request: PagingListRequest,
     ): ApiResponse<ResponseOfPagination>
 
     @GET("v1/products/{productId}")
@@ -78,33 +79,33 @@ interface FebysBackendService {
 
     @POST("v1/consumers/wishlist/list")
     suspend fun fetchWishlist(
-        @Header("Authorization") authToken: String, @QueryMap queryMap: Map<String, String>
+        @Header("Authorization") authToken: String, @QueryMap queryMap: Map<String, String>,
     ): ApiResponse<Pagination>
 
     @POST("v1/consumers/wishlist")
     suspend fun addToWishList(
-        @Header("Authorization") authToken: String, @Body req: FavSkuIds
+        @Header("Authorization") authToken: String, @Body req: FavSkuIds,
     ): ApiResponse<WishlistSkuIds>
 
     @HTTP(method = "DELETE", path = "v1/consumers/wishlist", hasBody = true)
     suspend fun removeFromWishList(
-        @Header("Authorization") authToken: String, @Body req: FavSkuIds
+        @Header("Authorization") authToken: String, @Body req: FavSkuIds,
     ): ApiResponse<FavSkuIds>
 
     @GET("v1/consumers/wishlist")
     suspend fun fetchWishlistIds(
-        @Header("Authorization") authToken: String
+        @Header("Authorization") authToken: String,
     ): ApiResponse<FavSkuIds>
 
     @GET("v1/cart")
     suspend fun fetchCart(
-        @Header("Authorization") authToken: String
+        @Header("Authorization") authToken: String,
     ): ApiResponse<CartResponse>
 
     @POST("v1/cart")
     suspend fun pushCart(
         @Header("Authorization") authToken: String,
-        @Body req: RequestPushCart
+        @Body req: RequestPushCart,
     ): ApiResponse<CartResponse>
 
     @POST("v1/consumers/stores")
@@ -112,7 +113,7 @@ interface FebysBackendService {
 
     @POST("v1/consumers/stores/recommendations")
     suspend fun fetchRecommendVendors(
-        @Header("Authorization") authToken: String, @QueryMap req: Map<String, String>
+        @Header("Authorization") authToken: String, @QueryMap req: Map<String, String>,
     ): ApiResponse<Pagination>
 
     @POST("v1/consumers/celebs")
@@ -120,7 +121,7 @@ interface FebysBackendService {
 
     @POST("v1/consumers/celebs/recommendations")
     suspend fun fetchRecommendCelebrities(
-        @Header("Authorization") authToken: String, @QueryMap req: Map<String, String>
+        @Header("Authorization") authToken: String, @QueryMap req: Map<String, String>,
     ): ApiResponse<Pagination>
 
     @GET("v1/consumers/stores/following")
@@ -137,12 +138,12 @@ interface FebysBackendService {
 
     @POST("v1/consumers/follow/{vendorId}")
     suspend fun followVendor(
-        @Header("Authorization") authKey: String, @Path("vendorId") vendorId: String
+        @Header("Authorization") authKey: String, @Path("vendorId") vendorId: String,
     ): ApiResponse<Unit>
 
     @POST("v1/consumers/un-follow/{vendorId}")
     suspend fun unFollowVendor(
-        @Header("Authorization") authKey: String, @Path("vendorId") vendorId: String
+        @Header("Authorization") authKey: String, @Path("vendorId") vendorId: String,
     ): ApiResponse<Unit>
 
     @POST("v1/consumers/products/recommended")
@@ -150,73 +151,73 @@ interface FebysBackendService {
 
     @POST("v1/consumers/products/{productId}/similar")
     suspend fun fetchSimilarProducts(
-        @Path("productId") productId: String, @Body request: PagingListRequest
+        @Path("productId") productId: String, @Body request: PagingListRequest,
     ): ApiResponse<Pagination>
 
     @POST("v1/products/{productId}/ask-question")
     suspend fun askQuestion(
         @Header("Authorization") authKey: String,
         @Path("productId") productId: String,
-        @Body askQuestionRequest: AskQuestionRequest
+        @Body askQuestionRequest: AskQuestionRequest,
     ): ApiResponse<QuestionAnswersResponse>
 
     @POST("v1/products/{productId}/ask-question")
     suspend fun replyQuestion(
         @Header("Authorization") authKey: String,
         @Path("productId") productId: String,
-        @Body askQuestionRequest: ReplyQuestionRequest
+        @Body askQuestionRequest: ReplyQuestionRequest,
     ): ApiResponse<QuestionAnswersResponse>
 
     @POST("v1/products/{productId}/threads/{threadId}/up-vote")
     suspend fun questionVoteUp(
         @Header("Authorization") authToken: String,
         @Path("productId") productId: String,
-        @Path("threadId") threadId: String
+        @Path("threadId") threadId: String,
     ): ApiResponse<QuestionAnswersResponse>
 
     @DELETE("v1/products/{productId}/threads/{threadId}/up-vote")
     suspend fun revokeQuestionVoteUp(
         @Header("Authorization") authToken: String,
         @Path("productId") productId: String,
-        @Path("threadId") threadId: String
+        @Path("threadId") threadId: String,
     ): ApiResponse<QuestionAnswersResponse>
 
     @POST("v1/products/{productId}/threads/{threadId}/down-vote")
     suspend fun questionVoteDown(
         @Header("Authorization") authToken: String,
         @Path("productId") productId: String,
-        @Path("threadId") threadId: String
+        @Path("threadId") threadId: String,
     ): ApiResponse<QuestionAnswersResponse>
 
     @DELETE("v1/products/{productId}/threads/{threadId}/down-vote")
     suspend fun revokeQuestionVoteDown(
         @Header("Authorization") authToken: String,
         @Path("productId") productId: String,
-        @Path("threadId") threadId: String
+        @Path("threadId") threadId: String,
     ): ApiResponse<QuestionAnswersResponse>
 
     @POST("v1/rating-review/{reviewId}/product/up-vote")
     suspend fun reviewVoteUp(
         @Header("Authorization") authToken: String,
-        @Path("reviewId") reviewId: String
+        @Path("reviewId") reviewId: String,
     ): ApiResponse<RatingAndReviewsResponse>
 
     @DELETE("v1/rating-review/{reviewId}/product/up-vote")
     suspend fun revokeReviewVoteUp(
         @Header("Authorization") authToken: String,
-        @Path("reviewId") reviewId: String
+        @Path("reviewId") reviewId: String,
     ): ApiResponse<RatingAndReviewsResponse>
 
     @POST("v1/rating-review/{reviewId}/product/down-vote")
     suspend fun reviewVoteDown(
         @Header("Authorization") authToken: String,
-        @Path("reviewId") reviewId: String
+        @Path("reviewId") reviewId: String,
     ): ApiResponse<RatingAndReviewsResponse>
 
     @DELETE("v1/rating-review/{reviewId}/product/down-vote")
     suspend fun revokeReviewVoteDown(
         @Header("Authorization") authToken: String,
-        @Path("reviewId") reviewId: String
+        @Path("reviewId") reviewId: String,
     ): ApiResponse<RatingAndReviewsResponse>
 
     @POST("v1/vouchers/of-consumer/list")
@@ -233,42 +234,42 @@ interface FebysBackendService {
 
     @POST("v1/consumers/shipping-details/list")
     suspend fun fetchShippingAddress(
-        @Header("Authorization") authKey: String
+        @Header("Authorization") authKey: String,
     ): ApiResponse<ShippingAddressResponse>
 
     @DELETE("v1/consumers/delete/shipping-detail/{id}")
     suspend fun removeShippingAddress(
         @Header("Authorization") authToken: String,
-        @Path("id") id: String
+        @Path("id") id: String,
     ): ApiResponse<Unit>
 
     @POST("v1/orders/info")
     suspend fun fetchOrderInfo(
-        @Header("Authorization") authToken: String, @Body orderRequest: OrderRequest
+        @Header("Authorization") authToken: String, @Body orderRequest: OrderRequest,
     ): ApiResponse<OrderResponse>
 
     @POST("v1/orders")
     suspend fun placeOrder(
-        @Header("Authorization") authToken: String, @Body orderRequest: OrderRequest
+        @Header("Authorization") authToken: String, @Body orderRequest: OrderRequest,
     ): ApiResponse<OrderResponse>
 
     @POST("v1/orders/for-consumer/list")
     suspend fun fetchOrderListing(
         @Header("Authorization") authToken: String,
         @QueryMap queryMap: Map<String, String>,
-        @Body orderListingRequest: JsonObject
+        @Body orderListingRequest: JsonObject,
     ): ApiResponse<Pagination>
 
     @POST("v1/orders/for-consumer/{orderId}")
     suspend fun fetchOrder(
         @Header("Authorization") authToken: String,
-        @Path("orderId") orderId: String
+        @Path("orderId") orderId: String,
     ): ApiResponse<OrderResponse>
 
     @POST("v1/consumers/save/shipping-detail")
     suspend fun addEditShippingAddress(
         @Header("Authorization") authToken: String,
-        @Body shippingAddress: ShippingAddress
+        @Body shippingAddress: ShippingAddress,
     ): ApiResponse<ShippingAddress>
 
     @GET("v1/consumers/countries/list")
@@ -277,13 +278,13 @@ interface FebysBackendService {
     @POST("v1/consumers/states-of-country/list")
     suspend fun getStates(
         @Header("Authorization") authToken: String,
-        @Body getStatesRequest: GetStatesRequest
+        @Body getStatesRequest: GetStatesRequest,
     ): ApiResponse<PostStatesResponse>
 
     @POST("v1/consumers/cities-of-state/list")
     suspend fun getCities(
         @Header("Authorization") authToken: String,
-        @Body getCitiesRequest: GetCitiesRequest
+        @Body getCitiesRequest: GetCitiesRequest,
     ): ApiResponse<PostCitiesResponse>
 
     @GET("v1/order-settings/consumer/order/cancellation/reasons")
@@ -294,7 +295,7 @@ interface FebysBackendService {
         @Header("Authorization") authToken: String,
         @Path("orderId") orderId: String,
         @Path("vendorId") vendorId: String,
-        @Body reqBody: Map<String, String>
+        @Body reqBody: Map<String, String>,
     ): ApiResponse<OrderResponse>
 
     @GET("v1/consumers/products/search/filters")
@@ -314,7 +315,7 @@ interface FebysBackendService {
 
     @GET("v1/consumers/me")
     suspend fun fetchProfile(
-        @Header("Authorization") authToken: String
+        @Header("Authorization") authToken: String,
     ): ApiResponse<Profile>
 
     @POST("v1/rating-review/save/{orderId}")
@@ -327,13 +328,16 @@ interface FebysBackendService {
     @PUT("v1/consumers")
     suspend fun updateProfile(
         @Header("Authorization") authToken: String,
-        @Body reqUpdateUser: RequestUpdateUser
+        @Body reqUpdateUser: RequestUpdateUser,
     ): ApiResponse<ResponseUpdateUser>
 
     @Multipart
     @POST("v1/media/upload/consumer_profile")
     suspend fun uploadImage(
         @Header("Authorization") authToken: String,
-        @Part file: MultipartBody.Part
+        @Part file: MultipartBody.Part,
     ): ApiResponse<List<String>>
+
+    @GET("v1/febys-plus/packages")
+    suspend fun fetchFebysPlusPackage(): ApiResponse<FebysPackageResponse>
 }

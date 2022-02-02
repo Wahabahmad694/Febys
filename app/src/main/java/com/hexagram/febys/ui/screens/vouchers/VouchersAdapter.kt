@@ -32,7 +32,7 @@ class VouchersAdapter : RecyclerView.Adapter<VouchersAdapter.ViewHolder>() {
     }
 
     inner class ViewHolder(
-        private val binding: ItemVoucherBinding
+        private val binding: ItemVoucherBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(position: Int) = with(binding) {
