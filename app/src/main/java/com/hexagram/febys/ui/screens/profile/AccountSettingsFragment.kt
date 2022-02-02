@@ -55,12 +55,18 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
         }
         binding.ivBack.setOnClickListener { goBack() }
         binding.ivEdit.setOnClickListener {
+            val resId = R.drawable.ic_thanks_info
+            val title = getString(R.string.msg_thank_you)
+            val msg = getString(R.string.label_profile_is_updated)
+
             isInEditMode = !isInEditMode
             updateField()
             if (!isInEditMode) {
                 val updateUser = getUpdatedConsumer()
                 updateUser?.let { accountSettingViewModel.updateProfile(it) }
-                showToast("User Profile updated")
+                    showInfoDialoge(resId, title, msg) {
+                        //todo top-up
+                    }
             }
         }
 
@@ -104,6 +110,7 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
         binding.etLastName.isEnabled = isInEditMode
         binding.etPhone.isEnabled = isInEditMode
         binding.camera.isVisible = isInEditMode
+        binding.ccpPhoneCode.isEnabled = isInEditMode
 
         binding.ivEdit.setImageResource(
             if (isInEditMode) R.drawable.ic_mark_tic else R.drawable.ic_edit
@@ -162,7 +169,7 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
             if (result.resultCode == Activity.RESULT_OK) {
                 result.data?.data?.let {
                     val filePath = MediaFileUtils.handleUri(requireContext(), it)
-                    startCrop(it!!)
+//                    startCrop(it!!)
                     binding.profileImg.setImageURI(it)
                     accountSettingViewModel.updateProfileImage(filePath!!)
                 }
@@ -176,8 +183,7 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
                 result.data?.data?.let {
                     val filePath = MediaFileUtils.handleUri(requireContext(), it)
                     binding.profileImg.setImageURI(it)
-                    startCrop(it!!)
-                    binding.profileImg.setImageURI(it)
+//                    startCrop(it!!)
                     accountSettingViewModel.updateProfileImage(filePath!!)
                 }
             }

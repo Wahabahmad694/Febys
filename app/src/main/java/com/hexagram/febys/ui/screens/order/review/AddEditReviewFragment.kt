@@ -70,6 +70,10 @@ class AddEditReviewFragment : BaseFragment() {
     }
 
     private fun uiListener() {
+        val resId = R.drawable.ic_thanks_info
+        val title = getString(R.string.msg_thank_you)
+        val msg = getString(R.string.label_review_is_updated)
+
         binding.ivBack.setOnClickListener { goBack() }
         binding.ivEdit.setOnClickListener {
             updateFieldAndReviewsAdapter(true)
@@ -108,6 +112,10 @@ class AddEditReviewFragment : BaseFragment() {
 
         binding.icTick.setOnClickListener {
             orderViewModel.postReview(args.orderId, orderReview)
+            showInfoDialoge(resId, title, msg) {
+                //todo nothing
+            }
+
         }
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner) {

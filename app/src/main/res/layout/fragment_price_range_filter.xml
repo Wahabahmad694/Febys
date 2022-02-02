@@ -65,7 +65,7 @@
                 style="@style/TextTheme.HelveticaNeue.TS16.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
                 android:text="@string/label_from" />
 
             <androidx.appcompat.widget.AppCompatEditText

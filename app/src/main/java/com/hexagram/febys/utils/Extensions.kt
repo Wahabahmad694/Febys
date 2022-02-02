@@ -139,7 +139,11 @@ fun Fragment.showWarningDialog(
 ) {
     WarningDialog(resId, title, msg) { onOkayClick() }.show(childFragmentManager, InfoDialog.TAG)
 }
-
+fun Fragment.showInfoDialoge(
+    @DrawableRes resId: Int, title: String, msg: String, onOkayClick: () -> Unit
+) {
+    InfoDialog(resId, title, msg) { onOkayClick() }.show(childFragmentManager, InfoDialog.TAG)
+}
 fun RecyclerView.applySpaceItemDecoration(
     @DimenRes verticalDimenRes: Int? = null,
     @DimenRes horizontalDimenRes: Int? = null

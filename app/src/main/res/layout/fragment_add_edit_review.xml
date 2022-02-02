@@ -59,8 +59,8 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ic_tick"
-                    android:layout_width="@dimen/_22sdp"
-                    android:layout_height="@dimen/_19sdp"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_18sdp"
                     android:layout_marginEnd="@dimen/_16sdp"
                     android:src="@drawable/ic_mark_tic"
                     app:layout_constraintBottom_toBottomOf="@id/label_add_review"
