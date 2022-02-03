@@ -228,7 +228,7 @@
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_toggle_follow"
                         style="@style/ButtonTheme.OutLine"
-                        android:layout_width="@dimen/_70sdp"
+                        android:layout_width="@dimen/_75sdp"
                         android:layout_height="wrap_content"
                         android:text="@{isFollowing ? @string/label_following : @string/label_follow}"
                         tools:text="Unfollow"/>
