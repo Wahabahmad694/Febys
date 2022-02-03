@@ -56,18 +56,12 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
         }
         binding.ivBack.setOnClickListener { goBack() }
         binding.ivEdit.setOnClickListener {
-            val resId = R.drawable.ic_thanks_info
-            val title = getString(R.string.msg_thank_you)
-            val msg = getString(R.string.label_profile_is_updated)
-
             isInEditMode = !isInEditMode
             updateField()
             if (!isInEditMode) {
                 val updateUser = getUpdatedConsumer()
                 updateUser?.let { accountSettingViewModel.updateProfile(it) }
-                    showInfoDialoge(resId, title, msg) {
-                        //todo top-up
-                    }
+                showSuccessDialog()
             }
         }
 
@@ -78,6 +72,14 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
                 updateField()
             } else goBack()
         }
+    }
+
+    private fun showSuccessDialog() {
+        val resId = R.drawable.ic_thanks_info
+        val title = getString(R.string.msg_thank_you)
+        val msg = getString(R.string.label_profile_is_updated)
+
+        showInfoDialoge(resId, title, msg) { goBack() }
     }
 
     private fun getUpdatedConsumer(): RequestUpdateUser? {
@@ -257,6 +259,7 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
             }
         }
     }
+
     private fun updateDefaultCCP(contact: PhoneNo) {
         binding.ccpPhoneCode.setDefaultCountryUsingNameCode(contact.countryCode)
         binding.ccpPhoneCode.resetToDefaultCountry()

@@ -59,7 +59,7 @@ class TransactionPagerAdapter :
             tvAmount.text =
                 Price("", item.requestedAmount, item.requestedCurrency).getFormattedPrice()
             tvPurpose.text = item.purpose.replace("_", " ").capitalizeWords
-            tvStatus.text = item.status.capitalizeWords
+            tvStatus.text = item.status.replace("_", " ").capitalizeWords
             tvStatus.setBackgroundRoundedColor(item.statusColor)
         }
     }

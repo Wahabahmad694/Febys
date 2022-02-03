@@ -163,6 +163,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_minus8sdp"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal"
                     app:layout_constraintTop_toBottomOf="@id/label_phone">
 
@@ -175,7 +176,7 @@
                         app:ccp_arrowColor="@color/black"
                         app:ccp_contentColor="@color/black"
                         app:ccp_hintExampleNumber="true"
-                        app:ccp_textSize="@style/TextTheme.Arial.TS16" />
+                        app:ccp_textSize="@dimen/_16sp" />
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/et_phone"
@@ -184,6 +185,7 @@
                         android:background="@null"
                         android:imeOptions="actionNext"
                         android:inputType="phone"
+                        android:maxLines="1"
                         android:paddingVertical="@dimen/_8dp"
                         android:textAppearance="@style/TextTheme.Arial.TS16"
                         app:layout_constraintTop_toBottomOf="@id/label_phone" />

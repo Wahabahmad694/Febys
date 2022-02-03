@@ -31,7 +31,7 @@ class CheckoutSuccessFragment : BaseFragment() {
     }
 
     private fun initUi() {
-        binding.tvOrderId.text = args.orderId
+        binding.tvOrderId.text = " ${args.orderId}"
     }
 
     private fun uiListener() {

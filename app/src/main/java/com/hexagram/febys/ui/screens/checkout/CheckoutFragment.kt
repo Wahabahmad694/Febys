@@ -126,6 +126,8 @@ class CheckoutFragment : BaseFragment() {
                 .getParcelableArrayList<Transaction>(BasePaymentFragment.TRANSACTIONS)?.toList()
 
             if (!transactions.isNullOrEmpty()) {
+                showOrderPlacingUi()
+                showLoader()
                 checkoutViewModel.cancelAllRunningJobs()
                 placeOrder(transactions)
             }
@@ -271,7 +273,6 @@ class CheckoutFragment : BaseFragment() {
     }
 
     private fun placeOrder(transactions: List<Transaction>) {
-        hideLoader()
         val vendorMessages = cartAdapter.getVendorMessages()
         checkoutViewModel
             .placeOrder(transactions, voucher, vendorMessages)

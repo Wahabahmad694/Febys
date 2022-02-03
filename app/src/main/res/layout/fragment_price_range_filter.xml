@@ -65,15 +65,16 @@
                 style="@style/TextTheme.HelveticaNeue.TS16.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
                 android:text="@string/label_from" />
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/et_min_price"
                 style="@style/TextTheme.HelveticaNeue.TS18"
-                android:layout_width="@dimen/_100sdp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_weight="1"
                 android:background="@drawable/bg_border_dark_grey"
                 android:hint="@string/label_min"
                 android:inputType="number"
@@ -85,15 +86,17 @@
                 style="@style/TextTheme.HelveticaNeue.TS16.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_8sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:text="@string/label_to" />
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/et_max_price"
                 style="@style/TextTheme.HelveticaNeue.TS18"
-                android:layout_width="@dimen/_100sdp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_weight="1"
                 android:background="@drawable/bg_border_dark_grey"
                 android:hint="@string/label_max"
                 android:inputType="number"
