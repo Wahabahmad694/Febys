@@ -688,7 +688,9 @@
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="@dimen/_16dp"
+                                android:layout_marginTop="@dimen/_16sdp"
+                                android:layout_marginBottom="@dimen/_16sdp"
+                                android:layout_marginEnd="@dimen/_16sdp"
                                 android:layout_weight="1"
                                 android:gravity="center"
                                 android:orientation="horizontal">
@@ -734,7 +736,9 @@
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:layout_margin="@dimen/_16dp"
+                                android:layout_marginTop="@dimen/_16dp"
+                                android:layout_marginBottom="@dimen/_16dp"
+                                android:maxLines="1"
                                 android:layout_weight="1"
                                 android:gravity="center"
                                 android:orientation="horizontal">
@@ -752,7 +756,7 @@
                                     style="@style/TextTheme.Arial.TS14.Bold"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="@dimen/_5sdp" />
+                                    android:layout_marginStart="@dimen/_3sdp" />
 
                             </LinearLayout>
 
