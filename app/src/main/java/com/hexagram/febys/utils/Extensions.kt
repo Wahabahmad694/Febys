@@ -228,6 +228,9 @@ fun TextView.showHtml(html: String) {
     this.setText(spannedText, TextView.BufferType.SPANNABLE)
 }
 
+val String.capitalizeWords
+    get() = this.lowercase().split(" ").joinToString(" ") { it.capitalize() }
+
 fun String.capitalize(): String {
     var capitalizeString = ""
     this.split(" ").forEach { word ->

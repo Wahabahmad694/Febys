@@ -723,7 +723,7 @@ class ProductDetailFragment : SliderFragment() {
         )
 
         productDescriptionsBinding.description = description
-        productDescriptionsBinding.labelDescription.text = description.title.capitalize()
+        productDescriptionsBinding.labelDescription.text = description.title.capitalizeWords
 
         productDescriptionsBinding.productDescriptionToggle.setOnClickListener {
             productDescriptionsBinding.containerProductDescription.toggleVisibility()

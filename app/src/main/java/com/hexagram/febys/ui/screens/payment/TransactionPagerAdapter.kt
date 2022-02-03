@@ -10,7 +10,7 @@ import com.hexagram.febys.models.api.price.Price
 import com.hexagram.febys.models.api.transaction.Transaction
 import com.hexagram.febys.utils.Utils
 import com.hexagram.febys.utils.Utils.DateTime.FORMAT_MONTH_DATE_YEAR_HOUR_MIN
-import com.hexagram.febys.utils.capitalize
+import com.hexagram.febys.utils.capitalizeWords
 import com.hexagram.febys.utils.setBackgroundRoundedColor
 
 class TransactionPagerAdapter :
@@ -53,13 +53,13 @@ class TransactionPagerAdapter :
             }
 
             transactionId.text = item._id
-            tvSource.text = item.source.capitalize()
+            tvSource.text = item.source.capitalizeWords
             tvDateTime.text =
                 Utils.DateTime.formatDate(item.createdAt, FORMAT_MONTH_DATE_YEAR_HOUR_MIN)
             tvAmount.text =
                 Price("", item.requestedAmount, item.requestedCurrency).getFormattedPrice()
-            tvPurpose.text = item.purpose.replace("_", " ")
-            tvStatus.text = item.status.capitalize()
+            tvPurpose.text = item.purpose.replace("_", " ").capitalizeWords
+            tvStatus.text = item.status.capitalizeWords
             tvStatus.setBackgroundRoundedColor(item.statusColor)
         }
     }
