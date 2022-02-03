@@ -89,7 +89,7 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
                 binding.etFirstName.text.toString(),
                 binding.etLastName.text.toString(),
                 binding.etPhone.text.toString(),
-                "PK",
+                binding.ccpPhoneCode.selectedCountryNameCode,
                 accountSettingViewModel.uploadedFilePath
             )
         }
