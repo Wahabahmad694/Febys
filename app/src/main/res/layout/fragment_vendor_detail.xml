@@ -137,13 +137,13 @@
                                 android:id="@+id/container_rating"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginHorizontal="@dimen/_5sdp"
-                                android:layout_weight="1"
+                                android:layout_marginStart="@dimen/_2sdp"
                                 android:gravity="center"
+                                android:maxLines="1"
                                 android:orientation="horizontal"
                                 app:layout_constraintBottom_toTopOf="@id/address"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toEndOf="@id/separator_50"
+                                app:layout_constraintStart_toStartOf="@id/separator_50"
                                 app:layout_constraintTop_toTopOf="parent"
                                 app:layout_constraintVertical_chainStyle="packed">
 
@@ -172,7 +172,7 @@
                                 style="@style/TextTheme.Arial.TS14"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginHorizontal="@dimen/_12sdp"
+                                android:layout_marginHorizontal="@dimen/_3sdp"
                                 android:layout_marginTop="@dimen/_4sdp"
                                 android:ellipsize="end"
                                 android:maxLines="1"
@@ -257,7 +257,6 @@
                     android:id="@+id/rv_reviews"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8sdp"
                     android:paddingHorizontal="@dimen/_16sdp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_reviews" />

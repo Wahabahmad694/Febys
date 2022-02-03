@@ -36,7 +36,7 @@ class CheckoutFragment : BaseFragment() {
     private var voucher = ""
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View {
         binding = FragmentCheckoutBinding.inflate(inflater, container, false)
         return binding.root
@@ -196,7 +196,7 @@ class CheckoutFragment : BaseFragment() {
     }
 
     private fun addProductToOrderSummary(
-        productName: String, quantity: Int, price: Price, hideQuantity: Boolean = false
+        productName: String, quantity: Int, price: Price, hideQuantity: Boolean = false,
     ) {
         val productSummary = LayoutOrderSummaryProductBinding.inflate(
             layoutInflater,
@@ -279,12 +279,15 @@ class CheckoutFragment : BaseFragment() {
                 when (it) {
                     is DataState.Loading -> {
                         showOrderPlacingUi()
+                        showLoader()
                     }
                     is DataState.Error -> {
                         hideOrderPlacingUi()
+                        hideLoader()
                         ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
                     }
                     is DataState.Data -> {
+                        hideLoader()
                         if (it.data == null) return@observe
                         binding.tvPlacingOrder.isVisible = false
                         val toCheckoutSuccess = CheckoutFragmentDirections

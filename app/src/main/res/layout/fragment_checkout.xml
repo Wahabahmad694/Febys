@@ -179,7 +179,6 @@
                 android:id="@+id/tv_placing_order"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/placing_order"
                 style="@style/TextTheme.HelveticaNeue.TS32.Bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
