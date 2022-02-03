@@ -53,13 +53,13 @@ class TransactionPagerAdapter :
             }
 
             transactionId.text = item._id
-            tvSource.text = item.source
+            tvSource.text = item.source.capitalize()
             tvDateTime.text =
                 Utils.DateTime.formatDate(item.createdAt, FORMAT_MONTH_DATE_YEAR_HOUR_MIN)
             tvAmount.text =
                 Price("", item.requestedAmount, item.requestedCurrency).getFormattedPrice()
             tvPurpose.text = item.purpose.replace("_", " ")
-            tvStatus.text = item.status.capitalize().substringBefore("_")
+            tvStatus.text = item.status.capitalize()
             tvStatus.setBackgroundRoundedColor(item.statusColor)
         }
     }

@@ -38,6 +38,10 @@ class FebysPlusFragment : BaseFragment() {
     private fun initUi() {
         binding.rvFebysPlus.adapter = febysPackageAdapter
         binding.rvFebysPlus.isNestedScrollingEnabled = false
+
+        febysPackageAdapter.onItemClick = {
+          //todo nothing
+        }
     }
 
     private fun setObserver() {

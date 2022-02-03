@@ -220,7 +220,6 @@
                         android:layout_marginEnd="@dimen/_4dp"
                         android:layout_marginStart="@dimen/_18sdp"
                         app:ccpDialog_keyboardAutoPopup="false"
-                        android:enabled="false"
                         app:ccp_arrowColor="@color/black"
                         app:ccp_contentColor="@color/black"
                         app:ccp_hintExampleNumber="true"
