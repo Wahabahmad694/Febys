@@ -30,7 +30,6 @@ import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.ui.screens.product.additional.AdditionalProductAdapter
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 
 @AndroidEntryPoint
 class ProductDetailFragment : SliderFragment() {
@@ -616,6 +615,7 @@ class ProductDetailFragment : SliderFragment() {
                     layoutInflater, binding.containerReviews, false
                 )
 
+                reviewBinding.userImage.load(item.consumer.profileImage)
                 reviewBinding.userName.text = item.consumer.fullName
                 reviewBinding.userRatingBar.rating = item.score.toFloat()
                 reviewBinding.userRatingBar.stepSize = 0.5f
