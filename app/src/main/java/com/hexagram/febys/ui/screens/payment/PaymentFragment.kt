@@ -296,6 +296,7 @@ class PaymentFragment : BasePaymentFragment() {
         binding.containerRemainingPayment.isVisible = paymentViewModel.isSplitMode
         if (paymentViewModel.isSplitMode) {
             markAsSelected(binding.containerWalletPayment, binding.walletFilledTick)
+            binding.walletFilledTick.isVisible = false
 
             val remainingPrice = paymentViewModel.getRemainingPriceForSplit().getFormattedPrice()
             val remainingPriceMsg =

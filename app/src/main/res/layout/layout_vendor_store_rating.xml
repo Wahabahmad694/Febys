@@ -11,13 +11,13 @@
         android:id="@+id/scroll_view_home"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:paddingBottom="@dimen/_20sdp">
+        android:clipToPadding="false">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="@dimen/_16sdp">
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginHorizontal="@dimen/_16sdp">
 
             <TextView
                 android:id="@+id/average_rating"
@@ -32,7 +32,7 @@
                 android:id="@+id/tv_average_rating"
                 style="@style/TextTheme.HelveticaNeue.TS16.Bold"
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
+                android:layout_height="23dp"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_marginEnd="@dimen/_18sdp"
                 app:layout_constraintBottom_toBottomOf="@id/average_rating"

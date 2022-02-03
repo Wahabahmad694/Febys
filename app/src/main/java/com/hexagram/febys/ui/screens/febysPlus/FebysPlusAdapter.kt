@@ -28,6 +28,8 @@ class FebysPlusAdapter() :
         return packages.size
     }
 
+    var onItemClick: ((packages: Package) -> Unit)? = null
+
     fun submitList(febysPackage: List<Package>) {
         this.packages = febysPackage
         notifyItemRangeChanged(0, packages.size)
@@ -45,6 +47,9 @@ class FebysPlusAdapter() :
             tvPrice.text = febysPackage.price.getFormattedPrice()
             tvFeature.text = febysPackage.features.joinToString(",") { it.title }
 
+            root.setOnClickListener {
+                onItemClick?.invoke((febysPackage))
+            }
             if (febysPackage.selected) {
                 // show selected ui
                 markAsSelected(binding.containerBasicFreeDelivery)

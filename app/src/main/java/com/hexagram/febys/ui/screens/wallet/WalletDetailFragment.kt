@@ -102,18 +102,18 @@ class WalletDetailFragment : BaseFragment() {
         binding.btnTopUp.setOnClickListener {
             val resId = R.drawable.ic_coming_soon
             val title = getString(R.string.label_coming_soon)
-            val msg = getString(R.string.msg_for_coming_soon)
+            val msg = getString(R.string.msg_for_top_up)
 
-            showWarningDialog(resId, title, msg) {
+            showInfoDialoge(resId, title, msg) {
                 //todo top-up
             }
         }
         binding.btnWithDraw.setOnClickListener {
             val resId = R.drawable.ic_coming_soon
             val title = getString(R.string.label_coming_soon)
-            val msg = getString(R.string.msg_for_coming_soon)
+            val msg = getString(R.string.msg_for_withdraw)
 
-            showWarningDialog(resId, title, msg) {
+            showInfoDialoge(resId, title, msg) {
                 //todo withdraw amount
             }
         }

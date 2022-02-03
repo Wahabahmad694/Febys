@@ -85,7 +85,7 @@
     <string name="label_get_inspired">Get Inspired</string>
     <string name="label_empty_wish_list_slogan">But not for long! Tap ♡ to start saving you favorite pieces</string>
     <string name="label_connection_error">Connection Error</string>
-    <string name="okay">Okay</string>
+    <string name="okay">OK</string>
     <string name="label_try_again">Try Again</string>
     <string name="label_no_internet">There\'s a problem with your network connection. Please check your connection</string>
     <string name="label_check_your_email">Check Your Email</string>
@@ -222,6 +222,7 @@
     <string name="label_vat_percentage">Vat %</string>
     <string name="label_vat">Vat</string>
     <string name="msg_thank_you_for_purchase">Thank You For Your Purchase</string>
+    <string name="msg_thank_you">Thank You</string>
     <string name="msg_success_order">Your Order has been placed! We will email you on order confirmation with details and tracking number once your order has been successfully processed</string>
     <string name="label_order_id">Order ID:</string>
     <string name="label_where_to_find_me">Where to find me</string>
@@ -297,14 +298,13 @@
     <string name="label_empty_view">No %1s found</string>
     <string name="label_person_name">Hi %1s</string>
     <string name="label_delete_warning">Are You Sure?</string>
-    <string name="label_coming_soon">Coming Soon</string>
     <string name="msg_for_delete_item_bag">Do you want to delete this item from bag?</string>
     <string name="msg_for_download_pdf">You want to download the PDF.</string>
     <string name="msg_for_unfollow_vendor">Do you want to unfollow this vendor?</string>
     <string name="msg_for_unfollow_celebrity">Do you want to unfollow this celebrity?</string>
     <string name="msg_for_delete_shipping_address">Do you want to delete this shipping address?</string>
-    <string name="msg_for_withdraw">Do you want to withdraw amount?</string>
-    <string name="msg_for_coming_soon">This feature is under progress</string>
+    <string name="msg_for_withdraw">Withdraw feature is coming soon</string>
+    <string name="msg_for_top_up">Top-Up feature is coming soon</string>
     <string name="label_add_seller_feedback">Add Seller Feedback</string>
     <string name="label_price">Price</string>
     <string name="label_value">Value</string>
@@ -326,9 +326,12 @@
     <string name="label_current_balance">Current balance</string>
     <string name="label_withdraw">Withdraw</string>
     <string name="label_topUp">Top-Up</string>
+    <string name="label_profile_is_updated">Your profile has been updated Successfully</string>
+    <string name="label_review_is_updated">Your review has been updated Successfully</string>
+    <string name="label_coming_soon">Coming Soon</string>
     <string name="label_transactions_history">Transactions History</string>
     <string name="label_transaction_id">Transaction ID:</string>
-    <string name="label_amount">Amount:</string>
+    <string name="label_amount">Amount</string>
     <string name="label_date_amp_time"><![CDATA[Date & Time:]]></string>
     <string name="label_purpose">Purpose:</string>
     <string name="insufficient_wallet_balance">Insufficient Wallet Balance</string>
@@ -339,8 +342,8 @@
     <string name="permission_denied">Permission denied</string>
     <string name="label_chose_option">Choose an Option</string>
     <string name="label_oops">Oops!</string>
-    <string name="label_source">Source:</string>
-    <string name="label_status">Status:</string>
+    <string name="label_source">Source</string>
+    <string name="label_status">Status</string>
     <string name="label_please_choose_following_one_of_them">Please choose following one of them</string>
     <string name="label_choose_payment_for_remaining">Choose Payment for remaining <b>%1s</b></string>
     <string name="please_select_a_payment_method">Please select a payment method</string>
@@ -357,5 +360,6 @@
     <string name="add_voucher">Add Voucher</string>
     <string name="label_add">Add</string>
     <string name="toast_enter_voucher_code">Please enter voucher code</string>
+    <string name="label_new_in">New In</string>
 
 </resources>

@@ -15,7 +15,7 @@ object Utils {
 
     object DateTime {
         const val FORMAT_ISO = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-        const val FORMAT_MONTH_DATE_YEAR = "MMMM dd, yyyy"
+        const val FORMAT_MONTH_DATE_YEAR = "MMM dd, yyyy"
         const val FORMAT_MONTH_DATE_YEAR_HOUR_MIN = "MMM dd, yyyy-hh:mm"
 
         const val MIN_30_IN_MILLI = 30 * 60 * 1000

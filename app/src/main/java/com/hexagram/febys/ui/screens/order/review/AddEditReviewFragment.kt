@@ -32,7 +32,7 @@ class AddEditReviewFragment : BaseFragment() {
         const val REQ_KEY_REFRESH = "reqKeyRefresh"
     }
 
-    private lateinit var binding: com.hexagram.febys.databinding.FragmentAddEditReviewBinding
+    private lateinit var binding: FragmentAddEditReviewBinding
     private val orderViewModel by viewModels<OrderViewModel>()
     private val args by navArgs<AddEditReviewFragmentArgs>()
 
@@ -128,15 +128,22 @@ class AddEditReviewFragment : BaseFragment() {
                 }
                 is DataState.Data -> {
                     hideLoader()
-                    showToast("Review Posted")
                     updateFieldAndReviewsAdapter(false)
                     setFragmentResult(
                         REQ_KEY_REFRESH,
                         bundleOf(REQ_KEY_REFRESH to true)
                     )
+                    showSuccessDialog()
                 }
             }
         }
+    }
+
+    private fun showSuccessDialog() {
+        val resId = R.drawable.ic_thanks_info
+        val title = getString(R.string.msg_thank_you)
+        val msg = getString(R.string.label_review_is_updated)
+        showInfoDialoge(resId, title, msg) { goBack() }
     }
 
     private fun updateUi(orderReview: OrderReview) {
