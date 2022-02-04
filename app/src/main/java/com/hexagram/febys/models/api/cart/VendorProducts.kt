@@ -1,6 +1,7 @@
 package com.hexagram.febys.models.api.cart
 
 import android.os.Parcelable
+import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import com.hexagram.febys.models.api.price.Price
 import com.hexagram.febys.models.api.rating.VendorReview
@@ -24,4 +25,9 @@ data class VendorProducts(
     val revertDetails: RevertedDetail?,
     @SerializedName("rating_and_review")
     val ratingAndReview: VendorReview?
-) : Parcelable
+) : Parcelable {
+    fun deepCopy(): VendorProducts {
+        val json = Gson().toJson(this)
+        return Gson().fromJson(json, VendorProducts::class.java)
+    }
+}

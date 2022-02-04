@@ -148,6 +148,7 @@
     <string name="label_my_orders">My Orders</string>
     <string name="label_orders_status">Order Status</string>
     <string name="label_order_detail">Order Details</string>
+    <string name="label_return_order">Return Order</string>
     <string name="label_return_orders">Return Orders</string>
     <string name="label_cancel_orders">Cancel Orders</string>
     <string name="label_cancel">Cancel</string>
@@ -356,6 +357,10 @@
     <string name="placing_order">Placing Order…</string>
     <string name="add_voucher">Add Voucher</string>
     <string name="label_add">Add</string>
+    <string name="label_store_name">Store Name</string>
+    <string name="label_address">Address</string>
+    <string name="label_country">Country</string>
+    <string name="label_zip_code">Zip Code</string>
     <string name="toast_enter_voucher_code">Please enter voucher code</string>
 
 </resources>

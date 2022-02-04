@@ -63,6 +63,9 @@ class OrderDetailFragment : BaseFragment() {
     private fun uiListener() {
         binding.ivBack.setOnClickListener { goBack() }
 
+        orderDetailVendorProductAdapter.onReturnItemClick = { vendorProduct: VendorProducts ->
+            gotoReturnOrder(vendorProduct)
+        }
         orderDetailVendorProductAdapter.onCancelOrderClick = { vendorId ->
             gotoCancelOrder(args.orderId, vendorId)
         }
@@ -88,6 +91,12 @@ class OrderDetailFragment : BaseFragment() {
                 orderViewModel.fetchOrder(args.orderId)
             }
         }
+    }
+
+    private fun gotoReturnOrder(vendorProduct: VendorProducts) {
+        val actionToReturnFragment = OrderDetailFragmentDirections
+            .actionOrderDetailFragmentToReturnOrderFragment(arrayOf(vendorProduct))
+        navigateTo(actionToReturnFragment)
     }
 
     private fun gotoCancelOrder(orderId: String, vendorId: String) {

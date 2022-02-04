@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hexagram.febys.R
 import com.hexagram.febys.databinding.ItemOrderDetailVendorForReviewBinding
 import com.hexagram.febys.databinding.ItemOrderDetailVendorsBinding
+import com.hexagram.febys.models.api.cart.CartProduct
 import com.hexagram.febys.models.api.cart.VendorProducts
 import com.hexagram.febys.utils.OrderStatus
 import com.hexagram.febys.utils.applySpaceItemDecoration
@@ -15,11 +16,13 @@ import com.hexagram.febys.utils.setBackgroundRoundedColor
 
 class OrderDetailVendorProductAdapter : RecyclerView.Adapter<IBindViewHolder>() {
     private var vendors = listOf<VendorProducts>()
+    var onReturnItemClick: ((vendorProduct: VendorProducts) -> Unit)? = null
     var onCancelOrderClick: ((vendorId: String) -> Unit)? = null
     var onAddReviewClick: ((vendorProducts: VendorProducts) -> Unit)? = null
     var onItemClick: ((vendorProducts: VendorProducts) -> Unit)? = null
     private var cancelableOrder: Boolean = true
     private var review: Boolean = false
+    private var selectedVendorProduct: Pair<CartProduct, VendorProducts>? = null
 
     inner class ReviewVH(
         private val binding: ItemOrderDetailVendorForReviewBinding
@@ -57,11 +60,6 @@ class OrderDetailVendorProductAdapter : RecyclerView.Adapter<IBindViewHolder>() 
             vendorType.text = vendor.role.name
             vendorImg.load(vendor.businessInfo.logo)
 
-            val orderDetailProductAdapter = OrderDetailProductAdapter()
-            rvOrderDetailProducts.applySpaceItemDecoration(R.dimen._16sdp)
-            rvOrderDetailProducts.adapter = orderDetailProductAdapter
-            orderDetailProductAdapter.submitList(vendorProducts.products)
-
             orderStatus.text = OrderStatus.getStatusForDisplay(vendorProducts.status)
             val color = OrderStatus.getStatusColor(vendorProducts.status)
             orderStatus.setBackgroundRoundedColor(color)
@@ -87,9 +85,36 @@ class OrderDetailVendorProductAdapter : RecyclerView.Adapter<IBindViewHolder>() 
             btnAddReview.isVisible =
                 !vendorProducts.hasReviewed && vendorProducts.status in arrayOf(OrderStatus.DELIVERED)
 
-            btnReturnItems.isVisible =
+            val showReturnBtn =
                 vendorProducts.status in arrayOf(OrderStatus.DELIVERED) && !reverted
+            btnReturnItems.isVisible = showReturnBtn
+            btnReturnItems.isEnabled = selectedVendorProduct != null
 
+            val orderDetailProductAdapter = OrderDetailProductAdapter(
+                showReturnBtn, selectedVendorProduct?.first?.product?.variants?.firstOrNull()?.skuId
+            )
+            rvOrderDetailProducts.applySpaceItemDecoration(R.dimen._16sdp)
+            rvOrderDetailProducts.adapter = orderDetailProductAdapter
+            orderDetailProductAdapter.submitList(vendorProducts.products)
+            orderDetailProductAdapter.onSelectClick = {
+                val currentSelected = it to vendorProducts
+                val isAlreadySelected =
+                    currentSelected.first.product.variants.firstOrNull()?.skuId ==
+                            selectedVendorProduct?.first?.product?.variants?.firstOrNull()?.skuId
+                selectedVendorProduct = if (isAlreadySelected) null else currentSelected
+                notifyItemChanged(position)
+            }
+
+            btnReturnItems.setOnClickListener {
+                if (selectedVendorProduct == null) return@setOnClickListener
+                // remove all other products
+                val vendorProduct = selectedVendorProduct!!.second.deepCopy()
+                vendorProduct.products.removeAll {
+                    it.product.variants.firstOrNull()?.skuId !=
+                            selectedVendorProduct?.first?.product?.variants?.firstOrNull()?.skuId
+                }
+                onReturnItemClick?.invoke(vendorProduct)
+            }
             btnCancelOrder.setOnClickListener { onCancelOrderClick?.invoke(vendor._id) }
             btnAddReview.setOnClickListener { onAddReviewClick?.invoke(vendorProducts) }
         }

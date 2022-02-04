@@ -100,6 +100,16 @@ class AccountFragment : BaseFragment() {
             )
         }
 
+        binding.orders.returnOrders.setOnClickListener {
+            gotoOrderListing(
+                arrayOf(
+                    OrderStatus.RETURNED,
+                    OrderStatus.PENDING_RETURN
+                ),
+                getString(R.string.label_return_orders)
+            )
+        }
+
         binding.orders.wishlist.setOnClickListener {
             val navigateToWishlist =
                 AccountFragmentDirections.actionAccountFragmentToWishListFragment()
@@ -122,19 +132,23 @@ class AccountFragment : BaseFragment() {
             navigateTo(goToAccountSettings)
         }
         binding.support.aboutFebys.setOnClickListener {
-            val goToAboutFebys = NavGraphDirections.toWebViewFragment("","https://www.facebook.com/")
+            val goToAboutFebys =
+                NavGraphDirections.toWebViewFragment("", "https://www.facebook.com/")
             navigateTo(goToAboutFebys)
         }
         binding.support.helpCenter.setOnClickListener {
-            val goToHelpCenter = NavGraphDirections.toWebViewFragment("","https://www.facebook.com/")
+            val goToHelpCenter =
+                NavGraphDirections.toWebViewFragment("", "https://www.facebook.com/")
             navigateTo(goToHelpCenter)
         }
         binding.support.privacyPolicy.setOnClickListener {
-            val goToPrivacyPolicy = NavGraphDirections.toWebViewFragment("","https://www.facebook.com/")
+            val goToPrivacyPolicy =
+                NavGraphDirections.toWebViewFragment("", "https://www.facebook.com/")
             navigateTo(goToPrivacyPolicy)
         }
         binding.support.termsAndConditions.setOnClickListener {
-            val goToTermsAndConditions = NavGraphDirections.toWebViewFragment("","https://www.facebook.com/")
+            val goToTermsAndConditions =
+                NavGraphDirections.toWebViewFragment("", "https://www.facebook.com/")
             navigateTo(goToTermsAndConditions)
         }
     }

@@ -8,9 +8,13 @@ import com.hexagram.febys.databinding.ItemOrderDetailProductForReviewBinding
 import com.hexagram.febys.databinding.ItemOrderDetailProductsBinding
 import com.hexagram.febys.models.api.cart.CartProduct
 
-class OrderDetailProductAdapter : RecyclerView.Adapter<IBindViewHolder>() {
+class OrderDetailProductAdapter constructor(
+    private val showSelectedBtn: Boolean = false,
+    private val selectedSkuId: String? = null,
+) : RecyclerView.Adapter<IBindViewHolder>() {
     private var products = listOf<CartProduct>()
     var onItemClick: (() -> Unit)? = null
+    var onSelectClick: ((skuId: CartProduct) -> Unit)? = null
     private var review: Boolean = false
 
     inner class VH(
@@ -20,6 +24,9 @@ class OrderDetailProductAdapter : RecyclerView.Adapter<IBindViewHolder>() {
             val cartProduct = products[position]
             quantity = cartProduct.quantity
             product = cartProduct.product
+            isSelected = cartProduct.product.variants.firstOrNull()?.skuId == selectedSkuId
+            ivIsSelected.isVisible = showSelectedBtn
+            if (showSelectedBtn) root.setOnClickListener { onSelectClick?.invoke(cartProduct) }
         }
     }
 
