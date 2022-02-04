@@ -4,13 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.hexagram.febys.R
 import com.hexagram.febys.databinding.FragmentReturnOrderBinding
+import com.hexagram.febys.ui.screens.list.selection.ListSelectionAdapter
 import com.hexagram.febys.ui.screens.order.OrderViewModel
 import com.hexagram.febys.utils.applySpaceItemDecoration
+import com.hexagram.febys.utils.fadeVisibility
 import com.hexagram.febys.utils.goBack
+import com.hexagram.febys.utils.onStateChange
 import com.paypal.pyplcheckout.home.view.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -20,6 +27,8 @@ class ReturnOrderFragment : BaseFragment() {
     private val orderViewModel: OrderViewModel by viewModels()
     private val args: ReturnOrderFragmentArgs by navArgs()
     private val returnOrderVendorProductAdapter = ReturnOrderVendorProductAdapter()
+    private val returnReasonsAdapter = ListSelectionAdapter()
+    private val returnReasonsBottomSheet get() = BottomSheetBehavior.from(binding.bottomSheetReturnReasons.root)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -33,9 +42,20 @@ class ReturnOrderFragment : BaseFragment() {
 
         initUi()
         uiListener()
+        setObservers()
     }
 
     private fun initUi() {
+        closeBottomSheet(returnReasonsBottomSheet)
+
+        binding.bottomSheetReturnReasons.rvSelectionList.apply {
+            setHasFixedSize(true)
+            adapter = returnReasonsAdapter
+            addItemDecoration(
+                DividerItemDecoration(context, (layoutManager as LinearLayoutManager).orientation)
+            )
+        }
+
         binding.rvVendorWithProducts.isNestedScrollingEnabled = false
         binding.rvVendorWithProducts.adapter = returnOrderVendorProductAdapter
         binding.rvVendorWithProducts.applySpaceItemDecoration(R.dimen._16sdp)
@@ -44,5 +64,60 @@ class ReturnOrderFragment : BaseFragment() {
 
     private fun uiListener() {
         binding.ivBack.setOnClickListener { goBack() }
+
+        binding.bottomSheetReturnReasons.btnClose.setOnClickListener {
+            closeBottomSheet(returnReasonsBottomSheet)
+        }
+        binding.containerReason.setOnClickListener {
+            showBottomSheet(returnReasonsBottomSheet)
+        }
+        returnReasonsBottomSheet.onStateChange { state ->
+            onBottomSheetStateChange(state)
+        }
+
+        returnReasonsAdapter.interaction = { selectedItem ->
+            updateReturnReason(selectedItem)
+            closeBottomSheet(returnReasonsBottomSheet)
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            closeBottomsSheetElseGoBack()
+        }
+    }
+
+    private fun setObservers() {
+        val reasons = listOf("1", "2", "3")
+        returnReasonsAdapter.submitList(reasons)
+        updateReturnReason(reasons.firstOrNull())
+    }
+
+    private fun updateReturnReason(reason: String?) {
+        binding.tvReason.text = reason
+    }
+
+    private fun showBottomSheet(bottomSheet: BottomSheetBehavior<View>) {
+        binding.bgDim.fadeVisibility(true)
+        bottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
+    }
+
+    private fun closeBottomSheet(bottomSheet: BottomSheetBehavior<View>) {
+        binding.bgDim.fadeVisibility(false)
+        bottomSheet.state = BottomSheetBehavior.STATE_HIDDEN
+    }
+
+    private fun onBottomSheetStateChange(state: Int) {
+        val isClosed = state == BottomSheetBehavior.STATE_HIDDEN
+        if (isClosed) {
+            binding.bgDim.fadeVisibility(false, 200)
+        }
+    }
+
+    private fun closeBottomsSheetElseGoBack() {
+        if (returnReasonsBottomSheet.state != BottomSheetBehavior.STATE_HIDDEN) {
+            closeBottomSheet(returnReasonsBottomSheet)
+            return
+        }
+
+        goBack()
     }
 }
