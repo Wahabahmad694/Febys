@@ -48,7 +48,10 @@ class FebysPlusAdapter() :
             tvFeature.text = febysPackage.features.joinToString(",") { it.title }
 
             root.setOnClickListener {
-                onItemClick?.invoke((febysPackage))
+                onItemClick?.invoke(febysPackage)
+                packages.forEach { it.selected = false }
+                packages[position].selected = true
+                notifyDataSetChanged()
             }
             if (febysPackage.selected) {
                 // show selected ui
@@ -59,23 +62,15 @@ class FebysPlusAdapter() :
                 markAsNotSelected(binding.containerBasicFreeDelivery)
 //                ContextCompat.getDrawable(context, R.drawable.bg_border_dark_grey)
             }
-
-            containerBasicFreeDelivery.setOnClickListener {
-                packages.map {
-                    it.selected = false
-                    it
-                }
-                packages[position].selected = true
-                notifyDataSetChanged()
-            }
         }
     }
 
-     fun markAsNotSelected(backgroundView: View) {
-                backgroundView.background =
+    fun markAsNotSelected(backgroundView: View) {
+        backgroundView.background =
             ContextCompat.getDrawable(backgroundView.context, R.drawable.bg_border_dark_grey)
     }
-     fun markAsSelected(backgroundView: View) {
+
+    fun markAsSelected(backgroundView: View) {
         backgroundView.background =
             ContextCompat.getDrawable(backgroundView.context, R.drawable.bg_border_dark_red)
     }

@@ -35,7 +35,9 @@
         app:exitAnim="@anim/slide_out_left"
         app:popEnterAnim="@anim/slide_in_right"
         app:popExitAnim="@anim/slide_out_right" />
-
+    <action
+        android:id="@+id/to_paymentFragment"
+        app:destination="@id/paymentFragment" />
 
     <action
         android:id="@+id/to_product_filter_fragment"
@@ -483,9 +485,6 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
-        <action
-            android:id="@+id/action_checkoutFragment_to_paymentFragment"
-            app:destination="@id/paymentFragment" />
         <action
             android:id="@+id/action_checkoutFragment_to_checkoutSuccessFragment"
             app:destination="@id/checkoutSuccessFragment"

@@ -5,13 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentFebysPlusBinding
 import com.hexagram.febys.models.api.febysPlusPackage.Package
+import com.hexagram.febys.models.api.request.PaymentRequest
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.utils.goBack
 import com.hexagram.febys.utils.hideLoader
+import com.hexagram.febys.utils.navigateTo
 import com.hexagram.febys.utils.showLoader
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -40,7 +43,9 @@ class FebysPlusFragment : BaseFragment() {
         binding.rvFebysPlus.isNestedScrollingEnabled = false
 
         febysPackageAdapter.onItemClick = {
-          //todo nothing
+            val paymentRequest = PaymentRequest(it.price.value, it.price.currency, "SUBSCRIPTION_PURCHASED")
+            val gotoPayment = NavGraphDirections.toPaymentFragment(paymentRequest)
+            navigateTo(gotoPayment)
         }
     }
 
@@ -65,6 +70,7 @@ class FebysPlusFragment : BaseFragment() {
     private fun updateUi(febysPackage: List<Package>) {
         febysPackageAdapter.submitList(febysPackage)
     }
+
     private fun uiListener() {
         binding.ivBack.setOnClickListener { goBack() }
 
