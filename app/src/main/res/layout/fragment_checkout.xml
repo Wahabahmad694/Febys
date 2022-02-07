@@ -126,7 +126,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_120sdp"
             android:background="@color/white"
-            android:elevation="16dp"
+            android:elevation="@dimen/_12sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
@@ -171,7 +171,7 @@
             android:id="@+id/container_placing_order"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:elevation="@dimen/_16dp"
+            android:elevation="@dimen/_16sdp"
             android:visibility="gone"
             android:background="@color/white">
 
@@ -179,7 +179,6 @@
                 android:id="@+id/tv_placing_order"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/placing_order"
                 style="@style/TextTheme.HelveticaNeue.TS32.Bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

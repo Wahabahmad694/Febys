@@ -138,7 +138,11 @@ fun Fragment.showWarningDialog(
 ) {
     WarningDialog(resId, title, msg) { onOkayClick() }.show(childFragmentManager, InfoDialog.TAG)
 }
-
+fun Fragment.showInfoDialoge(
+    @DrawableRes resId: Int, title: String, msg: String, onOkayClick: () -> Unit
+) {
+    InfoDialog(resId, title, msg) { onOkayClick() }.show(childFragmentManager, InfoDialog.TAG)
+}
 fun RecyclerView.applySpaceItemDecoration(
     @DimenRes verticalDimenRes: Int? = null,
     @DimenRes horizontalDimenRes: Int? = null
@@ -219,6 +223,9 @@ fun TextView.showHtml(html: String) {
         Html.fromHtml(html, Html.FROM_HTML_MODE_COMPACT)
     this.setText(spannedText, TextView.BufferType.SPANNABLE)
 }
+
+val String.capitalizeWords
+    get() = this.lowercase().split(" ").joinToString(" ") { it.capitalize() }
 
 fun String.capitalize(): String {
     var capitalizeString = ""

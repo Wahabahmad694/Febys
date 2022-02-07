@@ -1,5 +1,8 @@
 package com.hexagram.febys.network
 
+import com.hexagram.febys.models.api.febysPlusPackage.Package
+import com.hexagram.febys.models.api.vouchers.Voucher
+
 sealed class DataState<T> {
     class Loading<T> : DataState<T>()
 

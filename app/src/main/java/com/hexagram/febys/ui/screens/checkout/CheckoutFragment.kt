@@ -36,7 +36,7 @@ class CheckoutFragment : BaseFragment() {
     private var voucher = ""
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View {
         binding = FragmentCheckoutBinding.inflate(inflater, container, false)
         return binding.root
@@ -126,6 +126,8 @@ class CheckoutFragment : BaseFragment() {
                 .getParcelableArrayList<Transaction>(BasePaymentFragment.TRANSACTIONS)?.toList()
 
             if (!transactions.isNullOrEmpty()) {
+                showOrderPlacingUi()
+                showLoader()
                 checkoutViewModel.cancelAllRunningJobs()
                 placeOrder(transactions)
             }
@@ -196,7 +198,7 @@ class CheckoutFragment : BaseFragment() {
     }
 
     private fun addProductToOrderSummary(
-        productName: String, quantity: Int, price: Price, hideQuantity: Boolean = false
+        productName: String, quantity: Int, price: Price, hideQuantity: Boolean = false,
     ) {
         val productSummary = LayoutOrderSummaryProductBinding.inflate(
             layoutInflater,
@@ -219,7 +221,7 @@ class CheckoutFragment : BaseFragment() {
         )
 
         val vatLabel = getString(R.string.label_vat)
-        val vatWithPercentage = "$vatLabel $vatPercentage%"
+        val vatWithPercentage = "$vatLabel ($vatPercentage%)"
         productSummary.tvProductNameWithQuantity.text = vatWithPercentage
 
         val vatAmount =
@@ -271,7 +273,6 @@ class CheckoutFragment : BaseFragment() {
     }
 
     private fun placeOrder(transactions: List<Transaction>) {
-        hideLoader()
         val vendorMessages = cartAdapter.getVendorMessages()
         checkoutViewModel
             .placeOrder(transactions, voucher, vendorMessages)
@@ -279,12 +280,15 @@ class CheckoutFragment : BaseFragment() {
                 when (it) {
                     is DataState.Loading -> {
                         showOrderPlacingUi()
+                        showLoader()
                     }
                     is DataState.Error -> {
                         hideOrderPlacingUi()
+                        hideLoader()
                         ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
                     }
                     is DataState.Data -> {
+                        hideLoader()
                         if (it.data == null) return@observe
                         binding.tvPlacingOrder.isVisible = false
                         val toCheckoutSuccess = CheckoutFragmentDirections

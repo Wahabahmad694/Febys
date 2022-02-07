@@ -25,6 +25,7 @@ import javax.inject.Inject
 class PaymentViewModel @Inject constructor(
     private val paymentRepo: IPaymentRepo
 ) : BaseViewModel() {
+    var isWalletEnable: Boolean = true
     var paymentMethod: PaymentMethod? = null
     lateinit var paymentRequest: PaymentRequest
     private lateinit var wallet: Wallet

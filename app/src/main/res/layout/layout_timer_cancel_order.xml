@@ -16,7 +16,7 @@
 
         <TextView
             android:id="@+id/label_remaining_time"
-            style="@style/TextTheme.Arial.TS12"
+            style="@style/TextTheme.Arial.TS12.Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -44,7 +44,7 @@
 
             <TextView
                 android:id="@+id/tv_time"
-                style="@style/TextTheme.HelveticaNeue.TS14"
+                style="@style/TextTheme.HelveticaNeue.TS14.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_6sdp"

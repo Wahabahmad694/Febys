@@ -11,6 +11,7 @@ import com.hexagram.febys.R
 import com.hexagram.febys.databinding.ItemCartBinding
 import com.hexagram.febys.models.api.vendor.VendorMessage
 import com.hexagram.febys.models.db.CartDTO
+import com.hexagram.febys.utils.applyToViews
 
 class CartAdapter(private val isInCheckout: Boolean = false) :
     ListAdapter<CartDTO, CartAdapter.CartViewHolder>(DIFF_UTIL) {
@@ -70,6 +71,7 @@ class CartAdapter(private val isInCheckout: Boolean = false) :
                     interaction?.openProductDetail(cartDTO)
                 }
 
+                isInCheckout.not().applyToViews(ivFavToggle, tvFav)
                 val isFav = cartDTO.skuId in fav
                 if (isFav) {
                     ivFavToggle.setImageResource(R.drawable.ic_fav)

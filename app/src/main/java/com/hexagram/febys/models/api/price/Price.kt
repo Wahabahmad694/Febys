@@ -1,12 +1,12 @@
 package com.hexagram.febys.models.api.price
 
-import android.icu.text.CompactDecimalFormat
 import android.icu.text.NumberFormat
 import android.icu.util.Currency
 import android.icu.util.CurrencyAmount
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import java.util.*
+
 
 @Parcelize
 data class Price(
@@ -25,9 +25,7 @@ data class Price(
     private fun formatPrice(value: Double): String {
         if (currency.isEmpty()) return value.toString()
 
-        val format: NumberFormat = if (value < 1000) NumberFormat.getCurrencyInstance()
-        else CompactDecimalFormat
-            .getInstance(Locale.getDefault(), CompactDecimalFormat.CompactStyle.SHORT)
+        val format = NumberFormat.getCurrencyInstance(Locale.getDefault())
         format.maximumFractionDigits = 2
         val currency = Currency.getInstance(currency)
         val currencyAmount = CurrencyAmount(value, currency)

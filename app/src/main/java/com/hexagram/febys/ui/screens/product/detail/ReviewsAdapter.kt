@@ -8,6 +8,7 @@ import com.hexagram.febys.R
 import com.hexagram.febys.databinding.ItemReviewsBinding
 import com.hexagram.febys.models.api.product.RatingAndReviews
 import com.hexagram.febys.utils.Utils
+import com.hexagram.febys.utils.load
 import com.hexagram.febys.utils.setDrawableRes
 
 class ReviewsAdapter : RecyclerView.Adapter<ReviewsAdapter.ReviewVH>() {
@@ -20,10 +21,11 @@ class ReviewsAdapter : RecyclerView.Adapter<ReviewsAdapter.ReviewVH>() {
     var downVote: ((ratingAndReviews: RatingAndReviews, isRevoke: Boolean) -> Unit)? = null
 
     inner class ReviewVH(
-        private val binding: ItemReviewsBinding
+        private val binding: ItemReviewsBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: RatingAndReviews) = binding.apply {
-            userName.text = item.consumer.firstName
+            userImage.load(item.consumer.profileImage)
+            userName.text = item.consumer.fullName
             tvReview.text = item.review.comment
             date.text =
                 Utils.DateTime.formatDate(item.createdAt, Utils.DateTime.FORMAT_MONTH_DATE_YEAR)
@@ -36,7 +38,7 @@ class ReviewsAdapter : RecyclerView.Adapter<ReviewsAdapter.ReviewVH>() {
         }
 
         private fun setupReviewVotes(item: RatingAndReviews) {
-          binding.apply {
+            binding.apply {
                 voteUp.text = item.upVotes.size.toString()
                 voteDown.text = item.downVotes.size.toString()
 

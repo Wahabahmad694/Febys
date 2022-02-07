@@ -144,29 +144,28 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/iv_minus"
-                    android:layout_width="@dimen/_7sdp"
+                    android:layout_width="@dimen/_9sdp"
                     android:layout_height="@dimen/_18sdp"
                     android:src="@drawable/ic_remove"
-                    android:layout_marginStart="@dimen/_2sdp"/>
+                    android:layout_marginStart="@dimen/_3sdp"/>
 
                 <TextView
                     android:id="@+id/tv_quantity"
-                    android:layout_width="@dimen/_9sdp"
+                    android:layout_width="wrap_content"
                     android:layout_height="@dimen/_18sdp"
-                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginStart="@dimen/_14sdp"
                     android:gravity="center"
                     android:text="@{`` + cart.quantity}"
                     android:textAlignment="center"
                     android:textColor="@color/fillblack"
-                    tools:text="5"
+                    tools:text="12"
                     android:textStyle="bold"/>
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/iv_add"
-                    android:layout_width="@dimen/_7sdp"
+                    android:layout_width="@dimen/_10sdp"
                     android:layout_height="@dimen/_18sdp"
-                    android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_marginEnd="@dimen/_2sdp"
+                    android:layout_marginStart="@dimen/_13sdp"
                     android:src="@drawable/ic_adds" />
 
             </LinearLayout>
@@ -176,10 +175,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_16sdp"
-                android:layout_marginTop="@dimen/_20sdp"
                 android:src="@drawable/ic_un_fav"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_product_price"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/container_quantity" />
+                app:layout_constraintTop_toTopOf="@+id/tv_product_price" />
 
             <TextView
                 android:id="@+id/tv_fav"
@@ -221,10 +220,10 @@
                 style="@style/TextTheme.Arial.TS12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_2dp"
+                android:layout_marginTop="@dimen/_24sdp"
                 android:text="@{cart.price.getFormattedPrice(cart.quantity)}"
-                app:layout_constraintBaseline_toBaselineOf="@id/tv_fav"
                 app:layout_constraintEnd_toEndOf="@id/iv_remove"
+                app:layout_constraintTop_toBottomOf="@id/container_quantity"
                 tools:text="$14" />
 
             <LinearLayout

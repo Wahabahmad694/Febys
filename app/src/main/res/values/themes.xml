@@ -208,7 +208,7 @@
 
     <style name="RatingBar.Editable">
         <item name="android:isIndicator">false</item>
-        <item name="android:width">@dimen/_50sdp</item>
+        <item name="android:width">@dimen/_60sdp</item>
         <item name="android:height">@dimen/_20sdp</item>
     </style>
 

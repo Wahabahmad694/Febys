@@ -20,6 +20,7 @@ import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragmentWithPermission
 import com.hexagram.febys.databinding.FragmentAccountSettingsBinding
 import com.hexagram.febys.models.api.consumer.Consumer
+import com.hexagram.febys.models.api.contact.PhoneNo
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.requests.RequestUpdateUser
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
@@ -60,7 +61,7 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
             if (!isInEditMode) {
                 val updateUser = getUpdatedConsumer()
                 updateUser?.let { accountSettingViewModel.updateProfile(it) }
-                showToast("User Profile updated")
+                showSuccessDialog()
             }
         }
 
@@ -73,6 +74,14 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
         }
     }
 
+    private fun showSuccessDialog() {
+        val resId = R.drawable.ic_thanks_info
+        val title = getString(R.string.msg_thank_you)
+        val msg = getString(R.string.label_profile_is_updated)
+
+        showInfoDialoge(resId, title, msg) { goBack() }
+    }
+
     private fun getUpdatedConsumer(): RequestUpdateUser? {
         return consumer?.let {
             RequestUpdateUser(
@@ -80,7 +89,7 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
                 binding.etFirstName.text.toString(),
                 binding.etLastName.text.toString(),
                 binding.etPhone.text.toString(),
-                "PK",
+                binding.ccpPhoneCode.selectedCountryNameCode,
                 accountSettingViewModel.uploadedFilePath
             )
         }
@@ -104,11 +113,11 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
         binding.etLastName.isEnabled = isInEditMode
         binding.etPhone.isEnabled = isInEditMode
         binding.camera.isVisible = isInEditMode
+        binding.ccpPhoneCode.isActivated = isInEditMode
 
         binding.ivEdit.setImageResource(
             if (isInEditMode) R.drawable.ic_mark_tic else R.drawable.ic_edit
         )
-
 
         val color = if (isInEditMode) Color.GRAY else Color.BLACK
         binding.etEmail.setTextColor(color)
@@ -162,7 +171,7 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
             if (result.resultCode == Activity.RESULT_OK) {
                 result.data?.data?.let {
                     val filePath = MediaFileUtils.handleUri(requireContext(), it)
-                    startCrop(it!!)
+//                    startCrop(it)
                     binding.profileImg.setImageURI(it)
                     accountSettingViewModel.updateProfileImage(filePath!!)
                 }
@@ -175,8 +184,7 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
             if (result.resultCode == Activity.RESULT_OK) {
                 result.data?.data?.let {
                     val filePath = MediaFileUtils.handleUri(requireContext(), it)
-                    binding.profileImg.setImageURI(it)
-                    startCrop(it!!)
+//                    startCrop(it)
                     binding.profileImg.setImageURI(it)
                     accountSettingViewModel.updateProfileImage(filePath!!)
                 }
@@ -252,13 +260,20 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
         }
     }
 
+    private fun updateDefaultCCP(contact: PhoneNo) {
+        binding.ccpPhoneCode.setDefaultCountryUsingNameCode(contact.countryCode)
+        binding.ccpPhoneCode.resetToDefaultCountry()
+        val countryCodeWithPlus = binding.ccpPhoneCode.selectedCountryCodeWithPlus
+        binding.etPhone.setText(contact.number.replace(countryCodeWithPlus, ""))
+    }
+
     private fun setData(consumer: Consumer?) {
         binding.profileImg.setImageURI(consumer?.profileImage)
         binding.tvProfileName.text = consumer?.fullName
         binding.etFirstName.setText(consumer?.firstName)
         binding.etLastName.setText(consumer?.lastName)
         binding.etEmail.setText(consumer?.email)
-        binding.etPhone.setText(consumer?.phoneNumber?.number)
+        consumer?.phoneNumber?.let { updateDefaultCCP(it) }
     }
 
 }

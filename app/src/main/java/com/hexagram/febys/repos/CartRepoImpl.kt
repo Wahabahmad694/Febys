@@ -14,9 +14,12 @@ import com.hexagram.febys.network.adapter.*
 import com.hexagram.febys.network.requests.RequestPushCart
 import com.hexagram.febys.network.requests.SkuIdAndQuantity
 import com.hexagram.febys.prefs.IPrefManger
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class CartRepoImpl @Inject constructor(
@@ -84,8 +87,6 @@ class CartRepoImpl @Inject constructor(
         voucher: String?,
         vendorMessages: List<VendorMessage>
     ) = flow<DataState<Order?>> {
-        emit(DataState.Loading())
-        delay(1000)
         val authToken = pref.getAccessToken()
         val orderRequest = getOrderRequest(voucher, transactions, vendorMessages)
         if (orderRequest.items.isEmpty()) emit(DataState.Data(null))

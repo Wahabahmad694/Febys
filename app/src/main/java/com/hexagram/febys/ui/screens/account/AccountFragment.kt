@@ -133,12 +133,12 @@ class AccountFragment : BaseFragment() {
         }
         binding.support.aboutFebys.setOnClickListener {
             val goToAboutFebys =
-                NavGraphDirections.toWebViewFragment("", "https://www.facebook.com/")
+                NavGraphDirections.toWebViewFragment("", "https://qa.febys.com/about-us")
             navigateTo(goToAboutFebys)
         }
         binding.support.helpCenter.setOnClickListener {
             val goToHelpCenter =
-                NavGraphDirections.toWebViewFragment("", "https://www.facebook.com/")
+                NavGraphDirections.toWebViewFragment("", "https://qa.febys.com/helpcenter")
             navigateTo(goToHelpCenter)
         }
         binding.support.privacyPolicy.setOnClickListener {

@@ -37,7 +37,9 @@ data class Vendor @JvmOverloads constructor(
     @SerializedName("quality_score")
     val qualityScore: List<Rating>,
     @SerializedName("ratings_and_reviews")
-    val ratingsAndReviews: List<VendorReview>,
+    val _ratingsAndReviews: List<VendorReview>,
     @SerializedName("rating_and_review")
     val ratingAndReview: VendorReview? = null,
-) : Parcelable
+) : Parcelable{
+    val ratingsAndReviews get() = _ratingsAndReviews.reversed()
+}
