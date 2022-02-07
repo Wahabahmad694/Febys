@@ -37,6 +37,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <LinearLayout
+                android:id="@+id/container_product_listing_title_and_count"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:minHeight="?actionBarSize"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toStartOf="@id/tv_cart_count"
+                app:layout_constraintStart_toEndOf="@id/iv_back"
+                app:layout_constraintTop_toTopOf="parent">
+
             <TextView
                 android:id="@+id/tv_product_brand_appbar"
                 style="@style/TextTheme.HelveticaNeue.TS16.Bold"
@@ -50,34 +61,42 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            </LinearLayout>
+
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/_16dp"
+                android:padding="@dimen/_16sdp"
                 android:src="@drawable/ic_back"
-                app:layout_constraintBottom_toBottomOf="@id/tv_product_brand_appbar"
+                android:background="@color/grey"
+                app:layout_constraintBottom_toBottomOf="@id/container_product_listing_title_and_count"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_product_brand_appbar" />
+                app:layout_constraintTop_toTopOf="@id/container_product_listing_title_and_count" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_cart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_16dp"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingEnd="@dimen/_16sdp"
+                android:paddingTop="@dimen/_16sdp"
                 android:src="@drawable/ic_cart"
-                app:layout_constraintBottom_toBottomOf="@id/tv_product_brand_appbar"
+                android:background="@color/grey"
+                app:layout_constraintBottom_toBottomOf="@id/container_product_listing_title_and_count"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_product_brand_appbar" />
+                app:layout_constraintTop_toTopOf="@id/container_product_listing_title_and_count" />
 
             <TextView
                 android:id="@+id/tv_cart_count"
                 style="@style/TextTheme.HelveticaNeue.TS16.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_4sdp"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingEnd="@dimen/_2sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:background="@color/grey"
                 android:contentDescription="@string/app_name"
-                app:layout_constraintBottom_toBottomOf="@id/iv_cart"
                 app:layout_constraintEnd_toStartOf="@id/iv_cart"
                 app:layout_constraintTop_toTopOf="@id/iv_cart"
                 app:layout_constraintVertical_bias="0.8"
@@ -92,7 +111,7 @@
                 android:paddingBottom="@dimen/_65sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/ll_add_to_cart"
-                app:layout_constraintTop_toBottomOf="@id/tv_product_brand_appbar">
+                app:layout_constraintTop_toBottomOf="@id/container_product_listing_title_and_count">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
