@@ -121,8 +121,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_vendor_with_products"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:itemCount="1"
                 tools:listitem="@layout/item_order_detail_vendors" />

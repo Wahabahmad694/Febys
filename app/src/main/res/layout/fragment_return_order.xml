@@ -49,8 +49,8 @@
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:clipToPadding="false"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:clipToPadding="false">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -107,10 +107,10 @@
                     </LinearLayout>
 
                     <View
-                        android:background="@color/grey_e1e5e8"
                         android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1dp"
                         android:layout_marginHorizontal="@dimen/_16sdp"
-                        android:layout_height="@dimen/_1dp" />
+                        android:background="@color/grey_e1e5e8" />
 
                     <TextView
                         android:id="@+id/label_rating_comment"
@@ -135,16 +135,16 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:background="@color/grey_e1e5e8"
+                        android:layout_height="@dimen/_1dp"
                         android:layout_marginHorizontal="@dimen/_16sdp"
-                        android:layout_height="@dimen/_1dp" />
+                        android:background="@color/grey_e1e5e8" />
 
                     <TextView
                         style="@style/TextTheme.Arial.TS14.Grey"
                         android:layout_width="match_parent"
-                        android:layout_marginVertical="@dimen/_10sdp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/_16sdp"
+                        android:layout_marginVertical="@dimen/_10sdp"
                         android:text="@string/label_msg_return" />
 
                 </LinearLayout>

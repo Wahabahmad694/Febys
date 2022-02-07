@@ -7,10 +7,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hexagram.febys.databinding.ItemOrderDetailProductForReviewBinding
 import com.hexagram.febys.databinding.ItemOrderDetailProductsBinding
 import com.hexagram.febys.models.api.cart.CartProduct
+import com.hexagram.febys.models.api.cart.ReturnDetails
+import com.hexagram.febys.utils.OrderStatus
+import com.hexagram.febys.utils.setBackgroundRoundedColor
 
 class OrderDetailProductAdapter constructor(
     private val showSelectedBtn: Boolean = false,
     private val selectedSkuId: String? = null,
+    private val returns: List<ReturnDetails>? = null
 ) : RecyclerView.Adapter<IBindViewHolder>() {
     private var products = listOf<CartProduct>()
     var onItemClick: (() -> Unit)? = null
@@ -22,11 +26,22 @@ class OrderDetailProductAdapter constructor(
     ) : IBindViewHolder(binding.root) {
         override fun bind(position: Int) = with(binding) {
             val cartProduct = products[position]
+            val skuId = cartProduct.product.variants.firstOrNull()?.skuId
             quantity = cartProduct.quantity
             product = cartProduct.product
-            isSelected = cartProduct.product.variants.firstOrNull()?.skuId == selectedSkuId
-            ivIsSelected.isVisible = showSelectedBtn
-            if (showSelectedBtn) root.setOnClickListener { onSelectClick?.invoke(cartProduct) }
+            isSelected = skuId == selectedSkuId
+            ivIsSelected.isVisible = showSelectedBtn && cartProduct.refundable
+            if (showSelectedBtn && cartProduct.refundable) {
+                root.setOnClickListener { onSelectClick?.invoke(cartProduct) }
+            }
+
+            val status = returns?.firstOrNull { it.items.firstOrNull()?.skuId == skuId }?.status
+            tvStatus.text = OrderStatus.getStatusForDisplay(status)
+            val color = OrderStatus.getStatusColor(status)
+            tvStatus.setBackgroundRoundedColor(color)
+            tvStatus.isVisible = !status.isNullOrEmpty()
+            endViewWithMargin26.isVisible = !status.isNullOrEmpty()
+            endViewWithMargin16.isVisible = status.isNullOrEmpty()
         }
     }
 

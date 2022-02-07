@@ -85,15 +85,18 @@ class OrderDetailVendorProductAdapter : RecyclerView.Adapter<IBindViewHolder>() 
             btnAddReview.isVisible =
                 !vendorProducts.hasReviewed && vendorProducts.status in arrayOf(OrderStatus.DELIVERED)
 
-            val showReturnBtn =
-                vendorProducts.status in arrayOf(OrderStatus.DELIVERED) && !reverted
+            val showReturnBtn = !reverted
+                    && vendorProducts.products.any { it.refundable }
+                    && vendorProducts.status in arrayOf(OrderStatus.DELIVERED)
+
             btnReturnItems.isVisible = showReturnBtn
             btnReturnItems.isEnabled = selectedVendorProduct != null
 
             val orderDetailProductAdapter = OrderDetailProductAdapter(
-                showReturnBtn, selectedVendorProduct?.first?.product?.variants?.firstOrNull()?.skuId
+                showReturnBtn,
+                selectedVendorProduct?.first?.product?.variants?.firstOrNull()?.skuId,
+                vendorProducts.returns
             )
-            rvOrderDetailProducts.applySpaceItemDecoration(R.dimen._16sdp)
             rvOrderDetailProducts.adapter = orderDetailProductAdapter
             orderDetailProductAdapter.submitList(vendorProducts.products)
             orderDetailProductAdapter.onSelectClick = {

@@ -9,6 +9,7 @@ import com.hexagram.febys.models.api.order.CancelReasons
 import com.hexagram.febys.models.api.order.Order
 import com.hexagram.febys.models.api.rating.OrderReview
 import com.hexagram.febys.network.DataState
+import com.hexagram.febys.network.requests.RequestReturnOrder
 import com.hexagram.febys.repos.IOrderRepo
 import com.hexagram.febys.utils.OrderStatus
 import com.hexagram.febys.utils.Utils
@@ -35,6 +36,12 @@ class OrderViewModel @Inject constructor(
 
     private val _observerOrderReview = MutableLiveData<DataState<OrderReview>>()
     val observeOrderReview: LiveData<DataState<OrderReview>> = _observerOrderReview
+
+    private val _observerReturnReason = MutableLiveData<DataState<List<String>>>()
+    val observeReturnReason: LiveData<DataState<List<String>>> = _observerReturnReason
+
+    private val _observerReturnOrder = MutableLiveData<DataState<Order>>()
+    val observeReturnOrder: LiveData<DataState<Order>> = _observerReturnOrder
 
     private val _observerTimer = MutableLiveData<String?>()
     val observeTimer: LiveData<String?> = _observerTimer
@@ -89,6 +96,22 @@ class OrderViewModel @Inject constructor(
             _observerOrderReview.postValue(it)
         }
     }
+
+    fun fetchReturnReasons() = viewModelScope.launch {
+        _observerReturnReason.postValue(DataState.Loading())
+        orderRepo.returnReasons().collect {
+            _observerReturnReason.postValue(it)
+        }
+    }
+
+
+    fun returnOrder(orderId: String, returnOrderRequest: RequestReturnOrder) =
+        viewModelScope.launch {
+            _observerReturnOrder.postValue(DataState.Loading())
+            orderRepo.returnOrder(orderId, returnOrderRequest).collect {
+                _observerReturnOrder.postValue(it)
+            }
+        }
 
     fun startTimer(time: Long): Job {
         timerJob?.cancel()

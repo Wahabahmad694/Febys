@@ -16,7 +16,7 @@ object OrderStatus {
 
     fun getStatusForDisplay(status: String?): String {
         return when (status) {
-            PENDING -> {
+            PENDING_RETURN, PENDING -> {
                 "Pending"
             }
             ACCEPTED -> {
@@ -36,9 +36,6 @@ object OrderStatus {
             }
             RETURNED -> {
                 "Returned"
-            }
-            PENDING_RETURN -> {
-                "Pending return"
             }
             DELIVERED -> {
                 "Received"
@@ -77,7 +74,7 @@ object OrderStatus {
                 "#B2FFDA"
             }
             else -> {
-                "#000000"
+                "#FFFFFF"
             }
         }
 
