@@ -35,6 +35,8 @@ class FebysPlusAdapter() :
         notifyItemRangeChanged(0, packages.size)
     }
 
+    fun getSelectedPkg() = packages.firstOrNull { it.selected }
+
     inner class ViewHolder(
         private val binding: ItemsFebysPlusBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
@@ -56,11 +58,9 @@ class FebysPlusAdapter() :
             if (febysPackage.selected) {
                 // show selected ui
                 markAsSelected(binding.containerBasicFreeDelivery)
-//                ContextCompat.getDrawable(context, R.drawable.bg_border_dark_red)
             } else {
-                //show unslected ui
+                //show unselected ui
                 markAsNotSelected(binding.containerBasicFreeDelivery)
-//                ContextCompat.getDrawable(context, R.drawable.bg_border_dark_grey)
             }
         }
     }

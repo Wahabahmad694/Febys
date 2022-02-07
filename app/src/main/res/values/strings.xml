@@ -361,5 +361,6 @@
     <string name="label_add">Add</string>
     <string name="toast_enter_voucher_code">Please enter voucher code</string>
     <string name="label_new_in">New In</string>
+    <string name="msg_febys_plus">Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a gallery of type and scrambled it to make a type specimen book.</string>
 
 </resources>

@@ -92,4 +92,5 @@ class AuthViewModel @Inject constructor(
     fun getConsumer(): Consumer? = authRepo.getConsumer()
 
     fun getWallet(): Wallet? = authRepo.getWallet()
+
 }

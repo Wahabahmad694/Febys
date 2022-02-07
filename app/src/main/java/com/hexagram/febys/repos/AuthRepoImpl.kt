@@ -6,6 +6,7 @@ import com.hexagram.febys.models.api.cart.Cart
 import com.hexagram.febys.models.api.consumer.Consumer
 import com.hexagram.febys.models.api.profile.Profile
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
+import com.hexagram.febys.models.api.subscription.Subscription
 import com.hexagram.febys.network.AuthService
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.adapter.*
@@ -133,6 +134,7 @@ class AuthRepoImpl @Inject constructor(
             updateShippingAddress(profile.shippingAddresses)
             updateCart(profile.cart)
             updateWallet(profile.wallet)
+            saveSubscription(profile.subscription)
         }
 
         return flow<DataState<Profile?>> {
@@ -146,6 +148,10 @@ class AuthRepoImpl @Inject constructor(
                 .onException { emit(DataState.ExceptionError()) }
                 .onNetworkError { emit(DataState.NetworkError()) }
         }.flowOn(dispatcher)
+    }
+
+    private fun saveSubscription(subscription: Subscription) {
+        pref.saveSubscription(subscription)
     }
 
     private suspend fun updateCart(cart: Cart) {
