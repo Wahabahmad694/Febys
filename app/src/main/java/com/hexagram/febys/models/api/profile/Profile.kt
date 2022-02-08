@@ -25,5 +25,5 @@ data class Profile(
     val recentlyViewed: RecentlyViewed,
     val vouchers: List<Voucher>,
     val wallet: Wallet,
-    val subscription: Subscription,
+    val subscription: Subscription?,
 ) : Parcelable

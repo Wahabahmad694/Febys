@@ -14,6 +14,7 @@ import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.auth.AuthViewModel
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.utils.OrderStatus
+import com.hexagram.febys.utils.load
 import com.hexagram.febys.utils.navigateTo
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -190,6 +191,14 @@ class AccountFragment : BaseFragment() {
         val user = authViewModel.getConsumer()
         binding.isUserLoggedIn = isUserLoggedIn
         binding.userName.text = user?.firstName?.split(" ")?.get(0) ?: getString(R.string.label_me)
+
+        val subscription = authViewModel.getSubscription()
+        if (subscription != null) {
+            binding.icSubscription.load(subscription.packageInfo.icon)
+        } else {
+            binding.icSubscription.isVisible = false
+        }
+
     }
 
     override fun getIvCart() = binding.ivCart

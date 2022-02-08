@@ -20,16 +20,28 @@
         <TextView
             android:id="@+id/user_name"
             style="@style/TextTheme.HelveticaNeue.TS32.Bold"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_16dp"
             android:ellipsize="end"
             android:lines="1"
             app:layout_constraintBottom_toBottomOf="@id/iv_cart"
-            app:layout_constraintEnd_toStartOf="@+id/iv_cart"
+            app:layout_constraintEnd_toStartOf="@+id/ic_subscription"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/iv_cart"
             tools:text="Hillary" />
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/ic_subscription"
+            android:layout_width="@dimen/_26sdp"
+            android:layout_height="@dimen/_26sdp"
+            android:visibility="visible"
+            android:layout_marginStart="@dimen/_4sdp"
+            android:layout_marginTop="@dimen/_24sdp"
+            tools:src="@drawable/ic_camera"
+            app:layout_constraintStart_toEndOf="@+id/user_name"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/iv_cart" />
 
         <ImageView
             android:id="@+id/iv_cart"
@@ -41,7 +53,6 @@
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_cart"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/user_name"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView

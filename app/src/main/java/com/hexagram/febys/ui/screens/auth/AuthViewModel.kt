@@ -7,6 +7,7 @@ import com.hexagram.febys.base.BaseViewModel
 import com.hexagram.febys.enum.SocialLogin
 import com.hexagram.febys.models.api.consumer.Consumer
 import com.hexagram.febys.models.api.profile.Profile
+import com.hexagram.febys.models.api.subscription.Subscription
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.requests.RequestSignup
 import com.hexagram.febys.network.response.ResponseLogin
@@ -92,5 +93,7 @@ class AuthViewModel @Inject constructor(
     fun getConsumer(): Consumer? = authRepo.getConsumer()
 
     fun getWallet(): Wallet? = authRepo.getWallet()
+
+    fun getSubscription(): Subscription? = authRepo.getSubscription()
 
 }

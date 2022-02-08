@@ -150,8 +150,10 @@ class AuthRepoImpl @Inject constructor(
         }.flowOn(dispatcher)
     }
 
-    private fun saveSubscription(subscription: Subscription) {
-        pref.saveSubscription(subscription)
+    private fun saveSubscription(subscription: Subscription?) {
+        if (subscription != null) {
+            pref.saveSubscription(subscription)
+        }
     }
 
     private suspend fun updateCart(cart: Cart) {
@@ -187,5 +189,9 @@ class AuthRepoImpl @Inject constructor(
 
     override fun getWallet(): Wallet? {
         return pref.getWallet()
+    }
+
+    override fun getSubscription(): Subscription? {
+        return pref.getSubscription()
     }
 }

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import com.hexagram.febys.NavGraphDirections
+import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentFebysPlusBinding
 import com.hexagram.febys.models.api.febysPlusPackage.Package
@@ -17,10 +18,7 @@ import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.auth.AuthViewModel
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.ui.screens.payment.BasePaymentFragment
-import com.hexagram.febys.utils.goBack
-import com.hexagram.febys.utils.hideLoader
-import com.hexagram.febys.utils.navigateTo
-import com.hexagram.febys.utils.showLoader
+import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -55,13 +53,16 @@ class FebysPlusFragment : BaseFragment() {
                     PaymentRequest(it.price.value, it.price.currency, "SUBSCRIPTION_PURCHASED")
                 val gotoPayment = NavGraphDirections.toPaymentFragment(paymentRequest)
                 navigateTo(gotoPayment)
+                showSuccessDialog()
                 subscribePackage()
             } else gotoLogin()
         }
     }
 
     private fun updateUi(febysPackage: List<Package>) {
-        febysPackageAdapter.submitList(febysPackage)
+        val purchasedId = authViewModel.getSubscription()?.packageInfo?.id
+        febysPackageAdapter.submitList(febysPackage, purchasedId)
+
     }
 
     private fun uiListener() {
@@ -100,6 +101,13 @@ class FebysPlusFragment : BaseFragment() {
         }
     }
 
+    private fun showSuccessDialog() {
+        val resId = R.drawable.ic_thank
+        val title = getString(R.string.msg_thank_you)
+        val msg = getString(R.string.label_success_subscription)
+
+        showInfoDialoge(resId, title, msg) { goBack() }
+    }
     private fun subscribePackage() {
         setFragmentResultListener(BasePaymentFragment.TRANSACTIONS) { requestKey, bundle ->
             val transactions =
