@@ -169,7 +169,7 @@ class CartFragment : BaseFragment() {
             if (pdfUri != null) {
                 Utils.openUri(requireContext(), pdfUri)
             } else {
-                showToast("fail to save pdf")
+                showToast(getString(R.string.toast_fail_pdf))
             }
         }
     }
