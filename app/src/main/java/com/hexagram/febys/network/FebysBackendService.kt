@@ -22,6 +22,7 @@ import com.hexagram.febys.models.api.wishlist.FavSkuIds
 import com.hexagram.febys.models.api.wishlist.WishlistSkuIds
 import com.hexagram.febys.network.adapter.ApiResponse
 import com.hexagram.febys.network.requests.RequestPushCart
+import com.hexagram.febys.network.requests.RequestReturnOrder
 import com.hexagram.febys.network.requests.RequestUpdateUser
 import com.hexagram.febys.network.requests.ResponseUpdateUser
 import com.hexagram.febys.network.response.ResponseOfPagination
@@ -264,6 +265,16 @@ interface FebysBackendService {
     suspend fun fetchOrder(
         @Header("Authorization") authToken: String,
         @Path("orderId") orderId: String,
+    ): ApiResponse<OrderResponse>
+
+    @GET("v1/order-settings/consumer/order/consumerReturnReasons")
+    suspend fun fetchReturnReasons(): ApiResponse<ReturnReasonsResponse>
+
+    @PATCH("v1/orders/{orderId}/pending_return")
+    suspend fun returnOrder(
+        @Header("Authorization") authToken: String,
+        @Path("orderId") orderId: String,
+        @Body req: RequestReturnOrder
     ): ApiResponse<OrderResponse>
 
     @POST("v1/consumers/save/shipping-detail")
