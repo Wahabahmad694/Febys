@@ -145,17 +145,18 @@ class CartFragment : BaseFragment() {
                 if (cartCount == null || cartCount == 0) "" else "($cartCount)"
         }
         cartViewModel.observerDownloadPdf.observe(viewLifecycleOwner) {
-            when (it) {
+            val response = it.getContentIfNotHandled()
+            when (response) {
                 is DataState.Loading -> {
                     showLoader()
                 }
                 is DataState.Error -> {
                     hideLoader()
-                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
+                    ErrorDialog(response).show(childFragmentManager, ErrorDialog.TAG)
                 }
                 is DataState.Data -> {
                     hideLoader()
-                    savePdf(it.data)
+                    savePdf(response.data)
                 }
             }
         }
