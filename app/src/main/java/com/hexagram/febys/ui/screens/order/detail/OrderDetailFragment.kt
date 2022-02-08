@@ -19,6 +19,7 @@ import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.ui.screens.order.OrderViewModel
 import com.hexagram.febys.ui.screens.order.cancel.CancelOrderBottomSheet
+import com.hexagram.febys.ui.screens.order.refund.ReturnOrderFragment
 import com.hexagram.febys.ui.screens.order.review.AddEditReviewFragment
 import com.hexagram.febys.utils.*
 import com.hexagram.febys.utils.Utils.DateTime.FORMAT_MONTH_DATE_YEAR_HOUR_MIN
@@ -63,6 +64,9 @@ class OrderDetailFragment : BaseFragment() {
     private fun uiListener() {
         binding.ivBack.setOnClickListener { goBack() }
 
+        orderDetailVendorProductAdapter.onReturnItemClick = { vendorProduct: VendorProducts ->
+            gotoReturnOrder(vendorProduct)
+        }
         orderDetailVendorProductAdapter.onCancelOrderClick = { vendorId ->
             gotoCancelOrder(args.orderId, vendorId)
         }
@@ -80,6 +84,12 @@ class OrderDetailFragment : BaseFragment() {
             if (isOrderCanceled) orderViewModel.fetchOrder(args.orderId)
         }
 
+        setFragmentResultListener(ReturnOrderFragment.REQ_KEY_IS_ORDER_RETURN) { _, bundle ->
+            val isOrderReturned =
+                bundle.getBoolean(ReturnOrderFragment.REQ_KEY_IS_ORDER_RETURN)
+            if (isOrderReturned) orderViewModel.fetchOrder(args.orderId)
+        }
+
         setFragmentResultListener(AddEditReviewFragment.REQ_KEY_REFRESH) { _, bundle ->
             val refresh =
                 bundle.getBoolean(AddEditReviewFragment.REQ_KEY_REFRESH, false)
@@ -88,6 +98,12 @@ class OrderDetailFragment : BaseFragment() {
                 orderViewModel.fetchOrder(args.orderId)
             }
         }
+    }
+
+    private fun gotoReturnOrder(vendorProduct: VendorProducts) {
+        val actionToReturnFragment = OrderDetailFragmentDirections
+            .actionOrderDetailFragmentToReturnOrderFragment(args.orderId, arrayOf(vendorProduct))
+        navigateTo(actionToReturnFragment)
     }
 
     private fun gotoCancelOrder(orderId: String, vendorId: String) {

@@ -19,6 +19,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import okhttp3.ResponseBody
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -81,6 +82,21 @@ class CartRepoImpl @Inject constructor(
             .onException { emit(DataState.ExceptionError()) }
             .onNetworkError { emit(DataState.NetworkError()) }
     }
+
+    override suspend fun downloadPdf(
+        dispatcher: CoroutineDispatcher
+    ): Flow<DataState<ResponseBody>> =
+        flow {
+            val authToken = pref.getAccessToken()
+            if (authToken.isEmpty()) return@flow
+            val orderRequest = getOrderRequest(null, null, listOf())
+            try {
+                val body = backendService.downloadPdf(authToken, orderRequest)
+                emit(DataState.Data(body))
+            } catch (e: Exception) {
+                emit(DataState.ExceptionError())
+            }
+        }
 
     override fun placeOrder(
         transactions: List<Transaction>,

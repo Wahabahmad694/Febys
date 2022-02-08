@@ -74,21 +74,18 @@ object Utils {
         return Gson().fromJson(json, Wallet::class.java)
     }
 
-    fun jsonFromPaymentMethod(obj: PaymentMethod): String {
-        return Gson().toJson(obj)
-    }
-
-    fun jsonToPaymentMethod(json: String): PaymentMethod {
-        return Gson().fromJson(json, PaymentMethod::class.java)
-    }
-
     fun openLink(context: Context, link: String) {
         var url = link
         if (!url.startsWith("www.") && !url.startsWith("http")) url = "www.$url"
         if (!url.startsWith("http")) url = "https://$url"
 
         val uri = Uri.parse(url)
+        openUri(context, uri)
+    }
+
+    fun openUri(context: Context, uri: Uri) {
         val intent = Intent(Intent.ACTION_VIEW, uri)
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         context.startActivity(intent)
     }
 }

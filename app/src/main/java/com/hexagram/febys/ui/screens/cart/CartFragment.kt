@@ -1,9 +1,12 @@
 package com.hexagram.febys.ui.screens.cart
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.hexagram.febys.NavGraphDirections
@@ -12,17 +15,30 @@ import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentCartBinding
 import com.hexagram.febys.models.api.price.Price
 import com.hexagram.febys.models.db.CartDTO
-import com.hexagram.febys.utils.Utils
-import com.hexagram.febys.utils.goBack
-import com.hexagram.febys.utils.navigateTo
-import com.hexagram.febys.utils.showWarningDialog
+import com.hexagram.febys.network.DataState
+import com.hexagram.febys.ui.screens.dialog.ErrorDialog
+import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.ResponseBody
+
 
 @AndroidEntryPoint
 class CartFragment : BaseFragment() {
-    private lateinit var binding:FragmentCartBinding
+    private lateinit var binding: FragmentCartBinding
     private val cartViewModel: CartViewModel by viewModels()
+
     private val cartAdapter = CartAdapter()
+
+    private var openDocumentTreeCallback: ((Uri) -> Unit)? = null
+    private val openDocumentTree =
+        registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) {
+            if (it == null) return@registerForActivityResult
+            val takeFlags: Int =
+                Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+            requireContext().contentResolver.takePersistableUriPermission(it, takeFlags)
+            openDocumentTreeCallback?.invoke(it)
+        }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -62,7 +78,7 @@ class CartFragment : BaseFragment() {
             val msg = getString(R.string.msg_for_download_pdf)
 
             showWarningDialog(resId, title, msg) {
-                //todo nothing
+                cartViewModel.exportPdf()
             }
         }
 
@@ -128,6 +144,47 @@ class CartFragment : BaseFragment() {
             binding.tvCartCount.text =
                 if (cartCount == null || cartCount == 0) "" else "($cartCount)"
         }
+        cartViewModel.observerDownloadPdf.observe(viewLifecycleOwner) {
+            val response = it.getContentIfNotHandled()
+            when (response) {
+                is DataState.Loading -> {
+                    showLoader()
+                }
+                is DataState.Error -> {
+                    hideLoader()
+                    ErrorDialog(response).show(childFragmentManager, ErrorDialog.TAG)
+                }
+                is DataState.Data -> {
+                    hideLoader()
+                    savePdf(response.data)
+                }
+            }
+        }
+    }
+
+    private fun savePdf(body: ResponseBody) {
+        askUserToSelectDirectory { selectedDirectory ->
+            val pdfUri = FileUtils.writeResponseToFile(
+                requireContext(), selectedDirectory, "application/pdf", "febys_cart.pdf", body
+            )
+            if (pdfUri != null) {
+                Utils.openUri(requireContext(), pdfUri)
+            } else {
+                showToast(getString(R.string.toast_fail_pdf))
+            }
+        }
+    }
+
+    private fun askUserToSelectDirectory(callback: (Uri) -> Unit) {
+        val contentResolver = requireContext().contentResolver
+        val uri = contentResolver.persistedUriPermissions.firstOrNull()?.uri
+        if (uri != null) {
+            callback.invoke(uri)
+            return
+        }
+
+        openDocumentTreeCallback = callback
+        openDocumentTree.launch(null)
     }
 
     private fun updateBtnVisibilities(isVisible: Boolean) {

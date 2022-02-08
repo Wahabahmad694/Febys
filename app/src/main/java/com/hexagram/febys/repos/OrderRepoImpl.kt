@@ -15,6 +15,7 @@ import com.hexagram.febys.network.adapter.onError
 import com.hexagram.febys.network.adapter.onException
 import com.hexagram.febys.network.adapter.onNetworkError
 import com.hexagram.febys.network.adapter.onSuccess
+import com.hexagram.febys.network.requests.RequestReturnOrder
 import com.hexagram.febys.paginations.OrderListPagingSource
 import com.hexagram.febys.prefs.IPrefManger
 import com.hexagram.febys.utils.OrderStatus
@@ -42,6 +43,8 @@ class OrderRepoImpl @Inject constructor(
             val filtersBody = OrderListingRequest()
             if (!filters.isNullOrEmpty()) {
                 filtersBody.hasReviewed = filters.first() == OrderStatus.REVIEWED
+                filtersBody.isReturn =
+                    filters.first() in listOf(OrderStatus.RETURNED, OrderStatus.PENDING_RETURN)
                 filtersBody.filters = filters.toList()
             }
             OrderListPagingSource(
@@ -99,6 +102,27 @@ class OrderRepoImpl @Inject constructor(
         val authToken = pref.getAccessToken()
         backendService.postOrderReview(authToken, orderId, orderReview)
             .onSuccess { emit(DataState.Data(data!!)) }
+            .onError { emit(DataState.ApiError(message)) }
+            .onException { emit(DataState.ExceptionError()) }
+            .onNetworkError { emit(DataState.NetworkError()) }
+    }
+
+    override fun returnReasons(dispatcher: CoroutineDispatcher) = flow<DataState<List<String>>> {
+        backendService.fetchReturnReasons()
+            .onSuccess { emit(DataState.Data(data!!.settings.reasons)) }
+            .onError { emit(DataState.ApiError(message)) }
+            .onException { emit(DataState.ExceptionError()) }
+            .onNetworkError { emit(DataState.NetworkError()) }
+    }
+
+    override fun returnOrder(
+        orderId: String,
+        returnOrderRequest: RequestReturnOrder,
+        dispatcher: CoroutineDispatcher
+    ) = flow<DataState<Order>> {
+        val authToken = pref.getAccessToken()
+        backendService.returnOrder(authToken, orderId, returnOrderRequest)
+            .onSuccess { emit(DataState.Data(data!!.order)) }
             .onError { emit(DataState.ApiError(message)) }
             .onException { emit(DataState.ExceptionError()) }
             .onNetworkError { emit(DataState.NetworkError()) }

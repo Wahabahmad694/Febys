@@ -705,6 +705,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_orderDetailFragment_to_returnOrderFragment"
+            app:destination="@id/returnOrderFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/addEditReviewFragment"
@@ -717,6 +724,18 @@
         <argument
             android:name="vendorProducts"
             app:argType="com.hexagram.febys.models.api.cart.VendorProducts" />
+    </fragment>
+    <fragment
+        android:id="@+id/returnOrderFragment"
+        android:name="com.hexagram.febys.ui.screens.order.refund.ReturnOrderFragment"
+        android:label="ReturnOrderFragment"
+        tools:layout="@layout/fragment_return_order">
+        <argument
+            android:name="orderId"
+            app:argType="string" />
+        <argument
+            android:name="vendorProducts"
+            app:argType="com.hexagram.febys.models.api.cart.VendorProducts[]" />
     </fragment>
     <dialog
         android:id="@+id/addVoucherBottomSheet"

@@ -23,7 +23,7 @@ class AccountFragment : BaseFragment() {
     private val authViewModel: AuthViewModel by viewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentAccountBinding.inflate(inflater, container, false)
         return binding.root
@@ -96,6 +96,16 @@ class AccountFragment : BaseFragment() {
                     OrderStatus.REJECTED
                 ),
                 getString(R.string.label_cancel_orders)
+            )
+        }
+
+        binding.orders.returnOrders.setOnClickListener {
+            gotoOrderListing(
+                arrayOf(
+                    OrderStatus.RETURNED,
+                    OrderStatus.PENDING_RETURN
+                ),
+                getString(R.string.label_return_orders)
             )
         }
 

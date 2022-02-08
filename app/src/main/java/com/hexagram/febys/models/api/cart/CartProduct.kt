@@ -11,6 +11,7 @@ data class CartProduct constructor(
     @SerializedName("qty", alternate = ["quantity"])
     var quantity: Int,
     val product: Product,
+    val refundable: Boolean,
     @SerializedName("rating_and_review")
     var ratingAndReview: ProductReview? = null
 ) : Parcelable
