@@ -85,7 +85,7 @@
     <string name="label_get_inspired">Get Inspired</string>
     <string name="label_empty_wish_list_slogan">But not for long! Tap ♡ to start saving you favorite pieces</string>
     <string name="label_connection_error">Connection Error</string>
-    <string name="okay">Okay</string>
+    <string name="okay">OK</string>
     <string name="label_try_again">Try Again</string>
     <string name="label_no_internet">There\'s a problem with your network connection. Please check your connection</string>
     <string name="label_check_your_email">Check Your Email</string>
@@ -148,6 +148,7 @@
     <string name="label_my_orders">My Orders</string>
     <string name="label_orders_status">Order Status</string>
     <string name="label_order_detail">Order Details</string>
+    <string name="label_return_order">Return Order</string>
     <string name="label_return_orders">Return Orders</string>
     <string name="label_cancel_orders">Cancel Orders</string>
     <string name="label_cancel">Cancel</string>
@@ -189,6 +190,7 @@
     <string name="label_address_label">Address Label</string>
     <string name="label_order_cancel_reason">Order Cancel Reason</string>
     <string name="label_destination_or_region">Destination/Region</string>
+    <string name="label_return_reason">Return item Reason</string>
     <string name="label_address_line_1">Address Line 1</string>
     <string name="label_address_line_2">Address Line 2 (Optional)</string>
     <string name="label_city">City</string>
@@ -196,6 +198,7 @@
     <string name="label_postal_code">Postal Code</string>
     <string name="label_set_as_default_shipping_address">Set as default shipping address</string>
     <string name="label_save_and_continue">Save and Continue</string>
+    <string name="label_return">Return</string>
     <string name="label_save">Save</string>
     <string name="label_show_filter">Show %1s results</string>
     <string name="label_apply_filter">Apply Now</string>
@@ -222,6 +225,7 @@
     <string name="label_vat_percentage">Vat %</string>
     <string name="label_vat">Vat</string>
     <string name="msg_thank_you_for_purchase">Thank You For Your Purchase</string>
+    <string name="msg_thank_you">Thank You</string>
     <string name="msg_success_order">Your Order has been placed! We will email you on order confirmation with details and tracking number once your order has been successfully processed</string>
     <string name="label_order_id">Order ID:</string>
     <string name="label_where_to_find_me">Where to find me</string>
@@ -268,7 +272,6 @@
     <string name="here_s_a_little_more_about_febys_plus_that_we_think_you_ll_love">Here\'s a little more about Febys Plus that we think you\'ll love:</string>
     <string name="fast_free_delivery_on_over_100_million_items">Fast, Free Delivery on Over 100 Million Items</string>
     <string name="super_fast_shipping_tens_of_millions_of_items_and_flexible_delivery_option_to_fit_your_life">Super-fast shipping, tens of millions of items, and flexible delivery option to fit your life.</string>
-    <string name="the_best_of_shopping_amp_the_e_experience"><![CDATA[The Best of Shopping & the E experience]]></string>
     <string name="join_febys_plus_today_to_get_amazing_delivery_benefits_and_excluslve_ways_to_shop_stream_and_more_cancel_anytime">Join Febys Plus today to get amazing delivery benefits and excluslve ways to shop. stream, and more cancel anytime</string>
     <string name="free_one_day_shipping">Free One-Day Shipping</string>
     <string name="free_two_day_shipping">Free Two-Day Shipping</string>
@@ -298,14 +301,13 @@
     <string name="label_empty_view">No %1s found</string>
     <string name="label_person_name">Hi %1s</string>
     <string name="label_delete_warning">Are You Sure?</string>
-    <string name="label_coming_soon">Coming Soon</string>
     <string name="msg_for_delete_item_bag">Do you want to delete this item from bag?</string>
     <string name="msg_for_download_pdf">You want to download the PDF.</string>
     <string name="msg_for_unfollow_vendor">Do you want to unfollow this vendor?</string>
     <string name="msg_for_unfollow_celebrity">Do you want to unfollow this celebrity?</string>
     <string name="msg_for_delete_shipping_address">Do you want to delete this shipping address?</string>
-    <string name="msg_for_withdraw">Do you want to withdraw amount?</string>
-    <string name="msg_for_coming_soon">This feature is under progress</string>
+    <string name="msg_for_withdraw">Withdraw feature is coming soon</string>
+    <string name="msg_for_top_up">Top-Up feature is coming soon</string>
     <string name="label_add_seller_feedback">Add Seller Feedback</string>
     <string name="label_price">Price</string>
     <string name="label_value">Value</string>
@@ -327,9 +329,12 @@
     <string name="label_current_balance">Current balance</string>
     <string name="label_withdraw">Withdraw</string>
     <string name="label_topUp">Top-Up</string>
+    <string name="label_profile_is_updated">Your profile has been updated Successfully</string>
+    <string name="label_review_is_updated">Your review has been updated Successfully</string>
+    <string name="label_coming_soon">Coming Soon</string>
     <string name="label_transactions_history">Transactions History</string>
     <string name="label_transaction_id">Transaction ID:</string>
-    <string name="label_amount">Amount:</string>
+    <string name="label_amount">Amount</string>
     <string name="label_date_amp_time"><![CDATA[Date & Time:]]></string>
     <string name="label_purpose">Purpose:</string>
     <string name="insufficient_wallet_balance">Insufficient Wallet Balance</string>
@@ -340,8 +345,8 @@
     <string name="permission_denied">Permission denied</string>
     <string name="label_chose_option">Choose an Option</string>
     <string name="label_oops">Oops!</string>
-    <string name="label_source">Source:</string>
-    <string name="label_status">Status:</string>
+    <string name="label_source">Source</string>
+    <string name="label_status">Status</string>
     <string name="label_please_choose_following_one_of_them">Please choose following one of them</string>
     <string name="label_choose_payment_for_remaining">Choose Payment for remaining <b>%1s</b></string>
     <string name="please_select_a_payment_method">Please select a payment method</string>
@@ -354,9 +359,16 @@
     <string name="label_from">From</string>
     <string name="current_balance">Current Balance</string>
     <string name="placing_order">Placing Order…</string>
+    <string name="days">Days</string>
     <string name="add_voucher">Add Voucher</string>
     <string name="label_add">Add</string>
+    <string name="label_store_name">Store Name</string>
+    <string name="label_address">Address</string>
+    <string name="label_country">Country</string>
+    <string name="label_zip_code">Zip Code</string>
     <string name="toast_enter_voucher_code">Please enter voucher code</string>
+    <string name="label_new_in">New In</string>
+    <string name="label_msg_return">Payment will be automatic refund in Febian wallet and Febian anytime withdraw amount in his Account.</string>
     <string name="toast_fail_pdf">Fail to save PDF, please try again!</string>
 
 </resources>

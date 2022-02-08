@@ -4,6 +4,7 @@ import com.google.gson.JsonObject
 import com.hexagram.febys.models.api.cart.CartResponse
 import com.hexagram.febys.models.api.cities.PostCitiesResponse
 import com.hexagram.febys.models.api.countries.CountryResponse
+import com.hexagram.febys.models.api.febysPlusPackage.FebysPackageResponse
 import com.hexagram.febys.models.api.filters.SearchFilterResponse
 import com.hexagram.febys.models.api.pagination.Pagination
 import com.hexagram.febys.models.api.product.FeaturedCategory
@@ -21,6 +22,7 @@ import com.hexagram.febys.models.api.wishlist.FavSkuIds
 import com.hexagram.febys.models.api.wishlist.WishlistSkuIds
 import com.hexagram.febys.network.adapter.ApiResponse
 import com.hexagram.febys.network.requests.RequestPushCart
+import com.hexagram.febys.network.requests.RequestReturnOrder
 import com.hexagram.febys.network.requests.RequestUpdateUser
 import com.hexagram.febys.network.requests.ResponseUpdateUser
 import com.hexagram.febys.network.response.ResponseOfPagination
@@ -266,6 +268,16 @@ interface FebysBackendService {
         @Path("orderId") orderId: String
     ): ApiResponse<OrderResponse>
 
+    @GET("v1/order-settings/consumer/order/consumerReturnReasons")
+    suspend fun fetchReturnReasons(): ApiResponse<ReturnReasonsResponse>
+
+    @PATCH("v1/orders/{orderId}/pending_return")
+    suspend fun returnOrder(
+        @Header("Authorization") authToken: String,
+        @Path("orderId") orderId: String,
+        @Body req: RequestReturnOrder
+    ): ApiResponse<OrderResponse>
+
     @POST("v1/consumers/save/shipping-detail")
     suspend fun addEditShippingAddress(
         @Header("Authorization") authToken: String,
@@ -343,4 +355,7 @@ interface FebysBackendService {
         @Header("Authorization") authToken: String,
         @Body orderRequest: OrderRequest
     ): ResponseBody
+
+    @GET("v1/febys-plus/packages")
+    suspend fun fetchFebysPlusPackage(): ApiResponse<FebysPackageResponse>
 }

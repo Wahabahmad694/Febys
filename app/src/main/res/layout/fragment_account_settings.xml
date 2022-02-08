@@ -33,6 +33,7 @@
             app:layout_constraintBottom_toBottomOf="@id/label_account_settings"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/label_account_settings" />
+
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_edit"
             android:layout_width="@dimen/_20sdp"
@@ -57,8 +58,8 @@
 
                 <com.facebook.drawee.view.SimpleDraweeView
                     android:id="@+id/profile_img"
-                    android:layout_width="@dimen/_112sdp"
-                    android:layout_height="@dimen/_112sdp"
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_100sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:elevation="1dp"
                     app:actualImageScaleType="centerCrop"
@@ -70,8 +71,8 @@
 
                 <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/camera"
-                    android:layout_width="@dimen/_32sdp"
-                    android:layout_height="@dimen/_32sdp"
+                    android:layout_width="@dimen/_28sdp"
+                    android:layout_height="@dimen/_28sdp"
                     android:layout_marginEnd="@dimen/_minus6sdp"
                     android:layout_marginBottom="@dimen/_10sdp"
                     android:background="@null"
@@ -211,6 +212,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_minus8sdp"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal"
                     app:layout_constraintTop_toBottomOf="@id/label_phone_info">
 
@@ -218,23 +220,25 @@
                         android:id="@+id/ccp_phone_code"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_18sdp"
                         android:layout_marginEnd="@dimen/_4dp"
                         app:ccpDialog_keyboardAutoPopup="false"
                         app:ccp_arrowColor="@color/black"
                         app:ccp_contentColor="@color/black"
-                        android:layout_marginStart="@dimen/_20sdp"
                         app:ccp_hintExampleNumber="true"
-                        app:ccp_textSize="@style/TextTheme.Arial.TS16" />
+                        app:ccp_textSize="@dimen/_16sp" />
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/et_phone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_20sdp"
                         android:background="@null"
+                        android:enabled="false"
                         android:imeOptions="actionNext"
                         android:inputType="phone"
+                        android:maxLines="1"
                         android:paddingVertical="@dimen/_8dp"
-                        android:layout_marginEnd="@dimen/_20sdp"
                         android:textAppearance="@style/TextTheme.Arial.TS16"
                         app:layout_constraintTop_toBottomOf="@id/label_phone" />
 

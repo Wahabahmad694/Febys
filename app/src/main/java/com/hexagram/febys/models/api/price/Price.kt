@@ -1,32 +1,34 @@
 package com.hexagram.febys.models.api.price
 
-import android.icu.text.CompactDecimalFormat
+import android.icu.text.NumberFormat
 import android.icu.util.Currency
+import android.icu.util.CurrencyAmount
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import java.util.*
+
 
 @Parcelize
 data class Price(
     val _id: String,
     val value: Double,
-    val currency: String
+    val currency: String,
 ) : Parcelable {
     fun getFormattedPrice(): String {
-        if (currency.isEmpty()) return value.toString()
-        val format = CompactDecimalFormat
-            .getInstance(Locale(currency), CompactDecimalFormat.CompactStyle.SHORT)
-        format.maximumFractionDigits = 2
-        format.currency = Currency.getInstance(currency)
-        return format.format(value)
+        return formatPrice(value)
     }
 
     fun getFormattedPrice(multiplyBy: Int): String {
-        if (currency.isEmpty()) return (value * multiplyBy).toString()
-        val format = CompactDecimalFormat
-            .getInstance(Locale(currency), CompactDecimalFormat.CompactStyle.SHORT)
+        return formatPrice(value * multiplyBy)
+    }
+
+    private fun formatPrice(value: Double): String {
+        if (currency.isEmpty()) return value.toString()
+
+        val format = NumberFormat.getCurrencyInstance(Locale.getDefault())
         format.maximumFractionDigits = 2
-        format.currency = Currency.getInstance(currency)
-        return format.format(value * multiplyBy)
+        val currency = Currency.getInstance(currency)
+        val currencyAmount = CurrencyAmount(value, currency)
+        return format.format(currencyAmount)
     }
 }

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:binding="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="quantity"
+            type="Integer" />
+
+        <variable
+            name="product"
+            type="com.hexagram.febys.models.api.product.Product" />
+
+        <variable
+            name="isSelected"
+            type="Boolean" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/iv_product"
+            android:layout_width="@dimen/_83sdp"
+            android:layout_height="@dimen/_86sdp"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_18sdp"
+            android:background="@color/grey"
+            app:actualImageScaleType="fitCenter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:placeholderImage="@drawable/placeholder_image"
+            binding:image_url="@{product.variants.get(0).images.get(0)}" />
+
+        <TextView
+            android:id="@+id/tv_product_name"
+            style="@style/TextTheme.Arial.TS14"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="@{product.name}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_product"
+            app:layout_constraintTop_toTopOf="@id/iv_product"
+            tools:text="TCL 32-inch 3-Series 720p Roku Smart TV  (2018 Model)" />
+
+        <TextView
+            android:id="@+id/label_quantity"
+            style="@style/TextTheme.Arial.TS14.Grey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8dp"
+            android:text="@string/label_quantity"
+            app:layout_constraintStart_toStartOf="@id/tv_product_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_product_name" />
+
+        <TextView
+            android:id="@+id/tv_quantity"
+            style="@style/TextTheme.Arial.TS14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_4sdp"
+            android:layout_marginTop="@dimen/_16dp"
+            android:text="@{`` + quantity}"
+            app:layout_constraintBaseline_toBaselineOf="@id/label_quantity"
+            app:layout_constraintStart_toEndOf="@id/label_quantity"
+            tools:text="2" />
+
+        <TextView
+            android:id="@+id/label_sku_id"
+            style="@style/TextTheme.Arial.TS14.Grey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_sku_id"
+            app:layout_constraintStart_toStartOf="@id/label_quantity"
+            app:layout_constraintTop_toBottomOf="@id/label_quantity" />
+
+        <TextView
+            android:id="@+id/tv_sku_id"
+            style="@style/TextTheme.Arial.TS14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_4sdp"
+            android:text="@{product.variants.get(0).skuId}"
+            app:layout_constraintBaseline_toBaselineOf="@id/label_sku_id"
+            app:layout_constraintStart_toEndOf="@id/label_sku_id"
+            tools:text="123" />
+
+        <TextView
+            android:id="@+id/tv_product_off_price"
+            style="@style/TextTheme.Arial.TS10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_2sdp"
+            android:text="@{product.variants.get(0).originalPrice.getFormattedPrice(quantity)}"
+            app:layout_constraintBaseline_toBaselineOf="@id/tv_product_price"
+            app:layout_constraintStart_toStartOf="@id/label_sku_id"
+            app:layout_constraintTop_toBottomOf="@id/label_sku_id"
+            binding:is_visible="@{product.variants.get(0).hasPromotion}"
+            binding:strike_through="@{true}"
+            tools:text="$14" />
+
+        <TextView
+            android:id="@+id/tv_product_off_price_separator"
+            style="@style/TextTheme.Arial.TS12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_2sdp"
+            android:text="@string/minus"
+            app:layout_constraintBaseline_toBaselineOf="@id/tv_product_price"
+            app:layout_constraintStart_toEndOf="@id/tv_product_off_price"
+            binding:is_visible="@{product.variants.get(0).hasPromotion}" />
+
+        <TextView
+            android:id="@+id/tv_product_price"
+            style="@style/TextTheme.Arial.TS12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2dp"
+            android:text="@{product.variants.get(0).price.getFormattedPrice(quantity)}"
+            app:layout_constraintStart_toEndOf="@id/tv_product_off_price_separator"
+            app:layout_constraintTop_toBottomOf="@id/label_sku_id"
+            tools:text="$14" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:background="@color/grey"
+            app:layout_constraintTop_toBottomOf="@id/iv_product" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

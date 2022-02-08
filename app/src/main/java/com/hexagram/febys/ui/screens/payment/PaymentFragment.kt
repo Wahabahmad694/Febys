@@ -125,13 +125,20 @@ class PaymentFragment : BasePaymentFragment() {
                             paymentViewModel.amountPaidFromWallet!!.getFormattedPrice()
                         binding.tvWalletPaymentMsg.text = getString(R.string.taken_from_wallet)
                     } else {
-                        binding.containerWalletPayment.isVisible = it.data.amount > 0.0
+                        paymentViewModel.isWalletEnable = it.data.amount > 0.0
+                        if (!paymentViewModel.isWalletEnable) disableWallet()
                         binding.tvWalletPrice.text = it.data.getPrice().getFormattedPrice()
                         binding.tvWalletPaymentMsg.text = getString(R.string.available)
                     }
                 }
             }
         }
+    }
+
+    private fun disableWallet() {
+        binding.containerWalletPayment.setOnClickListener(null)
+        binding.containerWalletPayment.background =
+            ContextCompat.getDrawable(requireContext(), R.drawable.bg_grey)
     }
 
     override fun doWalletPayment() {
@@ -287,7 +294,9 @@ class PaymentFragment : BasePaymentFragment() {
     }
 
     private fun updateUi(selectedBackground: View, filledTick: View) {
-        markAsNotSelected(binding.containerWalletPayment, binding.walletFilledTick)
+        if (paymentViewModel.isWalletEnable) {
+            markAsNotSelected(binding.containerWalletPayment, binding.walletFilledTick)
+        }
         markAsNotSelected(binding.containerMomoPayment, binding.momoFilledTick)
         markAsNotSelected(binding.containerPaypalPayment, binding.paypalFilledTick)
 
@@ -296,6 +305,7 @@ class PaymentFragment : BasePaymentFragment() {
         binding.containerRemainingPayment.isVisible = paymentViewModel.isSplitMode
         if (paymentViewModel.isSplitMode) {
             markAsSelected(binding.containerWalletPayment, binding.walletFilledTick)
+            binding.walletFilledTick.isVisible = false
 
             val remainingPrice = paymentViewModel.getRemainingPriceForSplit().getFormattedPrice()
             val remainingPriceMsg =

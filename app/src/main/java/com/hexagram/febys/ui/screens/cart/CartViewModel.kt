@@ -14,8 +14,10 @@ import com.hexagram.febys.repos.ICartRepo
 import com.hexagram.febys.repos.IProductRepo
 import com.hexagram.febys.ui.screens.product.ProductViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
 import javax.inject.Inject
@@ -23,7 +25,7 @@ import javax.inject.Inject
 @HiltViewModel
 open class CartViewModel @Inject constructor(
     private val cartRepo: ICartRepo,
-    productRepo: IProductRepo,
+    productRepo: IProductRepo
 ) : ProductViewModel(productRepo) {
     private val _downloadPdf = MutableLiveData<DataState<ResponseBody>>()
     val observerDownloadPdf: LiveData<DataState<ResponseBody>> = _downloadPdf
@@ -81,9 +83,14 @@ open class CartViewModel @Inject constructor(
         voucher: String?,
         vendorMessages: List<VendorMessage>
     ): LiveData<DataState<Order?>> =
-        cartRepo.placeOrder(transactions, voucher, vendorMessages).onEach {
-            if (it is DataState.Data) clearCart()
-        }.asLiveData()
+        cartRepo.placeOrder(transactions, voucher, vendorMessages)
+            .onStart {
+                emit(DataState.Loading())
+            }
+            .onEach {
+                delay(500)
+                if (it is DataState.Data) clearCart()
+            }.asLiveData()
 
     fun exportPdf() = viewModelScope.launch {
         _downloadPdf.postValue(DataState.Loading())
@@ -93,4 +100,3 @@ open class CartViewModel @Inject constructor(
     }
 
 }
-

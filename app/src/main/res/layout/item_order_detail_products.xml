@@ -14,6 +14,10 @@
             name="product"
             type="com.hexagram.febys.models.api.product.Product" />
 
+        <variable
+            name="isSelected"
+            type="Boolean" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,24 +30,34 @@
             android:layout_height="@dimen/_86sdp"
             android:layout_marginStart="@dimen/_8sdp"
             android:layout_marginTop="@dimen/_18sdp"
-            app:actualImageScaleType="fitCenter"
             android:background="@color/grey"
+            app:actualImageScaleType="fitCenter"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:placeholderImage="@drawable/placeholder_image"
             binding:image_url="@{product.variants.get(0).images.get(0)}" />
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_is_selected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@{isSelected ? @drawable/ic_circle_fill : @drawable/ic_circle}"
+            app:layout_constraintBottom_toBottomOf="@id/iv_product"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iv_product"
+            tools:src="@drawable/ic_circle_fill" />
+
         <TextView
             android:id="@+id/tv_product_name"
             style="@style/TextTheme.Arial.TS14"
-            android:layout_width="@dimen/_0dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_8sdp"
             android:layout_marginTop="@dimen/_5sdp"
             android:ellipsize="end"
             android:maxLines="2"
             android:text="@{product.name}"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/iv_is_selected"
             app:layout_constraintStart_toEndOf="@id/iv_product"
             app:layout_constraintTop_toTopOf="@id/iv_product"
             tools:text="TCL 32-inch 3-Series 720p Roku Smart TV  (2018 Model)" />
@@ -126,7 +140,29 @@
             app:layout_constraintTop_toBottomOf="@id/label_sku_id"
             tools:text="$14" />
 
+        <TextView
+            android:id="@+id/tv_status"
+            style="@style/TextTheme.Arial.TS14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2dp"
+            android:padding="@dimen/_4sdp"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@+id/tv_product_off_price"
+            app:layout_constraintTop_toBottomOf="@id/tv_product_price"
+            tools:text="Processing" />
+
         <View
+            android:id="@+id/end_view_with_margin_26"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/_26sdp"
+            android:background="@color/grey"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/iv_product" />
+
+        <View
+            android:id="@+id/end_view_with_margin_16"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"
             android:layout_marginTop="@dimen/_16sdp"
