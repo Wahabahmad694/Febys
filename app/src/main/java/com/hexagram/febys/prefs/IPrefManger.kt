@@ -1,7 +1,6 @@
 package com.hexagram.febys.prefs
 
 import com.hexagram.febys.models.api.consumer.Consumer
-import com.hexagram.febys.models.view.PaymentMethod
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
 import com.hexagram.febys.network.response.User
 import com.hexagram.febys.ui.screens.payment.models.Wallet
@@ -29,7 +28,7 @@ interface IPrefManger {
 
     fun removeFromFav(skuId: String): Boolean
 
-    fun removeShippingAddress():Boolean
+    fun removeShippingAddress(): Boolean
 
     fun getFav(): MutableSet<String>
 

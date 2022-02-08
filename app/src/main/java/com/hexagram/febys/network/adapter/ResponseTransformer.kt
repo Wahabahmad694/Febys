@@ -1,7 +1,5 @@
 package com.hexagram.febys.network.adapter
 
-import com.hexagram.febys.network.response.ErrorResponse
-import com.google.gson.Gson
 import java.io.IOException
 
 /**
