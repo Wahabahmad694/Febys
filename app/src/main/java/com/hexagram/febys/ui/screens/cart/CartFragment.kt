@@ -1,10 +1,12 @@
 package com.hexagram.febys.ui.screens.cart
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.hexagram.febys.NavGraphDirections
@@ -17,6 +19,7 @@ import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.ResponseBody
 
 
 @AndroidEntryPoint
@@ -25,6 +28,17 @@ class CartFragment : BaseFragment() {
     private val cartViewModel: CartViewModel by viewModels()
 
     private val cartAdapter = CartAdapter()
+
+    private var openDocumentTreeCallback: ((Uri) -> Unit)? = null
+    private val openDocumentTree =
+        registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) {
+            if (it == null) return@registerForActivityResult
+            val takeFlags: Int =
+                Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+            requireContext().contentResolver.takePersistableUriPermission(it, takeFlags)
+            openDocumentTreeCallback?.invoke(it)
+        }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -141,17 +155,35 @@ class CartFragment : BaseFragment() {
                 }
                 is DataState.Data -> {
                     hideLoader()
-                    val pdfFile =
-                        FileUtils.writeResponseToFile(requireContext(), it.data)
-                    if (pdfFile != null) {
-                        showToast("Pdf download successfully at ${pdfFile.path}")
-                        val intent = Intent(Intent.ACTION_VIEW)
-                    } else {
-                        showToast("fail to write file")
-                    }
+                    savePdf(it.data)
                 }
             }
         }
+    }
+
+    private fun savePdf(body: ResponseBody) {
+        askUserToSelectDirectory { selectedDirectory ->
+            val pdfUri = FileUtils.writeResponseToFile(
+                requireContext(), selectedDirectory, "application/pdf", "febys_cart.pdf", body
+            )
+            if (pdfUri != null) {
+                Utils.openUri(requireContext(), pdfUri)
+            } else {
+                showToast("fail to save pdf")
+            }
+        }
+    }
+
+    private fun askUserToSelectDirectory(callback: (Uri) -> Unit) {
+        val contentResolver = requireContext().contentResolver
+        val uri = contentResolver.persistedUriPermissions.firstOrNull()?.uri
+        if (uri != null) {
+            callback.invoke(uri)
+            return
+        }
+
+        openDocumentTreeCallback = callback
+        openDocumentTree.launch(null)
     }
 
     private fun updateBtnVisibilities(isVisible: Boolean) {

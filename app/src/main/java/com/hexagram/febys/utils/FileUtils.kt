@@ -1,41 +1,48 @@
 package com.hexagram.febys.utils
 
 import android.content.Context
+import android.net.Uri
+import android.provider.DocumentsContract
 import okhttp3.ResponseBody
-import java.io.*
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.InputStream
 
 object FileUtils {
-    fun createTempFile(context: Context): File {
-        return File(context.cacheDir.path + File.separator.toString() + "feybs.pdf")
+    @Throws
+    fun createUri(context: Context, directory: Uri, mimeType: String, name: String): Uri {
+        val docId = DocumentsContract.getTreeDocumentId(directory)
+        val dirUri = DocumentsContract.buildDocumentUriUsingTree(directory, docId)
+        return DocumentsContract.createDocument(
+            context.contentResolver, dirUri, mimeType, name
+        ) ?: throw FileNotFoundException()
     }
 
-    fun writeToFile(context: Context, inputStream: InputStream): File? {
-        val outputStream: OutputStream?
+    fun writeToFile(
+        context: Context, directory: Uri, mimeType: String, name: String, inputStream: InputStream
+    ): Uri? {
         return try {
-            val fileReader = ByteArray(4096)
-            var fileSizeDownloaded: Long = 0
-            val febysCartPdf = createTempFile(context)
-            outputStream = FileOutputStream(febysCartPdf)
-            while (true) {
-                val read: Int = inputStream.read(fileReader)
-                if (read == -1) {
-                    break
+            val uri = createUri(context, directory, mimeType, name)
+            context.contentResolver.openFileDescriptor(uri, "w")?.use {
+                FileOutputStream(it.fileDescriptor).use { outputStream ->
+                    outputStream.write(inputStream.readBytes())
                 }
-                outputStream.write(fileReader, 0, read)
-                fileSizeDownloaded += read.toLong()
             }
-            outputStream.flush()
-            inputStream.close()
-            outputStream.close()
-            febysCartPdf
+            uri
+        } catch (e: FileNotFoundException) {
+            e.printStackTrace()
+            null
         } catch (e: IOException) {
+            e.printStackTrace()
             null
         }
     }
 
-    fun writeResponseToFile(context: Context, responseBody: ResponseBody): File? {
-        val inputStream: InputStream?
-        inputStream = responseBody.byteStream()
-        return writeToFile(context, inputStream)
+    fun writeResponseToFile(
+        context: Context, directory: Uri, mimeType: String, name: String, responseBody: ResponseBody
+    ): Uri? {
+        val inputStream = responseBody.byteStream()
+        return writeToFile(context, directory, mimeType, name, inputStream)
     }
 }

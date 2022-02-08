@@ -88,7 +88,12 @@ object Utils {
         if (!url.startsWith("http")) url = "https://$url"
 
         val uri = Uri.parse(url)
+        openUri(context, uri)
+    }
+
+    fun openUri(context: Context, uri: Uri) {
         val intent = Intent(Intent.ACTION_VIEW, uri)
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         context.startActivity(intent)
     }
 }
