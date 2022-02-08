@@ -74,14 +74,6 @@ object Utils {
         return Gson().fromJson(json, Wallet::class.java)
     }
 
-    fun jsonFromPaymentMethod(obj: PaymentMethod): String {
-        return Gson().toJson(obj)
-    }
-
-    fun jsonToPaymentMethod(json: String): PaymentMethod {
-        return Gson().fromJson(json, PaymentMethod::class.java)
-    }
-
     fun openLink(context: Context, link: String) {
         var url = link
         if (!url.startsWith("www.") && !url.startsWith("http")) url = "www.$url"
