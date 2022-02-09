@@ -34,14 +34,14 @@ class AuthRepoImpl @Inject constructor(
         signupReq: RequestSignup, dispatcher: CoroutineDispatcher
     ): Flow<DataState<ResponseSignup>> {
         return flow<DataState<ResponseSignup>> {
-            authService.signup(signupReq)
-                .onSuccess {
-                    data!!.apply {
-                        saveUserAndToken(user)
-                        fetchUserProfile(dispatcher)
-                        emit(DataState.Data(this))
-                    }
+            val response = authService.signup(signupReq)
+            response.onSuccess {
+                data!!.apply {
+                    saveUserAndToken(user)
+                    fetchUserProfile(dispatcher)
+                    emit(DataState.Data(this))
                 }
+            }
                 .onError { emit(DataState.ApiError(message)) }
                 .onException { emit(DataState.ExceptionError()) }
                 .onNetworkError { emit(DataState.NetworkError()) }
@@ -54,10 +54,10 @@ class AuthRepoImpl @Inject constructor(
         return flow<DataState<ResponseOtpVerification>> {
             val authToken = pref.getAccessToken()
             val verificationReq = mapOf("otp" to otp)
-            authService.verifyUser(authToken, verificationReq)
-                .onSuccess {
-                    emit(DataState.Data(data!!))
-                }
+            val response = authService.verifyUser(authToken, verificationReq)
+            response.onSuccess {
+                emit(DataState.Data(data!!))
+            }
                 .onError { emit(DataState.ApiError(message)) }
                 .onException { emit(DataState.ExceptionError()) }
                 .onNetworkError { emit(DataState.NetworkError()) }

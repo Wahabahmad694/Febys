@@ -2,6 +2,7 @@ package com.hexagram.febys.network.response
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import com.hexagram.febys.models.api.contact.PhoneNo
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -15,7 +16,7 @@ data class User @JvmOverloads constructor(
     @SerializedName("email")
     val email: String,
     @SerializedName("phone_number")
-    var phoneNo: String,
+    var phoneNo: PhoneNo,
     @SerializedName("keycloak_id")
     val keycloakId: String,
     @SerializedName("created_at")

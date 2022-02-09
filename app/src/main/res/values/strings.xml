@@ -344,6 +344,8 @@
     <string name="permission_granted">Permission granted</string>
     <string name="permission_denied">Permission denied</string>
     <string name="label_chose_option">Choose an Option</string>
+    <string name="label_permission_required">Permission Required</string>
+    <string name="label_permission_msg">Application can not perform action without permission</string>
     <string name="label_oops">Oops!</string>
     <string name="label_source">Source</string>
     <string name="label_status">Status</string>
