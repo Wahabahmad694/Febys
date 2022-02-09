@@ -15,6 +15,7 @@ import com.hexagram.febys.models.api.response.*
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddressResponse
 import com.hexagram.febys.models.api.states.PostStatesResponse
+import com.hexagram.febys.models.api.transaction.TransactionReq
 import com.hexagram.febys.models.api.vendor.Vendor
 import com.hexagram.febys.models.api.vendor.VendorPagingListing
 import com.hexagram.febys.models.api.vouchers.VoucherResponse
@@ -358,4 +359,11 @@ interface FebysBackendService {
 
     @GET("v1/febys-plus/packages")
     suspend fun fetchFebysPlusPackage(): ApiResponse<FebysPackageResponse>
+
+    @POST("v1/febys-plus/subscribe/{packageId}")
+    suspend fun subscribePackage(
+        @Header("Authorization") authKey: String,
+        @Path("packageId") packageId: String,
+        @Body transactionIds: TransactionReq
+    ): ApiResponse<Unit>
 }

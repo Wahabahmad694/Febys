@@ -2,6 +2,7 @@ package com.hexagram.febys.prefs
 
 import com.hexagram.febys.models.api.consumer.Consumer
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
+import com.hexagram.febys.models.api.subscription.Subscription
 import com.hexagram.febys.network.response.User
 import com.hexagram.febys.ui.screens.payment.models.Wallet
 
@@ -43,4 +44,8 @@ interface IPrefManger {
     fun getWallet(): Wallet?
 
     fun clear()
+
+    fun saveSubscription(subscription: Subscription)
+
+    fun getSubscription(): Subscription?
 }

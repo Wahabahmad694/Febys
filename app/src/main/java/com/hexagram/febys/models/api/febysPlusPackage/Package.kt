@@ -15,5 +15,5 @@ data class Package(
     val icon: String?,
     val subscriptionDays: Int,
     val title: String,
-    var selected:Boolean=false
+    var selected: Boolean = false
 ) : Parcelable

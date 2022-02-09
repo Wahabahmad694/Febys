@@ -10,11 +10,11 @@ import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentAccountBinding
-import com.hexagram.febys.models.api.consumer.Consumer
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.auth.AuthViewModel
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.utils.OrderStatus
+import com.hexagram.febys.utils.load
 import com.hexagram.febys.utils.navigateTo
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -161,8 +161,7 @@ class AccountFragment : BaseFragment() {
 
     private fun setupObserver() {
         observesUserLoggedIn.observe(viewLifecycleOwner) {
-            val user = authViewModel.getConsumer()
-            updateUserUi(user)
+            updateUserUi()
             updateWalletUi()
         }
 
@@ -175,6 +174,7 @@ class AccountFragment : BaseFragment() {
                     ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
                 }
                 is DataState.Data -> {
+                    updateUserUi()
                     updateWalletUi()
                 }
             }
@@ -187,9 +187,18 @@ class AccountFragment : BaseFragment() {
         binding.orders.containerWallet.isVisible = wallet?.isWalletCreated == true
     }
 
-    private fun updateUserUi(user: Consumer?) {
+    private fun updateUserUi() {
+        val user = authViewModel.getConsumer()
         binding.isUserLoggedIn = isUserLoggedIn
         binding.userName.text = user?.firstName?.split(" ")?.get(0) ?: getString(R.string.label_me)
+
+        val subscription = authViewModel.getSubscription()
+        if (subscription != null) {
+            binding.icSubscription.load(subscription.packageInfo.icon)
+        } else {
+            binding.icSubscription.isVisible = false
+        }
+
     }
 
     override fun getIvCart() = binding.ivCart

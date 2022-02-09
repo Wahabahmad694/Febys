@@ -4,6 +4,7 @@ import com.hexagram.febys.dataSource.ICartDataSource
 import com.hexagram.febys.enum.SocialLogin
 import com.hexagram.febys.models.api.consumer.Consumer
 import com.hexagram.febys.models.api.profile.Profile
+import com.hexagram.febys.models.api.subscription.Subscription
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.requests.RequestSignup
 import com.hexagram.febys.network.response.ResponseLogin
@@ -47,6 +48,9 @@ interface IAuthRepo {
     fun getConsumer(): Consumer?
 
     fun getWallet(): Wallet?
+
+    fun getSubscription(): Subscription?
+
 
     companion object {
         fun signOut(pref: IPrefManger, cartRepo: ICartRepo) {

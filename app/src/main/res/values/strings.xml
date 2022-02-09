@@ -148,7 +148,6 @@
     <string name="label_my_orders">My Orders</string>
     <string name="label_orders_status">Order Status</string>
     <string name="label_order_detail">Order Details</string>
-    <string name="label_return_order">Return Order</string>
     <string name="label_return_orders">Return Orders</string>
     <string name="label_cancel_orders">Cancel Orders</string>
     <string name="label_cancel">Cancel</string>
@@ -330,6 +329,7 @@
     <string name="label_withdraw">Withdraw</string>
     <string name="label_topUp">Top-Up</string>
     <string name="label_profile_is_updated">Your profile has been updated Successfully</string>
+    <string name="label_success_subscription">For choosing Febys Plus Membership You have got free delivery.</string>
     <string name="label_review_is_updated">Your review has been updated Successfully</string>
     <string name="label_coming_soon">Coming Soon</string>
     <string name="label_transactions_history">Transactions History</string>
@@ -368,7 +368,9 @@
     <string name="label_zip_code">Zip Code</string>
     <string name="toast_enter_voucher_code">Please enter voucher code</string>
     <string name="label_new_in">New In</string>
+    <string name="msg_febys_plus">Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a gallery of type and scrambled it to make a type specimen book.</string>
     <string name="label_msg_return">Payment will be automatic refund in Febian wallet and Febian anytime withdraw amount in his Account.</string>
     <string name="toast_fail_pdf">Fail to save PDF, please try again!</string>
+    <string name="label_return_order">Returned Orders</string>
 
 </resources>

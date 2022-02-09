@@ -4,10 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentMenuBinding
-import com.hexagram.febys.ui.screens.checkout.CheckoutFragmentDirections
 import com.hexagram.febys.utils.navigateTo
 
 class MenuFragment : BaseFragment() {
@@ -27,9 +25,9 @@ class MenuFragment : BaseFragment() {
 
     private fun initUiListener() {
         binding.labelFebysPlus.setOnClickListener {
-            val gotofebysPlus =
+            val gotoFebysPlus =
                 MenuFragmentDirections.actionMenuFragmentToFebysPlusFragment()
-            navigateTo(gotofebysPlus)
+            navigateTo(gotoFebysPlus)
         }
     }
 }

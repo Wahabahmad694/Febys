@@ -240,6 +240,7 @@
                         android:maxLines="1"
                         android:paddingVertical="@dimen/_8dp"
                         android:textAppearance="@style/TextTheme.Arial.TS16"
+                        android:textColor="@color/black"
                         app:layout_constraintTop_toBottomOf="@id/label_phone" />
 
                 </LinearLayout>

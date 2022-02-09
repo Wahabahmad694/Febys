@@ -74,8 +74,8 @@ class CheckoutFragment : BaseFragment() {
                 showToast(getString(R.string.error_please_select_shipping_address))
             } else {
                 val paymentRequest = PaymentRequest(orderPrice!!.value, orderPrice!!.currency)
-                val gotoPayment = CheckoutFragmentDirections
-                    .actionCheckoutFragmentToPaymentFragment(paymentRequest)
+                val gotoPayment = NavGraphDirections
+                    .toPaymentFragment(paymentRequest)
                 navigateTo(gotoPayment)
             }
         }
