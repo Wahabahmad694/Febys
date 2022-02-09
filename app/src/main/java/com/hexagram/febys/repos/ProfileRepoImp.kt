@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.flowOn
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import javax.inject.Inject
 
@@ -59,7 +60,7 @@ class ProfileRepoImp @Inject constructor(
         val filePart: MultipartBody.Part = MultipartBody.Part.createFormData(
             "media",
             fileToUpload.getName(),
-            RequestBody.create("image/*".toMediaTypeOrNull(), fileToUpload)
+            fileToUpload.asRequestBody("image/*".toMediaTypeOrNull())
         )
         val authToken = pref.getAccessToken()
         val response = backendService.uploadImage(authToken, filePart)
