@@ -190,6 +190,7 @@
     <string name="label_address_label">Address Label</string>
     <string name="label_order_cancel_reason">Order Cancel Reason</string>
     <string name="label_destination_or_region">Destination/Region</string>
+    <string name="label_return_reason">Return item Reason</string>
     <string name="label_address_line_1">Address Line 1</string>
     <string name="label_address_line_2">Address Line 2 (Optional)</string>
     <string name="label_city">City</string>
@@ -197,6 +198,7 @@
     <string name="label_postal_code">Postal Code</string>
     <string name="label_set_as_default_shipping_address">Set as default shipping address</string>
     <string name="label_save_and_continue">Save and Continue</string>
+    <string name="label_return">Return</string>
     <string name="label_save">Save</string>
     <string name="label_show_filter">Show %1s results</string>
     <string name="label_apply_filter">Apply Now</string>
@@ -328,6 +330,7 @@
     <string name="label_withdraw">Withdraw</string>
     <string name="label_topUp">Top-Up</string>
     <string name="label_profile_is_updated">Your profile has been updated Successfully</string>
+    <string name="label_success_subscription">For choosing Febys Plus Membership You have got free delivery.</string>
     <string name="label_review_is_updated">Your review has been updated Successfully</string>
     <string name="label_coming_soon">Coming Soon</string>
     <string name="label_transactions_history">Transactions History</string>
@@ -360,8 +363,16 @@
     <string name="days">Days</string>
     <string name="add_voucher">Add Voucher</string>
     <string name="label_add">Add</string>
+    <string name="label_store_name">Store Name</string>
+    <string name="label_address">Address</string>
+    <string name="label_country">Country</string>
+    <string name="label_zip_code">Zip Code</string>
     <string name="toast_enter_voucher_code">Please enter voucher code</string>
     <string name="label_new_in">New In</string>
     <string name="_14">$14</string>
+    <string name="msg_febys_plus">Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a gallery of type and scrambled it to make a type specimen book.</string>
+    <string name="label_msg_return">Payment will be automatic refund in Febian wallet and Febian anytime withdraw amount in his Account.</string>
+    <string name="toast_fail_pdf">Fail to save PDF, please try again!</string>
+    <string name="label_return_order">Returned Orders</string>
 
 </resources>

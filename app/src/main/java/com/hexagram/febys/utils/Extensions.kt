@@ -2,7 +2,6 @@ package com.hexagram.febys.utils
 
 import android.app.Activity
 import android.graphics.drawable.GradientDrawable
-import android.os.Build
 import android.text.Html
 import android.view.View
 import android.view.ViewGroup
@@ -220,11 +219,8 @@ fun TextView.setBackgroundRoundedColor(color: Int, cornerRadius: Float = 16f) {
 }
 
 fun TextView.showHtml(html: String) {
-    val spannedText = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+    val spannedText =
         Html.fromHtml(html, Html.FROM_HTML_MODE_COMPACT)
-    } else {
-        Html.fromHtml(html)
-    }
     this.setText(spannedText, TextView.BufferType.SPANNABLE)
 }
 

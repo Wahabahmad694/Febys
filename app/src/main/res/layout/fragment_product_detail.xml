@@ -131,6 +131,7 @@
                         android:layout_height="@dimen/_26sdp"
                         android:layout_marginTop="@dimen/_16dp"
                         android:layout_marginEnd="@dimen/_16dp"
+                        android:elevation="@dimen/_4sdp"
                         android:src="@drawable/ic_un_fav"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@id/slider_product_images" />

@@ -8,7 +8,8 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class OrderListingRequest constructor(
     var filters: List<String>? = null,
-    var hasReviewed: Boolean = false
+    var hasReviewed: Boolean = false,
+    var isReturn: Boolean = false
 ) : Parcelable {
     fun createRequest(): JsonObject {
         val req = JsonObject()
@@ -23,7 +24,9 @@ data class OrderListingRequest constructor(
             val multiFilters = JsonObject()
             multiFilters.add("\$in", filterArray)
             val filter = JsonObject()
-            filter.add("vendor_products.status", multiFilters)
+            val filtersKey =
+                if (isReturn) "vendor_products.returns_detail.status" else "vendor_products.status"
+            filter.add(filtersKey, multiFilters)
             req.add("filters", filter)
         }
 

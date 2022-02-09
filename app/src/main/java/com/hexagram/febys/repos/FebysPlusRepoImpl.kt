@@ -2,6 +2,7 @@ package com.hexagram.febys.repos
 
 
 import com.hexagram.febys.models.api.febysPlusPackage.Package
+import com.hexagram.febys.models.api.transaction.TransactionReq
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.FebysBackendService
 import com.hexagram.febys.network.adapter.onError
@@ -28,4 +29,16 @@ class FebysPlusRepoImpl @Inject constructor(
                 .onException { emit(DataState.ExceptionError()) }
                 .onNetworkError { emit(DataState.NetworkError()) }
         }.flowOn(dispatcher)
+
+    override suspend fun subscribePackage(
+        packageId: String, transaction: TransactionReq, dispatcher: CoroutineDispatcher
+    ) = flow<DataState<Unit>> {
+        val authToken = pref.getAccessToken()
+        if (authToken.isEmpty()) return@flow
+        backendService.subscribePackage(authToken, packageId, transaction)
+            .onSuccess { emit(DataState.Data(data!!)) }
+            .onError { emit(DataState.ApiError(message)) }
+            .onException { emit(DataState.ExceptionError()) }
+            .onNetworkError { emit(DataState.NetworkError()) }
+    }
 }

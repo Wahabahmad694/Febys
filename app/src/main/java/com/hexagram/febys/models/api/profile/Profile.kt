@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName
 import com.hexagram.febys.models.api.cart.Cart
 import com.hexagram.febys.models.api.consumer.Consumer
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
+import com.hexagram.febys.models.api.subscription.Subscription
 import com.hexagram.febys.models.api.vouchers.Voucher
 import com.hexagram.febys.models.api.wishlist.FavSkuIds
 import com.hexagram.febys.ui.screens.payment.models.Wallet
@@ -23,5 +24,6 @@ data class Profile(
     @SerializedName("recently_viewed")
     val recentlyViewed: RecentlyViewed,
     val vouchers: List<Voucher>,
-    val wallet: Wallet
+    val wallet: Wallet,
+    val subscription: Subscription?,
 ) : Parcelable
