@@ -135,6 +135,12 @@
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.hexagram.febys.ui.screens.notifications.NotificationFragment"
+        android:label="NotificationFragment"
+        tools:layout="@layout/fragment_notification">
+    </fragment>
+    <fragment
         android:id="@+id/searchFragment"
         android:name="com.hexagram.febys.ui.screens.search.SearchFragment"
         android:label="SearchFragment"

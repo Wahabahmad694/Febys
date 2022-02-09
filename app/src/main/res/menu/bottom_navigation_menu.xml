@@ -6,9 +6,9 @@
         android:title="@string/menu_home" />
 
     <item
-        android:id="@+id/messageFragment"
+        android:id="@+id/notificationFragment"
         android:icon="@drawable/ic_message_bottom_nav"
-        android:title="@string/menu_message" />
+        android:title="@string/menu_notification" />
 
     <item
         android:id="@+id/searchFragment"

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:name="com.hexagram.febys.ui.screens.notifications.NotificationFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/label_vouchers"
+                    style="@style/TextTheme.HelveticaNeue.TS32.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:text="@string/label_notifications"
+                    android:padding="@dimen/_10sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_notification"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:clipToPadding="false"
+                android:gravity="center_horizontal"
+                android:paddingBottom="@dimen/_2sdp"
+                app:layoutManager="LinearLayoutManager"
+                tools:context=".ui.screens.notifications.NotificationFragment"
+                tools:listitem="@layout/item_notifications" />
+
+        </LinearLayout>
+
+        <include
+            android:id="@+id/empty_view"
+            layout="@layout/layout_empty_view"
+            android:visibility="gone"
+            app:warningTitle="@{@string/label_notifications}" />
+    </RelativeLayout>
+</layout>
