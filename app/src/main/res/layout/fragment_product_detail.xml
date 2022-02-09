@@ -48,18 +48,18 @@
                 app:layout_constraintStart_toEndOf="@id/iv_back"
                 app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/tv_product_brand_appbar"
-                style="@style/TextTheme.HelveticaNeue.TS16.Bold"
-                android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
-                android:background="@color/grey"
-                android:gravity="center"
-                android:paddingHorizontal="@dimen/_32dp"
-                android:text="@{product.vendor.shopName}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/tv_product_brand_appbar"
+                    style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="?actionBarSize"
+                    android:background="@color/grey"
+                    android:gravity="center"
+                    android:paddingHorizontal="@dimen/_32dp"
+                    android:text="@{product.vendor.shopName}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </LinearLayout>
 
@@ -67,9 +67,9 @@
                 android:id="@+id/iv_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@color/grey"
                 android:padding="@dimen/_16sdp"
                 android:src="@drawable/ic_back"
-                android:background="@color/grey"
                 app:layout_constraintBottom_toBottomOf="@id/container_product_listing_title_and_count"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/container_product_listing_title_and_count" />
@@ -78,11 +78,11 @@
                 android:id="@+id/iv_cart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/_16sdp"
-                android:paddingEnd="@dimen/_16sdp"
-                android:paddingTop="@dimen/_16sdp"
-                android:src="@drawable/ic_cart"
                 android:background="@color/grey"
+                android:paddingTop="@dimen/_16sdp"
+                android:paddingEnd="@dimen/_16sdp"
+                android:paddingBottom="@dimen/_16sdp"
+                android:src="@drawable/ic_cart"
                 app:layout_constraintBottom_toBottomOf="@id/container_product_listing_title_and_count"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/container_product_listing_title_and_count" />
@@ -92,11 +92,11 @@
                 style="@style/TextTheme.HelveticaNeue.TS16.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/_16sdp"
-                android:paddingEnd="@dimen/_2sdp"
-                android:paddingTop="@dimen/_16sdp"
                 android:background="@color/grey"
                 android:contentDescription="@string/app_name"
+                android:paddingTop="@dimen/_16sdp"
+                android:paddingEnd="@dimen/_2sdp"
+                android:paddingBottom="@dimen/_16sdp"
                 app:layout_constraintEnd_toStartOf="@id/iv_cart"
                 app:layout_constraintTop_toTopOf="@id/iv_cart"
                 app:layout_constraintVertical_bias="0.8"
@@ -177,7 +177,7 @@
 
                     <TextView
                         android:id="@+id/tv_product_name"
-                        style="@style/TextTheme.Arial.TS14"
+                        style="@style/TextTheme.Arial.TS14.Bold"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/_16dp"
@@ -572,7 +572,7 @@
                                 android:id="@+id/see_more_rating_and_reviews"
                                 style="@style/ButtonTheme.OutLine.Full"
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/_39sdp"
+                                android:layout_height="@dimen/_49sdp"
                                 android:layout_marginTop="@dimen/_13sdp"
                                 android:text="@string/label_see_more" />
 
@@ -710,8 +710,8 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_16sdp"
-                                android:layout_marginBottom="@dimen/_16sdp"
                                 android:layout_marginEnd="@dimen/_16sdp"
+                                android:layout_marginBottom="@dimen/_16sdp"
                                 android:layout_weight="1"
                                 android:gravity="center"
                                 android:orientation="horizontal">
@@ -759,9 +759,9 @@
                                 android:layout_height="match_parent"
                                 android:layout_marginTop="@dimen/_16dp"
                                 android:layout_marginBottom="@dimen/_16dp"
-                                android:maxLines="1"
                                 android:layout_weight="1"
                                 android:gravity="center"
+                                android:maxLines="1"
                                 android:orientation="horizontal">
 
                                 <androidx.appcompat.widget.AppCompatRatingBar

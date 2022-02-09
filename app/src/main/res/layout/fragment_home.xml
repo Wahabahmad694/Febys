@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_febys_small"
-            android:layout_marginTop="@dimen/_14sdp"
+            android:layout_marginTop="@dimen/_6sdp"
             app:layout_constraintBottom_toBottomOf="@id/bg_top"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

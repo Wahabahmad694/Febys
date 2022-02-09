@@ -21,7 +21,7 @@ class ResetCredentialFragment : BaseFragment() {
     private val viewModel: AuthViewModel by viewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View {
         binding = FragmentResetCredentialBinding.inflate(inflater, container, false)
         return binding.root
@@ -65,7 +65,9 @@ class ResetCredentialFragment : BaseFragment() {
                         R.drawable.ic_email,
                         getString(R.string.label_check_your_email),
                         getString(R.string.label_email_sent)
-                    ).show(childFragmentManager, InfoDialog.TAG)
+                    ) {
+                       goBack()
+                    }.show(childFragmentManager, InfoDialog.TAG)
                 }
             }
         }

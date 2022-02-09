@@ -43,7 +43,7 @@
                 android:layout_marginStart="@dimen/_8dp"
                 android:layout_marginTop="@dimen/_16dp"
                 android:text="@{@string/wish_list_count(wishListCount)}"
-                android:visibility="@{wishListCount > 0 ? View.VISIBLE : View.GONE, default = gone}"
+                android:visibility="@{wishListCount >= 0 ? View.VISIBLE : View.GONE, default = gone}"
                 app:layout_constraintBaseline_toBaselineOf="@id/label_wishlist"
                 app:layout_constraintStart_toEndOf="@id/label_wishlist"
                 tools:text="(3)"

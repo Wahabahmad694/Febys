@@ -27,21 +27,21 @@ class AuthRepoImpl @Inject constructor(
     private val authService: AuthService,
     private val pref: IPrefManger,
     private val userDataSource: IUserDataSource,
-    private val cartRepo: ICartRepo
+    private val cartRepo: ICartRepo,
 ) : IAuthRepo {
 
     override fun signup(
-        signupReq: RequestSignup, dispatcher: CoroutineDispatcher
+        signupReq: RequestSignup, dispatcher: CoroutineDispatcher,
     ): Flow<DataState<ResponseSignup>> {
         return flow<DataState<ResponseSignup>> {
-            authService.signup(signupReq)
-                .onSuccess {
-                    data!!.apply {
-                        saveUserAndToken(user)
-                        fetchUserProfile(dispatcher)
-                        emit(DataState.Data(this))
-                    }
+            val response = authService.signup(signupReq)
+            response.onSuccess {
+                data!!.apply {
+                    saveUserAndToken(user)
+                    fetchUserProfile(dispatcher)
+                    emit(DataState.Data(this))
                 }
+            }
                 .onError { emit(DataState.ApiError(message)) }
                 .onException { emit(DataState.ExceptionError()) }
                 .onNetworkError { emit(DataState.NetworkError()) }
@@ -49,7 +49,7 @@ class AuthRepoImpl @Inject constructor(
     }
 
     override fun verifyUser(
-        otp: String, dispatcher: CoroutineDispatcher
+        otp: String, dispatcher: CoroutineDispatcher,
     ): Flow<DataState<ResponseOtpVerification>> {
         return flow<DataState<ResponseOtpVerification>> {
             val authToken = pref.getAccessToken()
@@ -65,7 +65,7 @@ class AuthRepoImpl @Inject constructor(
     }
 
     override fun login(
-        email: String, password: String, dispatcher: CoroutineDispatcher
+        email: String, password: String, dispatcher: CoroutineDispatcher,
     ): Flow<DataState<ResponseLogin>> {
         return flow<DataState<ResponseLogin>> {
             val loginReq = mapOf("email" to email, "password" to password)
@@ -83,7 +83,7 @@ class AuthRepoImpl @Inject constructor(
     }
 
     override fun resetCredentials(
-        email: String, dispatcher: CoroutineDispatcher
+        email: String, dispatcher: CoroutineDispatcher,
     ): Flow<DataState<Unit>> {
         return flow<DataState<Unit>> {
             val resetCredentialReq = mapOf("email" to email)
@@ -96,7 +96,7 @@ class AuthRepoImpl @Inject constructor(
     }
 
     override fun socialLogin(
-        token: String, socialLogin: SocialLogin, dispatcher: CoroutineDispatcher
+        token: String, socialLogin: SocialLogin, dispatcher: CoroutineDispatcher,
     ): Flow<DataState<ResponseLogin>> {
         return flow<DataState<ResponseLogin>> {
             val socialLoginReq = mapOf(
