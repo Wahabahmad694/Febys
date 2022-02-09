@@ -37,7 +37,7 @@ class SignupFragment : SocialMediaAuthFragment() {
     private var isSocialLogin = false
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View {
         binding = FragmentSignupBinding.inflate(inflater, container, false)
         return binding.root
@@ -217,9 +217,11 @@ class SignupFragment : SocialMediaAuthFragment() {
             showErrorDialog(getString(R.string.error_enter_valid_phone))
             return false
         }
-
-        if (!Validator.isValidPassword(password)) {
+        if (password.isEmpty()) {
             showErrorDialog(getString(R.string.error_enter_password))
+            return false
+        } else if (!Validator.isValidPassword(password)) {
+            showErrorDialog(getString(R.string.error_enter_password_characters))
             return false
         }
 

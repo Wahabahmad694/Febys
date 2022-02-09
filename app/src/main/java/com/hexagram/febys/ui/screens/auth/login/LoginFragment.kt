@@ -28,7 +28,7 @@ class LoginFragment : SocialMediaAuthFragment() {
     private var password = ""
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View {
         binding = FragmentLoginBinding.inflate(layoutInflater, container, false)
         return binding.root
@@ -127,7 +127,6 @@ class LoginFragment : SocialMediaAuthFragment() {
             showErrorDialog(getString(R.string.error_enter_password))
             return false
         }
-
         return true
     }
 }

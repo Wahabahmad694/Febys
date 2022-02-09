@@ -18,5 +18,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:placeholderImage="@drawable/placeholder_image"
-        binding:image_url="@{imageUrl}" />
+        binding:image_url="@{imageUrl}"
+        app:roundedCornerRadius="@dimen/_5sdp"/>
 </layout>

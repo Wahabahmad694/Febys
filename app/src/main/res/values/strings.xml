@@ -131,6 +131,7 @@
     <string name="error_enter_valid_last_name">Please Enter Valid Last Name</string>
     <string name="error_enter_email">Please Enter Email</string>
     <string name="error_enter_valid_email">Please Enter Valid Email</string>
+    <string name="error_enter_password_characters">Password must be atleast 8 characters</string>
     <string name="error_enter_password">Please Enter Password</string>
     <string name="error_select_cancel_reason">Please Select Cancel Reason</string>
     <string name="error_enter_confirm_password">Please Enter Password Again</string>
@@ -361,5 +362,6 @@
     <string name="label_add">Add</string>
     <string name="toast_enter_voucher_code">Please enter voucher code</string>
     <string name="label_new_in">New In</string>
+    <string name="_14">$14</string>
 
 </resources>

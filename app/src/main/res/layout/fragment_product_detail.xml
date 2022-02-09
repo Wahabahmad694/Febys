@@ -229,7 +229,7 @@
                     <com.facebook.drawee.view.SimpleDraweeView
                         android:id="@+id/iv_product_verified_logo"
                         android:layout_width="0dp"
-                        android:layout_height="@dimen/_24dp"
+                        android:layout_height="@dimen/_14sdp"
                         android:layout_marginTop="@dimen/_8dp"
                         app:actualImageResource="@drawable/ic_product_verified_logo"
                         app:actualImageScaleType="fitCenter"
