@@ -127,22 +127,23 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_product_fav"
-                        android:layout_width="@dimen/_26sdp"
-                        android:layout_height="@dimen/_26sdp"
+                        android:layout_width="@dimen/_32sdp"
+                        android:layout_height="@dimen/_32sdp"
                         android:layout_marginTop="@dimen/_16dp"
                         android:layout_marginEnd="@dimen/_16dp"
-                        android:elevation="@dimen/_4sdp"
+                        android:elevation="@dimen/_8sdp"
                         android:src="@drawable/ic_un_fav"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@id/slider_product_images" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_product_share"
-                        android:layout_width="@dimen/_19sdp"
-                        android:layout_height="@dimen/_19sdp"
-                        android:layout_marginTop="@dimen/_24dp"
+                        android:layout_width="@dimen/_32sdp"
+                        android:layout_height="@dimen/_32sdp"
+                        android:layout_marginTop="@dimen/_16dp"
                         android:layout_marginEnd="@dimen/_16dp"
-                        android:src="@drawable/ic_product_share"
+                        android:elevation="@dimen/_8sdp"
+                        android:src="@drawable/ic_share"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/iv_product_fav" />
 

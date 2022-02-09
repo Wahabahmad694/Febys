@@ -188,7 +188,7 @@ class OrderDetailFragment : BaseFragment() {
         )
 
         val vatLabel = getString(R.string.label_vat)
-        val vatWithPercentage = "$vatLabel $vatPercentage%"
+        val vatWithPercentage = "$vatLabel ($vatPercentage%)"
         productSummary.tvProductNameWithQuantity.text = vatWithPercentage
 
         val vatAmount =
