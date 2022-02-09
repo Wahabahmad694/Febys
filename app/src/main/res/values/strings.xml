@@ -372,5 +372,6 @@
     <string name="label_msg_return">Payment will be automatic refund in Febian wallet and Febian anytime withdraw amount in his Account.</string>
     <string name="toast_fail_pdf">Fail to save PDF, please try again!</string>
     <string name="label_return_order">Returned Orders</string>
+    <string name="label_done">Done</string>
 
 </resources>

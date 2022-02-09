@@ -1,21 +1,18 @@
 package com.hexagram.febys.ui.screens.profile
 
-import android.app.Activity
-import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
-import android.content.Intent
+import android.content.DialogInterface
 import android.graphics.Color
-import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.addCallback
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import com.canhub.cropper.CropImageContract
+import com.canhub.cropper.CropImageView
+import com.canhub.cropper.options
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragmentWithPermission
 import com.hexagram.febys.databinding.FragmentAccountSettingsBinding
@@ -25,8 +22,6 @@ import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.requests.RequestUpdateUser
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.utils.*
-import com.theartofdev.edmodo.cropper.CropImage
-import com.theartofdev.edmodo.cropper.CropImageView
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -34,6 +29,20 @@ import dagger.hilt.android.AndroidEntryPoint
 class AccountSettingsFragment : BaseFragmentWithPermission() {
     private lateinit var binding: FragmentAccountSettingsBinding
     private val accountSettingViewModel by viewModels<AccountSettingViewModel>()
+
+    private val cropImage = registerForActivityResult(CropImageContract()) { result ->
+        if (result.isSuccessful) {
+            val uriContent = result.uriContent
+            val uriFilePath = result.getUriFilePath(requireContext()) // optional usage
+            if (uriContent == null && uriFilePath == null) return@registerForActivityResult
+
+            binding.profileImg.setImageURI(uriContent, null)
+            accountSettingViewModel.updateProfileImage(uriFilePath!!)
+        } else {
+            val error = result.error?.message ?: ""
+            showToast(error)
+        }
+    }
 
     private var isInEditMode = false
     override fun onCreateView(
@@ -51,10 +60,12 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
     }
 
     private fun uiListeners() {
-        binding.camera.setOnClickListener {
-            choseOption()
+        binding.btnChangeProfileImg.setOnClickListener {
+            if (isInEditMode) showImageChooseOptions()
         }
+
         binding.ivBack.setOnClickListener { goBack() }
+
         binding.ivEdit.setOnClickListener {
             isInEditMode = !isInEditMode
             updateField()
@@ -70,7 +81,9 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
                 isInEditMode = false
                 setData(consumer)
                 updateField()
-            } else goBack()
+            } else {
+                goBack()
+            }
         }
     }
 
@@ -95,16 +108,42 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
         }
     }
 
-    private fun startCrop(imageUri: Uri) {
-        CropImage.activity()
-            .setAllowRotation(false)
-            .setGuidelines(CropImageView.Guidelines.ON)
-            .setAllowFlipping(false)
-            .setInitialCropWindowPaddingRatio(0.0f)
-            .setCropMenuCropButtonTitle("Done")
-            .setAspectRatio(1, 1)
-            .setOutputCompressQuality(50)
-            .start(requireContext(), this)
+    private fun showImageChooseOptions() {
+        val selectImageOptions = arrayOf("Gallery", "Camera", "Cancel")
+        val selectImageOptionHandler = DialogInterface.OnClickListener { dialog, which ->
+            when (which) {
+                0 -> {
+                    startCrop(includeGallery = true, includeCamera = false)
+                }
+                1 -> {
+                    startCrop(includeGallery = false, includeCamera = true)
+                }
+                2 -> {
+                    dialog.dismiss()
+                }
+            }
+        }
+
+        AlertDialog.Builder(context)
+            .setTitle(getString(R.string.label_chose_option))
+            .setItems(selectImageOptions, selectImageOptionHandler)
+            .create()
+            .show()
+    }
+
+    private fun startCrop(includeGallery: Boolean, includeCamera: Boolean) {
+        cropImage.launch(
+            options {
+                setImageSource(includeGallery, includeCamera)
+                setAllowRotation(false)
+                setGuidelines(CropImageView.Guidelines.ON)
+                setAllowFlipping(false)
+                setInitialCropWindowPaddingRatio(0.0f)
+                setCropMenuCropButtonTitle(getString(R.string.label_done))
+                setAspectRatio(1, 1)
+                setOutputCompressQuality(50)
+            }
+        )
     }
 
     private fun updateField() {
@@ -112,7 +151,7 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
         binding.etFirstName.isEnabled = isInEditMode
         binding.etLastName.isEnabled = isInEditMode
         binding.etPhone.isEnabled = isInEditMode
-        binding.camera.isVisible = isInEditMode
+        binding.btnChangeProfileImg.isVisible = isInEditMode
         binding.ccpPhoneCode.isActivated = isInEditMode
 
         binding.ivEdit.setImageResource(
@@ -122,75 +161,6 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
         val color = if (isInEditMode) Color.GRAY else Color.BLACK
         binding.etEmail.setTextColor(color)
     }
-
-    private fun choseOption() {
-        val builder: AlertDialog.Builder = AlertDialog.Builder(context)
-        builder.setTitle(getString(R.string.label_chose_option))
-
-        val option = arrayOf("Gallery", "Camera", "Cancel")
-        builder.setItems(
-            option
-        ) { dialog, which ->
-            when (which) {
-                0 -> {
-                    loadImage()
-                }
-                1 -> {
-                    captureImage()
-                }
-                2 -> {
-                    dialog.dismiss()
-                }
-            }
-        }
-
-        val dialog: AlertDialog = builder.create()
-        if (isInEditMode) {
-            dialog.show()
-        }
-    }
-
-    private fun captureImage() {
-        resultCameraLauncher.launch(
-            Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        )
-    }
-
-    private fun loadImage() {
-
-        val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
-        resultGalleryLauncher.launch(
-            galleryIntent
-        )
-
-    }
-
-
-    private val resultGalleryLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                result.data?.data?.let {
-                    val filePath = MediaFileUtils.handleUri(requireContext(), it)
-//                    startCrop(it)
-                    binding.profileImg.setImageURI(it)
-                    accountSettingViewModel.updateProfileImage(filePath!!)
-                }
-            }
-        }
-
-
-    private val resultCameraLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                result.data?.data?.let {
-                    val filePath = MediaFileUtils.handleUri(requireContext(), it)
-//                    startCrop(it)
-                    binding.profileImg.setImageURI(it)
-                    accountSettingViewModel.updateProfileImage(filePath!!)
-                }
-            }
-        }
-
 
     private fun setObserver() {
         accountSettingViewModel.observeProfile.observe(viewLifecycleOwner) {
@@ -239,22 +209,6 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
                     it.data
                     accountSettingViewModel.uploadedFilePath = it.data.firstOrNull()
                 }
-            }
-        }
-
-
-    }
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            val result = CropImage.getActivityResult(data)
-            if (resultCode == RESULT_OK) {
-                val resultUri: Uri = result.uri
-                val filePath = MediaFileUtils.handleUri(requireContext(), resultUri)
-                binding.profileImg.setImageURI(resultUri)
-                accountSettingViewModel.updateProfileImage(filePath!!)
-            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                val error = result.error
-                Toast.makeText(requireContext(), "$error", Toast.LENGTH_SHORT).show()
             }
         }
     }

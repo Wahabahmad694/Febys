@@ -70,7 +70,7 @@
                     app:roundAsCircle="true" />
 
                 <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/camera"
+                    android:id="@+id/btn_change_profile_img"
                     android:layout_width="@dimen/_28sdp"
                     android:layout_height="@dimen/_28sdp"
                     android:layout_marginEnd="@dimen/_minus6sdp"
