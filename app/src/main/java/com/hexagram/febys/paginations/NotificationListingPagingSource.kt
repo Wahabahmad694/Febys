@@ -23,6 +23,9 @@ class NotificationListingPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, RemoteNotification> {
         request.pageNo = params.key ?: 1
         val queryMap = request.createQueryMap()
+        if (authToken.isEmpty()) {
+            return LoadResult.Page(emptyList(), null, null)
+        }
         val response =
             service.fetchNotifications(authToken, queryMap, request)
         return when (response) {
