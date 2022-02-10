@@ -11,7 +11,7 @@ data class PagingListRequest constructor(
     var chunkSize: Int = 10,
     var pageNo: Int = 1,
     var orderByCol: String = "created_at",
-    var orderByType: String = "asc",
+    var orderByType: String = "desc",
     @SerializedName("start_date")
     var startDate: String = "2001-10-04T14:59:17.238Z",
     @SerializedName("end_date")
@@ -27,4 +27,12 @@ data class PagingListRequest constructor(
         "start_date" to startDate,
         "end_date" to endDate,
     )
+
+    companion object {
+        fun createDateSorter(): JsonObject {
+            val sorter = JsonObject()
+            sorter.addProperty("created_at", "desc")
+            return sorter
+        }
+    }
 }

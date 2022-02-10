@@ -139,6 +139,27 @@
         android:name="com.hexagram.febys.ui.screens.notifications.NotificationFragment"
         android:label="NotificationFragment"
         tools:layout="@layout/fragment_notification">
+        <action
+            android:id="@+id/action_notificationFragment_to_febysPlusFragment"
+            app:destination="@id/febysPlusFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_notificationFragment_to_orderDetailFragment"
+            app:destination="@id/orderDetailFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_notificationFragment_to_productDetailFragment"
+            app:destination="@id/productDetailFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -208,6 +229,11 @@
         <argument
             android:name="skuId"
             app:argType="string" />
+        <argument
+            android:name="threadId"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
         <action
             android:id="@+id/action_productDetailFragment_to_QAThreadsFragment"
             app:destination="@id/QAThreadsFragment"
@@ -634,6 +660,11 @@
         <argument
             android:name="productId"
             app:argType="string" />
+        <argument
+            android:name="threadId"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
         <argument
             android:name="threads"
             app:argType="com.hexagram.febys.models.api.product.QAThread[]" />

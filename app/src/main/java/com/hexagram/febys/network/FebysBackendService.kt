@@ -366,4 +366,11 @@ interface FebysBackendService {
         @Path("packageId") packageId: String,
         @Body transactionIds: TransactionReq
     ): ApiResponse<Unit>
+
+    @POST("v1/consumers/notifications/list")
+    suspend fun fetchNotifications(
+        @Header("Authorization") authKey: String,
+        @QueryMap queryMap: Map<String, String>,
+        @Body request: PagingListRequest
+    ): ApiResponse<Pagination>
 }

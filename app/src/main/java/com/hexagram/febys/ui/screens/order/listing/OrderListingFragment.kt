@@ -55,7 +55,6 @@ class OrderListingFragment : BaseFragment() {
         }
     }
 
-
     private fun setupOrderPagerAdapter() {
         binding.rvOrders.adapter = orderListingAdapter
 

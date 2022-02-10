@@ -13,6 +13,14 @@
         android:layout_marginBottom="@dimen/_5sdp"
         android:paddingHorizontal="@dimen/_14sdp">
 
+        <View
+            android:id="@+id/bg_notification_logo"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_notify_logo"
             android:layout_width="@dimen/_50sdp"
@@ -21,47 +29,47 @@
             app:actualImageScaleType="centerCrop"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:src="@drawable/placeholder_user"
-            app:roundAsCircle="true" />
+            app:roundAsCircle="true"
+            tools:src="@drawable/placeholder_user" />
 
         <TextView
             android:id="@+id/tv_name"
+            style="@style/TextTheme.Arial.TS16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Hi! Hillary"
-            style="@style/TextTheme.Arial.TS16"
+            android:layout_marginVertical="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_10sdp"
             app:layout_constraintStart_toEndOf="@id/iv_notify_logo"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginVertical="@dimen/_10sdp"
-            android:layout_marginStart="@dimen/_10sdp"/>
+            tools:text="Hi! Hillary" />
 
         <TextView
             android:id="@+id/tv_description"
+            style="@style/TextTheme.Arial.TS14"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            tools:text="Congratulation your order has been accepted by Deal-train Store"
-            style="@style/TextTheme.Arial.TS14"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:minLines="1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/tv_name"
             app:layout_constraintTop_toBottomOf="@id/tv_name"
-            android:layout_marginTop="@dimen/_5sdp"/>
+            tools:text="Congratulation your order has been accepted by Deal-train Store" />
 
         <TextView
             android:id="@+id/tv_date_time"
+            style="@style/TextTheme.Arial.TS14.Grey"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            tools:text="Nov 18.2021-3:01 pm"
-            style="@style/TextTheme.Arial.TS14.Grey"
+            android:layout_marginTop="@dimen/_5sdp"
             app:layout_constraintStart_toStartOf="@id/tv_description"
             app:layout_constraintTop_toBottomOf="@id/tv_description"
-            android:layout_marginTop="@dimen/_5sdp"/>
+            tools:text="Nov 18.2021-3:01 pm" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1dp"
-            android:background="@color/grey_e1e5e8"
             android:layout_marginVertical="@dimen/_10sdp"
+            android:background="@color/grey_e1e5e8"
             app:layout_constraintTop_toBottomOf="@id/tv_date_time" />
 
 

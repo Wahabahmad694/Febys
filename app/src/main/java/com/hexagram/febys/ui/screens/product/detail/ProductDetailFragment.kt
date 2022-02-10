@@ -454,6 +454,7 @@ class ProductDetailFragment : SliderFragment() {
 
         val variant = productDetailViewModel.selectedVariant
             ?: product.variants.firstOrNull { it.skuId == args.skuId }
+            ?: product.variants.firstOrNull { it.default }
             ?: product.variants[0]
 
         variant.getFirstVariantAttr()?.value?.let { selectedFirstAttr ->
@@ -490,10 +491,14 @@ class ProductDetailFragment : SliderFragment() {
         binding.storeRatingBar.rating = storeRating.toFloat()
         binding.storeRatingBar.stepSize = 0.5f
         binding.tvStoreRating.text = getString(R.string.store_rating, storeRating)
+
+        if (args.threadId != null) {
+            binding.seeMoreQAndA.performClick()
+        }
     }
 
     private fun updateQuestionAnswersThread(qaThreads: MutableList<QAThread>) {
-        binding.seeMoreQAndA.isVisible = qaThreads.size > 3
+        binding.seeMoreQAndA.isVisible = qaThreads.size >= 3
         if (qaThreads.isEmpty()) return
 
         binding.containerQAndAThread.removeAllViews()
@@ -810,7 +815,12 @@ class ProductDetailFragment : SliderFragment() {
     private fun gotoQAThreads(threads: Array<QAThread>) {
         val userId = consumer?.id?.toString()
         val action = ProductDetailFragmentDirections
-            .actionProductDetailFragmentToQAThreadsFragment(userId, args.productId, threads)
+            .actionProductDetailFragmentToQAThreadsFragment(
+                userId,
+                args.productId,
+                args.threadId,
+                threads
+            )
         navigateTo(action)
     }
 

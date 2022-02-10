@@ -4,13 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.hexagram.febys.R
 import com.hexagram.febys.databinding.ItemOrderDetailVendorForReviewBinding
 import com.hexagram.febys.databinding.ItemOrderDetailVendorsBinding
 import com.hexagram.febys.models.api.cart.CartProduct
 import com.hexagram.febys.models.api.cart.VendorProducts
 import com.hexagram.febys.utils.OrderStatus
-import com.hexagram.febys.utils.applySpaceItemDecoration
 import com.hexagram.febys.utils.load
 import com.hexagram.febys.utils.setBackgroundRoundedColor
 

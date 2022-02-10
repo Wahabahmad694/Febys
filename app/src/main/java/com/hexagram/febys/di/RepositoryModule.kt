@@ -78,4 +78,8 @@ abstract class RepositoryModule {
     @Singleton
     @Binds
     abstract fun febysPlusRepo(repo: FebysPlusRepoImpl): IFebysPlusRepo
+
+    @Singleton
+    @Binds
+    abstract fun notificationPlusRepo(repo: NotificationRepoImpl): INotificationRepo
 }

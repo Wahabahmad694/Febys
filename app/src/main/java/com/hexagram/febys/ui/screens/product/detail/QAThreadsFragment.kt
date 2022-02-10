@@ -134,6 +134,10 @@ class QAThreadsFragment : BaseBottomSheet() {
 
     private fun updateQA(qa: MutableList<QAThread>) {
         qaThreadsAdapter.submitList(qa)
+        if (args.threadId != null) {
+            val index = qa.indexOfFirst { it._id == args.threadId }
+            binding.rvQAThreads.scrollToPosition(index)
+        }
     }
 
     private fun onBottomSheetStateChange(state: Int) {
