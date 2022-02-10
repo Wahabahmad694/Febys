@@ -4,6 +4,8 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import com.hexagram.febys.models.api.product.Product
 import com.hexagram.febys.models.api.product.ProductPagingListing
 import com.hexagram.febys.models.api.request.PagingListRequest
@@ -31,6 +33,23 @@ class ProductListingRepoImpl @Inject constructor(
             PagingConfig(pageSize = 10)
         ) {
             val req = createReq(filters)
+            TodayDealsPagingSource(backendService, req, onProductListingResponse)
+        }.flow
+            .flowOn(dispatcher)
+            .cachedIn(scope)
+    }
+
+    override fun specialProductListing(
+        specialFilter: String,
+        filters: ProductListingRequest,
+        scope: CoroutineScope,
+        dispatcher: CoroutineDispatcher,
+        onProductListingResponse: ((ProductPagingListing) -> Unit)?
+    ): Flow<PagingData<Product>> {
+        return Pager(
+            PagingConfig(pageSize = 10)
+        ) {
+            val req = createReq(filters, specialFilter)
             TodayDealsPagingSource(backendService, req, onProductListingResponse)
         }.flow
             .flowOn(dispatcher)
@@ -140,12 +159,22 @@ class ProductListingRepoImpl @Inject constructor(
             .cachedIn(scope)
     }
 
-    private fun createReq(filters: ProductListingRequest): PagingListRequest {
+    private fun createReq(
+        filters: ProductListingRequest,
+        specialFilter: String? = null
+    ): PagingListRequest {
         val req = PagingListRequest()
         req.searchStr = filters.searchStr ?: ""
         req.queryStr = filters.searchStr ?: ""
         req.filters = filters.createFilters()
         req.sorter = filters.createSorter()
+        if (!specialFilter.isNullOrEmpty()) {
+            val specialTypes = JsonArray()
+            specialTypes.add(specialFilter)
+            val specialTypeFilter = JsonObject()
+            specialTypeFilter.add("\$in", specialTypes)
+            req.filters!!.add("spacial_types", specialTypeFilter)
+        }
         return req
     }
 }

@@ -5,13 +5,13 @@ import com.hexagram.febys.ui.screens.product.filters.FiltersType
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SpecialProductsListing : ProductListingFragment() {
-    private val args: SpecialProductsListingArgs by navArgs()
+class SpecialProductListingFragment : ProductListingFragment() {
+    private val args: SpecialProductListingFragmentArgs by navArgs()
 
     override fun getListingTitle(): String = args.productListTitle
 
     override fun getProductPagingData(refresh: Boolean) =
-        productListingViewModel.todayDealsListing(refresh) {
+        productListingViewModel.specialProductListing(refresh, args.specialFilter) {
             setProductItemCount(it.totalRows)
         }
 

@@ -30,7 +30,8 @@ class MenuFragment : BaseFragment() {
             navigateTo(gotoFebysPlus)
         }
         binding.labelThriftMarket.setOnClickListener {
-            val gotoThrift = MenuFragmentDirections.actionMenuFragmentToSpecialProductListing("")
+            val gotoThrift =
+                MenuFragmentDirections.actionMenuFragmentToSpecialProductListing("", "")
             navigateTo(gotoThrift)
         }
     }

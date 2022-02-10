@@ -83,13 +83,10 @@ data class ProductListingRequest constructor(
         return filters
     }
 
-    fun createSorter(): JsonObject {
+    fun createSorter(): JsonObject? {
+        if (sortByPrice == null) return null
         val sorter = JsonObject()
-
-        if (sortByPrice != null) {
-            sorter.addProperty(KEY_PRICE, sortByPrice)
-        }
-
+        sorter.addProperty(KEY_PRICE, sortByPrice)
         return sorter
     }
 
