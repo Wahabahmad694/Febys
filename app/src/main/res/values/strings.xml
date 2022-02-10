@@ -249,13 +249,13 @@
     <string name="label_compare_with_similar_items">Compare With Similar Items</string>
     <string name="label_no_answer">---</string>
     <string name="label_question">Question</string>
-    <string name="label_answer">Answer</string>
+    <string name="label_answer">Reply</string>
     <string name="error_please_select_shipping_address">Please select shipping address</string>
     <string name="label_order_date_and_time"><![CDATA[Order Date & Time:]]></string>
     <string name="error_enter_valid_country">Please enter valid region</string>
     <string name="label_average_rating">Average Rating:</string>
     <string name="average_rating_based_on">%1$.2f Based on %2$d ratings</string>
-    <string name="label_ratings_and_reviews">Ratings &amp; Reviews</string>
+    <string name="label_ratings_and_reviews">Customers Ratings &amp; Reviews</string>
     <string name="_1">1</string>
     <string name="_2">2</string>
     <string name="_3">3</string>

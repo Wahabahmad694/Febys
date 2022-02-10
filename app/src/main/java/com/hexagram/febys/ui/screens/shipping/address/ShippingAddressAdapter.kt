@@ -1,13 +1,12 @@
 package com.hexagram.febys.ui.screens.shipping.address
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import androidx.transition.Visibility
 import com.hexagram.febys.databinding.ItemShippingAddressBinding
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
 
@@ -16,13 +15,13 @@ class ShippingAddressAdapter :
     companion object {
         val diffUtil = object : DiffUtil.ItemCallback<ShippingAddress>() {
             override fun areItemsTheSame(
-                oldItem: ShippingAddress, newItem: ShippingAddress
+                oldItem: ShippingAddress, newItem: ShippingAddress,
             ): Boolean {
                 return oldItem.shippingDetail.shippingDetailId == newItem.shippingDetail.shippingDetailId
             }
 
             override fun areContentsTheSame(
-                oldItem: ShippingAddress, newItem: ShippingAddress
+                oldItem: ShippingAddress, newItem: ShippingAddress,
             ): Boolean {
                 return oldItem == newItem
             }
@@ -50,7 +49,7 @@ class ShippingAddressAdapter :
     }
 
     inner class ShippingAddressViewHolder(
-        private val binding: ItemShippingAddressBinding
+        private val binding: ItemShippingAddressBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(shippingAddress: ShippingAddress, position: Int) {
@@ -59,7 +58,6 @@ class ShippingAddressAdapter :
             binding.root.setOnClickListener {
                 if (!shippingAddress.shippingDetail.isDefault) {
                     setAsDefault(shippingAddress)
-                    binding.tvDefault.isVisible = true
                 }
             }
 

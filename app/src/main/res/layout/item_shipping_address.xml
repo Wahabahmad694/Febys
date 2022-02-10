@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_6sdp"
-            android:background="@color/grey_e1e5e8"
+            android:background="@drawable/bg_dark_grey_fill"
             android:paddingHorizontal="@dimen/_6sdp"
             android:paddingVertical="@dimen/_1sdp"
             android:text="@{address.shippingDetail.label}"
@@ -110,14 +110,14 @@
 
         <TextView
             android:id="@+id/tv_default"
-            style="@style/TextTheme.HelveticaNeue.TS14.Grey"
+            style="@style/TextTheme.Arial.TS14.Grey"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_default"
             app:layout_constraintBottom_toBottomOf="@id/delete_address"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/set_as_default"
             app:layout_constraintTop_toTopOf="@id/delete_address"
+            app:layout_constraintTop_toBottomOf="@id/set_as_default"
             binding:is_visible="@{address.shippingDetail.isDefault}" />
 
         <View

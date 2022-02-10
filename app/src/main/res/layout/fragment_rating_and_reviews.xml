@@ -17,12 +17,12 @@
 
             <TextView
                 android:id="@+id/tv_ratings_and_reviews"
-                style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+                style="@style/TextTheme.HelveticaNeue.TS16.Bold"
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
                 android:background="@color/grey"
                 android:gravity="center"
-                android:paddingHorizontal="@dimen/_32dp"
+                android:paddingHorizontal="@dimen/_32sdp"
                 android:text="@string/label_ratings_and_reviews"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
