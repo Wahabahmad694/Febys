@@ -197,6 +197,7 @@
     <string name="label_state">State</string>
     <string name="label_postal_code">Postal Code</string>
     <string name="label_set_as_default_shipping_address">Set as default shipping address</string>
+    <string name="label_default">Default</string>
     <string name="label_save_and_continue">Save and Continue</string>
     <string name="label_return">Return</string>
     <string name="label_save">Save</string>

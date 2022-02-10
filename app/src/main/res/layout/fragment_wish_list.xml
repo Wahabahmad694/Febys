@@ -71,7 +71,7 @@
                 android:layout_height="@dimen/_0dp"
                 android:clipToPadding="false"
                 android:paddingTop="@dimen/_16dp"
-                android:visibility="@{wishListCount > 0 ? View.VISIBLE : View.GONE, default = gone}"
+                android:visibility="@{wishListCount >= 0 ? View.VISIBLE : View.GONE, default = gone}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:listitem="@layout/item_wish_list" />

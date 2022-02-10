@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:binding="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -106,6 +107,18 @@
                 android:layout_marginHorizontal="@dimen/_6sdp"
                 android:src="@drawable/ic_delete" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_default"
+            style="@style/TextTheme.HelveticaNeue.TS14.Grey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_default"
+            app:layout_constraintBottom_toBottomOf="@id/delete_address"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/set_as_default"
+            app:layout_constraintTop_toTopOf="@id/delete_address"
+            binding:is_visible="@{address.shippingDetail.isDefault}" />
 
         <View
             android:layout_width="match_parent"
