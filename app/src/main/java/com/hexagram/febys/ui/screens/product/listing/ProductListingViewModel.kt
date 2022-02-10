@@ -18,6 +18,7 @@ open class ProductListingViewModel @Inject constructor(
     private val productListingRepo: IProductListingRepo
 ) : ProductViewModel(productListingRepo) {
     private var todayDealsListing: Flow<PagingData<Product>>? = null
+    private var specialProductListing: Flow<PagingData<Product>>? = null
     private var trendingProductsListing: Flow<PagingData<Product>>? = null
     private var under100DollarsItemsListing: Flow<PagingData<Product>>? = null
     private var categoryProductsListing: Flow<PagingData<Product>>? = null
@@ -40,6 +41,23 @@ open class ProductListingViewModel @Inject constructor(
         }
 
         return todayDealsListing!!
+    }
+
+    fun specialProductListing(
+        refresh: Boolean, specialFilter: String,
+        onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
+    ): Flow<PagingData<Product>> {
+        if (specialProductListing == null || refresh) {
+            specialProductListing =
+                productListingRepo.specialProductListing(
+                    specialFilter,
+                    filters,
+                    viewModelScope,
+                    onProductListingResponse = onProductListingResponse
+                )
+        }
+
+        return specialProductListing!!
     }
 
     fun trendingProductsListing(
