@@ -4,6 +4,7 @@ import android.graphics.Color
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.annotations.SerializedName
+import com.hexagram.febys.R
 import com.hexagram.febys.utils.OrderStatus
 
 data class RemoteNotification(
@@ -72,6 +73,8 @@ sealed class Notification(
 
     abstract fun getColor(): Int
 
+    abstract fun getIcon(): Int
+
     class FebysPlus(
         type: String,
         sentAt: String
@@ -79,6 +82,10 @@ sealed class Notification(
 
         override fun getColor(): Int {
             return Color.parseColor("#FFCFCF")
+        }
+
+        override fun getIcon(): Int {
+            return R.drawable.ic_febys_plus_notification
         }
     }
 
@@ -96,6 +103,10 @@ sealed class Notification(
         override fun getColor(): Int {
             return OrderStatus.getStatusColor(status)
         }
+
+        override fun getIcon(): Int {
+            return R.drawable.ic_order_notification
+        }
     }
 
     class QA(
@@ -112,6 +123,10 @@ sealed class Notification(
 
         override fun getColor(): Int {
             return Color.parseColor("#C8FCFF")
+        }
+
+        override fun getIcon(): Int {
+            return R.drawable.ic_qa_notification
         }
     }
 }

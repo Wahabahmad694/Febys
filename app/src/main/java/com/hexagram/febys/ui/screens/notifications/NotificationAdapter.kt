@@ -60,6 +60,9 @@ class NotificationAdapter :
             notification?.getNotification()?.getColor()?.let {
                 bgNotificationLogo.setBackgroundCircularColor(it)
             }
+            notification?.getNotification()?.getIcon()?.let {
+                ivNotifyLogo.setImageResource(it)
+            }
 
             root.setOnClickListener {
                 if (notification != null) onItemClick?.invoke(notification)
