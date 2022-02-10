@@ -93,6 +93,20 @@
             android:layout_height="@dimen/_1dp"
             android:background="@color/grey_e1e5e8" />
 
+        <TextView
+            android:id="@+id/label_thrift_market"
+            style="@style/TextTheme.HelveticaNeue.TS12.Bold"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_32sdp"
+            android:gravity="center_vertical"
+            android:text="@string/label_thrift_market"
+            app:drawableEndCompat="@drawable/ic_right_arrow" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1dp"
+            android:background="@color/grey_e1e5e8" />
+
 
     </LinearLayout>
 </layout>

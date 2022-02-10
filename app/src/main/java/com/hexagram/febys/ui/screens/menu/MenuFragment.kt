@@ -29,5 +29,9 @@ class MenuFragment : BaseFragment() {
                 MenuFragmentDirections.actionMenuFragmentToFebysPlusFragment()
             navigateTo(gotoFebysPlus)
         }
+        binding.labelThriftMarket.setOnClickListener {
+            val gotoThrift = MenuFragmentDirections.actionMenuFragmentToSpecialProductListing("")
+            navigateTo(gotoThrift)
+        }
     }
 }

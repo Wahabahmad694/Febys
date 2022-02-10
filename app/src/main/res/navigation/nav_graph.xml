@@ -381,6 +381,15 @@
     </fragment>
     <fragment
         android:id="@+id/todayDealsListingFragment"
+        android:name="com.hexagram.febys.ui.screens.product.listing.SearchProductListingFragment"
+        android:label="TodayDealsListingFragment"
+        tools:layout="@layout/fragment_product_listing">
+        <argument
+            android:name="productListTitle"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/specialListingFragment"
         android:name="com.hexagram.febys.ui.screens.product.listing.TodayDealsListingFragment"
         android:label="TodayDealsListingFragment"
         tools:layout="@layout/fragment_product_listing">
@@ -392,6 +401,15 @@
         android:id="@+id/trendingProductListingFragment"
         android:name="com.hexagram.febys.ui.screens.product.listing.TrendingProductListingFragment"
         android:label="TrendingProductListing"
+        tools:layout="@layout/fragment_product_listing">
+        <argument
+            android:name="productListTitle"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/specialProductListingFragment"
+        android:name="com.hexagram.febys.ui.screens.product.listing.SpecialProductsListing"
+        android:label="SpecialProductListing"
         tools:layout="@layout/fragment_product_listing">
         <argument
             android:name="productListTitle"
@@ -614,6 +632,14 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_menuFragment_to_specialProductListing"
+            app:destination="@id/specialListingFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+
     </fragment>
 
     <dialog
