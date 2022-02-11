@@ -99,6 +99,9 @@ class ProductDetailFragment : SliderFragment() {
         binding.ivProductFav.setOnClickListener {
             handleFavClick()
         }
+        binding.bgDim.setOnClickListener {
+            closeBottomsSheetElseGoBack()
+        }
 
         binding.containerProductVariantFirstAttr.setOnClickListener {
             binding.variant?.let {

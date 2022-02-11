@@ -113,6 +113,63 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/container_disable_wallet"
+                android:layout_width="match_parent"
+                android:layout_height="83dp"
+                android:layout_marginHorizontal="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_9sdp"
+                android:background="@drawable/bg_border_grey"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/disable_wallet_img"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_marginStart="@dimen/_14sdp"
+                    android:src="@drawable/ic_disable_wallet"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_disable_wallet"
+                    style="@style/TextTheme.Arial.TS16.Grey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_14sdp"
+                    android:text="@string/label_wallet"
+                    app:layout_constraintStart_toEndOf="@id/disable_wallet_img"
+                    app:layout_constraintTop_toTopOf="@id/disable_wallet_img" />
+
+                <TextView
+                    android:id="@+id/tv_disable_wallet_price"
+                    style="@style/TextTheme.Arial.TS16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:ellipsize="end"
+                    android:maxWidth="@dimen/_96sdp"
+                    android:maxLines="1"
+                    android:textColor="#DDDDDD"
+                    app:layout_constraintStart_toStartOf="@id/tv_disable_wallet"
+                    app:layout_constraintTop_toBottomOf="@id/tv_disable_wallet"
+                    tools:text="$1986767" />
+
+                <TextView
+                    android:id="@+id/tv_disable_wallet_payment_msg"
+                    style="@style/TextTheme.Arial.TS16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:textColor="#DDDDDD"
+                    app:layout_constraintBaseline_toBaselineOf="@id/tv_disable_wallet_price"
+                    app:layout_constraintStart_toEndOf="@id/tv_disable_wallet_price"
+                    tools:text="@string/available" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <LinearLayout
                 android:id="@+id/container_remaining_payment"
                 android:layout_width="wrap_content"
