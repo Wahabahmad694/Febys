@@ -393,5 +393,6 @@
     <string name="order_notification_channel_description">Notification related to orders</string>
     <string name="qa_notification_channel_name">Q&amp;A</string>
     <string name="qa_notification_channel_description">Notification related to Q&amp;A</string>
+    <string name="please_login_to_see_notifications">Please login to see notifications</string>
 
 </resources>

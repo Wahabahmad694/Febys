@@ -181,8 +181,6 @@ class AuthRepoImpl @Inject constructor(
     }
 
     override fun signOut() {
-        val topic = pref.getConsumer()?.id.toString()
-        FirebaseUtils.unSubscribeToTopic(topic)
         IAuthRepo.signOut(pref, cartRepo)
     }
 

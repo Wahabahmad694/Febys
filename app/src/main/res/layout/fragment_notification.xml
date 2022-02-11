@@ -1,45 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:binding="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
+        <variable
+            name="isUserLoggedIn"
+            type="Boolean" />
     </data>
 
-    <RelativeLayout
+
+    <LinearLayout
         android:name="com.hexagram.febys.ui.screens.notifications.NotificationFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <TextView
+                android:id="@+id/label_vouchers"
+                style="@style/TextTheme.HelveticaNeue.TS32.Bold"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:padding="@dimen/_10sdp"
+                android:text="@string/label_notifications"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <TextView
-                    android:id="@+id/label_vouchers"
-                    style="@style/TextTheme.HelveticaNeue.TS32.Bold"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:text="@string/label_notifications"
-                    android:padding="@dimen/_10sdp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            binding:is_visible="@{isUserLoggedIn}">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_notification"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="match_parent"
                 android:clipToPadding="false"
                 android:gravity="center_horizontal"
                 android:paddingBottom="@dimen/_2sdp"
@@ -47,12 +52,21 @@
                 tools:context=".ui.screens.notifications.NotificationFragment"
                 tools:listitem="@layout/item_notifications" />
 
-        </LinearLayout>
+            <include
+                android:id="@+id/empty_view"
+                layout="@layout/layout_empty_view"
+                android:visibility="gone"
+                app:warningTitle="@{@string/label_notifications}" />
+        </RelativeLayout>
 
-        <include
-            android:id="@+id/empty_view"
-            layout="@layout/layout_empty_view"
-            android:visibility="gone"
-            app:warningTitle="@{@string/label_notifications}" />
-    </RelativeLayout>
+        <TextView
+            style="@style/TextTheme.HelveticaNeue.TS18.Bold"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/please_login_to_see_notifications"
+            binding:is_visible="@{!isUserLoggedIn}" />
+    </LinearLayout>
+
 </layout>

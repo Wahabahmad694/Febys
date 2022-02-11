@@ -43,6 +43,13 @@ class NotificationFragment : BaseFragment() {
         setupOrderPagerAdapter()
         fetchNotification()
         registerNotificationReceiver()
+        setObserver()
+    }
+
+    private fun setObserver() {
+        observesUserLoggedIn.observe(viewLifecycleOwner) {
+            binding.isUserLoggedIn = it
+        }
     }
 
     private fun initUi() {
