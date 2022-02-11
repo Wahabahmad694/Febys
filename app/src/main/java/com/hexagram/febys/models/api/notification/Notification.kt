@@ -17,6 +17,9 @@ data class RemoteNotification(
             "febys-plus" -> {
                 Notification.FebysPlus::class.java
             }
+            "consumer" -> {
+                Notification.Consumer::class.java
+            }
             "order" -> {
                 Notification.Order::class.java
             }
@@ -42,6 +45,12 @@ sealed class Notification(
             return when (map["type"] as String) {
                 "febys-plus" -> {
                     FebysPlus(
+                        map["type"] as String,
+                        map["sended_at"] as String
+                    )
+                }
+                "consumer" -> {
+                    Consumer(
                         map["type"] as String,
                         map["sended_at"] as String
                     )
@@ -86,6 +95,21 @@ sealed class Notification(
 
         override fun getIcon(): Int {
             return R.drawable.ic_febys_plus_notification
+        }
+    }
+
+
+    class Consumer(
+        type: String,
+        sentAt: String
+    ) : Notification(type, sentAt) {
+
+        override fun getColor(): Int {
+            return Color.parseColor("#F7F7F7")
+        }
+
+        override fun getIcon(): Int {
+            return R.drawable.ic_febys_notification
         }
     }
 

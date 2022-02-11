@@ -17,7 +17,7 @@
             android:id="@+id/bg_notification_logo"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_13sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
@@ -35,7 +35,7 @@
 
         <TextView
             android:id="@+id/tv_name"
-            style="@style/TextTheme.Arial.TS16"
+            style="@style/TextTheme.Arial.TS16.bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/_10sdp"
@@ -49,7 +49,6 @@
             style="@style/TextTheme.Arial.TS14"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
             android:minLines="1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/tv_name"

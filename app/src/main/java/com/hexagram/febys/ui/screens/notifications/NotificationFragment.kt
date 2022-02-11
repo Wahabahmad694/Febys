@@ -55,6 +55,9 @@ class NotificationFragment : BaseFragment() {
                 is Notification.QA -> {
                     notification.navigate()
                 }
+                is Notification.Consumer -> {
+                    notification.navigate()
+                }
             }
         }
     }
@@ -111,5 +114,11 @@ class NotificationFragment : BaseFragment() {
                 productId, "", threadId
             )
         navigateTo(actionToFebysPlus)
+    }
+
+    private fun Notification.Consumer.navigate() {
+        val actionToAccountSettings =
+            NotificationFragmentDirections.actionNotificationFragmentToAccountSettingsFragment()
+        navigateTo(actionToAccountSettings)
     }
 }
