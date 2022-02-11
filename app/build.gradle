@@ -53,17 +53,7 @@ android {
             resValue "string", "google_web_client", credentialsProperties['GOOGLE_WEB_CLIENT']
             resValue "string", "facebook_app_id", credentialsProperties['FACEBOOK_APP_ID']
             resValue "string", "fb_login_protocol_scheme", credentialsProperties['FACEBOOK_LOGIN_PROTOCOL_SCHEME']
-        }
-        staging {
-            def endpointsProperties = getBuildProperties()
-            def credentialsProperties = getCredentials()
-            buildConfigField("String", "backendBaseUrl", endpointsProperties['BASE_URL_BACKEND'])
-            buildConfigField("String", "webCustomizationBaseUrl", endpointsProperties['BASE_URL_WEB_CUSTOMIZATION'])
-            buildConfigField("String", "keycloakClientId", credentialsProperties['KEYCLOAK_CLIENT_ID'])
-            buildConfigField("String", "keycloakClientSecret", credentialsProperties['KEYCLOAK_CLIENT_SECRET'])
-            resValue "string", "google_web_client", credentialsProperties['GOOGLE_WEB_CLIENT']
-            resValue "string", "facebook_app_id", credentialsProperties['FACEBOOK_APP_ID']
-            resValue "string", "fb_login_protocol_scheme", credentialsProperties['FACEBOOK_LOGIN_PROTOCOL_SCHEME']
+            resValue "string", "fb_client_token", credentialsProperties['FACEBOOK_CLIENT_TOKEN']
         }
         qa {
             initWith debug
@@ -77,10 +67,25 @@ android {
             resValue "string", "google_web_client", credentialsProperties['GOOGLE_WEB_CLIENT']
             resValue "string", "facebook_app_id", credentialsProperties['FACEBOOK_APP_ID']
             resValue "string", "fb_login_protocol_scheme", credentialsProperties['FACEBOOK_LOGIN_PROTOCOL_SCHEME']
+            resValue "string", "fb_client_token", credentialsProperties['FACEBOOK_CLIENT_TOKEN']
 
             applicationIdSuffix ".qa"
 
             matchingFallbacks = ['debug', 'release']
+        }
+        staging {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            def endpointsProperties = getBuildProperties()
+            def credentialsProperties = getCredentials()
+            buildConfigField("String", "backendBaseUrl", endpointsProperties['BASE_URL_BACKEND'])
+            buildConfigField("String", "webCustomizationBaseUrl", endpointsProperties['BASE_URL_WEB_CUSTOMIZATION'])
+            buildConfigField("String", "keycloakClientId", credentialsProperties['KEYCLOAK_CLIENT_ID'])
+            buildConfigField("String", "keycloakClientSecret", credentialsProperties['KEYCLOAK_CLIENT_SECRET'])
+            resValue "string", "google_web_client", credentialsProperties['GOOGLE_WEB_CLIENT']
+            resValue "string", "facebook_app_id", credentialsProperties['FACEBOOK_APP_ID']
+            resValue "string", "fb_login_protocol_scheme", credentialsProperties['FACEBOOK_LOGIN_PROTOCOL_SCHEME']
+            resValue "string", "fb_client_token", credentialsProperties['FACEBOOK_CLIENT_TOKEN']
         }
         release {
             minifyEnabled false
@@ -94,6 +99,7 @@ android {
             resValue "string", "google_web_client", credentialsProperties['GOOGLE_WEB_CLIENT']
             resValue "string", "facebook_app_id", credentialsProperties['FACEBOOK_APP_ID']
             resValue "string", "fb_login_protocol_scheme", credentialsProperties['FACEBOOK_LOGIN_PROTOCOL_SCHEME']
+            resValue "string", "fb_client_token", credentialsProperties['FACEBOOK_CLIENT_TOKEN']
         }
     }
     compileOptions {
@@ -193,7 +199,7 @@ dependencies {
     implementation platform("com.google.firebase:firebase-bom:$firebase_version")
 
     // facebook
-    def facebook_version = "5.15.3"
+    def facebook_version = "8.2.0"
     implementation "com.facebook.android:facebook-android-sdk:$facebook_version"
 
     // room database

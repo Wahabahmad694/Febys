@@ -241,9 +241,8 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
                 }
             }
         }
-
-
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             val result = CropImage.getActivityResult(data)
@@ -260,10 +259,12 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
     }
 
     private fun updateDefaultCCP(contact: PhoneNo) {
-        binding.ccpPhoneCode.setDefaultCountryUsingNameCode(contact.countryCode)
+        binding.ccpPhoneCode.setDefaultCountryUsingNameCode(
+            contact.countryCode ?: Utils.DEFAULT_COUNTRY_CODE
+        )
         binding.ccpPhoneCode.resetToDefaultCountry()
         val countryCodeWithPlus = binding.ccpPhoneCode.selectedCountryCodeWithPlus
-        binding.etPhone.setText(contact.number.replace(countryCodeWithPlus, ""))
+        binding.etPhone.setText(contact.number?.replace(countryCodeWithPlus, ""))
     }
 
     private fun setData(consumer: Consumer?) {
