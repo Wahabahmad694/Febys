@@ -15,13 +15,12 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/_8sdp">
+        android:paddingVertical="@dimen/_8sdp">
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_product"
             android:layout_width="@dimen/_48sdp"
             android:layout_height="@dimen/_48sdp"
-            android:layout_marginHorizontal="@dimen/_8sdp"
             android:layout_marginTop="@dimen/_8sdp"
             app:actualImageScaleType="fitCenter"
             app:layout_constraintStart_toStartOf="parent"

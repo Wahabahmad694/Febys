@@ -40,6 +40,11 @@ interface FebysBackendService {
         @QueryMap queryMap: Map<String, String>, @Body request: PagingListRequest
     ): ApiResponse<Pagination>
 
+    @POST("v1/consumers/products/spacial/type")
+    suspend fun fetchSpecialProducts(
+        @QueryMap queryMap: Map<String, String>, @Body request: PagingListRequest
+    ): ApiResponse<Pagination>
+
     @GET("v1/categories/featured")
     suspend fun fetchFeaturedCategories(): ApiResponse<List<FeaturedCategory>>
 

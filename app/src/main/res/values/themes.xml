@@ -153,6 +153,7 @@
 
     <style name="ButtonTheme.OutLine.Full">
         <item name="android:textAppearance">@style/TextTheme.HelveticaNeue.TS18.Bold</item>
+        <item name="strokeColor">@color/black</item>
     </style>
 
     <style name="ButtonTheme.OutLine.Small">
@@ -168,7 +169,7 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:minHeight">@dimen/_64dp</item>
         <item name="backgroundTint">@color/selector_contained_button</item>
-        <item name="android:textAppearance">@style/TextTheme.HelveticaNeue.TS18</item>
+        <item name="android:textAppearance">@style/TextTheme.HelveticaNeue.TS16</item>
         <item name="shapeAppearance">@style/Button.ShapeAppearance</item>
     </style>
 

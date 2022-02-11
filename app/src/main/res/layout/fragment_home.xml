@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="product"
             type="com.hexagram.febys.models.api.product.Product" />
@@ -27,10 +28,11 @@
             android:layout_height="wrap_content"
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_febys_small"
+            android:layout_marginTop="@dimen/_6sdp"
             app:layout_constraintBottom_toBottomOf="@id/bg_top"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/bg_top" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/iv_cart"
@@ -39,9 +41,9 @@
             android:layout_marginEnd="@dimen/_16dp"
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_cart"
-            app:layout_constraintBottom_toBottomOf="@id/iv_febys"
+            app:layout_constraintBottom_toBottomOf="@id/bg_top"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/iv_febys" />
+            app:layout_constraintTop_toTopOf="@id/bg_top" />
 
         <TextView
             android:id="@+id/tv_cart_count"
@@ -69,8 +71,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_12sdp">
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:id="@+id/tv_unique_categories"

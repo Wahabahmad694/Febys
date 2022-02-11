@@ -43,7 +43,7 @@
             android:layout_height="@dimen/_32sdp"
             android:gravity="center_vertical"
             android:text="@string/label_account_settings"
-            app:drawableEndCompat="@drawable/ic_right"
+            app:drawableEndCompat="@drawable/ic_right_arrow"
             binding:is_visible="@{isUserLoggedIn}" />
 
         <View
@@ -59,7 +59,7 @@
             android:layout_height="@dimen/_32sdp"
             android:gravity="center_vertical"
             android:text="@string/label_vouchers"
-            app:drawableEndCompat="@drawable/ic_right"
+            app:drawableEndCompat="@drawable/ic_right_arrow"
             binding:is_visible="@{isUserLoggedIn}" />
 
         <View
@@ -75,7 +75,7 @@
             android:layout_height="@dimen/_32sdp"
             android:gravity="center_vertical"
             android:text="@string/label_shipping_address"
-            app:drawableEndCompat="@drawable/ic_right"
+            app:drawableEndCompat="@drawable/ic_right_arrow"
             binding:is_visible="@{isUserLoggedIn}" />
 
         <View

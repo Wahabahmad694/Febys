@@ -9,36 +9,56 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingHorizontal="@dimen/_16dp">
+        android:orientation="vertical">
 
         <TextView
             style="@style/TextTheme.HelveticaNeue.TS16.Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingStart="@dimen/_16sdp"
             android:text="@string/label_my_location" />
 
-        <TextView
-            android:id="@+id/my_location"
-            style="@style/TextTheme.HelveticaNeue.TS14"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_32sdp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_16sdp"
-            android:drawablePadding="@dimen/_4sdp"
-            android:gravity="center_vertical"
-            android:text="@string/label_ghana"
-            app:drawableEndCompat="@drawable/ic_right"
-            app:drawableStartCompat="@drawable/flag_ghana" />
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/flag_ghana"
+                android:layout_width="@dimen/_54sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:src="@drawable/flags_ghana"
+                app:actualImageScaleType="fitCenter"
+                app:roundAsCircle="true" />
+
+            <TextView
+                android:id="@+id/my_location"
+                style="@style/TextTheme.HelveticaNeue.TS16"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_32sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:drawablePadding="@dimen/_4sdp"
+                android:gravity="center_vertical"
+                android:paddingEnd="@dimen/_14sdp"
+                android:text="@string/label_ghana"
+                app:drawableEndCompat="@drawable/ic_right_arrow" />
+        </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"
+            android:layout_marginHorizontal="@dimen/_14sdp"
+            android:layout_marginTop="@dimen/_5sdp"
             android:background="@color/grey_e1e5e8" />
 
         <TextView
             style="@style/TextTheme.Arial.TS14.Grey"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_14sdp"
             android:layout_marginTop="@dimen/_4sdp"
             android:text="@string/label_my_location_description" />
 

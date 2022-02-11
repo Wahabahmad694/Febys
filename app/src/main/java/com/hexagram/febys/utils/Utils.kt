@@ -12,6 +12,7 @@ import java.util.*
 
 object Utils {
     const val DEFAULT_CURRENCY = "GHS"
+    const val DEFAULT_COUNTRY_CODE = "GH"
 
     object DateTime {
         const val FORMAT_ISO = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"

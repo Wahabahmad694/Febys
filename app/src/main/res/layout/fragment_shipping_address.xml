@@ -40,10 +40,10 @@
                 app:layout_constraintTop_toTopOf="@id/label_shipping_address" />
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/_13sdp"
+                android:layout_height="@dimen/_13sdp"
                 android:layout_marginHorizontal="@dimen/_8sdp"
-                android:src="@drawable/ic_add"
+                android:src="@drawable/ic_adds"
                 app:layout_constraintBottom_toBottomOf="@id/label_add_new_shipping_address"
                 app:layout_constraintEnd_toEndOf="@id/label_add_new_shipping_address"
                 app:layout_constraintTop_toTopOf="@id/label_add_new_shipping_address" />

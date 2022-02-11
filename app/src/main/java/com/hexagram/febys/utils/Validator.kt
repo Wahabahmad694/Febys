@@ -13,7 +13,7 @@ object Validator {
         name.trim().isNotEmpty()
 
     fun isValidPassword(password: String): Boolean =
-        password.trim().isNotEmpty() && password.length >= 6
+        password.trim().isNotEmpty() && password.length >= 8
 
     fun isValidAddress(address: String): Boolean = address.trim().isNotEmpty()
 

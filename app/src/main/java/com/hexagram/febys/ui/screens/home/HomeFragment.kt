@@ -172,6 +172,17 @@ class HomeFragment : SliderFragment() {
         featuredCategoryProductsAdapter.interaction = homeProductAdapterInteraction
         trendingProductsAdapter.interaction = homeProductAdapterInteraction
         under100DollarsItemAdapter.interaction = homeProductAdapterInteraction
+        binding.rvUniqueCategories.setOnScrollChangeListener{_, _, _, _, _ ->
+            val horizontalScrollPosition =
+                binding.rvUniqueCategories.getHorizontalScrollPosition()
+            val param =(binding.ivIcScrollUniqueCategory.layoutParams as ConstraintLayout.LayoutParams)
+            param.horizontalBias = horizontalScrollPosition
+            binding.ivIcScrollUniqueCategory.layoutParams =param
+            binding.ivIcScrollUniqueCategory.visibility =
+                if(uniqueCategoryAdapter.itemCount >= 5) View.VISIBLE else View.GONE
+            binding.ivBgScrollUniqueCategory.visibility =
+                if(uniqueCategoryAdapter.itemCount >=5) View.VISIBLE else View.GONE
+        }
     }
 
     private fun setupObserver() {

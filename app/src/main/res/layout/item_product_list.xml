@@ -39,7 +39,7 @@
             android:layout_height="@dimen/_26sdp"
             android:layout_marginTop="@dimen/_13sdp"
             android:layout_marginEnd="@dimen/_13sdp"
-            android:elevation="@dimen/_4sdp"
+            android:elevation="@dimen/_8sdp"
             android:src="@{isFav ? @drawable/ic_fav : @drawable/ic_un_fav}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

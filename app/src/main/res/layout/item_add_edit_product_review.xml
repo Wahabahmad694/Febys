@@ -22,7 +22,7 @@
             android:id="@+id/iv_product"
             android:layout_width="@dimen/_48sdp"
             android:layout_height="@dimen/_48sdp"
-           android:layout_marginStart="@dimen/_8sdp"
+           android:layout_marginStart="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_8sdp"
             android:background="@color/grey"
             app:actualImageScaleType="fitCenter"
