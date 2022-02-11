@@ -10,6 +10,7 @@ import androidx.databinding.BindingAdapter
 import com.facebook.drawee.view.SimpleDraweeView
 import com.hexagram.febys.utils.load
 
+
 object BindingAdapter {
 
     @JvmStatic
@@ -39,5 +40,11 @@ object BindingAdapter {
     fun loadHtml(webView: WebView, html: String) {
         val encodedHtml = Base64.encodeToString(html.toByteArray(), Base64.NO_PADDING)
         webView.loadData(encodedHtml, "text/html", "base64")
+        webView.settings.apply {
+            javaScriptEnabled = true
+            domStorageEnabled = true
+            loadWithOverviewMode = true
+            setSupportZoom(true)
+        }
     }
 }

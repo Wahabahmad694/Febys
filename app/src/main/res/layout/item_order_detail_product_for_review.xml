@@ -26,6 +26,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:placeholderImage="@drawable/placeholder_image"
+            app:roundedCornerRadius="@dimen/_4sdp"
+            app:roundingBorderColor="@color/grey_e1e5e8"
+            app:roundingBorderWidth="@dimen/_1sdp"
             binding:image_url="@{product.variants.get(0).images.get(0)}" />
 
         <TextView
@@ -59,8 +62,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_4sdp"
             android:text="@{product.variants.get(0).skuId}"
-            app:layout_constraintBaseline_toBaselineOf="@id/label_sku_id"
+            app:layout_constraintBottom_toBottomOf="@id/label_sku_id"
             app:layout_constraintStart_toEndOf="@id/label_sku_id"
+            app:layout_constraintTop_toTopOf="@id/label_sku_id"
             tools:text="123" />
 
         <View

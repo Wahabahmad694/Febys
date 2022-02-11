@@ -32,7 +32,7 @@ data class Order(
     @SerializedName("vat_percentage")
     val vatPercentage: Double,
     @SerializedName("delivery_fee")
-    val deliveryFee: Price,
+    val deliveryFee: Price?,
     val transactions: List<Transaction>,
     val voucher: VoucherDetail?,
     @SerializedName("created_at")

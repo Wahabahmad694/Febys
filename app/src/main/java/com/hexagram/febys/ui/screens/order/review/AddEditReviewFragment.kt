@@ -110,6 +110,12 @@ class AddEditReviewFragment : BaseFragment() {
             orderViewModel.postReview(args.orderId, orderReview)
         }
 
+        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner) {
+            if (args.vendorProducts.hasReviewed && binding.icTick.isVisible)
+                updateFieldAndReviewsAdapter(false)
+            else
+                goBack()
+        }
     }
 
 
@@ -172,7 +178,9 @@ class AddEditReviewFragment : BaseFragment() {
 
     private fun updateFieldAndReviewsAdapter(isEnable: Boolean) {
         if (isEnable) {
-            binding.labelAddReview.text = getText(R.string.label_edit_review)
+            binding.labelAddReview.text =
+                if (args.vendorProducts.hasReviewed) getText(R.string.label_edit_review)
+                else getText(R.string.label_add_review)
         }
         binding.ivEdit.isVisible = !isEnable
         binding.icTick.isVisible = isEnable
