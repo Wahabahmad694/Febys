@@ -1,15 +1,11 @@
 package com.hexagram.febys.ui
 
-import android.content.BroadcastReceiver
-import android.content.IntentFilter
 import android.os.Bundle
 import androidx.core.view.isVisible
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseActivity
-import com.hexagram.febys.broadcast.NotificationLocalBroadcastReceiver
 import com.hexagram.febys.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -32,7 +28,6 @@ class MainActivity : BaseActivity() {
         setContentView(binding.root)
 
         setupBottomNav()
-        registerNotificationReceiver()
     }
 
     private fun setupBottomNav() {
@@ -47,27 +42,6 @@ class MainActivity : BaseActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             binding.bottomNavigation.isVisible = destination.id in showBottomNavInDestinations
-            if (destination.id == R.id.notificationFragment) clearBadge()
         }
-    }
-
-    private fun clearBadge() {
-        pref.clearNotificationCount()
-        updateNotificationBadge()
-    }
-
-    private fun updateNotificationBadge() {
-        val number = pref.getNotificationCount()
-        val notificationBadge = binding.bottomNavigation.getOrCreateBadge(R.id.notificationFragment)
-        notificationBadge.isVisible = number > 0
-        notificationBadge.number = number
-    }
-
-    private fun registerNotificationReceiver() {
-        val br: BroadcastReceiver = NotificationLocalBroadcastReceiver { updateNotificationBadge() }
-
-        val filter =
-            IntentFilter(NotificationLocalBroadcastReceiver.ACTION_RECEIVE_NOTIFICATION_BROADCAST)
-        LocalBroadcastManager.getInstance(this).registerReceiver(br, filter)
     }
 }

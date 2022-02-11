@@ -4,12 +4,11 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.navigation.NavDeepLinkBuilder
 import com.hexagram.febys.R
-import com.hexagram.febys.ui.MainActivity
 
 object NotificationManager {
     object ID {
@@ -131,13 +130,6 @@ object NotificationManager {
         )
     }
 
-    private fun getPendingIntent(context: Context): PendingIntent {
-        val intent = Intent(context, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
-        return PendingIntent.getActivity(context, 0, intent, 0)
-    }
-
     private fun sendNotification(
         context: Context,
         channelId: String,
@@ -176,5 +168,12 @@ object NotificationManager {
                 context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
+    }
+
+    private fun getPendingIntent(context: Context): PendingIntent {
+        return NavDeepLinkBuilder(context)
+            .setGraph(R.navigation.nav_graph)
+            .setDestination(R.id.notificationFragment)
+            .createPendingIntent()
     }
 }

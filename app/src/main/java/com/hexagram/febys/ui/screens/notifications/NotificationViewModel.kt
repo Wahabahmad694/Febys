@@ -15,8 +15,8 @@ class NotificationViewModel @Inject constructor(
 ) : BaseViewModel() {
     private var notificationListOldOrderListing: Flow<PagingData<RemoteNotification>>? = null
 
-    fun fetchNotificationList(): Flow<PagingData<RemoteNotification>> {
-        if (notificationListOldOrderListing == null) {
+    fun fetchNotificationList(refresh: Boolean): Flow<PagingData<RemoteNotification>> {
+        if (notificationListOldOrderListing == null || refresh) {
             notificationListOldOrderListing = notificationRepo.fetchNotification(viewModelScope)
         }
 

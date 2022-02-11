@@ -1,5 +1,7 @@
 package com.hexagram.febys.ui.screens.notifications
 
+import android.content.BroadcastReceiver
+import android.content.IntentFilter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,8 +9,10 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.paging.LoadState
 import com.hexagram.febys.base.BaseFragment
+import com.hexagram.febys.broadcast.NotificationLocalBroadcastReceiver
 import com.hexagram.febys.databinding.FragmentNotificationBinding
 import com.hexagram.febys.models.api.notification.Notification
 import com.hexagram.febys.utils.*
@@ -21,6 +25,8 @@ class NotificationFragment : BaseFragment() {
     private lateinit var binding: FragmentNotificationBinding
     private val notificationAdapter = NotificationAdapter()
     private val notificationViewModel by viewModels<NotificationViewModel>()
+    private val notificationBroadcastReceiver: BroadcastReceiver =
+        NotificationLocalBroadcastReceiver { fetchNotification(true) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -35,7 +41,8 @@ class NotificationFragment : BaseFragment() {
         initUi()
         uiListeners()
         setupOrderPagerAdapter()
-        setObservers()
+        fetchNotification()
+        registerNotificationReceiver()
     }
 
     private fun initUi() {
@@ -83,12 +90,31 @@ class NotificationFragment : BaseFragment() {
         }
     }
 
-    private fun setObservers() {
+    private fun fetchNotification(refresh: Boolean = false) {
         viewLifecycleOwner.lifecycleScope.launch {
-            notificationViewModel.fetchNotificationList().collectLatest {
+            notificationViewModel.fetchNotificationList(refresh).collectLatest {
                 notificationAdapter.submitData(it)
             }
         }
+    }
+
+    private fun registerNotificationReceiver() {
+        val filter =
+            IntentFilter(NotificationLocalBroadcastReceiver.ACTION_RECEIVE_NOTIFICATION_BROADCAST)
+        LocalBroadcastManager
+            .getInstance(requireContext())
+            .registerReceiver(notificationBroadcastReceiver, filter)
+    }
+
+    private fun unregisterNotificationReceiver() {
+        LocalBroadcastManager
+            .getInstance(requireContext())
+            .unregisterReceiver(notificationBroadcastReceiver)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterNotificationReceiver()
     }
 
     private fun Notification.FebysPlus.navigate() {
