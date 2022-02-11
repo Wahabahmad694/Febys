@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import com.hexagram.febys.BuildConfig
 import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
@@ -133,22 +134,22 @@ class AccountFragment : BaseFragment() {
         }
         binding.support.aboutFebys.setOnClickListener {
             val goToAboutFebys =
-                NavGraphDirections.toWebViewFragment("", "https://qa.febys.com/about-us")
+                NavGraphDirections.toWebViewFragment(getString(R.string.label_about_febys), "${BuildConfig.backendBaseUrl}static/about-us",false)
             navigateTo(goToAboutFebys)
         }
         binding.support.helpCenter.setOnClickListener {
             val goToHelpCenter =
-                NavGraphDirections.toWebViewFragment("", "https://qa.febys.com/helpcenter")
+                NavGraphDirections.toWebViewFragment(getString(R.string.label_help_center), "${BuildConfig.backendBaseUrl}static/help-center",false)
             navigateTo(goToHelpCenter)
         }
         binding.support.privacyPolicy.setOnClickListener {
             val goToPrivacyPolicy =
-                NavGraphDirections.toWebViewFragment("", "https://www.facebook.com/")
+                NavGraphDirections.toWebViewFragment(getString(R.string.label_privacy_policy), "${BuildConfig.backendBaseUrl}static/privacy-policy",false)
             navigateTo(goToPrivacyPolicy)
         }
         binding.support.termsAndConditions.setOnClickListener {
             val goToTermsAndConditions =
-                NavGraphDirections.toWebViewFragment("", "https://www.facebook.com/")
+                NavGraphDirections.toWebViewFragment(getString(R.string.label_terms_amp_conditions), "${BuildConfig.backendBaseUrl}static/terms-and-conditions",false)
             navigateTo(goToTermsAndConditions)
         }
     }

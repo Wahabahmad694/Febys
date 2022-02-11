@@ -67,7 +67,7 @@
 
                 <androidx.appcompat.widget.AppCompatRadioButton
                     android:id="@+id/rd_newItem"
-                    style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+                    style="@style/TextTheme.HelveticaNeue.TS14"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
@@ -82,7 +82,7 @@
 
                 <androidx.appcompat.widget.AppCompatRadioButton
                     android:id="@+id/rd_lowPrice"
-                    style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+                    style="@style/TextTheme.HelveticaNeue.TS14"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
@@ -97,7 +97,7 @@
 
                 <androidx.appcompat.widget.AppCompatRadioButton
                     android:id="@+id/rd_highPrice"
-                    style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+                    style="@style/TextTheme.HelveticaNeue.TS14"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"

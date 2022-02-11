@@ -53,9 +53,10 @@
                     android:ellipsize="start"
                     android:gravity="center"
                     android:maxLines="1"
+                    tools:text="Gucci For Men"
                     android:textAlignment="center"
-                    app:drawableEndCompat="@drawable/ic_info"
-                    tools:text="Gucci For Men" />
+                    android:drawableRight="@drawable/ic_info"
+                    android:drawablePadding="@dimen/_5sdp"/>
 
                 <TextView
                     android:id="@+id/tv_product_listing_count"
