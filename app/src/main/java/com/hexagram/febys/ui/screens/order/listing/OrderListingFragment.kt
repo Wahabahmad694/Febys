@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.paging.LoadState
+import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentOrderListingBinding
 import com.hexagram.febys.ui.screens.order.OrderViewModel
@@ -41,7 +42,7 @@ class OrderListingFragment : BaseFragment() {
 
     private fun initUi() {
         setupOrderPagerAdapter()
-        binding.labelOrders.text = args.title
+        binding.labelOrders.text = args.title ?: getString(R.string.order_listing)
     }
 
     private fun uiListener() {
@@ -50,7 +51,7 @@ class OrderListingFragment : BaseFragment() {
         orderListingAdapter.onItemClick = {
             val review = args.status?.firstOrNull() == OrderStatus.REVIEWED
             val gotoOrderDetail = OrderListingFragmentDirections
-                .actionOrderListingFragmentToOrderDetailFragment(args.title, it.orderId, review)
+                .actionOrderListingFragmentToOrderDetailFragment(args.titleForDetail, it.orderId, review)
             navigateTo(gotoOrderDetail)
         }
     }

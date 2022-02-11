@@ -26,7 +26,7 @@ class AccountFragment : BaseFragment() {
     private val authViewModel: AuthViewModel by viewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View {
         binding = FragmentAccountBinding.inflate(inflater, container, false)
         return binding.root
@@ -76,20 +76,23 @@ class AccountFragment : BaseFragment() {
                     OrderStatus.ACCEPTED,
                     OrderStatus.SHIPPED
                 ),
-                getString(R.string.label_my_orders)
+                getString(R.string.label_my_orders),
+                getString(R.string.label_order_detail),
             )
         }
 
         binding.orders.orderReceived.setOnClickListener {
             gotoOrderListing(
                 arrayOf(OrderStatus.DELIVERED),
-                getString(R.string.label_order_received)
+                getString(R.string.label_order_received),
+                getString(R.string.label_received_details)
             )
         }
 
         binding.orders.myReview.setOnClickListener {
             gotoOrderListing(
                 arrayOf(OrderStatus.REVIEWED),
+                getString(R.string.label_my_reviews),
                 getString(R.string.label_my_review)
             )
         }
@@ -101,7 +104,8 @@ class AccountFragment : BaseFragment() {
                     OrderStatus.CANCELLED_BY_VENDOR,
                     OrderStatus.REJECTED
                 ),
-                getString(R.string.label_cancel_orders)
+                getString(R.string.label_cancel_orders),
+                getString(R.string.label_cancel_details)
             )
         }
 
@@ -111,7 +115,8 @@ class AccountFragment : BaseFragment() {
                     OrderStatus.RETURNED,
                     OrderStatus.PENDING_RETURN
                 ),
-                getString(R.string.label_return_orders)
+                getString(R.string.label_return_orders),
+                getString(R.string.label_return_details)
             )
         }
 
@@ -138,22 +143,30 @@ class AccountFragment : BaseFragment() {
         }
         binding.support.aboutFebys.setOnClickListener {
             val goToAboutFebys =
-                NavGraphDirections.toWebViewFragment(getString(R.string.label_about_febys), "${BuildConfig.backendBaseUrl}static/about-us",false)
+                NavGraphDirections.toWebViewFragment(getString(R.string.label_about_febys),
+                    "${BuildConfig.backendBaseUrl}static/about-us",
+                    false)
             navigateTo(goToAboutFebys)
         }
         binding.support.helpCenter.setOnClickListener {
             val goToHelpCenter =
-                NavGraphDirections.toWebViewFragment(getString(R.string.label_help_center), "${BuildConfig.backendBaseUrl}static/help-center",false)
+                NavGraphDirections.toWebViewFragment(getString(R.string.label_help_center),
+                    "${BuildConfig.backendBaseUrl}static/help-center",
+                    false)
             navigateTo(goToHelpCenter)
         }
         binding.support.privacyPolicy.setOnClickListener {
             val goToPrivacyPolicy =
-                NavGraphDirections.toWebViewFragment(getString(R.string.label_privacy_policy), "${BuildConfig.backendBaseUrl}static/privacy-policy",false)
+                NavGraphDirections.toWebViewFragment(getString(R.string.label_privacy_policy),
+                    "${BuildConfig.backendBaseUrl}static/privacy-policy",
+                    false)
             navigateTo(goToPrivacyPolicy)
         }
         binding.support.termsAndConditions.setOnClickListener {
             val goToTermsAndConditions =
-                NavGraphDirections.toWebViewFragment(getString(R.string.label_terms_amp_conditions), "${BuildConfig.backendBaseUrl}static/terms-and-conditions",false)
+                NavGraphDirections.toWebViewFragment(getString(R.string.label_terms_amp_conditions),
+                    "${BuildConfig.backendBaseUrl}static/terms-and-conditions",
+                    false)
             navigateTo(goToTermsAndConditions)
         }
     }
@@ -168,9 +181,11 @@ class AccountFragment : BaseFragment() {
         authViewModel.updateNotificationSetting(notify)
     }
 
-    private fun gotoOrderListing(status: Array<String>? = null, title: String? = null) {
-        val navigateToOrderListing =
-            AccountFragmentDirections.actionAccountFragmentToOrderListingFragment(status, title)
+    private fun gotoOrderListing(
+        status: Array<String>? = null, title: String? = null, titleForDetail: String? = null,
+    ) {
+        val navigateToOrderListing = AccountFragmentDirections
+            .actionAccountFragmentToOrderListingFragment(status, title, titleForDetail)
         navigateTo(navigateToOrderListing)
     }
 
