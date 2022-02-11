@@ -20,6 +20,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Febys"
+        android:usesCleartextTraffic="true"
         tools:targetApi="n">
         <activity
             android:name=".ui.MainActivity"

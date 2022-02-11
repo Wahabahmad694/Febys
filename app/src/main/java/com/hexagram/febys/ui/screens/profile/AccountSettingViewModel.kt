@@ -26,8 +26,6 @@ class AccountSettingViewModel @Inject constructor(
     private val _updateProfileImage = MutableLiveData<DataState<List<String>>>()
     val updateProfileImage: LiveData<DataState<List<String>>> = _updateProfileImage
 
-    var uploadedFilePath: String? = null
-
     init {
         fetchProfile()
     }

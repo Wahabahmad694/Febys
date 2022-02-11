@@ -47,7 +47,6 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
             val uriFilePath = result.getUriFilePath(requireContext()) // optional usage
             if (uriContent == null && uriFilePath == null) return@registerForActivityResult
 
-            binding.profileImg.setImageURI(uriContent, null)
             accountSettingViewModel.updateProfileImage(uriFilePath!!)
         } else {
             val error = result.error?.message ?: ""
@@ -83,7 +82,6 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
             if (!isInEditMode) {
                 val updateUser = getUpdatedConsumer()
                 updateUser?.let { accountSettingViewModel.updateProfile(it) }
-                showSuccessDialog()
             }
         }
 
@@ -114,7 +112,7 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
                 binding.etLastName.text.toString(),
                 binding.etPhone.text.toString(),
                 binding.ccpPhoneCode.selectedCountryNameCode,
-                accountSettingViewModel.uploadedFilePath
+                consumer?.profileImage
             )
         }
     }
@@ -240,6 +238,7 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
                 is DataState.Data -> {
                     hideLoader()
                     setData(it.data)
+                    showSuccessDialog()
                 }
             }
         }
@@ -255,8 +254,7 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
                 }
                 is DataState.Data -> {
                     hideLoader()
-                    it.data
-                    accountSettingViewModel.uploadedFilePath = it.data.firstOrNull()
+                    setData(consumer)
                 }
             }
         }
@@ -270,7 +268,7 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
     }
 
     private fun setData(consumer: Consumer?) {
-        binding.profileImg.setImageURI(consumer?.profileImage)
+        binding.profileImg.load(consumer?.profileImage)
         binding.tvProfileName.text = consumer?.fullName
         binding.etFirstName.setText(consumer?.firstName)
         binding.etLastName.setText(consumer?.lastName)
