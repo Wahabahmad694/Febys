@@ -734,6 +734,11 @@
             android:defaultValue="@null"
             app:argType="string"
             app:nullable="true" />
+        <argument
+            android:name="titleForDetail"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
         <action
             android:id="@+id/action_orderListingFragment_to_orderDetailFragment"
             app:destination="@id/orderDetailFragment"
