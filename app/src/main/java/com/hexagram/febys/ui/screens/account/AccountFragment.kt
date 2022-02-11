@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import com.hexagram.febys.BuildConfig
 import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
@@ -137,7 +138,7 @@ class AccountFragment : BaseFragment() {
         }
         binding.support.aboutFebys.setOnClickListener {
             val goToAboutFebys =
-                NavGraphDirections.toWebViewFragment("", "https://qa.febys.com/about-us")
+                NavGraphDirections.toWebViewFragment(getString(R.string.label_about_febys), "${BuildConfig.backendBaseUrl}static/about-us",true)
             navigateTo(goToAboutFebys)
         }
         binding.support.helpCenter.setOnClickListener {
@@ -198,7 +199,6 @@ class AccountFragment : BaseFragment() {
     private fun updateWalletUi() {
         val wallet = authViewModel.getWallet()
         binding.orders.labelPrice.text = wallet?.getPrice()?.getFormattedPrice()
-        binding.orders.containerWallet.isVisible = wallet?.isWalletCreated == true
     }
 
     private fun updateUserUi() {

@@ -136,9 +136,8 @@ class PaymentFragment : BasePaymentFragment() {
     }
 
     private fun disableWallet() {
-        binding.containerWalletPayment.setOnClickListener(null)
-        binding.containerWalletPayment.background =
-            ContextCompat.getDrawable(requireContext(), R.drawable.bg_grey)
+        binding.containerDisableWallet.setOnClickListener(null)
+        binding.containerDisableWallet.isVisible = true
     }
 
     override fun doWalletPayment() {
