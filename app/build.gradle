@@ -60,17 +60,8 @@ android {
             initWith debug
 
             def endpointsProperties = getBuildProperties()
-            def credentialsProperties = getCredentials()
             buildConfigField("String", "backendBaseUrl", endpointsProperties['QA_BASE_URL_BACKEND'])
             buildConfigField("String", "webCustomizationBaseUrl", endpointsProperties['QA_BASE_URL_WEB_CUSTOMIZATION'])
-            buildConfigField("String", "keycloakClientId", credentialsProperties['KEYCLOAK_CLIENT_ID'])
-            buildConfigField("String", "keycloakClientSecret", credentialsProperties['KEYCLOAK_CLIENT_SECRET'])
-            resValue "string", "google_web_client", credentialsProperties['GOOGLE_WEB_CLIENT']
-            resValue "string", "facebook_app_id", credentialsProperties['FACEBOOK_APP_ID']
-            resValue "string", "fb_login_protocol_scheme", credentialsProperties['FACEBOOK_LOGIN_PROTOCOL_SCHEME']
-            resValue "string", "fb_client_token", credentialsProperties['FACEBOOK_CLIENT_TOKEN']
-
-            applicationIdSuffix ".qa"
 
             matchingFallbacks = ['debug', 'release']
         }
