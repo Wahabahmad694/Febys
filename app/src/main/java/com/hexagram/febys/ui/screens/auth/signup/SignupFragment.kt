@@ -52,7 +52,7 @@ class SignupFragment : SocialMediaAuthFragment() {
     }
 
     private fun initUi() {
-        binding.ccpPhoneCode.setDefaultCountryUsingNameCode("GH")
+        binding.ccpPhoneCode.setDefaultCountryUsingNameCode(Utils.DEFAULT_COUNTRY_CODE)
         binding.ccpPhoneCode.resetToDefaultCountry()
     }
 

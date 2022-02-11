@@ -136,7 +136,7 @@ class AddEditShippingAddressFragment : BaseFragment() {
             binding.tvState.text = statesAdapter.getSelectedItem()
             binding.tvCity.text = citiesAdapter.getSelectedItem()
 
-            binding.ccpPhoneCode.setDefaultCountryUsingNameCode("GH")
+            binding.ccpPhoneCode.setDefaultCountryUsingNameCode(Utils.DEFAULT_COUNTRY_CODE)
             binding.ccpPhoneCode.resetToDefaultCountry()
 
             return
@@ -163,10 +163,12 @@ class AddEditShippingAddressFragment : BaseFragment() {
     }
 
     private fun updateDefaultCCP(contact: PhoneNo) {
-        binding.ccpPhoneCode.setDefaultCountryUsingNameCode(contact.countryCode)
+        binding.ccpPhoneCode.setDefaultCountryUsingNameCode(
+            contact.countryCode ?: Utils.DEFAULT_COUNTRY_CODE
+        )
         binding.ccpPhoneCode.resetToDefaultCountry()
         val countryCodeWithPlus = binding.ccpPhoneCode.selectedCountryCodeWithPlus
-        binding.etPhone.setText(contact.number.replace(countryCodeWithPlus, ""))
+        binding.etPhone.setText(contact.number?.replace(countryCodeWithPlus, ""))
     }
 
     private fun uiListeners() {
