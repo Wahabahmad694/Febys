@@ -382,6 +382,8 @@
     <string name="default_notification_channel_id">defaultNotificationChannelId</string>
     <string name="febys_plus_notification_channel_name">Febys Plus Subscription</string>
     <string name="febys_plus_notification_channel_description">Notification related to febys plus subscription</string>
+    <string name="consumer_notification_channel_name">Consumer</string>
+    <string name="consumer_notification_channel_description">Notification related to consumer</string>
     <string name="order_notification_channel_name">Orders</string>
     <string name="order_notification_channel_description">Notification related to orders</string>
     <string name="qa_notification_channel_name">Q&amp;A</string>

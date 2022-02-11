@@ -14,12 +14,14 @@ import com.hexagram.febys.ui.MainActivity
 object NotificationManager {
     object ID {
         const val FEBYS_PLUS = 111
-        const val ORDER = 222
-        const val QA = 333
+        const val CONSUMER = 222
+        const val ORDER = 333
+        const val QA = 444
     }
 
     object ChannelId {
         const val FEBYS_PLUS = "febysPlusNotificationChannelId"
+        const val CONSUMER = "consumerNotificationChannelId"
         const val ORDER = "orderNotificationChannelId"
         const val QA = "qaNotificationChannelId"
     }
@@ -29,6 +31,12 @@ object NotificationManager {
             context, ChannelId.FEBYS_PLUS,
             context.getString(R.string.febys_plus_notification_channel_name),
             context.getString(R.string.febys_plus_notification_channel_description)
+        )
+
+        createChannel(
+            context, ChannelId.CONSUMER,
+            context.getString(R.string.consumer_notification_channel_name),
+            context.getString(R.string.consumer_notification_channel_description)
         )
 
         createChannel(
@@ -51,6 +59,9 @@ object NotificationManager {
             is Notification.FebysPlus -> {
                 sendNotification(context, title, content, notification)
             }
+            is Notification.Consumer -> {
+                sendNotification(context, title, content, notification)
+            }
             is Notification.Order -> {
                 sendNotification(context, title, content, notification)
             }
@@ -71,6 +82,21 @@ object NotificationManager {
             context.getString(R.string.febys_plus_notification_channel_name),
             context.getString(R.string.febys_plus_notification_channel_description),
             ID.FEBYS_PLUS,
+            getPendingIntent(context)
+        )
+    }
+
+    private fun sendNotification(
+        context: Context, title: String, content: String, notification: Notification.Consumer
+    ) {
+        sendNotification(
+            context,
+            ChannelId.CONSUMER,
+            title,
+            content,
+            context.getString(R.string.consumer_notification_channel_name),
+            context.getString(R.string.consumer_notification_channel_description),
+            ID.CONSUMER,
             getPendingIntent(context)
         )
     }

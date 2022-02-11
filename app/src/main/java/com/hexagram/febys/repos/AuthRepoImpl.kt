@@ -1,8 +1,5 @@
 package com.hexagram.febys.repos
 
-import android.util.Log
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.messaging.ktx.messaging
 import com.hexagram.febys.dataSource.IUserDataSource
 import com.hexagram.febys.enum.SocialLogin
 import com.hexagram.febys.models.api.cart.Cart
@@ -18,7 +15,7 @@ import com.hexagram.febys.network.response.ResponseLogin
 import com.hexagram.febys.network.response.ResponseOtpVerification
 import com.hexagram.febys.network.response.ResponseSignup
 import com.hexagram.febys.network.response.User
-import com.hexagram.febys.notification.FCMService
+import com.hexagram.febys.notification.FirebaseUtils
 import com.hexagram.febys.prefs.IPrefManger
 import com.hexagram.febys.ui.screens.payment.models.Wallet
 import kotlinx.coroutines.CoroutineDispatcher
@@ -139,8 +136,10 @@ class AuthRepoImpl @Inject constructor(
             updateCart(profile.cart)
             updateWallet(profile.wallet)
             saveSubscription(profile.subscription)
-
-            subscribeToTopicForNotification(profile.consumerInfo.id.toString())
+            if (!pref.isNotificationSettingInitialize()) {
+                pref.updateNotificationSetting(true)
+                FirebaseUtils.subscribeToTopic(profile.consumerInfo.id.toString())
+            }
         }
 
         return flow<DataState<Profile?>> {
@@ -154,17 +153,6 @@ class AuthRepoImpl @Inject constructor(
                 .onException { emit(DataState.ExceptionError()) }
                 .onNetworkError { emit(DataState.NetworkError()) }
         }.flowOn(dispatcher)
-    }
-
-    private fun subscribeToTopicForNotification(topic: String) {
-        Firebase.messaging.subscribeToTopic(topic)
-            .addOnCompleteListener { task ->
-                var msg = "Notification subscribed to topic: $topic"
-                if (!task.isSuccessful) {
-                    msg = "Notification subscription failed"
-                }
-                Log.d(FCMService.TAG, msg)
-            }
     }
 
     private fun saveSubscription(subscription: Subscription?) {
@@ -194,14 +182,7 @@ class AuthRepoImpl @Inject constructor(
 
     override fun signOut() {
         val topic = pref.getConsumer()?.id.toString()
-        Firebase.messaging.unsubscribeFromTopic(topic)
-            .addOnCompleteListener { task ->
-                var msg = "Notification un-subscribed for topic: $topic"
-                if (!task.isSuccessful) {
-                    msg = "Notification un-subscribe failed"
-                }
-                Log.d(FCMService.TAG, msg)
-            }
+        FirebaseUtils.unSubscribeToTopic(topic)
         IAuthRepo.signOut(pref, cartRepo)
     }
 
@@ -219,5 +200,13 @@ class AuthRepoImpl @Inject constructor(
 
     override fun getSubscription(): Subscription? {
         return pref.getSubscription()
+    }
+
+    override fun updateNotificationSetting(notify: Boolean) {
+        pref.updateNotificationSetting(notify)
+    }
+
+    override fun getNotificationSetting(): Boolean {
+        return pref.getNotificationSetting()
     }
 }

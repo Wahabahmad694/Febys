@@ -11,6 +11,7 @@ import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentAccountBinding
 import com.hexagram.febys.network.DataState
+import com.hexagram.febys.notification.FirebaseUtils
 import com.hexagram.febys.ui.screens.auth.AuthViewModel
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.utils.OrderStatus
@@ -44,6 +45,9 @@ class AccountFragment : BaseFragment() {
     }
 
     private fun uiListeners() {
+        binding.settings.toggleNotification.setOnCheckedChangeListener { _, isChecked ->
+            toggleNotification(isChecked)
+        }
         binding.orders.walletImg.setImageResource(R.drawable.ic_wallet)
         binding.btnLogin.setOnClickListener {
             val navigateToLogin = AccountFragmentDirections.actionToLoginFragment()
@@ -153,6 +157,16 @@ class AccountFragment : BaseFragment() {
         }
     }
 
+    private fun toggleNotification(notify: Boolean) {
+        val topic = consumer?.id?.toString() ?: return
+        if (notify) {
+            FirebaseUtils.subscribeToTopic(topic)
+        } else {
+            FirebaseUtils.unSubscribeToTopic(topic)
+        }
+        authViewModel.updateNotificationSetting(notify)
+    }
+
     private fun gotoOrderListing(status: Array<String>? = null, title: String? = null) {
         val navigateToOrderListing =
             AccountFragmentDirections.actionAccountFragmentToOrderListingFragment(status, title)
@@ -199,6 +213,13 @@ class AccountFragment : BaseFragment() {
             binding.icSubscription.isVisible = false
         }
 
+        if (isUserLoggedIn) {
+            binding.settings.toggleNotification.isChecked = authViewModel.getNotificationSetting()
+            binding.settings.toggleNotification.isEnabled = true
+        } else {
+            binding.settings.toggleNotification.isChecked = false
+            binding.settings.toggleNotification.isEnabled = false
+        }
     }
 
     override fun getIvCart() = binding.ivCart

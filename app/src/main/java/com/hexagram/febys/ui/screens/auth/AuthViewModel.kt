@@ -96,4 +96,12 @@ class AuthViewModel @Inject constructor(
 
     fun getSubscription(): Subscription? = authRepo.getSubscription()
 
+    fun updateNotificationSetting(notify: Boolean) {
+        authRepo.updateNotificationSetting(notify)
+    }
+
+    fun getNotificationSetting(): Boolean {
+        return  authRepo.getNotificationSetting()
+    }
+
 }

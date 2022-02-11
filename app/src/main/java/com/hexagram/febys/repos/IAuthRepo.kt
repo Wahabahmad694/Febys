@@ -51,6 +51,10 @@ interface IAuthRepo {
 
     fun getSubscription(): Subscription?
 
+    fun updateNotificationSetting(notify: Boolean)
+
+    fun getNotificationSetting(): Boolean
+
 
     companion object {
         fun signOut(pref: IPrefManger, cartRepo: ICartRepo) {

@@ -24,6 +24,7 @@
             android:text="@string/label_settings" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/toggle_notification"
             style="@style/TextTheme.HelveticaNeue.TS14"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_32sdp"

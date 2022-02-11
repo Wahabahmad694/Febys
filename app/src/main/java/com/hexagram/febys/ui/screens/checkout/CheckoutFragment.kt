@@ -66,7 +66,8 @@ class CheckoutFragment : BaseFragment() {
         binding.ivBack.setOnClickListener { goBack() }
 
         binding.containerShippingAddress.setOnClickListener {
-            showChangeShippingAddressWarningDialog()
+            if (checkoutViewModel.getDefaultShippingAddress() == null) gotoShippingAddress()
+            else showChangeShippingAddressWarningDialog()
         }
 
         binding.btnPlaceOrder.setOnClickListener {

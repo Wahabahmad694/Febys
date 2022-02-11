@@ -54,4 +54,10 @@ interface IPrefManger {
     fun getNotificationCount(defValue: Int = 0): Int
 
     fun clearNotificationCount()
+
+    fun updateNotificationSetting(notify: Boolean)
+
+    fun getNotificationSetting(defValue: Boolean = false): Boolean
+
+    fun isNotificationSettingInitialize(): Boolean
 }

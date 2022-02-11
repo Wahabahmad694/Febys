@@ -29,7 +29,6 @@ import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class AccountSettingsFragment : BaseFragmentWithPermission() {
     private lateinit var binding: FragmentAccountSettingsBinding
