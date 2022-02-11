@@ -142,6 +142,7 @@
     <string name="label_proceed_to_payment">Proceed to Payment</string>
     <string name="label_download_pdf">Download PDF</string>
     <string name="label_apply">Apply</string>
+    <string name="label_remove">Remove</string>
     <string name="label_enter_voucher_code">Enter Voucher Code</string>
     <string name="menu_menu">Menu</string>
     <string name="Ghana">GH</string>
@@ -302,7 +303,11 @@
     <string name="label_no_reviews">No Reviews</string>
     <string name="label_empty_view">No %1s Found</string>
     <string name="label_person_name">Hi %1s</string>
+    <string name="label_remove_voucher_warning">Are You Sure?</string>
     <string name="label_delete_warning">Are You Sure?</string>
+    <string name="label_invalid_voucher">Invalid Voucher?</string>
+    <string name="msg_for_invalid_voucher">You can\'t apply this voucher. Would you like to remove it?</string>
+    <string name="msg_for_remove_voucher">Would you like to remove voucher?</string>
     <string name="msg_for_delete_item_bag">Do you want to delete this item from bag?</string>
     <string name="msg_for_download_pdf">You want to download the PDF.</string>
     <string name="msg_for_unfollow_vendor">Do you want to unfollow this vendor?</string>

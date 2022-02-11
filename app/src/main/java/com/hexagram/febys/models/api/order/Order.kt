@@ -31,6 +31,8 @@ data class Order(
     val vendorProducts: MutableList<VendorProducts>,
     @SerializedName("vat_percentage")
     val vatPercentage: Double,
+    @SerializedName("delivery_fee")
+    val deliveryFee: Price,
     val transactions: List<Transaction>,
     val voucher: VoucherDetail?,
     @SerializedName("created_at")

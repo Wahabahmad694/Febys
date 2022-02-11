@@ -161,12 +161,15 @@ class OrderDetailFragment : BaseFragment() {
 
         val cartItems = order.toListOfCartDTO()
 
-        updateOrderSummaryQuantity(cartItems.size)
-        cartItems.forEach { addProductToOrderSummary(it.productName, it.quantity, it.price) }
+        var totalItems = 0
+        cartItems.forEach {
+            totalItems += it.quantity
+            addProductToOrderSummary(it.productName, it.quantity, it.price)
+        }
+        updateOrderSummaryQuantity(totalItems)
         addProductToOrderSummary(getString(R.string.label_subtotal), 1, order.productsAmount, true)
 
-        val shippingFee = Price("", 0.0, order.productsAmount.currency)
-        addProductToOrderSummary(getString(R.string.label_shipping_fee), 1, shippingFee, true)
+        addProductToOrderSummary(getString(R.string.label_shipping_fee), 1, order.deliveryFee, true)
         addVatToOrderSummary(order.vatPercentage, order.productsAmount)
 
         if (order.voucher != null) {

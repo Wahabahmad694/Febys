@@ -34,6 +34,7 @@ class CheckoutFragment : BaseFragment() {
     private var orderPrice: Price? = null
 
     private var voucher = ""
+    private var validVoucher = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
@@ -74,6 +75,10 @@ class CheckoutFragment : BaseFragment() {
             if (checkoutViewModel.getDefaultShippingAddress() == null) {
                 showToast(getString(R.string.error_please_select_shipping_address))
             } else {
+                if (!validVoucher) {
+                    showInvalidVoucherDialog()
+                    return@setOnClickListener
+                }
                 val paymentRequest = PaymentRequest(orderPrice!!.value, orderPrice!!.currency)
                 val gotoPayment = NavGraphDirections
                     .toPaymentFragment(paymentRequest)
@@ -82,8 +87,16 @@ class CheckoutFragment : BaseFragment() {
         }
 
         binding.containerApplyVoucher.btnApplyVoucher.setOnClickListener {
-            if (isUserLoggedIn) {
-                voucher = binding.containerApplyVoucher.etApplyVoucher.text.toString()
+            voucher = binding.containerApplyVoucher.etApplyVoucher.text.toString()
+            fetchOrderInfo()
+        }
+
+        binding.containerApplyVoucher.btnRemoveVoucher.setOnClickListener {
+            val resId = R.drawable.ic_error
+            val title = getString(R.string.label_remove_voucher_warning)
+            val msg = getString(R.string.msg_for_remove_voucher)
+            showWarningDialog(resId, title, msg) {
+                voucher = ""
                 fetchOrderInfo()
             }
         }
@@ -135,6 +148,17 @@ class CheckoutFragment : BaseFragment() {
         }
     }
 
+    private fun showInvalidVoucherDialog() {
+        val resId = R.drawable.ic_error
+        val title = getString(R.string.label_invalid_voucher)
+        val msg = getString(R.string.msg_for_invalid_voucher)
+
+        showWarningDialog(resId, title, msg) {
+            voucher = ""
+            fetchOrderInfo()
+        }
+    }
+
     private fun fetchOrderInfo() {
         checkoutViewModel
             .fetchOrderInfo(voucher)
@@ -157,9 +181,17 @@ class CheckoutFragment : BaseFragment() {
                     goBack()
                     return
                 }
+                updateVoucherField()
                 createOrderSummary(orderInfoResponse.data)
             }
         }
+    }
+
+    private fun updateVoucherField() {
+        binding.containerApplyVoucher.etApplyVoucher.setText(voucher)
+        binding.containerApplyVoucher.etApplyVoucher.isEnabled = voucher.isEmpty()
+        binding.containerApplyVoucher.btnApplyVoucher.isVisible = voucher.isEmpty()
+        binding.containerApplyVoucher.btnRemoveVoucher.isVisible = voucher.isNotEmpty()
     }
 
     private fun setObserver() {
@@ -175,16 +207,16 @@ class CheckoutFragment : BaseFragment() {
 
         val cartItems = order.toListOfCartDTO()
 
-        updateOrderSummaryQuantity(cartItems.size)
-
+        var totalItems = 0
         cartItems.forEach {
+            totalItems += it.quantity
             addProductToOrderSummary(it.productName, it.quantity, it.price)
         }
+        updateOrderSummaryQuantity(totalItems)
 
         addProductToOrderSummary(getString(R.string.label_subtotal), 1, order.productsAmount, true)
 
-        val shippingFee = Price("", 0.0, order.productsAmount.currency)
-        addProductToOrderSummary(getString(R.string.label_shipping_fee), 1, shippingFee, true)
+        addProductToOrderSummary(getString(R.string.label_shipping_fee), 1, order.deliveryFee, true)
         addVatToOrderSummary(order.vatPercentage, order.productsAmount)
 
         if (order.voucher != null) {
@@ -196,6 +228,7 @@ class CheckoutFragment : BaseFragment() {
         }
 
         updateTotalAmount(order.billAmount)
+        validVoucher = order.billAmount.value > (order.voucher?.amount ?: 0.0)
     }
 
     private fun addProductToOrderSummary(

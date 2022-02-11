@@ -42,5 +42,16 @@
             android:text="@string/label_apply"
             android:textColor="@color/white" />
 
+        <TextView
+            android:id="@+id/btn_remove_voucher"
+            style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+            android:layout_width="@dimen/_58sdp"
+            android:layout_height="match_parent"
+            android:background="@color/red"
+            android:gravity="center"
+            android:visibility="gone"
+            android:text="@string/label_remove"
+            android:textColor="@color/white" />
+
     </LinearLayout>
 </layout>
