@@ -39,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/_10sdp"
-            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_20sdp"
             app:layout_constraintStart_toEndOf="@id/iv_notify_logo"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Hi! Hillary" />
