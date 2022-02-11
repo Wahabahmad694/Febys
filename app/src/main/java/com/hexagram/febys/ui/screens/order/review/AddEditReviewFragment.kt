@@ -110,9 +110,6 @@ class AddEditReviewFragment : BaseFragment() {
             orderViewModel.postReview(args.orderId, orderReview)
         }
 
-        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner) {
-            if (binding.icTick.isVisible) updateFieldAndReviewsAdapter(false) else goBack()
-        }
     }
 
 
