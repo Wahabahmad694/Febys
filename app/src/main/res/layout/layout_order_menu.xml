@@ -103,7 +103,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_32sdp"
             android:gravity="center_vertical"
-            android:text="@string/label_my_review"
+            android:text="@string/label_my_reviews"
             app:drawableEndCompat="@drawable/ic_right_arrow" />
 
         <View

@@ -631,7 +631,7 @@
                                 android:id="@+id/see_more_q_and_a"
                                 style="@style/ButtonTheme.OutLine.Full"
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/_39sdp"
+                                android:layout_height="@dimen/_49sdp"
                                 android:text="@string/label_see_more" />
 
                             <LinearLayout
