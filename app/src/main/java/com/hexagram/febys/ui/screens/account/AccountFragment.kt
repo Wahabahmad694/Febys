@@ -92,8 +92,8 @@ class AccountFragment : BaseFragment() {
         binding.orders.myReview.setOnClickListener {
             gotoOrderListing(
                 arrayOf(OrderStatus.REVIEWED),
-                getString(R.string.label_my_reviews),
-                getString(R.string.label_my_review)
+                getString(R.string.label_my_review),
+                getString(R.string.label_my_reviews)
             )
         }
 
