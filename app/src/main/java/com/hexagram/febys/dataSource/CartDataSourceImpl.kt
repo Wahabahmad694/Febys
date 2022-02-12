@@ -72,6 +72,11 @@ class CartDataSourceImpl @Inject constructor(
         }
     }
 
+    override fun replaceOrAddCart(listOfCartDTO: List<CartDTO>) {
+        cartDao.clear()
+        cartDao.insert(listOfCartDTO)
+    }
+
     private fun updateCartItemIfChange(dbCartItem: CartDTO, cartItem: CartDTO) {
         if (dbCartItem.hasPromotion != cartItem.hasPromotion) {
             cartDao.update(cartItem)

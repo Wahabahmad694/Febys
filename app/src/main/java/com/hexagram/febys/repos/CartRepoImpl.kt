@@ -19,8 +19,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import okhttp3.ResponseBody
 import kotlinx.coroutines.launch
+import okhttp3.ResponseBody
 import javax.inject.Inject
 
 class CartRepoImpl @Inject constructor(
@@ -75,7 +75,7 @@ class CartRepoImpl @Inject constructor(
         if (orderRequest.items.isEmpty()) emit(DataState.Data(null))
         backendService.fetchOrderInfo(authToken, orderRequest)
             .onSuccess {
-                cartDataSource.updateCart(data!!.order.toListOfCartDTO())
+                cartDataSource.replaceOrAddCart(data!!.order.toListOfCartDTO())
                 emit(DataState.Data(data.order))
             }
             .onError { emit(DataState.ApiError(message)) }
