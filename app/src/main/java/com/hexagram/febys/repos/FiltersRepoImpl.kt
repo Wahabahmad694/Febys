@@ -24,8 +24,12 @@ class FiltersRepoImpl @Inject constructor(val backendService: FebysBackendServic
             FiltersType.TODAY_DEALS -> backendService.fetchTodayDealsFilters()
             FiltersType.VENDOR -> backendService.fetchVendorFilters(vendorId!!)
             FiltersType.UNDER_HUNDRED -> backendService.fetchUnderHundredFilters()
-            FiltersType.TRENDING -> ApiResponse.exception(NullPointerException())
-            FiltersType.SPECIAL_PRODUCT -> ApiResponse.exception(NullPointerException())
+            FiltersType.RECOMMENDED_PRODUCT,
+            FiltersType.SIMILAR_PRODUCT,
+            FiltersType.SPECIAL_PRODUCT,
+            FiltersType.TRENDING -> {
+                ApiResponse.exception(NullPointerException())
+            }
         }
 
         response.onSuccess {

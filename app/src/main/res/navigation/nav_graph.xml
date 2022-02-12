@@ -262,6 +262,20 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_productDetailFragment_to_similarProductListing"
+            app:destination="@id/similarListingFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_productDetailFragment_to_recommendedProductListing"
+            app:destination="@id/recommendedListingFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/accountFragment"
@@ -430,13 +444,37 @@
     <fragment
         android:id="@+id/specialListingFragment"
         android:name="com.hexagram.febys.ui.screens.product.listing.SpecialProductListingFragment"
-        android:label="TodayDealsListingFragment"
+        android:label="SpecialProductListingFragment"
         tools:layout="@layout/fragment_product_listing">
         <argument
             android:name="productListTitle"
             app:argType="string" />
         <argument
             android:name="specialFilter"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/similarListingFragment"
+        android:name="com.hexagram.febys.ui.screens.product.listing.SimilarProductListingFragment"
+        android:label="SimilarProductListingFragment"
+        tools:layout="@layout/fragment_product_listing">
+        <argument
+            android:name="productId"
+            app:argType="string" />
+        <argument
+            android:name="productListTitle"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/recommendedListingFragment"
+        android:name="com.hexagram.febys.ui.screens.product.listing.RecommendedProductListingFragment"
+        android:label="RecommendedListingFragment"
+        tools:layout="@layout/fragment_product_listing">
+        <argument
+            android:name="productId"
+            app:argType="string" />
+        <argument
+            android:name="productListTitle"
             app:argType="string" />
     </fragment>
     <fragment
