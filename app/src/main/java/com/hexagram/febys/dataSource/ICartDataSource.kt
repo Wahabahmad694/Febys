@@ -31,6 +31,8 @@ interface ICartDataSource {
 
     fun updateCart(listOfCartDTO: List<CartDTO>)
 
+    fun replaceOrAddCart(listOfCartDTO: List<CartDTO>)
+
     fun getCart(): List<CartDTO>
 
     fun getCartSkuIdsAndQuantity(): List<SkuIdAndQuantity>

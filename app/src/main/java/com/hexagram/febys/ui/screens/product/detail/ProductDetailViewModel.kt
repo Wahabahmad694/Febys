@@ -118,8 +118,8 @@ class ProductDetailViewModel @Inject constructor(
         }
     }
 
-    fun fetchRecommendProducts() = viewModelScope.launch {
-        val products = productRepo.fetchRecommendProducts()
+    fun fetchRecommendProducts(productId: String) = viewModelScope.launch {
+        val products = productRepo.fetchRecommendProducts(productId)
         _recommendProducts.postValue(DataState.Data(products))
     }
 
@@ -127,6 +127,10 @@ class ProductDetailViewModel @Inject constructor(
         val products = productRepo.fetchSimilarProducts(productId)
         _similarProducts.postValue(DataState.Data(products))
     }
+
+    fun getRecommendProducts() = (_recommendProducts.value as? DataState.Data<List<Product>>)?.data
+
+    fun getSimilarProducts() = (_similarProducts.value as? DataState.Data<List<Product>>)?.data
 
     fun reviewVoteUp(reviewId: String, revoke: Boolean) = viewModelScope.launch {
         this@ProductDetailViewModel._observeReviews.postValue(DataState.Loading())

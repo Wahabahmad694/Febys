@@ -1,12 +1,17 @@
 package com.hexagram.febys.ui.screens.cart
 
+import android.Manifest
+import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.hexagram.febys.NavGraphDirections
@@ -28,6 +33,12 @@ class CartFragment : BaseFragment() {
     private val cartViewModel: CartViewModel by viewModels()
 
     private val cartAdapter = CartAdapter()
+
+    private var permissionCallback: ((Boolean) -> Unit)? = null
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+            permissionCallback?.invoke(isGranted)
+        }
 
     private var openDocumentTreeCallback: ((Uri) -> Unit)? = null
     private val openDocumentTree =
@@ -78,7 +89,9 @@ class CartFragment : BaseFragment() {
             val msg = getString(R.string.msg_for_download_pdf)
 
             showWarningDialog(resId, title, msg) {
-                cartViewModel.exportPdf()
+                requestPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) {
+                    cartViewModel.exportPdf()
+                }
             }
         }
 
@@ -209,5 +222,41 @@ class CartFragment : BaseFragment() {
 
         binding.tvSubtotalAmount.text = formattedTotalPrice
         binding.tvTotalAmount.text = formattedTotalPrice
+    }
+
+
+    private fun requestPermission(
+        context: Context, permission: String, permissionCallback: (Boolean) -> Unit
+    ) {
+        this.permissionCallback = permissionCallback
+        when {
+            ContextCompat.checkSelfPermission(
+                context, permission
+            ) == PackageManager.PERMISSION_GRANTED -> {
+                this.permissionCallback?.invoke(true)
+            }
+            shouldShowRequestPermissionRationale(permission) -> {
+                showRationalPermissionDialog(permission)
+            }
+            else -> {
+                requestPermissionLauncher.launch(permission)
+            }
+        }
+    }
+
+
+    private fun showRationalPermissionDialog(permission: String) {
+        AlertDialog.Builder(context)
+            .setTitle(getString(R.string.label_permission_required))
+            .setMessage(getString(R.string.label_permission_msg))
+            .setPositiveButton(R.string.okay) { dialog, _ ->
+                dialog.dismiss()
+                requestPermissionLauncher.launch(permission)
+            }
+            .setNegativeButton(R.string.label_cancel) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
     }
 }

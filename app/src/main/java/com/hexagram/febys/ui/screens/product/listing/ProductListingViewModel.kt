@@ -19,6 +19,8 @@ open class ProductListingViewModel @Inject constructor(
 ) : ProductViewModel(productListingRepo) {
     private var todayDealsListing: Flow<PagingData<Product>>? = null
     private var specialProductListing: Flow<PagingData<Product>>? = null
+    private var similarProductListing: Flow<PagingData<Product>>? = null
+    private var recommendedProductListing: Flow<PagingData<Product>>? = null
     private var trendingProductsListing: Flow<PagingData<Product>>? = null
     private var under100DollarsItemsListing: Flow<PagingData<Product>>? = null
     private var categoryProductsListing: Flow<PagingData<Product>>? = null
@@ -58,6 +60,42 @@ open class ProductListingViewModel @Inject constructor(
         }
 
         return specialProductListing!!
+    }
+
+    fun similarProductListing(
+        productId: String,
+        refresh: Boolean,
+        onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
+    ): Flow<PagingData<Product>> {
+        if (similarProductListing == null || refresh) {
+            similarProductListing =
+                productListingRepo.similarProductListing(
+                    productId,
+                    filters,
+                    viewModelScope,
+                    onProductListingResponse = onProductListingResponse
+                )
+        }
+
+        return similarProductListing!!
+    }
+
+    fun recommendedProductListing(
+        productId: String,
+        refresh: Boolean,
+        onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
+    ): Flow<PagingData<Product>> {
+        if (recommendedProductListing == null || refresh) {
+            recommendedProductListing =
+                productListingRepo.recommendedProductListing(
+                    productId,
+                    filters,
+                    viewModelScope,
+                    onProductListingResponse = onProductListingResponse
+                )
+        }
+
+        return recommendedProductListing!!
     }
 
     fun trendingProductsListing(

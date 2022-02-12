@@ -50,7 +50,45 @@ class ProductListingRepoImpl @Inject constructor(
             PagingConfig(pageSize = 10)
         ) {
             val req = createReq(filters, specialFilter)
-            TodayDealsPagingSource(backendService, req, onProductListingResponse)
+            SpecialProductListingPagingSource(backendService, req, onProductListingResponse)
+        }.flow
+            .flowOn(dispatcher)
+            .cachedIn(scope)
+    }
+
+    override fun similarProductListing(
+        productId: String,
+        filters: ProductListingRequest,
+        scope: CoroutineScope,
+        dispatcher: CoroutineDispatcher,
+        onProductListingResponse: ((ProductPagingListing) -> Unit)?
+    ): Flow<PagingData<Product>> {
+        return Pager(
+            PagingConfig(pageSize = 10)
+        ) {
+            val req = createReq(filters)
+            SimilarProductListingPagingSource(
+                productId, backendService, req, onProductListingResponse
+            )
+        }.flow
+            .flowOn(dispatcher)
+            .cachedIn(scope)
+    }
+
+    override fun recommendedProductListing(
+        productId: String,
+        filters: ProductListingRequest,
+        scope: CoroutineScope,
+        dispatcher: CoroutineDispatcher,
+        onProductListingResponse: ((ProductPagingListing) -> Unit)?
+    ): Flow<PagingData<Product>> {
+        return Pager(
+            PagingConfig(pageSize = 10)
+        ) {
+            val req = createReq(filters)
+            RecommendedProductListingPagingSource(
+                productId, backendService, req, onProductListingResponse
+            )
         }.flow
             .flowOn(dispatcher)
             .cachedIn(scope)

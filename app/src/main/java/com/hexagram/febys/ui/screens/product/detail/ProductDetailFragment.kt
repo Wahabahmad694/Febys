@@ -30,6 +30,8 @@ import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.ui.screens.product.additional.AdditionalProductAdapter
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import com.hexagram.febys.ui.screens.product.filters.FiltersType
+import androidx.navigation.NavDirections
 
 @AndroidEntryPoint
 class ProductDetailFragment : SliderFragment() {
@@ -68,7 +70,7 @@ class ProductDetailFragment : SliderFragment() {
         uiListeners()
         observersSetup()
 
-        productDetailViewModel.fetchRecommendProducts()
+        productDetailViewModel.fetchRecommendProducts(args.productId)
         productDetailViewModel.fetchSimilarProducts(args.productId)
     }
 
@@ -428,7 +430,7 @@ class ProductDetailFragment : SliderFragment() {
                 }
                 is DataState.Data -> {
                     hideLoader()
-                    addAdditionalProduct(getString(R.string.label_customer_recommend), it.data, 0)
+                    updateAdditionalProducts()
                 }
             }
         }
@@ -444,11 +446,27 @@ class ProductDetailFragment : SliderFragment() {
                 }
                 is DataState.Data -> {
                     hideLoader()
-                    addAdditionalProduct(
-                        getString(R.string.label_compare_with_similar_items), it.data
-                    )
+                    updateAdditionalProducts()
                 }
             }
+        }
+    }
+
+    private fun updateAdditionalProducts(){
+        binding.containerAdditionalProducts.removeAllViews()
+        productDetailViewModel.getRecommendProducts()?.let {
+            addAdditionalProduct(
+                FiltersType.RECOMMENDED_PRODUCT,
+                getString(R.string.label_customer_recommend),
+                if (it.size > 4) it.subList(0, 4) else it
+            )
+        }
+        productDetailViewModel.getSimilarProducts()?.let {
+            addAdditionalProduct(
+                FiltersType.SIMILAR_PRODUCT,
+                getString(R.string.label_compare_with_similar_items),
+                if (it.size > 4) it.subList(0, 4) else it
+            )
         }
     }
 
@@ -585,11 +603,12 @@ class ProductDetailFragment : SliderFragment() {
         addView(parent, layoutQuestionAnswersThread.root, position)
     }
 
-    private fun addAdditionalProduct(title: String, products: List<Product>, position: Int = -1) {
+    private fun addAdditionalProduct(
+        filterType: FiltersType, title: String, products: List<Product>, position: Int = -1
+    ) {
         if (products.isEmpty()) return
 
         val parent = binding.containerAdditionalProducts
-        parent.removeAllViews()
 
         val layoutAdditionalProductBinding = LayoutAdditionalProductBinding
             .inflate(layoutInflater, parent, false)
@@ -610,6 +629,18 @@ class ProductDetailFragment : SliderFragment() {
                 val gotoProductDetail =
                     NavGraphDirections.actionToProductDetail(item._id, item.variants[0].skuId)
                 navigateTo(gotoProductDetail)
+            }
+            layoutAdditionalProductBinding.btnAdditionalProductShopAll.setOnClickListener {
+                var actionToProductListing : NavDirections? = null
+                if (filterType == FiltersType.SIMILAR_PRODUCT){
+                    actionToProductListing = ProductDetailFragmentDirections
+                        .actionProductDetailFragmentToSimilarProductListing(args.productId, title)
+                } else if(filterType == FiltersType.RECOMMENDED_PRODUCT){
+                    actionToProductListing = ProductDetailFragmentDirections
+                        .actionProductDetailFragmentToRecommendedProductListing(args.productId, title)
+                }
+
+                actionToProductListing?.let { navigateTo(it) }
             }
         }
 

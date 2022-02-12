@@ -147,9 +147,24 @@ open class ProductRepoImpl @Inject constructor(
             .onNetworkError { emit(DataState.NetworkError()) }
     }.flowOn(dispatcher)
 
-    override suspend fun fetchRecommendProducts(dispatcher: CoroutineDispatcher): List<Product> {
+    override suspend fun fetchRecommendProducts(
+        productId: String, dispatcher: CoroutineDispatcher
+    ): List<Product> {
         val pagingListRequest = PagingListRequest()
-        val response = backendService.fetchRecommendProducts(pagingListRequest)
+        val response = backendService.fetchRecommendProducts(
+            pagingListRequest.createQueryMap(), pagingListRequest
+        )
+        return (response as? ApiResponse.ApiSuccessResponse)
+            ?.data?.getResponse<ProductPagingListing>()?.products ?: emptyList()
+    }
+
+    override suspend fun fetchSimilarProducts(
+        productId: String, dispatcher: CoroutineDispatcher
+    ): List<Product> {
+        val pagingListRequest = PagingListRequest()
+        val response = backendService.fetchSimilarProducts(
+            productId, pagingListRequest.createQueryMap(), pagingListRequest
+        )
         return (response as? ApiResponse.ApiSuccessResponse)
             ?.data?.getResponse<ProductPagingListing>()?.products ?: emptyList()
     }
@@ -193,13 +208,4 @@ open class ProductRepoImpl @Inject constructor(
             .onException { emit(DataState.ExceptionError()) }
             .onNetworkError { emit(DataState.NetworkError()) }
     }.flowOn(dispatcher)
-
-    override suspend fun fetchSimilarProducts(
-        productId: String, dispatcher: CoroutineDispatcher
-    ): List<Product> {
-        val pagingListRequest = PagingListRequest()
-        val response = backendService.fetchSimilarProducts(productId, pagingListRequest)
-        return (response as? ApiResponse.ApiSuccessResponse)
-            ?.data?.getResponse<ProductPagingListing>()?.products ?: emptyList()
-    }
 }

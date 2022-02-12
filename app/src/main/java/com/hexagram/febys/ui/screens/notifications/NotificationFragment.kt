@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.paging.LoadState
+import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.broadcast.NotificationLocalBroadcastReceiver
 import com.hexagram.febys.databinding.FragmentNotificationBinding
@@ -41,7 +42,6 @@ class NotificationFragment : BaseFragment() {
         initUi()
         uiListeners()
         setupOrderPagerAdapter()
-        fetchNotification()
         registerNotificationReceiver()
         setObserver()
     }
@@ -49,6 +49,9 @@ class NotificationFragment : BaseFragment() {
     private fun setObserver() {
         observesUserLoggedIn.observe(viewLifecycleOwner) {
             binding.isUserLoggedIn = it
+            if (it) {
+                fetchNotification(true)
+            }
         }
     }
 
@@ -73,6 +76,11 @@ class NotificationFragment : BaseFragment() {
                     notification.navigate()
                 }
             }
+        }
+
+        binding.gotoLogin.setOnClickListener {
+            val navigateToLogin = NavGraphDirections.actionToLoginFragment()
+            navigateTo(navigateToLogin)
         }
     }
 

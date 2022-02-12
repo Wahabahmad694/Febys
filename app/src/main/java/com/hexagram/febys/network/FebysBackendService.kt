@@ -155,11 +155,16 @@ interface FebysBackendService {
     ): ApiResponse<Unit>
 
     @POST("v1/consumers/products/recommended")
-    suspend fun fetchRecommendProducts(@Body request: PagingListRequest): ApiResponse<Pagination>
+    suspend fun fetchRecommendProducts(
+        @QueryMap queryMap: Map<String, String>,
+        @Body request: PagingListRequest
+    ): ApiResponse<Pagination>
 
     @POST("v1/consumers/products/{productId}/similar")
     suspend fun fetchSimilarProducts(
-        @Path("productId") productId: String, @Body request: PagingListRequest
+        @Path("productId") productId: String,
+        @QueryMap queryMap: Map<String, String>,
+        @Body request: PagingListRequest
     ): ApiResponse<Pagination>
 
     @POST("v1/products/{productId}/ask-question")
@@ -370,7 +375,7 @@ interface FebysBackendService {
         @Header("Authorization") authKey: String,
         @Path("packageId") packageId: String,
         @Body transactionIds: TransactionReq
-    ): ApiResponse<Unit>
+    ): ApiResponse<ResponseSubscription>
 
     @POST("v1/consumers/notifications/list")
     suspend fun fetchNotifications(

@@ -35,7 +35,9 @@ class FebysPlusAdapter() :
     fun submitList(febysPackage: List<Package>, purchasedPkgId: String? = null) {
         this.packages = febysPackage
         this.purchasedPkgId = purchasedPkgId
-        packages.forEach { it.selected = purchasedPkgId == it.id }
+        if (purchasedPkgId != null) {
+            packages.forEach { it.selected = purchasedPkgId == it.id }
+        }
         notifyItemRangeChanged(0, packages.size)
     }
 

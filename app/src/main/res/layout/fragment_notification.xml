@@ -59,14 +59,36 @@
                 app:warningTitle="@{@string/label_notifications}" />
         </RelativeLayout>
 
-        <TextView
+        <androidx.constraintlayout.widget.ConstraintLayout
             style="@style/TextTheme.HelveticaNeue.TS18.Bold"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/please_login_to_see_notifications"
-            binding:is_visible="@{!isUserLoggedIn}" />
+            android:paddingHorizontal="@dimen/_16sdp"
+            binding:is_visible="@{!isUserLoggedIn}">
+
+            <TextView
+                android:id="@+id/label_login"
+                style="@style/TextTheme.Arial.TS16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/please_login_to_see_notifications"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/goto_login"
+                style="@style/ButtonTheme.Contained"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:text="@string/label_login"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/label_login"
+                app:layout_constraintWidth_max="@dimen/_298sdp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </LinearLayout>
 
 </layout>
