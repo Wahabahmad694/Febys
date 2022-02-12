@@ -606,6 +606,11 @@ class ProductDetailFragment : SliderFragment() {
                 layoutManager = GridLayoutManager(context, 2)
                 adapter = additionalAdapter
             }
+            additionalAdapter.onItemClick = { item ->
+                val gotoProductDetail =
+                    NavGraphDirections.actionToProductDetail(item._id, item.variants[0].skuId)
+                navigateTo(gotoProductDetail)
+            }
         }
 
         addView(parent, layoutAdditionalProductBinding.root, position)

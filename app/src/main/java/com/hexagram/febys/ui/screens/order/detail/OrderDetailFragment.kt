@@ -169,7 +169,8 @@ class OrderDetailFragment : BaseFragment() {
         updateOrderSummaryQuantity(totalItems)
         addProductToOrderSummary(getString(R.string.label_subtotal), 1, order.productsAmount, true)
 
-        addProductToOrderSummary(getString(R.string.label_shipping_fee), 1, order.deliveryFee, true)
+        val deliveryFee = order.deliveryFee ?: Price("", 0.0, order.productsAmount.currency)
+        addProductToOrderSummary(getString(R.string.label_shipping_fee), 1, deliveryFee, true)
         addVatToOrderSummary(order.vatPercentage, order.productsAmount)
 
         if (order.voucher != null) {
