@@ -65,7 +65,7 @@
 
                 <TextView
                     android:id="@+id/label_source"
-                    style="@style/TextTheme.HelveticaNeue.TS14.Grey"
+                    style="@style/TextTheme.Arial.TS14.Grey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_source" />
@@ -176,7 +176,7 @@
 
                 <TextView
                     android:id="@+id/label_status"
-                    style="@style/TextTheme.HelveticaNeue.TS14.Grey"
+                    style="@style/TextTheme.Arial.TS14.Grey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_status" />
