@@ -370,7 +370,7 @@ interface FebysBackendService {
         @Header("Authorization") authKey: String,
         @Path("packageId") packageId: String,
         @Body transactionIds: TransactionReq
-    ): ApiResponse<Unit>
+    ): ApiResponse<ResponseSubscription>
 
     @POST("v1/consumers/notifications/list")
     suspend fun fetchNotifications(

@@ -53,8 +53,6 @@ class FebysPlusFragment : BaseFragment() {
                     PaymentRequest(it.price.value, it.price.currency, "SUBSCRIPTION_PURCHASED")
                 val gotoPayment = NavGraphDirections.toPaymentFragment(paymentRequest)
                 navigateTo(gotoPayment)
-                showSuccessDialog()
-                subscribePackage()
             } else gotoLogin()
         }
     }
@@ -96,7 +94,18 @@ class FebysPlusFragment : BaseFragment() {
                 }
                 is DataState.Data -> {
                     hideLoader()
+                    showSuccessDialog()
                 }
+            }
+        }
+
+        setFragmentResultListener(BasePaymentFragment.TRANSACTIONS) { _, bundle ->
+            val transactions =
+                bundle.getParcelableArrayList<Transaction>(BasePaymentFragment.TRANSACTIONS)
+                    ?.map { it._id }!!
+            if (transactions.isEmpty()) return@setFragmentResultListener
+            febysPackageAdapter.getSelectedPkg()?.let {
+                febysPlusViewModel.subscribePackage(it.id, TransactionReq(transactions))
             }
         }
     }
@@ -107,16 +116,6 @@ class FebysPlusFragment : BaseFragment() {
         val msg = getString(R.string.label_success_subscription)
 
         showInfoDialoge(resId, title, msg) { goBack() }
-    }
-    private fun subscribePackage() {
-        setFragmentResultListener(BasePaymentFragment.TRANSACTIONS) { requestKey, bundle ->
-            val transactions =
-                bundle.getParcelableArrayList<Transaction>(BasePaymentFragment.TRANSACTIONS)
-                    ?.map { it._id }!!
-            febysPackageAdapter.getSelectedPkg()?.let {
-                febysPlusViewModel.subscribePackage(it.id, TransactionReq(transactions))
-            }
-        }
     }
 
     private fun gotoLogin() {
