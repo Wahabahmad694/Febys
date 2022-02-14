@@ -166,11 +166,14 @@ class SignupFragment : SocialMediaAuthFragment() {
     private fun gotoNextScreen() {
         val popUpTo = if (args.isOpenFromLogin) R.id.loginFragment else R.id.signupFragment
 
-        if (isSocialLogin) {
+        // remove following line when otp work get done from backend
+        findNavController().popBackStack(popUpTo, true)
+        // uncomment following lines when otp work get done from backend
+        /*if (isSocialLogin) {
             findNavController().popBackStack(popUpTo, true)
         } else {
             navigateToOTPVerification(popUpTo)
-        }
+        }*/
     }
 
     private fun signup() {
