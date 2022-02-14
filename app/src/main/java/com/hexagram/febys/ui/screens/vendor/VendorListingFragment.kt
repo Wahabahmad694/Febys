@@ -71,17 +71,9 @@ class VendorListingFragment : BaseFragment() {
         }
 
         vendorListingAdapter.unFollowVendor = { vendor, position ->
-
-            val resId = R.drawable.ic_error
-            val title = getString(R.string.label_delete_warning)
-            val msg =
-                if (isCelebrity) getString(R.string.msg_for_unfollow_celebrity) else getString(R.string.msg_for_unfollow_vendor)
-
-            showWarningDialog(resId, title, msg) {
-                vendorViewModel.unFollowVendor(vendor._id)
-                vendor.isFollow = !vendor.isFollow
-                vendorListingAdapter.notifyItemChanged(position)
-            }
+            vendorViewModel.unFollowVendor(vendor._id)
+            vendor.isFollow = !vendor.isFollow
+            vendorListingAdapter.notifyItemChanged(position)
         }
 
         vendorListingAdapter.gotoCelebrityDetail =
