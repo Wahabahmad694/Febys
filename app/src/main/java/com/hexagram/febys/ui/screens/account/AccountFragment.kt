@@ -144,28 +144,28 @@ class AccountFragment : BaseFragment() {
         binding.support.aboutFebys.setOnClickListener {
             val goToAboutFebys =
                 NavGraphDirections.toWebViewFragment(getString(R.string.label_about_febys),
-                    "${BuildConfig.backendBaseUrl}static/about-us",
+                    "${BuildConfig.backendBaseUrl}static/about-us/",
                     false)
             navigateTo(goToAboutFebys)
         }
         binding.support.helpCenter.setOnClickListener {
             val goToHelpCenter =
                 NavGraphDirections.toWebViewFragment(getString(R.string.label_help_center),
-                    "${BuildConfig.backendBaseUrl}static/help-center",
+                    "${BuildConfig.backendBaseUrl}static/help-center/",
                     false)
             navigateTo(goToHelpCenter)
         }
         binding.support.privacyPolicy.setOnClickListener {
             val goToPrivacyPolicy =
                 NavGraphDirections.toWebViewFragment(getString(R.string.label_privacy_policy),
-                    "${BuildConfig.backendBaseUrl}static/privacy-policy",
+                    "${BuildConfig.backendBaseUrl}static/privacy-policy/",
                     false)
             navigateTo(goToPrivacyPolicy)
         }
         binding.support.termsAndConditions.setOnClickListener {
             val goToTermsAndConditions =
                 NavGraphDirections.toWebViewFragment(getString(R.string.label_terms_amp_conditions),
-                    "${BuildConfig.backendBaseUrl}static/terms-and-conditions",
+                    "${BuildConfig.backendBaseUrl}static/terms-and-conditions/",
                     false)
             navigateTo(goToTermsAndConditions)
         }

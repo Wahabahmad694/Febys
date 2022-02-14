@@ -4,11 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentMenuBinding
 import com.hexagram.febys.utils.navigateTo
 
 class MenuFragment : BaseFragment() {
+
+    object SpecialMarketFilters {
+        const val THRIFT_MARKET = "Thrift Market"
+        const val MADE_IN_GHANA = "Made in Ghana"
+        const val AFRICAN_MARKET = "African Market"
+        const val DISCOUNT_MALL = "Discount Mall"
+    }
+
     private lateinit var binding: FragmentMenuBinding
 
     override fun onCreateView(
@@ -31,8 +40,35 @@ class MenuFragment : BaseFragment() {
         }
         binding.labelThriftMarket.setOnClickListener {
             val gotoThrift =
-                MenuFragmentDirections.actionMenuFragmentToSpecialProductListing("", "")
+                MenuFragmentDirections.actionMenuFragmentToSpecialProductListing(
+                    getString(R.string.label_thrift_market),
+                    SpecialMarketFilters.THRIFT_MARKET
+                )
             navigateTo(gotoThrift)
+        }
+        binding.labelDiscountMall.setOnClickListener {
+            val gotoDiscountMall =
+                MenuFragmentDirections.actionMenuFragmentToSpecialProductListing(
+                    getString(R.string.label_discount_mall),
+                    SpecialMarketFilters.DISCOUNT_MALL
+                )
+            navigateTo(gotoDiscountMall)
+        }
+        binding.labelMadeInGhana.setOnClickListener {
+            val gotoMadeInGhana =
+                MenuFragmentDirections.actionMenuFragmentToSpecialProductListing(
+                    getString(R.string.label_made_in_ghana),
+                    SpecialMarketFilters.MADE_IN_GHANA
+                )
+            navigateTo(gotoMadeInGhana)
+        }
+        binding.labelAfricanMarket.setOnClickListener {
+            val gotoAfrican =
+                MenuFragmentDirections.actionMenuFragmentToSpecialProductListing(
+                    getString(R.string.label_african_market),
+                    SpecialMarketFilters.AFRICAN_MARKET
+                )
+            navigateTo(gotoAfrican)
         }
     }
 }
