@@ -111,7 +111,7 @@ class VendorDetailFragment : BaseFragment() {
             binding.storeRatingBar.rating = storeRating.toFloat()
             binding.storeRatingBar.stepSize = 0.5f
             binding.tvStoreRating.text = getString(R.string.store_rating, storeRating)
-            binding.containerVendorStoreRating.averagePriceRating.text = storeRating.toString()
+            binding.containerVendorStoreRating.tvAverageRating.text = storeRating.toString()
 
             val hasReviews = vendor.ratingsAndReviews.isNotEmpty()
                     || vendor.pricingScore.isNotEmpty()

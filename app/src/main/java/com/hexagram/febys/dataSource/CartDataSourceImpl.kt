@@ -73,8 +73,25 @@ class CartDataSourceImpl @Inject constructor(
     }
 
     override fun replaceOrAddCart(listOfCartDTO: List<CartDTO>) {
-        cartDao.clear()
-        cartDao.insert(listOfCartDTO)
+        val dbCart = cartDao.getCart()
+
+        val itemsToRemove = dbCart.filter { dbCartItem ->
+            listOfCartDTO.firstOrNull { dbCartItem.skuId == it.skuId } == null
+        }
+        cartDao.delete(itemsToRemove)
+
+        listOfCartDTO.forEach { cartItem ->
+            val dbCartItem =
+                dbCart.firstOrNull { dbCartItem -> cartItem.skuId == dbCartItem.skuId }
+            if (dbCartItem != null) {
+                val updatedCartItem = cartItem.copy(
+                    createdAt = dbCartItem.createdAt
+                )
+                cartDao.update(updatedCartItem)
+            } else {
+                addCartItem(cartItem)
+            }
+        }
     }
 
     private fun updateCartItemIfChange(dbCartItem: CartDTO, cartItem: CartDTO) {

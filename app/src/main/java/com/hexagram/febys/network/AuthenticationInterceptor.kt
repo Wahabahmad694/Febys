@@ -5,7 +5,6 @@ import com.hexagram.febys.dataSource.ICartDataSource
 import com.hexagram.febys.network.adapter.ApiResponse
 import com.hexagram.febys.prefs.IPrefManger
 import com.hexagram.febys.repos.IAuthRepo
-import com.hexagram.febys.repos.ICartRepo
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Request

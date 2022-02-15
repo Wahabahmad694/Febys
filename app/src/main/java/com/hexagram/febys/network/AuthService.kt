@@ -3,6 +3,8 @@ package com.hexagram.febys.network
 import com.hexagram.febys.models.api.profile.Profile
 import com.hexagram.febys.network.adapter.ApiResponse
 import com.hexagram.febys.network.requests.RequestSignup
+import com.hexagram.febys.network.requests.RequestUpdateUser
+import com.hexagram.febys.network.requests.ResponseUpdateUser
 import com.hexagram.febys.network.response.ResponseLogin
 import com.hexagram.febys.network.response.ResponseOtpVerification
 import com.hexagram.febys.network.response.ResponseRefreshToken
@@ -32,4 +34,10 @@ interface AuthService {
 
     @GET("v1/consumers/me")
     suspend fun me(@Header("Authorization") authKey: String): ApiResponse<Profile>
+
+    @PUT("v1/consumers")
+    suspend fun updateProfile(
+        @Header("Authorization") authToken: String,
+        @Body reqUpdateUser: RequestUpdateUser
+    ): ApiResponse<ResponseUpdateUser>
 }

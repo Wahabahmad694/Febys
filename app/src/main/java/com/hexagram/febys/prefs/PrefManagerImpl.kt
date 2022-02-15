@@ -26,7 +26,6 @@ class PrefManagerImpl @Inject constructor(
         private const val KEY_DEF_SHIPPING_ADDRESS = "defShippingAddress"
         private const val KEY_WALLET = "wallet"
         private const val KEY_NOTIFICATION_COUNT = "notificationCount"
-        private const val KEY_NOTIFICATION = "notification"
     }
 
     private val pref: SharedPreferences by lazy {
@@ -157,18 +156,6 @@ class PrefManagerImpl @Inject constructor(
 
     override fun clearNotificationCount() {
         remove(KEY_NOTIFICATION_COUNT)
-    }
-
-    override fun updateNotificationSetting(notify: Boolean) {
-        saveBoolean(KEY_NOTIFICATION, notify)
-    }
-
-    override fun getNotificationSetting(defValue: Boolean): Boolean {
-        return getBoolean(KEY_NOTIFICATION, defValue)
-    }
-
-    override fun isNotificationSettingInitialize(): Boolean {
-        return pref.contains(KEY_NOTIFICATION)
     }
 
     private fun saveBoolean(key: String, value: Boolean) {

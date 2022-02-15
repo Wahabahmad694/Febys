@@ -163,12 +163,10 @@ class AddEditShippingAddressFragment : BaseFragment() {
     }
 
     private fun updateDefaultCCP(contact: PhoneNo) {
-        binding.ccpPhoneCode.setDefaultCountryUsingNameCode(
-            contact.countryCode ?: Utils.DEFAULT_COUNTRY_CODE
-        )
+        binding.ccpPhoneCode.setDefaultCountryUsingNameCode(contact.countryCode)
         binding.ccpPhoneCode.resetToDefaultCountry()
         val countryCodeWithPlus = binding.ccpPhoneCode.selectedCountryCodeWithPlus
-        binding.etPhone.setText(contact.number?.replace(countryCodeWithPlus, ""))
+        binding.etPhone.setText(contact.number.replace(countryCodeWithPlus, ""))
     }
 
     private fun uiListeners() {

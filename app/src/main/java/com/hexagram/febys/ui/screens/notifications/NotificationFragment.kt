@@ -18,6 +18,7 @@ import com.hexagram.febys.databinding.FragmentNotificationBinding
 import com.hexagram.febys.models.api.notification.Notification
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -27,7 +28,13 @@ class NotificationFragment : BaseFragment() {
     private val notificationAdapter = NotificationAdapter()
     private val notificationViewModel by viewModels<NotificationViewModel>()
     private val notificationBroadcastReceiver: BroadcastReceiver =
-        NotificationLocalBroadcastReceiver { fetchNotification(true) }
+        NotificationLocalBroadcastReceiver {
+            lifecycleScope.launch {
+                delay(2000)
+                fetchNotification(true)
+            }
+
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?

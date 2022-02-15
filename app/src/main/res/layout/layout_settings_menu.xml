@@ -29,6 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_32sdp"
             android:layout_marginTop="@dimen/_18sdp"
+            android:enabled="false"
             android:gravity="center_vertical"
             android:text="@string/label_notifications" />
 

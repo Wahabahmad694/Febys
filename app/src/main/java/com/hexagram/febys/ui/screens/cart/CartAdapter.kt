@@ -139,7 +139,7 @@ class CartAdapter(private val isInCheckout: Boolean = false) :
             if (position == currentList.size - 1) return
 
             val currentVendorId = getItem(position).vendorId
-            val nextVendorId = getItem(+1).vendorId
+            val nextVendorId = getItem(position + 1).vendorId
             val previousVendorId = if (position > 0) getItem(position - 1).vendorId else -1
 
             showHeader = currentVendorId != previousVendorId && currentVendorId == nextVendorId

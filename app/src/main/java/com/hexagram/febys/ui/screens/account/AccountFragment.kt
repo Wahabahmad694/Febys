@@ -172,12 +172,6 @@ class AccountFragment : BaseFragment() {
     }
 
     private fun toggleNotification(notify: Boolean) {
-        val topic = consumer?.id?.toString() ?: return
-        if (notify) {
-            FirebaseUtils.subscribeToTopic(topic)
-        } else {
-            FirebaseUtils.unSubscribeToTopic(topic)
-        }
         authViewModel.updateNotificationSetting(notify)
     }
 
@@ -232,8 +226,8 @@ class AccountFragment : BaseFragment() {
             binding.settings.toggleNotification.isChecked = authViewModel.getNotificationSetting()
             binding.settings.toggleNotification.isEnabled = true
         } else {
-            binding.settings.toggleNotification.isChecked = false
             binding.settings.toggleNotification.isEnabled = false
+            binding.settings.toggleNotification.isChecked = false
         }
     }
 

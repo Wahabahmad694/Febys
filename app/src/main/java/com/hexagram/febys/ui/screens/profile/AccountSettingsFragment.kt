@@ -111,7 +111,8 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
                 binding.etLastName.text.toString(),
                 binding.etPhone.text.toString(),
                 binding.ccpPhoneCode.selectedCountryNameCode,
-                consumer?.profileImage
+                consumer?.profileImage,
+                consumer?.notificationsStatus
             )
         }
     }
@@ -259,11 +260,13 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
         }
     }
 
-    private fun updateDefaultCCP(contact: PhoneNo) {
-        binding.ccpPhoneCode.setDefaultCountryUsingNameCode(contact.countryCode)
+    private fun updateDefaultCCP(contact: PhoneNo?) {
+        binding.ccpPhoneCode.setDefaultCountryUsingNameCode(
+            contact?.countryCode ?: Utils.DEFAULT_COUNTRY_CODE
+        )
         binding.ccpPhoneCode.resetToDefaultCountry()
         val countryCodeWithPlus = binding.ccpPhoneCode.selectedCountryCodeWithPlus
-        binding.etPhone.setText(contact.number.replace(countryCodeWithPlus, ""))
+        binding.etPhone.setText(contact?.number?.replace(countryCodeWithPlus, ""))
     }
 
     private fun setData(consumer: Consumer?) {
@@ -272,7 +275,6 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
         binding.etFirstName.setText(consumer?.firstName)
         binding.etLastName.setText(consumer?.lastName)
         binding.etEmail.setText(consumer?.email)
-        consumer?.phoneNumber?.let { updateDefaultCCP(it) }
+        updateDefaultCCP(consumer?.phoneNumber)
     }
-
 }

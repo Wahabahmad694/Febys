@@ -146,7 +146,7 @@ object NotificationManager {
                 .setContentTitle(title)
                 .setContentText(content)
                 .setContentIntent(pendingIntent)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true)
 
         createChannel(context, channelId, channelName, channelDescription)
@@ -160,7 +160,7 @@ object NotificationManager {
         context: Context, channelId: String, channelName: String, channelDescription: String
     ) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val importance = NotificationManager.IMPORTANCE_HIGH
             val channel = NotificationChannel(channelId, channelName, importance).apply {
                 description = channelDescription
             }

@@ -17,5 +17,7 @@ data class RequestUpdateUser constructor(
     @SerializedName("country_code")
     val countryCode: String,
     @SerializedName("profile_image")
-    val profileImage: String?
+    val profileImage: String?,
+    @SerializedName("notificationsStatus")
+    val notificationsStatus: Int?,
 ) : Parcelable

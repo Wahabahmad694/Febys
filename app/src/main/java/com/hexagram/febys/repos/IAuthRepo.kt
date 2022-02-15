@@ -52,7 +52,9 @@ interface IAuthRepo {
 
     fun getSubscription(): Subscription?
 
-    fun updateNotificationSetting(notify: Boolean)
+    suspend fun updateNotificationSetting(
+        notify: Boolean, dispatcher: CoroutineDispatcher = Dispatchers.IO
+    )
 
     fun getNotificationSetting(): Boolean
 

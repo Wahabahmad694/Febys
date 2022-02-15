@@ -11,6 +11,7 @@ import com.hexagram.febys.network.AuthService
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.adapter.*
 import com.hexagram.febys.network.requests.RequestSignup
+import com.hexagram.febys.network.requests.RequestUpdateUser
 import com.hexagram.febys.network.response.ResponseLogin
 import com.hexagram.febys.network.response.ResponseOtpVerification
 import com.hexagram.febys.network.response.ResponseSignup
@@ -136,10 +137,10 @@ class AuthRepoImpl @Inject constructor(
             updateCart(profile.cart)
             updateWallet(profile.wallet)
             saveSubscription(profile.subscription)
-            if (!pref.isNotificationSettingInitialize()) {
-                pref.updateNotificationSetting(true)
-                FirebaseUtils.subscribeToTopic(profile.consumerInfo.id.toString())
-            }
+            updateNotificationSubscription(
+                profile.consumerInfo.id.toString(),
+                profile.consumerInfo.notification
+            )
         }
 
         return flow<DataState<Profile?>> {
@@ -200,11 +201,39 @@ class AuthRepoImpl @Inject constructor(
         return pref.getSubscription()
     }
 
-    override fun updateNotificationSetting(notify: Boolean) {
-        pref.updateNotificationSetting(notify)
+    override suspend fun updateNotificationSetting(
+        notify: Boolean,
+        dispatcher: CoroutineDispatcher
+    ) {
+        val authToken = pref.getAccessToken()
+        val consumer = getConsumer() ?: return
+        val notificationStatus = if (notify) 1 else 0
+        val requestUpdateUser = RequestUpdateUser(
+            consumer.id,
+            consumer.firstName,
+            consumer.lastName,
+            consumer.phoneNumber.number ?: "",
+            consumer.phoneNumber.countryCode ?: "",
+            consumer.profileImage,
+            notificationStatus
+        )
+        val response = authService.updateProfile(authToken, requestUpdateUser)
+        if (response is ApiResponse.ApiSuccessResponse) {
+            updateNotificationSubscription(consumer.id.toString(), notify)
+            pref.saveConsumer(response.data!!.user)
+        }
     }
 
     override fun getNotificationSetting(): Boolean {
-        return pref.getNotificationSetting()
+        return getConsumer()?.notification ?: false
     }
+
+    fun updateNotificationSubscription(topic: String, notify: Boolean) {
+        if (notify) {
+            FirebaseUtils.subscribeToTopic(topic)
+        } else {
+            FirebaseUtils.unSubscribeToTopic(topic)
+        }
+    }
+
 }

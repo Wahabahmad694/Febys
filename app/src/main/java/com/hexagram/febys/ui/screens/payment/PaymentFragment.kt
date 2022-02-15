@@ -116,7 +116,7 @@ class PaymentFragment : BasePaymentFragment() {
                 is DataState.Error -> {
                     hideLoader()
                     ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
-                    binding.containerWalletPayment.isVisible = false
+                    disableWallet()
                 }
                 is DataState.Data -> {
                     hideLoader()
@@ -126,9 +126,12 @@ class PaymentFragment : BasePaymentFragment() {
                         binding.tvWalletPaymentMsg.text = getString(R.string.taken_from_wallet)
                     } else {
                         paymentViewModel.isWalletEnable = it.data.amount > 0.0
-                        if (!paymentViewModel.isWalletEnable) disableWallet()
-                        binding.tvWalletPrice.text = it.data.getPrice().getFormattedPrice()
-                        binding.tvWalletPaymentMsg.text = getString(R.string.available)
+                        if (!paymentViewModel.isWalletEnable) {
+                            disableWallet()
+                        } else {
+                            binding.tvWalletPrice.text = it.data.getPrice().getFormattedPrice()
+                            binding.tvWalletPaymentMsg.text = getString(R.string.available)
+                        }
                     }
                 }
             }
@@ -136,6 +139,8 @@ class PaymentFragment : BasePaymentFragment() {
     }
 
     private fun disableWallet() {
+        binding.tvDisableWalletPrice.text =
+            Price("", 0.0, Utils.DEFAULT_CURRENCY).getFormattedPrice()
         binding.containerDisableWallet.setOnClickListener(null)
         binding.containerDisableWallet.isVisible = true
     }
