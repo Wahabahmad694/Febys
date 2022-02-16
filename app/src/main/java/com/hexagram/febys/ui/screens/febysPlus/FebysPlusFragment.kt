@@ -111,9 +111,11 @@ class FebysPlusFragment : BaseFragment() {
     }
 
     private fun showSuccessDialog() {
+        val days =
+            authViewModel.getSubscription()?.packageInfo?.subscriptionDays?.toString()
         val resId = R.drawable.ic_thank
         val title = getString(R.string.msg_thank_you)
-        val msg = getString(R.string.label_success_subscription)
+        val msg = getString(R.string.label_success_subscription, days)
 
         showInfoDialoge(resId, title, msg) { goBack() }
     }

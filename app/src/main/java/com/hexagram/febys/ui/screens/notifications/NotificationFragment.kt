@@ -49,7 +49,6 @@ class NotificationFragment : BaseFragment() {
         initUi()
         uiListeners()
         setupOrderPagerAdapter()
-        registerNotificationReceiver()
         setObserver()
     }
 
@@ -134,8 +133,13 @@ class NotificationFragment : BaseFragment() {
             .unregisterReceiver(notificationBroadcastReceiver)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onResume() {
+        super.onResume()
+        registerNotificationReceiver()
+    }
+
+    override fun onPause() {
+        super.onPause()
         unregisterNotificationReceiver()
     }
 

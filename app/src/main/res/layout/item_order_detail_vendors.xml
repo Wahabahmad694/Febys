@@ -212,21 +212,21 @@
                 style="@style/TextTheme.Arial.TS14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{@string/label_order_cancel_reason + `:`}" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_1dp"
-                android:layout_weight="1" />
+                android:text="@{@string/label_order_cancel_reason + `:`}"
+                tools:text="Order Cancel Reason:" />
 
             <TextView
                 android:id="@+id/order_cancel_reason"
                 style="@style/TextTheme.Arial.TS14"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="end"
+                android:maxLines="2"
                 android:padding="@dimen/_4sdp"
                 android:textColor="@color/red"
-                tools:text="Change of Mind" />
+                tools:text="Change of mind" />
         </LinearLayout>
 
         <LinearLayout
@@ -241,6 +241,7 @@
                 style="@style/ButtonTheme.OutLine"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_8sdp"
                 android:text="@string/label_add_review" />
 
             <com.google.android.material.button.MaterialButton
@@ -248,7 +249,6 @@
                 style="@style/ButtonTheme.Contained"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_8sdp"
                 android:enabled="false"
                 android:minHeight="@dimen/_36sdp"
                 android:text="@string/label_return_item"

@@ -10,8 +10,9 @@
         android:id="@+id/tv_selection"
         style="@style/TextTheme.HelveticaNeue.TS14.Grey"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_26sdp"
+        android:layout_height="wrap_content"
         android:gravity="center"
+        android:minHeight="@dimen/_26sdp"
         android:textAlignment="center"
         tools:text="Official" />
 </layout>

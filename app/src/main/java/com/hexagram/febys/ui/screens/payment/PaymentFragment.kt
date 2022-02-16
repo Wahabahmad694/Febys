@@ -142,7 +142,8 @@ class PaymentFragment : BasePaymentFragment() {
         binding.tvDisableWalletPrice.text =
             Price("", 0.0, Utils.DEFAULT_CURRENCY).getFormattedPrice()
         binding.containerDisableWallet.setOnClickListener(null)
-        binding.containerDisableWallet.isVisible = true
+        binding.containerDisableWallet.show()
+        binding.containerWalletPayment.invisible()
     }
 
     override fun doWalletPayment() {

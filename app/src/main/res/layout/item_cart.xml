@@ -146,8 +146,8 @@
                     android:id="@+id/iv_minus"
                     android:layout_width="@dimen/_12sdp"
                     android:layout_height="@dimen/_18sdp"
-                    android:src="@drawable/ic_remove"
-                    android:layout_marginStart="@dimen/_3sdp"/>
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:src="@drawable/ic_remove" />
 
                 <TextView
                     android:id="@+id/tv_quantity"
@@ -158,16 +158,16 @@
                     android:text="@{`` + cart.quantity}"
                     android:textAlignment="center"
                     android:textColor="@color/fillblack"
-                    tools:text="12"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold"
+                    tools:text="12" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/iv_add"
                     android:layout_width="@dimen/_12sdp"
                     android:layout_height="@dimen/_18sdp"
                     android:layout_marginStart="@dimen/_14sdp"
-                    android:src="@drawable/ic_adds"
-                    android:layout_marginEnd="@dimen/_3sdp"/>
+                    android:layout_marginEnd="@dimen/_3sdp"
+                    android:src="@drawable/ic_adds" />
 
             </LinearLayout>
 
@@ -176,6 +176,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_16sdp"
+                android:elevation="@dimen/_8sdp"
                 android:src="@drawable/ic_un_fav"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_product_price"
                 app:layout_constraintStart_toStartOf="parent"
