@@ -144,10 +144,11 @@ class OrderDetailFragment : BaseFragment() {
         tvOrderDate.text =
             Utils.DateTime.formatDate(order.createdAt, FORMAT_MONTH_DATE_YEAR_HOUR_MIN)
 
-        val vendorProducts =
-            if (!args.review) order.vendorProducts else order.vendorProducts.filter { it.hasReviewed }
+        val vendorProducts = if (args.review) order.vendorProducts.filter { it.hasReviewed }
+        else order.vendorProducts
         orderDetailVendorProductAdapter.submitList(vendorProducts, args.review)
 
+        binding.containerOrderSummary.root.isVisible = !args.review || !args.returnDetail
         order.addToOrderSummary(binding.containerOrderSummary)
     }
 }

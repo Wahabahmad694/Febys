@@ -240,7 +240,7 @@
                 android:id="@+id/btn_add_review"
                 style="@style/ButtonTheme.OutLine"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/_36sdp"
                 android:layout_marginEnd="@dimen/_8sdp"
                 android:text="@string/label_add_review" />
 
@@ -248,9 +248,8 @@
                 android:id="@+id/btn_return_items"
                 style="@style/ButtonTheme.Contained"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/_36sdp"
                 android:enabled="false"
-                android:minHeight="@dimen/_36sdp"
                 android:text="@string/label_return_item"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

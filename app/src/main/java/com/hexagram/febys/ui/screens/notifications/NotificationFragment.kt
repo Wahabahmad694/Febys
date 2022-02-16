@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.paging.LoadState
 import com.hexagram.febys.NavGraphDirections
+import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.broadcast.NotificationLocalBroadcastReceiver
 import com.hexagram.febys.databinding.FragmentNotificationBinding
@@ -56,7 +57,7 @@ class NotificationFragment : BaseFragment() {
         observesUserLoggedIn.observe(viewLifecycleOwner) {
             binding.isUserLoggedIn = it
             if (it) {
-                fetchNotification(true)
+                fetchNotification()
             }
         }
     }
@@ -150,12 +151,36 @@ class NotificationFragment : BaseFragment() {
     }
 
     private fun Notification.Order.navigate() {
+        fun getOrderDetail(status: String): String {
+            return when (status) {
+                OrderStatus.DELIVERED -> {
+                    getString(R.string.label_received_details)
+                }
+                OrderStatus.REVIEWED -> {
+                    getString(R.string.label_my_review)
+                }
+                OrderStatus.CANCELED,
+                OrderStatus.CANCELLED_BY_VENDOR,
+                OrderStatus.REJECTED -> {
+                    getString(R.string.label_cancel_details)
+                }
+                OrderStatus.RETURNED,
+                OrderStatus.PENDING_RETURN -> {
+                    getString(R.string.label_return_details)
+                }
+                else -> {
+                    getString(R.string.label_order_detail)
+                }
+            }
+        }
+
         val actionToFebysPlus =
             NotificationFragmentDirections
                 .actionNotificationFragmentToOrderDetailFragment(
-                    null,
+                    getOrderDetail(status),
                     orderId,
-                    status == OrderStatus.REVIEWED
+                    status == OrderStatus.REVIEWED,
+                    status in arrayOf(OrderStatus.RETURNED, OrderStatus.PENDING_RETURN)
                 )
         navigateTo(actionToFebysPlus)
     }

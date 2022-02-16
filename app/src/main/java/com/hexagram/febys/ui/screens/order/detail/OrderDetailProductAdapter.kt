@@ -1,5 +1,6 @@
 package com.hexagram.febys.ui.screens.order.detail
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -39,6 +40,7 @@ class OrderDetailProductAdapter constructor(
             tvStatus.text = OrderStatus.getStatusForDisplay(status)
             val color = OrderStatus.getStatusColor(status)
             tvStatus.setBackgroundRoundedColor(color)
+            tvStatus.setTextColor(if (status == OrderStatus.RETURNED) Color.WHITE else Color.BLACK)
             tvStatus.isVisible = !status.isNullOrEmpty()
             endViewWithMargin26.isVisible = !status.isNullOrEmpty()
             endViewWithMargin16.isVisible = status.isNullOrEmpty()
