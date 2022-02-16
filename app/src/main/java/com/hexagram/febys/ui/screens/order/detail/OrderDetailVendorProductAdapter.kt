@@ -1,5 +1,6 @@
 package com.hexagram.febys.ui.screens.order.detail
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -61,6 +62,7 @@ class OrderDetailVendorProductAdapter : RecyclerView.Adapter<IBindViewHolder>() 
             orderStatus.text = OrderStatus.getStatusForDisplay(vendorProducts.status)
             val color = OrderStatus.getStatusColor(vendorProducts.status)
             orderStatus.setBackgroundRoundedColor(color)
+            orderStatus.setTextColor(if (vendorProducts.status == OrderStatus.RETURNED) Color.WHITE else Color.BLACK)
             containerOrderStatus.isVisible = vendorProducts.status != null
 
             orderAmountByVendor.text = vendorProducts.amount?.getFormattedPrice()

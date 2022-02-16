@@ -148,7 +148,7 @@ class OrderDetailFragment : BaseFragment() {
         else order.vendorProducts
         orderDetailVendorProductAdapter.submitList(vendorProducts, args.review)
 
-        binding.containerOrderSummary.root.isVisible = !args.review || !args.returnDetail
+        binding.containerOrderSummary.root.isVisible = !(args.review || args.returnDetail)
         order.addToOrderSummary(binding.containerOrderSummary)
     }
 }
