@@ -125,7 +125,10 @@ sealed class Notification(
             get() = _status ?: "PENDING"
 
         override fun getColor(): Int {
-            return OrderStatus.getStatusColor(status)
+            return if (status in arrayOf(OrderStatus.RETURNED, OrderStatus.PENDING_RETURN))
+                Color.parseColor("#E0E7FF")
+            else
+                OrderStatus.getStatusColor(status)
         }
 
         override fun getIcon(): Int {
