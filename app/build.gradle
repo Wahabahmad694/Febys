@@ -16,7 +16,7 @@ android {
         minSdkVersion 24
         targetSdkVersion 30
         versionCode 1
-        versionName "1.0.10"
+        versionName "0.1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -35,7 +35,7 @@ android {
             keyPassword keystoreProperties['keyPassword']
         }
         release {
-            def keystoreProperties = getKeystore("debug")
+            def keystoreProperties = getKeystore("release")
             storeFile rootProject.file(keystoreProperties['storeFile'])
             storePassword keystoreProperties['storePassword']
             keyAlias keystoreProperties['keyAlias']
@@ -66,21 +66,27 @@ android {
             matchingFallbacks = ['debug', 'release']
         }
         staging {
-            initWith debug
-
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             def endpointsProperties = getBuildProperties()
+            def credentialsProperties = getCredentials()
             buildConfigField("String", "backendBaseUrl", endpointsProperties['STAGING_BASE_URL_BACKEND'])
             buildConfigField("String", "webCustomizationBaseUrl", endpointsProperties['STAGING_BASE_URL_WEB_CUSTOMIZATION'])
+            buildConfigField("String", "keycloakClientId", credentialsProperties['KEYCLOAK_CLIENT_ID'])
+            buildConfigField("String", "keycloakClientSecret", credentialsProperties['KEYCLOAK_CLIENT_SECRET'])
+            resValue "string", "google_web_client", credentialsProperties['GOOGLE_WEB_CLIENT']
+            resValue "string", "facebook_app_id", credentialsProperties['FACEBOOK_APP_ID']
+            resValue "string", "fb_login_protocol_scheme", credentialsProperties['FACEBOOK_LOGIN_PROTOCOL_SCHEME']
+            resValue "string", "fb_client_token", credentialsProperties['FACEBOOK_CLIENT_TOKEN']
 
-            matchingFallbacks = ['debug', 'release']
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             def endpointsProperties = getBuildProperties()
             def credentialsProperties = getCredentials()
-            buildConfigField("String", "backendBaseUrl", endpointsProperties['BASE_URL_BACKEND'])
-            buildConfigField("String", "webCustomizationBaseUrl", endpointsProperties['BASE_URL_WEB_CUSTOMIZATION'])
+            buildConfigField("String", "backendBaseUrl", endpointsProperties['STAGING_BASE_URL_BACKEND'])
+            buildConfigField("String", "webCustomizationBaseUrl", endpointsProperties['STAGING_BASE_URL_WEB_CUSTOMIZATION'])
             buildConfigField("String", "keycloakClientId", credentialsProperties['KEYCLOAK_CLIENT_ID'])
             buildConfigField("String", "keycloakClientSecret", credentialsProperties['KEYCLOAK_CLIENT_SECRET'])
             resValue "string", "google_web_client", credentialsProperties['GOOGLE_WEB_CLIENT']
