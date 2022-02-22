@@ -4,7 +4,7 @@ import androidx.navigation.fragment.navArgs
 import com.hexagram.febys.ui.screens.product.filters.FiltersType
 
 class StoreYouFollowItemListingFragment : ProductListingFragment() {
-    private val args: Under100DollarsItemListingFragmentArgs by navArgs()
+    private val args: StoreYouFollowItemListingFragmentArgs by navArgs()
 
     override fun getListingTitle(): String = args.productListTitle
 

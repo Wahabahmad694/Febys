@@ -117,7 +117,7 @@ open class ProductListingViewModel @Inject constructor(
     ): Flow<PagingData<Product>> {
         if (trendingProductsListing == null || refresh) {
             trendingProductsListing =
-                productListingRepo.fetchTrendingProductsListing(
+                productListingRepo.fetchStoreYouFollowItemsListing(
                     filters, viewModelScope, onProductListingResponse = onProductListingResponse
                 )
         }
