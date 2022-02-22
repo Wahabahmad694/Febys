@@ -142,7 +142,7 @@ object NotificationManager {
     ) {
         val builder =
             NotificationCompat.Builder(context, channelId)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.ic_febys_notify)
                 .setContentTitle(title)
                 .setContentText(content)
                 .setContentIntent(pendingIntent)
