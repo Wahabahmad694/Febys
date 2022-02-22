@@ -20,6 +20,7 @@ import com.hexagram.febys.models.api.category.UniqueCategory
 import com.hexagram.febys.models.api.product.FeaturedCategory
 import com.hexagram.febys.models.api.product.Product
 import com.hexagram.febys.network.DataState
+import com.hexagram.febys.network.response.Offer
 import com.hexagram.febys.network.response.SeasonalOffer
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.utils.*
@@ -107,6 +108,12 @@ class HomeFragment : SliderFragment() {
     }
 
     private fun initUiListener() {
+        uniqueCategoryAdapter.interaction = object : UniqueCategoryAdapter.Interaction {
+            override fun onItemSelected(position: Int, item: UniqueCategory) {
+                gotoCategoryListing(item.name, item.categoryId)
+            }
+        }
+
         binding.btnShopNowTodayDeals.setOnClickListener {
             val gotoTodayDealsListingFragment = HomeFragmentDirections
                 .actionHomeFragmentToTodayDealsListingFragment(getString(R.string.label_today_deals))
@@ -140,9 +147,7 @@ class HomeFragment : SliderFragment() {
                 }
             }
 
-            val gotoCategoryListing = HomeFragmentDirections
-                .actionHomeFragmentToCategoryProductListingFragment(categoryTitle, categoryId)
-            navigateTo(gotoCategoryListing)
+            gotoCategoryListing(categoryTitle, categoryId)
         }
 
         fun updateFav() {
@@ -193,6 +198,12 @@ class HomeFragment : SliderFragment() {
         }
     }
 
+    private fun gotoCategoryListing(categoryTitle: String, categoryId: Int) {
+        val gotoCategoryListing = HomeFragmentDirections
+            .actionHomeFragmentToCategoryProductListingFragment(categoryTitle, categoryId)
+        navigateTo(gotoCategoryListing)
+    }
+
     private fun setupObserver() {
         homeViewModel.observeHomeModel.observe(viewLifecycleOwner) {
             when (it) {
@@ -235,7 +246,8 @@ class HomeFragment : SliderFragment() {
     private fun setupBanner(banners: List<Banner>) {
         val sliderImages =
             banners.filter { banner -> banner.type == "headerImages" && banner._for == "mobile" }
-        binding.imageSliderHome.adapter = PagerAdapter(sliderImages, this)
+        val pagerAdapter = PagerAdapter(this, sliderImages)
+        binding.imageSliderHome.adapter = pagerAdapter
         binding.dotsIndicator.setViewPager2(binding.imageSliderHome)
 
         val isVisible = sliderImages.isNotEmpty()
@@ -288,15 +300,19 @@ class HomeFragment : SliderFragment() {
     }
 
     private fun setupSeasonalOffers(seasonalOffers: List<SeasonalOffer>) {
-        binding.sliderSeasonalOffer.adapter = PagerAdapter(seasonalOffers, this)
-        binding.sliderSeasonalOfferDotsIndicator.setViewPager2(binding.sliderSeasonalOffer)
-
         val isVisible = seasonalOffers.isNotEmpty()
         isVisible.applyToViews(
             binding.tvSeasonalOffers,
             binding.sliderSeasonalOffer,
             binding.sliderSeasonalOfferDotsIndicator
         )
+
+        if (seasonalOffers.isEmpty()) return
+
+        binding.tvSeasonalOffersSlogan.text = seasonalOffers[0].name
+        val pagerAdapter = PagerAdapter(this, seasonalOffers[0].offers, seasonalOffers[0].name)
+        binding.sliderSeasonalOffer.adapter = pagerAdapter
+        binding.sliderSeasonalOfferDotsIndicator.setViewPager2(binding.sliderSeasonalOffer)
     }
 
     private fun setupTrendingProducts(trendingProducts: List<Product>) {
@@ -356,7 +372,7 @@ class HomeFragment : SliderFragment() {
     override fun getIvCart(): View = binding.ivCart
 
     private inner class PagerAdapter<out T>(
-        val list: List<T>, fa: Fragment
+        fa: Fragment, val list: List<T>, val categoryName: String? = null
     ) : FragmentStateAdapter(fa) {
         override fun getItemCount(): Int = list.size
 
@@ -365,7 +381,7 @@ class HomeFragment : SliderFragment() {
             return if (item is Banner) {
                 HomeSliderPageFragment.newInstance(item)
             } else {
-                HomeSeasonalOfferSliderPageFragment.newInstance(item as SeasonalOffer)
+                HomeSliderPageFragment.newInstance(categoryName!!, item as Offer)
             }
         }
     }

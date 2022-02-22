@@ -125,6 +125,7 @@ class ProductListingRepoImpl @Inject constructor(
             .flowOn(dispatcher)
             .cachedIn(scope)
     }
+
     override fun fetchStoreYouFollowItemsListing(
         filters: ProductListingRequest,
         scope: CoroutineScope,
@@ -134,8 +135,9 @@ class ProductListingRepoImpl @Inject constructor(
         return Pager(
             PagingConfig(pageSize = 10)
         ) {
+            val authToken = pref.getAccessToken()
             val req = createReq(filters)
-            StoreYourFollowPagingSource(backendService, req, onProductListingResponse)
+            StoreYourFollowPagingSource(authToken, backendService, req, onProductListingResponse)
         }.flow
             .flowOn(dispatcher)
             .cachedIn(scope)

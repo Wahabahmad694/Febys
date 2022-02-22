@@ -72,11 +72,14 @@ interface FebysBackendService {
 
     @POST("v1/consumers/products/stores-you/follow/listing")
     suspend fun fetchStoreYouFollowItems(
-        @QueryMap queryMap: Map<String, String>, @Body request: PagingListRequest
+        @Header("Authorization") authToken: String,
+        @QueryMap queryMap: Map<String, String>,
+        @Body request: PagingListRequest
     ): ApiResponse<Pagination>
 
     @GET("v1/consumers/products/stores-you/follow/homepage")
     suspend fun fetchStoreYouFollow(
+        @Header("Authorization") authToken: String,
         @QueryMap queryMap: Map<String, String>
     ): ApiResponse<Pagination>
 

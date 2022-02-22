@@ -27,9 +27,7 @@ class FiltersRepoImpl @Inject constructor(val backendService: FebysBackendServic
             FiltersType.RECOMMENDED_PRODUCT,
             FiltersType.SIMILAR_PRODUCT,
             FiltersType.SPECIAL_PRODUCT,
-            FiltersType.TRENDING -> {
-                ApiResponse.exception(NullPointerException())
-            }
+            FiltersType.TRENDING,
             FiltersType.STORE_YOU_FOLLOW -> {
                 ApiResponse.exception(NullPointerException())
             }

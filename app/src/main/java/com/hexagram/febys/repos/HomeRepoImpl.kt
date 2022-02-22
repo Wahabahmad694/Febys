@@ -11,12 +11,14 @@ import com.hexagram.febys.network.FebysBackendService
 import com.hexagram.febys.network.FebysWebCustomizationService
 import com.hexagram.febys.network.adapter.ApiResponse
 import com.hexagram.febys.network.response.SeasonalOffer
+import com.hexagram.febys.prefs.IPrefManger
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
 
 class HomeRepoImpl @Inject constructor(
     private val webCustomizationService: FebysWebCustomizationService,
-    private val backendService: FebysBackendService
+    private val backendService: FebysBackendService,
+    private val pref: IPrefManger,
 ) : IHomeRepo {
 
     override suspend fun fetchAllUniqueCategories(dispatcher: CoroutineDispatcher): List<UniqueCategory> {
@@ -67,12 +69,13 @@ class HomeRepoImpl @Inject constructor(
     }
 
     override suspend fun fetchStoresYouFollow(dispatcher: CoroutineDispatcher): List<Product> {
+        val authToken = pref.getAccessToken()
+        if (authToken.isEmpty()) return emptyList()
         val pagingListRequest = PagingListRequest()
-        val response = backendService.fetchStoreYouFollow(
-            pagingListRequest.createQueryMap()
-        )
+        val response =
+            backendService.fetchStoreYouFollow(authToken, pagingListRequest.createQueryMap())
         return (response as? ApiResponse.ApiSuccessResponse)
-            ?.data?.getResponse<ProductPagingListing>()?.products?: emptyList()
+            ?.data?.getResponse<ProductPagingListing>()?.products ?: emptyList()
     }
 
     override suspend fun fetchUnder100DollarsItems(dispatcher: CoroutineDispatcher): List<Product> {

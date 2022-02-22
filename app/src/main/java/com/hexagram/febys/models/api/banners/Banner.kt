@@ -10,5 +10,8 @@ data class Banner(
     val _id: String,
     val type: String,
     @SerializedName("for")
-    val _for: String
+    val _for: String,
+    val name: String,
+    @SerializedName("category_id")
+    val categoryId: Int
 ) : Parcelable

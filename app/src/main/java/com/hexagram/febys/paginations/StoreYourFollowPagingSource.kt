@@ -7,6 +7,7 @@ import com.hexagram.febys.network.FebysBackendService
 import com.hexagram.febys.network.adapter.ApiResponse
 
 class StoreYourFollowPagingSource constructor(
+    private val authKey: String,
     private val service: FebysBackendService,
     private val request: PagingListRequest,
     onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
@@ -15,7 +16,7 @@ class StoreYourFollowPagingSource constructor(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Product> {
         request.pageNo = params.key ?: 1
         val queryMap = request.createQueryMap()
-        return when (val response = service.fetchStoreYouFollowItems(queryMap, request)) {
+        return when (val response = service.fetchStoreYouFollowItems(authKey, queryMap, request)) {
             is ApiResponse.ApiSuccessResponse -> {
                 val storeYouFollowResponse = response.data!!.getResponse<ProductPagingListing>()
                 onProductListingResponse?.invoke(storeYouFollowResponse)
