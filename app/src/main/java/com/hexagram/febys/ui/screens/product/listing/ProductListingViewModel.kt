@@ -23,6 +23,7 @@ open class ProductListingViewModel @Inject constructor(
     private var recommendedProductListing: Flow<PagingData<Product>>? = null
     private var trendingProductsListing: Flow<PagingData<Product>>? = null
     private var under100DollarsItemsListing: Flow<PagingData<Product>>? = null
+    private var storeYouFollowItemListingItemsListing: Flow<PagingData<Product>>? = null
     private var categoryProductsListing: Flow<PagingData<Product>>? = null
     private var searchProductsListing: Flow<PagingData<Product>>? = null
     private var vendorProductsListing: Flow<PagingData<Product>>? = null
@@ -99,6 +100,19 @@ open class ProductListingViewModel @Inject constructor(
     }
 
     fun trendingProductsListing(
+        refresh: Boolean, onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
+    ): Flow<PagingData<Product>> {
+        if (trendingProductsListing == null || refresh) {
+            trendingProductsListing =
+                productListingRepo.fetchTrendingProductsListing(
+                    filters, viewModelScope, onProductListingResponse = onProductListingResponse
+                )
+        }
+
+        return trendingProductsListing!!
+    }
+
+    fun storeYouFollowListing(
         refresh: Boolean, onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
     ): Flow<PagingData<Product>> {
         if (trendingProductsListing == null || refresh) {

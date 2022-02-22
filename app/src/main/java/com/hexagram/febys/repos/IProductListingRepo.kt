@@ -55,6 +55,13 @@ interface IProductListingRepo : IProductRepo {
         onProductListingResponse: ((ProductPagingListing) -> Unit)?
     ): Flow<PagingData<Product>>
 
+    fun fetchStoreYouFollowItemsListing(
+        filters: ProductListingRequest,
+        scope: CoroutineScope,
+        dispatcher: CoroutineDispatcher = Dispatchers.IO,
+        onProductListingResponse: ((ProductPagingListing) -> Unit)?
+    ): Flow<PagingData<Product>>
+
     fun vendorProductListing(
         vendorId: String,
         filters: ProductListingRequest,

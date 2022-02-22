@@ -7,6 +7,7 @@ enum class FiltersType {
     CATEGORY,
     VENDOR,
     TRENDING,
+    STORE_YOU_FOLLOW,
     SPECIAL_PRODUCT,
     SIMILAR_PRODUCT,
     RECOMMENDED_PRODUCT

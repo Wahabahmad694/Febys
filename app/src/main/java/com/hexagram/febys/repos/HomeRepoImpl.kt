@@ -1,6 +1,5 @@
 package com.hexagram.febys.repos
 
-import com.hexagram.febys.R
 import com.hexagram.febys.models.api.banners.Banner
 import com.hexagram.febys.models.api.category.UniqueCategory
 import com.hexagram.febys.models.api.product.FeaturedCategory
@@ -67,11 +66,13 @@ class HomeRepoImpl @Inject constructor(
             ?.data?.getResponse<Trending>()?.getAllProducts() ?: emptyList()
     }
 
-    override suspend fun fetchStoresYouFollow(dispatcher: CoroutineDispatcher): List<String> {
-        return listOf(
-            "res:///${R.drawable.ic_shirt}",
-            "res:///${R.drawable.ic_shirt}"
+    override suspend fun fetchStoresYouFollow(dispatcher: CoroutineDispatcher): List<Product> {
+        val pagingListRequest = PagingListRequest()
+        val response = backendService.fetchStoreYouFollow(
+            pagingListRequest.createQueryMap()
         )
+        return (response as? ApiResponse.ApiSuccessResponse)
+            ?.data?.getResponse<ProductPagingListing>()?.products?: emptyList()
     }
 
     override suspend fun fetchUnder100DollarsItems(dispatcher: CoroutineDispatcher): List<Product> {

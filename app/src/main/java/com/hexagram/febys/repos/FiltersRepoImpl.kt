@@ -30,6 +30,9 @@ class FiltersRepoImpl @Inject constructor(val backendService: FebysBackendServic
             FiltersType.TRENDING -> {
                 ApiResponse.exception(NullPointerException())
             }
+            FiltersType.STORE_YOU_FOLLOW -> {
+                ApiResponse.exception(NullPointerException())
+            }
         }
 
         response.onSuccess {

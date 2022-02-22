@@ -34,7 +34,7 @@ class HomeFragment : SliderFragment() {
     private val todayDealsAdapter = HomeProductsAdapter()
     private val featuredCategoryProductsAdapter = HomeProductsAdapter()
     private val trendingProductsAdapter = HomeProductsAdapter()
-    private val storeYouFollowAdapter = HomeStoresAdapter()
+    private val storeYouFollowAdapter = HomeProductsAdapter()
     private val under100DollarsItemAdapter = HomeProductsAdapter()
 
     private var lastCheckedCategoryId = -1
@@ -124,6 +124,11 @@ class HomeFragment : SliderFragment() {
                 .actionHomeFragmentToUnder100DollarsItemListingFragment(getString(R.string.label_under_100_dollar_items))
             navigateTo(gotoTodayDealsListingFragment)
         }
+        binding.btnShopNowStoreYouFollow.setOnClickListener {
+            val gotoStoreYouFollowListingFragment = HomeFragmentDirections
+                .actionHomeFragmentToStoreYouFollowItemListingFragment(getString(R.string.label_store_you_follow))
+            navigateTo(gotoStoreYouFollowListingFragment)
+        }
 
         binding.btnShopNowFeaturedCategories.setOnClickListener {
             var categoryTitle = getString(R.string.label_featured_categories)
@@ -145,6 +150,7 @@ class HomeFragment : SliderFragment() {
             todayDealsAdapter.submitFav(fav)
             featuredCategoryProductsAdapter.submitFav(fav)
             trendingProductsAdapter.submitFav(fav)
+            storeYouFollowAdapter.submitFav(fav)
             under100DollarsItemAdapter.submitFav(fav)
         }
 
@@ -170,18 +176,20 @@ class HomeFragment : SliderFragment() {
 
         todayDealsAdapter.interaction = homeProductAdapterInteraction
         featuredCategoryProductsAdapter.interaction = homeProductAdapterInteraction
+        storeYouFollowAdapter.interaction = homeProductAdapterInteraction
         trendingProductsAdapter.interaction = homeProductAdapterInteraction
         under100DollarsItemAdapter.interaction = homeProductAdapterInteraction
-        binding.rvUniqueCategories.setOnScrollChangeListener{_, _, _, _, _ ->
+        binding.rvUniqueCategories.setOnScrollChangeListener { _, _, _, _, _ ->
             val horizontalScrollPosition =
                 binding.rvUniqueCategories.getHorizontalScrollPosition()
-            val param =(binding.ivIcScrollUniqueCategory.layoutParams as ConstraintLayout.LayoutParams)
+            val param =
+                (binding.ivIcScrollUniqueCategory.layoutParams as ConstraintLayout.LayoutParams)
             param.horizontalBias = horizontalScrollPosition
-            binding.ivIcScrollUniqueCategory.layoutParams =param
+            binding.ivIcScrollUniqueCategory.layoutParams = param
             binding.ivIcScrollUniqueCategory.visibility =
-                if(uniqueCategoryAdapter.itemCount >= 5) View.VISIBLE else View.GONE
+                if (uniqueCategoryAdapter.itemCount >= 5) View.VISIBLE else View.GONE
             binding.ivBgScrollUniqueCategory.visibility =
-                if(uniqueCategoryAdapter.itemCount >=5) View.VISIBLE else View.GONE
+                if (uniqueCategoryAdapter.itemCount >= 5) View.VISIBLE else View.GONE
         }
     }
 
@@ -303,7 +311,7 @@ class HomeFragment : SliderFragment() {
         )
     }
 
-    private fun setupStoreYouFollow(storeYouFollow: List<String>) {
+    private fun setupStoreYouFollow(storeYouFollow: List<Product>) {
         storeYouFollowAdapter.submitList(storeYouFollow)
 
         val isVisible = storeYouFollow.isNotEmpty()

@@ -127,6 +127,13 @@
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
         <action
+            android:id="@+id/action_homeFragment_to_storeYouFollowItemListingFragment"
+            app:destination="@id/storeYouFollowItemListingFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
             android:id="@+id/action_homeFragment_to_categoryProductListingFragment"
             app:destination="@id/categoryProductListingFragment"
             app:enterAnim="@anim/slide_in_left"
@@ -490,6 +497,15 @@
         android:id="@+id/under100DollarsItemListingFragment"
         android:name="com.hexagram.febys.ui.screens.product.listing.Under100DollarsItemListingFragment"
         android:label="Under100DollarsItemFragment"
+        tools:layout="@layout/fragment_product_listing">
+        <argument
+            android:name="productListTitle"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/storeYouFollowItemListingFragment"
+        android:name="com.hexagram.febys.ui.screens.product.listing.StoreYouFollowItemListingFragment"
+        android:label="StoreYouFollowItemListingFragment"
         tools:layout="@layout/fragment_product_listing">
         <argument
             android:name="productListTitle"
