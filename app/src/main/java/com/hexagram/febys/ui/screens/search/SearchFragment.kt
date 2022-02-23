@@ -94,7 +94,7 @@ class SearchFragment : BaseFragment() {
                 doSearch(query)
             }
         }
-
+        binding.ivClear.setOnClickListener { binding.etSearch.setText("") }
         binding.ivSearch.setOnClickListener { onSearchClick() }
 
         binding.etSearch.onSearch { onSearchClick() }

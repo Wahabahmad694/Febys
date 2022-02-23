@@ -81,6 +81,14 @@
                 android:textColorHint="@color/black" />
 
             <ImageView
+                android:id="@+id/iv_clear"
+                android:layout_width="48dp"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/hint_search"
+                android:padding="@dimen/_16dp"
+                android:src="@drawable/iv_close_2" />
+
+            <ImageView
                 android:id="@+id/iv_search"
                 android:layout_width="48dp"
                 android:layout_height="match_parent"
