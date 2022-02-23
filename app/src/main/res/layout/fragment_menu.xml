@@ -29,8 +29,8 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ic_febys_plus"
-                android:layout_width="@dimen/_24sdp"
-                android:layout_height="@dimen/_24sdp"
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_22sdp"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:src="@drawable/ic_febys_plus" />
 
@@ -40,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_32sdp"
                 android:layout_marginStart="@dimen/_7sdp"
-                android:layout_marginTop="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:gravity="center_vertical"
                 android:text="@string/febys_plus"
                 app:drawableEndCompat="@drawable/ic_right_arrow" />
@@ -58,8 +58,8 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ic_discount_mall"
-                android:layout_width="@dimen/_24sdp"
-                android:layout_height="@dimen/_24sdp"
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_22sdp"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:src="@drawable/ic_discount_mall" />
 
@@ -69,7 +69,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_32sdp"
                 android:layout_marginStart="@dimen/_7sdp"
-                android:layout_marginTop="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:gravity="center_vertical"
                 android:text="@string/label_discount_mall"
                 app:drawableEndCompat="@drawable/ic_right_arrow" />
@@ -88,8 +88,8 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ic_pawn_shop"
-                android:layout_width="@dimen/_24sdp"
-                android:layout_height="@dimen/_24sdp"
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_22sdp"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:src="@drawable/ic_pawn_shop" />
 
@@ -99,7 +99,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_32sdp"
                 android:layout_marginStart="@dimen/_7sdp"
-                android:layout_marginTop="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:gravity="center_vertical"
                 android:text="@string/label_pawn_shop"
                 app:drawableEndCompat="@drawable/ic_right_arrow" />
@@ -117,8 +117,8 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ic_made_in_ghana"
-                android:layout_width="@dimen/_24sdp"
-                android:layout_height="@dimen/_24sdp"
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_22sdp"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:src="@drawable/ic_made_in_ghana" />
 
@@ -128,7 +128,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_32sdp"
                 android:layout_marginStart="@dimen/_7sdp"
-                android:layout_marginTop="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:gravity="center_vertical"
                 android:text="@string/label_made_in_ghana"
                 app:drawableEndCompat="@drawable/ic_right_arrow" />
@@ -146,8 +146,8 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ic_african_market"
-                android:layout_width="@dimen/_24sdp"
-                android:layout_height="@dimen/_24sdp"
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_22sdp"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:src="@drawable/ic_african_market" />
 
@@ -157,7 +157,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_32sdp"
                 android:layout_marginStart="@dimen/_7sdp"
-                android:layout_marginTop="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:gravity="center_vertical"
                 android:text="@string/label_african_market"
                 app:drawableEndCompat="@drawable/ic_right_arrow" />
@@ -176,8 +176,8 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ic_thrift_market"
-                android:layout_width="@dimen/_24sdp"
-                android:layout_height="@dimen/_24sdp"
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_22sdp"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:src="@drawable/ic_thrift_market" />
 
@@ -187,7 +187,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_32sdp"
                 android:layout_marginStart="@dimen/_7sdp"
-                android:layout_marginTop="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:gravity="center_vertical"
                 android:text="@string/label_thrift_market"
                 app:drawableEndCompat="@drawable/ic_right_arrow" />
