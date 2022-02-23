@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
@@ -43,11 +42,18 @@ class ResetCredentialFragment : BaseFragment() {
         binding.btnSendResetCredentialLink.setOnClickListener {
             val email = binding.etEmailAddress.text.toString()
             if (!Validator.isValidEmail(email)) {
-                showErrorDialog(getString(R.string.error_enter_valid_email))
+                showWarning()
                 return@setOnClickListener
             }
             viewModel.resetCredentials(email)
         }
+    }
+    private fun showWarning() {
+        val resId = R.drawable.ic_error
+        val title = getString(R.string.label_try_again)
+        val msg = getString(R.string.error_enter_valid_email)
+
+        showInfoDialoge(resId, title, msg) { goBack() }
     }
 
     private fun setupObserver() {

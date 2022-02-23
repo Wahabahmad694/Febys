@@ -12,6 +12,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
@@ -28,10 +29,9 @@ import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.cart.CartViewModel
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.ui.screens.product.additional.AdditionalProductAdapter
+import com.hexagram.febys.ui.screens.product.filters.FiltersType
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
-import com.hexagram.febys.ui.screens.product.filters.FiltersType
-import androidx.navigation.NavDirections
 
 @AndroidEntryPoint
 class ProductDetailFragment : SliderFragment() {
@@ -452,7 +452,7 @@ class ProductDetailFragment : SliderFragment() {
         }
     }
 
-    private fun updateAdditionalProducts(){
+    private fun updateAdditionalProducts() {
         binding.containerAdditionalProducts.removeAllViews()
         productDetailViewModel.getRecommendProducts()?.let {
             addAdditionalProduct(
@@ -631,13 +631,16 @@ class ProductDetailFragment : SliderFragment() {
                 navigateTo(gotoProductDetail)
             }
             layoutAdditionalProductBinding.btnAdditionalProductShopAll.setOnClickListener {
-                var actionToProductListing : NavDirections? = null
-                if (filterType == FiltersType.SIMILAR_PRODUCT){
+                var actionToProductListing: NavDirections? = null
+                if (filterType == FiltersType.SIMILAR_PRODUCT) {
                     actionToProductListing = ProductDetailFragmentDirections
                         .actionProductDetailFragmentToSimilarProductListing(args.productId, title)
-                } else if(filterType == FiltersType.RECOMMENDED_PRODUCT){
+                } else if (filterType == FiltersType.RECOMMENDED_PRODUCT) {
                     actionToProductListing = ProductDetailFragmentDirections
-                        .actionProductDetailFragmentToRecommendedProductListing(args.productId, title)
+                        .actionProductDetailFragmentToRecommendedProductListing(
+                            args.productId,
+                            title
+                        )
                 }
 
                 actionToProductListing?.let { navigateTo(it) }
@@ -891,6 +894,6 @@ class ProductDetailFragment : SliderFragment() {
         override fun getItemCount(): Int = images.size
 
         override fun createFragment(position: Int): Fragment =
-            ProductSliderPageFragment.newInstance(images[position])
+            ProductSliderPageFragment.newInstance(images[position],images)
     }
 }

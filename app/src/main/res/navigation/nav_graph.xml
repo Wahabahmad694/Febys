@@ -36,6 +36,13 @@
         app:popEnterAnim="@anim/slide_in_right"
         app:popExitAnim="@anim/slide_out_right" />
     <action
+        android:id="@+id/to_imagePreviewFragment"
+        app:destination="@id/imagePreviewFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_right" />
+    <action
         android:id="@+id/to_paymentFragment"
         app:destination="@id/paymentFragment" />
 
@@ -634,6 +641,16 @@
         android:name="com.hexagram.febys.ui.screens.febysPlus.FebysPlusFragment"
         android:label="FebysPlusFragment"
         tools:layout="@layout/fragment_febys_plus" />
+    <fragment
+        android:id="@+id/imagePreviewFragment"
+        android:name="com.hexagram.febys.ui.screens.imagePreview.ImagePreviewFragment"
+        android:label="ImagePreviewFragment"
+        tools:layout="@layout/fragment_image_preview">
+        <argument
+            android:name="image"
+            app:argType="string[]" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/celebrityDetailFragment"
