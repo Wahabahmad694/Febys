@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.view.children
+import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -98,6 +100,10 @@ class SearchFragment : BaseFragment() {
         binding.ivSearch.setOnClickListener { onSearchClick() }
 
         binding.etSearch.onSearch { onSearchClick() }
+
+        binding.etSearch.addTextChangedListener {
+            binding.ivClear.isVisible = binding.etSearch.text.isNotEmpty()
+        }
     }
 
     private fun doSearch(query: String) {

@@ -9,7 +9,6 @@ import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentImagePreviewBinding
-import com.hexagram.febys.ui.screens.product.detail.ProductSliderPageFragment
 import com.hexagram.febys.utils.goBack
 
 class ImagePreviewFragment : BaseFragment() {
@@ -38,17 +37,17 @@ class ImagePreviewFragment : BaseFragment() {
         images.forEach {
             imageList.add(it)
         }
-        binding.ivProduct.adapter = ProductSliderPageAdapter(images = imageList, this)
-        binding.dotsIndicator.setViewPager2(binding.ivProduct)
+        binding.ivProductImage.adapter = ZoomProductSliderPageAdapter(images = imageList, this)
+        binding.dotsIndicator.setViewPager2(binding.ivProductImage)
     }
 
-    private inner class ProductSliderPageAdapter(
+    private inner class ZoomProductSliderPageAdapter(
         val images: List<String>, fa: Fragment,
     ) :
         FragmentStateAdapter(fa) {
         override fun getItemCount(): Int = images.size
 
         override fun createFragment(position: Int): Fragment =
-            ProductSliderPageFragment.newInstance(images[position], images)
+            ZoomableProductFragment.newInstance(images[position], images)
     }
 }

@@ -120,6 +120,7 @@
     <string name="menu_account">Account</string>
 
     <string name="hint_search">Search…</string>
+    <string name="hint_clear">Clear…</string>
 
     <string name="error_something_went_wrong">Something went wrong!</string>
 

@@ -82,10 +82,11 @@
 
             <ImageView
                 android:id="@+id/iv_clear"
-                android:layout_width="48dp"
-                android:layout_height="match_parent"
-                android:contentDescription="@string/hint_search"
+                android:layout_width="46dp"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/hint_clear"
                 android:padding="@dimen/_16dp"
+                android:visibility="gone"
                 android:src="@drawable/iv_close_2" />
 
             <ImageView

@@ -30,6 +30,7 @@ class CartAdapter(private val isInCheckout: Boolean = false) :
         }
     }
 
+    var gotoVendorDetail: ((vendorId: String) -> Unit)? = null
 
     private var fav = mutableSetOf<String>()
     var interaction: Interaction? = null
@@ -67,7 +68,13 @@ class CartAdapter(private val isInCheckout: Boolean = false) :
                     removeCartItemAndNotifyNext(cartDTO)
                 }
 
-                root.setOnClickListener {
+                vendorImg.setOnClickListener {
+                    val id = cartDTO.vendorId
+
+                    gotoDetailScreen(vendorId = id)
+                }
+
+                ivProduct.setOnClickListener {
                     interaction?.openProductDetail(cartDTO)
                 }
 
@@ -152,6 +159,10 @@ class CartAdapter(private val isInCheckout: Boolean = false) :
             return cartDTO.vendorId in currentList.subList(0, position).map { it.vendorId }
         }
 
+    }
+
+    private fun gotoDetailScreen(vendorId: String) {
+        gotoVendorDetail?.invoke(vendorId)
     }
 
     override fun submitList(list: List<CartDTO>?) {
