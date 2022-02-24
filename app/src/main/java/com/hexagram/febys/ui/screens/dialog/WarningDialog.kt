@@ -10,11 +10,11 @@ import com.hexagram.febys.base.BaseDialog
 import com.hexagram.febys.databinding.DialogWarningBinding
 
 class WarningDialog(
-@DrawableRes
-private val infoRes: Int,
-private val infoTitle: String,
-private val infoMsg: String,
-private val okayCallback: (() -> Unit)? = null
+    @DrawableRes
+    private val infoRes: Int,
+    private val infoTitle: String,
+    private val infoMsg: String,
+    private val okayCallback: (() -> Unit)? = null,
 ) : BaseDialog() {
 
     companion object {
@@ -24,7 +24,7 @@ private val okayCallback: (() -> Unit)? = null
     private lateinit var binding: DialogWarningBinding
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View {
         binding = DialogWarningBinding.inflate(inflater, container, false)
         return binding.root
