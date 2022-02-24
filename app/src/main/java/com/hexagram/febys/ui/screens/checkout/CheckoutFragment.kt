@@ -100,6 +100,8 @@ class CheckoutFragment : BaseFragment() {
             }
         }
 
+        cartAdapter.gotoVendorDetail = { vendorID -> gotoVendorDetail(vendorID, true) }
+
         cartAdapter.interaction = object : CartAdapter.Interaction {
             override fun updateCartItem(cartDTO: CartDTO) {
                 checkoutViewModel.updateCartItem(cartDTO)
@@ -156,6 +158,11 @@ class CheckoutFragment : BaseFragment() {
             voucher = ""
             fetchOrderInfo()
         }
+    }
+
+    private fun gotoVendorDetail(vendorId: String, isFollow: Boolean) {
+        val direction = NavGraphDirections.toVendorDetailFragment(vendorId, isFollow)
+        navigateTo(direction)
     }
 
     private fun fetchOrderInfo() {

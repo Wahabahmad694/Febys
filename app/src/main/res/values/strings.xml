@@ -401,5 +401,6 @@
     <string name="qa_notification_channel_description">Notification related to Q&amp;A</string>
     <string name="please_login_to_see_notifications">Please sign in to see notifications</string>
     <string name="order_listing">Order Listing</string>
+    <string name="label_continue_shopping">Continue Shopping</string>
 
 </resources>
