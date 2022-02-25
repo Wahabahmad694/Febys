@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.30" />
+            app:layout_constraintGuide_percent="0.40" />
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_close"
             android:layout_width="@dimen/_20sdp"
@@ -104,7 +104,7 @@
 
         <TextView
             android:id="@+id/tv_total_amount"
-            style="@style/TextTheme.HelveticaNeue.TS32.Bold"
+            style="@style/TextTheme.HelveticaNeue.TS28.Bold"
             android:layout_width="0dp"
             android:textAlignment="viewEnd"
             android:ellipsize="end"

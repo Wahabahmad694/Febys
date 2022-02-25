@@ -110,6 +110,11 @@ class ProductDetailFragment : SliderFragment() {
                 showBottomSheet(variantFirstAttrBottomSheet)
             }
         }
+        binding.containerVendorDetail.setOnClickListener {
+            val vendorId = binding.product?.vendor?._id ?: return@setOnClickListener
+            val gotoVendorDetail = NavGraphDirections.toVendorDetailFragment(vendorId, false)
+            navigateTo(gotoVendorDetail)
+        }
         binding.btnPayNow.setOnClickListener {
             if (isUserLoggedIn) {
                 handleAddToCartClick()
@@ -894,6 +899,6 @@ class ProductDetailFragment : SliderFragment() {
         override fun getItemCount(): Int = images.size
 
         override fun createFragment(position: Int): Fragment =
-            ProductSliderPageFragment.newInstance(images[position],images)
+            ProductSliderPageFragment.newInstance(images[position], images)
     }
 }

@@ -100,7 +100,7 @@ class CheckoutFragment : BaseFragment() {
             }
         }
 
-        cartAdapter.gotoVendorDetail = { vendorID -> gotoVendorDetail(vendorID, true) }
+        cartAdapter.gotoVendorDetail = { vendorID -> gotoVendorDetail(vendorID, false) }
 
         cartAdapter.interaction = object : CartAdapter.Interaction {
             override fun updateCartItem(cartDTO: CartDTO) {

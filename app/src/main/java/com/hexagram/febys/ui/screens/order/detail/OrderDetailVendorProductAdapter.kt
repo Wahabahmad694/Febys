@@ -17,6 +17,7 @@ class OrderDetailVendorProductAdapter : RecyclerView.Adapter<IBindViewHolder>() 
     private var vendors = listOf<VendorProducts>()
     var onReturnItemClick: ((vendorProduct: VendorProducts) -> Unit)? = null
     var onCancelOrderClick: ((vendorId: String) -> Unit)? = null
+    var gotoVendorDetail: ((vendorId: String) -> Unit)? = null
     var onAddReviewClick: ((vendorProducts: VendorProducts) -> Unit)? = null
     var onItemClick: ((vendorProducts: VendorProducts) -> Unit)? = null
     private var cancelableOrder: Boolean = true
@@ -118,6 +119,7 @@ class OrderDetailVendorProductAdapter : RecyclerView.Adapter<IBindViewHolder>() 
                 }
                 onReturnItemClick?.invoke(vendorProduct)
             }
+            vendorImg.setOnClickListener { gotoVendorDetail?.invoke(vendor._id) }
             btnCancelOrder.setOnClickListener { onCancelOrderClick?.invoke(vendor._id) }
             btnAddReview.setOnClickListener { onAddReviewClick?.invoke(vendorProducts) }
         }
