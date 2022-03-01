@@ -198,7 +198,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_16sdp"
                     android:layout_marginTop="@dimen/_24sdp"
-                    android:text="@string/label_where_to_find_me" />
+                    android:text="@string/label_connect_with_me" />
 
                 <LinearLayout
                     android:id="@+id/container_follow_me"

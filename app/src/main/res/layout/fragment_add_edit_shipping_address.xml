@@ -157,7 +157,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="@string/label_destination_or_region" />
+                                android:text="@string/label_country" />
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/region_arrow"
