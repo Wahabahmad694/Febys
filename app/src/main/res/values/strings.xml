@@ -252,7 +252,7 @@
     <string name="label_ask">Ask</string>
     <string name="label_send">Send</string>
     <string name="label_payment_method">Payment Methods</string>
-    <string name="label_customer_recommend">Customers Recommend</string>
+    <string name="label_customer_recommend">Recommended Products</string>
     <string name="label_compare_with_similar_items">Similar Items</string>
     <string name="label_no_answer">---</string>
     <string name="label_question">Question</string>
