@@ -33,6 +33,7 @@ import com.hexagram.febys.ui.screens.product.filters.FiltersType
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
+
 @AndroidEntryPoint
 class ProductDetailFragment : SliderFragment() {
     private lateinit var binding: FragmentProductDetailBinding
@@ -184,6 +185,9 @@ class ProductDetailFragment : SliderFragment() {
                 binding.containerProductShippingInfo.containerProductShippingFee.isVisible
             )
             binding.scrollView.scrollToDescendant(binding.containerProductShippingInfo.containerProductShippingFee)
+            binding.containerProductShippingInfo.returnChip.setOnClickListener {
+                //todo nothing
+            }
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {

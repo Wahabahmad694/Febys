@@ -69,9 +69,9 @@ class OrderDetailVendorProductAdapter : RecyclerView.Adapter<IBindViewHolder>() 
             orderAmountByVendor.text = vendorProducts.amount?.getFormattedPrice()
             containerOrderAmountByVendor.isVisible = vendorProducts.amount != null && !reverted
 
-            orderTrackingCode.text = vendorProducts.courier?.trackingId
-            containerOrderTrackingCode.isVisible = vendorProducts.courier != null && !reverted
-                    && vendorProducts.status in arrayOf(OrderStatus.SHIPPED)
+//            orderTrackingCode.text = vendorProducts.courier?.trackingId
+//            containerOrderTrackingCode.isVisible = vendorProducts.courier != null && !reverted
+//                    && vendorProducts.status in arrayOf(OrderStatus.SHIPPED)
 
             orderDeliveryService.load(vendorProducts.courier?.service?.logo)
             containerOrderDeliveryService.isVisible = vendorProducts.courier != null && !reverted
