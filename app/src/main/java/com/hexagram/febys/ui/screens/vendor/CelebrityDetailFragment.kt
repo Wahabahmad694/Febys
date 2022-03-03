@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -106,9 +108,13 @@ class CelebrityDetailFragment : BaseFragment() {
             if (binding.isFollowing == null) return@setOnClickListener
             binding.isFollowing = !binding.isFollowing!!
 
-            if (binding.isFollowing!!)
+
+            if (binding.isFollowing!!){
                 celebrityViewModel.followVendor(args.id)
-            else
+                binding.btnToggleFollow.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.red)
+            }
+
+            else{
                 celebrityViewModel.unFollowVendor(args.id)
             }
         }
@@ -145,7 +151,6 @@ class CelebrityDetailFragment : BaseFragment() {
                 if (endorsementAdapter.itemCount >= 6) View.VISIBLE else View.GONE
         }
     }
-
     private fun setObserver() {
         setupPagerAdapter()
 
