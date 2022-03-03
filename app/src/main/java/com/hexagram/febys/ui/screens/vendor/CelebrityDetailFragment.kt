@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -52,7 +51,7 @@ class CelebrityDetailFragment : BaseFragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View {
         binding = FragmentCelebrityDetailBinding.inflate(inflater, container, false)
         return binding.root
@@ -111,6 +110,7 @@ class CelebrityDetailFragment : BaseFragment() {
                 celebrityViewModel.followVendor(args.id)
             else
                 celebrityViewModel.unFollowVendor(args.id)
+            }
         }
 
         productListingPagerAdapter.interaction = object : ProductListingPagerAdapter.Interaction {
@@ -168,7 +168,8 @@ class CelebrityDetailFragment : BaseFragment() {
         celebrityViewModel.observerVendorEndorsement.observe(viewLifecycleOwner) {
             when (it) {
                 is DataState.Loading,
-                is DataState.Error -> {
+                is DataState.Error,
+                -> {
                     // do nothing
                 }
                 is DataState.Data -> {

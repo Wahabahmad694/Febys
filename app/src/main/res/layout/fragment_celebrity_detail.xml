@@ -318,7 +318,8 @@
                         android:layout_width="@dimen/_75sdp"
                         android:layout_height="wrap_content"
                         android:text="@{isFollowing ? @string/label_following : @string/label_follow}"
-                        tools:text="Unfollow"/>
+                        tools:text="Unfollow"
+                        />
 
                 </LinearLayout>
 
