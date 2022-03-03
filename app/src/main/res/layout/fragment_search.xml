@@ -95,6 +95,7 @@
                 android:layout_height="match_parent"
                 android:contentDescription="@string/hint_search"
                 android:padding="@dimen/_16dp"
+                android:background="@color/red"
                 android:src="@drawable/ic_search" />
 
         </LinearLayout>

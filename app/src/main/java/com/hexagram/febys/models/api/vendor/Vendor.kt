@@ -3,7 +3,6 @@ package com.hexagram.febys.models.api.vendor
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import com.hexagram.febys.models.api.contact.ContactDetails
-import com.hexagram.febys.models.api.product.RatingAndReviews
 import com.hexagram.febys.models.api.rating.Rating
 import com.hexagram.febys.models.api.rating.VendorReview
 import com.hexagram.febys.models.api.role.Role

@@ -95,6 +95,9 @@ class VendorDetailFragment : BaseFragment() {
     private fun updateUi(vendor: Vendor) {
         binding.apply {
             title.text = vendor.shopName
+            if (vendor.official) {
+                ivBadge.isVisible = true
+            }
             profileImg.load(vendor.templatePhoto)
             vendor.template
                 ?.firstOrNull { it.section == "1,1" }

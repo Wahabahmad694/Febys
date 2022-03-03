@@ -185,9 +185,6 @@ class ProductDetailFragment : SliderFragment() {
                 binding.containerProductShippingInfo.containerProductShippingFee.isVisible
             )
             binding.scrollView.scrollToDescendant(binding.containerProductShippingInfo.containerProductShippingFee)
-            binding.containerProductShippingInfo.returnChip.setOnClickListener {
-                //todo nothing
-            }
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
@@ -491,6 +488,10 @@ class ProductDetailFragment : SliderFragment() {
             productDetailViewModel.selectedFirstAttr = selectedFirstAttr
 
             val firstAttrList = productDetailViewModel.getFirstAttrList(product)
+
+            if (binding.product?.vendor?.official == true) {
+                binding.ivBadge.isVisible = true
+            }
 
             productVariantFirstAttrAdapter
                 .submitList(selectedFirstAttr, firstAttrList)

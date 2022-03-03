@@ -37,7 +37,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class CelebrityDetailFragment : BaseFragment() {
+class CelebrityDetailFragment : BaseFragment()  {
     private lateinit var binding: FragmentCelebrityDetailBinding
     private val celebrityViewModel: VendorViewModel by viewModels()
     private val filtersViewModel by viewModels<FilterViewModel>()
