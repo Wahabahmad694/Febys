@@ -138,19 +138,5 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"
             android:background="@color/grey_e1e5e8" />
-
-        <TextView
-            android:id="@+id/wishlist"
-            style="@style/TextTheme.HelveticaNeue.TS14"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_32sdp"
-            android:gravity="center_vertical"
-            android:text="@string/label_wishlist"
-            app:drawableEndCompat="@drawable/ic_right_arrow" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_1sdp"
-            android:background="@color/grey_e1e5e8" />
     </LinearLayout>
 </layout>

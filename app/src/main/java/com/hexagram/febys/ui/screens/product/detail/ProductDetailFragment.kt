@@ -1,6 +1,10 @@
 package com.hexagram.febys.ui.screens.product.detail
 
+import android.app.DownloadManager
+import android.content.Context
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -158,6 +162,10 @@ class ProductDetailFragment : SliderFragment() {
             closeBottomSheet(variantFirstAttrBottomSheet)
         }
 
+        binding.containerProductShippingInfo.returnChip.setOnClickListener {
+            downloadPolicy()
+        }
+
         productVariantSecondAttrAdapter.interaction = { selectedSecondAttr ->
             binding.product?.let { product ->
                 productDetailViewModel.selectedSecondAttr = selectedSecondAttr
@@ -297,6 +305,20 @@ class ProductDetailFragment : SliderFragment() {
             binding.containerRatingAndReviews.reviews.radioGroupSorting.check(checkedId)
             updateReviews(ratingsAndReviews)
         }
+    }
+
+    private fun downloadPolicy() {
+        val uri = Uri.parse(binding.variant?.refund?.policy)
+        val mManager = requireContext().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        val request: DownloadManager.Request? = DownloadManager.Request(uri)
+            .setTitle("Febys Return & Refund Policy")
+            .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS," ReturnPolicy.pdf")
+            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+            .setDescription("Downloading...")
+            .setMimeType("application/pdf");
+
+        request?.allowScanningByMediaScanner()
+        mManager.enqueue(request)
     }
 
     private fun handleFavClick() {
@@ -489,7 +511,7 @@ class ProductDetailFragment : SliderFragment() {
 
             val firstAttrList = productDetailViewModel.getFirstAttrList(product)
 
-            if (binding.product?.vendor?.official == true) {
+            if (binding.product?.vendor?.official!!) {
                 binding.ivBadge.isVisible = true
             }
 

@@ -154,6 +154,14 @@
         <item name="backgroundTint">@color/selector_outlined_button</item>
     </style>
 
+    <style name="ButtonTheme.OutLine.Red" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textAppearance">@style/TextTheme.HelveticaNeue.TS14</item>
+        <item name="android:minWidth">@dimen/_96sdp</item>
+        <item name="strokeColor">@color/disable_button_color</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="backgroundTint">@color/red</item>
+    </style>
+
     <style name="ButtonTheme.OutLines" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:textAppearance">@style/TextTheme.HelveticaNeue.TS14</item>
         <item name="android:minWidth">@dimen/_96sdp</item>

@@ -12,7 +12,6 @@ import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentAccountBinding
 import com.hexagram.febys.network.DataState
-import com.hexagram.febys.notification.FirebaseUtils
 import com.hexagram.febys.ui.screens.auth.AuthViewModel
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.utils.OrderStatus
@@ -118,12 +117,6 @@ class AccountFragment : BaseFragment() {
                 getString(R.string.label_return_orders),
                 getString(R.string.label_return_details)
             )
-        }
-
-        binding.orders.wishlist.setOnClickListener {
-            val navigateToWishlist =
-                AccountFragmentDirections.actionAccountFragmentToWishListFragment()
-            navigateTo(navigateToWishlist)
         }
 
         binding.settings.shippingAddress.setOnClickListener {

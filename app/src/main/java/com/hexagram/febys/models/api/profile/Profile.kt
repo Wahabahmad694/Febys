@@ -4,6 +4,7 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import com.hexagram.febys.models.api.cart.Cart
 import com.hexagram.febys.models.api.consumer.Consumer
+import com.hexagram.febys.models.api.notification.NotificationCount
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
 import com.hexagram.febys.models.api.subscription.Subscription
 import com.hexagram.febys.models.api.vouchers.Voucher
@@ -26,4 +27,6 @@ data class Profile(
     val vouchers: List<Voucher>,
     val wallet: Wallet,
     val subscription: Subscription?,
+    @SerializedName("notifications_counts")
+    val notificationsCounts: NotificationCount
 ) : Parcelable

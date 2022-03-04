@@ -45,6 +45,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/bg_top" />
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_wish_list"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_marginStart="@dimen/_16dp"
+            android:src="@drawable/ic_heart"
+            app:layout_constraintBottom_toBottomOf="@id/iv_febys"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iv_febys" />
+
         <TextView
             android:id="@+id/tv_cart_count"
             style="@style/TextTheme.HelveticaNeue.TS16.Bold"
