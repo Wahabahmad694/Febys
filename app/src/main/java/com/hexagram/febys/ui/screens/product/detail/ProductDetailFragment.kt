@@ -220,6 +220,8 @@ class ProductDetailFragment : SliderFragment() {
         }
 
         binding.btnAddToCart.setOnClickListener {
+            val anim = android.view.animation.AnimationUtils.loadAnimation(requireContext(),R.anim.cart_count_bounce)
+            binding.tvCartCount.startAnimation(anim)
             handleAddToCartClick()
         }
 
