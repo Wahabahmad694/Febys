@@ -104,16 +104,12 @@ class CelebrityDetailFragment : BaseFragment()  {
                 navigateTo(gotoLogin)
                 return@setOnClickListener
             }
-
             if (binding.isFollowing == null) return@setOnClickListener
             binding.isFollowing = !binding.isFollowing!!
 
-
             if (binding.isFollowing!!){
                 celebrityViewModel.followVendor(args.id)
-            }
-
-            else{
+            } else {
                 celebrityViewModel.unFollowVendor(args.id)
             }
         }
