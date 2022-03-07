@@ -23,7 +23,7 @@
             android:layout_marginHorizontal="@dimen/_16sdp"
             android:layout_weight="1"
             android:background="@null"
-            android:hint="@string/label_voucher_code"
+            android:hint="@string/label_enter_voucher"
             android:imeOptions="actionNext"
             android:inputType="textEmailAddress"
             android:maxLines="1"
@@ -41,6 +41,17 @@
             android:gravity="center"
             android:text="@string/label_apply"
             android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/btn_remove_voucher"
+            style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+            android:layout_width="@dimen/_58sdp"
+            android:layout_height="match_parent"
+            android:background="@color/red"
+            android:gravity="center"
+            android:text="@string/label_remove"
+            android:textColor="@color/white"
+            android:visibility="gone" />
 
     </LinearLayout>
 </layout>

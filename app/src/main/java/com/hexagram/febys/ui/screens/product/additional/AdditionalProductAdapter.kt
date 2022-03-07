@@ -10,12 +10,17 @@ class AdditionalProductAdapter :
     RecyclerView.Adapter<AdditionalProductAdapter.ItemAdditionalProductViewHolder>() {
     var products = listOf<Product>()
 
-    class ItemAdditionalProductViewHolder(
+    var onItemClick: ((Product) -> Unit)? = null
+
+    inner class ItemAdditionalProductViewHolder(
         private val binding: ItemAdditionalProductBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Product, position: Int) = with(binding) {
             product = item
+            root.setOnClickListener {
+                onItemClick?.invoke(item)
+            }
         }
     }
 

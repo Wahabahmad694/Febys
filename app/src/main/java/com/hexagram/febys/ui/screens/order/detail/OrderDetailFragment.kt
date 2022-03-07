@@ -8,13 +8,12 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentOrderDetailBinding
-import com.hexagram.febys.databinding.LayoutOrderSummaryProductBinding
 import com.hexagram.febys.models.api.cart.VendorProducts
 import com.hexagram.febys.models.api.order.Order
-import com.hexagram.febys.models.api.price.Price
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.ui.screens.order.OrderViewModel
@@ -31,8 +30,6 @@ class OrderDetailFragment : BaseFragment() {
     private val orderViewModel: OrderViewModel by viewModels()
     private val args: OrderDetailFragmentArgs by navArgs()
     private val orderDetailVendorProductAdapter = OrderDetailVendorProductAdapter()
-
-    private var orderPrice: Price? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +60,9 @@ class OrderDetailFragment : BaseFragment() {
 
     private fun uiListener() {
         binding.ivBack.setOnClickListener { goBack() }
+
+        orderDetailVendorProductAdapter.gotoVendorDetail =
+            { vendorId -> gotoVendorDetail(vendorId, false) }
 
         orderDetailVendorProductAdapter.onReturnItemClick = { vendorProduct: VendorProducts ->
             gotoReturnOrder(vendorProduct)
@@ -148,84 +148,17 @@ class OrderDetailFragment : BaseFragment() {
         tvOrderDate.text =
             Utils.DateTime.formatDate(order.createdAt, FORMAT_MONTH_DATE_YEAR_HOUR_MIN)
 
-        val vendorProducts =
-            if (!args.review) order.vendorProducts else order.vendorProducts.filter { it.hasReviewed }
+        val vendorProducts = if (args.review) order.vendorProducts.filter { it.hasReviewed }
+        else order.vendorProducts
         orderDetailVendorProductAdapter.submitList(vendorProducts, args.review)
 
-        createOrderSummary(order)
+        binding.containerOrderSummary.root.isVisible = !(args.review || args.returnDetail)
+        order.addToOrderSummary(binding.containerOrderSummary)
     }
 
-    private fun createOrderSummary(order: Order) {
-        binding.containerOrderSummary.root.isVisible = !args.review
-        binding.containerOrderSummary.containerOrderSummaryProducts.removeAllViews()
-
-        val cartItems = order.toListOfCartDTO()
-
-        updateOrderSummaryQuantity(cartItems.size)
-        cartItems.forEach { addProductToOrderSummary(it.productName, it.quantity, it.price) }
-        addProductToOrderSummary(getString(R.string.label_subtotal), 1, order.productsAmount, true)
-
-        val shippingFee = Price("", 0.0, order.productsAmount.currency)
-        addProductToOrderSummary(getString(R.string.label_shipping_fee), 1, shippingFee, true)
-        addVatToOrderSummary(order.vatPercentage, order.productsAmount)
-
-        if (order.voucher != null) {
-            val voucherDiscount = order.voucher.discount ?: 0.0
-            val voucherPrice = Price("", -voucherDiscount, order.productsAmount.currency)
-            addProductToOrderSummary(
-                getString(R.string.label_voucher_discount), 1, voucherPrice, true
-            )
-        }
-
-        updateTotalAmount(order.billAmount)
+    private fun gotoVendorDetail(vendorId: String, isFollow: Boolean) {
+        val direction = NavGraphDirections.toVendorDetailFragment(vendorId, isFollow)
+        navigateTo(direction)
     }
 
-    private fun addVatToOrderSummary(vatPercentage: Double, total: Price) {
-        val productSummary = LayoutOrderSummaryProductBinding.inflate(
-            layoutInflater,
-            binding.containerOrderSummary.containerOrderSummaryProducts,
-            false
-        )
-
-        val vatLabel = getString(R.string.label_vat)
-        val vatWithPercentage = "$vatLabel $vatPercentage%"
-        productSummary.tvProductNameWithQuantity.text = vatWithPercentage
-
-        val vatAmount =
-            if (vatPercentage > 0) total.value.times(vatPercentage).div(100.0) else 0.0
-        val vatPrice = Price("", vatAmount, total.currency)
-
-        productSummary.tvTotalPrice.text = vatPrice.getFormattedPrice()
-        binding.containerOrderSummary.containerOrderSummaryProducts.addView(productSummary.root)
-    }
-
-    private fun addProductToOrderSummary(
-        productName: String, quantity: Int, price: Price, hideQuantity: Boolean = false
-    ) {
-        val productSummary = LayoutOrderSummaryProductBinding.inflate(
-            layoutInflater,
-            binding.containerOrderSummary.containerOrderSummaryProducts,
-            false
-        )
-
-        val productNameWithQuantity = if (hideQuantity) productName else "$quantity x $productName"
-        productSummary.tvProductNameWithQuantity.text = productNameWithQuantity
-
-        productSummary.tvTotalPrice.text = price.getFormattedPrice(quantity)
-        binding.containerOrderSummary.containerOrderSummaryProducts.addView(productSummary.root)
-    }
-
-    private fun updateOrderSummaryQuantity(quantity: Int) {
-        val itemString =
-            if (quantity > 1) getString(R.string.label_items) else getString(R.string.label_item)
-        val summaryQuantityString =
-            getString(R.string.label_order_summary_with_quantity) + " ($quantity " + itemString + ")"
-        binding.containerOrderSummary.labelOrderSummary.text = summaryQuantityString
-    }
-
-    private fun updateTotalAmount(price: Price) {
-        orderPrice = price
-        val totalAmountAsString = price.getFormattedPrice()
-        binding.containerOrderSummary.tvTotalPrice.text = totalAmountAsString
-    }
 }

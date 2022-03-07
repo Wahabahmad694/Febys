@@ -66,9 +66,11 @@ object OrderStatus {
             REJECTED -> {
                 "#FFCFCF"
             }
-            RETURNED,
             PENDING_RETURN -> {
-                "#E0E7FF"
+                "#F7F7F7"
+            }
+            RETURNED -> {
+                "#222222"
             }
             DELIVERED -> {
                 "#B2FFDA"

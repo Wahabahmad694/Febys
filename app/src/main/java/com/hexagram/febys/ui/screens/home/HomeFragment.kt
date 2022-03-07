@@ -20,6 +20,7 @@ import com.hexagram.febys.models.api.category.UniqueCategory
 import com.hexagram.febys.models.api.product.FeaturedCategory
 import com.hexagram.febys.models.api.product.Product
 import com.hexagram.febys.network.DataState
+import com.hexagram.febys.network.response.Offer
 import com.hexagram.febys.network.response.SeasonalOffer
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.utils.*
@@ -34,7 +35,7 @@ class HomeFragment : SliderFragment() {
     private val todayDealsAdapter = HomeProductsAdapter()
     private val featuredCategoryProductsAdapter = HomeProductsAdapter()
     private val trendingProductsAdapter = HomeProductsAdapter()
-    private val storeYouFollowAdapter = HomeStoresAdapter()
+    private val storeYouFollowAdapter = HomeProductsAdapter()
     private val under100DollarsItemAdapter = HomeProductsAdapter()
 
     private var lastCheckedCategoryId = -1
@@ -107,10 +108,22 @@ class HomeFragment : SliderFragment() {
     }
 
     private fun initUiListener() {
+        uniqueCategoryAdapter.interaction = object : UniqueCategoryAdapter.Interaction {
+            override fun onItemSelected(position: Int, item: UniqueCategory) {
+                gotoCategoryListing(item.name, item.categoryId)
+            }
+        }
+
         binding.btnShopNowTodayDeals.setOnClickListener {
             val gotoTodayDealsListingFragment = HomeFragmentDirections
                 .actionHomeFragmentToTodayDealsListingFragment(getString(R.string.label_today_deals))
             navigateTo(gotoTodayDealsListingFragment)
+        }
+        binding.ivWishList.setOnClickListener {
+            if (isUserLoggedIn) {
+                val gotoWishList = HomeFragmentDirections.actionHomeFragmentToWishListFragment()
+                navigateTo(gotoWishList)
+            } else gotoLogin()
         }
 
         binding.btnShopNowTrendingProducts.setOnClickListener {
@@ -124,6 +137,11 @@ class HomeFragment : SliderFragment() {
                 .actionHomeFragmentToUnder100DollarsItemListingFragment(getString(R.string.label_under_100_dollar_items))
             navigateTo(gotoTodayDealsListingFragment)
         }
+        binding.btnShopNowStoreYouFollow.setOnClickListener {
+            val gotoStoreYouFollowListingFragment = HomeFragmentDirections
+                .actionHomeFragmentToStoreYouFollowItemListingFragment(getString(R.string.label_store_you_follow))
+            navigateTo(gotoStoreYouFollowListingFragment)
+        }
 
         binding.btnShopNowFeaturedCategories.setOnClickListener {
             var categoryTitle = getString(R.string.label_featured_categories)
@@ -135,9 +153,7 @@ class HomeFragment : SliderFragment() {
                 }
             }
 
-            val gotoCategoryListing = HomeFragmentDirections
-                .actionHomeFragmentToCategoryProductListingFragment(categoryTitle, categoryId)
-            navigateTo(gotoCategoryListing)
+            gotoCategoryListing(categoryTitle, categoryId)
         }
 
         fun updateFav() {
@@ -145,6 +161,7 @@ class HomeFragment : SliderFragment() {
             todayDealsAdapter.submitFav(fav)
             featuredCategoryProductsAdapter.submitFav(fav)
             trendingProductsAdapter.submitFav(fav)
+            storeYouFollowAdapter.submitFav(fav)
             under100DollarsItemAdapter.submitFav(fav)
         }
 
@@ -170,8 +187,32 @@ class HomeFragment : SliderFragment() {
 
         todayDealsAdapter.interaction = homeProductAdapterInteraction
         featuredCategoryProductsAdapter.interaction = homeProductAdapterInteraction
+        storeYouFollowAdapter.interaction = homeProductAdapterInteraction
         trendingProductsAdapter.interaction = homeProductAdapterInteraction
         under100DollarsItemAdapter.interaction = homeProductAdapterInteraction
+        binding.rvUniqueCategories.setOnScrollChangeListener { _, _, _, _, _ ->
+            val horizontalScrollPosition =
+                binding.rvUniqueCategories.getHorizontalScrollPosition()
+            val param =
+                (binding.ivIcScrollUniqueCategory.layoutParams as ConstraintLayout.LayoutParams)
+            param.horizontalBias = horizontalScrollPosition
+            binding.ivIcScrollUniqueCategory.layoutParams = param
+            binding.ivIcScrollUniqueCategory.visibility =
+                if (uniqueCategoryAdapter.itemCount >= 5) View.VISIBLE else View.GONE
+            binding.ivBgScrollUniqueCategory.visibility =
+                if (uniqueCategoryAdapter.itemCount >= 5) View.VISIBLE else View.GONE
+        }
+    }
+
+    private fun gotoLogin() {
+        val gotoLogin = NavGraphDirections.actionToLoginFragment()
+        navigateTo(gotoLogin)
+    }
+
+    private fun gotoCategoryListing(categoryTitle: String, categoryId: Int) {
+        val gotoCategoryListing = HomeFragmentDirections
+            .actionHomeFragmentToCategoryProductListingFragment(categoryTitle, categoryId)
+        navigateTo(gotoCategoryListing)
     }
 
     private fun setupObserver() {
@@ -216,7 +257,8 @@ class HomeFragment : SliderFragment() {
     private fun setupBanner(banners: List<Banner>) {
         val sliderImages =
             banners.filter { banner -> banner.type == "headerImages" && banner._for == "mobile" }
-        binding.imageSliderHome.adapter = PagerAdapter(sliderImages, this)
+        val pagerAdapter = PagerAdapter(this, sliderImages)
+        binding.imageSliderHome.adapter = pagerAdapter
         binding.dotsIndicator.setViewPager2(binding.imageSliderHome)
 
         val isVisible = sliderImages.isNotEmpty()
@@ -269,15 +311,19 @@ class HomeFragment : SliderFragment() {
     }
 
     private fun setupSeasonalOffers(seasonalOffers: List<SeasonalOffer>) {
-        binding.sliderSeasonalOffer.adapter = PagerAdapter(seasonalOffers, this)
-        binding.sliderSeasonalOfferDotsIndicator.setViewPager2(binding.sliderSeasonalOffer)
-
         val isVisible = seasonalOffers.isNotEmpty()
         isVisible.applyToViews(
             binding.tvSeasonalOffers,
             binding.sliderSeasonalOffer,
             binding.sliderSeasonalOfferDotsIndicator
         )
+
+        if (seasonalOffers.isEmpty()) return
+
+        binding.tvSeasonalOffersSlogan.text = seasonalOffers[0].name
+        val pagerAdapter = PagerAdapter(this, seasonalOffers[0].offers, seasonalOffers[0].name)
+        binding.sliderSeasonalOffer.adapter = pagerAdapter
+        binding.sliderSeasonalOfferDotsIndicator.setViewPager2(binding.sliderSeasonalOffer)
     }
 
     private fun setupTrendingProducts(trendingProducts: List<Product>) {
@@ -292,7 +338,7 @@ class HomeFragment : SliderFragment() {
         )
     }
 
-    private fun setupStoreYouFollow(storeYouFollow: List<String>) {
+    private fun setupStoreYouFollow(storeYouFollow: List<Product>) {
         storeYouFollowAdapter.submitList(storeYouFollow)
 
         val isVisible = storeYouFollow.isNotEmpty()
@@ -337,7 +383,7 @@ class HomeFragment : SliderFragment() {
     override fun getIvCart(): View = binding.ivCart
 
     private inner class PagerAdapter<out T>(
-        val list: List<T>, fa: Fragment
+        fa: Fragment, val list: List<T>, val categoryName: String? = null
     ) : FragmentStateAdapter(fa) {
         override fun getItemCount(): Int = list.size
 
@@ -346,7 +392,7 @@ class HomeFragment : SliderFragment() {
             return if (item is Banner) {
                 HomeSliderPageFragment.newInstance(item)
             } else {
-                HomeSeasonalOfferSliderPageFragment.newInstance(item as SeasonalOffer)
+                HomeSliderPageFragment.newInstance(categoryName!!, item as Offer)
             }
         }
     }

@@ -26,7 +26,7 @@ data class ProductListingRequest constructor(
         private const val KEY_ATTR = "variants.attributes.value"
         private const val KEY_PRICE = "variants.price.value"
         private const val KEY_GTE = "\$gte" // greater than equal to
-        private const val KEY_LT = "\$lt" // less than
+        private const val KEY_LTE = "\$lte" // less than equal to
         private const val KEY_IN = "\$in"
         private const val KEY_OR = "\$or"
         const val KEY_ASC = "asc"
@@ -69,7 +69,7 @@ data class ProductListingRequest constructor(
             val priceRange = JsonObject()
 
             if (minPrice != null) priceRange.addProperty(KEY_GTE, minPrice)
-            if (maxPrice != null) priceRange.addProperty(KEY_LT, maxPrice)
+            if (maxPrice != null) priceRange.addProperty(KEY_LTE, maxPrice)
 
             val price = JsonObject()
             price.add(KEY_PRICE, priceRange)
@@ -83,13 +83,10 @@ data class ProductListingRequest constructor(
         return filters
     }
 
-    fun createSorter(): JsonObject {
+    fun createSorter(): JsonObject? {
+        if (sortByPrice == null) return null
         val sorter = JsonObject()
-
-        if (sortByPrice != null) {
-            sorter.addProperty(KEY_PRICE, sortByPrice)
-        }
-
+        sorter.addProperty(KEY_PRICE, sortByPrice)
         return sorter
     }
 

@@ -36,7 +36,10 @@ class FebysPlusRepoImpl @Inject constructor(
         val authToken = pref.getAccessToken()
         if (authToken.isEmpty()) return@flow
         backendService.subscribePackage(authToken, packageId, transaction)
-            .onSuccess { emit(DataState.Data(data!!)) }
+            .onSuccess {
+                pref.saveSubscription(data!!.subscription)
+                emit(DataState.Data(Unit))
+            }
             .onError { emit(DataState.ApiError(message)) }
             .onException { emit(DataState.ExceptionError()) }
             .onNetworkError { emit(DataState.NetworkError()) }

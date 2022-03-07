@@ -24,10 +24,12 @@
             android:text="@string/label_settings" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/toggle_notification"
             style="@style/TextTheme.HelveticaNeue.TS14"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_32sdp"
             android:layout_marginTop="@dimen/_18sdp"
+            android:enabled="false"
             android:gravity="center_vertical"
             android:text="@string/label_notifications" />
 
@@ -43,7 +45,7 @@
             android:layout_height="@dimen/_32sdp"
             android:gravity="center_vertical"
             android:text="@string/label_account_settings"
-            app:drawableEndCompat="@drawable/ic_right"
+            app:drawableEndCompat="@drawable/ic_right_arrow"
             binding:is_visible="@{isUserLoggedIn}" />
 
         <View
@@ -59,7 +61,7 @@
             android:layout_height="@dimen/_32sdp"
             android:gravity="center_vertical"
             android:text="@string/label_vouchers"
-            app:drawableEndCompat="@drawable/ic_right"
+            app:drawableEndCompat="@drawable/ic_right_arrow"
             binding:is_visible="@{isUserLoggedIn}" />
 
         <View
@@ -75,7 +77,7 @@
             android:layout_height="@dimen/_32sdp"
             android:gravity="center_vertical"
             android:text="@string/label_shipping_address"
-            app:drawableEndCompat="@drawable/ic_right"
+            app:drawableEndCompat="@drawable/ic_right_arrow"
             binding:is_visible="@{isUserLoggedIn}" />
 
         <View

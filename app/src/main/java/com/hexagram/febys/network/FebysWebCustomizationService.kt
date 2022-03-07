@@ -11,7 +11,7 @@ import retrofit2.http.Path
 
 interface FebysWebCustomizationService {
 
-    @GET("v1/unique-category")
+    @GET("v1/unique-category/mobile")
     suspend fun fetchAllUniqueCategories(): ApiResponse<List<UniqueCategory>>
 
     @GET("v1/banner/mobile")

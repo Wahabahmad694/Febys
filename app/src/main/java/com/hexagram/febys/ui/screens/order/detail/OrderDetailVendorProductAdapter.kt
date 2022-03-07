@@ -1,16 +1,15 @@
 package com.hexagram.febys.ui.screens.order.detail
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.hexagram.febys.R
 import com.hexagram.febys.databinding.ItemOrderDetailVendorForReviewBinding
 import com.hexagram.febys.databinding.ItemOrderDetailVendorsBinding
 import com.hexagram.febys.models.api.cart.CartProduct
 import com.hexagram.febys.models.api.cart.VendorProducts
 import com.hexagram.febys.utils.OrderStatus
-import com.hexagram.febys.utils.applySpaceItemDecoration
 import com.hexagram.febys.utils.load
 import com.hexagram.febys.utils.setBackgroundRoundedColor
 
@@ -18,6 +17,7 @@ class OrderDetailVendorProductAdapter : RecyclerView.Adapter<IBindViewHolder>() 
     private var vendors = listOf<VendorProducts>()
     var onReturnItemClick: ((vendorProduct: VendorProducts) -> Unit)? = null
     var onCancelOrderClick: ((vendorId: String) -> Unit)? = null
+    var gotoVendorDetail: ((vendorId: String) -> Unit)? = null
     var onAddReviewClick: ((vendorProducts: VendorProducts) -> Unit)? = null
     var onItemClick: ((vendorProducts: VendorProducts) -> Unit)? = null
     private var cancelableOrder: Boolean = true
@@ -63,14 +63,15 @@ class OrderDetailVendorProductAdapter : RecyclerView.Adapter<IBindViewHolder>() 
             orderStatus.text = OrderStatus.getStatusForDisplay(vendorProducts.status)
             val color = OrderStatus.getStatusColor(vendorProducts.status)
             orderStatus.setBackgroundRoundedColor(color)
+            orderStatus.setTextColor(if (vendorProducts.status == OrderStatus.RETURNED) Color.WHITE else Color.BLACK)
             containerOrderStatus.isVisible = vendorProducts.status != null
 
             orderAmountByVendor.text = vendorProducts.amount?.getFormattedPrice()
             containerOrderAmountByVendor.isVisible = vendorProducts.amount != null && !reverted
 
-            orderTrackingCode.text = vendorProducts.courier?.trackingId
-            containerOrderTrackingCode.isVisible = vendorProducts.courier != null && !reverted
-                    && vendorProducts.status in arrayOf(OrderStatus.SHIPPED)
+//            orderTrackingCode.text = vendorProducts.courier?.trackingId
+//            containerOrderTrackingCode.isVisible = vendorProducts.courier != null && !reverted
+//                    && vendorProducts.status in arrayOf(OrderStatus.SHIPPED)
 
             orderDeliveryService.load(vendorProducts.courier?.service?.logo)
             containerOrderDeliveryService.isVisible = vendorProducts.courier != null && !reverted
@@ -118,6 +119,7 @@ class OrderDetailVendorProductAdapter : RecyclerView.Adapter<IBindViewHolder>() 
                 }
                 onReturnItemClick?.invoke(vendorProduct)
             }
+            vendorImg.setOnClickListener { gotoVendorDetail?.invoke(vendor._id) }
             btnCancelOrder.setOnClickListener { onCancelOrderClick?.invoke(vendor._id) }
             btnAddReview.setOnClickListener { onAddReviewClick?.invoke(vendorProducts) }
         }

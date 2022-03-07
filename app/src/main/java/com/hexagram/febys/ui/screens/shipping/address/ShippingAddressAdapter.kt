@@ -2,6 +2,8 @@ package com.hexagram.febys.ui.screens.shipping.address
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -13,13 +15,13 @@ class ShippingAddressAdapter :
     companion object {
         val diffUtil = object : DiffUtil.ItemCallback<ShippingAddress>() {
             override fun areItemsTheSame(
-                oldItem: ShippingAddress, newItem: ShippingAddress
+                oldItem: ShippingAddress, newItem: ShippingAddress,
             ): Boolean {
                 return oldItem.shippingDetail.shippingDetailId == newItem.shippingDetail.shippingDetailId
             }
 
             override fun areContentsTheSame(
-                oldItem: ShippingAddress, newItem: ShippingAddress
+                oldItem: ShippingAddress, newItem: ShippingAddress,
             ): Boolean {
                 return oldItem == newItem
             }
@@ -47,7 +49,7 @@ class ShippingAddressAdapter :
     }
 
     inner class ShippingAddressViewHolder(
-        private val binding: ItemShippingAddressBinding
+        private val binding: ItemShippingAddressBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(shippingAddress: ShippingAddress, position: Int) {

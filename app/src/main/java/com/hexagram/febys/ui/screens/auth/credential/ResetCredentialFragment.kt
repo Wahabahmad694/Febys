@@ -21,7 +21,7 @@ class ResetCredentialFragment : BaseFragment() {
     private val viewModel: AuthViewModel by viewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View {
         binding = FragmentResetCredentialBinding.inflate(inflater, container, false)
         return binding.root
@@ -42,11 +42,18 @@ class ResetCredentialFragment : BaseFragment() {
         binding.btnSendResetCredentialLink.setOnClickListener {
             val email = binding.etEmailAddress.text.toString()
             if (!Validator.isValidEmail(email)) {
-                showErrorDialog(getString(R.string.error_enter_valid_email))
+                showWarning()
                 return@setOnClickListener
             }
             viewModel.resetCredentials(email)
         }
+    }
+    private fun showWarning() {
+        val resId = R.drawable.ic_error
+        val title = getString(R.string.label_try_again)
+        val msg = getString(R.string.error_enter_valid_email)
+
+        showInfoDialoge(resId, title, msg) { goBack() }
     }
 
     private fun setupObserver() {
@@ -65,7 +72,9 @@ class ResetCredentialFragment : BaseFragment() {
                         R.drawable.ic_email,
                         getString(R.string.label_check_your_email),
                         getString(R.string.label_email_sent)
-                    ).show(childFragmentManager, InfoDialog.TAG)
+                    ) {
+                       goBack()
+                    }.show(childFragmentManager, InfoDialog.TAG)
                 }
             }
         }

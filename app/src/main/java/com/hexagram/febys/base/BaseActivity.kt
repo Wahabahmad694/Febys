@@ -6,10 +6,16 @@ import android.view.MotionEvent
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import com.hexagram.febys.prefs.IPrefManger
 import com.hexagram.febys.ui.screens.dialog.LoaderDialog
 import com.hexagram.febys.utils.hideKeyboard
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 abstract class BaseActivity : AppCompatActivity() {
+    @Inject
+    lateinit var pref: IPrefManger
     private val loaderDialog = LoaderDialog()
 
     override fun onCreate(savedInstanceState: Bundle?) {

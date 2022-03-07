@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import com.hexagram.febys.BuildConfig
 import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
@@ -24,7 +25,7 @@ class AccountFragment : BaseFragment() {
     private val authViewModel: AuthViewModel by viewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View {
         binding = FragmentAccountBinding.inflate(inflater, container, false)
         return binding.root
@@ -44,6 +45,9 @@ class AccountFragment : BaseFragment() {
     }
 
     private fun uiListeners() {
+        binding.settings.toggleNotification.setOnCheckedChangeListener { _, isChecked ->
+            toggleNotification(isChecked)
+        }
         binding.orders.walletImg.setImageResource(R.drawable.ic_wallet)
         binding.btnLogin.setOnClickListener {
             val navigateToLogin = AccountFragmentDirections.actionToLoginFragment()
@@ -71,20 +75,23 @@ class AccountFragment : BaseFragment() {
                     OrderStatus.ACCEPTED,
                     OrderStatus.SHIPPED
                 ),
-                getString(R.string.label_my_orders)
+                getString(R.string.label_my_orders),
+                getString(R.string.label_order_detail),
             )
         }
 
         binding.orders.orderReceived.setOnClickListener {
             gotoOrderListing(
                 arrayOf(OrderStatus.DELIVERED),
-                getString(R.string.label_order_received)
+                getString(R.string.label_order_received),
+                getString(R.string.label_received_details)
             )
         }
 
         binding.orders.myReview.setOnClickListener {
             gotoOrderListing(
                 arrayOf(OrderStatus.REVIEWED),
+                getString(R.string.label_my_reviews),
                 getString(R.string.label_my_review)
             )
         }
@@ -96,7 +103,8 @@ class AccountFragment : BaseFragment() {
                     OrderStatus.CANCELLED_BY_VENDOR,
                     OrderStatus.REJECTED
                 ),
-                getString(R.string.label_cancel_orders)
+                getString(R.string.label_cancel_orders),
+                getString(R.string.label_cancel_details)
             )
         }
 
@@ -106,14 +114,9 @@ class AccountFragment : BaseFragment() {
                     OrderStatus.RETURNED,
                     OrderStatus.PENDING_RETURN
                 ),
-                getString(R.string.label_return_orders)
+                getString(R.string.label_return_orders),
+                getString(R.string.label_return_details)
             )
-        }
-
-        binding.orders.wishlist.setOnClickListener {
-            val navigateToWishlist =
-                AccountFragmentDirections.actionAccountFragmentToWishListFragment()
-            navigateTo(navigateToWishlist)
         }
 
         binding.settings.shippingAddress.setOnClickListener {
@@ -133,29 +136,44 @@ class AccountFragment : BaseFragment() {
         }
         binding.support.aboutFebys.setOnClickListener {
             val goToAboutFebys =
-                NavGraphDirections.toWebViewFragment("", "https://qa.febys.com/about-us")
+                NavGraphDirections.toWebViewFragment(getString(R.string.label_about_febys),
+                    "${BuildConfig.backendBaseUrl}static/about-us/",
+                    false)
             navigateTo(goToAboutFebys)
         }
+
         binding.support.helpCenter.setOnClickListener {
             val goToHelpCenter =
-                NavGraphDirections.toWebViewFragment("", "https://qa.febys.com/helpcenter")
+                NavGraphDirections.toWebViewFragment(getString(R.string.label_help_center),
+                    "${BuildConfig.backendBaseUrl}static/help-center/",
+                    false)
             navigateTo(goToHelpCenter)
         }
         binding.support.privacyPolicy.setOnClickListener {
             val goToPrivacyPolicy =
-                NavGraphDirections.toWebViewFragment("", "https://www.facebook.com/")
+                NavGraphDirections.toWebViewFragment(getString(R.string.label_privacy_policy),
+                    "${BuildConfig.backendBaseUrl}static/privacy-policy/",
+                    false)
             navigateTo(goToPrivacyPolicy)
         }
         binding.support.termsAndConditions.setOnClickListener {
             val goToTermsAndConditions =
-                NavGraphDirections.toWebViewFragment("", "https://www.facebook.com/")
+                NavGraphDirections.toWebViewFragment(getString(R.string.label_terms_amp_conditions),
+                    "${BuildConfig.backendBaseUrl}static/terms-and-conditions/",
+                    false)
             navigateTo(goToTermsAndConditions)
         }
     }
 
-    private fun gotoOrderListing(status: Array<String>? = null, title: String? = null) {
-        val navigateToOrderListing =
-            AccountFragmentDirections.actionAccountFragmentToOrderListingFragment(status, title)
+    private fun toggleNotification(notify: Boolean) {
+        authViewModel.updateNotificationSetting(notify)
+    }
+
+    private fun gotoOrderListing(
+        status: Array<String>? = null, title: String? = null, titleForDetail: String? = null,
+    ) {
+        val navigateToOrderListing = AccountFragmentDirections
+            .actionAccountFragmentToOrderListingFragment(status, title, titleForDetail)
         navigateTo(navigateToOrderListing)
     }
 
@@ -184,7 +202,6 @@ class AccountFragment : BaseFragment() {
     private fun updateWalletUi() {
         val wallet = authViewModel.getWallet()
         binding.orders.labelPrice.text = wallet?.getPrice()?.getFormattedPrice()
-        binding.orders.containerWallet.isVisible = wallet?.isWalletCreated == true
     }
 
     private fun updateUserUi() {
@@ -199,6 +216,13 @@ class AccountFragment : BaseFragment() {
             binding.icSubscription.isVisible = false
         }
 
+        if (isUserLoggedIn) {
+            binding.settings.toggleNotification.isChecked = authViewModel.getNotificationSetting()
+            binding.settings.toggleNotification.isEnabled = true
+        } else {
+            binding.settings.toggleNotification.isEnabled = false
+            binding.settings.toggleNotification.isChecked = false
+        }
     }
 
     override fun getIvCart() = binding.ivCart

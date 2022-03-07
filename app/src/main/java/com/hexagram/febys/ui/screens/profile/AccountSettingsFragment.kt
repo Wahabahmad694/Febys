@@ -1,13 +1,18 @@
 package com.hexagram.febys.ui.screens.profile
 
+import android.Manifest
 import android.app.AlertDialog
+import android.content.Context
 import android.content.DialogInterface
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.canhub.cropper.CropImageContract
@@ -24,11 +29,16 @@ import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class AccountSettingsFragment : BaseFragmentWithPermission() {
     private lateinit var binding: FragmentAccountSettingsBinding
     private val accountSettingViewModel by viewModels<AccountSettingViewModel>()
+
+    private var permissionCallback: ((Boolean) -> Unit)? = null
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+            permissionCallback?.invoke(isGranted)
+        }
 
     private val cropImage = registerForActivityResult(CropImageContract()) { result ->
         if (result.isSuccessful) {
@@ -36,7 +46,6 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
             val uriFilePath = result.getUriFilePath(requireContext()) // optional usage
             if (uriContent == null && uriFilePath == null) return@registerForActivityResult
 
-            binding.profileImg.setImageURI(uriContent, null)
             accountSettingViewModel.updateProfileImage(uriFilePath!!)
         } else {
             val error = result.error?.message ?: ""
@@ -72,7 +81,6 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
             if (!isInEditMode) {
                 val updateUser = getUpdatedConsumer()
                 updateUser?.let { accountSettingViewModel.updateProfile(it) }
-                showSuccessDialog()
             }
         }
 
@@ -103,7 +111,8 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
                 binding.etLastName.text.toString(),
                 binding.etPhone.text.toString(),
                 binding.ccpPhoneCode.selectedCountryNameCode,
-                accountSettingViewModel.uploadedFilePath
+                consumer?.profileImage,
+                consumer?.notificationsStatus
             )
         }
     }
@@ -113,10 +122,14 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
         val selectImageOptionHandler = DialogInterface.OnClickListener { dialog, which ->
             when (which) {
                 0 -> {
-                    startCrop(includeGallery = true, includeCamera = false)
+                    requestPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) {
+                        if (it) startCrop(includeGallery = true, includeCamera = false)
+                    }
                 }
                 1 -> {
-                    startCrop(includeGallery = false, includeCamera = true)
+                    requestPermission(requireContext(), Manifest.permission.CAMERA) {
+                        if (it) startCrop(includeGallery = false, includeCamera = true)
+                    }
                 }
                 2 -> {
                     dialog.dismiss()
@@ -127,6 +140,40 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
         AlertDialog.Builder(context)
             .setTitle(getString(R.string.label_chose_option))
             .setItems(selectImageOptions, selectImageOptionHandler)
+            .create()
+            .show()
+    }
+
+    private fun requestPermission(
+        context: Context, permission: String, permissionCallback: (Boolean) -> Unit
+    ) {
+        this.permissionCallback = permissionCallback
+        when {
+            ContextCompat.checkSelfPermission(
+                context, permission
+            ) == PackageManager.PERMISSION_GRANTED -> {
+                this.permissionCallback?.invoke(true)
+            }
+            shouldShowRequestPermissionRationale(permission) -> {
+                showRationalPermissionDialog(permission)
+            }
+            else -> {
+                requestPermissionLauncher.launch(permission)
+            }
+        }
+    }
+
+    private fun showRationalPermissionDialog(permission: String) {
+        AlertDialog.Builder(context)
+            .setTitle(getString(R.string.label_permission_required))
+            .setMessage(getString(R.string.label_permission_msg))
+            .setPositiveButton(R.string.okay) { dialog, _ ->
+                dialog.dismiss()
+                requestPermissionLauncher.launch(permission)
+            }
+            .setNegativeButton(R.string.label_cancel) { dialog, _ ->
+                dialog.dismiss()
+            }
             .create()
             .show()
     }
@@ -191,6 +238,7 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
                 is DataState.Data -> {
                     hideLoader()
                     setData(it.data)
+                    showSuccessDialog()
                 }
             }
         }
@@ -206,27 +254,27 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
                 }
                 is DataState.Data -> {
                     hideLoader()
-                    it.data
-                    accountSettingViewModel.uploadedFilePath = it.data.firstOrNull()
+                    setData(consumer)
                 }
             }
         }
     }
 
-    private fun updateDefaultCCP(contact: PhoneNo) {
-        binding.ccpPhoneCode.setDefaultCountryUsingNameCode(contact.countryCode)
+    private fun updateDefaultCCP(contact: PhoneNo?) {
+        binding.ccpPhoneCode.setDefaultCountryUsingNameCode(
+            contact?.countryCode ?: Utils.DEFAULT_COUNTRY_CODE
+        )
         binding.ccpPhoneCode.resetToDefaultCountry()
         val countryCodeWithPlus = binding.ccpPhoneCode.selectedCountryCodeWithPlus
-        binding.etPhone.setText(contact.number.replace(countryCodeWithPlus, ""))
+        binding.etPhone.setText(contact?.number?.replace(countryCodeWithPlus, ""))
     }
 
     private fun setData(consumer: Consumer?) {
-        binding.profileImg.setImageURI(consumer?.profileImage)
+        binding.profileImg.load(consumer?.profileImage)
         binding.tvProfileName.text = consumer?.fullName
         binding.etFirstName.setText(consumer?.firstName)
         binding.etLastName.setText(consumer?.lastName)
         binding.etEmail.setText(consumer?.email)
-        consumer?.phoneNumber?.let { updateDefaultCCP(it) }
+        updateDefaultCCP(consumer?.phoneNumber)
     }
-
 }

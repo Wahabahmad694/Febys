@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.hexagram.febys.databinding.ItemOrderListingBinding
 import com.hexagram.febys.models.api.order.Order
-import com.hexagram.febys.models.api.product.Product
 import com.hexagram.febys.utils.Utils
 
 class OrderListingAdapter :
@@ -53,10 +52,5 @@ class OrderListingAdapter :
                 onItemClick?.invoke((order))
             }
         }
-    }
-
-    interface Interaction {
-        fun onItemSelected(position: Int, item: Product)
-        fun removeFav(skuId: String)
     }
 }

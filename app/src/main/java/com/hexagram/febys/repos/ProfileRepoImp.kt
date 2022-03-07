@@ -15,7 +15,6 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import javax.inject.Inject
@@ -66,16 +65,12 @@ class ProfileRepoImp @Inject constructor(
         val response = backendService.uploadImage(authToken, filePart)
         response
             .onSuccess {
+                val updateConsumer = pref.getConsumer()?.copy(profileImage = data!!.firstOrNull())
+                updateConsumer?.let { pref.saveConsumer(updateConsumer) }
                 emit(DataState.Data(data!!))
-                try {
-                    fileToUpload.delete()
-                }
-                catch (e:Exception){
-
-                }
             }
             .onError { emit(DataState.ApiError(message)) }
             .onException { emit(DataState.ExceptionError()) }
-            .onNetworkError {emit(DataState.NetworkError()) }
+            .onNetworkError { emit(DataState.NetworkError()) }
     }.flowOn(dispatcher)
 }

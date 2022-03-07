@@ -23,7 +23,7 @@ class ShippingAddressFragment : BaseFragment() {
     private val shippingAddressAdapter = ShippingAddressAdapter()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View {
         binding = FragmentShippingAddressBinding.inflate(inflater, container, false)
         return binding.root
@@ -99,6 +99,7 @@ class ShippingAddressFragment : BaseFragment() {
 
     private fun updateUi(addresses: List<ShippingAddress>) {
         binding.emptyView.root.isVisible = addresses.isEmpty()
+        binding.btnSave.isVisible = addresses.isNotEmpty()
         shippingAddressAdapter.submitList(addresses)
     }
 

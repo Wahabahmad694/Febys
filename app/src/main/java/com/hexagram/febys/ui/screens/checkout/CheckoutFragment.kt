@@ -11,7 +11,6 @@ import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentCheckoutBinding
-import com.hexagram.febys.databinding.LayoutOrderSummaryProductBinding
 import com.hexagram.febys.models.api.order.Order
 import com.hexagram.febys.models.api.price.Price
 import com.hexagram.febys.models.api.request.PaymentRequest
@@ -34,6 +33,7 @@ class CheckoutFragment : BaseFragment() {
     private var orderPrice: Price? = null
 
     private var voucher = ""
+    private var validVoucher = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
@@ -66,13 +66,18 @@ class CheckoutFragment : BaseFragment() {
         binding.ivBack.setOnClickListener { goBack() }
 
         binding.containerShippingAddress.setOnClickListener {
-            showChangeShippingAddressWarningDialog()
+            if (checkoutViewModel.getDefaultShippingAddress() == null) gotoShippingAddress()
+            else showChangeShippingAddressWarningDialog()
         }
 
         binding.btnPlaceOrder.setOnClickListener {
             if (checkoutViewModel.getDefaultShippingAddress() == null) {
                 showToast(getString(R.string.error_please_select_shipping_address))
             } else {
+                if (!validVoucher) {
+                    showInvalidVoucherDialog()
+                    return@setOnClickListener
+                }
                 val paymentRequest = PaymentRequest(orderPrice!!.value, orderPrice!!.currency)
                 val gotoPayment = NavGraphDirections
                     .toPaymentFragment(paymentRequest)
@@ -81,11 +86,21 @@ class CheckoutFragment : BaseFragment() {
         }
 
         binding.containerApplyVoucher.btnApplyVoucher.setOnClickListener {
-            if (isUserLoggedIn) {
-                voucher = binding.containerApplyVoucher.etApplyVoucher.text.toString()
+            voucher = binding.containerApplyVoucher.etApplyVoucher.text.toString()
+            fetchOrderInfo()
+        }
+
+        binding.containerApplyVoucher.btnRemoveVoucher.setOnClickListener {
+            val resId = R.drawable.ic_error
+            val title = getString(R.string.label_remove_voucher_warning)
+            val msg = getString(R.string.msg_for_remove_voucher)
+            showWarningDialog(resId, title, msg) {
+                voucher = ""
                 fetchOrderInfo()
             }
         }
+
+        cartAdapter.gotoVendorDetail = { vendorID -> gotoVendorDetail(vendorID, false) }
 
         cartAdapter.interaction = object : CartAdapter.Interaction {
             override fun updateCartItem(cartDTO: CartDTO) {
@@ -134,6 +149,22 @@ class CheckoutFragment : BaseFragment() {
         }
     }
 
+    private fun showInvalidVoucherDialog() {
+        val resId = R.drawable.ic_error
+        val title = getString(R.string.label_invalid_voucher)
+        val msg = getString(R.string.msg_for_invalid_voucher)
+
+        showWarningDialog(resId, title, msg) {
+            voucher = ""
+            fetchOrderInfo()
+        }
+    }
+
+    private fun gotoVendorDetail(vendorId: String, isFollow: Boolean) {
+        val direction = NavGraphDirections.toVendorDetailFragment(vendorId, isFollow)
+        navigateTo(direction)
+    }
+
     private fun fetchOrderInfo() {
         checkoutViewModel
             .fetchOrderInfo(voucher)
@@ -152,13 +183,24 @@ class CheckoutFragment : BaseFragment() {
             }
             is DataState.Data -> {
                 hideLoader()
-                if (orderInfoResponse.data == null) {
+                val order = orderInfoResponse.data
+                if (order == null) {
                     goBack()
                     return
                 }
-                createOrderSummary(orderInfoResponse.data)
+                updateVoucherField()
+                order.addToOrderSummary(binding.containerOrderSummary)
+                updateTotalAmount(order.billAmount)
+                validVoucher = order.billAmount.value > (order.voucher?.amount ?: 0.0)
             }
         }
+    }
+
+    private fun updateVoucherField() {
+        binding.containerApplyVoucher.etApplyVoucher.setText(voucher)
+        binding.containerApplyVoucher.etApplyVoucher.isEnabled = voucher.isEmpty()
+        binding.containerApplyVoucher.btnApplyVoucher.isVisible = voucher.isEmpty()
+        binding.containerApplyVoucher.btnRemoveVoucher.isVisible = voucher.isNotEmpty()
     }
 
     private fun setObserver() {
@@ -169,82 +211,10 @@ class CheckoutFragment : BaseFragment() {
         }
     }
 
-    private fun createOrderSummary(order: Order) {
-        binding.containerOrderSummary.containerOrderSummaryProducts.removeAllViews()
-
-        val cartItems = order.toListOfCartDTO()
-
-        updateOrderSummaryQuantity(cartItems.size)
-
-        cartItems.forEach {
-            addProductToOrderSummary(it.productName, it.quantity, it.price)
-        }
-
-        addProductToOrderSummary(getString(R.string.label_subtotal), 1, order.productsAmount, true)
-
-        val shippingFee = Price("", 0.0, order.productsAmount.currency)
-        addProductToOrderSummary(getString(R.string.label_shipping_fee), 1, shippingFee, true)
-        addVatToOrderSummary(order.vatPercentage, order.productsAmount)
-
-        if (order.voucher != null) {
-            val voucherDiscount = order.voucher.discount ?: 0.0
-            val voucherPrice = Price("", -voucherDiscount, order.productsAmount.currency)
-            addProductToOrderSummary(
-                getString(R.string.label_voucher_discount), 1, voucherPrice, true
-            )
-        }
-
-        updateTotalAmount(order.billAmount)
-    }
-
-    private fun addProductToOrderSummary(
-        productName: String, quantity: Int, price: Price, hideQuantity: Boolean = false,
-    ) {
-        val productSummary = LayoutOrderSummaryProductBinding.inflate(
-            layoutInflater,
-            binding.containerOrderSummary.containerOrderSummaryProducts,
-            false
-        )
-
-        val productNameWithQuantity = if (hideQuantity) productName else "$quantity x $productName"
-        productSummary.tvProductNameWithQuantity.text = productNameWithQuantity
-
-        productSummary.tvTotalPrice.text = price.getFormattedPrice(quantity)
-        binding.containerOrderSummary.containerOrderSummaryProducts.addView(productSummary.root)
-    }
-
-    private fun addVatToOrderSummary(vatPercentage: Double, total: Price) {
-        val productSummary = LayoutOrderSummaryProductBinding.inflate(
-            layoutInflater,
-            binding.containerOrderSummary.containerOrderSummaryProducts,
-            false
-        )
-
-        val vatLabel = getString(R.string.label_vat)
-        val vatWithPercentage = "$vatLabel ($vatPercentage%)"
-        productSummary.tvProductNameWithQuantity.text = vatWithPercentage
-
-        val vatAmount =
-            if (vatPercentage > 0) total.value.times(vatPercentage).div(100.0) else 0.0
-        val vatPrice = Price("", vatAmount, total.currency)
-
-        productSummary.tvTotalPrice.text = vatPrice.getFormattedPrice()
-        binding.containerOrderSummary.containerOrderSummaryProducts.addView(productSummary.root)
-    }
-
-    private fun updateOrderSummaryQuantity(quantity: Int) {
-        val itemString =
-            if (quantity > 1) getString(R.string.label_items) else getString(R.string.label_item)
-        val summaryQuantityString =
-            getString(R.string.label_order_summary_with_quantity) + " ($quantity " + itemString + ")"
-        binding.containerOrderSummary.labelOrderSummary.text = summaryQuantityString
-    }
-
     private fun updateTotalAmount(price: Price) {
         orderPrice = price
         val totalAmountAsString = price.getFormattedPrice()
         binding.tvTotalAmount.text = totalAmountAsString
-        binding.containerOrderSummary.tvTotalPrice.text = totalAmountAsString
     }
 
     private fun updateShippingAddressUi(shippingAddress: ShippingAddress?) {

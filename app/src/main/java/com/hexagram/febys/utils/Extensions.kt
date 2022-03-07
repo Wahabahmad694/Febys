@@ -35,6 +35,7 @@ import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.util.*
 
+
 fun View.show() {
     visibility = View.VISIBLE
 }
@@ -138,11 +139,13 @@ fun Fragment.showWarningDialog(
 ) {
     WarningDialog(resId, title, msg) { onOkayClick() }.show(childFragmentManager, InfoDialog.TAG)
 }
+
 fun Fragment.showInfoDialoge(
     @DrawableRes resId: Int, title: String, msg: String, onOkayClick: () -> Unit
 ) {
     InfoDialog(resId, title, msg) { onOkayClick() }.show(childFragmentManager, InfoDialog.TAG)
 }
+
 fun RecyclerView.applySpaceItemDecoration(
     @DimenRes verticalDimenRes: Int? = null,
     @DimenRes horizontalDimenRes: Int? = null
@@ -211,9 +214,17 @@ fun TextView.setDrawableRes(
     this.setCompoundDrawablesWithIntrinsicBounds(left, top, right, bottom)
 }
 
-fun TextView.setBackgroundRoundedColor(color: Int, cornerRadius: Float = 16f) {
+fun View.setBackgroundRoundedColor(color: Int, cornerRadius: Float = 16f) {
     val shape = GradientDrawable()
     shape.cornerRadius = cornerRadius
+    shape.setColor(color)
+    this.background = shape
+}
+
+fun View.setBackgroundCircularColor(color: Int) {
+    val shape = GradientDrawable()
+    shape.shape = GradientDrawable.OVAL
+    shape.cornerRadii = floatArrayOf(0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f)
     shape.setColor(color)
     this.background = shape
 }

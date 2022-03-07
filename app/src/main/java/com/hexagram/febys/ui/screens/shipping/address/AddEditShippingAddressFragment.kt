@@ -136,7 +136,7 @@ class AddEditShippingAddressFragment : BaseFragment() {
             binding.tvState.text = statesAdapter.getSelectedItem()
             binding.tvCity.text = citiesAdapter.getSelectedItem()
 
-            binding.ccpPhoneCode.setDefaultCountryUsingNameCode("GH")
+            binding.ccpPhoneCode.setDefaultCountryUsingNameCode(Utils.DEFAULT_COUNTRY_CODE)
             binding.ccpPhoneCode.resetToDefaultCountry()
 
             return

@@ -1,6 +1,5 @@
 package com.hexagram.febys.network.response
 
-import com.google.gson.JsonObject
 import com.google.gson.annotations.SerializedName
 
 data class SeasonalOffer(
@@ -10,6 +9,8 @@ data class SeasonalOffer(
     val name: String,
     @SerializedName("offer")
     val offers: List<Offer>,
+    @SerializedName("for")
+    val _for: String,
     @SerializedName("__v")
     val v: Int
 )
@@ -20,5 +21,7 @@ data class Offer(
     @SerializedName("_id")
     val id: String,
     @SerializedName("link")
-    val link: String
+    val link: String,
+    @SerializedName("category_id")
+    val categoryId: Int
 )

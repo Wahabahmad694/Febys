@@ -35,11 +35,12 @@ class FebysPlusViewModel @Inject constructor(
         }
     }
 
-    fun subscribePackage(packageId: String, transactionReq: TransactionReq) = viewModelScope.launch {
-        _subscribeFebysPackage.postValue(DataState.Loading())
-        febysRepo.subscribePackage(packageId, transactionReq).collect {
-            if (it is DataState.Data) fetchFebysPackage()
-            else _subscribeFebysPackage.postValue(it)
+    fun subscribePackage(packageId: String, transactionReq: TransactionReq) =
+        viewModelScope.launch {
+            _subscribeFebysPackage.postValue(DataState.Loading())
+            febysRepo.subscribePackage(packageId, transactionReq).collect {
+                if (it is DataState.Data) fetchFebysPackage()
+                _subscribeFebysPackage.postValue(it)
+            }
         }
-    }
 }

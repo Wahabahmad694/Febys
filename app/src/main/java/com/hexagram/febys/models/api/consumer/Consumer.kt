@@ -27,6 +27,8 @@ data class Consumer(
     val saleCurrency: String?,
     @SerializedName("is_verified")
     val isVerified: Int,
+    @SerializedName("notificationsStatus")
+    val notificationsStatus: Int,
     val deleted: Int,
     @SerializedName("created_at")
     val createdAt: String,
@@ -37,4 +39,7 @@ data class Consumer(
 ) : Parcelable {
     val fullName
         get() = "$firstName $lastName"
+
+    val notification
+        get() = notificationsStatus == 1
 }

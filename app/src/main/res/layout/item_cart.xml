@@ -96,7 +96,7 @@
 
             <TextView
                 android:id="@+id/tv_product_name"
-                style="@style/TextTheme.Arial.TS14"
+                style="@style/TextTheme.Arial.TS14.Bold"
                 android:layout_width="@dimen/_0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_16dp"
@@ -132,8 +132,8 @@
 
             <LinearLayout
                 android:id="@+id/container_quantity"
-                android:layout_width="@dimen/_68sdp"
-                android:layout_height="@dimen/_26sdp"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_28sdp"
                 android:layout_marginTop="@dimen/_12dp"
                 android:background="@drawable/bg_border_dark_grey"
                 android:gravity="center_vertical"
@@ -144,28 +144,29 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/iv_minus"
-                    android:layout_width="@dimen/_9sdp"
+                    android:layout_width="@dimen/_12sdp"
                     android:layout_height="@dimen/_18sdp"
-                    android:src="@drawable/ic_remove"
-                    android:layout_marginStart="@dimen/_3sdp"/>
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:src="@drawable/ic_remove" />
 
                 <TextView
                     android:id="@+id/tv_quantity"
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/_14sdp"
                     android:layout_height="@dimen/_18sdp"
                     android:layout_marginStart="@dimen/_14sdp"
                     android:gravity="center"
                     android:text="@{`` + cart.quantity}"
                     android:textAlignment="center"
                     android:textColor="@color/fillblack"
-                    tools:text="12"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold"
+                    tools:text="12" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/iv_add"
-                    android:layout_width="@dimen/_10sdp"
+                    android:layout_width="@dimen/_12sdp"
                     android:layout_height="@dimen/_18sdp"
-                    android:layout_marginStart="@dimen/_13sdp"
+                    android:layout_marginStart="@dimen/_14sdp"
+                    android:layout_marginEnd="@dimen/_3sdp"
                     android:src="@drawable/ic_adds" />
 
             </LinearLayout>
@@ -175,6 +176,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_16sdp"
+                android:elevation="@dimen/_16sdp"
                 android:src="@drawable/ic_un_fav"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_product_price"
                 app:layout_constraintStart_toStartOf="parent"
@@ -193,7 +195,7 @@
 
             <TextView
                 android:id="@+id/tv_product_off_price"
-                style="@style/TextTheme.Arial.TS10"
+                style="@style/TextTheme.Arial.TS12.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_2sdp"
@@ -206,7 +208,7 @@
 
             <TextView
                 android:id="@+id/tv_product_off_price_separator"
-                style="@style/TextTheme.Arial.TS12"
+                style="@style/TextTheme.Arial.TS12.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_2sdp"
@@ -217,7 +219,7 @@
 
             <TextView
                 android:id="@+id/tv_product_price"
-                style="@style/TextTheme.Arial.TS12"
+                style="@style/TextTheme.Arial.TS12.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_24sdp"
@@ -230,13 +232,13 @@
                 android:id="@+id/container_message_to_seller"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_35sdp"
+                android:layout_marginTop="@dimen/_20sdp"
                 android:orientation="vertical"
                 app:layout_constraintTop_toBottomOf="@id/tv_product_price"
                 binding:is_visible="@{isInCheckout}">
 
                 <TextView
-                    style="@style/TextTheme.Arial.TS14"
+                    style="@style/TextTheme.Arial.TS14.Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_16sdp"

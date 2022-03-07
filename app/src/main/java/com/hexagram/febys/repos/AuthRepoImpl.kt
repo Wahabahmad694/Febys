@@ -11,10 +11,12 @@ import com.hexagram.febys.network.AuthService
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.adapter.*
 import com.hexagram.febys.network.requests.RequestSignup
+import com.hexagram.febys.network.requests.RequestUpdateUser
 import com.hexagram.febys.network.response.ResponseLogin
 import com.hexagram.febys.network.response.ResponseOtpVerification
 import com.hexagram.febys.network.response.ResponseSignup
 import com.hexagram.febys.network.response.User
+import com.hexagram.febys.notification.FirebaseUtils
 import com.hexagram.febys.prefs.IPrefManger
 import com.hexagram.febys.ui.screens.payment.models.Wallet
 import kotlinx.coroutines.CoroutineDispatcher
@@ -27,21 +29,21 @@ class AuthRepoImpl @Inject constructor(
     private val authService: AuthService,
     private val pref: IPrefManger,
     private val userDataSource: IUserDataSource,
-    private val cartRepo: ICartRepo
+    private val cartRepo: ICartRepo,
 ) : IAuthRepo {
 
     override fun signup(
-        signupReq: RequestSignup, dispatcher: CoroutineDispatcher
+        signupReq: RequestSignup, dispatcher: CoroutineDispatcher,
     ): Flow<DataState<ResponseSignup>> {
         return flow<DataState<ResponseSignup>> {
-            authService.signup(signupReq)
-                .onSuccess {
-                    data!!.apply {
-                        saveUserAndToken(user)
-                        fetchUserProfile(dispatcher)
-                        emit(DataState.Data(this))
-                    }
+            val response = authService.signup(signupReq)
+            response.onSuccess {
+                data!!.apply {
+                    saveUserAndToken(user)
+                    fetchUserProfile(dispatcher)
+                    emit(DataState.Data(this))
                 }
+            }
                 .onError { emit(DataState.ApiError(message)) }
                 .onException { emit(DataState.ExceptionError()) }
                 .onNetworkError { emit(DataState.NetworkError()) }
@@ -49,15 +51,15 @@ class AuthRepoImpl @Inject constructor(
     }
 
     override fun verifyUser(
-        otp: String, dispatcher: CoroutineDispatcher
+        otp: String, dispatcher: CoroutineDispatcher,
     ): Flow<DataState<ResponseOtpVerification>> {
         return flow<DataState<ResponseOtpVerification>> {
             val authToken = pref.getAccessToken()
             val verificationReq = mapOf("otp" to otp)
-            authService.verifyUser(authToken, verificationReq)
-                .onSuccess {
-                    emit(DataState.Data(data!!))
-                }
+            val response = authService.verifyUser(authToken, verificationReq)
+            response.onSuccess {
+                emit(DataState.Data(data!!))
+            }
                 .onError { emit(DataState.ApiError(message)) }
                 .onException { emit(DataState.ExceptionError()) }
                 .onNetworkError { emit(DataState.NetworkError()) }
@@ -65,7 +67,7 @@ class AuthRepoImpl @Inject constructor(
     }
 
     override fun login(
-        email: String, password: String, dispatcher: CoroutineDispatcher
+        email: String, password: String, dispatcher: CoroutineDispatcher,
     ): Flow<DataState<ResponseLogin>> {
         return flow<DataState<ResponseLogin>> {
             val loginReq = mapOf("email" to email, "password" to password)
@@ -83,7 +85,7 @@ class AuthRepoImpl @Inject constructor(
     }
 
     override fun resetCredentials(
-        email: String, dispatcher: CoroutineDispatcher
+        email: String, dispatcher: CoroutineDispatcher,
     ): Flow<DataState<Unit>> {
         return flow<DataState<Unit>> {
             val resetCredentialReq = mapOf("email" to email)
@@ -96,7 +98,7 @@ class AuthRepoImpl @Inject constructor(
     }
 
     override fun socialLogin(
-        token: String, socialLogin: SocialLogin, dispatcher: CoroutineDispatcher
+        token: String, socialLogin: SocialLogin, dispatcher: CoroutineDispatcher,
     ): Flow<DataState<ResponseLogin>> {
         return flow<DataState<ResponseLogin>> {
             val socialLoginReq = mapOf(
@@ -135,6 +137,10 @@ class AuthRepoImpl @Inject constructor(
             updateCart(profile.cart)
             updateWallet(profile.wallet)
             saveSubscription(profile.subscription)
+            updateNotificationSubscription(
+                profile.consumerInfo.id.toString(),
+                profile.consumerInfo.notification
+            )
         }
 
         return flow<DataState<Profile?>> {
@@ -194,4 +200,40 @@ class AuthRepoImpl @Inject constructor(
     override fun getSubscription(): Subscription? {
         return pref.getSubscription()
     }
+
+    override suspend fun updateNotificationSetting(
+        notify: Boolean,
+        dispatcher: CoroutineDispatcher
+    ) {
+        val authToken = pref.getAccessToken()
+        val consumer = getConsumer() ?: return
+        val notificationStatus = if (notify) 1 else 0
+        val requestUpdateUser = RequestUpdateUser(
+            consumer.id,
+            consumer.firstName,
+            consumer.lastName,
+            consumer.phoneNumber.number ?: "",
+            consumer.phoneNumber.countryCode ?: "",
+            consumer.profileImage,
+            notificationStatus
+        )
+        val response = authService.updateProfile(authToken, requestUpdateUser)
+        if (response is ApiResponse.ApiSuccessResponse) {
+            updateNotificationSubscription(consumer.id.toString(), notify)
+            pref.saveConsumer(response.data!!.user)
+        }
+    }
+
+    override fun getNotificationSetting(): Boolean {
+        return getConsumer()?.notification ?: false
+    }
+
+    fun updateNotificationSubscription(topic: String, notify: Boolean) {
+        if (notify) {
+            FirebaseUtils.subscribeToTopic(topic)
+        } else {
+            FirebaseUtils.unSubscribeToTopic(topic)
+        }
+    }
+
 }

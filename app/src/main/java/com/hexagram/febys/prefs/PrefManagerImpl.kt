@@ -25,6 +25,7 @@ class PrefManagerImpl @Inject constructor(
         private const val KEY_FAV = "fav"
         private const val KEY_DEF_SHIPPING_ADDRESS = "defShippingAddress"
         private const val KEY_WALLET = "wallet"
+        private const val KEY_NOTIFICATION_COUNT = "notificationCount"
     }
 
     private val pref: SharedPreferences by lazy {
@@ -142,6 +143,39 @@ class PrefManagerImpl @Inject constructor(
         val wallet = getString(KEY_WALLET, "")
         if (wallet.isEmpty()) return null
         return Utils.jsonToWallet(wallet)
+    }
+
+    override fun increaseNotificationCount() {
+        val notificationCount = getInt(KEY_NOTIFICATION_COUNT, 0)
+        saveInt(KEY_NOTIFICATION_COUNT, notificationCount + 1)
+    }
+
+    override fun getNotificationCount(defValue: Int): Int {
+        return getInt(KEY_NOTIFICATION_COUNT, defValue)
+    }
+
+    override fun clearNotificationCount() {
+        remove(KEY_NOTIFICATION_COUNT)
+    }
+
+    private fun saveBoolean(key: String, value: Boolean) {
+        pref.edit {
+            putBoolean(key, value)
+        }
+    }
+
+    private fun getBoolean(key: String, defValue: Boolean): Boolean {
+        return pref.getBoolean(key, defValue)
+    }
+
+    private fun saveInt(key: String, value: Int) {
+        pref.edit {
+            putInt(key, value)
+        }
+    }
+
+    private fun getInt(key: String, defValue: Int): Int {
+        return pref.getInt(key, defValue)
     }
 
     private fun saveString(key: String, value: String) {

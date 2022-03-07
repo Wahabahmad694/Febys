@@ -157,7 +157,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="@string/label_destination_or_region" />
+                                android:text="@string/label_country" />
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/region_arrow"
@@ -177,11 +177,11 @@
 
                     </LinearLayout>
 
-
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1dp"
                         android:layout_marginHorizontal="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
                         android:background="@color/grey_e1e5e8"
                         app:layout_constraintTop_toBottomOf="@id/container_region" />
 

@@ -26,7 +26,7 @@
             android:layout_marginTop="@dimen/_18sdp"
             android:gravity="center_vertical"
             android:text="@string/label_about_febys"
-            app:drawableEndCompat="@drawable/ic_right" />
+            app:drawableEndCompat="@drawable/ic_right_arrow" />
 
         <View
             android:layout_width="match_parent"
@@ -40,7 +40,7 @@
             android:layout_height="@dimen/_32sdp"
             android:gravity="center_vertical"
             android:text="@string/label_help_center"
-            app:drawableEndCompat="@drawable/ic_right" />
+            app:drawableEndCompat="@drawable/ic_right_arrow" />
 
         <View
             android:layout_width="match_parent"
@@ -54,7 +54,7 @@
             android:layout_height="@dimen/_32sdp"
             android:gravity="center_vertical"
             android:text="@string/label_privacy_policy"
-            app:drawableEndCompat="@drawable/ic_right" />
+            app:drawableEndCompat="@drawable/ic_right_arrow" />
 
         <View
             android:layout_width="match_parent"
@@ -68,7 +68,7 @@
             android:layout_height="@dimen/_32sdp"
             android:gravity="center_vertical"
             android:text="@string/label_terms_amp_conditions"
-            app:drawableEndCompat="@drawable/ic_right" />
+            app:drawableEndCompat="@drawable/ic_right_arrow" />
 
         <View
             android:layout_width="match_parent"

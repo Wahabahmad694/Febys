@@ -18,8 +18,12 @@ open class ProductListingViewModel @Inject constructor(
     private val productListingRepo: IProductListingRepo
 ) : ProductViewModel(productListingRepo) {
     private var todayDealsListing: Flow<PagingData<Product>>? = null
+    private var specialProductListing: Flow<PagingData<Product>>? = null
+    private var similarProductListing: Flow<PagingData<Product>>? = null
+    private var recommendedProductListing: Flow<PagingData<Product>>? = null
     private var trendingProductsListing: Flow<PagingData<Product>>? = null
     private var under100DollarsItemsListing: Flow<PagingData<Product>>? = null
+    private var storeYouFollowItemListingItemsListing: Flow<PagingData<Product>>? = null
     private var categoryProductsListing: Flow<PagingData<Product>>? = null
     private var searchProductsListing: Flow<PagingData<Product>>? = null
     private var vendorProductsListing: Flow<PagingData<Product>>? = null
@@ -42,12 +46,78 @@ open class ProductListingViewModel @Inject constructor(
         return todayDealsListing!!
     }
 
+    fun specialProductListing(
+        refresh: Boolean, specialFilter: String,
+        onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
+    ): Flow<PagingData<Product>> {
+        if (specialProductListing == null || refresh) {
+            specialProductListing =
+                productListingRepo.specialProductListing(
+                    specialFilter,
+                    filters,
+                    viewModelScope,
+                    onProductListingResponse = onProductListingResponse
+                )
+        }
+
+        return specialProductListing!!
+    }
+
+    fun similarProductListing(
+        productId: String,
+        refresh: Boolean,
+        onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
+    ): Flow<PagingData<Product>> {
+        if (similarProductListing == null || refresh) {
+            similarProductListing =
+                productListingRepo.similarProductListing(
+                    productId,
+                    filters,
+                    viewModelScope,
+                    onProductListingResponse = onProductListingResponse
+                )
+        }
+
+        return similarProductListing!!
+    }
+
+    fun recommendedProductListing(
+        productId: String,
+        refresh: Boolean,
+        onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
+    ): Flow<PagingData<Product>> {
+        if (recommendedProductListing == null || refresh) {
+            recommendedProductListing =
+                productListingRepo.recommendedProductListing(
+                    productId,
+                    filters,
+                    viewModelScope,
+                    onProductListingResponse = onProductListingResponse
+                )
+        }
+
+        return recommendedProductListing!!
+    }
+
     fun trendingProductsListing(
         refresh: Boolean, onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
     ): Flow<PagingData<Product>> {
         if (trendingProductsListing == null || refresh) {
             trendingProductsListing =
                 productListingRepo.fetchTrendingProductsListing(
+                    filters, viewModelScope, onProductListingResponse = onProductListingResponse
+                )
+        }
+
+        return trendingProductsListing!!
+    }
+
+    fun storeYouFollowListing(
+        refresh: Boolean, onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
+    ): Flow<PagingData<Product>> {
+        if (trendingProductsListing == null || refresh) {
+            trendingProductsListing =
+                productListingRepo.fetchStoreYouFollowItemsListing(
                     filters, viewModelScope, onProductListingResponse = onProductListingResponse
                 )
         }

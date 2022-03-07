@@ -37,7 +37,7 @@ class SignupFragment : SocialMediaAuthFragment() {
     private var isSocialLogin = false
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View {
         binding = FragmentSignupBinding.inflate(inflater, container, false)
         return binding.root
@@ -52,7 +52,7 @@ class SignupFragment : SocialMediaAuthFragment() {
     }
 
     private fun initUi() {
-        binding.ccpPhoneCode.setDefaultCountryUsingNameCode("GH")
+        binding.ccpPhoneCode.setDefaultCountryUsingNameCode(Utils.DEFAULT_COUNTRY_CODE)
         binding.ccpPhoneCode.resetToDefaultCountry()
     }
 
@@ -166,11 +166,14 @@ class SignupFragment : SocialMediaAuthFragment() {
     private fun gotoNextScreen() {
         val popUpTo = if (args.isOpenFromLogin) R.id.loginFragment else R.id.signupFragment
 
-        if (isSocialLogin) {
+        // remove following line when otp work get done from backend
+        findNavController().popBackStack(popUpTo, true)
+        // uncomment following lines when otp work get done from backend
+        /*if (isSocialLogin) {
             findNavController().popBackStack(popUpTo, true)
         } else {
             navigateToOTPVerification(popUpTo)
-        }
+        }*/
     }
 
     private fun signup() {
@@ -217,9 +220,11 @@ class SignupFragment : SocialMediaAuthFragment() {
             showErrorDialog(getString(R.string.error_enter_valid_phone))
             return false
         }
-
-        if (!Validator.isValidPassword(password)) {
+        if (password.isEmpty()) {
             showErrorDialog(getString(R.string.error_enter_password))
+            return false
+        } else if (!Validator.isValidPassword(password)) {
+            showErrorDialog(getString(R.string.error_enter_password_characters))
             return false
         }
 

@@ -95,6 +95,9 @@ class VendorDetailFragment : BaseFragment() {
     private fun updateUi(vendor: Vendor) {
         binding.apply {
             title.text = vendor.shopName
+            if (vendor.official) {
+                ivBadge.isVisible = true
+            }
             profileImg.load(vendor.templatePhoto)
             vendor.template
                 ?.firstOrNull { it.section == "1,1" }
@@ -111,6 +114,7 @@ class VendorDetailFragment : BaseFragment() {
             binding.storeRatingBar.rating = storeRating.toFloat()
             binding.storeRatingBar.stepSize = 0.5f
             binding.tvStoreRating.text = getString(R.string.store_rating, storeRating)
+            binding.containerVendorStoreRating.tvAverageRating.text = storeRating.toString()
 
             val hasReviews = vendor.ratingsAndReviews.isNotEmpty()
                     || vendor.pricingScore.isNotEmpty()
@@ -169,11 +173,7 @@ class VendorDetailFragment : BaseFragment() {
         }
         val qualityAverage = totalQualityScore.div(totalQualityScoreCount)
 
-        val totalAverage =
-            priceAverage.plus(valueAverage).plus(qualityAverage).div(3)
-
         binding.containerVendorStoreRating.apply {
-            tvAverageRating.text = totalAverage.toFixedDecimal(1)
             averagePriceRating.text =
                 getString(R.string.label_average_price_rating, priceAverage.toFixedDecimal(1))
             averageValueRating.text =

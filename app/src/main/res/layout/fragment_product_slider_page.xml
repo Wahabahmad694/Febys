@@ -17,13 +17,16 @@
         android:background="@color/grey">
 
         <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/iv_product_image"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:actualImageScaleType="fitCenter"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:placeholderImage="@drawable/placeholder_image"
+            app:placeholderImageScaleType="centerCrop"
             binding:image_url="@{imageUrl}" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -8,7 +8,6 @@ import com.hexagram.febys.ui.screens.product.filters.FiltersType
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import java.lang.NullPointerException
 import javax.inject.Inject
 
 class FiltersRepoImpl @Inject constructor(val backendService: FebysBackendService) : IFiltersRepo {
@@ -25,7 +24,13 @@ class FiltersRepoImpl @Inject constructor(val backendService: FebysBackendServic
             FiltersType.TODAY_DEALS -> backendService.fetchTodayDealsFilters()
             FiltersType.VENDOR -> backendService.fetchVendorFilters(vendorId!!)
             FiltersType.UNDER_HUNDRED -> backendService.fetchUnderHundredFilters()
-            FiltersType.TRENDING -> ApiResponse.exception(NullPointerException())
+            FiltersType.RECOMMENDED_PRODUCT,
+            FiltersType.SIMILAR_PRODUCT,
+            FiltersType.SPECIAL_PRODUCT,
+            FiltersType.TRENDING,
+            FiltersType.STORE_YOU_FOLLOW -> {
+                ApiResponse.exception(NullPointerException())
+            }
         }
 
         response.onSuccess {

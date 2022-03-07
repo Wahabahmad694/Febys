@@ -1,6 +1,10 @@
 package com.hexagram.febys.ui.screens.product.detail
 
+import android.app.DownloadManager
+import android.content.Context
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +16,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
@@ -28,8 +33,10 @@ import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.cart.CartViewModel
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.ui.screens.product.additional.AdditionalProductAdapter
+import com.hexagram.febys.ui.screens.product.filters.FiltersType
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class ProductDetailFragment : SliderFragment() {
@@ -68,7 +75,7 @@ class ProductDetailFragment : SliderFragment() {
         uiListeners()
         observersSetup()
 
-        productDetailViewModel.fetchRecommendProducts()
+        productDetailViewModel.fetchRecommendProducts(args.productId)
         productDetailViewModel.fetchSimilarProducts(args.productId)
     }
 
@@ -99,11 +106,19 @@ class ProductDetailFragment : SliderFragment() {
         binding.ivProductFav.setOnClickListener {
             handleFavClick()
         }
+        binding.bgDim.setOnClickListener {
+            closeBottomsSheetElseGoBack()
+        }
 
         binding.containerProductVariantFirstAttr.setOnClickListener {
             binding.variant?.let {
                 showBottomSheet(variantFirstAttrBottomSheet)
             }
+        }
+        binding.containerVendorDetail.setOnClickListener {
+            val vendorId = binding.product?.vendor?._id ?: return@setOnClickListener
+            val gotoVendorDetail = NavGraphDirections.toVendorDetailFragment(vendorId, false)
+            navigateTo(gotoVendorDetail)
         }
         binding.btnPayNow.setOnClickListener {
             if (isUserLoggedIn) {
@@ -145,6 +160,10 @@ class ProductDetailFragment : SliderFragment() {
             }
 
             closeBottomSheet(variantFirstAttrBottomSheet)
+        }
+
+        binding.containerProductShippingInfo.returnChip.setOnClickListener {
+            downloadPolicy()
         }
 
         productVariantSecondAttrAdapter.interaction = { selectedSecondAttr ->
@@ -288,6 +307,20 @@ class ProductDetailFragment : SliderFragment() {
         }
     }
 
+    private fun downloadPolicy() {
+        val uri = Uri.parse(binding.variant?.refund?.policy)
+        val mManager = requireContext().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        val request: DownloadManager.Request? = DownloadManager.Request(uri)
+            .setTitle("Febys Return & Refund Policy")
+            .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS," ReturnPolicy.pdf")
+            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+            .setDescription("Downloading...")
+            .setMimeType("application/pdf");
+
+        request?.allowScanningByMediaScanner()
+        mManager.enqueue(request)
+    }
+
     private fun handleFavClick() {
         if (isUserLoggedIn) toggleFavAndUpdateIcon() else gotoLogin()
     }
@@ -425,7 +458,7 @@ class ProductDetailFragment : SliderFragment() {
                 }
                 is DataState.Data -> {
                     hideLoader()
-                    addAdditionalProduct(getString(R.string.label_customer_recommend), it.data, 0)
+                    updateAdditionalProducts()
                 }
             }
         }
@@ -441,11 +474,27 @@ class ProductDetailFragment : SliderFragment() {
                 }
                 is DataState.Data -> {
                     hideLoader()
-                    addAdditionalProduct(
-                        getString(R.string.label_compare_with_similar_items), it.data
-                    )
+                    updateAdditionalProducts()
                 }
             }
+        }
+    }
+
+    private fun updateAdditionalProducts() {
+        binding.containerAdditionalProducts.removeAllViews()
+        productDetailViewModel.getRecommendProducts()?.let {
+            addAdditionalProduct(
+                FiltersType.RECOMMENDED_PRODUCT,
+                getString(R.string.label_customer_recommend),
+                if (it.size > 4) it.subList(0, 4) else it
+            )
+        }
+        productDetailViewModel.getSimilarProducts()?.let {
+            addAdditionalProduct(
+                FiltersType.SIMILAR_PRODUCT,
+                getString(R.string.label_compare_with_similar_items),
+                if (it.size > 4) it.subList(0, 4) else it
+            )
         }
     }
 
@@ -454,12 +503,17 @@ class ProductDetailFragment : SliderFragment() {
 
         val variant = productDetailViewModel.selectedVariant
             ?: product.variants.firstOrNull { it.skuId == args.skuId }
+            ?: product.variants.firstOrNull { it.default }
             ?: product.variants[0]
 
         variant.getFirstVariantAttr()?.value?.let { selectedFirstAttr ->
             productDetailViewModel.selectedFirstAttr = selectedFirstAttr
 
             val firstAttrList = productDetailViewModel.getFirstAttrList(product)
+
+            if (binding.product?.vendor?.official!!) {
+                binding.ivBadge.isVisible = true
+            }
 
             productVariantFirstAttrAdapter
                 .submitList(selectedFirstAttr, firstAttrList)
@@ -490,10 +544,14 @@ class ProductDetailFragment : SliderFragment() {
         binding.storeRatingBar.rating = storeRating.toFloat()
         binding.storeRatingBar.stepSize = 0.5f
         binding.tvStoreRating.text = getString(R.string.store_rating, storeRating)
+
+        if (args.threadId != null) {
+            binding.seeMoreQAndA.performClick()
+        }
     }
 
     private fun updateQuestionAnswersThread(qaThreads: MutableList<QAThread>) {
-        binding.seeMoreQAndA.isVisible = qaThreads.size > 3
+        binding.seeMoreQAndA.isVisible = qaThreads.size >= 3
         if (qaThreads.isEmpty()) return
 
         binding.containerQAndAThread.removeAllViews()
@@ -577,11 +635,12 @@ class ProductDetailFragment : SliderFragment() {
         addView(parent, layoutQuestionAnswersThread.root, position)
     }
 
-    private fun addAdditionalProduct(title: String, products: List<Product>, position: Int = -1) {
+    private fun addAdditionalProduct(
+        filterType: FiltersType, title: String, products: List<Product>, position: Int = -1
+    ) {
         if (products.isEmpty()) return
 
         val parent = binding.containerAdditionalProducts
-        parent.removeAllViews()
 
         val layoutAdditionalProductBinding = LayoutAdditionalProductBinding
             .inflate(layoutInflater, parent, false)
@@ -597,6 +656,26 @@ class ProductDetailFragment : SliderFragment() {
                 isNestedScrollingEnabled = false
                 layoutManager = GridLayoutManager(context, 2)
                 adapter = additionalAdapter
+            }
+            additionalAdapter.onItemClick = { item ->
+                val gotoProductDetail =
+                    NavGraphDirections.actionToProductDetail(item._id, item.variants[0].skuId)
+                navigateTo(gotoProductDetail)
+            }
+            layoutAdditionalProductBinding.btnAdditionalProductShopAll.setOnClickListener {
+                var actionToProductListing: NavDirections? = null
+                if (filterType == FiltersType.SIMILAR_PRODUCT) {
+                    actionToProductListing = ProductDetailFragmentDirections
+                        .actionProductDetailFragmentToSimilarProductListing(args.productId, title)
+                } else if (filterType == FiltersType.RECOMMENDED_PRODUCT) {
+                    actionToProductListing = ProductDetailFragmentDirections
+                        .actionProductDetailFragmentToRecommendedProductListing(
+                            args.productId,
+                            title
+                        )
+                }
+
+                actionToProductListing?.let { navigateTo(it) }
             }
         }
 
@@ -810,7 +889,12 @@ class ProductDetailFragment : SliderFragment() {
     private fun gotoQAThreads(threads: Array<QAThread>) {
         val userId = consumer?.id?.toString()
         val action = ProductDetailFragmentDirections
-            .actionProductDetailFragmentToQAThreadsFragment(userId, args.productId, threads)
+            .actionProductDetailFragmentToQAThreadsFragment(
+                userId,
+                args.productId,
+                args.threadId,
+                threads
+            )
         navigateTo(action)
     }
 
@@ -842,6 +926,6 @@ class ProductDetailFragment : SliderFragment() {
         override fun getItemCount(): Int = images.size
 
         override fun createFragment(position: Int): Fragment =
-            ProductSliderPageFragment.newInstance(images[position])
+            ProductSliderPageFragment.newInstance(images[position], images)
     }
 }

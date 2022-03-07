@@ -9,8 +9,8 @@ data class ErrorResponse(
 )
 
 data class FieldError(
-    @SerializedName("field")
+    @SerializedName("field", alternate = ["key"])
     val field: String,
-    @SerializedName("error")
+    @SerializedName("error", alternate = ["value"])
     val error: String
 )

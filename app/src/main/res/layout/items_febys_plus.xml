@@ -25,7 +25,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:placeholderImage="@drawable/img_basic_free_delivery"
             app:placeholderImageScaleType="fitCenter" />
 
         <TextView

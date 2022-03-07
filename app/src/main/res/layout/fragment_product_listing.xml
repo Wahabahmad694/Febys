@@ -40,6 +40,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_16sdp"
                     android:ellipsize="start"
                     android:gravity="center"
                     android:maxLines="1"
@@ -68,9 +69,9 @@
                 android:paddingStart="@dimen/_16dp"
                 android:paddingEnd="0dp"
                 android:src="@drawable/ic_back"
-                app:layout_constraintBottom_toBottomOf="@id/container_product_listing_title_and_count"
+                app:layout_constraintBottom_toBottomOf="@id/container_top_bar"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/container_product_listing_title_and_count" />
+                app:layout_constraintTop_toTopOf="@id/container_top_bar" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_cart"

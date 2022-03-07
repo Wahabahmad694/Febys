@@ -48,4 +48,10 @@ interface IPrefManger {
     fun saveSubscription(subscription: Subscription)
 
     fun getSubscription(): Subscription?
+
+    fun increaseNotificationCount()
+
+    fun getNotificationCount(defValue: Int = 0): Int
+
+    fun clearNotificationCount()
 }

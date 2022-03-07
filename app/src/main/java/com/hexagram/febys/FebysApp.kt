@@ -5,6 +5,7 @@ import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.imagepipeline.core.ImagePipelineConfig
 import com.facebook.imagepipeline.core.ImageTranscoderType
 import com.facebook.imagepipeline.core.MemoryChunkType
+import com.hexagram.febys.models.api.notification.NotificationManager
 import com.paypal.checkout.PayPalCheckout
 import com.paypal.checkout.config.CheckoutConfig
 import com.paypal.checkout.config.Environment
@@ -44,5 +45,7 @@ class FebysApp : Application() {
             settingsConfig = SettingsConfig(loggingEnabled = true)
         )
         PayPalCheckout.setConfig(config)
+
+        NotificationManager.createAllChannels(this)
     }
 }

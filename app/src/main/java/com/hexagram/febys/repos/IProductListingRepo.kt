@@ -17,6 +17,30 @@ interface IProductListingRepo : IProductRepo {
         onProductListingResponse: ((ProductPagingListing) -> Unit)?
     ): Flow<PagingData<Product>>
 
+    fun specialProductListing(
+        specialFilter: String,
+        filters: ProductListingRequest,
+        scope: CoroutineScope,
+        dispatcher: CoroutineDispatcher = Dispatchers.IO,
+        onProductListingResponse: ((ProductPagingListing) -> Unit)?
+    ): Flow<PagingData<Product>>
+
+    fun similarProductListing(
+        productId: String,
+        filters: ProductListingRequest,
+        scope: CoroutineScope,
+        dispatcher: CoroutineDispatcher = Dispatchers.IO,
+        onProductListingResponse: ((ProductPagingListing) -> Unit)?
+    ): Flow<PagingData<Product>>
+
+    fun recommendedProductListing(
+        productId: String,
+        filters: ProductListingRequest,
+        scope: CoroutineScope,
+        dispatcher: CoroutineDispatcher = Dispatchers.IO,
+        onProductListingResponse: ((ProductPagingListing) -> Unit)?
+    ): Flow<PagingData<Product>>
+
     fun fetchTrendingProductsListing(
         filters: ProductListingRequest,
         scope: CoroutineScope,
@@ -25,6 +49,13 @@ interface IProductListingRepo : IProductRepo {
     ): Flow<PagingData<Product>>
 
     fun fetchUnder100DollarsItemsListing(
+        filters: ProductListingRequest,
+        scope: CoroutineScope,
+        dispatcher: CoroutineDispatcher = Dispatchers.IO,
+        onProductListingResponse: ((ProductPagingListing) -> Unit)?
+    ): Flow<PagingData<Product>>
+
+    fun fetchStoreYouFollowItemsListing(
         filters: ProductListingRequest,
         scope: CoroutineScope,
         dispatcher: CoroutineDispatcher = Dispatchers.IO,

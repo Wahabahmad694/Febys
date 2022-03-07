@@ -11,6 +11,7 @@ import com.hexagram.febys.network.response.ResponseLogin
 import com.hexagram.febys.network.response.ResponseOtpVerification
 import com.hexagram.febys.network.response.ResponseSignup
 import com.hexagram.febys.network.response.User
+import com.hexagram.febys.notification.FirebaseUtils
 import com.hexagram.febys.prefs.IPrefManger
 import com.hexagram.febys.ui.screens.payment.models.Wallet
 import kotlinx.coroutines.CoroutineDispatcher
@@ -51,16 +52,29 @@ interface IAuthRepo {
 
     fun getSubscription(): Subscription?
 
+    suspend fun updateNotificationSetting(
+        notify: Boolean, dispatcher: CoroutineDispatcher = Dispatchers.IO
+    )
+
+    fun getNotificationSetting(): Boolean
+
 
     companion object {
         fun signOut(pref: IPrefManger, cartRepo: ICartRepo) {
+            unsubscribeNotifications(pref)
             cartRepo.clearCart()
             pref.clear()
         }
 
         fun signOut(pref: IPrefManger, cartDataSource: ICartDataSource) {
+            unsubscribeNotifications(pref)
             cartDataSource.clear()
             pref.clear()
+        }
+
+        private fun unsubscribeNotifications(pref: IPrefManger) {
+            val topic = pref.getConsumer()?.id.toString()
+            FirebaseUtils.unSubscribeToTopic(topic)
         }
     }
 }

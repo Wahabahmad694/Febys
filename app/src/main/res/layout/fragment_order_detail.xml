@@ -7,137 +7,144 @@
 
     </data>
 
-    <androidx.core.widget.NestedScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.screens.order.detail.OrderDetailFragment">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/top_bar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/top_bar"
+            <TextView
+                android:id="@+id/label_orders"
+                style="@style/TextTheme.HelveticaNeue.TS16.Bold"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="?actionBarSize"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/_32dp"
+                android:text="@string/label_order_detail"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/label_orders"
-                    style="@style/TextTheme.HelveticaNeue.TS16.Bold"
-                    android:layout_width="match_parent"
-                    android:layout_height="?actionBarSize"
-                    android:gravity="center"
-                    android:paddingHorizontal="@dimen/_32dp"
-                    android:text="@string/label_order_detail"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_16dp"
+                android:src="@drawable/ic_back"
+                app:layout_constraintBottom_toBottomOf="@id/label_orders"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/label_orders" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/iv_back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/_16dp"
-                    android:src="@drawable/ic_back"
-                    app:layout_constraintBottom_toBottomOf="@id/label_orders"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/label_orders" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".ui.screens.order.detail.OrderDetailFragment">
 
-            <include
-                android:id="@+id/container_timer"
-                layout="@layout/layout_timer_cancel_order" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_60sdp"
-                android:layout_marginHorizontal="@dimen/_8sdp"
-                android:layout_marginVertical="@dimen/_4sdp"
-                android:layout_marginBottom="@dimen/_16sdp">
-
-                <LinearLayout
-                    android:id="@+id/container_order_labels"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_13sdp"
-                    android:orientation="vertical"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:ignore="MissingConstraints">
-
-                    <TextView
-                        android:id="@+id/label_order_id"
-                        style="@style/TextTheme.Arial.TS14.Grey"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_13sdp"
-                        android:text="@string/label_order_id"
-                        android:textSize="@dimen/_11sdp"
-                        tools:text="@string/label_order_id" />
-
-                    <TextView
-                        android:id="@+id/label_date_time"
-                        style="@style/TextTheme.Arial.TS14.Grey"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_8sdp"
-                        android:layout_marginBottom="@dimen/_12sdp"
-                        android:text="@string/label_order_date_and_time"
-                        android:textSize="@dimen/_11sdp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/container_order_data"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_13sdp"
-                    android:gravity="end"
-                    android:orientation="vertical"
-                    app:layout_constraintBottom_toBottomOf="@id/container_order_labels"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/container_order_labels"
-                    app:layout_constraintTop_toTopOf="@id/container_order_labels">
-
-                    <TextView
-                        android:id="@+id/tv_order_id"
-                        style="@style/TextTheme.Arial.TS14"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/_11sdp"
-                        tools:text="FT133659380093" />
-
-                    <TextView
-                        android:id="@+id/tv_order_date"
-                        style="@style/TextTheme.Arial.TS14"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_9sdp"
-                        android:textSize="@dimen/_11sdp"
-                        tools:text="May 18.2021-12:49" />
-                </LinearLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_vendor_with_products"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:itemCount="1"
-                tools:listitem="@layout/item_order_detail_vendors" />
+                android:orientation="vertical">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_16sdp" />
+                <include
+                    android:id="@+id/container_timer"
+                    layout="@layout/layout_timer_cancel_order" />
 
-            <include
-                android:id="@+id/container_order_summary"
-                layout="@layout/layout_order_summary" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_60sdp"
+                    android:layout_marginHorizontal="@dimen/_8sdp"
+                    android:layout_marginVertical="@dimen/_4sdp"
+                    android:layout_marginBottom="@dimen/_16sdp">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_16sdp" />
+                    <LinearLayout
+                        android:id="@+id/container_order_labels"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_13sdp"
+                        android:orientation="vertical"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:ignore="MissingConstraints">
 
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+                        <TextView
+                            android:id="@+id/label_order_id"
+                            style="@style/TextTheme.Arial.TS14.Grey"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_13sdp"
+                            android:text="@string/label_order_id"
+                            android:textSize="@dimen/_11sdp"
+                            tools:text="@string/label_order_id" />
+
+                        <TextView
+                            android:id="@+id/label_date_time"
+                            style="@style/TextTheme.Arial.TS14.Grey"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:layout_marginBottom="@dimen/_12sdp"
+                            android:text="@string/label_order_date_and_time"
+                            android:textSize="@dimen/_11sdp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/container_order_data"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_13sdp"
+                        android:gravity="end"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="@id/container_order_labels"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/container_order_labels"
+                        app:layout_constraintTop_toTopOf="@id/container_order_labels">
+
+                        <TextView
+                            android:id="@+id/tv_order_id"
+                            style="@style/TextTheme.Arial.TS14"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/_11sdp"
+                            tools:text="FT133659380093" />
+
+                        <TextView
+                            android:id="@+id/tv_order_date"
+                            style="@style/TextTheme.Arial.TS14"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_9sdp"
+                            android:textSize="@dimen/_11sdp"
+                            tools:text="May 18.2021-12:49" />
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_vendor_with_products"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="1"
+                    tools:listitem="@layout/item_order_detail_vendors" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_16sdp" />
+
+                <include
+                    android:id="@+id/container_order_summary"
+                    layout="@layout/layout_order_summary" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_16sdp" />
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+
 </layout>
