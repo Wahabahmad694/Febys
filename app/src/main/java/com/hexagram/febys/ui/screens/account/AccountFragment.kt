@@ -141,6 +141,7 @@ class AccountFragment : BaseFragment() {
                     false)
             navigateTo(goToAboutFebys)
         }
+
         binding.support.helpCenter.setOnClickListener {
             val goToHelpCenter =
                 NavGraphDirections.toWebViewFragment(getString(R.string.label_help_center),
