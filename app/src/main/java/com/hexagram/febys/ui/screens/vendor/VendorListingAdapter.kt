@@ -2,6 +2,7 @@ package com.hexagram.febys.ui.screens.vendor
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -100,6 +101,10 @@ class VendorListingAdapter(private val isCelebrity: Boolean) :
 
                 root.setOnClickListener {
                     gotoDetailPage(item)
+                }
+
+                if (item.official) {
+                    ivBadge.isVisible = true
                 }
 
                 vendorName.text = if (isCelebrity!!) item.name else item.shopName

@@ -1,22 +1,21 @@
-package com.hexagram.febys.ui.screens.product.detail
+package com.hexagram.febys.ui.screens.imagePreview
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.hexagram.febys.NavGraphDirections
+import com.bumptech.glide.Glide
 import com.hexagram.febys.base.BaseFragment
-import com.hexagram.febys.databinding.FragmentProductSliderPageBinding
-import com.hexagram.febys.utils.navigateTo
+import com.hexagram.febys.databinding.FragmentZoomableProductBinding
 
 private const val ARG_IMAGE = "imageArg"
 private const val ARG_IMAGE_LIST = "IMAGES"
 
-class ProductSliderPageFragment : BaseFragment() {
+class ZoomableProductFragment : BaseFragment() {
     private lateinit var imageUrl: String
     private lateinit var images: ArrayList<String>
 
-    private lateinit var binding: FragmentProductSliderPageBinding
+    private lateinit var binding: FragmentZoomableProductBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,24 +28,19 @@ class ProductSliderPageFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentProductSliderPageBinding.inflate(inflater, container, false)
+        binding = FragmentZoomableProductBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.imageUrl = imageUrl
-        binding.ivProductImage.setOnClickListener {
-            val gotoImagePreview =
-                NavGraphDirections.toImagePreviewFragment(image = images.toTypedArray())
-            navigateTo(gotoImagePreview)
-        }
+        Glide.with(this).load(imageUrl).into(binding.ivProductImage)
     }
 
     companion object {
         @JvmStatic
         fun newInstance(imageUrl: String, images: List<String>) =
-            ProductSliderPageFragment().apply {
+            ZoomableProductFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_IMAGE, imageUrl)
                     putStringArrayList("IMAGES", images as ArrayList<String>)

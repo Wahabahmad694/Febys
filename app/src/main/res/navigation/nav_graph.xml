@@ -36,8 +36,22 @@
         app:popEnterAnim="@anim/slide_in_right"
         app:popExitAnim="@anim/slide_out_right" />
     <action
+        android:id="@+id/to_imagePreviewFragment"
+        app:destination="@id/imagePreviewFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_right" />
+    <action
         android:id="@+id/to_paymentFragment"
         app:destination="@id/paymentFragment" />
+    <action
+        android:id="@+id/to_vendorDetailFragment"
+        app:destination="@id/vendorDetailFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_right" />
 
     <action
         android:id="@+id/to_product_filter_fragment"
@@ -122,6 +136,13 @@
         <action
             android:id="@+id/action_homeFragment_to_under100DollarsItemListingFragment"
             app:destination="@id/under100DollarsItemListingFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_homeFragment_to_wishListFragment"
+            app:destination="@id/wishListFragment"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
@@ -289,13 +310,6 @@
         android:name="com.hexagram.febys.ui.screens.account.AccountFragment"
         android:label="AccountFragment"
         tools:layout="@layout/fragment_account">
-        <action
-            android:id="@+id/action_accountFragment_to_wishListFragment"
-            app:destination="@id/wishListFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_accountFragment_to_shippingFragment"
             app:destination="@id/shippingAddressFragment"
@@ -634,6 +648,16 @@
         android:name="com.hexagram.febys.ui.screens.febysPlus.FebysPlusFragment"
         android:label="FebysPlusFragment"
         tools:layout="@layout/fragment_febys_plus" />
+    <fragment
+        android:id="@+id/imagePreviewFragment"
+        android:name="com.hexagram.febys.ui.screens.imagePreview.ImagePreviewFragment"
+        android:label="ImagePreviewFragment"
+        tools:layout="@layout/fragment_image_preview">
+        <argument
+            android:name="image"
+            app:argType="string[]" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/celebrityDetailFragment"
@@ -664,13 +688,6 @@
         <argument
             android:name="isFollow"
             app:argType="boolean" />
-        <action
-            android:id="@+id/action_productListingByVendorFragment_to_vendorDetailFragment"
-            app:destination="@id/vendorDetailFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/storeListFragment"

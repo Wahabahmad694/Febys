@@ -17,6 +17,7 @@ class OrderDetailVendorProductAdapter : RecyclerView.Adapter<IBindViewHolder>() 
     private var vendors = listOf<VendorProducts>()
     var onReturnItemClick: ((vendorProduct: VendorProducts) -> Unit)? = null
     var onCancelOrderClick: ((vendorId: String) -> Unit)? = null
+    var gotoVendorDetail: ((vendorId: String) -> Unit)? = null
     var onAddReviewClick: ((vendorProducts: VendorProducts) -> Unit)? = null
     var onItemClick: ((vendorProducts: VendorProducts) -> Unit)? = null
     private var cancelableOrder: Boolean = true
@@ -68,9 +69,9 @@ class OrderDetailVendorProductAdapter : RecyclerView.Adapter<IBindViewHolder>() 
             orderAmountByVendor.text = vendorProducts.amount?.getFormattedPrice()
             containerOrderAmountByVendor.isVisible = vendorProducts.amount != null && !reverted
 
-            orderTrackingCode.text = vendorProducts.courier?.trackingId
-            containerOrderTrackingCode.isVisible = vendorProducts.courier != null && !reverted
-                    && vendorProducts.status in arrayOf(OrderStatus.SHIPPED)
+//            orderTrackingCode.text = vendorProducts.courier?.trackingId
+//            containerOrderTrackingCode.isVisible = vendorProducts.courier != null && !reverted
+//                    && vendorProducts.status in arrayOf(OrderStatus.SHIPPED)
 
             orderDeliveryService.load(vendorProducts.courier?.service?.logo)
             containerOrderDeliveryService.isVisible = vendorProducts.courier != null && !reverted
@@ -118,6 +119,7 @@ class OrderDetailVendorProductAdapter : RecyclerView.Adapter<IBindViewHolder>() 
                 }
                 onReturnItemClick?.invoke(vendorProduct)
             }
+            vendorImg.setOnClickListener { gotoVendorDetail?.invoke(vendor._id) }
             btnCancelOrder.setOnClickListener { onCancelOrderClick?.invoke(vendor._id) }
             btnAddReview.setOnClickListener { onAddReviewClick?.invoke(vendorProducts) }
         }

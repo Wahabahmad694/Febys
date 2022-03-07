@@ -8,6 +8,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentOrderDetailBinding
@@ -59,6 +60,9 @@ class OrderDetailFragment : BaseFragment() {
 
     private fun uiListener() {
         binding.ivBack.setOnClickListener { goBack() }
+
+        orderDetailVendorProductAdapter.gotoVendorDetail =
+            { vendorId -> gotoVendorDetail(vendorId, false) }
 
         orderDetailVendorProductAdapter.onReturnItemClick = { vendorProduct: VendorProducts ->
             gotoReturnOrder(vendorProduct)
@@ -151,4 +155,10 @@ class OrderDetailFragment : BaseFragment() {
         binding.containerOrderSummary.root.isVisible = !(args.review || args.returnDetail)
         order.addToOrderSummary(binding.containerOrderSummary)
     }
+
+    private fun gotoVendorDetail(vendorId: String, isFollow: Boolean) {
+        val direction = NavGraphDirections.toVendorDetailFragment(vendorId, isFollow)
+        navigateTo(direction)
+    }
+
 }

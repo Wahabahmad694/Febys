@@ -98,6 +98,7 @@ class CartFragment : BaseFragment() {
         binding.btnProceedToCheckout.setOnClickListener {
             if (isUserLoggedIn) gotoCheckout() else gotoLogin()
         }
+        cartAdapter.gotoVendorDetail = { vendorID -> gotoVendorDetail(vendorID, false) }
 
         cartAdapter.interaction = object : CartAdapter.Interaction {
             override fun updateCartItem(cartDTO: CartDTO) {
@@ -186,6 +187,11 @@ class CartFragment : BaseFragment() {
                 showToast(getString(R.string.toast_fail_pdf))
             }
         }
+    }
+
+    private fun gotoVendorDetail(vendorId: String, isFollow: Boolean) {
+        val direction = NavGraphDirections.toVendorDetailFragment(vendorId, isFollow)
+        navigateTo(direction)
     }
 
     private fun askUserToSelectDirectory(callback: (Uri) -> Unit) {

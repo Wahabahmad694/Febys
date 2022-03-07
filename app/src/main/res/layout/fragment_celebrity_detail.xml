@@ -285,7 +285,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_16sdp"
                     android:layout_marginTop="@dimen/_24sdp"
-                    android:text="@string/label_where_to_find_me" />
+                    android:text="@string/label_connect_with_me" />
 
                 <LinearLayout
                     android:id="@+id/container_follow_me"
@@ -315,10 +315,11 @@
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_toggle_follow"
                         style="@style/ButtonTheme.OutLine"
-                        android:layout_width="@dimen/_70sdp"
+                        android:layout_width="@dimen/_75sdp"
                         android:layout_height="wrap_content"
                         android:text="@{isFollowing ? @string/label_following : @string/label_follow}"
-                        tools:text="Unfollow"/>
+                        tools:text="Unfollow"
+                        />
 
                 </LinearLayout>
 

@@ -17,7 +17,7 @@
     <string name="label_seasonal_offers">Seasonal Offers</string>
     <string name="label_same_day_delivery">Same day delivery</string>
     <string name="label_store_you_follow">Stores You Follow</string>
-    <string name="label_market_you_follow">Celebrity You Follow</string>
+    <string name="label_market_you_follow">Celebrities You Follow</string>
     <string name="label_store_you_follow_slogan">This week\'s highlights</string>
     <string name="label_add_protection">Add Protection</string>
     <string name="label_mobile_payment_offer">Mobile Money Payments accepted across all networks <b>Read More</b></string>
@@ -120,6 +120,7 @@
     <string name="menu_account">Account</string>
 
     <string name="hint_search">Search…</string>
+    <string name="hint_clear">Clear…</string>
 
     <string name="error_something_went_wrong">Something went wrong!</string>
 
@@ -184,7 +185,7 @@
     <string name="label_explore_stores">Explore Stores</string>
     <string name="label_stores">Stores</string>
     <string name="label_explore_markets">Explore Celebrity</string>
-    <string name="label_following">Unfollow</string>
+    <string name="label_following">Following</string>
     <string name="label_follow">Follow</string>
     <string name="label_create_account_slogan">Create an account to FEBYS to get all features.</string>
     <string name="label_create_account">Create Account</string>
@@ -195,7 +196,6 @@
     <string name="label_edit_review">Edit Review</string>
     <string name="label_address_label">Address Label</string>
     <string name="label_order_cancel_reason">Order Cancel Reason</string>
-    <string name="label_destination_or_region">Destination/Region</string>
     <string name="label_return_reason">Return item Reason</string>
     <string name="label_address_line_1">Address Line 1</string>
     <string name="label_address_line_2">Address Line 2 (Optional)</string>
@@ -235,7 +235,7 @@
     <string name="msg_thank_you">Thank You</string>
     <string name="msg_success_order">Your Order has been placed! We will email you on order confirmation with details and tracking number once your order has been successfully processed</string>
     <string name="label_order_id">Order ID:</string>
-    <string name="label_where_to_find_me">Where to find me</string>
+    <string name="label_connect_with_me">Connect With Me</string>
     <string name="label_my_endorsements">My Endorsements</string>
     <string name="label_discount_mall">Discount Mall</string>
     <string name="label_african_market">African Market</string>
@@ -252,7 +252,7 @@
     <string name="label_ask">Ask</string>
     <string name="label_send">Send</string>
     <string name="label_payment_method">Payment Methods</string>
-    <string name="label_customer_recommend">Customers Recommend</string>
+    <string name="label_customer_recommend">Recommended Products</string>
     <string name="label_compare_with_similar_items">Similar Items</string>
     <string name="label_no_answer">---</string>
     <string name="label_question">Question</string>
@@ -319,6 +319,7 @@
     <string name="msg_for_unfollow_celebrity">Do you want to unfollow this celebrity?</string>
     <string name="msg_for_delete_shipping_address">Do you want to delete this shipping address?</string>
     <string name="msg_for_withdraw">Withdraw feature is coming soon</string>
+    <string name="msg_for_pawn_shop">Pawn Shop feature is coming soon</string>
     <string name="msg_for_top_up">Top-Up feature is coming soon</string>
     <string name="label_add_seller_feedback">Add Seller Feedback</string>
     <string name="label_price">Price</string>
@@ -400,5 +401,6 @@
     <string name="qa_notification_channel_description">Notification related to Q&amp;A</string>
     <string name="please_login_to_see_notifications">Please sign in to see notifications</string>
     <string name="order_listing">Order Listing</string>
+    <string name="label_continue_shopping">Continue Shopping</string>
 
 </resources>

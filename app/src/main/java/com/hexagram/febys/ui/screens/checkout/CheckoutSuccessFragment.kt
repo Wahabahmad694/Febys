@@ -42,6 +42,7 @@ class CheckoutSuccessFragment : BaseFragment() {
         binding.btnMyOrders.setOnClickListener {
             gotoOrderListing()
         }
+        binding.btnContinueShopping.setOnClickListener { goBack() }
     }
 
     private fun gotoOrderListing() {

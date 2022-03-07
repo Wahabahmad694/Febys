@@ -8,6 +8,7 @@ import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentMenuBinding
 import com.hexagram.febys.utils.navigateTo
+import com.hexagram.febys.utils.showInfoDialoge
 
 class MenuFragment : BaseFragment() {
 
@@ -69,6 +70,17 @@ class MenuFragment : BaseFragment() {
                     SpecialMarketFilters.AFRICAN_MARKET
                 )
             navigateTo(gotoAfrican)
+        }
+        binding.labelPawnShop.setOnClickListener { showDialog() }
+    }
+
+    private fun showDialog() {
+        val resId = R.drawable.ic_coming_soon
+        val title = getString(R.string.label_coming_soon)
+        val msg = getString(R.string.msg_for_pawn_shop)
+
+        showInfoDialoge(resId, title, msg) {
+            //todo withdraw amount
         }
     }
 }

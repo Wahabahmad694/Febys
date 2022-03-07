@@ -119,6 +119,12 @@ class HomeFragment : SliderFragment() {
                 .actionHomeFragmentToTodayDealsListingFragment(getString(R.string.label_today_deals))
             navigateTo(gotoTodayDealsListingFragment)
         }
+        binding.ivWishList.setOnClickListener {
+            if (isUserLoggedIn) {
+                val gotoWishList = HomeFragmentDirections.actionHomeFragmentToWishListFragment()
+                navigateTo(gotoWishList)
+            } else gotoLogin()
+        }
 
         binding.btnShopNowTrendingProducts.setOnClickListener {
             val gotoTodayDealsListingFragment = HomeFragmentDirections
@@ -196,6 +202,11 @@ class HomeFragment : SliderFragment() {
             binding.ivBgScrollUniqueCategory.visibility =
                 if (uniqueCategoryAdapter.itemCount >= 5) View.VISIBLE else View.GONE
         }
+    }
+
+    private fun gotoLogin() {
+        val gotoLogin = NavGraphDirections.actionToLoginFragment()
+        navigateTo(gotoLogin)
     }
 
     private fun gotoCategoryListing(categoryTitle: String, categoryId: Int) {
