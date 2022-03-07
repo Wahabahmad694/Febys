@@ -11,4 +11,8 @@ interface INotificationRepo {
     fun fetchNotification(
         scope: CoroutineScope, dispatcher: CoroutineDispatcher = Dispatchers.IO
     ): Flow<PagingData<RemoteNotification>>
+
+    suspend fun markRead(notificationId: String, dispatcher: CoroutineDispatcher = Dispatchers.IO)
+
+    suspend fun clearNotificationBadge(dispatcher: CoroutineDispatcher = Dispatchers.IO)
 }

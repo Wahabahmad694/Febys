@@ -132,6 +132,7 @@ class AuthRepoImpl @Inject constructor(
         if (response is ApiResponse.ApiSuccessResponse) {
             val profile = response.data!!
             userDataSource.saveConsumer(profile.consumerInfo)
+            pref.saveNotificationCount(profile.notificationsCounts.badge)
             updateWishlist(profile.wishlist.skuIds.toMutableSet())
             updateShippingAddress(profile.shippingAddresses)
             updateCart(profile.cart)

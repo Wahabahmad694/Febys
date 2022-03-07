@@ -53,13 +53,13 @@
             android:id="@+id/iv_badge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_badge"
-            app:layout_constraintTop_toTopOf="@id/vendor_name"
             android:layout_marginStart="@dimen/_4sdp"
             android:layout_marginBottom="@dimen/_2sdp"
+            android:src="@drawable/ic_badge"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/vendor_name"
-            app:layout_constraintStart_toEndOf="@id/vendor_name"/>
+            app:layout_constraintStart_toEndOf="@id/vendor_name"
+            app:layout_constraintTop_toTopOf="@id/vendor_name" />
 
         <TextView
             android:id="@+id/preferred_vendor_or_shop_name"
@@ -109,10 +109,13 @@
             android:layout_width="@dimen/_75sdp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_10sdp"
-            android:text="@string/label_following"
+            android:backgroundTint="@{isFollowing ? @color/selector_outlined_button : @color/red}"
+            android:text="@{isFollowing ? @string/label_following : @string/label_follow}"
+            android:textColor="@{isFollowing ? @color/black : @color/white}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:strokeColor="@{isFollowing ? @color/disable_button_color : @color/red}"
             binding:is_visible="@{isFollowing}" />
 
         <androidx.appcompat.widget.AppCompatImageView

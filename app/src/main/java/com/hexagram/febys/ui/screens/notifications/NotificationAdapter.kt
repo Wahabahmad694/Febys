@@ -64,8 +64,14 @@ class NotificationAdapter :
                 ivNotifyLogo.setImageResource(it)
             }
 
+            read = notification?.read
+
             root.setOnClickListener {
-                if (notification != null) onItemClick?.invoke(notification)
+                if (notification != null) {
+                    notification.read = true
+                    notifyItemChanged(position)
+                    onItemClick?.invoke(notification)
+                }
             }
         }
     }

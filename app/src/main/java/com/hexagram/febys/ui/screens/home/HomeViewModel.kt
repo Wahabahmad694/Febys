@@ -32,7 +32,7 @@ class HomeViewModel @Inject constructor(
             val todayDeals = async { homeRepo.fetchTodayDeals() }
             val featuredCategories = async { homeRepo.fetchFeaturedCategories() }
             val seasonalOffers = async { homeRepo.fetchAllSeasonalOffers() }
-            val trendingProducts = async { homeRepo.fetchTrendingProductsByUnits() }
+            val trendingProducts = async { homeRepo.fetchTrendingProducts() }
             val storeYouFollow = async { homeRepo.fetchStoresYouFollow() }
             val under100DollarsItems = async { homeRepo.fetchUnder100DollarsItems() }
 

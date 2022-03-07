@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:binding="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
+        <variable
+            name="read"
+            type="Boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_5sdp"
+        android:background="@{read ?  @android:color/transparent : @color/grey}"
         android:paddingHorizontal="@dimen/_14sdp">
 
         <View
@@ -32,6 +36,16 @@
             app:layout_constraintTop_toTopOf="@id/bg_notification_logo"
             app:roundAsCircle="true"
             tools:src="@drawable/placeholder_user" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/_8sdp"
+            android:layout_height="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_3sdp"
+            android:layout_marginBottom="@dimen/_3sdp"
+            android:src="@color/red"
+            app:layout_constraintBottom_toBottomOf="@id/bg_notification_logo"
+            app:layout_constraintEnd_toEndOf="@id/bg_notification_logo"
+            binding:is_visible="@{!read}" />
 
         <TextView
             android:id="@+id/tv_name"
@@ -69,7 +83,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1dp"
             android:layout_marginVertical="@dimen/_20sdp"
-            android:background="@color/grey_e1e5e8"
+            android:background="@color/grey"
             app:layout_constraintTop_toBottomOf="@id/bg_notification_logo" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

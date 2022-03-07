@@ -8,9 +8,11 @@ import com.hexagram.febys.R
 import com.hexagram.febys.utils.OrderStatus
 
 data class RemoteNotification(
+    val _id: String,
+    var read: Boolean,
     val title: String,
     val body: String,
-    val data: JsonObject
+    var data: JsonObject
 ) {
     fun getNotification(): Notification? {
         val notificationType = when (data["type"].asString) {

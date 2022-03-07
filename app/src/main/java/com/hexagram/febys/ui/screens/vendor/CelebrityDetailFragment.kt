@@ -111,7 +111,6 @@ class CelebrityDetailFragment : BaseFragment()  {
 
             if (binding.isFollowing!!){
                 celebrityViewModel.followVendor(args.id)
-                binding.btnToggleFollow.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.red)
             }
 
             else{

@@ -145,9 +145,8 @@ class PrefManagerImpl @Inject constructor(
         return Utils.jsonToWallet(wallet)
     }
 
-    override fun increaseNotificationCount() {
-        val notificationCount = getInt(KEY_NOTIFICATION_COUNT, 0)
-        saveInt(KEY_NOTIFICATION_COUNT, notificationCount + 1)
+    override fun saveNotificationCount(count: Int) {
+        saveInt(KEY_NOTIFICATION_COUNT, count)
     }
 
     override fun getNotificationCount(defValue: Int): Int {

@@ -136,8 +136,7 @@ class AddEditShippingAddressFragment : BaseFragment() {
             binding.tvState.text = statesAdapter.getSelectedItem()
             binding.tvCity.text = citiesAdapter.getSelectedItem()
 
-            binding.ccpPhoneCode.setDefaultCountryUsingNameCode(Utils.DEFAULT_COUNTRY_CODE)
-            binding.ccpPhoneCode.resetToDefaultCountry()
+           updateDefaultCCP(PhoneNo(Utils.DEFAULT_COUNTRY_CODE, ""))
 
             return
         }
@@ -193,6 +192,7 @@ class AddEditShippingAddressFragment : BaseFragment() {
         regionsAdapter.interaction = { selectedItem ->
             countryCodeISO = countries.firstOrNull { it.name == selectedItem }?.isoCode ?: ""
             updateSelectedCountry()
+            updateDefaultCCP(PhoneNo(countryCodeISO, ""))
             closeBottomSheet(regionBottomSheet)
         }
         statesAdapter.interaction = { selectedItem ->

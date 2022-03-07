@@ -36,14 +36,7 @@ class MainActivity : BaseActivity() {
         configureStatusBar()
 
         setContentView(binding.root)
-        val consumerId = pref.getConsumer()?.id?.toString() ?: ""
-        val topic = intent?.extras?.getString("from")
-        if (topic?.contains(consumerId) == true) {
-            pref.increaseNotificationCount()
-        }
-
         setupBottomNav()
-        updateNotificationBadge()
     }
 
     private fun configureStatusBar() {

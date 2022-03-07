@@ -23,6 +23,8 @@ interface IHomeRepo {
 
     suspend fun fetchTrendingProductsBySale(dispatcher: CoroutineDispatcher = Dispatchers.IO): List<Product>
 
+    suspend fun fetchTrendingProducts(dispatcher: CoroutineDispatcher = Dispatchers.IO): List<Product>
+
     suspend fun fetchStoresYouFollow(dispatcher: CoroutineDispatcher = Dispatchers.IO): List<Product>
 
     suspend fun fetchUnder100DollarsItems(dispatcher: CoroutineDispatcher = Dispatchers.IO): List<Product>

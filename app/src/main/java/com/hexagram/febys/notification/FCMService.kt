@@ -35,11 +35,7 @@ class FCMService : FirebaseMessagingService() {
         val notification = Notification.fromMap(remoteMessage.data) ?: return
         NotificationManager.sendNotification(this, title, body, notification)
 
-        pref.increaseNotificationCount()
-
-        Intent().also { intent ->
-            intent.action = NotificationLocalBroadcastReceiver.ACTION_RECEIVE_NOTIFICATION_BROADCAST
-            LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
-        }
+        pref.saveNotificationCount(1)
+        NotificationLocalBroadcastReceiver.sendBroadCast(this)
     }
 }

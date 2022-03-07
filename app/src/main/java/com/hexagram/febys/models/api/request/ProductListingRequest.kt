@@ -12,6 +12,8 @@ data class ProductListingRequest constructor(
     var filterType: FiltersType? = null,
     var searchStr: String? = null,
     var isDefault: Boolean = false,
+    var hasPromotion: Boolean = false,
+    var trendsOnSale: Boolean = false,
     var categoryIds: MutableSet<Int> = mutableSetOf(),
     var vendorIds: MutableSet<String> = mutableSetOf(),
     var variantAttrs: MutableSet<String> = mutableSetOf(),
@@ -21,6 +23,8 @@ data class ProductListingRequest constructor(
 ) : Parcelable {
     companion object {
         private const val KEY_DEFAULT = "variants.default"
+        private const val KEY_HAS_PROMOTION = "variants.has_promotion"
+        private const val KEY_TRENDS_ON_SALE = "variants.trendsOnSale"
         private const val KEY_CATEGORY_IDS = "category_id"
         private const val KEY_VENDOR_IDS = "vendor_id"
         private const val KEY_ATTR = "variants.attributes.value"
@@ -80,13 +84,22 @@ data class ProductListingRequest constructor(
             filters.add(KEY_OR, jsonArray)
         }
 
+        if (hasPromotion) {
+            filters.addProperty(KEY_HAS_PROMOTION, hasPromotion)
+        }
+
+        if (trendsOnSale) {
+            filters.addProperty(KEY_TRENDS_ON_SALE, trendsOnSale)
+        }
+
         return filters
     }
 
     fun createSorter(): JsonObject? {
-        if (sortByPrice == null) return null
+        if (sortByPrice == null && !trendsOnSale) return null
         val sorter = JsonObject()
-        sorter.addProperty(KEY_PRICE, sortByPrice)
+        if (sortByPrice != null) sorter.addProperty(KEY_PRICE, sortByPrice)
+        if (trendsOnSale) sorter.addProperty("variants.stats.sales.value", "desc")
         return sorter
     }
 

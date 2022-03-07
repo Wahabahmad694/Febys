@@ -103,8 +103,9 @@ class ProductListingRepoImpl @Inject constructor(
         return Pager(
             PagingConfig(pageSize = 10)
         ) {
+            filters.trendsOnSale = true
             val req = createReq(filters)
-            TrendingProductsPagingSource(backendService, req, onProductListingResponse)
+            SearchProductPagingSource(backendService, req, onProductListingResponse)
         }.flow
             .flowOn(dispatcher)
             .cachedIn(scope)
