@@ -42,7 +42,7 @@
             android:layout_height="@dimen/_8sdp"
             android:layout_marginEnd="@dimen/_3sdp"
             android:layout_marginBottom="@dimen/_3sdp"
-            android:src="@color/red"
+            android:background="@drawable/bg_notifications"
             app:layout_constraintBottom_toBottomOf="@id/bg_notification_logo"
             app:layout_constraintEnd_toEndOf="@id/bg_notification_logo"
             binding:is_visible="@{!read}" />
