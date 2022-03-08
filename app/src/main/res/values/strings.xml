@@ -233,6 +233,7 @@
     <string name="label_vat">VAT</string>
     <string name="msg_thank_you_for_purchase">Thank You For Your Purchase</string>
     <string name="msg_thank_you">Thank You</string>
+    <string name="msg_congrats">Congrats!</string>
     <string name="msg_success_order">Your Order has been placed! We will email you on order confirmation with details and tracking number once your order has been successfully processed</string>
     <string name="label_order_id">Order ID:</string>
     <string name="label_connect_with_me">Connect With Me</string>
@@ -315,6 +316,7 @@
     <string name="msg_for_remove_voucher">Would you like to remove voucher?</string>
     <string name="msg_for_delete_item_bag">Do you want to delete this item from bag?</string>
     <string name="msg_for_download_pdf">You want to download the PDF.</string>
+    <string name="msg_for_pdf_success">PDF download successfully.</string>
     <string name="msg_for_unfollow_vendor">Do you want to unfollow this vendor?</string>
     <string name="msg_for_unfollow_celebrity">Do you want to unfollow this celebrity?</string>
     <string name="msg_for_delete_shipping_address">Do you want to delete this shipping address?</string>

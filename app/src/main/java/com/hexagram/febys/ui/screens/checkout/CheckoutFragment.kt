@@ -219,7 +219,7 @@ class CheckoutFragment : BaseFragment() {
 
     private fun updateShippingAddressUi(shippingAddress: ShippingAddress?) {
         binding.tvShippingAddress.text =
-            shippingAddress?.shippingDetail?.address?.fullAddress()
+            shippingAddress?.shippingDetail?.address?.singleLineAddress()
                 ?: getString(R.string.msg_for_no_shipping_address)
     }
 

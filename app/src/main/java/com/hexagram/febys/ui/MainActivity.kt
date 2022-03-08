@@ -95,6 +95,5 @@ class MainActivity : BaseActivity() {
         val notificationBadge = binding.bottomNavigation.getOrCreateBadge(R.id.notificationFragment)
         notificationBadge.isVisible = number > 0
         notificationBadge.number = number
-        notificationBadge.badgeTextColor = notificationBadge.backgroundColor
     }
 }
