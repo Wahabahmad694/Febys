@@ -43,6 +43,8 @@ data class ProductListingRequest constructor(
         isDefault = variantAttrs.isEmpty()
                 && filterType != FiltersType.TODAY_DEALS
                 && filterType != FiltersType.UNDER_HUNDRED
+                && filterType != FiltersType.TRENDING
+                && filterType != FiltersType.SPECIAL_PRODUCT
         if (isDefault) filters.addProperty(KEY_DEFAULT, isDefault)
 
         if (categoryIds.isNotEmpty()) {

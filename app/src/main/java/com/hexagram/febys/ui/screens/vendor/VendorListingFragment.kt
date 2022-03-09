@@ -71,9 +71,11 @@ class VendorListingFragment : BaseFragment() {
         }
 
         vendorListingAdapter.unFollowVendor = { vendor, position ->
-            vendorViewModel.unFollowVendor(vendor._id)
-            vendor.isFollow = !vendor.isFollow
-            vendorListingAdapter.notifyItemChanged(position)
+            showUnfollowConfirmationPopup {
+                vendorViewModel.unFollowVendor(vendor._id)
+                vendor.isFollow = !vendor.isFollow
+                vendorListingAdapter.notifyItemChanged(position)
+            }
         }
 
         vendorListingAdapter.gotoCelebrityDetail =
@@ -81,6 +83,15 @@ class VendorListingFragment : BaseFragment() {
 
         vendorListingAdapter.gotoVendorDetail =
             { vendor -> gotoVendorDetail(vendor, vendor.isFollow) }
+    }
+
+    private fun showUnfollowConfirmationPopup(confirmCallBack: () -> Unit) {
+        val resId = R.drawable.ic_error
+        val title = getString(R.string.label_delete_warning)
+        val msg = getString(
+            if (isCelebrity) R.string.msg_for_unfollow_celebrity else R.string.msg_for_unfollow_vendor
+        )
+        showWarningDialog(resId, title, msg) { confirmCallBack() }
     }
 
     private fun setObserver() {

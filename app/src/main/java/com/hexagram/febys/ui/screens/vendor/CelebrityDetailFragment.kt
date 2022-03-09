@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
@@ -37,7 +36,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class CelebrityDetailFragment : BaseFragment()  {
+class CelebrityDetailFragment : BaseFragment() {
     private lateinit var binding: FragmentCelebrityDetailBinding
     private val celebrityViewModel: VendorViewModel by viewModels()
     private val filtersViewModel by viewModels<FilterViewModel>()
@@ -105,12 +104,15 @@ class CelebrityDetailFragment : BaseFragment()  {
                 return@setOnClickListener
             }
             if (binding.isFollowing == null) return@setOnClickListener
-            binding.isFollowing = !binding.isFollowing!!
 
-            if (binding.isFollowing!!){
-                celebrityViewModel.followVendor(args.id)
+            if (binding.isFollowing!!) {
+                showUnfollowConfirmationPopup {
+                    celebrityViewModel.unFollowVendor(args.id)
+                    binding.isFollowing = false
+                }
             } else {
-                celebrityViewModel.unFollowVendor(args.id)
+                celebrityViewModel.followVendor(args.id)
+                binding.isFollowing = true
             }
         }
 
@@ -146,6 +148,14 @@ class CelebrityDetailFragment : BaseFragment()  {
                 if (endorsementAdapter.itemCount >= 6) View.VISIBLE else View.GONE
         }
     }
+
+    private fun showUnfollowConfirmationPopup(confirmCallBack: () -> Unit) {
+        val resId = R.drawable.ic_error
+        val title = getString(R.string.label_delete_warning)
+        val msg = getString(R.string.msg_for_unfollow_celebrity)
+        showWarningDialog(resId, title, msg) { confirmCallBack() }
+    }
+
     private fun setObserver() {
         setupPagerAdapter()
 

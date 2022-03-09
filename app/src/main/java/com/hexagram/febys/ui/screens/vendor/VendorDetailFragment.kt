@@ -65,13 +65,24 @@ class VendorDetailFragment : BaseFragment() {
             }
 
             if (binding.isFollowing == null) return@setOnClickListener
-            binding.isFollowing = !binding.isFollowing!!
 
             if (binding.isFollowing!!)
+                showUnfollowConfirmationPopup {
+                    vendorViewModel.unFollowVendor(args.id)
+                    binding.isFollowing = false
+                }
+            else {
                 vendorViewModel.followVendor(args.id)
-            else
-                vendorViewModel.unFollowVendor(args.id)
+                binding.isFollowing = true
+            }
         }
+    }
+
+    private fun showUnfollowConfirmationPopup(confirmCallback: () -> Unit) {
+        val resId = R.drawable.ic_error
+        val title = getString(R.string.label_delete_warning)
+        val msg = getString(R.string.msg_for_unfollow_vendor)
+        showWarningDialog(resId, title, msg) { confirmCallback() }
     }
 
     private fun setObserver() {
