@@ -87,6 +87,9 @@ class CelebrityDetailFragment : BaseFragment() {
             goBack()
         }
 
+        endorsementAdapter.gotoVendorDetail =
+            { id, isCelebrity -> gotoVendorDetail(id, isCelebrity, false) }
+
         binding.btnRefine.setOnClickListener {
             if (filtersViewModel.filters != null) {
                 val gotoRefineProduct = NavGraphDirections
@@ -150,7 +153,7 @@ class CelebrityDetailFragment : BaseFragment() {
     }
 
     private fun showUnfollowConfirmationPopup(confirmCallBack: () -> Unit) {
-        val resId = R.drawable.ic_error
+        val resId = R.drawable.ic_vendor_follow
         val title = getString(R.string.label_delete_warning)
         val msg = getString(R.string.msg_for_unfollow_celebrity)
         showWarningDialog(resId, title, msg) { confirmCallBack() }
@@ -307,6 +310,15 @@ class CelebrityDetailFragment : BaseFragment() {
 
     private fun setProductItemCount(count: Int) {
         celebrityViewModel.updateItemCount(count)
+    }
+
+    private fun gotoVendorDetail(id: String, isCelebrity: Boolean, isFollow: Boolean) {
+        val direction = if (isCelebrity) {
+            NavGraphDirections.toCelebrityDetailFragment(id, isFollow)
+        } else {
+            NavGraphDirections.toVendorDetailFragment(id, isFollow)
+        }
+        navigateTo(direction)
     }
 
     override fun getTvCartCount(): TextView = binding.tvCartCount

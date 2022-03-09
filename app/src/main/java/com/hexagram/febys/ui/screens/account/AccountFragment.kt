@@ -1,13 +1,11 @@
 package com.hexagram.febys.ui.screens.account
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.hexagram.febys.BuildConfig
 import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
@@ -120,6 +118,10 @@ class AccountFragment : BaseFragment() {
                 getString(R.string.label_return_orders),
                 getString(R.string.label_return_details)
             )
+        }
+        binding.orders.wishList.setOnClickListener {
+            val gotoWishList = NavGraphDirections.toWishListFragment()
+            navigateTo(gotoWishList)
         }
 
         binding.settings.shippingAddress.setOnClickListener {

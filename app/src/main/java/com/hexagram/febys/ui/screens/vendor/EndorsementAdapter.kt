@@ -10,6 +10,8 @@ import com.hexagram.febys.utils.load
 class EndorsementAdapter : RecyclerView.Adapter<EndorsementAdapter.EndorsementViewHolder>() {
     private var endorsements = emptyList<Endorsement>()
 
+    var gotoVendorDetail: ((id: String, isCelebrity: Boolean) -> Unit)? = null
+
     inner class EndorsementViewHolder(
         private val binding: ItemMyEndorsementsBinding
     ) : RecyclerView.ViewHolder(binding.root) {
@@ -17,6 +19,11 @@ class EndorsementAdapter : RecyclerView.Adapter<EndorsementAdapter.EndorsementVi
             binding.apply {
                 profileImg.load(endorsement.businessInfo.logo)
                 name.text = endorsement.name
+
+                root.setOnClickListener {
+                    val isCelebrity = endorsement.role.name.lowercase().contains("celebrity")
+                    gotoVendorDetail?.invoke(endorsement._id, isCelebrity)
+                }
             }
         }
     }

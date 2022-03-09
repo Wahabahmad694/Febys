@@ -82,7 +82,9 @@ class VouchersFragment : BaseFragment() {
                 }
                 is DataState.Error -> {
                     hideLoader()
-                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
+                    ErrorDialog(it) {
+
+                    }.show(childFragmentManager, ErrorDialog.TAG)
                 }
                 is DataState.Data -> {
                     // do nothing

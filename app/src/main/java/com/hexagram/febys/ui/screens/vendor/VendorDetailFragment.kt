@@ -79,7 +79,7 @@ class VendorDetailFragment : BaseFragment() {
     }
 
     private fun showUnfollowConfirmationPopup(confirmCallback: () -> Unit) {
-        val resId = R.drawable.ic_error
+        val resId = R.drawable.ic_vendor_follow
         val title = getString(R.string.label_delete_warning)
         val msg = getString(R.string.msg_for_unfollow_vendor)
         showWarningDialog(resId, title, msg) { confirmCallback() }

@@ -163,7 +163,13 @@ class ProductDetailFragment : SliderFragment() {
         }
 
         binding.containerProductShippingInfo.returnChip.setOnClickListener {
-            downloadPolicy()
+            val resId = R.drawable.ic_pdf
+            val title = getString(R.string.label_delete_warning)
+            val msg = getString(R.string.msg_for_download_pdf)
+
+            showWarningDialog(resId, title, msg) {
+                downloadPolicy()
+            }
         }
 
         productVariantSecondAttrAdapter.interaction = { selectedSecondAttr ->
@@ -220,7 +226,10 @@ class ProductDetailFragment : SliderFragment() {
         }
 
         binding.btnAddToCart.setOnClickListener {
-            val anim = android.view.animation.AnimationUtils.loadAnimation(requireContext(),R.anim.cart_count_bounce)
+            val anim = android.view.animation.AnimationUtils.loadAnimation(
+                requireContext(),
+                R.anim.cart_count_bounce
+            )
             binding.tvCartCount.startAnimation(anim)
             handleAddToCartClick()
         }
@@ -311,10 +320,11 @@ class ProductDetailFragment : SliderFragment() {
 
     private fun downloadPolicy() {
         val uri = Uri.parse(binding.variant?.refund?.policy)
-        val mManager = requireContext().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        val mManager =
+            requireContext().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         val request: DownloadManager.Request? = DownloadManager.Request(uri)
             .setTitle("Febys Return & Refund Policy")
-            .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS," ReturnPolicy.pdf")
+            .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, " ReturnPolicy.pdf")
             .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
             .setDescription("Downloading...")
             .setMimeType("application/pdf");

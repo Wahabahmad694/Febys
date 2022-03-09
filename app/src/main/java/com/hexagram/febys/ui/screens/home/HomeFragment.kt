@@ -121,7 +121,7 @@ class HomeFragment : SliderFragment() {
         }
         binding.ivWishList.setOnClickListener {
             if (isUserLoggedIn) {
-                val gotoWishList = HomeFragmentDirections.actionHomeFragmentToWishListFragment()
+                val gotoWishList = NavGraphDirections.toWishListFragment()
                 navigateTo(gotoWishList)
             } else gotoLogin()
         }
@@ -178,6 +178,7 @@ class HomeFragment : SliderFragment() {
                 if (isUserLoggedIn) {
                     homeViewModel.toggleFav(skuId)
                     updateFav()
+                    updateFavIcon()
                 } else {
                     val navigateToLogin = NavGraphDirections.actionToLoginFragment()
                     navigateTo(navigateToLogin)
@@ -372,6 +373,18 @@ class HomeFragment : SliderFragment() {
         radioButton.text = text
 
         return radioButton
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateFavIcon()
+    }
+
+    private fun updateFavIcon() {
+        val favRes =
+            if (homeViewModel.getFav().isEmpty()) R.drawable.ic_heart else R.drawable.ic_fav_heart
+
+        binding.ivWishList.setImageResource(favRes)
     }
 
     override fun getSlider() =
