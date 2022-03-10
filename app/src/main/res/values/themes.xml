@@ -66,8 +66,8 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="TextTheme.HelveticaNeue.TS28">
-        <item name="android:textSize">@dimen/_28sp</item>
+    <style name="TextTheme.HelveticaNeue.TS20">
+        <item name="android:textSize">@dimen/_20sp</item>
     </style>
 
 
@@ -75,7 +75,7 @@
         <item name="android:textSize">@dimen/_32sp</item>
     </style>
 
-    <style name="TextTheme.HelveticaNeue.TS28.Bold">
+    <style name="TextTheme.HelveticaNeue.TS20.Bold">
         <item name="android:textStyle">bold</item>
     </style>
 

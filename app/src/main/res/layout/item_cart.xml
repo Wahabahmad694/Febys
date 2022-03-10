@@ -132,7 +132,7 @@
 
             <LinearLayout
                 android:id="@+id/container_quantity"
-                android:layout_width="@dimen/_80sdp"
+                android:layout_width="@dimen/_85sdp"
                 android:layout_height="@dimen/_28sdp"
                 android:layout_marginTop="@dimen/_12dp"
                 android:background="@drawable/bg_border_dark_grey"
@@ -151,9 +151,9 @@
 
                 <TextView
                     android:id="@+id/tv_quantity"
-                    android:layout_width="@dimen/_14sdp"
+                    android:layout_width="wrap_content"
                     android:layout_height="@dimen/_18sdp"
-                    android:layout_marginStart="@dimen/_14sdp"
+                    android:layout_marginStart="@dimen/_15sdp"
                     android:gravity="center"
                     android:text="@{`` + cart.quantity}"
                     android:textAlignment="center"
