@@ -15,7 +15,7 @@ data class Address(
     val zipCode: String
 ):Parcelable{
     fun fullAddress(): String {
-        return "$street, $city, $state\n$zipCode, $countryCode"
+        return "$street, $city, $state\n$zipCode,\n$countryCode"
     }
 
     fun singleLineAddress():String{
