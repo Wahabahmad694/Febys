@@ -357,6 +357,7 @@
     <string name="pay_the_difference_using_a_different_payment_method_by_selecting_split_pay">Pay the difference using a different payment method by selecting split pay.</string>
     <string name="split_pay">Split Pay</string>
     <string name="you_have_30_minutes_to_cancel_your_order">You have 30 minutes to cancel your order</string>
+    <string name="you_have_already_collected_this_voucher">You have already collected this voucher!</string>
     <string name="permission_granted">Permission granted</string>
     <string name="permission_denied">Permission denied</string>
     <string name="label_chose_option">Choose an Option</string>

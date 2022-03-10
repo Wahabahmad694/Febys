@@ -12,7 +12,7 @@ data class RemoteNotification(
     var read: Boolean,
     val title: String,
     val body: String,
-    var data: JsonObject
+    var data: JsonObject,
 ) {
     fun getNotification(): Notification? {
         val notificationType = when (data["type"].asString) {
@@ -40,7 +40,7 @@ data class RemoteNotification(
 sealed class Notification(
     val type: String,
     @SerializedName("sended_at")
-    val sentAt: String
+    val sentAt: String,
 ) {
     companion object {
         fun fromMap(map: Map<String, Any>): Notification? {
@@ -88,7 +88,7 @@ sealed class Notification(
 
     class FebysPlus(
         type: String,
-        sentAt: String
+        sentAt: String,
     ) : Notification(type, sentAt) {
 
         override fun getColor(): Int {
@@ -103,7 +103,7 @@ sealed class Notification(
 
     class Consumer(
         type: String,
-        sentAt: String
+        sentAt: String,
     ) : Notification(type, sentAt) {
 
         override fun getColor(): Int {
@@ -121,16 +121,25 @@ sealed class Notification(
         @SerializedName("order_id")
         val orderId: String,
         @SerializedName("status")
-        val _status: String?
+        val _status: String?,
     ) : Notification(type, sentAt) {
         val status
             get() = _status ?: "PENDING"
 
         override fun getColor(): Int {
-            return if (status in arrayOf(OrderStatus.RETURNED, OrderStatus.PENDING_RETURN))
-                Color.parseColor("#E0E7FF")
-            else
-                OrderStatus.getStatusColor(status)
+            return when (status) {
+                OrderStatus.RETURNED,
+                OrderStatus.PENDING_RETURN,
+                -> {
+                    Color.parseColor("#E0E7FF")
+                }
+                OrderStatus.DELIVERED -> {
+                    Color.parseColor("#D1FFB5")
+                }
+                else -> {
+                    OrderStatus.getStatusColor(status)
+                }
+            }
         }
 
         override fun getIcon(): Int {

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseDialog
 import com.hexagram.febys.databinding.DialogErrorBinding
@@ -12,7 +13,7 @@ import com.hexagram.febys.network.DataState
 class ErrorDialog<T>(
     private val error: DataState.Error<T>,
     private val onOkayClick: (() -> Unit)? = null,
-    private val onCloseClick: (() -> Unit)? = null
+    private val onCloseClick: (() -> Unit)? = null,
 ) : BaseDialog() {
 
     companion object {
@@ -22,7 +23,7 @@ class ErrorDialog<T>(
     private lateinit var binding: DialogErrorBinding
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View {
         binding = DialogErrorBinding.inflate(inflater, container, false)
         return binding.root
@@ -59,21 +60,21 @@ class ErrorDialog<T>(
     }
 
     private fun setupApiErrorDialog(message: String) {
-        binding.isNetworkError = false
+        binding.btnOkay.isVisible = onOkayClick != null
         binding.ivError.setImageResource(R.drawable.ic_error)
         binding.tvErrorTitle.text = getString(R.string.label_try_again)
         binding.tvErrorMsg.text = message
     }
 
     private fun setupExceptionDialog() {
-        binding.isNetworkError = false
+        binding.btnOkay.isVisible = onOkayClick != null
         binding.ivError.setImageResource(R.drawable.ic_error)
         binding.tvErrorTitle.text = getString(R.string.label_try_again)
         binding.tvErrorMsg.text = getString(R.string.error_something_went_wrong)
     }
 
     private fun setupNetworkErrorDialog() {
-        binding.isNetworkError = true
+        binding.btnOkay.isVisible = true
         binding.ivError.setImageResource(R.drawable.ic_no_internet)
         binding.tvErrorTitle.text = getString(R.string.label_connection_error)
         binding.tvErrorMsg.text = getString(R.string.label_no_internet)

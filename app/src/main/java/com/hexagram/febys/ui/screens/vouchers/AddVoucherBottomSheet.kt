@@ -21,7 +21,7 @@ class AddVoucherBottomSheet : BaseBottomSheet() {
 
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View {
         binding = BottomSheetAddVoucherBinding.inflate(inflater, container, false)
         return binding.root
