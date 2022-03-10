@@ -3,6 +3,7 @@ package com.hexagram.febys.ui.screens.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.hexagram.febys.models.api.product.Product
 import com.hexagram.febys.models.view.HomeModel
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.repos.IHomeRepo
@@ -21,6 +22,9 @@ class HomeViewModel @Inject constructor(
     private val _observeHomeModel = MutableLiveData<DataState<HomeModel>>()
     val observeHomeModel: LiveData<DataState<HomeModel>> = _observeHomeModel
 
+    private val _observeStoreYouFollow = MutableLiveData<List<Product>>()
+    val observeStoreYouFollow: LiveData<List<Product>> = _observeStoreYouFollow
+
     fun fetchHomeModel(isRefresh: Boolean = false) {
         viewModelScope.launch {
             if (!isRefresh && (_observeHomeModel.value != null && _observeHomeModel.value is DataState.Data)) {
@@ -33,7 +37,6 @@ class HomeViewModel @Inject constructor(
             val featuredCategories = async { homeRepo.fetchFeaturedCategories() }
             val seasonalOffers = async { homeRepo.fetchAllSeasonalOffers() }
             val trendingProducts = async { homeRepo.fetchTrendingProducts() }
-            val storeYouFollow = async { homeRepo.fetchStoresYouFollow() }
             val under100DollarsItems = async { homeRepo.fetchUnder100DollarsItems() }
 
             val homeModel = HomeModel(
@@ -43,11 +46,17 @@ class HomeViewModel @Inject constructor(
                 featuredCategories.await(),
                 seasonalOffers.await(),
                 trendingProducts.await(),
-                storeYouFollow.await(),
                 under100DollarsItems.await()
             )
 
             _observeHomeModel.postValue(DataState.Data(homeModel))
+        }
+    }
+
+    fun fetchStoreYouFollow() {
+        viewModelScope.launch {
+            val storeYouFollow = homeRepo.fetchStoresYouFollow()
+            _observeStoreYouFollow.postValue(storeYouFollow)
         }
     }
 }

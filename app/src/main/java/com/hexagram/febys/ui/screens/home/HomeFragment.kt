@@ -236,11 +236,12 @@ class HomeFragment : SliderFragment() {
                     setupFeaturedCategories(homeModel.featuredCategories)
                     setupSeasonalOffers(homeModel.seasonalOffers)
                     setupTrendingProducts(homeModel.trendingProducts)
-                    setupStoreYouFollow(homeModel.storeYouFollow)
                     setupUnder100DollarsItems(homeModel.under100DollarsItems)
                 }
             }
         }
+
+        homeViewModel.observeStoreYouFollow.observe(viewLifecycleOwner) { setupStoreYouFollow(it) }
     }
 
     private fun setupUniqueCategory(uniqueCategories: List<UniqueCategory>) {
@@ -377,6 +378,7 @@ class HomeFragment : SliderFragment() {
 
     override fun onResume() {
         super.onResume()
+        homeViewModel.fetchStoreYouFollow()
         updateFavIcon()
     }
 
