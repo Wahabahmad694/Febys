@@ -5,9 +5,11 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
+import androidx.fragment.app.DialogFragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.hexagram.febys.R
 
 abstract class BaseBottomSheet : BottomSheetDialogFragment() {
     abstract fun fullScreen(): Boolean
@@ -30,7 +32,7 @@ abstract class BaseBottomSheet : BottomSheetDialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialog = BottomSheetDialog(requireContext(), theme)
+        val dialog = BottomSheetDialog(requireContext(),R.style.AppBottomSheetDialogTheme)
         if (fullScreen()) dialog.setOnShowListener(onShowListener)
         return dialog
     }

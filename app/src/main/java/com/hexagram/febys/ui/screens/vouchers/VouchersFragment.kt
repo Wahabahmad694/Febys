@@ -24,7 +24,7 @@ class VouchersFragment : BaseFragment() {
     private val vouchersAdapter = VouchersAdapter()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View {
         binding = FragmentVouchersBinding.inflate(inflater, container, false)
         return binding.root
@@ -66,7 +66,9 @@ class VouchersFragment : BaseFragment() {
                 }
                 is DataState.Error -> {
                     hideLoader()
-                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
+                    ErrorDialog(it, onOkayClick = {
+                        // do nothing
+                    }).show(childFragmentManager, ErrorDialog.TAG)
                 }
                 is DataState.Data -> {
                     hideLoader()
