@@ -140,7 +140,7 @@ class OrderDetailVendorProductAdapter : RecyclerView.Adapter<IBindViewHolder>() 
             )
             timelines.add(
                 TimelineModel(
-                    if (OrderStatus.isAccepted(status)) "Pending" else "Confirmed",
+                    if (OrderStatus.isAccepted(status)) "Confirmed" else "Pending",
                     OrderStatus.isAccepted(status),
                     isCancelled
                 )
