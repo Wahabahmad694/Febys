@@ -15,6 +15,12 @@
         android:orientation="vertical"
         android:paddingHorizontal="@dimen/_8sdp">
 
+        <com.hexagram.febys.utils.TimelineView
+            android:id="@+id/timeline"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_20sdp" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/container_vendor_detail"
             android:layout_width="match_parent"
@@ -145,10 +151,10 @@
             android:id="@+id/container_order_tracking_code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             android:layout_marginHorizontal="@dimen/_8sdp"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <TextView
                 style="@style/TextTheme.Arial.TS14.Grey"
