@@ -311,7 +311,7 @@
     <string name="label_person_name">Hi %1s</string>
     <string name="label_remove_voucher_warning">Are You Sure?</string>
     <string name="label_delete_warning">Are You Sure?</string>
-    <string name="label_invalid_voucher">Invalid Voucher?</string>
+    <string name="label_invalid_voucher">Invalid Voucher</string>
     <string name="msg_for_invalid_voucher">You can\'t apply this voucher. Would you like to remove it?</string>
     <string name="msg_for_remove_voucher">Would you like to remove voucher?</string>
     <string name="msg_for_delete_item_bag">Do you want to delete this item from bag?</string>

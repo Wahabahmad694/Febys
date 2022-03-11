@@ -10,6 +10,11 @@
             name="product"
             type="com.hexagram.febys.models.api.product.Product" />
 
+
+        <variable
+            name="isFav"
+            type="Boolean" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,7 +26,7 @@
             android:layout_width="@dimen/_140sdp"
             android:layout_height="@dimen/_128sdp"
             android:layout_marginHorizontal="@dimen/_16dp"
-            android:layout_marginTop="@dimen/_25sdp"
+            android:layout_marginTop="@dimen/_30sdp"
             app:actualImageScaleType="fitCenter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -29,6 +34,16 @@
             app:placeholderImage="@drawable/placeholder_image"
             binding:image_url="@{product.variants.get(0).images.get(0)}" />
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_fav"
+            android:layout_width="@dimen/_26sdp"
+            android:layout_height="@dimen/_26sdp"
+            android:layout_marginEnd="@dimen/_16dp"
+            android:elevation="@dimen/_16sdp"
+            android:src="@{isFav ? @drawable/ic_fav: @drawable/ic_un_fav}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_un_fav" />
         <TextView
             android:id="@+id/tv_product_brand"
             style="@style/TextTheme.HelveticaNeue.TS12.Bold"
