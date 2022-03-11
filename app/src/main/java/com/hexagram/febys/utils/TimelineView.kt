@@ -40,15 +40,16 @@ class TimelineView : LinearLayout {
                     else -> "#F7F7F7"
                 }
 
+                val separatorHeight = context.resources.getDimension(R.dimen._3sdp).toInt()
                 val bgColor = Color.parseColor(bgColorCode)
                 val timeLineSeparator = View(context).also {
-                    it.layoutParams = LayoutParams(0, R.dimen._3sdp, 1F)
+                    it.layoutParams = LayoutParams(0, separatorHeight, 1F)
                     it.setBackgroundColor(bgColor)
                 }
                 binding.containerTimelineView.addView(timeLineSeparator)
 
                 val timeLineTitleSeparator = View(context).also {
-                    it.layoutParams = LayoutParams(0, R.dimen._3sdp, 1F)
+                    it.layoutParams = LayoutParams(0, separatorHeight, 1F)
                 }
                 binding.containerTimelineTitle.addView(timeLineTitleSeparator)
             }
