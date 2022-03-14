@@ -109,18 +109,18 @@
             android:layout_width="@dimen/_75sdp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_10sdp"
+            android:textColor="@{isFollowing ? @color/black : @color/white}"
             android:backgroundTint="@{isFollowing ? @color/selector_outlined_button : @color/red}"
             android:text="@{isFollowing ? @string/label_following : @string/label_follow}"
-            android:textColor="@{isFollowing ? @color/black : @color/white}"
+            app:strokeColor="@{isFollowing ? @color/disable_button_color : @color/red}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:strokeColor="@{isFollowing ? @color/disable_button_color : @color/red}"
             binding:is_visible="@{isFollowing}" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="@dimen/_12sdp"
-            android:layout_height="@dimen/_12sdp"
+            android:layout_width="12dp"
+            android:layout_height="11dp"
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:src="@drawable/ic_right_arrow"
             app:layout_constraintBottom_toBottomOf="parent"

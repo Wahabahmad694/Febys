@@ -35,6 +35,8 @@ data class Vendor @JvmOverloads constructor(
     val pricingScore: List<Rating>,
     @SerializedName("quality_score")
     val qualityScore: List<Rating>,
+    @SerializedName("template_published")
+    var templatePublished: Boolean,
     @SerializedName("ratings_and_reviews")
     val _ratingsAndReviews: List<VendorReview>,
     @SerializedName("rating_and_review")

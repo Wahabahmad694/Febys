@@ -109,10 +109,12 @@ class VendorDetailFragment : BaseFragment() {
             if (vendor.official) {
                 ivBadge.isVisible = true
             }
+            if(vendor.templatePublished){
             profileImg.load(vendor.templatePhoto)
             vendor.template
                 ?.firstOrNull { it.section == "1,1" }
                 ?.images?.firstOrNull()?.url?.let { headerImg.load(it) }
+            }
             vendorName.text = vendor.name
             type.text = vendor.role.name
             address.text = vendor.contactDetails.address
