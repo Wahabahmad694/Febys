@@ -49,9 +49,7 @@
                 android:id="@+id/iv_fav"
                 android:layout_width="@dimen/_26sdp"
                 android:layout_height="@dimen/_26sdp"
-                android:layout_gravity="center"
                 android:layout_marginStart="@dimen/_1sdp"
-                android:elevation="@dimen/_16sdp"
                 android:src="@{isFav ? @drawable/ic_fav: @drawable/ic_un_fav}"
                 tools:src="@drawable/ic_un_fav" />
         </androidx.cardview.widget.CardView>
