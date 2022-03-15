@@ -183,7 +183,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintWidth_max="@dimen/_300sdp"
-                        app:placeholderImage="@drawable/placeholder_image"
+                        android:background="@drawable/placeholder_template"
                         app:placeholderImageScaleType="centerCrop"
                         app:roundedCornerRadius="@dimen/_5sdp"/>
 
