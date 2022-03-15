@@ -85,6 +85,7 @@
     <string name="label_get_inspired">Get Inspired</string>
     <string name="label_empty_wish_list_slogan">But not for long! Tap ♡ to start saving you favorite pieces</string>
     <string name="label_connection_error">Connection Error</string>
+    <string name="label_error"> Error</string>
     <string name="okay">Okay</string>
     <string name="label_try_again">Try Again</string>
     <string name="label_no_internet">There\'s a problem with your network connection. Please check your connection</string>
@@ -132,6 +133,7 @@
     <string name="error_enter_valid_last_name">Please Enter Valid Last Name</string>
     <string name="error_enter_email">Please Enter Email</string>
     <string name="error_enter_valid_email">Please Enter Valid Email</string>
+    <string name="error_add_shipping_address">Please select or add shipping address </string>
     <string name="error_enter_password_characters">Password must be atleast 8 characters</string>
     <string name="error_enter_password">Please Enter Password</string>
     <string name="error_select_cancel_reason">Please Select Cancel Reason</string>
@@ -314,12 +316,12 @@
     <string name="label_invalid_voucher">Invalid Voucher</string>
     <string name="msg_for_invalid_voucher">You can\'t apply this voucher. Would you like to remove it?</string>
     <string name="msg_for_remove_voucher">Would you like to remove voucher?</string>
-    <string name="msg_for_delete_item_bag">Do you want to delete this item from bag?</string>
+    <string name="msg_for_delete_item_bag">You want to delete this item from bag</string>
     <string name="msg_for_download_pdf">You want to download the PDF.</string>
     <string name="msg_for_pdf_success">PDF download successfully.</string>
-    <string name="msg_for_unfollow_vendor">Do you want to unfollow this vendor?</string>
-    <string name="msg_for_unfollow_celebrity">Do you want to unfollow this celebrity?</string>
-    <string name="msg_for_delete_shipping_address">Do you want to delete this shipping address?</string>
+    <string name="msg_for_unfollow_vendor">You want to unfollow this Vendor</string>
+    <string name="msg_for_unfollow_celebrity">You want to unfollow this Celebrity</string>
+    <string name="msg_for_delete_shipping_address">You want to delete this shipping address</string>
     <string name="msg_for_withdraw">Withdraw feature is coming soon</string>
     <string name="msg_for_pawn_shop">Pawn Shop feature is coming soon</string>
     <string name="msg_for_top_up">Top-Up feature is coming soon</string>

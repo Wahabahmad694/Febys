@@ -72,7 +72,7 @@ class CheckoutFragment : BaseFragment() {
 
         binding.btnPlaceOrder.setOnClickListener {
             if (checkoutViewModel.getDefaultShippingAddress() == null) {
-                showToast(getString(R.string.error_please_select_shipping_address))
+                showErrorPopUp()
             } else {
                 if (!validVoucher) {
                     showInvalidVoucherDialog()
@@ -147,6 +147,14 @@ class CheckoutFragment : BaseFragment() {
                 placeOrder(transactions)
             }
         }
+    }
+
+    private fun showErrorPopUp() {
+        val resId = R.drawable.ic_error
+        val title = getString(R.string.label_error)
+        val msg = getString(R.string.error_add_shipping_address)
+
+        showInfoDialoge(resId, title, msg) { goBack() }
     }
 
     private fun showInvalidVoucherDialog() {
