@@ -111,7 +111,10 @@ class VendorListingPagingSource constructor(
             service.fetchFollowingVendors(authKey)
 
         return if (followingVendorsResponse is ApiResponse.ApiSuccessResponse) {
-            followingVendorsResponse.data!!.vendors.onEach { it.isFollow = true }
+            followingVendorsResponse.data!!.vendors.onEach {
+                it.isFollow = true
+                it.showFollowButton = true
+            }
         } else {
             emptyList()
         }

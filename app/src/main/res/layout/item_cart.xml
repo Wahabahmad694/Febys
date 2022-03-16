@@ -194,30 +194,6 @@
                 app:layout_constraintTop_toTopOf="@id/iv_fav_toggle" />
 
             <TextView
-                android:id="@+id/tv_product_off_price"
-                style="@style/TextTheme.Arial.TS12.Bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_2sdp"
-                android:text="@{cart.originalPrice.getFormattedPrice(cart.quantity)}"
-                app:layout_constraintBaseline_toBaselineOf="@id/tv_product_price"
-                app:layout_constraintEnd_toStartOf="@id/tv_product_off_price_separator"
-                binding:is_visible="@{cart.hasPromotion}"
-                binding:strike_through="@{true}"
-                tools:text="$14" />
-
-            <TextView
-                android:id="@+id/tv_product_off_price_separator"
-                style="@style/TextTheme.Arial.TS12.Bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_2sdp"
-                android:text="@string/minus"
-                app:layout_constraintBaseline_toBaselineOf="@id/tv_product_price"
-                app:layout_constraintEnd_toStartOf="@id/tv_product_price"
-                binding:is_visible="@{cart.hasPromotion}" />
-
-            <TextView
                 android:id="@+id/tv_product_price"
                 style="@style/TextTheme.Arial.TS12.Bold"
                 android:layout_width="wrap_content"

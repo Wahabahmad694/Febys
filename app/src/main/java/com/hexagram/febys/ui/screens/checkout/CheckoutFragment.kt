@@ -71,6 +71,7 @@ class CheckoutFragment : BaseFragment() {
         }
 
         binding.btnPlaceOrder.setOnClickListener {
+            if (orderPrice == null) return@setOnClickListener
             if (checkoutViewModel.getDefaultShippingAddress() == null) {
                 showErrorPopUp()
             } else {
@@ -154,7 +155,9 @@ class CheckoutFragment : BaseFragment() {
         val title = getString(R.string.label_error)
         val msg = getString(R.string.error_add_shipping_address)
 
-        showInfoDialoge(resId, title, msg) { goBack() }
+        showInfoDialoge(resId, title, msg) {
+            // do nothing
+        }
     }
 
     private fun showInvalidVoucherDialog() {

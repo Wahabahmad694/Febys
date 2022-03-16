@@ -674,6 +674,16 @@ class ProductDetailFragment : SliderFragment() {
                     NavGraphDirections.actionToProductDetail(item._id, item.variants[0].skuId)
                 navigateTo(gotoProductDetail)
             }
+            additionalAdapter.toggleFavIfUserLoggedIn = { skuId ->
+                isUserLoggedIn.also {
+                    if (it) {
+                        productDetailViewModel.toggleFav(skuId)
+                    } else {
+                        val navigateToLogin = NavGraphDirections.actionToLoginFragment()
+                        navigateTo(navigateToLogin)
+                    }
+                }
+            }
             layoutAdditionalProductBinding.btnAdditionalProductShopAll.setOnClickListener {
                 var actionToProductListing: NavDirections? = null
                 if (filterType == FiltersType.SIMILAR_PRODUCT) {

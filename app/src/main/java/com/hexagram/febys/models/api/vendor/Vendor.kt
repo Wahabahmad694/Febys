@@ -29,6 +29,7 @@ data class Vendor @JvmOverloads constructor(
     @SerializedName("contact_details")
     val contactDetails: ContactDetails,
     var isFollow: Boolean = false,
+    var showFollowButton: Boolean = false,
     @SerializedName("value_score")
     val valueScore: List<Rating>,
     @SerializedName("pricing_score")

@@ -56,7 +56,7 @@ class TimelineView : LinearLayout {
 
             val imageRes = when {
                 timeline.isError -> R.drawable.ic_timeline_error
-                timeline.isCompleted -> R.drawable.ic_timeline_filled
+                timeline.isCompleted || timeline.title.lowercase() == "pending" -> R.drawable.ic_timeline_filled
                 else -> R.drawable.ic_timeline
             }
 

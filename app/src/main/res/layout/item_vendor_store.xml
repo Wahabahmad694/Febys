@@ -16,6 +16,10 @@
             name="isFollowing"
             type="Boolean" />
 
+        <variable
+            name="showFollowButton"
+            type="Boolean" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -109,14 +113,14 @@
             android:layout_width="@dimen/_75sdp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_10sdp"
-            android:textColor="@{isFollowing ? @color/black : @color/white}"
             android:backgroundTint="@{isFollowing ? @color/selector_outlined_button : @color/red}"
             android:text="@{isFollowing ? @string/label_following : @string/label_follow}"
-            app:strokeColor="@{isFollowing ? @color/disable_button_color : @color/red}"
+            android:textColor="@{isFollowing ? @color/black : @color/white}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            binding:is_visible="@{isFollowing}" />
+            app:strokeColor="@{isFollowing ? @color/disable_button_color : @color/red}"
+            binding:is_visible="@{showFollowButton}" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="12dp"
@@ -126,7 +130,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            binding:is_visible="@{!isFollowing}" />
+            binding:is_visible="@{!showFollowButton}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

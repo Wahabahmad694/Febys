@@ -119,6 +119,7 @@ class VendorListingAdapter(private val isCelebrity: Boolean) :
                 BindingAdapter.imageUrl(vendorImg, imageUrl)
 
                 isFollowing = item.isFollow
+                showFollowButton = item.showFollowButton
 
                 btnToggleFollow.setOnClickListener {
                     if (isFollowing == null) return@setOnClickListener
