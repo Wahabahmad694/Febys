@@ -555,7 +555,7 @@ class ProductDetailFragment : SliderFragment() {
         val storeRating = product.vendor.stats.rating.score
         binding.storeRatingBar.rating = storeRating.toFloat()
         binding.storeRatingBar.stepSize = 0.5f
-        binding.tvStoreRating.text = getString(R.string.store_rating, storeRating.toString())
+        binding.tvStoreRating.text = getString(R.string.store_rating, storeRating)
 
         if (args.threadId != null) {
             binding.seeMoreQAndA.performClick()
