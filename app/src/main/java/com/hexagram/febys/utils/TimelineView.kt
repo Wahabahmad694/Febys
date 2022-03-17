@@ -30,13 +30,11 @@ class TimelineView : LinearLayout {
         binding.containerTimelineView.removeAllViews()
         binding.containerTimelineTitle.removeAllViews()
 
-        val lastCompletedIndex = timelines.indexOfLast { it.isCompleted }
-
         for ((index, timeline) in timelines.withIndex()) {
             if (index != 0) {
                 val bgColorCode = when {
                     timeline.isError -> "#E04C38"
-                    lastCompletedIndex == index - 1 || timeline.isCompleted -> "#6CE038"
+                    timeline.isCompleted -> "#6CE038"
                     else -> "#F7F7F7"
                 }
 

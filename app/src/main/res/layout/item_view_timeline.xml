@@ -10,5 +10,5 @@
         android:id="@+id/iv_timeline"
         android:layout_width="@dimen/_16sdp"
         android:layout_height="@dimen/_16sdp"
-        tools:src="@drawable/ic_timeline"/>
+        tools:src="@drawable/ic_timeline" />
 </layout>

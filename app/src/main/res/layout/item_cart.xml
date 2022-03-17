@@ -151,9 +151,10 @@
 
                 <TextView
                     android:id="@+id/tv_quantity"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="@dimen/_18sdp"
-                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginHorizontal="@dimen/_3sdp"
+                    android:layout_weight="1"
                     android:gravity="center"
                     android:text="@{`` + cart.quantity}"
                     android:textAlignment="center"
@@ -165,7 +166,6 @@
                     android:id="@+id/iv_add"
                     android:layout_width="@dimen/_12sdp"
                     android:layout_height="@dimen/_18sdp"
-                    android:layout_marginStart="@dimen/_14sdp"
                     android:layout_marginEnd="@dimen/_3sdp"
                     android:src="@drawable/ic_adds" />
 

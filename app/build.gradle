@@ -79,11 +79,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             def endpointsProperties = getBuildProperties()
             def credentialsProperties = getCredentials()
-            buildConfigField("String", "backendBaseUrl", endpointsProperties['QA_BASE_URL_BACKEND'])
-            buildConfigField("String", "webCustomizationBaseUrl", endpointsProperties['QA_BASE_URL_WEB_CUSTOMIZATION'])
-
-//            buildConfigField("String", "backendBaseUrl", endpointsProperties['STAGING_BASE_URL_BACKEND'])
-//            buildConfigField("String", "webCustomizationBaseUrl", endpointsProperties['STAGING_BASE_URL_WEB_CUSTOMIZATION'])
+            buildConfigField("String", "backendBaseUrl", endpointsProperties['STAGING_BASE_URL_BACKEND'])
+            buildConfigField("String", "webCustomizationBaseUrl", endpointsProperties['STAGING_BASE_URL_WEB_CUSTOMIZATION'])
             buildConfigField("String", "keycloakClientId", credentialsProperties['KEYCLOAK_CLIENT_ID'])
             buildConfigField("String", "keycloakClientSecret", credentialsProperties['KEYCLOAK_CLIENT_SECRET'])
             resValue "string", "google_web_client", credentialsProperties['GOOGLE_WEB_CLIENT']
