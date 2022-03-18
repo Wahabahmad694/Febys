@@ -43,7 +43,18 @@ node ('android-node') {
 //         sh 'gradle wrapper'
         sh 'touch local.properties'
 
-        sh 'cp /var/jenkins_home/projects/android/febys/firebase_config/google-services.json app/src/qa/google-services.json'
+        if (env.BRANCH_NAME == 'release') {
+            sh 'cp /var/jenkins_home/projects/android/febys/firebase_config/google-services.json app/src/release/google-services.json'
+        }
+        else if (env.BRANCH_NAME == 'staging') {
+            sh 'cp /var/jenkins_home/projects/android/febys/firebase_config/google-services.json app/src/staging/google-services.json'
+        }
+        else if (env.BRANCH_NAME == 'develop') {
+            sh 'cp /var/jenkins_home/projects/android/febys/firebase_config/google-services.json app/src/qa/google-services.json'
+        }
+        else {
+            sh 'cp /var/jenkins_home/projects/android/febys/firebase_config/google-services.json app/src/debug/google-services.json'
+        }
     }
 
     try{
