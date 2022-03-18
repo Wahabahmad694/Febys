@@ -344,7 +344,7 @@
     <string name="paypal">Paypal</string>
     <string name="pay_via_paypal">Pay via paypal</string>
     <string name="ghs_100_06">GHS_100_06</string>
-    <string name="label_current_balance">Current balance</string>
+    <string name="label_current_balance">Current Balance</string>
     <string name="label_withdraw">Withdraw</string>
     <string name="label_topUp">Top-Up</string>
     <string name="label_profile_is_updated">Your profile has been updated successfully</string>
