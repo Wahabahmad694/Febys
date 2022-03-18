@@ -121,6 +121,8 @@ void setupDebugCredentials() {
         sh 'mkdir -p app/keystore/'
         sh 'cp \$debugKeystore app/keystore/debug.keystore'
         sh 'cp \$keystoreProperties app/keystore/debug.properties'
+        sh 'cp \$debugKeystore app/keystore/release.jks'
+        sh 'cp \$keystoreProperties app/keystore/release.properties'
         sh 'cp \$febysQaCredentials credentials.properties'
     }
 }
