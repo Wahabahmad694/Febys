@@ -13,6 +13,7 @@ import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseActivity
 import com.hexagram.febys.broadcast.NotificationLocalBroadcastReceiver
 import com.hexagram.febys.databinding.ActivityMainBinding
+import com.hexagram.febys.ui.screens.home.HomeFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -36,20 +37,13 @@ class MainActivity : BaseActivity() {
         configureStatusBar()
 
         setContentView(binding.root)
-        val consumerId = pref.getConsumer()?.id?.toString() ?: ""
-        val topic = intent?.extras?.getString("from")
-        if (topic?.contains(consumerId) == true) {
-            pref.increaseNotificationCount()
-        }
-
         setupBottomNav()
-        updateNotificationBadge()
     }
 
     private fun configureStatusBar() {
         window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.statusBarColor = ContextCompat.getColor(this, R.color.white);
+        window.statusBarColor = ContextCompat.getColor(this, R.color.white)
     }
 
     private fun setupBottomNav() {
@@ -60,6 +54,9 @@ class MainActivity : BaseActivity() {
 
         binding.bottomNavigation.setOnNavigationItemReselectedListener {
             // do not remove it, this is need to avoid recreation of fragment on reselect
+            if (navController.currentDestination?.id == R.id.homeFragment) {
+                (navHostFragment.childFragmentManager.fragments[0] as? HomeFragment)?.refreshData()
+            }
         }
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
@@ -102,6 +99,5 @@ class MainActivity : BaseActivity() {
         val notificationBadge = binding.bottomNavigation.getOrCreateBadge(R.id.notificationFragment)
         notificationBadge.isVisible = number > 0
         notificationBadge.number = number
-        notificationBadge.badgeTextColor = notificationBadge.backgroundColor
     }
 }

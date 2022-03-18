@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
+import com.hexagram.febys.broadcast.NotificationLocalBroadcastReceiver
 import com.hexagram.febys.databinding.FragmentSplashBinding
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.auth.AuthViewModel
@@ -45,6 +46,7 @@ class SplashFragment : BaseFragment() {
                     ).show(childFragmentManager, ErrorDialog.TAG)
                 }
                 else -> {
+                    NotificationLocalBroadcastReceiver.sendBroadCast(requireContext())
                     val navigateToHome =
                         SplashFragmentDirections.actionSplashFragmentToHomeFragment()
                     navigateTo(navigateToHome)

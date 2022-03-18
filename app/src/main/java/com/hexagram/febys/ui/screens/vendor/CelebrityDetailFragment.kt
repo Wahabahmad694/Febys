@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
@@ -37,7 +36,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class CelebrityDetailFragment : BaseFragment()  {
+class CelebrityDetailFragment : BaseFragment() {
     private lateinit var binding: FragmentCelebrityDetailBinding
     private val celebrityViewModel: VendorViewModel by viewModels()
     private val filtersViewModel by viewModels<FilterViewModel>()
@@ -88,6 +87,9 @@ class CelebrityDetailFragment : BaseFragment()  {
             goBack()
         }
 
+        endorsementAdapter.gotoVendorDetail =
+            { id, isCelebrity -> gotoVendorDetail(id, isCelebrity, false) }
+
         binding.btnRefine.setOnClickListener {
             if (filtersViewModel.filters != null) {
                 val gotoRefineProduct = NavGraphDirections
@@ -104,18 +106,16 @@ class CelebrityDetailFragment : BaseFragment()  {
                 navigateTo(gotoLogin)
                 return@setOnClickListener
             }
-
             if (binding.isFollowing == null) return@setOnClickListener
-            binding.isFollowing = !binding.isFollowing!!
 
-
-            if (binding.isFollowing!!){
+            if (binding.isFollowing!!) {
+                showUnfollowConfirmationPopup {
+                    celebrityViewModel.unFollowVendor(args.id)
+                    binding.isFollowing = false
+                }
+            } else {
                 celebrityViewModel.followVendor(args.id)
-                binding.btnToggleFollow.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.red)
-            }
-
-            else{
-                celebrityViewModel.unFollowVendor(args.id)
+                binding.isFollowing = true
             }
         }
 
@@ -151,6 +151,14 @@ class CelebrityDetailFragment : BaseFragment()  {
                 if (endorsementAdapter.itemCount >= 6) View.VISIBLE else View.GONE
         }
     }
+
+    private fun showUnfollowConfirmationPopup(confirmCallBack: () -> Unit) {
+        val resId = R.drawable.ic_vendor_follow
+        val title = getString(R.string.label_delete_warning)
+        val msg = getString(R.string.msg_for_unfollow_celebrity)
+        showWarningDialog(resId, title, msg) { confirmCallBack() }
+    }
+
     private fun setObserver() {
         setupPagerAdapter()
 
@@ -302,6 +310,15 @@ class CelebrityDetailFragment : BaseFragment()  {
 
     private fun setProductItemCount(count: Int) {
         celebrityViewModel.updateItemCount(count)
+    }
+
+    private fun gotoVendorDetail(id: String, isCelebrity: Boolean, isFollow: Boolean) {
+        val direction = if (isCelebrity) {
+            NavGraphDirections.toCelebrityDetailFragment(id, isFollow)
+        } else {
+            NavGraphDirections.toVendorDetailFragment(id, isFollow)
+        }
+        navigateTo(direction)
     }
 
     override fun getTvCartCount(): TextView = binding.tvCartCount

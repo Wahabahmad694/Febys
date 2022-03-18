@@ -88,6 +88,21 @@
                 app:layout_constraintTop_toTopOf="@id/container_product_listing_title_and_count" />
 
             <TextView
+                style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:background="@color/grey"
+                android:contentDescription="@string/app_name"
+                android:minEms="3"
+                android:paddingTop="@dimen/_16sdp"
+                android:paddingEnd="@dimen/_2sdp"
+                android:paddingBottom="@dimen/_16sdp"
+                app:layout_constraintBottom_toBottomOf="@id/container_product_listing_title_and_count"
+                app:layout_constraintEnd_toStartOf="@id/iv_cart"
+                app:layout_constraintTop_toTopOf="@id/container_product_listing_title_and_count"
+                app:layout_constraintVertical_bias="0.8" />
+
+            <TextView
                 android:id="@+id/tv_cart_count"
                 style="@style/TextTheme.HelveticaNeue.TS16.Bold"
                 android:layout_width="wrap_content"
@@ -228,12 +243,12 @@
                         app:layout_constraintTop_toBottomOf="@id/tv_product_name"
                         tools:text="$14" />
 
-                    <com.facebook.drawee.view.SimpleDraweeView
+                    <ImageView
                         android:id="@+id/iv_product_verified_logo"
                         android:layout_width="0dp"
                         android:layout_height="@dimen/_14sdp"
                         android:layout_marginTop="@dimen/_8dp"
-                        app:actualImageResource="@drawable/ic_product_verified_logo"
+                        android:src="@drawable/ic_product_verified_logo"
                         app:actualImageScaleType="fitCenter"
                         app:layout_constraintDimensionRatio="7:1"
                         app:layout_constraintEnd_toEndOf="parent"

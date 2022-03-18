@@ -29,12 +29,15 @@ data class Vendor @JvmOverloads constructor(
     @SerializedName("contact_details")
     val contactDetails: ContactDetails,
     var isFollow: Boolean = false,
+    var showFollowButton: Boolean = false,
     @SerializedName("value_score")
     val valueScore: List<Rating>,
     @SerializedName("pricing_score")
     val pricingScore: List<Rating>,
     @SerializedName("quality_score")
     val qualityScore: List<Rating>,
+    @SerializedName("template_published")
+    var templatePublished: Boolean,
     @SerializedName("ratings_and_reviews")
     val _ratingsAndReviews: List<VendorReview>,
     @SerializedName("rating_and_review")

@@ -66,8 +66,8 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="TextTheme.HelveticaNeue.TS28">
-        <item name="android:textSize">@dimen/_28sp</item>
+    <style name="TextTheme.HelveticaNeue.TS20">
+        <item name="android:textSize">@dimen/_20sp</item>
     </style>
 
 
@@ -75,7 +75,7 @@
         <item name="android:textSize">@dimen/_32sp</item>
     </style>
 
-    <style name="TextTheme.HelveticaNeue.TS28.Bold">
+    <style name="TextTheme.HelveticaNeue.TS20.Bold">
         <item name="android:textStyle">bold</item>
     </style>
 
@@ -154,10 +154,10 @@
         <item name="backgroundTint">@color/selector_outlined_button</item>
     </style>
 
-    <style name="ButtonTheme.OutLine.Red" parent="Widget.MaterialComponents.Button.OutlinedButton">
+    <style name="ButtonTheme.OutLine.Red">
         <item name="android:textAppearance">@style/TextTheme.HelveticaNeue.TS14</item>
         <item name="android:minWidth">@dimen/_96sdp</item>
-        <item name="strokeColor">@color/disable_button_color</item>
+        <item name="strokeColor">@color/red</item>
         <item name="android:textColor">@color/white</item>
         <item name="backgroundTint">@color/red</item>
     </style>
@@ -238,4 +238,20 @@
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/black</item>
     </style>
+
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
+    </style>
+
+    <style name="AppBottomSheetDialogTheme"
+        parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
+    </style>
+
+    <style name="AppModalStyle"
+        parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bg_bottom_sheet</item>
+    </style>
+
 </resources>

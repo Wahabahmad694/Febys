@@ -31,9 +31,7 @@ class FebysApp : Application() {
 
         val environment = if (BuildConfig.DEBUG) Environment.SANDBOX else Environment.LIVE
         // todo change client id
-        val clientId = if (BuildConfig.DEBUG)
-            "AVxMDtg2UkfX0IFBK86r_l_EcCeloAcMmOQf7vbOuPQsr10I5QJBf-u4YVn504puI-GyLQ0ZcKRYBG2T"
-        else
+        val clientId =
             "AVxMDtg2UkfX0IFBK86r_l_EcCeloAcMmOQf7vbOuPQsr10I5QJBf-u4YVn504puI-GyLQ0ZcKRYBG2T"
         val config = CheckoutConfig(
             application = this,

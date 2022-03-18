@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
+import android.widget.ScrollView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.children
@@ -51,9 +52,6 @@ class HomeFragment : SliderFragment() {
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        savedInstanceState?.let {
-            binding.scrollViewHome.y = it.getFloat(KEY_HOME_SCROLL_POSITION, 0f)
-        }
         savedInstanceState?.let {
             lastCheckedCategoryId = it.getInt(KEY_LAST_CHECKED_FEATURED_CATEGORY_ID, -1)
         }
@@ -121,7 +119,7 @@ class HomeFragment : SliderFragment() {
         }
         binding.ivWishList.setOnClickListener {
             if (isUserLoggedIn) {
-                val gotoWishList = HomeFragmentDirections.actionHomeFragmentToWishListFragment()
+                val gotoWishList = NavGraphDirections.toWishListFragment()
                 navigateTo(gotoWishList)
             } else gotoLogin()
         }
@@ -178,6 +176,7 @@ class HomeFragment : SliderFragment() {
                 if (isUserLoggedIn) {
                     homeViewModel.toggleFav(skuId)
                     updateFav()
+                    updateFavIcon()
                 } else {
                     val navigateToLogin = NavGraphDirections.actionToLoginFragment()
                     navigateTo(navigateToLogin)
@@ -235,11 +234,12 @@ class HomeFragment : SliderFragment() {
                     setupFeaturedCategories(homeModel.featuredCategories)
                     setupSeasonalOffers(homeModel.seasonalOffers)
                     setupTrendingProducts(homeModel.trendingProducts)
-                    setupStoreYouFollow(homeModel.storeYouFollow)
                     setupUnder100DollarsItems(homeModel.under100DollarsItems)
                 }
             }
         }
+
+        homeViewModel.observeStoreYouFollow.observe(viewLifecycleOwner) { setupStoreYouFollow(it) }
     }
 
     private fun setupUniqueCategory(uniqueCategories: List<UniqueCategory>) {
@@ -374,6 +374,32 @@ class HomeFragment : SliderFragment() {
         return radioButton
     }
 
+    override fun onResume() {
+        super.onResume()
+        homeViewModel.fetchStoreYouFollow()
+        updateFavIcon()
+    }
+
+    private fun updateFavIcon() {
+        val favRes =
+            if (homeViewModel.getFav().isEmpty()) R.drawable.ic_heart else R.drawable.ic_fav_heart
+
+        binding.ivWishList.setImageResource(favRes)
+    }
+
+    fun refreshData() {
+        homeViewModel.fetchHomeModel(true) {
+            lastCheckedCategoryId = -1
+            binding.scrollViewHome.fullScroll(ScrollView.FOCUS_UP)
+            binding.rvUniqueCategories.smoothScrollToPosition(0)
+            binding.rvTodayDeals.smoothScrollToPosition(0)
+            binding.rvFeaturedCategoryProducts.smoothScrollToPosition(0)
+            binding.rvTrendingProducts.smoothScrollToPosition(0)
+            binding.rvUnder100DollarsItems.smoothScrollToPosition(0)
+            binding.rvStoreYouFollow.smoothScrollToPosition(0)
+        }
+    }
+
     override fun getSlider() =
         listOf(binding.imageSliderHome, binding.sliderSeasonalOffer)
 
@@ -398,13 +424,11 @@ class HomeFragment : SliderFragment() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putFloat(KEY_HOME_SCROLL_POSITION, binding.scrollViewHome.y)
         outState.putInt(KEY_LAST_CHECKED_FEATURED_CATEGORY_ID, lastCheckedCategoryId)
         super.onSaveInstanceState(outState)
     }
 
     companion object {
-        const val KEY_HOME_SCROLL_POSITION = "scrollPosition"
         const val KEY_LAST_CHECKED_FEATURED_CATEGORY_ID = "lastCheckedFeaturedCategoryId"
     }
 }

@@ -36,6 +36,13 @@
         app:popEnterAnim="@anim/slide_in_right"
         app:popExitAnim="@anim/slide_out_right" />
     <action
+        android:id="@+id/to_wishListFragment"
+        app:destination="@id/wishListFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_right" />
+    <action
         android:id="@+id/to_imagePreviewFragment"
         app:destination="@id/imagePreviewFragment"
         app:enterAnim="@anim/slide_in_left"
@@ -48,6 +55,14 @@
     <action
         android:id="@+id/to_vendorDetailFragment"
         app:destination="@id/vendorDetailFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_right" />
+
+    <action
+        android:id="@+id/to_celebrityDetailFragment"
+        app:destination="@id/celebrityDetailFragment"
         app:enterAnim="@anim/slide_in_left"
         app:exitAnim="@anim/slide_out_left"
         app:popEnterAnim="@anim/slide_in_right"
@@ -141,13 +156,6 @@
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
         <action
-            android:id="@+id/action_homeFragment_to_wishListFragment"
-            app:destination="@id/wishListFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right" />
-        <action
             android:id="@+id/action_homeFragment_to_storeYouFollowItemListingFragment"
             app:destination="@id/storeYouFollowItemListingFragment"
             app:enterAnim="@anim/slide_in_left"
@@ -201,14 +209,6 @@
         android:name="com.hexagram.febys.ui.screens.search.SearchFragment"
         android:label="SearchFragment"
         tools:layout="@layout/fragment_search">
-        <action
-            android:id="@+id/action_searchFragment_to_celebrityDetailFragment"
-            app:destination="@id/celebrityDetailFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right" />
-
         <action
             android:id="@+id/action_searchFragment_to_categoryNameFragment"
             app:destination="@id/categoryNameFragment"

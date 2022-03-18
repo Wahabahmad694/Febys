@@ -182,11 +182,22 @@ class CartFragment : BaseFragment() {
                 requireContext(), selectedDirectory, "application/pdf", "febys_cart.pdf", body
             )
             if (pdfUri != null) {
-                Utils.openUri(requireContext(), pdfUri)
+                showSuccessDialog(pdfUri)
             } else {
                 showToast(getString(R.string.toast_fail_pdf))
             }
         }
+    }
+
+    private fun showSuccessDialog(pdfUri: Uri) {
+        val resId = R.drawable.ic_pdf
+        val title = getString(R.string.msg_congrats)
+        val msg = getString(R.string.msg_for_pdf_success)
+
+        showInfoDialoge(resId, title, msg) {
+            Utils.openUri(requireContext(), pdfUri)
+        }
+
     }
 
     private fun gotoVendorDetail(vendorId: String, isFollow: Boolean) {

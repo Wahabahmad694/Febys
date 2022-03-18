@@ -49,7 +49,7 @@ interface IPrefManger {
 
     fun getSubscription(): Subscription?
 
-    fun increaseNotificationCount()
+    fun saveNotificationCount(count: Int)
 
     fun getNotificationCount(defValue: Int = 0): Int
 

@@ -396,4 +396,15 @@ interface FebysBackendService {
         @QueryMap queryMap: Map<String, String>,
         @Body request: PagingListRequest
     ): ApiResponse<Pagination>
+
+    @PATCH("v1/consumers/notifications/mark-read/badge")
+    suspend fun clearNotificationBadge(
+        @Header("Authorization") authKey: String
+    ): ApiResponse<Unit>
+
+    @PATCH("v1/consumers/notifications/mark-read/{id}")
+    suspend fun markRead(
+        @Header("Authorization") authKey: String,
+        @Path("id") notificationId: String
+    )
 }

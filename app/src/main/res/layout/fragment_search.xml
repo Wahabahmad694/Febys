@@ -78,7 +78,7 @@
                 android:inputType="text"
                 android:singleLine="true"
                 android:textAppearance="@style/TextTheme.HelveticaNeue.TS14"
-                android:textColorHint="@color/black" />
+                android:textColorHint="@color/gray" />
 
             <ImageView
                 android:id="@+id/iv_clear"
@@ -91,7 +91,7 @@
 
             <ImageView
                 android:id="@+id/iv_search"
-                android:layout_width="48dp"
+                android:layout_width="@dimen/_43sdp"
                 android:layout_height="match_parent"
                 android:contentDescription="@string/hint_search"
                 android:padding="@dimen/_16dp"

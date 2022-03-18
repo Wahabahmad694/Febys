@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <TextView
+        android:id="@+id/tv_title_timeline_view"
+        style="@style/TextTheme.Arial.TS12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Confirmed" />
+</layout>

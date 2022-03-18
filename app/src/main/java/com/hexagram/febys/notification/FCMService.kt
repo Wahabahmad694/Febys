@@ -1,8 +1,6 @@
 package com.hexagram.febys.notification
 
-import android.content.Intent
 import android.util.Log
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.hexagram.febys.broadcast.NotificationLocalBroadcastReceiver
@@ -35,11 +33,8 @@ class FCMService : FirebaseMessagingService() {
         val notification = Notification.fromMap(remoteMessage.data) ?: return
         NotificationManager.sendNotification(this, title, body, notification)
 
-        pref.increaseNotificationCount()
-
-        Intent().also { intent ->
-            intent.action = NotificationLocalBroadcastReceiver.ACTION_RECEIVE_NOTIFICATION_BROADCAST
-            LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
-        }
+        val notificationCount = pref.getNotificationCount() + 1
+        pref.saveNotificationCount(notificationCount)
+        NotificationLocalBroadcastReceiver.sendBroadCast(this)
     }
 }

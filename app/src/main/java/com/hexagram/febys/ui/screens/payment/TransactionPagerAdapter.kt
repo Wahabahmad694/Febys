@@ -53,7 +53,9 @@ class TransactionPagerAdapter :
             }
 
             transactionId.text = item._id
-            tvSource.text = item.source.capitalizeWords
+            var source = item.source.capitalizeWords
+            if (source == "Paystack") source = "Momo Payment"
+            tvSource.text = source
             tvDateTime.text =
                 Utils.DateTime.formatDate(item.createdAt, FORMAT_MONTH_DATE_YEAR_HOUR_MIN)
             tvAmount.text =

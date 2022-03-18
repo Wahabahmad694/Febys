@@ -8,6 +8,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
+import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentVendorListingBinding
@@ -71,9 +72,11 @@ class VendorListingFragment : BaseFragment() {
         }
 
         vendorListingAdapter.unFollowVendor = { vendor, position ->
-            vendorViewModel.unFollowVendor(vendor._id)
-            vendor.isFollow = !vendor.isFollow
-            vendorListingAdapter.notifyItemChanged(position)
+            showUnfollowConfirmationPopup {
+                vendorViewModel.unFollowVendor(vendor._id)
+                vendor.isFollow = !vendor.isFollow
+                vendorListingAdapter.notifyItemChanged(position)
+            }
         }
 
         vendorListingAdapter.gotoCelebrityDetail =
@@ -81,6 +84,15 @@ class VendorListingFragment : BaseFragment() {
 
         vendorListingAdapter.gotoVendorDetail =
             { vendor -> gotoVendorDetail(vendor, vendor.isFollow) }
+    }
+
+    private fun showUnfollowConfirmationPopup(confirmCallBack: () -> Unit) {
+        val resId = R.drawable.ic_vendor_follow
+        val title = getString(R.string.label_delete_warning)
+        val msg = getString(
+            if (isCelebrity) R.string.msg_for_unfollow_celebrity else R.string.msg_for_unfollow_vendor
+        )
+        showWarningDialog(resId, title, msg) { confirmCallBack() }
     }
 
     private fun setObserver() {
@@ -109,8 +121,7 @@ class VendorListingFragment : BaseFragment() {
     }
 
     private fun gotoCelebrityDetail(vendorId: String, isFollow: Boolean) {
-        val direction = SearchFragmentDirections
-            .actionSearchFragmentToCelebrityDetailFragment(vendorId, isFollow)
+        val direction = NavGraphDirections.toCelebrityDetailFragment(vendorId, isFollow)
         navigateTo(direction)
     }
 

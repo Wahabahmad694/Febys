@@ -43,7 +43,7 @@
                 android:layout_width="@dimen/_13sdp"
                 android:layout_height="@dimen/_13sdp"
                 android:layout_marginHorizontal="@dimen/_8sdp"
-                android:src="@drawable/ic_adds"
+                android:src="@drawable/ic_plus"
                 app:layout_constraintBottom_toBottomOf="@id/label_add_new_shipping_address"
                 app:layout_constraintEnd_toEndOf="@id/label_add_new_shipping_address"
                 app:layout_constraintTop_toTopOf="@id/label_add_new_shipping_address" />
@@ -54,7 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_31sdp"
                 android:layout_marginHorizontal="@dimen/_16sdp"
-                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_20sdp"
                 android:background="@drawable/bg_border_dark_grey"
                 android:gravity="center"
                 android:text="@string/label_add_shipping_address"

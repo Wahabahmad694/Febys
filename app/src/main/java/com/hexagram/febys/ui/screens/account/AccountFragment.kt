@@ -10,6 +10,7 @@ import com.hexagram.febys.BuildConfig
 import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
+import com.hexagram.febys.broadcast.NotificationLocalBroadcastReceiver
 import com.hexagram.febys.databinding.FragmentAccountBinding
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.auth.AuthViewModel
@@ -118,6 +119,10 @@ class AccountFragment : BaseFragment() {
                 getString(R.string.label_return_details)
             )
         }
+        binding.orders.wishList.setOnClickListener {
+            val gotoWishList = NavGraphDirections.toWishListFragment()
+            navigateTo(gotoWishList)
+        }
 
         binding.settings.shippingAddress.setOnClickListener {
             val shippingAddress =
@@ -136,31 +141,39 @@ class AccountFragment : BaseFragment() {
         }
         binding.support.aboutFebys.setOnClickListener {
             val goToAboutFebys =
-                NavGraphDirections.toWebViewFragment(getString(R.string.label_about_febys),
+                NavGraphDirections.toWebViewFragment(
+                    getString(R.string.label_about_febys),
                     "${BuildConfig.backendBaseUrl}static/about-us/",
-                    false)
+                    false
+                )
             navigateTo(goToAboutFebys)
         }
 
         binding.support.helpCenter.setOnClickListener {
             val goToHelpCenter =
-                NavGraphDirections.toWebViewFragment(getString(R.string.label_help_center),
+                NavGraphDirections.toWebViewFragment(
+                    getString(R.string.label_help_center),
                     "${BuildConfig.backendBaseUrl}static/help-center/",
-                    false)
+                    false
+                )
             navigateTo(goToHelpCenter)
         }
         binding.support.privacyPolicy.setOnClickListener {
             val goToPrivacyPolicy =
-                NavGraphDirections.toWebViewFragment(getString(R.string.label_privacy_policy),
+                NavGraphDirections.toWebViewFragment(
+                    getString(R.string.label_privacy_policy),
                     "${BuildConfig.backendBaseUrl}static/privacy-policy/",
-                    false)
+                    false
+                )
             navigateTo(goToPrivacyPolicy)
         }
         binding.support.termsAndConditions.setOnClickListener {
             val goToTermsAndConditions =
-                NavGraphDirections.toWebViewFragment(getString(R.string.label_terms_amp_conditions),
+                NavGraphDirections.toWebViewFragment(
+                    getString(R.string.label_terms_amp_conditions),
                     "${BuildConfig.backendBaseUrl}static/terms-and-conditions/",
-                    false)
+                    false
+                )
             navigateTo(goToTermsAndConditions)
         }
     }
@@ -192,6 +205,7 @@ class AccountFragment : BaseFragment() {
                     ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
                 }
                 is DataState.Data -> {
+                    NotificationLocalBroadcastReceiver.sendBroadCast(requireContext())
                     updateUserUi()
                     updateWalletUi()
                 }

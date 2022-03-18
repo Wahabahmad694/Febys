@@ -17,7 +17,7 @@
         app:actualImageScaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:placeholderImage="@drawable/placeholder_image"
+        android:background="@drawable/placeholder_template"
         app:placeholderImageScaleType="centerCrop"
         app:roundedCornerRadius="@dimen/_5sdp"
         binding:image_url="@{imageUrl}" />

@@ -183,7 +183,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintWidth_max="@dimen/_300sdp"
-                        app:placeholderImage="@drawable/placeholder_image"
+                        android:background="@drawable/placeholder_template"
                         app:placeholderImageScaleType="centerCrop"
                         app:roundedCornerRadius="@dimen/_5sdp"/>
 
@@ -317,7 +317,10 @@
                         style="@style/ButtonTheme.OutLine"
                         android:layout_width="@dimen/_75sdp"
                         android:layout_height="wrap_content"
+                        android:textColor="@{isFollowing ? @color/black : @color/white}"
+                        android:backgroundTint="@{isFollowing ? @color/selector_outlined_button : @color/red}"
                         android:text="@{isFollowing ? @string/label_following : @string/label_follow}"
+                        app:strokeColor="@{isFollowing ? @color/disable_button_color : @color/red}"
                         tools:text="Unfollow"
                         />
 

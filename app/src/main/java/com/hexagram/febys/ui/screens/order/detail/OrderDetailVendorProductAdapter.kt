@@ -10,6 +10,7 @@ import com.hexagram.febys.databinding.ItemOrderDetailVendorsBinding
 import com.hexagram.febys.models.api.cart.CartProduct
 import com.hexagram.febys.models.api.cart.VendorProducts
 import com.hexagram.febys.utils.OrderStatus
+import com.hexagram.febys.utils.TimelineModel
 import com.hexagram.febys.utils.load
 import com.hexagram.febys.utils.setBackgroundRoundedColor
 
@@ -55,6 +56,8 @@ class OrderDetailVendorProductAdapter : RecyclerView.Adapter<IBindViewHolder>() 
             val vendorProducts = vendors[position]
             val vendor = vendorProducts.vendor
             val reverted = vendorProducts.reverted == true
+
+            updateTimeline(vendorProducts.status)
 
             vendorName.text = vendor.shopName
             vendorType.text = vendor.role.name
@@ -122,6 +125,44 @@ class OrderDetailVendorProductAdapter : RecyclerView.Adapter<IBindViewHolder>() 
             vendorImg.setOnClickListener { gotoVendorDetail?.invoke(vendor._id) }
             btnCancelOrder.setOnClickListener { onCancelOrderClick?.invoke(vendor._id) }
             btnAddReview.setOnClickListener { onAddReviewClick?.invoke(vendorProducts) }
+        }
+
+        private fun updateTimeline(status: String?) {
+            if (status.isNullOrEmpty()) {
+                binding.timeline.isVisible = false
+                return
+            }
+
+            val timelines = mutableListOf<TimelineModel>()
+
+            val isCancelled = status in arrayOf(
+                OrderStatus.CANCELED, OrderStatus.CANCELLED_BY_VENDOR, OrderStatus.REJECTED
+            )
+            timelines.add(
+                TimelineModel(
+                    if (OrderStatus.isAccepted(status)) "Confirmed" else "Pending",
+                    OrderStatus.isAccepted(status),
+                    isCancelled
+                )
+            )
+            if (!isCancelled) {
+                timelines.add(
+                    TimelineModel(
+                        "On The Way",
+                        OrderStatus.isShipped(status),
+                        isCancelled
+                    )
+                )
+            }
+            timelines.add(
+                TimelineModel(
+                    if (isCancelled) "Canceled" else "Received",
+                    isCancelled || OrderStatus.isReceived(status),
+                    isCancelled
+                )
+            )
+
+            binding.timeline.submitTimeline(timelines)
         }
     }
 

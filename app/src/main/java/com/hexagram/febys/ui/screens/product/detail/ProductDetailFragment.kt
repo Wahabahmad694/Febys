@@ -2,6 +2,7 @@ package com.hexagram.febys.ui.screens.product.detail
 
 import android.app.DownloadManager
 import android.content.Context
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -11,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.addCallback
+import androidx.core.content.ContextCompat
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -23,6 +25,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.snackbar.Snackbar
 import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
 import com.hexagram.febys.base.SliderFragment
@@ -163,7 +166,13 @@ class ProductDetailFragment : SliderFragment() {
         }
 
         binding.containerProductShippingInfo.returnChip.setOnClickListener {
-            downloadPolicy()
+            val resId = R.drawable.ic_pdf
+            val title = getString(R.string.label_delete_warning)
+            val msg = getString(R.string.msg_for_download_pdf)
+
+            showWarningDialog(resId, title, msg) {
+                downloadPolicy()
+            }
         }
 
         productVariantSecondAttrAdapter.interaction = { selectedSecondAttr ->
@@ -220,6 +229,12 @@ class ProductDetailFragment : SliderFragment() {
         }
 
         binding.btnAddToCart.setOnClickListener {
+            val anim = android.view.animation.AnimationUtils.loadAnimation(
+                requireContext(),
+                R.anim.cart_count_bounce
+            )
+            binding.tvCartCount.startAnimation(anim)
+            showSnackBar()
             handleAddToCartClick()
         }
 
@@ -307,12 +322,25 @@ class ProductDetailFragment : SliderFragment() {
         }
     }
 
+    private fun showSnackBar() {
+        Snackbar.make(binding.root, getString(R.string.msg_item_added), Snackbar.LENGTH_LONG)
+            .setAction(getString(R.string.msg_view_bag)) {
+                val gotoCart = NavGraphDirections.actionToCartFragment()
+                navigateTo(gotoCart)
+            }
+            .setTextColor(Color.WHITE)
+            .setActionTextColor(Color.WHITE)
+            .setBackgroundTint(ContextCompat.getColor(requireContext(),R.color.red))
+            .show()
+    }
+
     private fun downloadPolicy() {
         val uri = Uri.parse(binding.variant?.refund?.policy)
-        val mManager = requireContext().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        val mManager =
+            requireContext().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         val request: DownloadManager.Request? = DownloadManager.Request(uri)
             .setTitle("Febys Return & Refund Policy")
-            .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS," ReturnPolicy.pdf")
+            .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, " ReturnPolicy.pdf")
             .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
             .setDescription("Downloading...")
             .setMimeType("application/pdf");
@@ -540,7 +568,7 @@ class ProductDetailFragment : SliderFragment() {
 
         updateReviews(product.ratingsAndReviews)
 
-        val storeRating = product.stats.rating.score
+        val storeRating = product.vendor.stats.rating.score
         binding.storeRatingBar.rating = storeRating.toFloat()
         binding.storeRatingBar.stepSize = 0.5f
         binding.tvStoreRating.text = getString(R.string.store_rating, storeRating)
@@ -661,6 +689,16 @@ class ProductDetailFragment : SliderFragment() {
                 val gotoProductDetail =
                     NavGraphDirections.actionToProductDetail(item._id, item.variants[0].skuId)
                 navigateTo(gotoProductDetail)
+            }
+            additionalAdapter.toggleFavIfUserLoggedIn = { skuId ->
+                isUserLoggedIn.also {
+                    if (it) {
+                        productDetailViewModel.toggleFav(skuId)
+                    } else {
+                        val navigateToLogin = NavGraphDirections.actionToLoginFragment()
+                        navigateTo(navigateToLogin)
+                    }
+                }
             }
             layoutAdditionalProductBinding.btnAdditionalProductShopAll.setOnClickListener {
                 var actionToProductListing: NavDirections? = null

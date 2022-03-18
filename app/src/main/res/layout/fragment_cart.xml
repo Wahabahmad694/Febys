@@ -104,7 +104,7 @@
 
         <TextView
             android:id="@+id/tv_total_amount"
-            style="@style/TextTheme.HelveticaNeue.TS28.Bold"
+            style="@style/TextTheme.HelveticaNeue.TS20.Bold"
             android:layout_width="0dp"
             android:textAlignment="viewEnd"
             android:ellipsize="end"

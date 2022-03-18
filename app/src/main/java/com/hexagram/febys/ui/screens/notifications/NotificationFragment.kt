@@ -83,6 +83,7 @@ class NotificationFragment : BaseFragment() {
                     notification.navigate()
                 }
             }
+            notificationViewModel.markRead(it._id)
         }
 
         binding.gotoLogin.setOnClickListener {

@@ -71,8 +71,9 @@ class CheckoutFragment : BaseFragment() {
         }
 
         binding.btnPlaceOrder.setOnClickListener {
+            if (orderPrice == null) return@setOnClickListener
             if (checkoutViewModel.getDefaultShippingAddress() == null) {
-                showToast(getString(R.string.error_please_select_shipping_address))
+                showErrorPopUp()
             } else {
                 if (!validVoucher) {
                     showInvalidVoucherDialog()
@@ -149,6 +150,16 @@ class CheckoutFragment : BaseFragment() {
         }
     }
 
+    private fun showErrorPopUp() {
+        val resId = R.drawable.ic_error
+        val title = getString(R.string.label_error)
+        val msg = getString(R.string.error_add_shipping_address)
+
+        showInfoDialoge(resId, title, msg) {
+            // do nothing
+        }
+    }
+
     private fun showInvalidVoucherDialog() {
         val resId = R.drawable.ic_error
         val title = getString(R.string.label_invalid_voucher)
@@ -219,7 +230,7 @@ class CheckoutFragment : BaseFragment() {
 
     private fun updateShippingAddressUi(shippingAddress: ShippingAddress?) {
         binding.tvShippingAddress.text =
-            shippingAddress?.shippingDetail?.address?.fullAddress()
+            shippingAddress?.shippingDetail?.address?.singleLineAddress()
                 ?: getString(R.string.msg_for_no_shipping_address)
     }
 

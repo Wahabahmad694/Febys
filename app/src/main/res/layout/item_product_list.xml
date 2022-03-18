@@ -30,7 +30,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:placeholderImage="@drawable/placeholder_image"
+            android:background="@drawable/placeholder_template"
             binding:image_url="@{product.variants.get(0).images.get(0)}" />
 
         <androidx.appcompat.widget.AppCompatImageView

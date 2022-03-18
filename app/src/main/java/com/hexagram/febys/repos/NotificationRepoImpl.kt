@@ -35,4 +35,16 @@ class NotificationRepoImpl @Inject constructor(
             .flowOn(dispatcher)
             .cachedIn(scope)
     }
+
+    override suspend fun markRead(notificationId: String, dispatcher: CoroutineDispatcher) {
+        val authToken = pref.getAccessToken()
+        if (authToken.isEmpty()) return
+        backendService.markRead(authToken, notificationId)
+    }
+
+    override suspend fun clearNotificationBadge(dispatcher: CoroutineDispatcher) {
+        val authToken = pref.getAccessToken()
+        if (authToken.isEmpty()) return
+        backendService.clearNotificationBadge(authToken)
+    }
 }

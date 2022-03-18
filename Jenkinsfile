@@ -42,8 +42,10 @@ node ('android-node') {
         // set up gradle for tasks.
 //         sh 'gradle wrapper'
         sh 'touch local.properties'
-
+        sh 'cp /var/jenkins_home/projects/android/febys/firebase_config/google-services.json app/src/debug/google-services.json'
         sh 'cp /var/jenkins_home/projects/android/febys/firebase_config/google-services.json app/src/qa/google-services.json'
+        sh 'cp /var/jenkins_home/projects/android/febys/firebase_config/google-services.json app/src/staging/google-services.json'
+        sh 'cp /var/jenkins_home/projects/android/febys/firebase_config/google-services.json app/src/release/google-services.json'
     }
 
     try{
@@ -115,13 +117,15 @@ void setupBuildCredentials() {
 void setupDebugCredentials() {
     withCredentials([
         file(credentialsId: 'febys-keystore', variable: 'debugKeystore'),
-        file(credentialsId: 'febys-keystore-properties', variable: 'keystoreProperties'),
-        file(credentialsId: 'febysCredentials', variable: 'febysQaCredentials')
+        file(credentialsId: 'febys-keystore-properties', variable: 'debugKeystoreProperties'),
+        file(credentialsId: 'febysCredentials', variable: 'febysCredentials')
     ]) {
         sh 'mkdir -p app/keystore/'
         sh 'cp \$debugKeystore app/keystore/debug.keystore'
-        sh 'cp \$keystoreProperties app/keystore/debug.properties'
-        sh 'cp \$febysQaCredentials credentials.properties'
+        sh 'cp \$debugKeystoreProperties app/keystore/debug.properties'
+        sh 'cp \$debugKeystore app/keystore/release.keystore'
+        sh 'cp \$debugKeystoreProperties app/keystore/release.properties'
+        sh 'cp \$febysCredentials credentials.properties'
     }
 }
 
