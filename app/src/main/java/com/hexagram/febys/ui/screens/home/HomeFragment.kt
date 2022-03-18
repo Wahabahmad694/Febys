@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
+import android.widget.ScrollView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.children
@@ -51,9 +52,6 @@ class HomeFragment : SliderFragment() {
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        savedInstanceState?.let {
-            binding.scrollViewHome.y = it.getFloat(KEY_HOME_SCROLL_POSITION, 0f)
-        }
         savedInstanceState?.let {
             lastCheckedCategoryId = it.getInt(KEY_LAST_CHECKED_FEATURED_CATEGORY_ID, -1)
         }
@@ -389,6 +387,19 @@ class HomeFragment : SliderFragment() {
         binding.ivWishList.setImageResource(favRes)
     }
 
+    fun refreshData() {
+        homeViewModel.fetchHomeModel(true) {
+            lastCheckedCategoryId = -1
+            binding.scrollViewHome.fullScroll(ScrollView.FOCUS_UP)
+            binding.rvUniqueCategories.smoothScrollToPosition(0)
+            binding.rvTodayDeals.smoothScrollToPosition(0)
+            binding.rvFeaturedCategoryProducts.smoothScrollToPosition(0)
+            binding.rvTrendingProducts.smoothScrollToPosition(0)
+            binding.rvUnder100DollarsItems.smoothScrollToPosition(0)
+            binding.rvStoreYouFollow.smoothScrollToPosition(0)
+        }
+    }
+
     override fun getSlider() =
         listOf(binding.imageSliderHome, binding.sliderSeasonalOffer)
 
@@ -413,13 +424,11 @@ class HomeFragment : SliderFragment() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putFloat(KEY_HOME_SCROLL_POSITION, binding.scrollViewHome.y)
         outState.putInt(KEY_LAST_CHECKED_FEATURED_CATEGORY_ID, lastCheckedCategoryId)
         super.onSaveInstanceState(outState)
     }
 
     companion object {
-        const val KEY_HOME_SCROLL_POSITION = "scrollPosition"
         const val KEY_LAST_CHECKED_FEATURED_CATEGORY_ID = "lastCheckedFeaturedCategoryId"
     }
 }

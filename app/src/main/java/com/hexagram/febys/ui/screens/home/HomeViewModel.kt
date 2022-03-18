@@ -11,6 +11,7 @@ import com.hexagram.febys.repos.IProductRepo
 import com.hexagram.febys.ui.screens.product.ProductViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,12 +26,13 @@ class HomeViewModel @Inject constructor(
     private val _observeStoreYouFollow = MutableLiveData<List<Product>>()
     val observeStoreYouFollow: LiveData<List<Product>> = _observeStoreYouFollow
 
-    fun fetchHomeModel(isRefresh: Boolean = false) {
+    fun fetchHomeModel(isRefresh: Boolean = false, resetUiCallback: (() -> Unit)? = null) {
         viewModelScope.launch {
             if (!isRefresh && (_observeHomeModel.value != null && _observeHomeModel.value is DataState.Data)) {
                 return@launch
             }
             _observeHomeModel.postValue(DataState.Loading())
+            delay(300)
             val uniqueCategories = async { homeRepo.fetchAllUniqueCategories() }
             val banners = async { homeRepo.fetchAllBanner() }
             val todayDeals = async { homeRepo.fetchTodayDeals() }
@@ -50,6 +52,7 @@ class HomeViewModel @Inject constructor(
             )
 
             _observeHomeModel.postValue(DataState.Data(homeModel))
+            resetUiCallback?.invoke()
         }
     }
 

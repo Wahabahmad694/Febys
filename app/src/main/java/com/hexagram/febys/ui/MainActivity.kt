@@ -13,6 +13,7 @@ import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseActivity
 import com.hexagram.febys.broadcast.NotificationLocalBroadcastReceiver
 import com.hexagram.febys.databinding.ActivityMainBinding
+import com.hexagram.febys.ui.screens.home.HomeFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -53,6 +54,9 @@ class MainActivity : BaseActivity() {
 
         binding.bottomNavigation.setOnNavigationItemReselectedListener {
             // do not remove it, this is need to avoid recreation of fragment on reselect
+            if (navController.currentDestination?.id == R.id.homeFragment) {
+                (navHostFragment.childFragmentManager.fragments[0] as? HomeFragment)?.refreshData()
+            }
         }
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
