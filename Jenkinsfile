@@ -113,14 +113,8 @@ void setupBuildCredentials() {
 
 void setupDebugCredentials() {
     withCredentials([
-        if (env.BRANCH_NAME == 'release') {
-            file(credentialsId: 'febys-keystore', variable: '$releaseKeystore'),
-            file(credentialsId: 'febys-keystore-properties', variable: 'releaseKeystoreProperties'),
-        }
-        else {
-            file(credentialsId: 'febys-keystore', variable: 'debugKeystore'),
-            file(credentialsId: 'febys-keystore-properties', variable: '$debugKeystoreProperties'),
-        }
+        file(credentialsId: 'febys-keystore', variable: 'debugKeystore'),
+        file(credentialsId: 'febys-keystore-properties', variable: '$debugKeystoreProperties'),
         file(credentialsId: 'febysCredentials', variable: 'febysCredentials')
     ]) {
         sh 'mkdir -p app/keystore/'
