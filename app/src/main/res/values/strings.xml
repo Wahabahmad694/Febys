@@ -408,5 +408,7 @@
     <string name="please_login_to_see_notifications">Please sign in to see notifications</string>
     <string name="order_listing">Order Listing</string>
     <string name="label_continue_shopping">Continue Shopping</string>
+    <string name="msg_item_added">Item has been added in the bag</string>
+    <string name="msg_view_bag">View Bag</string>
 
 </resources>

@@ -2,6 +2,7 @@ package com.hexagram.febys.ui.screens.product.detail
 
 import android.app.DownloadManager
 import android.content.Context
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -11,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.addCallback
+import androidx.core.content.ContextCompat
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -23,6 +25,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.snackbar.Snackbar
 import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
 import com.hexagram.febys.base.SliderFragment
@@ -231,6 +234,7 @@ class ProductDetailFragment : SliderFragment() {
                 R.anim.cart_count_bounce
             )
             binding.tvCartCount.startAnimation(anim)
+            showSnackBar()
             handleAddToCartClick()
         }
 
@@ -316,6 +320,18 @@ class ProductDetailFragment : SliderFragment() {
             binding.containerRatingAndReviews.reviews.radioGroupSorting.check(checkedId)
             updateReviews(ratingsAndReviews)
         }
+    }
+
+    private fun showSnackBar() {
+        Snackbar.make(binding.root, getString(R.string.msg_item_added), Snackbar.LENGTH_LONG)
+            .setAction(getString(R.string.msg_view_bag)) {
+                val gotoCart = NavGraphDirections.actionToCartFragment()
+                navigateTo(gotoCart)
+            }
+            .setTextColor(Color.WHITE)
+            .setActionTextColor(Color.WHITE)
+            .setBackgroundTint(ContextCompat.getColor(requireContext(),R.color.red))
+            .show()
     }
 
     private fun downloadPolicy() {
