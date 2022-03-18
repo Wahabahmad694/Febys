@@ -42,7 +42,10 @@ node ('android-node') {
         // set up gradle for tasks.
 //         sh 'gradle wrapper'
         sh 'touch local.properties'
+        sh 'cp /var/jenkins_home/projects/android/febys/firebase_config/google-services.json app/src/debug/google-services.json'
         sh 'cp /var/jenkins_home/projects/android/febys/firebase_config/google-services.json app/src/qa/google-services.json'
+        sh 'cp /var/jenkins_home/projects/android/febys/firebase_config/google-services.json app/src/staging/google-services.json'
+        sh 'cp /var/jenkins_home/projects/android/febys/firebase_config/google-services.json app/src/release/google-services.json'
     }
 
     try{
