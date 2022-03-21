@@ -17,7 +17,7 @@
             app:actualImageScaleType="fitCenter"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/placeholder_template"
+            app:placeholderImage="@drawable/placeholder_image"
             app:placeholderImageScaleType="centerCrop" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

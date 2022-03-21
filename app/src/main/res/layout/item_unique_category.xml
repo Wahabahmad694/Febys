@@ -24,7 +24,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:placeholderImage="@drawable/placeholder_image"
+            app:placeholderImage="@drawable/placeholder_template"
             app:roundAsCircle="true"
             binding:image_url="@{item.image[0]}" />
 

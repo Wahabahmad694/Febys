@@ -323,12 +323,13 @@ class ProductDetailFragment : SliderFragment() {
     }
 
     private fun showSnackBar() {
-        Snackbar.make(binding.root, getString(R.string.msg_item_added), Snackbar.LENGTH_LONG)
+        Snackbar.make(binding.root, getString(R.string.msg_item_added), Snackbar.LENGTH_SHORT)
             .setAction(getString(R.string.msg_view_bag)) {
                 val gotoCart = NavGraphDirections.actionToCartFragment()
                 navigateTo(gotoCart)
             }
             .setTextColor(Color.WHITE)
+            .setAnchorView(binding.btnAddToCart)
             .setActionTextColor(Color.WHITE)
             .setBackgroundTint(ContextCompat.getColor(requireContext(),R.color.red))
             .show()
