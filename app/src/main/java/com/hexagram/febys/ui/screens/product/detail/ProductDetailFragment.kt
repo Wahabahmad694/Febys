@@ -323,8 +323,8 @@ class ProductDetailFragment : SliderFragment() {
         val anim = ValueAnimator.ofFloat(1f, 1.2f)
         anim.duration = 100
         anim.addUpdateListener { animation ->
-            binding.tvCartCount.setScaleX(animation.animatedValue as Float)
-            binding.tvCartCount.setScaleY(animation.animatedValue as Float)
+            binding.tvCartCount.scaleX = animation.animatedValue as Float
+            binding.tvCartCount.scaleY = animation.animatedValue as Float
 
         }
         anim.repeatCount = 1
