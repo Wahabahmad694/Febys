@@ -1,5 +1,6 @@
 package com.hexagram.febys.ui.screens.product.detail
 
+import android.animation.ValueAnimator
 import android.app.DownloadManager
 import android.content.Context
 import android.graphics.Color
@@ -229,11 +230,7 @@ class ProductDetailFragment : SliderFragment() {
         }
 
         binding.btnAddToCart.setOnClickListener {
-            val anim = android.view.animation.AnimationUtils.loadAnimation(
-                requireContext(),
-                R.anim.cart_count_bounce
-            )
-            binding.tvCartCount.startAnimation(anim)
+            showAnimation()
             showSnackBar()
             handleAddToCartClick()
         }
@@ -322,6 +319,19 @@ class ProductDetailFragment : SliderFragment() {
         }
     }
 
+    private fun showAnimation() {
+        val anim = ValueAnimator.ofFloat(1f, 1.2f)
+        anim.duration = 100
+        anim.addUpdateListener { animation ->
+            binding.tvCartCount.setScaleX(animation.animatedValue as Float)
+            binding.tvCartCount.setScaleY(animation.animatedValue as Float)
+
+        }
+        anim.repeatCount = 1
+        anim.repeatMode = ValueAnimator.REVERSE
+        anim.start()
+    }
+
     private fun showSnackBar() {
         Snackbar.make(binding.root, getString(R.string.msg_item_added), Snackbar.LENGTH_SHORT)
             .setAction(getString(R.string.msg_view_bag)) {
@@ -331,7 +341,7 @@ class ProductDetailFragment : SliderFragment() {
             .setTextColor(Color.WHITE)
             .setAnchorView(binding.btnAddToCart)
             .setActionTextColor(Color.WHITE)
-            .setBackgroundTint(ContextCompat.getColor(requireContext(),R.color.red))
+            .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.red))
             .show()
     }
 
@@ -665,7 +675,7 @@ class ProductDetailFragment : SliderFragment() {
     }
 
     private fun addAdditionalProduct(
-        filterType: FiltersType, title: String, products: List<Product>, position: Int = -1
+        filterType: FiltersType, title: String, products: List<Product>, position: Int = -1,
     ) {
         if (products.isEmpty()) return
 
