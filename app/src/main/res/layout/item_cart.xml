@@ -178,7 +178,7 @@
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:orientation="vertical"
-                app:cardCornerRadius="@dimen/_13sdp"
+                app:cardCornerRadius="@dimen/_10sdp"
                 app:cardElevation="@dimen/_5sdp"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_product_price"
                 app:layout_constraintStart_toStartOf="parent"
