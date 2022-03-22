@@ -247,7 +247,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_5sdp"
-                        android:background="@color/cream"
+                        android:background="@drawable/bg_corner_cream"
                         android:padding="@dimen/_5sdp"
                         app:layout_constraintBottom_toBottomOf="@id/tv_product_price"
                         app:layout_constraintStart_toEndOf="@id/tv_product_price"
@@ -261,7 +261,6 @@
                             android:layout_height="wrap_content"
                             android:text="@{String.format(@string/save_price, variant.savedPrice.getFormattedPrice())}"
                             tools:text="Saved GHS 40" />
-
                     </LinearLayout>
 
                     <ImageView
