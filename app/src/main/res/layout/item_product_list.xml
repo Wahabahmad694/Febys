@@ -14,6 +14,10 @@
             name="product"
             type="com.hexagram.febys.models.api.product.Product" />
 
+        <variable
+            name="variant"
+            type="com.hexagram.febys.models.api.product.Variant" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -110,6 +114,29 @@
             app:layout_constraintStart_toEndOf="@id/tv_product_off_price_separator"
             app:layout_constraintTop_toBottomOf="@id/tv_product_name"
             tools:text="$14" />
+
+        <LinearLayout
+            android:id="@+id/container_saved_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:background="@color/cream"
+            android:padding="@dimen/_5sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_product_off_price"
+            app:layout_constraintEnd_toEndOf="@id/tv_product_price"
+            app:layout_constraintTop_toBottomOf="@id/tv_product_price"
+            binding:is_visible="@{variant.hasPromotion}">
+
+            <TextView
+                android:id="@+id/tv_save_amount"
+                style="@style/TextTheme.Arial.TS10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{variant.originalPrice.getFormattedPrice()}"
+                tools:text="Saved GHS 40" />
+
+        </LinearLayout>
 
         <View
             android:layout_width="match_parent"
