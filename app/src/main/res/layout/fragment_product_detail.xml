@@ -259,7 +259,7 @@
                             style="@style/TextTheme.Arial.TS10"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{variant.originalPrice.getFormattedPrice()}"
+                            android:text="@{String.format(@string/save_price, variant.savedPrice.getFormattedPrice())}"
                             tools:text="Saved GHS 40" />
 
                     </LinearLayout>

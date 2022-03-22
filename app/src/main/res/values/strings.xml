@@ -410,5 +410,6 @@
     <string name="label_continue_shopping">Continue Shopping</string>
     <string name="msg_item_added">Item has been added in the bag</string>
     <string name="msg_view_bag">View Bag</string>
+    <string name="save_price">Save %1s</string>
 
 </resources>

@@ -39,6 +39,13 @@ data class Variant(
             return if (_images.isNullOrEmpty()) listOf("") else _images
         }
 
+    @IgnoredOnParcel
+    val savedPrice: Price
+        get() {
+            val savedAmount = (originalPrice.value - price.value)
+            return Price("", savedAmount, originalPrice.currency)
+        }
+
     fun getFirstVariantAttr(): Attr? {
         if (attributes.isNullOrEmpty()) return null
         return attributes.sortedBy { it._id }[0]
