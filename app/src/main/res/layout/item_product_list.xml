@@ -126,7 +126,7 @@
 
             <TextView
                 android:id="@+id/tv_save_amount"
-                style="@style/TextTheme.Arial.TS10"
+                style="@style/TextTheme.Arial.TS10.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{String.format(@string/save_price, product.variants.get(0).savedPrice.getFormattedPrice())}"
