@@ -1,8 +1,10 @@
 package com.hexagram.febys.ui.screens.product.detail
 
+import android.animation.ValueAnimator
 import android.app.DownloadManager
 import android.content.Context
 import android.graphics.Color
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -13,6 +15,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -229,11 +232,7 @@ class ProductDetailFragment : SliderFragment() {
         }
 
         binding.btnAddToCart.setOnClickListener {
-            val anim = android.view.animation.AnimationUtils.loadAnimation(
-                requireContext(),
-                R.anim.cart_count_bounce
-            )
-            binding.tvCartCount.startAnimation(anim)
+            showAnimation()
             showSnackBar()
             handleAddToCartClick()
         }
@@ -322,15 +321,32 @@ class ProductDetailFragment : SliderFragment() {
         }
     }
 
+    private fun showAnimation() {
+        val anim = ValueAnimator.ofFloat(1f, 1.2f)
+        anim.duration = 100
+        anim.addUpdateListener { animation ->
+            binding.tvCartCount.scaleX = animation.animatedValue as Float
+            binding.tvCartCount.scaleY = animation.animatedValue as Float
+
+        }
+        anim.repeatCount = 1
+        anim.repeatMode = ValueAnimator.REVERSE
+        anim.start()
+    }
+
     private fun showSnackBar() {
-        Snackbar.make(binding.root, getString(R.string.msg_item_added), Snackbar.LENGTH_LONG)
+        val tv = view?.findViewById(com.google.android.material.R.id.snackbar_action) as? TextView
+        tv?.typeface = ResourcesCompat.getFont(requireContext(), R.font.helvetica_neue)
+        tv?.setTypeface(null,Typeface.BOLD)
+        Snackbar.make(binding.root, getString(R.string.msg_item_added), Snackbar.LENGTH_SHORT)
             .setAction(getString(R.string.msg_view_bag)) {
                 val gotoCart = NavGraphDirections.actionToCartFragment()
                 navigateTo(gotoCart)
             }
             .setTextColor(Color.WHITE)
+            .setAnchorView(binding.btnAddToCart)
             .setActionTextColor(Color.WHITE)
-            .setBackgroundTint(ContextCompat.getColor(requireContext(),R.color.red))
+            .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.red))
             .show()
     }
 
@@ -664,7 +680,7 @@ class ProductDetailFragment : SliderFragment() {
     }
 
     private fun addAdditionalProduct(
-        filterType: FiltersType, title: String, products: List<Product>, position: Int = -1
+        filterType: FiltersType, title: String, products: List<Product>, position: Int = -1,
     ) {
         if (products.isEmpty()) return
 
@@ -807,6 +823,9 @@ class ProductDetailFragment : SliderFragment() {
     private fun updateVariant(variant: Variant) {
         binding.variant = variant
         productDetailViewModel.selectedVariant = variant
+
+        binding.btnAddToCart.isEnabled = variant.availability
+        binding.btnPayNow.isEnabled = variant.availability
 
         setupProductImagesSlider(variant.images)
 

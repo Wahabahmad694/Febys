@@ -88,10 +88,10 @@
                 android:layout_height="@dimen/_72sdp"
                 android:layout_marginHorizontal="@dimen/_16dp"
                 android:layout_marginTop="@dimen/_18sdp"
+                android:background="@drawable/placeholder_template"
                 app:actualImageScaleType="fitCenter"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:background="@drawable/placeholder_template"
                 binding:image_url="@{cart.productImg}" />
 
             <TextView
@@ -171,16 +171,26 @@
 
             </LinearLayout>
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_fav_toggle"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/container_wishlist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_16sdp"
-                android:elevation="@dimen/_16sdp"
-                android:src="@drawable/ic_un_fav"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:orientation="vertical"
+                app:cardCornerRadius="@dimen/_10sdp"
+                app:cardElevation="@dimen/_5sdp"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_product_price"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tv_product_price" />
+                app:layout_constraintTop_toTopOf="@+id/tv_product_price">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_fav_toggle"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_marginStart="@dimen/_1sdp"
+                    android:src="@drawable/ic_un_fav" />
+            </androidx.cardview.widget.CardView>
 
             <TextView
                 android:id="@+id/tv_fav"
@@ -189,9 +199,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:text="@string/label_remove_from_wishlist"
-                app:layout_constraintBottom_toBottomOf="@id/iv_fav_toggle"
-                app:layout_constraintStart_toEndOf="@id/iv_fav_toggle"
-                app:layout_constraintTop_toTopOf="@id/iv_fav_toggle" />
+                app:layout_constraintBottom_toBottomOf="@id/container_wishlist"
+                app:layout_constraintStart_toEndOf="@id/container_wishlist"
+                app:layout_constraintTop_toTopOf="@id/container_wishlist" />
 
             <TextView
                 android:id="@+id/tv_product_price"
@@ -203,6 +213,12 @@
                 app:layout_constraintEnd_toEndOf="@id/iv_remove"
                 app:layout_constraintTop_toBottomOf="@id/container_quantity"
                 tools:text="$14" />
+
+            <View
+                android:id="@+id/separator"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_8sdp"
+                app:layout_constraintTop_toBottomOf="@id/container_wishlist" />
 
             <LinearLayout
                 android:id="@+id/container_message_to_seller"

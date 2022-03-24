@@ -62,7 +62,10 @@ class AccountFragment : BaseFragment() {
         }
 
         binding.btnSignOut.setOnClickListener {
-            authViewModel.signOut { signOut() }
+            authViewModel.signOut {
+                NotificationLocalBroadcastReceiver.sendBroadCast(requireContext())
+                signOut()
+            }
         }
         binding.orders.containerWallet.setOnClickListener {
             val gotoWallet = AccountFragmentDirections.actionAccountFragmentToWalletFragment()

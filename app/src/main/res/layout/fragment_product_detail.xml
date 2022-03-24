@@ -107,10 +107,9 @@
                 style="@style/TextTheme.HelveticaNeue.TS16.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/grey"
                 android:contentDescription="@string/app_name"
                 android:paddingTop="@dimen/_16sdp"
-                android:paddingEnd="@dimen/_2sdp"
+                android:paddingEnd="@dimen/_4sdp"
                 android:paddingBottom="@dimen/_16sdp"
                 app:layout_constraintEnd_toStartOf="@id/iv_cart"
                 app:layout_constraintTop_toTopOf="@id/iv_cart"
@@ -242,6 +241,27 @@
                         app:layout_constraintStart_toEndOf="@id/tv_product_off_price_separator"
                         app:layout_constraintTop_toBottomOf="@id/tv_product_name"
                         tools:text="$14" />
+
+                    <LinearLayout
+                        android:id="@+id/container_saved_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:background="@drawable/bg_corner_cream"
+                        android:padding="@dimen/_5sdp"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_product_price"
+                        app:layout_constraintStart_toEndOf="@id/tv_product_price"
+                        app:layout_constraintTop_toTopOf="@id/tv_product_price"
+                        binding:is_visible="@{variant.hasPromotion}">
+
+                        <TextView
+                            android:id="@+id/tv_save_amount"
+                            style="@style/TextTheme.Arial.TS10.Bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{String.format(@string/save_price, variant.savedPrice.getFormattedPrice())}"
+                            tools:text="Saved GHS 40" />
+                    </LinearLayout>
 
                     <ImageView
                         android:id="@+id/iv_product_verified_logo"
