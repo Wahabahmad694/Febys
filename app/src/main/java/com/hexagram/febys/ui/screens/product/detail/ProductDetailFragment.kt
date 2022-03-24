@@ -4,6 +4,7 @@ import android.animation.ValueAnimator
 import android.app.DownloadManager
 import android.content.Context
 import android.graphics.Color
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -14,6 +15,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -333,6 +335,9 @@ class ProductDetailFragment : SliderFragment() {
     }
 
     private fun showSnackBar() {
+        val tv = view?.findViewById(com.google.android.material.R.id.snackbar_action) as? TextView
+        tv?.typeface = ResourcesCompat.getFont(requireContext(), R.font.helvetica_neue)
+        tv?.setTypeface(null,Typeface.BOLD)
         Snackbar.make(binding.root, getString(R.string.msg_item_added), Snackbar.LENGTH_SHORT)
             .setAction(getString(R.string.msg_view_bag)) {
                 val gotoCart = NavGraphDirections.actionToCartFragment()
@@ -818,6 +823,9 @@ class ProductDetailFragment : SliderFragment() {
     private fun updateVariant(variant: Variant) {
         binding.variant = variant
         productDetailViewModel.selectedVariant = variant
+
+        binding.btnAddToCart.isEnabled = variant.availability
+        binding.btnPayNow.isEnabled = variant.availability
 
         setupProductImagesSlider(variant.images)
 
