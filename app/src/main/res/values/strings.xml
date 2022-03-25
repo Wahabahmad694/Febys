@@ -391,7 +391,7 @@
     <string name="toast_enter_voucher_code">Please enter voucher code</string>
     <string name="label_new_in">New In</string>
     <string name="_14">$14</string>
-    <string name="msg_febys_plus">Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a gallery of type and scrambled it to make a type specimen book.</string>
+    <string name="msg_febys_plus">Join the amazing world of Febys Plus! Get access to early deals, loyalty rewards and special discounts.</string>
     <string name="label_msg_return">Payment will be automatic refund in Febian wallet and Febian anytime withdraw amount in his Account.</string>
     <string name="toast_fail_pdf">Fail to save PDF, please try again!</string>
     <string name="label_return_order">Returned Orders</string>

@@ -346,7 +346,7 @@ class ProductDetailFragment : SliderFragment() {
             .setTextColor(Color.WHITE)
             .setAnchorView(binding.btnAddToCart)
             .setActionTextColor(Color.WHITE)
-            .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.red))
+            .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.black))
             .show()
     }
 
