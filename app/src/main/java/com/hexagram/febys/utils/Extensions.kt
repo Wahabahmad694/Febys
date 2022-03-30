@@ -135,9 +135,16 @@ fun Fragment.showErrorDialog(msg: String) {
 }
 
 fun Fragment.showWarningDialog(
-    @DrawableRes resId: Int, title: String, msg: String, onOkayClick: () -> Unit
+    @DrawableRes resId: Int,
+    title: String,
+    msg: String,
+    showNoBtn: Boolean = true,
+    onOkayClick: () -> Unit
 ) {
-    WarningDialog(resId, title, msg) { onOkayClick() }.show(childFragmentManager, InfoDialog.TAG)
+    WarningDialog(resId, title, msg, showNoBtn) { onOkayClick() }.show(
+        childFragmentManager,
+        InfoDialog.TAG
+    )
 }
 
 fun Fragment.showInfoDialoge(

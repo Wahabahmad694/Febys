@@ -165,7 +165,7 @@ class CheckoutFragment : BaseFragment() {
         val title = getString(R.string.label_invalid_voucher)
         val msg = getString(R.string.msg_for_invalid_voucher)
 
-        showWarningDialog(resId, title, msg) {
+        showWarningDialog(resId, title, msg, false) {
             voucher = ""
             fetchOrderInfo()
         }
@@ -202,7 +202,10 @@ class CheckoutFragment : BaseFragment() {
                 updateVoucherField()
                 order.addToOrderSummary(binding.containerOrderSummary)
                 updateTotalAmount(order.billAmount)
-                validVoucher = order.billAmount.value > (order.voucher?.amount ?: 0.0)
+                validVoucher = order.productsAmount.value > (order.voucher?.amount ?: 0.0)
+                if (!validVoucher) {
+                    showInvalidVoucherDialog()
+                }
             }
         }
     }

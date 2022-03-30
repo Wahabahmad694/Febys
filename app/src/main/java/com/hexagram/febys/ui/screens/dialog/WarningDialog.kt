@@ -9,12 +9,13 @@ import androidx.core.view.isVisible
 import com.hexagram.febys.base.BaseDialog
 import com.hexagram.febys.databinding.DialogWarningBinding
 
-class WarningDialog(
+class WarningDialog constructor(
     @DrawableRes
     private val infoRes: Int,
     private val infoTitle: String,
     private val infoMsg: String,
-    private val okayCallback: (() -> Unit)? = null,
+    private val showNoBtn: Boolean = true,
+    private val okayCallback: (() -> Unit)? = null
 ) : BaseDialog() {
 
     companion object {
@@ -42,6 +43,7 @@ class WarningDialog(
         binding.tvInfoTitle.text = infoTitle
         binding.tvInfoMsg.text = infoMsg
         binding.btnYes.isVisible = okayCallback != null
+        binding.btnNo.isVisible = showNoBtn
     }
 
     private fun uiListener() {
