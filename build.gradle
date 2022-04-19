@@ -34,6 +34,7 @@ allprojects {
             }
         }
         maven { url "https://jitpack.io" }
+        maven{ url 'https://zendesk.jfrog.io/zendesk/repo'}
         jcenter() // Warning: this repository is going to shut down soon
     }
 }

@@ -209,6 +209,10 @@ dependencies {
     //Glide property
     implementation 'com.github.bumptech.glide:glide:4.13.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.0'
+
+    //zendesk
+    implementation group: 'com.zendesk', name: 'chat', version: '3.3.4'
+    implementation group: 'com.zendesk', name: 'messaging', version: '5.2.3'
 }
 
 def getCredentials() {
