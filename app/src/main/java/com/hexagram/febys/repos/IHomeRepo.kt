@@ -28,4 +28,6 @@ interface IHomeRepo {
     suspend fun fetchStoresYouFollow(dispatcher: CoroutineDispatcher = Dispatchers.IO): List<Product>
 
     suspend fun fetchUnder100DollarsItems(dispatcher: CoroutineDispatcher = Dispatchers.IO): List<Product>
+
+    suspend fun fetchEditorsPickItems(dispatcher: CoroutineDispatcher = Dispatchers.IO): List<Product>
 }

@@ -74,6 +74,16 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/bg_top">
 
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_chat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:backgroundTint="@color/red"
+                android:layout_margin="16dp"
+                android:contentDescription="@string/label_zendesk_chat"
+                app:srcCompat="@drawable/ic_zendesk_chat"/>
+
             <androidx.core.widget.NestedScrollView
                 android:id="@+id/scroll_view_home"
                 android:layout_width="match_parent"
@@ -521,7 +531,55 @@
 
                     <!--endregion under $100 items-->
 
+                    <!--region editors pick items-->
+                    <TextView
+                        android:id="@+id/tv_label_editor_pick_items"
+                        style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_16dp"
+                        android:text="@string/label_editors_pick_items"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/btn_shop_now_under_100_dollars_items" />
+
+                    <TextView
+                        android:id="@+id/tv_label_editor_pick_items_slogan"
+                        style="@style/TextTheme.Arial.TS12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2dp"
+                        android:text="@string/label_featured_categories_slogan"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_label_editor_pick_items" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_editors_pick_items"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_16dp"
+                        android:clipToPadding="false"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintTop_toBottomOf="@id/tv_label_editor_pick_items_slogan"
+                        tools:listitem="@layout/item_product_home" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_shop_now_editors_pick_items"
+                        style="@style/ButtonTheme.OutLine.Full"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_16dp"
+                        android:layout_marginTop="@dimen/_16dp"
+                        android:text="@string/label_shop_now"
+                        app:layout_constraintTop_toBottomOf="@id/rv_editors_pick_items" />
+
+                    <!--endregion editors pick items-->
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
             </androidx.core.widget.NestedScrollView>
         </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

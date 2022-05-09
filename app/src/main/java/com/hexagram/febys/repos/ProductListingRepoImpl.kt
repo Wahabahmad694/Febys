@@ -111,6 +111,23 @@ class ProductListingRepoImpl @Inject constructor(
             .cachedIn(scope)
     }
 
+    override fun fetchEditorsPickListing(
+        filters: ProductListingRequest,
+        scope: CoroutineScope,
+        dispatcher: CoroutineDispatcher,
+        onProductListingResponse: ((ProductPagingListing) -> Unit)?
+    ): Flow<PagingData<Product>> {
+        return Pager(
+            PagingConfig(pageSize = 10)
+        ) {
+            filters.editorsPick = true
+            val req = createReq(filters)
+            SearchProductPagingSource(backendService, req, onProductListingResponse)
+        }.flow
+            .flowOn(dispatcher)
+            .cachedIn(scope)
+    }
+
     override fun fetchUnder100DollarsItemsListing(
         filters: ProductListingRequest,
         scope: CoroutineScope,

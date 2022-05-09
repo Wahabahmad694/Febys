@@ -22,6 +22,7 @@ open class ProductListingViewModel @Inject constructor(
     private var similarProductListing: Flow<PagingData<Product>>? = null
     private var recommendedProductListing: Flow<PagingData<Product>>? = null
     private var trendingProductsListing: Flow<PagingData<Product>>? = null
+    private var editorsPickListing: Flow<PagingData<Product>>? = null
     private var under100DollarsItemsListing: Flow<PagingData<Product>>? = null
     private var storeYouFollowItemListingItemsListing: Flow<PagingData<Product>>? = null
     private var categoryProductsListing: Flow<PagingData<Product>>? = null
@@ -110,6 +111,18 @@ open class ProductListingViewModel @Inject constructor(
         }
 
         return trendingProductsListing!!
+    }
+    fun editorsPickItemListing(
+        refresh: Boolean, onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
+    ): Flow<PagingData<Product>> {
+        if (editorsPickListing == null || refresh) {
+            editorsPickListing =
+                productListingRepo.fetchEditorsPickListing(
+                    filters, viewModelScope, onProductListingResponse = onProductListingResponse
+                )
+        }
+
+        return editorsPickListing!!
     }
 
     fun storeYouFollowListing(
