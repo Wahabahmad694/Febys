@@ -14,6 +14,7 @@ data class ProductListingRequest constructor(
     var isDefault: Boolean = false,
     var hasPromotion: Boolean = false,
     var trendsOnSale: Boolean = false,
+    var editorsPick: Boolean = false,
     var categoryIds: MutableSet<Int> = mutableSetOf(),
     var vendorIds: MutableSet<String> = mutableSetOf(),
     var variantAttrs: MutableSet<String> = mutableSetOf(),
@@ -25,6 +26,7 @@ data class ProductListingRequest constructor(
         private const val KEY_DEFAULT = "variants.default"
         private const val KEY_HAS_PROMOTION = "variants.has_promotion"
         private const val KEY_TRENDS_ON_SALE = "variants.trendsOnSale"
+        private const val KEY_EDITORS_PICK = "editor_picked"
         private const val KEY_CATEGORY_IDS = "category_id"
         private const val KEY_VENDOR_IDS = "vendor_id"
         private const val KEY_ATTR = "variants.attributes.value"
@@ -92,6 +94,9 @@ data class ProductListingRequest constructor(
 
         if (trendsOnSale) {
             filters.addProperty(KEY_TRENDS_ON_SALE, trendsOnSale)
+        }
+        if (editorsPick) {
+            filters.addProperty(KEY_EDITORS_PICK, editorsPick)
         }
 
         return filters

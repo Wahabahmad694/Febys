@@ -12,6 +12,7 @@
     <string name="label_trending_products_slogan">Discover the top selling products</string>
     <string name="label_under_100_dollar_items">Under ₵100 Items</string>
     <string name="label_under_100_dollar_items_slogan">Discover new deal\'s, just for you</string>
+    <string name="label_editors_pick_items">Editors Pick</string>
     <string name="label_shop_now">Shop Now</string>
     <string name="label_shop_all">Shop All</string>
     <string name="label_seasonal_offers">Seasonal Offers</string>
@@ -411,5 +412,6 @@
     <string name="msg_item_added">Item has been added to the bag</string>
     <string name="msg_view_bag">View Bag</string>
     <string name="save_price">Save %1s</string>
+    <string name="label_zendesk_chat">chat</string>
 
 </resources>

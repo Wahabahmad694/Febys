@@ -19,8 +19,6 @@ import com.hexagram.febys.utils.OrderStatus
 import com.hexagram.febys.utils.load
 import com.hexagram.febys.utils.navigateTo
 import dagger.hilt.android.AndroidEntryPoint
-import zendesk.chat.*
-import zendesk.messaging.MessagingActivity
 
 @AndroidEntryPoint
 class AccountFragment : BaseFragment() {
@@ -155,9 +153,13 @@ class AccountFragment : BaseFragment() {
         }
 
         binding.support.helpCenter.setOnClickListener {
-            if (isUserLoggedIn) {
-                gotoChat()
-            } else gotoLogin()
+            val goToHelpCenter =
+                NavGraphDirections.toWebViewFragment(
+                    getString(R.string.label_help_center),
+                    "${BuildConfig.backendBaseUrl}static/help-center/",
+                    false
+                )
+            navigateTo(goToHelpCenter)
 
         }
         binding.support.privacyPolicy.setOnClickListener {
@@ -178,39 +180,6 @@ class AccountFragment : BaseFragment() {
                 )
             navigateTo(goToTermsAndConditions)
         }
-    }
-
-    private fun gotoChat() {
-        Chat.INSTANCE.init(requireContext(), "vevKJuWFPABXvTRg1r7VpkotUq0MVpOB", "com.android.application")
-        val chatConfiguration = ChatConfiguration.builder()
-            .withAgentAvailabilityEnabled(true)
-            .withPreChatFormEnabled(true)
-            .build()
-
-        val visitorInfo = VisitorInfo.builder()
-            .withName(consumer?.fullName)
-            .withEmail(consumer?.email)
-            .withPhoneNumber(consumer?.phoneNumber?.number) // numeric string
-            .build()
-
-        val chatProvidersConfiguration = ChatProvidersConfiguration.builder()
-            .withVisitorInfo(visitorInfo)
-            .withDepartment("Department Name")
-            .build()
-
-        Chat.INSTANCE.chatProvidersConfiguration = chatProvidersConfiguration
-
-        Chat.INSTANCE.resetIdentity()
-
-        val profileProvider = Chat.INSTANCE.providers()!!.profileProvider()
-        val chatProvider = Chat.INSTANCE.providers()!!.chatProvider()
-
-        profileProvider.setVisitorInfo(visitorInfo, null)
-        chatProvider.setDepartment("Febys Admin", null)
-
-        MessagingActivity.builder()
-            .withEngines(ChatEngine.engine())
-            .show(requireContext(), chatConfiguration)
     }
 
     private fun toggleNotification(notify: Boolean) {

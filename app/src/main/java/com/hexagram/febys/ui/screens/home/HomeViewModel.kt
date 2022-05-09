@@ -40,6 +40,7 @@ class HomeViewModel @Inject constructor(
             val seasonalOffers = async { homeRepo.fetchAllSeasonalOffers() }
             val trendingProducts = async { homeRepo.fetchTrendingProducts() }
             val under100DollarsItems = async { homeRepo.fetchUnder100DollarsItems() }
+            val editorsPickItems = async { homeRepo.fetchEditorsPickItems() }
 
             val homeModel = HomeModel(
                 uniqueCategories.await(),
@@ -48,7 +49,8 @@ class HomeViewModel @Inject constructor(
                 featuredCategories.await(),
                 seasonalOffers.await(),
                 trendingProducts.await(),
-                under100DollarsItems.await()
+                under100DollarsItems.await(),
+                editorsPickItems.await()
             )
 
             _observeHomeModel.postValue(DataState.Data(homeModel))

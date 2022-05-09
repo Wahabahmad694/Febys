@@ -26,6 +26,8 @@ import com.hexagram.febys.network.response.SeasonalOffer
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import zendesk.chat.*
+import zendesk.messaging.MessagingActivity
 
 @AndroidEntryPoint
 class HomeFragment : SliderFragment() {
@@ -38,6 +40,7 @@ class HomeFragment : SliderFragment() {
     private val trendingProductsAdapter = HomeProductsAdapter()
     private val storeYouFollowAdapter = HomeProductsAdapter()
     private val under100DollarsItemAdapter = HomeProductsAdapter()
+    private val editorsPickItemAdapter = HomeProductsAdapter()
 
     private var lastCheckedCategoryId = -1
 
@@ -103,6 +106,11 @@ class HomeFragment : SliderFragment() {
         binding.rvUnder100DollarsItems.applySpaceItemDecoration(horizontalDimenRes = R.dimen._24dp)
         binding.rvUnder100DollarsItems.setHasFixedSize(true)
         binding.rvUnder100DollarsItems.adapter = under100DollarsItemAdapter
+
+        // editors pick items
+        binding.rvEditorsPickItems.applySpaceItemDecoration(horizontalDimenRes = R.dimen._24dp)
+        binding.rvEditorsPickItems.setHasFixedSize(true)
+        binding.rvEditorsPickItems.adapter = editorsPickItemAdapter
     }
 
     private fun initUiListener() {
@@ -117,6 +125,12 @@ class HomeFragment : SliderFragment() {
                 .actionHomeFragmentToTodayDealsListingFragment(getString(R.string.label_today_deals))
             navigateTo(gotoTodayDealsListingFragment)
         }
+
+        binding.fabChat.setOnClickListener {
+            if (isUserLoggedIn) {
+                gotoChat()
+            } else gotoLogin()
+        }
         binding.ivWishList.setOnClickListener {
             if (isUserLoggedIn) {
                 val gotoWishList = NavGraphDirections.toWishListFragment()
@@ -128,6 +142,11 @@ class HomeFragment : SliderFragment() {
             val gotoTodayDealsListingFragment = HomeFragmentDirections
                 .actionHomeFragmentToTrendingProductListingFragment(getString(R.string.label_trending_products))
             navigateTo(gotoTodayDealsListingFragment)
+        }
+        binding.btnShopNowEditorsPickItems.setOnClickListener {
+            val gotoEditorPickListingFragment = HomeFragmentDirections
+                .actionHomeFragmentToEditorsPickItemListingFragment(getString(R.string.label_editors_pick_items))
+            navigateTo(gotoEditorPickListingFragment)
         }
 
         binding.btnShopNowUnder100DollarsItems.setOnClickListener {
@@ -161,6 +180,7 @@ class HomeFragment : SliderFragment() {
             trendingProductsAdapter.submitFav(fav)
             storeYouFollowAdapter.submitFav(fav)
             under100DollarsItemAdapter.submitFav(fav)
+            editorsPickItemAdapter.submitFav(fav)
         }
 
         updateFav()
@@ -189,6 +209,7 @@ class HomeFragment : SliderFragment() {
         storeYouFollowAdapter.interaction = homeProductAdapterInteraction
         trendingProductsAdapter.interaction = homeProductAdapterInteraction
         under100DollarsItemAdapter.interaction = homeProductAdapterInteraction
+        editorsPickItemAdapter.interaction = homeProductAdapterInteraction
         binding.rvUniqueCategories.setOnScrollChangeListener { _, _, _, _, _ ->
             val horizontalScrollPosition =
                 binding.rvUniqueCategories.getHorizontalScrollPosition()
@@ -235,6 +256,7 @@ class HomeFragment : SliderFragment() {
                     setupSeasonalOffers(homeModel.seasonalOffers)
                     setupTrendingProducts(homeModel.trendingProducts)
                     setupUnder100DollarsItems(homeModel.under100DollarsItems)
+                    setupEditorsPickItem(homeModel.editorsPickItems)
                 }
             }
         }
@@ -338,6 +360,18 @@ class HomeFragment : SliderFragment() {
         )
     }
 
+    private fun setupEditorsPickItem(editorsPickItem: List<Product>) {
+        editorsPickItemAdapter.submitList(editorsPickItem)
+
+        val isVisible = editorsPickItem.isNotEmpty()
+        isVisible.applyToViews(
+            binding.tvLabelEditorPickItems,
+            binding.tvLabelEditorPickItemsSlogan,
+            binding.rvEditorsPickItems,
+            binding.btnShopNowEditorsPickItems
+        )
+    }
+
     private fun setupStoreYouFollow(storeYouFollow: List<Product>) {
         storeYouFollowAdapter.submitList(storeYouFollow)
 
@@ -398,6 +432,43 @@ class HomeFragment : SliderFragment() {
             binding.rvUnder100DollarsItems.smoothScrollToPosition(0)
             binding.rvStoreYouFollow.smoothScrollToPosition(0)
         }
+    }
+
+    private fun gotoChat() {
+        Chat.INSTANCE.init(
+            requireContext(),
+            "oHEynglv55DD1fMfIVdQjGyh8qVBVFtR",
+            "com.android.application"
+        )
+        val chatConfiguration = ChatConfiguration.builder()
+            .withAgentAvailabilityEnabled(true)
+            .withPreChatFormEnabled(true)
+            .build()
+
+        val visitorInfo = VisitorInfo.builder()
+            .withName(consumer?.fullName)
+            .withEmail(consumer?.email)
+            .withPhoneNumber(consumer?.phoneNumber?.number) // numeric string
+            .build()
+
+        val chatProvidersConfiguration = ChatProvidersConfiguration.builder()
+            .withVisitorInfo(visitorInfo)
+            .withDepartment("Department Name")
+            .build()
+
+        Chat.INSTANCE.chatProvidersConfiguration = chatProvidersConfiguration
+
+        Chat.INSTANCE.resetIdentity()
+
+        val profileProvider = Chat.INSTANCE.providers()!!.profileProvider()
+        val chatProvider = Chat.INSTANCE.providers()!!.chatProvider()
+
+        profileProvider.setVisitorInfo(visitorInfo, null)
+        chatProvider.setDepartment("Febys Admin", null)
+
+        MessagingActivity.builder()
+            .withEngines(ChatEngine.engine())
+            .show(requireContext(), chatConfiguration)
     }
 
     override fun getSlider() =

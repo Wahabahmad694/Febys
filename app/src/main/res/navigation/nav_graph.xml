@@ -169,6 +169,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_homeFragment_to_editorsPickItemListingFragment"
+            app:destination="@id/editorsPickItemListingFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/notificationFragment"
@@ -520,6 +527,15 @@
         android:id="@+id/storeYouFollowItemListingFragment"
         android:name="com.hexagram.febys.ui.screens.product.listing.StoreYouFollowItemListingFragment"
         android:label="StoreYouFollowItemListingFragment"
+        tools:layout="@layout/fragment_product_listing">
+        <argument
+            android:name="productListTitle"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/editorsPickItemListingFragment"
+        android:name="com.hexagram.febys.ui.screens.product.listing.EditorsPickItemsListingFragment"
+        android:label="EditorsPickItemListingFragment"
         tools:layout="@layout/fragment_product_listing">
         <argument
             android:name="productListTitle"
