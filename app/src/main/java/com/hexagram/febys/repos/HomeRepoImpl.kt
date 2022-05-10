@@ -8,6 +8,7 @@ import com.hexagram.febys.models.api.product.ProductPagingListing
 import com.hexagram.febys.models.api.product.Trending
 import com.hexagram.febys.models.api.request.PagingListRequest
 import com.hexagram.febys.models.api.request.ProductListingRequest
+import com.hexagram.febys.models.view.VendorListing
 import com.hexagram.febys.network.FebysBackendService
 import com.hexagram.febys.network.FebysWebCustomizationService
 import com.hexagram.febys.network.adapter.ApiResponse
@@ -44,6 +45,14 @@ class HomeRepoImpl @Inject constructor(
     override suspend fun fetchFeaturedCategories(dispatcher: CoroutineDispatcher): List<FeaturedCategory> {
         val response = backendService.fetchFeaturedCategories()
         return (response as? ApiResponse.ApiSuccessResponse)?.data ?: emptyList()
+    }
+
+    override suspend fun fetchFeaturedStores(dispatcher: CoroutineDispatcher): List<VendorListing.Vendor> {
+        val pagingListRequest = PagingListRequest()
+        val response = backendService.fetchVendors(
+            pagingListRequest.createQueryMap()
+        )
+        return (response as? ApiResponse.ApiSuccessResponse)?.data ?.getResponse()?: emptyList()
     }
 
     override suspend fun fetchAllSeasonalOffers(dispatcher: CoroutineDispatcher): List<SeasonalOffer> {

@@ -16,4 +16,5 @@ data class HomeModel(
     val trendingProducts: List<Product>,
     val under100DollarsItems: List<Product>,
     val editorsPickItems: List<Product>,
+    val featuredStores: List<VendorListing>,
 )

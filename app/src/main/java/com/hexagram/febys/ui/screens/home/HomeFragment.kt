@@ -12,6 +12,7 @@ import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.facebook.drawee.backends.pipeline.Fresco
 import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
 import com.hexagram.febys.base.SliderFragment
@@ -67,6 +68,16 @@ class HomeFragment : SliderFragment() {
         initUi()
         initUiListener()
         setupObserver()
+        setFloatingButton()
+    }
+
+    private fun setFloatingButton() {
+        val uri = "res:///${R.drawable.gif_zendesk_chat}"
+        val draweeViewBuilder = Fresco.newDraweeControllerBuilder()
+        draweeViewBuilder.setUri(uri)
+        draweeViewBuilder.autoPlayAnimations = true
+
+        binding.ivFabChat.controller = draweeViewBuilder.build()
     }
 
     private fun initUi() {
@@ -126,7 +137,7 @@ class HomeFragment : SliderFragment() {
             navigateTo(gotoTodayDealsListingFragment)
         }
 
-        binding.fabChat.setOnClickListener {
+        binding.ivFabChat.setOnClickListener {
             if (isUserLoggedIn) {
                 gotoChat()
             } else gotoLogin()
@@ -257,12 +268,45 @@ class HomeFragment : SliderFragment() {
                     setupTrendingProducts(homeModel.trendingProducts)
                     setupUnder100DollarsItems(homeModel.under100DollarsItems)
                     setupEditorsPickItem(homeModel.editorsPickItems)
+//                    setupFeaturedStores(homeModel.featuredStores)
                 }
             }
         }
 
         homeViewModel.observeStoreYouFollow.observe(viewLifecycleOwner) { setupStoreYouFollow(it) }
     }
+
+//    private fun setupFeaturedStores(featuredStores: List<VendorListing>) {
+//        featuredStores.forEach { category ->
+//            if (category.products.isNotEmpty()) {
+//                val radioButton = makeRadioButton(category.id, category.name)
+//                binding.radioGroupFeaturedStores.addView(radioButton)
+//            }
+//        }
+//
+//        binding.radioGroupFeaturedStores.setOnCheckedChangeListener { _, id ->
+//            val products = featuredStores.find { category -> category.id == id }?.products
+//            featuredCategoryProductsAdapter.submitList(products)
+//
+//            lastCheckedCategoryId = id
+//        }
+//
+//        // set auto select 1
+//        if (lastCheckedCategoryId != -1) {
+//            binding.radioGroupFeaturedStores.check(lastCheckedCategoryId)
+//        } else {
+//            featuredStores.firstOrNull { it.products.isNotEmpty() }?.let { category ->
+//                binding.radioGroupFeaturedStores.check(category.id)
+//            }
+//        }
+//
+//        val isVisible = binding.radioGroupFeaturedStores.childCount > 0
+//        isVisible.applyToViews(
+//            binding.tvFeaturedStores,
+//            binding.tvFeaturedStoresSlogan,
+//            binding.rvFeaturedStores,
+//        )
+//    }
 
     private fun setupUniqueCategory(uniqueCategories: List<UniqueCategory>) {
         uniqueCategoryAdapter.submitList(uniqueCategories)
