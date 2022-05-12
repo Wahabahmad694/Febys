@@ -9,8 +9,7 @@
         android:id="@+id/card"
         android:layout_width="@dimen/_125sdp"
         android:layout_height="@dimen/_130sdp"
-        android:layout_marginHorizontal="@dimen/_8sdp"
-        app:cardCornerRadius="@dimen/_6sdp"
+        app:cardCornerRadius="@dimen/_2sdp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,8 +40,9 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                app:layout_constraintEnd_toEndOf="@id/store_img"
-                app:layout_constraintStart_toStartOf="@id/store_img"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/store_img"
                 tools:text="Television" />
 
@@ -53,7 +53,7 @@
                 android:layout_marginStart="@dimen/_2sdp"
                 android:layout_marginBottom="@dimen/_2sdp"
                 android:src="@drawable/ic_badge"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@id/tv_store_name"
                 app:layout_constraintStart_toEndOf="@id/tv_store_name"
                 app:layout_constraintTop_toTopOf="@id/tv_store_name" />

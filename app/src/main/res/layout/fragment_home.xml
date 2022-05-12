@@ -305,18 +305,18 @@
                             android:layout_marginTop="@dimen/_16dp"
                             android:clipToPadding="false"
                             android:orientation="horizontal"
+                            android:layout_marginStart="@dimen/_2sdp"
                             android:paddingHorizontal="@dimen/_16dp"
                             app:singleLine="true"
                             app:singleSelection="true"
-                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tv_featured_stores_slogan"/>
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/rv_featured_stores"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_5dp"
+                            android:layout_height="@dimen/_135sdp"
+                            android:layout_marginTop="@dimen/_8sdp"
                             android:clipToPadding="false"
                             android:orientation="horizontal"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

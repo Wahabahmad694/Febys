@@ -1,5 +1,6 @@
 package com.hexagram.febys.ui.screens.home
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +22,7 @@ import com.hexagram.febys.models.api.banners.Banner
 import com.hexagram.febys.models.api.category.UniqueCategory
 import com.hexagram.febys.models.api.product.FeaturedCategory
 import com.hexagram.febys.models.api.product.Product
+import com.hexagram.febys.models.api.vendor.Vendor
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.response.Offer
 import com.hexagram.febys.network.response.SeasonalOffer
@@ -38,12 +40,14 @@ class HomeFragment : SliderFragment() {
     private val uniqueCategoryAdapter = UniqueCategoryAdapter()
     private val todayDealsAdapter = HomeProductsAdapter()
     private val featuredCategoryProductsAdapter = HomeProductsAdapter()
+    private val featuredStoreListingAdapter = FeaturedStoreListingAdapter()
     private val trendingProductsAdapter = HomeProductsAdapter()
     private val storeYouFollowAdapter = HomeProductsAdapter()
     private val under100DollarsItemAdapter = HomeProductsAdapter()
     private val editorsPickItemAdapter = HomeProductsAdapter()
 
     private var lastCheckedCategoryId = -1
+    private var lastCheckedFeatureStoreId = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +62,9 @@ class HomeFragment : SliderFragment() {
 
         savedInstanceState?.let {
             lastCheckedCategoryId = it.getInt(KEY_LAST_CHECKED_FEATURED_CATEGORY_ID, -1)
+        }
+        savedInstanceState?.let {
+            lastCheckedFeatureStoreId = it.getInt(KEY_LAST_CHECKED_FEATURED_STORE_ID, -1)
         }
 
         return binding.root
@@ -108,6 +115,12 @@ class HomeFragment : SliderFragment() {
         binding.rvStoreYouFollow.setHasFixedSize(true)
         binding.rvStoreYouFollow.adapter = storeYouFollowAdapter
 
+        // featured stores
+        binding.rvFeaturedStores.applySpaceItemDecoration(horizontalDimenRes = R.dimen._24dp)
+        binding.rvFeaturedStores.setHasFixedSize(true)
+        binding.rvFeaturedStores.adapter = featuredStoreListingAdapter
+
+
         // trending products
         binding.rvTrendingProducts.applySpaceItemDecoration(horizontalDimenRes = R.dimen._24dp)
         binding.rvTrendingProducts.setHasFixedSize(true)
@@ -148,6 +161,9 @@ class HomeFragment : SliderFragment() {
                 navigateTo(gotoWishList)
             } else gotoLogin()
         }
+
+        featuredStoreListingAdapter.gotoVendorDetail =
+            { vendorId -> gotoVendorDetail(vendorId, false) }
 
         binding.btnShopNowTrendingProducts.setOnClickListener {
             val gotoTodayDealsListingFragment = HomeFragmentDirections
@@ -268,7 +284,10 @@ class HomeFragment : SliderFragment() {
                     setupTrendingProducts(homeModel.trendingProducts)
                     setupUnder100DollarsItems(homeModel.under100DollarsItems)
                     setupEditorsPickItem(homeModel.editorsPickItems)
-//                    setupFeaturedStores(homeModel.featuredStores)
+                    setupFeaturedStores(
+                        homeModel.featuredVendorStores,
+                        homeModel.featureCelebrityStores
+                    )
                 }
             }
         }
@@ -276,37 +295,42 @@ class HomeFragment : SliderFragment() {
         homeViewModel.observeStoreYouFollow.observe(viewLifecycleOwner) { setupStoreYouFollow(it) }
     }
 
-//    private fun setupFeaturedStores(featuredStores: List<VendorListing>) {
-//        featuredStores.forEach { category ->
-//            if (category.products.isNotEmpty()) {
-//                val radioButton = makeRadioButton(category.id, category.name)
-//                binding.radioGroupFeaturedStores.addView(radioButton)
-//            }
-//        }
-//
-//        binding.radioGroupFeaturedStores.setOnCheckedChangeListener { _, id ->
-//            val products = featuredStores.find { category -> category.id == id }?.products
-//            featuredCategoryProductsAdapter.submitList(products)
-//
-//            lastCheckedCategoryId = id
-//        }
-//
-//        // set auto select 1
-//        if (lastCheckedCategoryId != -1) {
-//            binding.radioGroupFeaturedStores.check(lastCheckedCategoryId)
-//        } else {
-//            featuredStores.firstOrNull { it.products.isNotEmpty() }?.let { category ->
-//                binding.radioGroupFeaturedStores.check(category.id)
-//            }
-//        }
-//
-//        val isVisible = binding.radioGroupFeaturedStores.childCount > 0
-//        isVisible.applyToViews(
-//            binding.tvFeaturedStores,
-//            binding.tvFeaturedStoresSlogan,
-//            binding.rvFeaturedStores,
-//        )
-//    }
+    @SuppressLint("ResourceType")
+    private fun setupFeaturedStores(
+        featuredVendorStores: List<Vendor>,
+        featureCelebrityStores: List<Vendor>
+    ) {
+        binding.radioGroupFeaturedStores.removeAllViews()
+        val vendorButton = makeRadioButton(1, "Vendor")
+        binding.radioGroupFeaturedStores.addView(vendorButton)
+
+        val celebrityButton = makeRadioButton(2, "Celebrity")
+        binding.radioGroupFeaturedStores.addView(celebrityButton)
+
+        binding.radioGroupFeaturedStores.setOnCheckedChangeListener { _, id ->
+            val stores = when (id) {
+                1 -> featuredVendorStores
+                else -> featureCelebrityStores
+            }
+
+            featuredStoreListingAdapter.submitList(stores)
+            lastCheckedFeatureStoreId = id
+        }
+
+        // set auto select 1
+        if (lastCheckedFeatureStoreId != -1) {
+            binding.radioGroupFeaturedStores.check(lastCheckedFeatureStoreId)
+        } else {
+            binding.radioGroupFeaturedStores.check(1)
+        }
+
+        val isVisible = binding.radioGroupFeaturedStores.childCount > 0
+        isVisible.applyToViews(
+            binding.tvFeaturedStores,
+            binding.tvFeaturedStoresSlogan,
+            binding.rvFeaturedStores,
+        )
+    }
 
     private fun setupUniqueCategory(uniqueCategories: List<UniqueCategory>) {
         uniqueCategoryAdapter.submitList(uniqueCategories)
@@ -478,10 +502,15 @@ class HomeFragment : SliderFragment() {
         }
     }
 
+    private fun gotoVendorDetail(vendorId: String, isFollow: Boolean) {
+        val direction = NavGraphDirections.toVendorDetailFragment(vendorId, isFollow)
+        navigateTo(direction)
+    }
+
     private fun gotoChat() {
         Chat.INSTANCE.init(
             requireContext(),
-            "oHEynglv55DD1fMfIVdQjGyh8qVBVFtR",
+            "0aiYzNdhwJBPnvl9Oui81EDgJJo2de9j",
             "com.android.application"
         )
         val chatConfiguration = ChatConfiguration.builder()
@@ -540,10 +569,12 @@ class HomeFragment : SliderFragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putInt(KEY_LAST_CHECKED_FEATURED_CATEGORY_ID, lastCheckedCategoryId)
+        outState.putInt(KEY_LAST_CHECKED_FEATURED_STORE_ID, lastCheckedFeatureStoreId)
         super.onSaveInstanceState(outState)
     }
 
     companion object {
         const val KEY_LAST_CHECKED_FEATURED_CATEGORY_ID = "lastCheckedFeaturedCategoryId"
+        const val KEY_LAST_CHECKED_FEATURED_STORE_ID = "lastCheckedFeaturedStoreId"
     }
 }

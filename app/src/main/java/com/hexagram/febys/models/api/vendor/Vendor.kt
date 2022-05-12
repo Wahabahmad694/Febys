@@ -18,6 +18,7 @@ data class Vendor @JvmOverloads constructor(
     @SerializedName("shop_name")
     val shopName: String,
     val official: Boolean,
+    val featured: Boolean,
     val socials: List<Social>?,
     val template: List<Template>?,
     @SerializedName("template_photo")

@@ -17,6 +17,10 @@ sealed class VendorListing {
         val preferredVendorOrShopName: String,
         @SerializedName("role")
         val _role: String,
+        @SerializedName("official")
+        val official: Boolean,
+        @SerializedName("featured")
+        val featured: Boolean,
         @SerializedName("profileImage")
         val profileImage: String?,
         @SerializedName("business_logo")
@@ -36,6 +40,8 @@ sealed class VendorListing {
         email: String,
         preferredVendorOrShopName: String,
         _role: String,
+        official: Boolean,
+        featured: Boolean,
         profileImage: String?,
         businessLogo: String,
         businessAddress: String,
@@ -47,6 +53,8 @@ sealed class VendorListing {
         email,
         preferredVendorOrShopName,
         _role,
+        official,
+        featured,
         profileImage,
         businessLogo,
         businessAddress,
@@ -70,6 +78,8 @@ sealed class VendorListing {
                     vendor.email,
                     vendor.preferredVendorOrShopName,
                     vendor._role,
+                    vendor.official,
+                    vendor.featured,
                     vendor.profileImage,
                     vendor.businessLogo,
                     vendor.businessAddress,
