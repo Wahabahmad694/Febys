@@ -29,8 +29,15 @@ import com.hexagram.febys.network.response.SeasonalOffer
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
-import zendesk.chat.*
+import zendesk.answerbot.AnswerBotEngine
+import zendesk.chat.Chat
+import zendesk.chat.ChatEngine
+import zendesk.core.AnonymousIdentity
+import zendesk.core.Zendesk
 import zendesk.messaging.MessagingActivity
+import zendesk.support.Support
+import zendesk.support.SupportEngine
+
 
 @AndroidEntryPoint
 class HomeFragment : SliderFragment() {
@@ -284,10 +291,10 @@ class HomeFragment : SliderFragment() {
                     setupTrendingProducts(homeModel.trendingProducts)
                     setupUnder100DollarsItems(homeModel.under100DollarsItems)
                     setupEditorsPickItem(homeModel.editorsPickItems)
-                    setupFeaturedStores(
-                        homeModel.featuredVendorStores,
-                        homeModel.featureCelebrityStores
-                    )
+//                    setupFeaturedStores(
+//                        homeModel.featuredVendorStores,
+//                        homeModel.featureCelebrityStores
+//                    )
                 }
             }
         }
@@ -508,40 +515,23 @@ class HomeFragment : SliderFragment() {
     }
 
     private fun gotoChat() {
-        Chat.INSTANCE.init(
-            requireContext(),
-            "0aiYzNdhwJBPnvl9Oui81EDgJJo2de9j",
-            "com.android.application"
+        Zendesk.INSTANCE.init(
+            requireContext(), "https://synavos4743.zendesk.com",
+            "4d8e5148e0bc70c785c02eb5c2e06a9331e293ec20756b6a",
+            "mobile_sdk_client_eab73d8a7313a41db8de"
         )
-        val chatConfiguration = ChatConfiguration.builder()
-            .withAgentAvailabilityEnabled(true)
-            .withPreChatFormEnabled(true)
-            .build()
 
-        val visitorInfo = VisitorInfo.builder()
-            .withName(consumer?.fullName)
-            .withEmail(consumer?.email)
-            .withPhoneNumber(consumer?.phoneNumber?.number) // numeric string
-            .build()
+        Support.INSTANCE.init(Zendesk.INSTANCE)
+        Chat.INSTANCE.init(requireContext(), "kK7tIQMiIaBGQQog0HSzbxISgnUnC7Gq")
+        Zendesk.INSTANCE.setIdentity(AnonymousIdentity())
 
-        val chatProvidersConfiguration = ChatProvidersConfiguration.builder()
-            .withVisitorInfo(visitorInfo)
-            .withDepartment("Department Name")
-            .build()
-
-        Chat.INSTANCE.chatProvidersConfiguration = chatProvidersConfiguration
-
-        Chat.INSTANCE.resetIdentity()
-
-        val profileProvider = Chat.INSTANCE.providers()!!.profileProvider()
-        val chatProvider = Chat.INSTANCE.providers()!!.chatProvider()
-
-        profileProvider.setVisitorInfo(visitorInfo, null)
-        chatProvider.setDepartment("Febys Admin", null)
+        val answerEngine = AnswerBotEngine.engine()
+        val supportEngine = SupportEngine.engine()
+        val chatEngine = ChatEngine.engine()
 
         MessagingActivity.builder()
-            .withEngines(ChatEngine.engine())
-            .show(requireContext(), chatConfiguration)
+            .withEngines(answerEngine, supportEngine, chatEngine)
+            .show(requireContext())
     }
 
     override fun getSlider() =
