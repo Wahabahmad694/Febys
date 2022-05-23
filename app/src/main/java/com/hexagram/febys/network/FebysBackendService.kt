@@ -132,6 +132,9 @@ interface FebysBackendService {
     @POST("v1/consumers/stores")
     suspend fun fetchVendors(@QueryMap req: Map<String, String>): ApiResponse<Pagination>
 
+    @POST("v1/consumers/stores")
+    suspend fun fetchVendors(@QueryMap req: Map<String, String>,@Body body:JsonObject): ApiResponse<Pagination>
+
     @POST("v1/consumers/stores/recommendations")
     suspend fun fetchRecommendVendors(
         @Header("Authorization") authToken: String, @QueryMap req: Map<String, String>
@@ -139,6 +142,9 @@ interface FebysBackendService {
 
     @POST("v1/consumers/celebs")
     suspend fun fetchCelebrities(@QueryMap req: Map<String, String>): ApiResponse<Pagination>
+
+    @POST("v1/consumers/celebs")
+    suspend fun fetchCelebrities(@QueryMap req: Map<String, String>, @Body body: JsonObject): ApiResponse<Pagination>
 
     @POST("v1/consumers/celebs/recommendations")
     suspend fun fetchRecommendCelebrities(

@@ -5,6 +5,7 @@
     <string name="label_today_deals">Today\'s Deals</string>
     <string name="label_today_deals_slogan">Discover new deal\'s, just for you</string>
     <string name="label_featured_categories">Featured Categories</string>
+    <string name="label_featured_stores">Featured Stores</string>
     <string name="label_categories">Categories</string>
     <string name="label_featured_categories_slogan">We think you\'ll love these</string>
     <string name="label_trending_products">Trending Products</string>
@@ -329,6 +330,7 @@
     <string name="msg_for_top_up">Top-Up feature is coming soon.</string>
     <string name="label_add_seller_feedback">Add Seller Feedback.</string>
     <string name="label_price">Price</string>
+    <string name="label_celebrity">Celebrity</string>
     <string name="label_value">Value</string>
     <string name="label_quality">Quality</string>
     <string name="label_your_overall_rating">Your Overall Rating</string>

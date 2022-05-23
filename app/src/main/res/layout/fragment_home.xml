@@ -74,16 +74,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/bg_top">
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_chat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|right"
-                android:backgroundTint="@color/red"
-                android:layout_margin="16dp"
-                android:contentDescription="@string/label_zendesk_chat"
-                app:srcCompat="@drawable/ic_zendesk_chat"/>
-
             <androidx.core.widget.NestedScrollView
                 android:id="@+id/scroll_view_home"
                 android:layout_width="match_parent"
@@ -273,6 +263,72 @@
                         app:layout_constraintTop_toBottomOf="@id/rv_featured_category_products" />
                     <!--endregion featured categories-->
 
+
+                    <!--region featured vendor and celebrity store-->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/container_featured_stores"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/grey"
+                        android:paddingBottom="@dimen/_15sdp"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginTop="@dimen/_16dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/btn_shop_now_featured_categories">
+
+                        <TextView
+                            android:id="@+id/tv_featured_stores"
+                            style="@style/TextTheme.HelveticaNeue.TS16.Bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:text="@string/label_featured_stores"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_featured_stores_slogan"
+                            style="@style/TextTheme.Arial.TS12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_2dp"
+                            android:text="@string/label_featured_categories_slogan"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tv_featured_stores" />
+
+                        <RadioGroup
+                            android:id="@+id/radio_group_featured_stores"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_16dp"
+                            android:clipToPadding="false"
+                            android:orientation="horizontal"
+                            android:layout_marginStart="@dimen/_2sdp"
+                            android:paddingHorizontal="@dimen/_16dp"
+                            app:singleLine="true"
+                            app:singleSelection="true"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tv_featured_stores_slogan"/>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_featured_stores"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_135sdp"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:clipToPadding="false"
+                            android:orientation="horizontal"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            app:layout_constraintTop_toBottomOf="@id/radio_group_featured_stores"
+                            tools:listitem="@layout/item_store_featured" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!--endregion featured vendor and celebrity store-->
+
+
                     <!--region seasonal offers-->
                     <TextView
                         android:id="@+id/tv_seasonal_offers"
@@ -283,7 +339,7 @@
                         android:text="@string/label_seasonal_offers"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/btn_shop_now_featured_categories" />
+                        app:layout_constraintTop_toBottomOf="@id/container_featured_stores" />
 
                     <TextView
                         android:id="@+id/tv_seasonal_offers_slogan"
@@ -578,9 +634,17 @@
                     <!--endregion editors pick items-->
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
             </androidx.core.widget.NestedScrollView>
         </FrameLayout>
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/iv_fab_chat"
+            android:layout_width="@dimen/_65sdp"
+            android:layout_height="@dimen/_65sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:elevation="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

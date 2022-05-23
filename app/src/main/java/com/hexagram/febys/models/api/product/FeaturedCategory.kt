@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class FeaturedCategory(
+data class FeaturedCategory constructor(
     val id: Int,
     val name: String,
     val logo: String,

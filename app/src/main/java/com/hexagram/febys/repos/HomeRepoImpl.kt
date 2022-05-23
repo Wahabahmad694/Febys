@@ -1,5 +1,6 @@
 package com.hexagram.febys.repos
 
+import com.google.gson.JsonObject
 import com.hexagram.febys.models.api.banners.Banner
 import com.hexagram.febys.models.api.category.UniqueCategory
 import com.hexagram.febys.models.api.product.FeaturedCategory
@@ -8,6 +9,8 @@ import com.hexagram.febys.models.api.product.ProductPagingListing
 import com.hexagram.febys.models.api.product.Trending
 import com.hexagram.febys.models.api.request.PagingListRequest
 import com.hexagram.febys.models.api.request.ProductListingRequest
+import com.hexagram.febys.models.api.vendor.Vendor
+import com.hexagram.febys.models.api.vendor.VendorPagingListing
 import com.hexagram.febys.network.FebysBackendService
 import com.hexagram.febys.network.FebysWebCustomizationService
 import com.hexagram.febys.network.adapter.ApiResponse
@@ -44,6 +47,29 @@ class HomeRepoImpl @Inject constructor(
     override suspend fun fetchFeaturedCategories(dispatcher: CoroutineDispatcher): List<FeaturedCategory> {
         val response = backendService.fetchFeaturedCategories()
         return (response as? ApiResponse.ApiSuccessResponse)?.data ?: emptyList()
+    }
+
+    override suspend fun fetchFeaturedVendorStores(dispatcher: CoroutineDispatcher): List<Vendor> {
+        val pagingListRequest = PagingListRequest()
+        val response = backendService.fetchVendors(
+            pagingListRequest.createQueryMap(),
+            JsonObject().apply {
+                add("filters",JsonObject().apply { addProperty("featured", true) })
+            }
+
+        )
+        return (response as? ApiResponse.ApiSuccessResponse)?.data ?.getResponse<VendorPagingListing>()?.vendors ?: emptyList()
+    }
+
+    override suspend fun fetchFeaturedCelebrityStores(dispatcher: CoroutineDispatcher): List<Vendor>{
+        val pagingListRequest = PagingListRequest()
+        val response = backendService.fetchCelebrities(
+            pagingListRequest.createQueryMap(),
+            JsonObject().apply {
+                add("filters",JsonObject().apply { addProperty("featured", true) })
+            }
+        )
+        return (response as? ApiResponse.ApiSuccessResponse)?.data ?.getResponse<VendorPagingListing>()?.vendors ?: emptyList()
     }
 
     override suspend fun fetchAllSeasonalOffers(dispatcher: CoroutineDispatcher): List<SeasonalOffer> {
@@ -113,4 +139,5 @@ class HomeRepoImpl @Inject constructor(
         return (response as? ApiResponse.ApiSuccessResponse)
             ?.data?.getResponse<ProductPagingListing>()?.products ?: emptyList()
     }
+
 }

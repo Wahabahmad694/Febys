@@ -4,6 +4,7 @@ import com.hexagram.febys.models.api.banners.Banner
 import com.hexagram.febys.models.api.category.UniqueCategory
 import com.hexagram.febys.models.api.product.FeaturedCategory
 import com.hexagram.febys.models.api.product.Product
+import com.hexagram.febys.models.api.vendor.Vendor
 import com.hexagram.febys.network.response.SeasonalOffer
 
 
@@ -16,4 +17,6 @@ data class HomeModel(
     val trendingProducts: List<Product>,
     val under100DollarsItems: List<Product>,
     val editorsPickItems: List<Product>,
+    val featuredVendorStores: List<Vendor>,
+    val featureCelebrityStores: List<Vendor>
 )

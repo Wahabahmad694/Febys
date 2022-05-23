@@ -1,5 +1,6 @@
 package com.hexagram.febys.ui.screens.home
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.facebook.drawee.backends.pipeline.Fresco
 import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.R
 import com.hexagram.febys.base.SliderFragment
@@ -20,14 +22,22 @@ import com.hexagram.febys.models.api.banners.Banner
 import com.hexagram.febys.models.api.category.UniqueCategory
 import com.hexagram.febys.models.api.product.FeaturedCategory
 import com.hexagram.febys.models.api.product.Product
+import com.hexagram.febys.models.api.vendor.Vendor
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.response.Offer
 import com.hexagram.febys.network.response.SeasonalOffer
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
-import zendesk.chat.*
+import zendesk.answerbot.AnswerBotEngine
+import zendesk.chat.Chat
+import zendesk.chat.ChatEngine
+import zendesk.core.AnonymousIdentity
+import zendesk.core.Zendesk
 import zendesk.messaging.MessagingActivity
+import zendesk.support.Support
+import zendesk.support.SupportEngine
+
 
 @AndroidEntryPoint
 class HomeFragment : SliderFragment() {
@@ -37,12 +47,14 @@ class HomeFragment : SliderFragment() {
     private val uniqueCategoryAdapter = UniqueCategoryAdapter()
     private val todayDealsAdapter = HomeProductsAdapter()
     private val featuredCategoryProductsAdapter = HomeProductsAdapter()
+    private val featuredStoreListingAdapter = FeaturedStoreListingAdapter()
     private val trendingProductsAdapter = HomeProductsAdapter()
     private val storeYouFollowAdapter = HomeProductsAdapter()
     private val under100DollarsItemAdapter = HomeProductsAdapter()
     private val editorsPickItemAdapter = HomeProductsAdapter()
 
     private var lastCheckedCategoryId = -1
+    private var lastCheckedFeatureStoreId = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +70,9 @@ class HomeFragment : SliderFragment() {
         savedInstanceState?.let {
             lastCheckedCategoryId = it.getInt(KEY_LAST_CHECKED_FEATURED_CATEGORY_ID, -1)
         }
+        savedInstanceState?.let {
+            lastCheckedFeatureStoreId = it.getInt(KEY_LAST_CHECKED_FEATURED_STORE_ID, -1)
+        }
 
         return binding.root
     }
@@ -67,6 +82,16 @@ class HomeFragment : SliderFragment() {
         initUi()
         initUiListener()
         setupObserver()
+        setFloatingButton()
+    }
+
+    private fun setFloatingButton() {
+        val uri = "res:///${R.drawable.gif_zendesk_chat}"
+        val draweeViewBuilder = Fresco.newDraweeControllerBuilder()
+        draweeViewBuilder.setUri(uri)
+        draweeViewBuilder.autoPlayAnimations = true
+
+        binding.ivFabChat.controller = draweeViewBuilder.build()
     }
 
     private fun initUi() {
@@ -97,6 +122,12 @@ class HomeFragment : SliderFragment() {
         binding.rvStoreYouFollow.setHasFixedSize(true)
         binding.rvStoreYouFollow.adapter = storeYouFollowAdapter
 
+        // featured stores
+        binding.rvFeaturedStores.applySpaceItemDecoration(horizontalDimenRes = R.dimen._24dp)
+        binding.rvFeaturedStores.setHasFixedSize(true)
+        binding.rvFeaturedStores.adapter = featuredStoreListingAdapter
+
+
         // trending products
         binding.rvTrendingProducts.applySpaceItemDecoration(horizontalDimenRes = R.dimen._24dp)
         binding.rvTrendingProducts.setHasFixedSize(true)
@@ -126,7 +157,7 @@ class HomeFragment : SliderFragment() {
             navigateTo(gotoTodayDealsListingFragment)
         }
 
-        binding.fabChat.setOnClickListener {
+        binding.ivFabChat.setOnClickListener {
             if (isUserLoggedIn) {
                 gotoChat()
             } else gotoLogin()
@@ -137,6 +168,9 @@ class HomeFragment : SliderFragment() {
                 navigateTo(gotoWishList)
             } else gotoLogin()
         }
+
+        featuredStoreListingAdapter.gotoVendorDetail =
+            { vendorId -> gotoVendorDetail(vendorId, false) }
 
         binding.btnShopNowTrendingProducts.setOnClickListener {
             val gotoTodayDealsListingFragment = HomeFragmentDirections
@@ -257,11 +291,52 @@ class HomeFragment : SliderFragment() {
                     setupTrendingProducts(homeModel.trendingProducts)
                     setupUnder100DollarsItems(homeModel.under100DollarsItems)
                     setupEditorsPickItem(homeModel.editorsPickItems)
+//                    setupFeaturedStores(
+//                        homeModel.featuredVendorStores,
+//                        homeModel.featureCelebrityStores
+//                    )
                 }
             }
         }
 
         homeViewModel.observeStoreYouFollow.observe(viewLifecycleOwner) { setupStoreYouFollow(it) }
+    }
+
+    @SuppressLint("ResourceType")
+    private fun setupFeaturedStores(
+        featuredVendorStores: List<Vendor>,
+        featureCelebrityStores: List<Vendor>
+    ) {
+        binding.radioGroupFeaturedStores.removeAllViews()
+        val vendorButton = makeRadioButton(1, "Vendor")
+        binding.radioGroupFeaturedStores.addView(vendorButton)
+
+        val celebrityButton = makeRadioButton(2, "Celebrity")
+        binding.radioGroupFeaturedStores.addView(celebrityButton)
+
+        binding.radioGroupFeaturedStores.setOnCheckedChangeListener { _, id ->
+            val stores = when (id) {
+                1 -> featuredVendorStores
+                else -> featureCelebrityStores
+            }
+
+            featuredStoreListingAdapter.submitList(stores)
+            lastCheckedFeatureStoreId = id
+        }
+
+        // set auto select 1
+        if (lastCheckedFeatureStoreId != -1) {
+            binding.radioGroupFeaturedStores.check(lastCheckedFeatureStoreId)
+        } else {
+            binding.radioGroupFeaturedStores.check(1)
+        }
+
+        val isVisible = binding.radioGroupFeaturedStores.childCount > 0
+        isVisible.applyToViews(
+            binding.tvFeaturedStores,
+            binding.tvFeaturedStoresSlogan,
+            binding.rvFeaturedStores,
+        )
     }
 
     private fun setupUniqueCategory(uniqueCategories: List<UniqueCategory>) {
@@ -434,41 +509,29 @@ class HomeFragment : SliderFragment() {
         }
     }
 
+    private fun gotoVendorDetail(vendorId: String, isFollow: Boolean) {
+        val direction = NavGraphDirections.toVendorDetailFragment(vendorId, isFollow)
+        navigateTo(direction)
+    }
+
     private fun gotoChat() {
-        Chat.INSTANCE.init(
-            requireContext(),
-            "oHEynglv55DD1fMfIVdQjGyh8qVBVFtR",
-            "com.android.application"
+        Zendesk.INSTANCE.init(
+            requireContext(), "https://synavos4743.zendesk.com",
+            "4d8e5148e0bc70c785c02eb5c2e06a9331e293ec20756b6a",
+            "mobile_sdk_client_eab73d8a7313a41db8de"
         )
-        val chatConfiguration = ChatConfiguration.builder()
-            .withAgentAvailabilityEnabled(true)
-            .withPreChatFormEnabled(true)
-            .build()
 
-        val visitorInfo = VisitorInfo.builder()
-            .withName(consumer?.fullName)
-            .withEmail(consumer?.email)
-            .withPhoneNumber(consumer?.phoneNumber?.number) // numeric string
-            .build()
+        Support.INSTANCE.init(Zendesk.INSTANCE)
+        Chat.INSTANCE.init(requireContext(), "kK7tIQMiIaBGQQog0HSzbxISgnUnC7Gq")
+        Zendesk.INSTANCE.setIdentity(AnonymousIdentity())
 
-        val chatProvidersConfiguration = ChatProvidersConfiguration.builder()
-            .withVisitorInfo(visitorInfo)
-            .withDepartment("Department Name")
-            .build()
-
-        Chat.INSTANCE.chatProvidersConfiguration = chatProvidersConfiguration
-
-        Chat.INSTANCE.resetIdentity()
-
-        val profileProvider = Chat.INSTANCE.providers()!!.profileProvider()
-        val chatProvider = Chat.INSTANCE.providers()!!.chatProvider()
-
-        profileProvider.setVisitorInfo(visitorInfo, null)
-        chatProvider.setDepartment("Febys Admin", null)
+        val answerEngine = AnswerBotEngine.engine()
+        val supportEngine = SupportEngine.engine()
+        val chatEngine = ChatEngine.engine()
 
         MessagingActivity.builder()
-            .withEngines(ChatEngine.engine())
-            .show(requireContext(), chatConfiguration)
+            .withEngines(answerEngine, supportEngine, chatEngine)
+            .show(requireContext())
     }
 
     override fun getSlider() =
@@ -496,10 +559,12 @@ class HomeFragment : SliderFragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putInt(KEY_LAST_CHECKED_FEATURED_CATEGORY_ID, lastCheckedCategoryId)
+        outState.putInt(KEY_LAST_CHECKED_FEATURED_STORE_ID, lastCheckedFeatureStoreId)
         super.onSaveInstanceState(outState)
     }
 
     companion object {
         const val KEY_LAST_CHECKED_FEATURED_CATEGORY_ID = "lastCheckedFeaturedCategoryId"
+        const val KEY_LAST_CHECKED_FEATURED_STORE_ID = "lastCheckedFeaturedStoreId"
     }
 }

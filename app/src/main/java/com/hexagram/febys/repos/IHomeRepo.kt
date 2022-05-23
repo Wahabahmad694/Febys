@@ -4,6 +4,7 @@ import com.hexagram.febys.models.api.banners.Banner
 import com.hexagram.febys.models.api.category.UniqueCategory
 import com.hexagram.febys.models.api.product.FeaturedCategory
 import com.hexagram.febys.models.api.product.Product
+import com.hexagram.febys.models.api.vendor.Vendor
 import com.hexagram.febys.network.response.SeasonalOffer
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -30,4 +31,8 @@ interface IHomeRepo {
     suspend fun fetchUnder100DollarsItems(dispatcher: CoroutineDispatcher = Dispatchers.IO): List<Product>
 
     suspend fun fetchEditorsPickItems(dispatcher: CoroutineDispatcher = Dispatchers.IO): List<Product>
+
+    suspend fun fetchFeaturedVendorStores(dispatcher: CoroutineDispatcher = Dispatchers.IO): List<Vendor>
+
+    suspend fun fetchFeaturedCelebrityStores(dispatcher: CoroutineDispatcher = Dispatchers.IO): List<Vendor>
 }
