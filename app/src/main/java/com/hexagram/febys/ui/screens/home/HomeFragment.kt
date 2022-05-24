@@ -12,6 +12,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.hexagram.febys.NavGraphDirections
@@ -28,13 +29,19 @@ import com.hexagram.febys.network.response.Offer
 import com.hexagram.febys.network.response.SeasonalOffer
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.utils.*
+import com.zendesk.logger.Logger
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import zendesk.answerbot.AnswerBot
 import zendesk.answerbot.AnswerBotEngine
 import zendesk.chat.Chat
 import zendesk.chat.ChatEngine
 import zendesk.core.AnonymousIdentity
+import zendesk.core.Identity
 import zendesk.core.Zendesk
 import zendesk.messaging.MessagingActivity
+import zendesk.support.Guide
 import zendesk.support.Support
 import zendesk.support.SupportEngine
 
@@ -517,21 +524,38 @@ class HomeFragment : SliderFragment() {
     private fun gotoChat() {
         Zendesk.INSTANCE.init(
             requireContext(), "https://synavos4743.zendesk.com",
-            "4d8e5148e0bc70c785c02eb5c2e06a9331e293ec20756b6a",
-            "mobile_sdk_client_eab73d8a7313a41db8de"
+            "4bec6af177f6381b817a1beb0a6a856c2fb7ad17e8f03dfb",
+            "mobile_sdk_client_f2062f768e45a11d080d"
         )
 
         Support.INSTANCE.init(Zendesk.INSTANCE)
+
         Chat.INSTANCE.init(requireContext(), "kK7tIQMiIaBGQQog0HSzbxISgnUnC7Gq")
-        Zendesk.INSTANCE.setIdentity(AnonymousIdentity())
+        AnswerBot.INSTANCE.init(Zendesk.INSTANCE, Guide.INSTANCE);
+
+
+        Logger.setLoggable(true)
+
+        val identity: Identity = AnonymousIdentity.Builder()
+            .withNameIdentifier(consumer?.fullName) // name is optional
+            .withEmailIdentifier(consumer?.email) // email is optional
+            .build()
+
+        Zendesk.INSTANCE.setIdentity(identity)
 
         val answerEngine = AnswerBotEngine.engine()
         val supportEngine = SupportEngine.engine()
         val chatEngine = ChatEngine.engine()
 
-        MessagingActivity.builder()
-            .withEngines(answerEngine, supportEngine, chatEngine)
-            .show(requireContext())
+        lifecycleScope.launch {
+            delay(1000)
+            MessagingActivity.builder()
+                .withEngines(answerEngine, supportEngine, chatEngine)
+                .withBotLabelString("Alisha")
+                .show(requireContext())
+        }
+
+
     }
 
     override fun getSlider() =
