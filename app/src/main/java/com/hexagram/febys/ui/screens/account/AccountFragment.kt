@@ -19,6 +19,7 @@ import com.hexagram.febys.utils.OrderStatus
 import com.hexagram.febys.utils.load
 import com.hexagram.febys.utils.navigateTo
 import dagger.hilt.android.AndroidEntryPoint
+import zendesk.chat.Chat
 
 @AndroidEntryPoint
 class AccountFragment : BaseFragment() {
@@ -66,6 +67,7 @@ class AccountFragment : BaseFragment() {
                 NotificationLocalBroadcastReceiver.sendBroadCast(requireContext())
                 signOut()
             }
+            resetChat()
         }
         binding.orders.containerWallet.setOnClickListener {
             val gotoWallet = AccountFragmentDirections.actionAccountFragmentToWalletFragment()
@@ -180,6 +182,10 @@ class AccountFragment : BaseFragment() {
                 )
             navigateTo(goToTermsAndConditions)
         }
+    }
+
+    private fun resetChat() {
+        Chat.INSTANCE.resetIdentity()
     }
 
     private fun toggleNotification(notify: Boolean) {
