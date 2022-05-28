@@ -55,6 +55,13 @@ interface IProductListingRepo : IProductRepo {
         onProductListingResponse: ((ProductPagingListing) -> Unit)?
     ): Flow<PagingData<Product>>
 
+    fun fetchSameDayDeliveryListing(
+        filters: ProductListingRequest,
+        scope: CoroutineScope,
+        dispatcher: CoroutineDispatcher = Dispatchers.IO,
+        onProductListingResponse: ((ProductPagingListing) -> Unit)?
+    ): Flow<PagingData<Product>>
+
     fun fetchUnder100DollarsItemsListing(
         filters: ProductListingRequest,
         scope: CoroutineScope,

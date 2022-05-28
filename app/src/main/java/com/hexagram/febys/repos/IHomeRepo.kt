@@ -35,4 +35,6 @@ interface IHomeRepo {
     suspend fun fetchFeaturedVendorStores(dispatcher: CoroutineDispatcher = Dispatchers.IO): List<Vendor>
 
     suspend fun fetchFeaturedCelebrityStores(dispatcher: CoroutineDispatcher = Dispatchers.IO): List<Vendor>
+
+    suspend fun fetchSameDayDeliveryItems(dispatcher: CoroutineDispatcher = Dispatchers.IO): List<Product>
 }
