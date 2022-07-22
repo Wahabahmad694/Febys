@@ -486,7 +486,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_2dp"
-                        android:text="@string/label_featured_categories_slogan"
+                        android:text="@string/label_same_day_delivery_slogan"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_label_same_day_delivery" />

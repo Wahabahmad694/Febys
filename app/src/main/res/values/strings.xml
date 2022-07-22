@@ -8,12 +8,13 @@
     <string name="label_featured_stores">Featured Stores</string>
     <string name="label_categories">Categories</string>
     <string name="label_featured_categories_slogan">We think you\'ll love these</string>
+    <string name="label_same_day_delivery_slogan">Explore things that you want on a same day</string>
     <string name="label_trending_products">Trending Products</string>
     <string name="label_products">Products</string>
     <string name="label_trending_products_slogan">Discover the top selling products</string>
     <string name="label_under_100_dollar_items">Under ₵100 Items</string>
     <string name="label_under_100_dollar_items_slogan">Discover new deal\'s, just for you</string>
-    <string name="label_editors_pick_items">Editors Pick</string>
+    <string name="label_editors_pick_items">Editor\'s Pick</string>
     <string name="label_same_day_delivery_items">Same Day Delivery</string>
     <string name="label_shop_now">Shop Now</string>
     <string name="label_shop_all">Shop All</string>
