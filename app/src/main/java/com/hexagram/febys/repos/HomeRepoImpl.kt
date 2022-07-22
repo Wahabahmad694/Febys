@@ -140,4 +140,17 @@ class HomeRepoImpl @Inject constructor(
             ?.data?.getResponse<ProductPagingListing>()?.products ?: emptyList()
     }
 
+    override suspend fun fetchSameDayDeliveryItems(dispatcher: CoroutineDispatcher): List<Product> {
+        val pagingListRequest = PagingListRequest()
+        val productListingRequest = ProductListingRequest()
+        productListingRequest.sameDayDelivery = true
+        pagingListRequest.filters = productListingRequest.createFilters()
+        pagingListRequest.sorter = productListingRequest.createSorter()
+        val response = backendService.searchProducts(
+            pagingListRequest.createQueryMap(), pagingListRequest
+        )
+        return (response as? ApiResponse.ApiSuccessResponse)
+            ?.data?.getResponse<ProductPagingListing>()?.products ?: emptyList()
+    }
+
 }

@@ -469,76 +469,48 @@
 
                     <!--region same day delivery-->
 
-                    <com.facebook.drawee.view.SimpleDraweeView
-                        android:id="@+id/iv_bg_same_day_delivery"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_marginHorizontal="@dimen/_16dp"
-                        android:layout_marginTop="@dimen/_16dp"
-                        android:visibility="gone"
-                        app:actualImageResource="@drawable/bg_same_day_delivery"
-                        app:layout_constraintDimensionRatio="93:44"
-                        app:layout_constraintTop_toBottomOf="@id/btn_shop_now_store_you_follow"
-                        app:placeholderImage="@drawable/placeholder_image" />
-
-                    <com.facebook.drawee.view.SimpleDraweeView
-                        android:id="@+id/iv_bg_transparent_layer_same_day_delivery"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:visibility="gone"
-                        android:layout_marginTop="@dimen/_16dp"
-                        app:actualImageResource="@drawable/bg_transparent_layer_same_day_delivery"
-                        app:actualImageScaleType="none"
-                        app:layout_constraintDimensionRatio="93:44"
-                        app:layout_constraintEnd_toEndOf="@id/iv_bg_same_day_delivery"
-                        app:layout_constraintStart_toStartOf="@id/iv_bg_same_day_delivery"
-                        app:layout_constraintTop_toBottomOf="@id/btn_shop_now_store_you_follow" />
-
                     <TextView
-                        android:id="@+id/tv_same_day_delivery"
+                        android:id="@+id/tv_label_same_day_delivery"
                         style="@style/TextTheme.HelveticaNeue.TS16.Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/label_same_day_delivery"
-                        android:textColor="@color/white"
-                        android:visibility="gone"
-                        app:layout_constraintBottom_toBottomOf="@id/iv_bg_same_day_delivery"
-                        app:layout_constraintEnd_toEndOf="@id/iv_bg_same_day_delivery"
-                        app:layout_constraintStart_toStartOf="@id/iv_bg_same_day_delivery"
-                        app:layout_constraintTop_toTopOf="@id/iv_bg_same_day_delivery"
-                        app:layout_constraintVertical_bias="0.4" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_shop_now_same_day_delivery"
-                        style="@style/ButtonTheme.OutLine.Small"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_8dp"
-                        android:backgroundTint="@android:color/transparent"
-                        android:text="@string/label_shop_now"
-                        android:visibility="gone"
-                        android:textColor="@color/white"
-                        app:layout_constraintEnd_toEndOf="@id/iv_bg_same_day_delivery"
-                        app:layout_constraintStart_toStartOf="@id/iv_bg_same_day_delivery"
-                        app:layout_constraintTop_toBottomOf="@id/tv_same_day_delivery"
-                        app:strokeColor="@color/white" />
-
-                    <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
-                        android:id="@+id/dots_indicators"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_16sdp"
-                        app:dotsColor="@color/slider_dot_colors"
-                        app:dotsCornerRadius="8dp"
-                        app:dotsSize="4dp"
-                        app:dotsSpacing="4dp"
-                        app:dotsWidthFactor="2.5"
-                        android:visibility="gone"
+                        android:layout_marginTop="@dimen/_16dp"
+                        android:text="@string/label_same_day_delivery_items"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/btn_shop_now_same_day_delivery"
-                        app:progressMode="true"
-                        app:selectedDotColor="@color/slider_dot_selected_colors" />
+                        app:layout_constraintTop_toBottomOf="@id/btn_shop_now_store_you_follow" />
+
+                    <TextView
+                        android:id="@+id/tv_label_same_day_delivery_slogan"
+                        style="@style/TextTheme.Arial.TS12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2dp"
+                        android:text="@string/label_same_day_delivery_slogan"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_label_same_day_delivery" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_same_day_delivery_items"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_16dp"
+                        android:clipToPadding="false"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintTop_toBottomOf="@id/tv_label_same_day_delivery_slogan"
+                        tools:listitem="@layout/item_product_home" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_same_day_delivery_items"
+                        style="@style/ButtonTheme.OutLine.Full"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_16dp"
+                        android:layout_marginTop="@dimen/_16dp"
+                        android:text="@string/label_shop_now"
+                        app:layout_constraintTop_toBottomOf="@id/rv_same_day_delivery_items" />
                     <!--endregion same day delivery-->
 
                     <!--region under $100 items-->
@@ -551,7 +523,7 @@
                         android:text="@string/label_under_100_dollar_items"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/iv_bg_same_day_delivery" />
+                        app:layout_constraintTop_toBottomOf="@id/btn_same_day_delivery_items" />
 
                     <TextView
                         android:id="@+id/tv_label_under_100_dollars_items_slogan"

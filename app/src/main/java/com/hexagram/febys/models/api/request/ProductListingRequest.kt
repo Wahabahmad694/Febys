@@ -15,6 +15,7 @@ data class ProductListingRequest constructor(
     var hasPromotion: Boolean = false,
     var trendsOnSale: Boolean = false,
     var editorsPick: Boolean = false,
+    var sameDayDelivery: Boolean = false,
     var categoryIds: MutableSet<Int> = mutableSetOf(),
     var vendorIds: MutableSet<String> = mutableSetOf(),
     var variantAttrs: MutableSet<String> = mutableSetOf(),

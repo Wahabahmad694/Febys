@@ -23,6 +23,7 @@ open class ProductListingViewModel @Inject constructor(
     private var recommendedProductListing: Flow<PagingData<Product>>? = null
     private var trendingProductsListing: Flow<PagingData<Product>>? = null
     private var editorsPickListing: Flow<PagingData<Product>>? = null
+    private var sameDayDeliveryListing: Flow<PagingData<Product>>? = null
     private var under100DollarsItemsListing: Flow<PagingData<Product>>? = null
     private var storeYouFollowItemListingItemsListing: Flow<PagingData<Product>>? = null
     private var categoryProductsListing: Flow<PagingData<Product>>? = null
@@ -118,6 +119,19 @@ open class ProductListingViewModel @Inject constructor(
         if (editorsPickListing == null || refresh) {
             editorsPickListing =
                 productListingRepo.fetchEditorsPickListing(
+                    filters, viewModelScope, onProductListingResponse = onProductListingResponse
+                )
+        }
+
+        return editorsPickListing!!
+    }
+
+    fun sameDayDeliveryItemListing(
+        refresh: Boolean, onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
+    ): Flow<PagingData<Product>> {
+        if (sameDayDeliveryListing == null || refresh) {
+            sameDayDeliveryListing =
+                productListingRepo.fetchSameDayDeliveryListing(
                     filters, viewModelScope, onProductListingResponse = onProductListingResponse
                 )
         }

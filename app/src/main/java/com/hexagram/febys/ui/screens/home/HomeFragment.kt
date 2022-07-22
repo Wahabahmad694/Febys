@@ -149,6 +149,11 @@ class HomeFragment : SliderFragment() {
         binding.rvEditorsPickItems.applySpaceItemDecoration(horizontalDimenRes = R.dimen._24dp)
         binding.rvEditorsPickItems.setHasFixedSize(true)
         binding.rvEditorsPickItems.adapter = editorsPickItemAdapter
+
+        // same day delivery items
+        binding.rvSameDayDeliveryItems.applySpaceItemDecoration(horizontalDimenRes = R.dimen._24dp)
+        binding.rvSameDayDeliveryItems.setHasFixedSize(true)
+        binding.rvSameDayDeliveryItems.adapter = editorsPickItemAdapter
     }
 
     private fun initUiListener() {
@@ -188,6 +193,12 @@ class HomeFragment : SliderFragment() {
             val gotoEditorPickListingFragment = HomeFragmentDirections
                 .actionHomeFragmentToEditorsPickItemListingFragment(getString(R.string.label_editors_pick_items))
             navigateTo(gotoEditorPickListingFragment)
+        }
+
+        binding.btnSameDayDeliveryItems.setOnClickListener {
+            val gotoSameDayDeliveryListingFragment = HomeFragmentDirections
+                .actionHomeFragmentToEditorsPickItemListingFragment(getString(R.string.label_same_day_delivery_items))
+            navigateTo(gotoSameDayDeliveryListingFragment)
         }
 
         binding.btnShopNowUnder100DollarsItems.setOnClickListener {
@@ -297,6 +308,7 @@ class HomeFragment : SliderFragment() {
                     setupSeasonalOffers(homeModel.seasonalOffers)
                     setupTrendingProducts(homeModel.trendingProducts)
                     setupUnder100DollarsItems(homeModel.under100DollarsItems)
+                    setupSameDayDeliveryItems(homeModel.sameDayDeliveryItems)
                     setupEditorsPickItem(homeModel.editorsPickItems)
 //                    setupFeaturedStores(
 //                        homeModel.featuredVendorStores,
@@ -454,6 +466,18 @@ class HomeFragment : SliderFragment() {
         )
     }
 
+    private fun setupSameDayDeliveryItems(sameDayDeliveryItem: List<Product>) {
+        editorsPickItemAdapter.submitList(sameDayDeliveryItem)
+
+        val isVisible = sameDayDeliveryItem.isNotEmpty()
+        isVisible.applyToViews(
+            binding.tvLabelSameDayDelivery,
+            binding.tvLabelSameDayDeliverySlogan,
+            binding.rvSameDayDeliveryItems,
+            binding.btnSameDayDeliveryItems
+        )
+    }
+
     private fun setupStoreYouFollow(storeYouFollow: List<Product>) {
         storeYouFollowAdapter.submitList(storeYouFollow)
 
@@ -551,7 +575,7 @@ class HomeFragment : SliderFragment() {
             delay(1000)
             MessagingActivity.builder()
                 .withEngines(answerEngine, supportEngine, chatEngine)
-                .withBotLabelString("Alisha")
+                .withBotLabelString("Alicia")
                 .show(requireContext())
         }
 
