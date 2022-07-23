@@ -7,23 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.view.children
-import androidx.core.view.isVisible
-import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.viewModels
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentSearchBinding
-import com.hexagram.febys.utils.hideKeyboard
 import com.hexagram.febys.utils.navigateTo
-import com.hexagram.febys.utils.onSearch
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SearchFragment : BaseFragment() {
     private lateinit var binding: FragmentSearchBinding
-    private val viewModel: SearchViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -89,28 +83,14 @@ class SearchFragment : BaseFragment() {
     }
 
     private fun uiListeners() {
-        fun onSearchClick() {
-            hideKeyboard()
-            val query = binding.etSearch.text.toString()
-            if (query.isNotEmpty()) {
-                doSearch(query)
-            }
-        }
-        binding.ivClear.setOnClickListener { binding.etSearch.setText("") }
-        binding.ivSearch.setOnClickListener { onSearchClick() }
 
-        binding.etSearch.onSearch { onSearchClick() }
-
-        binding.etSearch.addTextChangedListener {
-            binding.ivClear.isVisible = binding.etSearch.text.isNotEmpty()
+        binding.etSearch.setOnClickListener {
+            val gotoSearchProduct =
+                SearchFragmentDirections.actionSearchFragmentToSearchProductFragment()
+            navigateTo(gotoSearchProduct)
         }
     }
 
-    private fun doSearch(query: String) {
-        val gotoSearch =
-            SearchFragmentDirections.actionSearchFragmentToSearchProductListingFragment(query)
-        navigateTo(gotoSearch)
-    }
 
     override fun getTvCartCount(): TextView = binding.tvCartCount
     override fun getIvCart(): View = binding.ivCart
