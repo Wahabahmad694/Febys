@@ -10,7 +10,10 @@ import com.hexagram.febys.models.api.product.Product
 import com.hexagram.febys.models.api.product.ProductPagingListing
 import com.hexagram.febys.models.api.request.PagingListRequest
 import com.hexagram.febys.models.api.request.ProductListingRequest
+import com.hexagram.febys.models.api.request.SearchRequest
+import com.hexagram.febys.models.api.response.SearchSuggestionPagingListing
 import com.hexagram.febys.network.FebysBackendService
+import com.hexagram.febys.network.SearchService
 import com.hexagram.febys.paginations.*
 import com.hexagram.febys.prefs.IPrefManger
 import kotlinx.coroutines.CoroutineDispatcher
@@ -21,7 +24,8 @@ import javax.inject.Inject
 
 class ProductListingRepoImpl @Inject constructor(
     pref: IPrefManger,
-    backendService: FebysBackendService
+    backendService: FebysBackendService,
+    val searchService: SearchService
 ) : ProductRepoImpl(pref, backendService), IProductListingRepo {
     override fun fetchTodayDealsListing(
         filters: ProductListingRequest,
@@ -227,6 +231,25 @@ class ProductListingRepoImpl @Inject constructor(
         ) {
             val req = createReq(filters)
             SearchProductPagingSource(backendService, req, onProductListingResponse)
+        }.flow
+            .flowOn(dispatcher)
+            .cachedIn(scope)
+    }
+
+    override fun searchProductSuggestionListing(
+        scope: CoroutineScope,
+        dispatcher: CoroutineDispatcher,
+        searchRequest: SearchRequest,
+        onSearchProductListingResponse: ((SearchSuggestionPagingListing) -> Unit)?
+    ): Flow<PagingData<Product>> {
+        return Pager(
+            PagingConfig(pageSize = 10)
+        ) {
+            SearchProductSuggestionPagingSource(
+                searchService,
+                searchRequest,
+                onSearchProductListingResponse
+            )
         }.flow
             .flowOn(dispatcher)
             .cachedIn(scope)

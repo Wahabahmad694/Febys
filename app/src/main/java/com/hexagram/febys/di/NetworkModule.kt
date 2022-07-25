@@ -2,11 +2,9 @@ package com.hexagram.febys.di
 
 import com.hexagram.febys.BuildConfig
 import com.hexagram.febys.dataSource.ICartDataSource
-import com.hexagram.febys.dataSource.IUserDataSource
 import com.hexagram.febys.network.*
 import com.hexagram.febys.network.adapter.ApiResponseCallAdapterFactory
 import com.hexagram.febys.prefs.IPrefManger
-import com.hexagram.febys.repos.ICartRepo
 import com.hexagram.febys.ui.screens.payment.service.PaymentService
 import dagger.Module
 import dagger.Provides
@@ -73,6 +71,19 @@ object NetworkModule {
             .build()
     }
 
+
+    @Provides
+    @Singleton
+    @SearchClient
+    fun provideBackendSearchClient(okHttpClient: OkHttpClient): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(BuildConfig.searchBaseUrl)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(ApiResponseCallAdapterFactory())
+            .build()
+    }
+
     @Provides
     @Singleton
     @WebCustomizationClient
@@ -95,6 +106,12 @@ object NetworkModule {
     @Singleton
     fun provideWebCustomizationService(@WebCustomizationClient retrofit: Retrofit): FebysWebCustomizationService {
         return retrofit.create(FebysWebCustomizationService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSearchService(@SearchClient retrofit: Retrofit): SearchService {
+        return retrofit.create(SearchService::class.java)
     }
 
     @Provides

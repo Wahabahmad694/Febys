@@ -4,6 +4,8 @@ import androidx.paging.PagingData
 import com.hexagram.febys.models.api.product.Product
 import com.hexagram.febys.models.api.product.ProductPagingListing
 import com.hexagram.febys.models.api.request.ProductListingRequest
+import com.hexagram.febys.models.api.request.SearchRequest
+import com.hexagram.febys.models.api.response.SearchSuggestionPagingListing
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -103,5 +105,12 @@ interface IProductListingRepo : IProductRepo {
         scope: CoroutineScope,
         dispatcher: CoroutineDispatcher = Dispatchers.IO,
         onProductListingResponse: ((ProductPagingListing) -> Unit)?
+    ): Flow<PagingData<Product>>
+
+     fun searchProductSuggestionListing(
+        scope: CoroutineScope,
+        dispatcher: CoroutineDispatcher,
+        body: SearchRequest,
+        onSearchProductListingResponse: ((SearchSuggestionPagingListing) -> Unit)?
     ): Flow<PagingData<Product>>
 }
