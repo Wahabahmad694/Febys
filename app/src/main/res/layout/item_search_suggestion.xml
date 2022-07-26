@@ -17,10 +17,10 @@
             android:layout_height="@dimen/_86sdp"
             android:layout_marginStart="@dimen/_8sdp"
             android:layout_marginTop="@dimen/_18sdp"
-            app:actualImageScaleType="fitCenter"
+            app:actualImageScaleType="centerCrop"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:placeholderImage="@drawable/placeholder_image"
+            android:background="@drawable/placeholder_template"
             app:roundingBorderColor="@color/grey_e1e5e8"
             app:roundingBorderWidth="@dimen/_1sdp" />
 
@@ -64,24 +64,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginStart="@dimen/_10sdp"
-            app:layout_constraintEnd_toStartOf="@id/tv_product_off_price_separator"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="@id/tv_store_name"
             app:layout_constraintTop_toBottomOf="@id/tv_store_name"
-            tools:text="$14" />
+            app:layout_constraintStart_toStartOf="@+id/tv_store_name"
+            tools:text="$666666614" />
 
         <TextView
             android:id="@+id/tv_product_off_price_separator"
             style="@style/TextTheme.Arial.TS12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_2sdp"
-            android:layout_marginStart="@dimen/_2sdp"
+            android:layout_marginStart="@dimen/_3sdp"
             android:text="@string/minus"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_product_off_price"
-            app:layout_constraintEnd_toStartOf="@id/tv_product_price"
             app:layout_constraintStart_toEndOf="@id/tv_product_off_price"
+            app:layout_constraintTop_toTopOf="@id/tv_product_off_price"
+            app:layout_constraintBottom_toBottomOf="@id/tv_product_off_price"
             />
 
         <TextView
@@ -89,12 +86,10 @@
             style="@style/TextTheme.Arial.TS12.Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_2sdp"
-            android:layout_marginTop="@dimen/_3sdp"
-            app:layout_constraintEnd_toEndOf="@id/tv_store_name"
+            android:layout_marginStart="@dimen/_3sdp"
             app:layout_constraintStart_toEndOf="@id/tv_product_off_price_separator"
+            app:layout_constraintTop_toTopOf="@id/tv_product_off_price_separator"
             app:layout_constraintBottom_toBottomOf="@id/tv_product_off_price_separator"
-            app:layout_constraintTop_toTopOf="@+id/tv_product_off_price_separator"
             tools:text="$14" />
 
         <View

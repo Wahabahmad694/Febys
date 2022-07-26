@@ -238,13 +238,6 @@
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
         <action
-            android:id="@+id/action_searchFragment_to_searchProductListingFragment"
-            app:destination="@id/searchProductListingFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right" />
-        <action
             android:id="@+id/action_searchFragment_to_productListingByVendorFragment"
             app:destination="@id/productListingByVendorFragment"
             app:enterAnim="@anim/slide_in_left"
@@ -737,7 +730,15 @@
         android:id="@+id/searchProductFragment"
         android:name="com.hexagram.febys.ui.screens.searchProductFragment.SearchProductFragment"
         android:label="SearchProductFragment"
-        tools:layout="@layout/fragment_search_product" />
+        tools:layout="@layout/fragment_search_product">
+        <action
+            android:id="@+id/action_searchProductFragment_to_searchProductListingFragment"
+            app:destination="@id/searchProductListingFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
     <fragment
         android:id="@+id/storeLoadFragment"
         android:name="com.hexagram.febys.ui.screens.store.menu.LoadStoreFragment"

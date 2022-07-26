@@ -4,11 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.hexagram.febys.models.api.product.Product
 import com.hexagram.febys.models.api.product.ProductPagingListing
 import com.hexagram.febys.models.api.request.ProductListingRequest
 import com.hexagram.febys.models.api.request.SearchRequest
-import com.hexagram.febys.models.api.response.SearchSuggestionPagingListing
 import com.hexagram.febys.repos.IProductListingRepo
 import com.hexagram.febys.ui.screens.product.ProductViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -203,18 +203,13 @@ open class ProductListingViewModel @Inject constructor(
         return searchProductsListing!!
     }
 
-    fun searchProductsSuggestionListing(
-        refresh: Boolean = false,
-        searchRequest: SearchRequest,
-        onSearchProductListingResponse: ((SearchSuggestionPagingListing) -> Unit)? = null
-    ): Flow<PagingData<Product>> {
-        return productListingRepo.searchProductSuggestionListing(
-            viewModelScope,
-            dispatcher = Dispatchers.IO,
-            searchRequest,
-            onSearchProductListingResponse
-        )
-    }
+    fun searchProductsListing(
+        search: String
+    ) = productListingRepo.searchProductSuggestionListing(
+        viewModelScope,
+        dispatcher = Dispatchers.IO,
+        SearchRequest(searchStr = search)
+    ).cachedIn(viewModelScope)
 
 
     fun vendorProductListing(

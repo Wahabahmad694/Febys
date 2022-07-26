@@ -189,9 +189,9 @@ fun EditText.onSearch(callback: () -> Unit) {
     }
 }
 
-fun EditText.getQueryTextChangeStateFlow(): StateFlow<String> {
+fun EditText.getQueryTextChangeStateFlow(): StateFlow<String?> {
 
-    val query = MutableStateFlow("")
+    val query : MutableStateFlow<String?> = MutableStateFlow(null)
 
     addTextChangedListener(afterTextChanged = {
         query.value = it.toString()

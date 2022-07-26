@@ -5,7 +5,7 @@ import com.hexagram.febys.models.api.product.Product
 import com.hexagram.febys.models.api.product.ProductPagingListing
 import com.hexagram.febys.models.api.request.ProductListingRequest
 import com.hexagram.febys.models.api.request.SearchRequest
-import com.hexagram.febys.models.api.response.SearchSuggestionPagingListing
+import com.hexagram.febys.models.api.suggestedSearch.SuggestedProduct
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -110,7 +110,6 @@ interface IProductListingRepo : IProductRepo {
      fun searchProductSuggestionListing(
         scope: CoroutineScope,
         dispatcher: CoroutineDispatcher,
-        body: SearchRequest,
-        onSearchProductListingResponse: ((SearchSuggestionPagingListing) -> Unit)?
-    ): Flow<PagingData<Product>>
+        body: SearchRequest
+    ): Flow<PagingData<SuggestedProduct>>
 }

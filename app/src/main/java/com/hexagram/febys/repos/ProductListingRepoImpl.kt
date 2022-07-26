@@ -11,7 +11,7 @@ import com.hexagram.febys.models.api.product.ProductPagingListing
 import com.hexagram.febys.models.api.request.PagingListRequest
 import com.hexagram.febys.models.api.request.ProductListingRequest
 import com.hexagram.febys.models.api.request.SearchRequest
-import com.hexagram.febys.models.api.response.SearchSuggestionPagingListing
+import com.hexagram.febys.models.api.suggestedSearch.SuggestedProduct
 import com.hexagram.febys.network.FebysBackendService
 import com.hexagram.febys.network.SearchService
 import com.hexagram.febys.paginations.*
@@ -239,20 +239,19 @@ class ProductListingRepoImpl @Inject constructor(
     override fun searchProductSuggestionListing(
         scope: CoroutineScope,
         dispatcher: CoroutineDispatcher,
-        searchRequest: SearchRequest,
-        onSearchProductListingResponse: ((SearchSuggestionPagingListing) -> Unit)?
-    ): Flow<PagingData<Product>> {
+        body: SearchRequest
+    ): Flow<PagingData<SuggestedProduct>> {
+
         return Pager(
             PagingConfig(pageSize = 10)
         ) {
             SearchProductSuggestionPagingSource(
                 searchService,
-                searchRequest,
-                onSearchProductListingResponse
-            )
+                body
+            ) {
+
+            }
         }.flow
-            .flowOn(dispatcher)
-            .cachedIn(scope)
     }
 
     override fun fetchWishList(
