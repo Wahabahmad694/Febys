@@ -4,12 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.hexagram.febys.models.api.product.Product
 import com.hexagram.febys.models.api.product.ProductPagingListing
 import com.hexagram.febys.models.api.request.ProductListingRequest
+import com.hexagram.febys.models.api.request.SearchRequest
 import com.hexagram.febys.repos.IProductListingRepo
 import com.hexagram.febys.ui.screens.product.ProductViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -113,6 +116,7 @@ open class ProductListingViewModel @Inject constructor(
 
         return trendingProductsListing!!
     }
+
     fun editorsPickItemListing(
         refresh: Boolean, onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
     ): Flow<PagingData<Product>> {
@@ -198,6 +202,15 @@ open class ProductListingViewModel @Inject constructor(
 
         return searchProductsListing!!
     }
+
+    fun searchProductsListing(
+        search: String
+    ) = productListingRepo.searchProductSuggestionListing(
+        viewModelScope,
+        dispatcher = Dispatchers.IO,
+        SearchRequest(searchStr = search)
+    ).cachedIn(viewModelScope)
+
 
     fun vendorProductListing(
         vendorId: String,

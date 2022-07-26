@@ -51,10 +51,12 @@ android {
             buildConfigField("String", "webCustomizationBaseUrl", endpointsProperties['BASE_URL_WEB_CUSTOMIZATION'])
             buildConfigField("String", "keycloakClientId", credentialsProperties['KEYCLOAK_CLIENT_ID'])
             buildConfigField("String", "keycloakClientSecret", credentialsProperties['KEYCLOAK_CLIENT_SECRET'])
+            buildConfigField("String", "searchBaseUrl", endpointsProperties['SEARCH_BASE_URL_BACKEND'])
             resValue "string", "google_web_client", credentialsProperties['GOOGLE_WEB_CLIENT']
             resValue "string", "facebook_app_id", credentialsProperties['FACEBOOK_APP_ID']
             resValue "string", "fb_login_protocol_scheme", credentialsProperties['FACEBOOK_LOGIN_PROTOCOL_SCHEME']
             resValue "string", "fb_client_token", credentialsProperties['FACEBOOK_CLIENT_TOKEN']
+
         }
         qa {
             initWith debug
@@ -62,6 +64,7 @@ android {
             def endpointsProperties = getBuildProperties()
             buildConfigField("String", "backendBaseUrl", endpointsProperties['QA_BASE_URL_BACKEND'])
             buildConfigField("String", "webCustomizationBaseUrl", endpointsProperties['QA_BASE_URL_WEB_CUSTOMIZATION'])
+            buildConfigField("String", "searchBaseUrl", endpointsProperties['SEARCH_BASE_URL_BACKEND_QA'])
 
             matchingFallbacks = ['debug', 'release']
         }
@@ -71,6 +74,7 @@ android {
             def endpointsProperties = getBuildProperties()
             buildConfigField("String", "backendBaseUrl", endpointsProperties['STAGING_BASE_URL_BACKEND'])
             buildConfigField("String", "webCustomizationBaseUrl", endpointsProperties['STAGING_BASE_URL_WEB_CUSTOMIZATION'])
+            buildConfigField("String", "searchBaseUrl", endpointsProperties['SEARCH_BASE_URL_BACKEND_STAGING'])
 
             matchingFallbacks = ['debug', 'release']
         }
@@ -83,10 +87,12 @@ android {
             buildConfigField("String", "webCustomizationBaseUrl", endpointsProperties['STAGING_BASE_URL_WEB_CUSTOMIZATION'])
             buildConfigField("String", "keycloakClientId", credentialsProperties['KEYCLOAK_CLIENT_ID'])
             buildConfigField("String", "keycloakClientSecret", credentialsProperties['KEYCLOAK_CLIENT_SECRET'])
+            buildConfigField("String", "searchBaseUrl", endpointsProperties['SEARCH_BASE_URL_BACKEND_STAGING'])
             resValue "string", "google_web_client", credentialsProperties['GOOGLE_WEB_CLIENT']
             resValue "string", "facebook_app_id", credentialsProperties['FACEBOOK_APP_ID']
             resValue "string", "fb_login_protocol_scheme", credentialsProperties['FACEBOOK_LOGIN_PROTOCOL_SCHEME']
             resValue "string", "fb_client_token", credentialsProperties['FACEBOOK_CLIENT_TOKEN']
+
         }
     }
     compileOptions {

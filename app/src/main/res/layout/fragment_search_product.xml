@@ -9,8 +9,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.screens.search.SearchFragment">
+        android:layout_height="match_parent">
 
         <View
             android:id="@+id/bg_top"
@@ -30,29 +29,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/bg_top" />
 
-        <ImageView
-            android:id="@+id/iv_cart"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_16dp"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_cart"
+            android:padding="@dimen/_16dp"
+            android:src="@drawable/iv_close_2"
             app:layout_constraintBottom_toBottomOf="@id/iv_febys"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/iv_febys" />
-
-        <TextView
-            android:id="@+id/tv_cart_count"
-            style="@style/TextTheme.HelveticaNeue.TS16.Bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_4sdp"
-            android:contentDescription="@string/app_name"
-            app:layout_constraintBottom_toBottomOf="@id/iv_cart"
-            app:layout_constraintEnd_toStartOf="@id/iv_cart"
-            app:layout_constraintTop_toTopOf="@id/iv_cart"
-            app:layout_constraintVertical_bias="0.8"
-            tools:text="2" />
 
         <LinearLayout
             android:id="@+id/ll_search_container_search_fragment"
@@ -66,18 +51,28 @@
             android:paddingEnd="@dimen/_0dp"
             app:layout_constraintTop_toBottomOf="@id/iv_febys">
 
-            <TextView
-                android:id="@+id/tv_search"
+            <EditText
+                android:id="@+id/et_search"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:autofillHints="@null"
-                android:gravity="center_vertical"
                 android:background="@null"
                 android:hint="@string/hint_search"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
                 android:singleLine="true"
                 android:textAppearance="@style/TextTheme.HelveticaNeue.TS14"
                 android:textColorHint="@color/gray" />
+
+            <ImageView
+                android:id="@+id/iv_clear"
+                android:layout_width="46dp"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/hint_clear"
+                android:padding="@dimen/_16dp"
+                android:visibility="gone"
+                android:src="@drawable/iv_close_2" />
 
             <ImageView
                 android:id="@+id/iv_search"
@@ -90,21 +85,21 @@
 
         </LinearLayout>
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout_search_fragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_16dp"
-            app:layout_constraintTop_toBottomOf="@id/ll_search_container_search_fragment"
-            app:tabMode="scrollable"
-            app:tabTextAppearance="@style/TextTheme.HelveticaNeue.TS12" />
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/view_pager_search_fragment"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_product_search"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tab_layout_search_fragment" />
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:gravity="center_horizontal"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_2sdp"
+            app:layoutManager="LinearLayoutManager"
+            tools:context=".ui.screens.searchProductFragment.SearchProductFragment"
+            tools:listitem="@layout/item_search_suggestion"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll_search_container_search_fragment"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -14,6 +14,7 @@ import androidx.annotation.DrawableRes
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
@@ -30,6 +31,8 @@ import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.ui.screens.dialog.InfoDialog
 import com.hexagram.febys.ui.screens.dialog.WarningDialog
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import java.io.IOException
 import java.math.RoundingMode
 import java.text.DecimalFormat
@@ -184,6 +187,19 @@ fun EditText.onSearch(callback: () -> Unit) {
         }
         false
     }
+}
+
+fun EditText.getQueryTextChangeStateFlow(): StateFlow<String?> {
+
+    val query : MutableStateFlow<String?> = MutableStateFlow(null)
+
+    addTextChangedListener(afterTextChanged = {
+        query.value = it.toString()
+
+    })
+
+    return query
+
 }
 
 fun <T : View> BottomSheetBehavior<T>.onStateChange(callback: (state: Int) -> Unit) {
