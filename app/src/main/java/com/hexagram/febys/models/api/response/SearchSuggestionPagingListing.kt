@@ -12,7 +12,7 @@ class SearchSuggestionPagingListing(
     @SerializedName("pagingInfo", alternate = ["pagination_info"])
     val pagingInfo: PagingInfo,
     @SerializedName("total_rows")
-    val totalRows: Int,
+    val totalRows: Long,
     val hasNextPage: Boolean,
     val hasPreviousPage: Boolean,
     val nextPage: Int,

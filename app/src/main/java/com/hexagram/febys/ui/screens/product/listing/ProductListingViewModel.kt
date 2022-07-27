@@ -38,6 +38,11 @@ open class ProductListingViewModel @Inject constructor(
 
     var filters = ProductListingRequest()
 
+    fun getTotalProducts(): MutableLiveData<Long> {
+        return productListingRepo.getTotalProducts()
+    }
+
+
     fun todayDealsListing(
         refresh: Boolean, onProductListingResponse: ((ProductPagingListing) -> Unit)? = null
     ): Flow<PagingData<Product>> {
@@ -204,7 +209,7 @@ open class ProductListingViewModel @Inject constructor(
     }
 
     fun searchProductsListing(
-        search: String
+        search: String?
     ) = productListingRepo.searchProductSuggestionListing(
         viewModelScope,
         dispatcher = Dispatchers.IO,

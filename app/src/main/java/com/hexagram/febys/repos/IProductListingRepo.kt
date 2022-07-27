@@ -1,5 +1,6 @@
 package com.hexagram.febys.repos
 
+import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagingData
 import com.hexagram.febys.models.api.product.Product
 import com.hexagram.febys.models.api.product.ProductPagingListing
@@ -112,4 +113,6 @@ interface IProductListingRepo : IProductRepo {
         dispatcher: CoroutineDispatcher,
         body: SearchRequest
     ): Flow<PagingData<SuggestedProduct>>
+
+    fun getTotalProducts(): MutableLiveData<Long>
 }

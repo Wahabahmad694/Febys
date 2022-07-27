@@ -58,7 +58,12 @@ abstract class ProductListingFragment : BaseFragment() {
     }
 
     private fun initUi() {
-        binding.productListingTitle = getListingTitle()
+        if (getListingTitle().isEmpty()) {
+            binding.productListingTitle = getString(R.string.label_search_result)
+        } else {
+            binding.productListingTitle = getListingTitle()
+        }
+
 
         binding.rvProductList.apply {
             setHasFixedSize(true)

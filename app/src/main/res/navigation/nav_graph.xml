@@ -728,7 +728,7 @@
         tools:layout="@layout/fragment_store_list" />
     <fragment
         android:id="@+id/searchProductFragment"
-        android:name="com.hexagram.febys.ui.screens.searchProductFragment.SearchProductFragment"
+        android:name="com.hexagram.febys.ui.screens.suggestionSearch.SearchProductFragment"
         android:label="SearchProductFragment"
         tools:layout="@layout/fragment_search_product">
         <action

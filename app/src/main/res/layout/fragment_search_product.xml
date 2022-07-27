@@ -95,11 +95,24 @@
             android:paddingTop="@dimen/_10sdp"
             android:paddingBottom="@dimen/_2sdp"
             app:layoutManager="LinearLayoutManager"
-            tools:context=".ui.screens.searchProductFragment.SearchProductFragment"
+            tools:context=".ui.screens.suggestionSearch.SearchProductFragment"
             tools:listitem="@layout/item_search_suggestion"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ll_search_container_search_fragment"/>
+
+        <include
+            android:id="@+id/empty_view"
+            layout="@layout/layout_empty_search_result"
+            android:visibility="gone"
+            tools:visibility="visible"
+            />
+
+        <include
+            android:id="@+id/search_type_view"
+            layout="@layout/layout_empty_search"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

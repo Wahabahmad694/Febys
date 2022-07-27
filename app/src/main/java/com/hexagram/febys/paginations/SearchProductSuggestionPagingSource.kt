@@ -15,6 +15,10 @@ class SearchProductSuggestionPagingSource constructor(
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, SuggestedProduct> {
 
+        if (request.searchStr == null) {
+            onTotalItems.invoke(-1)
+            return LoadResult.Error(Exception(""))
+        }
 
         request.pageNo = params.key ?: 1
         val queryMap = request.createQueryMap()
@@ -22,7 +26,7 @@ class SearchProductSuggestionPagingSource constructor(
             is ApiResponse.ApiSuccessResponse -> {
                 val searchProductResponse =
                     response.data?.listing!!
-                onTotalItems.invoke(searchProductResponse.totalDocs)
+                onTotalItems.invoke(searchProductResponse.totalRows)
                 val (prevKey, nextKey) = getPagingKeys(searchProductResponse.pagingInfo)
                 LoadResult.Page(searchProductResponse.search, prevKey, nextKey)
 
