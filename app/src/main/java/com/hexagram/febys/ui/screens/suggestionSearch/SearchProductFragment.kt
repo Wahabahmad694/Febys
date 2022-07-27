@@ -25,9 +25,8 @@ class SearchProductFragment : BaseFragment() {
     private lateinit var binding: FragmentSearchProductBinding
     private val productListingViewModel: ProductListingViewModel by viewModels()
     private var job: Job? = null
-    private var isFirsttime = true
     private lateinit var suggestedProductsAdapter: SearchSuggestionAdapter
-    private var isAuntyVisible: Boolean? = true
+    private var isFirstSearchVisible: Boolean? = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
@@ -51,10 +50,10 @@ class SearchProductFragment : BaseFragment() {
         }
     }
 
-    fun setOnEditTextChange() {
+    private fun setOnEditTextChange() {
         binding.etSearch.addTextChangedListener {
             val search = it?.toString() ?: ""
-            isAuntyVisible = search.isEmpty()
+            isFirstSearchVisible = search.isEmpty()
             binding.ivClear.isVisible = binding.etSearch.text.isNotEmpty()
         }
     }
@@ -64,10 +63,10 @@ class SearchProductFragment : BaseFragment() {
         if (it == -1L) {
             binding.searchTypeView.root.show()
             binding.emptyView.root.hide()
-        } else if (it == 0L && isAuntyVisible == false) {
+        } else if (it == 0L && isFirstSearchVisible == false) {
             binding.searchTypeView.root.hide()
             binding.emptyView.root.show()
-        } else if (it == 0L && isAuntyVisible == true) {
+        } else if (it == 0L && isFirstSearchVisible == true) {
             binding.searchTypeView.root.show()
             binding.emptyView.root.hide()
         } else {
@@ -85,23 +84,10 @@ class SearchProductFragment : BaseFragment() {
             navigateTo(gotoProductDetail)
 
         }
-
         binding.rvProductSearch.adapter = suggestedProductsAdapter
 
-        suggestedProductsAdapter.addLoadStateListener {
-//            handleProgressPlaceholder(it)
-        }
     }
 
-//    private fun handleProgressPlaceholder(combinedLoadStates: CombinedLoadStates) = binding.apply {
-//        if (isFirsttime) {
-//            isFirsttime = false
-//            emptyView.root.isVisible = false
-//        } else {
-//            emptyView.root.isVisible = suggestedProductsAdapter.itemCount == 0
-//        }
-//
-//    }
 
     private fun uiListener() {
 
