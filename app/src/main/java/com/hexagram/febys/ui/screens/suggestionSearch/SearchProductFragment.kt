@@ -110,9 +110,8 @@ class SearchProductFragment : BaseFragment() {
     private fun onSearchClick() {
         hideKeyboard()
         val query = binding.etSearch.text.toString()
-        if (query.isNotEmpty()) {
-            doSearch(query)
-        }
+        doSearch(query)
+
     }
 
     private fun doSearch(query: String) {

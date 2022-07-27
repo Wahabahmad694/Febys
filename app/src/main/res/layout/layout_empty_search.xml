@@ -25,7 +25,7 @@
 
         <TextView
             android:id="@+id/label_search"
-            style="@style/TextTheme.HelveticaNeue.TS32"
+            style="@style/TextTheme.HelveticaNeue.TS32.Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp"
@@ -37,10 +37,10 @@
 
         <TextView
             android:id="@+id/label_empty_item"
-            style="@style/TextTheme.Arial.TS14.Bold"
+            style="@style/TextTheme.Arial.TS14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_5sdp"
             android:gravity="center"
             android:text="@string/description_please_type_any_keyboard_in_the_top_search_bar"
             app:layout_constraintEnd_toEndOf="parent"

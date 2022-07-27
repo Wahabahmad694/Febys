@@ -420,5 +420,6 @@
     <string name="description_please_type_any_keyboard_in_the_top_search_bar">Please type any keyboard in the \ntop search bar</string>
     <string name="label_search">Search</string>
     <string name="description_sorry_it_seems_that_the_product_you_nare_looking_for_does_not_exit">Sorry, it seems that the product you \nare looking for does not exit.</string>
+    <string name="label_search_result">Search Result</string>
 
 </resources>
