@@ -1,6 +1,7 @@
-package com.hexagram.febys.ui.screens.searchProductFragment
+package com.hexagram.febys.ui.screens.suggestionSearch
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,10 +13,7 @@ import com.hexagram.febys.NavGraphDirections
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentSearchProductBinding
 import com.hexagram.febys.ui.screens.product.listing.ProductListingViewModel
-import com.hexagram.febys.utils.getQueryTextChangeStateFlow
-import com.hexagram.febys.utils.goBack
-import com.hexagram.febys.utils.hideKeyboard
-import com.hexagram.febys.utils.navigateTo
+import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -27,8 +25,9 @@ class SearchProductFragment : BaseFragment() {
     private lateinit var binding: FragmentSearchProductBinding
     private val productListingViewModel: ProductListingViewModel by viewModels()
     private var job: Job? = null
+    private var isFirsttime = true
     private lateinit var suggestedProductsAdapter: SearchSuggestionAdapter
-
+    private var isAuntyVisible: Boolean? = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
@@ -42,6 +41,39 @@ class SearchProductFragment : BaseFragment() {
 
         uiListener()
         setMyJobsPagingAdapter()
+        setObserver()
+        setOnEditTextChange()
+    }
+
+    private fun setObserver() {
+        productListingViewModel.getTotalProducts().observe(viewLifecycleOwner) {
+            showEmptyView(it)
+        }
+    }
+
+    fun setOnEditTextChange() {
+        binding.etSearch.addTextChangedListener {
+            val search = it?.toString() ?: ""
+            isAuntyVisible = search.isEmpty()
+            binding.ivClear.isVisible = binding.etSearch.text.isNotEmpty()
+        }
+    }
+
+    private fun showEmptyView(it: Long?) {
+        Log.d("TAG_SEARCH", "showEmptyView: $it")
+        if (it == -1L) {
+            binding.searchTypeView.root.show()
+            binding.emptyView.root.hide()
+        } else if (it == 0L && isAuntyVisible == false) {
+            binding.searchTypeView.root.hide()
+            binding.emptyView.root.show()
+        } else if (it == 0L && isAuntyVisible == true) {
+            binding.searchTypeView.root.show()
+            binding.emptyView.root.hide()
+        } else {
+            binding.searchTypeView.root.hide()
+            binding.emptyView.root.hide()
+        }
     }
 
     private fun setMyJobsPagingAdapter() {
@@ -57,11 +89,19 @@ class SearchProductFragment : BaseFragment() {
         binding.rvProductSearch.adapter = suggestedProductsAdapter
 
         suggestedProductsAdapter.addLoadStateListener {
-
 //            handleProgressPlaceholder(it)
         }
     }
 
+//    private fun handleProgressPlaceholder(combinedLoadStates: CombinedLoadStates) = binding.apply {
+//        if (isFirsttime) {
+//            isFirsttime = false
+//            emptyView.root.isVisible = false
+//        } else {
+//            emptyView.root.isVisible = suggestedProductsAdapter.itemCount == 0
+//        }
+//
+//    }
 
     private fun uiListener() {
 
@@ -72,11 +112,12 @@ class SearchProductFragment : BaseFragment() {
         binding.ivSearch.setOnClickListener {
             onSearchClick()
         }
-        binding.ivClear.setOnClickListener { binding.etSearch.setText("") }
-
-        binding.etSearch.addTextChangedListener {
-            binding.ivClear.isVisible = binding.etSearch.text.isNotEmpty()
+        binding.ivClear.setOnClickListener {
+            binding.etSearch.setText("")
+            binding.searchTypeView.root.show()
+            binding.emptyView.root.hide()
         }
+
         startSearch()
     }
 
@@ -110,8 +151,7 @@ class SearchProductFragment : BaseFragment() {
                     .collect { result ->
                         if (result == null) {
                             getProducts(binding.etSearch.text.toString())
-                        }
-                        else{
+                        } else {
                             getProducts(result)
 
                         }
@@ -121,7 +161,7 @@ class SearchProductFragment : BaseFragment() {
         }
     }
 
-    private fun getProducts(search: String = "") {
+    private fun getProducts(search: String? = "") {
         job?.cancel()
         job = lifecycleScope.launch {
             productListingViewModel.searchProductsListing(search).collectLatest { pagingData ->

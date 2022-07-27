@@ -1,4 +1,4 @@
-package com.hexagram.febys.ui.screens.searchProductFragment
+package com.hexagram.febys.ui.screens.suggestionSearch
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

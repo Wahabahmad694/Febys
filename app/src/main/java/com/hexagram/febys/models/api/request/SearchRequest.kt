@@ -5,7 +5,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class SearchRequest(
-    val searchStr: String,
+    val searchStr: String?,
     var pageNo: Int = 1,
 ) : Parcelable{
     fun createQueryMap() = mapOf(

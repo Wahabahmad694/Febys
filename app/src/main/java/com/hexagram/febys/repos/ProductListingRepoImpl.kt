@@ -1,5 +1,6 @@
 package com.hexagram.febys.repos
 
+import androidx.lifecycle.MutableLiveData
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -16,6 +17,7 @@ import com.hexagram.febys.network.FebysBackendService
 import com.hexagram.febys.network.SearchService
 import com.hexagram.febys.paginations.*
 import com.hexagram.febys.prefs.IPrefManger
+import com.hexagram.febys.utils.update
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -27,6 +29,9 @@ class ProductListingRepoImpl @Inject constructor(
     backendService: FebysBackendService,
     val searchService: SearchService
 ) : ProductRepoImpl(pref, backendService), IProductListingRepo {
+
+    private var totalProduct: MutableLiveData<Long> = MutableLiveData<Long>(-1)
+
     override fun fetchTodayDealsListing(
         filters: ProductListingRequest,
         scope: CoroutineScope,
@@ -236,12 +241,12 @@ class ProductListingRepoImpl @Inject constructor(
             .cachedIn(scope)
     }
 
+    override fun getTotalProducts() = totalProduct
     override fun searchProductSuggestionListing(
         scope: CoroutineScope,
         dispatcher: CoroutineDispatcher,
         body: SearchRequest
     ): Flow<PagingData<SuggestedProduct>> {
-
         return Pager(
             PagingConfig(pageSize = 10)
         ) {
@@ -249,7 +254,7 @@ class ProductListingRepoImpl @Inject constructor(
                 searchService,
                 body
             ) {
-
+                totalProduct.update(it)
             }
         }.flow
     }
