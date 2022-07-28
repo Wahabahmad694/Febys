@@ -6,7 +6,7 @@ import com.hexagram.febys.ui.screens.product.filters.FiltersType
 class SearchProductListingFragment : ProductListingFragment() {
     private val args: SearchProductListingFragmentArgs by navArgs()
 
-    override fun getListingTitle(): String = args.query
+    override fun getListingTitle(): String = "Search Results"
 
     override fun getProductPagingData(refresh: Boolean) =
         productListingViewModel.searchProductsListing(args.query, refresh) {
@@ -16,7 +16,6 @@ class SearchProductListingFragment : ProductListingFragment() {
     override fun getFilterType() = FiltersType.SEARCH
 
     override fun getSearchStr(): String = args.query
-
 
 
 }

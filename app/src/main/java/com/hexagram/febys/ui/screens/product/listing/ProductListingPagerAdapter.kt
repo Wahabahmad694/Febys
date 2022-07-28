@@ -68,7 +68,6 @@ class ProductListingPagerAdapter :
                 }
                 notifyItemChanged(position)
             }
-
             binding.product = item
         }
     }

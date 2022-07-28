@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hexagram.febys.databinding.ItemSearchSuggestionBinding
 import com.hexagram.febys.models.api.suggestedSearch.SuggestedProduct
 import com.hexagram.febys.utils.load
+import com.hexagram.febys.utils.show
 
 class SearchSuggestionAdapter(
 
@@ -44,8 +45,13 @@ class SearchSuggestionAdapter(
                 tvProductName.text = product.productName
                 tvCategoryName.text = product.categoryName
                 tvStoreName.text = product.vendorName
-                tvProductOffPrice.text = product.price.value.toString()
-                tvProductPrice.text = product.originalPrice.value.toString()
+                if (product.hasPromotion) {
+                    tvProductOffPrice.text = product.originalPrice.getFormattedPrice()
+                    binding.tvProductOffPrice.show()
+                    binding.tvProductOffPriceSeparator.show()
+                }
+                tvProductPrice.text = product.price.getFormattedPrice()
+
             }
 
         }
