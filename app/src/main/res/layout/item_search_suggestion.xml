@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:binding="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -17,10 +18,10 @@
             android:layout_height="@dimen/_86sdp"
             android:layout_marginStart="@dimen/_8sdp"
             android:layout_marginTop="@dimen/_18sdp"
+            android:background="@drawable/placeholder_template"
             app:actualImageScaleType="centerCrop"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/placeholder_template"
             app:roundingBorderColor="@color/grey_e1e5e8"
             app:roundingBorderWidth="@dimen/_1sdp" />
 
@@ -44,19 +45,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8dp"
-            tools:text="Mens Fashion"
             app:layout_constraintStart_toStartOf="@id/tv_product_name"
-            app:layout_constraintTop_toBottomOf="@id/tv_product_name" />
+            app:layout_constraintTop_toBottomOf="@id/tv_product_name"
+            tools:text="Mens Fashion" />
 
 
         <TextView
             android:id="@+id/tv_store_name"
-            style="@style/TextTheme.Arial.TS14"
+            style="@style/TextTheme.Arial.TS14.Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Gucci"
             app:layout_constraintStart_toStartOf="@id/tv_category_name"
-            app:layout_constraintTop_toBottomOf="@id/tv_category_name" />
+            app:layout_constraintTop_toBottomOf="@id/tv_category_name"
+            tools:text="Gucci" />
 
         <TextView
             android:id="@+id/tv_product_off_price"
@@ -65,8 +66,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintTop_toBottomOf="@id/tv_store_name"
             app:layout_constraintStart_toStartOf="@+id/tv_store_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_store_name"
+            binding:strike_through="@{true}"
             tools:text="$666666614" />
 
         <TextView
@@ -76,10 +78,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_3sdp"
             android:text="@string/minus"
-            app:layout_constraintStart_toEndOf="@id/tv_product_off_price"
-            app:layout_constraintTop_toTopOf="@id/tv_product_off_price"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/tv_product_off_price"
-            />
+            app:layout_constraintStart_toEndOf="@id/tv_product_off_price"
+            app:layout_constraintTop_toTopOf="@id/tv_product_off_price" />
 
         <TextView
             android:id="@+id/tv_product_price"
@@ -87,9 +89,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_3sdp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_product_off_price_separator"
             app:layout_constraintStart_toEndOf="@id/tv_product_off_price_separator"
             app:layout_constraintTop_toTopOf="@id/tv_product_off_price_separator"
-            app:layout_constraintBottom_toBottomOf="@id/tv_product_off_price_separator"
             tools:text="$14" />
 
         <View

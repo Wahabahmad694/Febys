@@ -36,6 +36,8 @@ data class Product constructor(
     val createdAt: String,
     @SerializedName("updated_at")
     val updatedAt: String,
+    @SerializedName("vendor_shop_name")
+    val vendorShopName:String,
 ) : Parcelable {
     val qaThreads
         get() = _qaThreads.asReversed()
