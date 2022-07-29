@@ -1,6 +1,7 @@
 package com.hexagram.febys.ui.screens.payment.repo
 
 import androidx.paging.PagingData
+import com.hexagram.febys.ui.screens.payment.models.brainTree.TokenResponse
 import com.hexagram.febys.models.api.request.PaymentRequest
 import com.hexagram.febys.models.api.transaction.Transaction
 import com.hexagram.febys.network.DataState
@@ -39,4 +40,6 @@ interface IPaymentRepo {
     fun fetchTransactions(
         scope: CoroutineScope, dispatcher: CoroutineDispatcher = Dispatchers.IO
     ): Flow<PagingData<Transaction>>
+
+    suspend fun getBraintreeToken(dispatcher: CoroutineDispatcher = Dispatchers.IO): Flow<DataState<TokenResponse>>
 }

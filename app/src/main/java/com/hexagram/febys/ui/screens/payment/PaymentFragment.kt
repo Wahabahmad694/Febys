@@ -2,6 +2,7 @@ package com.hexagram.febys.ui.screens.payment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,6 +53,26 @@ class PaymentFragment : BasePaymentFragment() {
         initUi()
         uiListeners()
         refreshWallet()
+        setObserver()
+    }
+
+    private fun setObserver() {
+        paymentViewModel.braintreeTokenResponse.observe(viewLifecycleOwner) {
+            when (it) {
+                is DataState.Loading -> {
+                    showLoader()
+                }
+                is DataState.Error -> {
+                    hideLoader()
+                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
+                }
+                is DataState.Data -> {
+                    hideLoader()
+                    Log.d("BRAIN_TREE", "setObserver: ${it.data.data.clientToken}")
+
+                }
+            }
+        }
     }
 
     private fun initUi() {
@@ -86,11 +107,13 @@ class PaymentFragment : BasePaymentFragment() {
         binding.containerMomoPayment.setOnClickListener {
             paymentViewModel.paymentMethod = PaymentMethod.PAY_STACK
             updateUi(binding.containerMomoPayment, binding.momoFilledTick)
+
         }
 
         binding.containerPaypalPayment.setOnClickListener {
-            paymentViewModel.paymentMethod = PaymentMethod.PAYPAL
+//            paymentViewModel.paymentMethod = PaymentMethod.PAYPAL
             updateUi(binding.containerPaypalPayment, binding.paypalFilledTick)
+            paymentViewModel.getBraintreeToken()
         }
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner) { handleBackPress() }
@@ -321,7 +344,7 @@ class PaymentFragment : BasePaymentFragment() {
     }
 
     override fun onPaypalNotSupported() {
-        binding.containerPaypalPayment.isVisible = false
+        binding.containerPaypalPayment.isVisible = true
     }
 
     override fun onPayStackNotSupported() {

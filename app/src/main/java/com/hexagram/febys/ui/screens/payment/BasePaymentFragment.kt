@@ -37,10 +37,10 @@ abstract class BasePaymentFragment : BaseFragment() {
     private fun initPaypalConfig() {
         val currencyCode = getCurrency()
         val isCurrencySupported = isPaypalSupportedCurrency(currencyCode)
-        if (!isCurrencySupported) {
-            onPaypalNotSupported()
-            return
-        }
+//        if (!isCurrencySupported) {
+//            onPaypalNotSupported()
+//            return
+//        }
     }
 
     protected fun isPaypalSupportedCurrency(currencyCode: String) = try {

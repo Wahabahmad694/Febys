@@ -1,6 +1,7 @@
 package com.hexagram.febys.ui.screens.payment.vm
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -12,13 +13,13 @@ import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.payment.methods.PaymentMethod
 import com.hexagram.febys.ui.screens.payment.models.PayStackTransactionRequest
 import com.hexagram.febys.ui.screens.payment.models.Wallet
+import com.hexagram.febys.ui.screens.payment.models.brainTree.TokenResponse
 import com.hexagram.febys.ui.screens.payment.repo.IPaymentRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.channelFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -46,6 +47,10 @@ class PaymentViewModel @Inject constructor(
     /**
      * history of all transactions
      */
+
+    private var _braintreeTokenResponse = MutableLiveData<DataState<TokenResponse>>()
+    var braintreeTokenResponse: LiveData<DataState<TokenResponse>> = _braintreeTokenResponse
+
     val allTransactions: Flow<PagingData<Transaction>> =
         paymentRepo.fetchTransactions(viewModelScope)
 
@@ -107,4 +112,13 @@ class PaymentViewModel @Inject constructor(
         }.asLiveData()
 
     fun getTransactions(): List<Transaction> = transactions
+
+
+    fun getBraintreeToken() = viewModelScope.launch {
+        _braintreeTokenResponse.postValue(DataState.Loading())
+        paymentRepo.getBraintreeToken(Dispatchers.IO).collect {
+            _braintreeTokenResponse.postValue(it)
+        }
+
+    }
 }
