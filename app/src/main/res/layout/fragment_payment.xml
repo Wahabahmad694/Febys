@@ -201,7 +201,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/container_momo_payment"
                 android:layout_width="match_parent"
-                android:layout_height="83dp"
+                android:layout_height="@dimen/_85sdp"
                 android:layout_marginHorizontal="@dimen/_18sdp"
                 android:layout_marginTop="@dimen/_16sdp"
                 android:background="@drawable/bg_border_grey"
@@ -213,9 +213,9 @@
                     android:layout_height="@dimen/_35sdp"
                     android:layout_marginStart="@dimen/_14sdp"
                     android:src="@drawable/ic_momo"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@id/paystack_amount"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="@id/label_momo_or_bank_card" />
 
                 <TextView
                     android:id="@+id/label_momo_or_bank_card"
@@ -223,9 +223,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_14sdp"
+                    android:layout_marginTop="@dimen/_12sdp"
                     android:text="@string/momo_bank_card"
                     app:layout_constraintStart_toEndOf="@id/momo_img"
-                    app:layout_constraintTop_toTopOf="@id/momo_img" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/tv_momo_bank_card"
@@ -236,6 +237,20 @@
                     android:text="@string/pay_via_momo_or_bank_card"
                     app:layout_constraintStart_toStartOf="@id/label_momo_or_bank_card"
                     app:layout_constraintTop_toBottomOf="@id/label_momo_or_bank_card" />
+
+                <TextView
+                    android:id="@+id/paystack_amount"
+                    style="@style/TextTheme.Arial.TS14.Grey"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/tv_momo_bank_card"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_momo_bank_card"
+                    app:layout_constraintVertical_bias="0.0"
+                    app:srcCompat="@drawable/ic_wallet" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/momo_filled_tick"
@@ -253,7 +268,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/container_paypal_payment"
                 android:layout_width="match_parent"
-                android:layout_height="83dp"
+                android:layout_height="@dimen/_85sdp"
                 android:layout_marginHorizontal="@dimen/_18sdp"
                 android:layout_marginTop="@dimen/_16sdp"
                 android:background="@drawable/bg_border_grey"
@@ -265,9 +280,9 @@
                     android:layout_height="@dimen/_35sdp"
                     android:layout_marginStart="@dimen/_14sdp"
                     android:src="@drawable/ic_paypal"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@+id/braintree_amount"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="@id/label_paypal" />
 
                 <TextView
                     android:id="@+id/label_paypal"
@@ -275,19 +290,34 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_14sdp"
+                    android:layout_marginTop="@dimen/_12sdp"
                     android:text="@string/paypal"
                     app:layout_constraintStart_toEndOf="@id/paypal_img"
-                    app:layout_constraintTop_toTopOf="@id/paypal_img" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/tv_paypal"
+                    android:id="@+id/paypal_description"
                     style="@style/TextTheme.Arial.TS14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_4sdp"
-                    android:text="@string/pay_via_paypal"
-                    app:layout_constraintStart_toStartOf="@id/label_paypal"
-                    app:layout_constraintTop_toBottomOf="@id/label_paypal" />
+                    android:text="@string/braintree_powered_by_paypal"
+                    app:layout_constraintStart_toStartOf="@+id/label_paypal"
+                    app:layout_constraintTop_toBottomOf="@+id/label_paypal"
+                    app:srcCompat="@drawable/ic_wallet" />
+
+                <TextView
+                    android:id="@+id/braintree_amount"
+                    style="@style/TextTheme.Arial.TS14.Grey"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    android:layout_marginBottom="@dimen/_12sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/paypal_description"
+                    app:layout_constraintTop_toBottomOf="@+id/paypal_description"
+                    app:srcCompat="@drawable/ic_wallet" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/paypal_filled_tick"

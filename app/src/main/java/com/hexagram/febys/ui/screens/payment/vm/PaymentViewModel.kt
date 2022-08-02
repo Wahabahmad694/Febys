@@ -14,6 +14,8 @@ import com.hexagram.febys.ui.screens.payment.methods.PaymentMethod
 import com.hexagram.febys.ui.screens.payment.models.PayStackTransactionRequest
 import com.hexagram.febys.ui.screens.payment.models.Wallet
 import com.hexagram.febys.ui.screens.payment.models.brainTree.TokenResponse
+import com.hexagram.febys.ui.screens.payment.models.feeSlabs.FeeSlabRequest
+import com.hexagram.febys.ui.screens.payment.models.feeSlabs.FeeSlabsResponse
 import com.hexagram.febys.ui.screens.payment.repo.IPaymentRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -50,6 +52,9 @@ class PaymentViewModel @Inject constructor(
 
     private var _braintreeTokenResponse = MutableLiveData<DataState<TokenResponse>>()
     var braintreeTokenResponse: LiveData<DataState<TokenResponse>> = _braintreeTokenResponse
+
+    private var _feeSlabsResponse = MutableLiveData<DataState<FeeSlabsResponse>>()
+    var feeSlabsResponse: LiveData<DataState<FeeSlabsResponse>> = _feeSlabsResponse
 
     val allTransactions: Flow<PagingData<Transaction>> =
         paymentRepo.fetchTransactions(viewModelScope)
@@ -119,6 +124,12 @@ class PaymentViewModel @Inject constructor(
         paymentRepo.getBraintreeToken(Dispatchers.IO).collect {
             _braintreeTokenResponse.postValue(it)
         }
+    }
 
+    fun getFeeSlab(feeSlabRequest: FeeSlabRequest) = viewModelScope.launch {
+        _feeSlabsResponse.postValue(DataState.Loading())
+        paymentRepo.feeSlabs(Dispatchers.IO,feeSlabRequest).collect {
+            _feeSlabsResponse.postValue(it)
+        }
     }
 }

@@ -16,6 +16,8 @@ import com.hexagram.febys.prefs.IPrefManger
 import com.hexagram.febys.ui.screens.payment.models.PayStackTransactionRequest
 import com.hexagram.febys.ui.screens.payment.models.Wallet
 import com.hexagram.febys.ui.screens.payment.models.brainTree.TokenResponse
+import com.hexagram.febys.ui.screens.payment.models.feeSlabs.FeeSlabRequest
+import com.hexagram.febys.ui.screens.payment.models.feeSlabs.FeeSlabsResponse
 import com.hexagram.febys.ui.screens.payment.service.PaymentService
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -126,6 +128,21 @@ class PaymentRepoImpl @Inject constructor(
     ) = flow<DataState<TokenResponse>> {
         emit(DataState.Loading())
         brainTree.getBraintreeToken()
+            .onSuccess { data?.let { emit(DataState.Data(it)) } }
+            .onError { emit(DataState.ApiError(message)) }
+            .onException { emit(DataState.ExceptionError()) }
+            .onNetworkError { emit(DataState.NetworkError()) }
+    }.flowOn(dispatcher)
+
+    override suspend fun feeSlabs(
+        dispatcher: CoroutineDispatcher,
+        request: FeeSlabRequest
+    ) = flow<DataState<FeeSlabsResponse>>
+    {
+        emit(DataState.Loading())
+        brainTree.feeSlabs(
+            request = request
+        )
             .onSuccess { data?.let { emit(DataState.Data(it)) } }
             .onError { emit(DataState.ApiError(message)) }
             .onException { emit(DataState.ExceptionError()) }

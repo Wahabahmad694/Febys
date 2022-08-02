@@ -1,14 +1,18 @@
 package com.hexagram.febys.ui
 
 import android.content.BroadcastReceiver
+import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.util.Log
 import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.braintreepayments.api.DropInResult
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseActivity
 import com.hexagram.febys.broadcast.NotificationLocalBroadcastReceiver
@@ -19,6 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {
     private lateinit var binding: ActivityMainBinding
+    private val DROP_IN_REQUEST_CODE = 0
     private val notificationBroadcastReceiver: BroadcastReceiver =
         NotificationLocalBroadcastReceiver { updateNotificationBadge() }
 
@@ -99,5 +104,36 @@ class MainActivity : BaseActivity() {
         val notificationBadge = binding.bottomNavigation.getOrCreateBadge(R.id.notificationFragment)
         notificationBadge.isVisible = number > 0
         notificationBadge.number = number
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == DROP_IN_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                val result: DropInResult? =
+                    data?.getParcelableExtra(DropInResult.EXTRA_DROP_IN_RESULT)
+                val paymentMethodNonce = result?.paymentMethodNonce?.string
+                val paymentMethod = result?.paymentMethodType
+
+//                paymentMethodNonce?.let { paymentFragment?.createBraintreeTransaction(it) }
+
+                Log.d(
+                    "paymentMethodNonce",
+                    "onActivityResult: $paymentMethodNonce : $paymentMethod"
+                )
+                // use the result to update your UI and send the payment method nonce to your server
+            } else if (resultCode == AppCompatActivity.RESULT_CANCELED) {
+                // the user canceled
+                Log.d("paymentMethodNonce", "RESULT_CANCELED: ")
+            } else {
+                // an error occurred, checked the returned exception
+                val error: Exception? =
+                    data?.getSerializableExtra(DropInResult.EXTRA_ERROR) as? Exception
+
+                Log.d("paymentMethodNonce", "onActivityResult: $error")
+
+            }
+        }
     }
 }
