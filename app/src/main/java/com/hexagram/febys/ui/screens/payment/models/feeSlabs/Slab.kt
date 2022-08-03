@@ -12,5 +12,6 @@ data class Slab(
     val isActive: Boolean,
     val percentage: Double,
     val to: Double,
-    val type: String
+    val type: String,
+    val value: Int
 ) : Parcelable

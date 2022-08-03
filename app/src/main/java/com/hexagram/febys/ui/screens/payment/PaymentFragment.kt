@@ -20,6 +20,7 @@ import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.ui.screens.payment.methods.PaymentMethod
 import com.hexagram.febys.ui.screens.payment.models.PayStackTransactionRequest
+import com.hexagram.febys.ui.screens.payment.models.brainTree.BraintreeRequest
 import com.hexagram.febys.ui.screens.payment.models.feeSlabs.FeeSlabRequest
 import com.hexagram.febys.ui.screens.payment.models.feeSlabs.Programs
 import com.hexagram.febys.ui.screens.payment.utils.PayStackWebViewClient
@@ -31,6 +32,7 @@ class PaymentFragment : BasePaymentFragment() {
     private lateinit var binding: FragmentPaymentBinding
 
     private val DROP_IN_REQUEST_CODE = 0
+    private var brainTreeFee: Int = 0
 
     private val args by navArgs<PaymentFragmentArgs>()
 
@@ -186,10 +188,28 @@ class PaymentFragment : BasePaymentFragment() {
                 }
             }
         }
+
+        paymentViewModel.braintreeTransaction.observe(viewLifecycleOwner) {
+            when (it) {
+                is DataState.Loading -> {
+                    showLoader()
+                }
+                is DataState.Error -> {
+                    hideLoader()
+                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
+                }
+                is DataState.Data -> {
+                    hideLoader()
+                    Log.d("BRAIN_TREE_TRANS", "setObserver: ${it.data}")
+
+                }
+            }
+        }
     }
 
     private fun showFeeSlabs(slabs: List<Programs>) {
         getProcessingFee("BRAINTREE", slabs)?.let {
+            brainTreeFee = slabs.firstOrNull()?.slab?.value!!
             binding.braintreeAmount.text =
                 getString(R.string.processing_fee_will_be_charged, it)
             specificTextColorChange(
@@ -239,19 +259,20 @@ class PaymentFragment : BasePaymentFragment() {
     fun createBraintreeTransaction(nonce: String) {
         Log.d("PaymentFragment1234567", "onCreate: $nonce")
 
-
-//        val request = BraintreeRequest(
-//            totalAmountAfterConverted.toDouble().convertTwoDecimal().toDouble(),
-//            paymentViewModel.session.getBraintreeCurreny()!!,
-//            braintreeDeviceData,
-//            nonce,
-//            currencyConversionRate,
-//            braintreeTransactionFee,
-//            totalAmount.toDouble().convertTwoDecimal().toDouble(),
-//            currency,
-//            event?.ticketType ?: ""
-//        )
-//        event?.let { paymentViewModel.braintreeTransaction(request, it) }
+        val totalAmountAfterConverted = brainTreeFee + args.paymentRequest.amount
+        val request = BraintreeRequest(
+            totalAmountAfterConverted,
+            "USD",
+            "",
+            nonce,
+            1.0,
+            brainTreeFee.toDouble(),
+            args.paymentRequest.amount,
+            args.paymentRequest.currency,
+            "PRODUCT_PURCHASE",
+            "PRODUCT_PURCHASE"
+        )
+        paymentViewModel.doBrainTreeTransaction(request)
     }
 
 

@@ -112,8 +112,7 @@ class MainActivity : BaseActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val navFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
-        val mapFragment = navFragment!!.childFragmentManager.getPrimaryNavigationFragment()
-
+        val mapFragment = navFragment!!.childFragmentManager.primaryNavigationFragment
 
 
         if (requestCode == DROP_IN_REQUEST_CODE) {
