@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class Data(
+data class Transaction(
     val clientToken: String
 ) : Parcelable
 

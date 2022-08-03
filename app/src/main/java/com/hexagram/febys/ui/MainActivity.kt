@@ -18,6 +18,7 @@ import com.hexagram.febys.base.BaseActivity
 import com.hexagram.febys.broadcast.NotificationLocalBroadcastReceiver
 import com.hexagram.febys.databinding.ActivityMainBinding
 import com.hexagram.febys.ui.screens.home.HomeFragment
+import com.hexagram.febys.ui.screens.payment.PaymentFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -43,7 +44,9 @@ class MainActivity : BaseActivity() {
 
         setContentView(binding.root)
         setupBottomNav()
+
     }
+
 
     private fun configureStatusBar() {
         window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
@@ -108,16 +111,25 @@ class MainActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        val navFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
+        val mapFragment = navFragment!!.childFragmentManager.getPrimaryNavigationFragment()
+
+
 
         if (requestCode == DROP_IN_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
+            if (resultCode == AppCompatActivity.RESULT_OK) {
                 val result: DropInResult? =
                     data?.getParcelableExtra(DropInResult.EXTRA_DROP_IN_RESULT)
                 val paymentMethodNonce = result?.paymentMethodNonce?.string
                 val paymentMethod = result?.paymentMethodType
-
-//                paymentMethodNonce?.let { paymentFragment?.createBraintreeTransaction(it) }
-
+                if (mapFragment is PaymentFragment) {
+                    paymentMethodNonce?.let {
+                        (mapFragment as PaymentFragment).createBraintreeTransaction(
+                            it
+                        )
+                    }
+                    Log.d("PaymentFragment1234567", "onCreate: XTXX")
+                }
                 Log.d(
                     "paymentMethodNonce",
                     "onActivityResult: $paymentMethodNonce : $paymentMethod"

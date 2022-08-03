@@ -5,7 +5,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class TokenResponse(
-    val data: Data
+    val transaction: Transaction
 ) : Parcelable
 
 

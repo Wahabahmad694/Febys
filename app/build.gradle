@@ -52,7 +52,6 @@ android {
             buildConfigField("String", "keycloakClientId", credentialsProperties['KEYCLOAK_CLIENT_ID'])
             buildConfigField("String", "keycloakClientSecret", credentialsProperties['KEYCLOAK_CLIENT_SECRET'])
             buildConfigField("String", "searchBaseUrl", endpointsProperties['SEARCH_BASE_URL_BACKEND'])
-            buildConfigField("String", "brainTreeUrl", endpointsProperties['BRAIN_TREE_URL_BACKEND_STAGING'])
             resValue "string", "google_web_client", credentialsProperties['GOOGLE_WEB_CLIENT']
             resValue "string", "facebook_app_id", credentialsProperties['FACEBOOK_APP_ID']
             resValue "string", "fb_login_protocol_scheme", credentialsProperties['FACEBOOK_LOGIN_PROTOCOL_SCHEME']
@@ -218,8 +217,7 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.0'
 
     //Brain Tree
-    implementation 'com.braintreepayments.api:drop-in:3.7.1'
-    //    implementation 'com.braintreepayments.api:data-collector:4.10.1'
+//    implementation 'com.braintreepayments.api:drop-in:3.7.1'
     implementation ('com.braintreepayments.api:drop-in'){
         version {
             strictly '6.0.2'

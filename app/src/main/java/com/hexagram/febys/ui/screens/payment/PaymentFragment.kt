@@ -21,7 +21,7 @@ import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.ui.screens.payment.methods.PaymentMethod
 import com.hexagram.febys.ui.screens.payment.models.PayStackTransactionRequest
 import com.hexagram.febys.ui.screens.payment.models.feeSlabs.FeeSlabRequest
-import com.hexagram.febys.ui.screens.payment.models.feeSlabs.PaymentGatewaysFeeSlab
+import com.hexagram.febys.ui.screens.payment.models.feeSlabs.Programs
 import com.hexagram.febys.ui.screens.payment.utils.PayStackWebViewClient
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -56,138 +56,6 @@ class PaymentFragment : BasePaymentFragment() {
         getFeeSlabs()
     }
 
-    private fun getFeeSlabs() {
-        val feeSlabRequest = FeeSlabRequest(
-            currency = args.paymentRequest.currency,
-            amount = args.paymentRequest.amount.toString()
-        )
-        paymentViewModel.getFeeSlab(feeSlabRequest)
-    }
-
-    private fun setObserver() {
-        paymentViewModel.braintreeTokenResponse.observe(viewLifecycleOwner) {
-            when (it) {
-                is DataState.Loading -> {
-                    showLoader()
-                }
-                is DataState.Error -> {
-                    hideLoader()
-                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
-                }
-                is DataState.Data -> {
-                    hideLoader()
-                    Log.d("BRAIN_TREE", "setObserver: ${it.data.data.clientToken}")
-                    callBrainTree(it.data.data.clientToken, args.paymentRequest.amount.toString())
-                }
-            }
-        }
-
-        paymentViewModel.feeSlabsResponse.observe(viewLifecycleOwner) {
-            when (it) {
-                is DataState.Loading -> {
-                    showLoader()
-                }
-                is DataState.Error -> {
-                    hideLoader()
-                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
-                }
-                is DataState.Data -> {
-                    hideLoader()
-                    Log.d("Slabs Fee", "setObserver: ${it.data.data}")
-                    showFeeSlabs(it.data.data)
-                }
-            }
-        }
-    }
-
-    private fun showFeeSlabs(slabs: List<PaymentGatewaysFeeSlab>) {
-        getProcessingFee("BRAINTREE", slabs)?.let {
-            binding.braintreeAmount.text =
-                getString(R.string.processing_fee_will_be_charged, it)
-            specificTextColorChange(
-                binding.braintreeAmount.text.toString(),
-                0,
-                binding.braintreeAmount.text.toString().split("processing")
-                    .first().length,
-                binding.braintreeAmount
-            )
-        }
-        getProcessingFee("PAY_STACK", slabs)?.let {
-            binding.paystackAmount.text =
-                getString(R.string.processing_fee_will_be_charged, it)
-            specificTextColorChange(
-                binding.paystackAmount.text.toString(),
-                0,
-                binding.paystackAmount.text.toString().split("processing")
-                    .first().length,
-                binding.paystackAmount
-            )
-        }
-    }
-
-
-    private fun getProcessingFee(type: String, slabs: List<PaymentGatewaysFeeSlab>?): String? {
-
-        slabs?.find { it.gateway == type }
-            ?.let {
-                return when {
-                    it.slab.type == "BOTH" -> {
-                        "${(it.slab.percentage)}% + ${args.paymentRequest.currency}${it.slab.fixed} "
-                    }
-                    it.slab.type == "PERCENTAGE" -> {
-                        "${it.slab.percentage}% "
-                    }
-                    else -> {
-                        "${args.paymentRequest.currency}${it.slab.fixed} "
-                    }
-                }
-            }
-
-        return null
-
-    }
-
-    private fun callBrainTree(token: String, amount: String) {
-
-        val dropInRequest = DropInRequest()
-        dropInRequest.maskCardNumber = true
-        dropInRequest.maskSecurityCode = true
-        dropInRequest.isPayPalDisabled = !isPaypalSupported("USD"/*currency*/)
-        dropInRequest.threeDSecureRequest = demoThreeDSecureRequest(amount)
-        val dropInClient = DropInClient(requireContext(), token, dropInRequest)
-        dropInClient.launchDropInForResult(requireActivity(), DROP_IN_REQUEST_CODE)
-    }
-
-    enum class PaypalCurrencies {
-        AUD,
-        USD,
-        EUR,
-        CAD,
-        MXN,
-        GBP
-    }
-
-    private inline fun <reified T : Enum<T>> currencySupported(currencyCode: String?): Boolean {
-        return enumValues<T>().any { it.name == currencyCode }
-    }
-
-    private fun isPaypalSupported(currencyCode: String?): Boolean {
-        return try {
-            currencySupported<PaypalCurrencies>(currencyCode)
-        } catch (e: java.lang.Exception) {
-            false
-        }
-    }
-
-    private fun demoThreeDSecureRequest(amount: String): ThreeDSecureRequest {
-
-        val threeDSecureRequest = ThreeDSecureRequest()
-        threeDSecureRequest.amount = amount.toDouble().toString()
-        threeDSecureRequest.versionRequested = ThreeDSecureRequest.VERSION_2
-        return threeDSecureRequest
-
-    }
-
     private fun initUi() {
         val totalAmount =
             Price("", args.paymentRequest.amount, args.paymentRequest.currency).getFormattedPrice()
@@ -200,7 +68,6 @@ class PaymentFragment : BasePaymentFragment() {
 
         binding.btnCheckout.setOnClickListener {
             handlePayNowClick()
-
         }
 
         binding.containerSplit.btnSplitPay.setOnClickListener {
@@ -227,7 +94,6 @@ class PaymentFragment : BasePaymentFragment() {
         binding.containerPaypalPayment.setOnClickListener {
             paymentViewModel.paymentMethod = PaymentMethod.PAYPAL
             updateUi(binding.containerPaypalPayment, binding.paypalFilledTick)
-            paymentViewModel.getBraintreeToken()
         }
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner) { handleBackPress() }
@@ -273,6 +139,154 @@ class PaymentFragment : BasePaymentFragment() {
                 }
             }
         }
+    }
+
+    private fun getFeeSlabs() {
+        val feeSlabRequest = FeeSlabRequest(
+            currency = args.paymentRequest.currency,
+            amount = args.paymentRequest.amount.toString()
+        )
+        paymentViewModel.getFeeSlab(feeSlabRequest)
+    }
+
+    private fun setObserver() {
+        paymentViewModel.braintreeTokenResponse.observe(viewLifecycleOwner) {
+            when (it) {
+                is DataState.Loading -> {
+                    showLoader()
+                }
+                is DataState.Error -> {
+                    hideLoader()
+                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
+                }
+                is DataState.Data -> {
+                    hideLoader()
+                    Log.d("BRAIN_TREE", "setObserver: ${it.data.transaction.clientToken}")
+                    callBrainTree(
+                        it.data.transaction.clientToken,
+                        args.paymentRequest.amount.toString()
+                    )
+                }
+            }
+        }
+
+        paymentViewModel.feeSlabsResponse.observe(viewLifecycleOwner) {
+            when (it) {
+                is DataState.Loading -> {
+                    showLoader()
+                }
+                is DataState.Error -> {
+                    hideLoader()
+                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
+                }
+                is DataState.Data -> {
+                    hideLoader()
+                    Log.d("Slabs Fee", "setObserver: ${it.data.programs}")
+                    showFeeSlabs(it.data.programs)
+                }
+            }
+        }
+    }
+
+    private fun showFeeSlabs(slabs: List<Programs>) {
+        getProcessingFee("BRAINTREE", slabs)?.let {
+            binding.braintreeAmount.text =
+                getString(R.string.processing_fee_will_be_charged, it)
+            specificTextColorChange(
+                binding.braintreeAmount.text.toString(),
+                0,
+                binding.braintreeAmount.text.toString().split("processing")
+                    .first().length,
+                binding.braintreeAmount
+            )
+        }
+        getProcessingFee("PAY_STACK", slabs)?.let {
+            binding.paystackAmount.text =
+                getString(R.string.processing_fee_will_be_charged, it)
+            specificTextColorChange(
+                binding.paystackAmount.text.toString(),
+                0,
+                binding.paystackAmount.text.toString().split("processing")
+                    .first().length,
+                binding.paystackAmount
+            )
+        }
+    }
+
+
+    private fun getProcessingFee(type: String, slabs: List<Programs>?): String? {
+
+        slabs?.find { it.gateway == type }
+            ?.let {
+                return when {
+                    it.slab.type == "BOTH" -> {
+                        "${(it.slab.percentage)}% + ${it.slab.currency}${it.slab.fixed} "
+                    }
+                    it.slab.type == "PERCENTAGE" -> {
+                        "${it.slab.percentage}% "
+                    }
+                    else -> {
+                        "${it.slab.currency}${it.slab.fixed} "
+                    }
+                }
+            }
+
+        return null
+
+    }
+
+
+    fun createBraintreeTransaction(nonce: String) {
+        Log.d("PaymentFragment1234567", "onCreate: $nonce")
+
+
+//        val request = BraintreeRequest(
+//            totalAmountAfterConverted.toDouble().convertTwoDecimal().toDouble(),
+//            paymentViewModel.session.getBraintreeCurreny()!!,
+//            braintreeDeviceData,
+//            nonce,
+//            currencyConversionRate,
+//            braintreeTransactionFee,
+//            totalAmount.toDouble().convertTwoDecimal().toDouble(),
+//            currency,
+//            event?.ticketType ?: ""
+//        )
+//        event?.let { paymentViewModel.braintreeTransaction(request, it) }
+    }
+
+
+    private fun callBrainTree(token: String, amount: String) {
+
+        val dropInRequest = DropInRequest()
+        dropInRequest.maskCardNumber = true
+        dropInRequest.maskSecurityCode = true
+        dropInRequest.isPayPalDisabled = !isPaypalSupported(args.paymentRequest.currency)
+        dropInRequest.threeDSecureRequest = demoThreeDSecureRequest(amount)
+        val dropInClient = DropInClient(requireContext(), token, dropInRequest)
+
+        dropInClient.launchDropInForResult(requireActivity(), DROP_IN_REQUEST_CODE)
+    }
+
+
+    private inline fun <reified T : Enum<T>> currencySupported(currencyCode: String?): Boolean {
+        return enumValues<T>().any { it.name == currencyCode }
+    }
+
+    private fun isPaypalSupported(currencyCode: String?): Boolean {
+        return try {
+            currencySupported<PaypalCurrency>(currencyCode)
+        } catch (e: java.lang.Exception) {
+            false
+        }
+    }
+
+    private fun demoThreeDSecureRequest(amount: String): ThreeDSecureRequest {
+
+        val threeDSecureRequest = ThreeDSecureRequest()
+        threeDSecureRequest.amount = amount.toDouble().toString()
+        threeDSecureRequest.versionRequested = ThreeDSecureRequest.VERSION_2
+        return threeDSecureRequest
+
     }
 
     private fun disableWallet() {
@@ -489,5 +503,7 @@ class PaymentFragment : BasePaymentFragment() {
             ContextCompat.getDrawable(requireContext(), R.drawable.bg_border_grey)
         tickView.isVisible = false
     }
+
+
 }
 

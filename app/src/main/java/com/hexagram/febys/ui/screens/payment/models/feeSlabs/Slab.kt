@@ -8,6 +8,7 @@ data class Slab(
     val _id: String,
     val fixed: Double,
     val from: Double,
+    val currency: String,
     val isActive: Boolean,
     val percentage: Double,
     val to: Double,

@@ -86,18 +86,6 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    @BraintreeClient
-    fun provideBackendBraintree(okHttpClient: OkHttpClient): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(BuildConfig.brainTreeUrl)
-            .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(ApiResponseCallAdapterFactory())
-            .build()
-    }
-
-    @Provides
-    @Singleton
     @WebCustomizationClient
     fun provideWebCustomizationClient(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
@@ -124,12 +112,6 @@ object NetworkModule {
     @Singleton
     fun provideSearchService(@SearchClient retrofit: Retrofit): SearchService {
         return retrofit.create(SearchService::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideBrainTreeService(@BraintreeClient retrofit: Retrofit): BrainTree {
-        return retrofit.create(BrainTree::class.java)
     }
 
     @Provides

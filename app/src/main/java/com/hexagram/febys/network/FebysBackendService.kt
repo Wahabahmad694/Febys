@@ -27,6 +27,9 @@ import com.hexagram.febys.network.requests.RequestReturnOrder
 import com.hexagram.febys.network.requests.RequestUpdateUser
 import com.hexagram.febys.network.requests.ResponseUpdateUser
 import com.hexagram.febys.network.response.ResponseOfPagination
+import com.hexagram.febys.ui.screens.payment.models.brainTree.TokenResponse
+import com.hexagram.febys.ui.screens.payment.models.feeSlabs.FeeSlabRequest
+import com.hexagram.febys.ui.screens.payment.models.feeSlabs.FeeSlabsResponse
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import retrofit2.http.*
@@ -413,4 +416,5 @@ interface FebysBackendService {
         @Header("Authorization") authKey: String,
         @Path("id") notificationId: String
     )
+
 }

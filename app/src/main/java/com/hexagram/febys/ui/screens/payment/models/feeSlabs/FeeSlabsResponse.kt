@@ -5,5 +5,5 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class FeeSlabsResponse(
-    val data: List<PaymentGatewaysFeeSlab>
+    val programs: List<Programs>
 ):Parcelable

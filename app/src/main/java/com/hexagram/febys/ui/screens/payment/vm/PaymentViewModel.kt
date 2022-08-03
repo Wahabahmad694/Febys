@@ -13,6 +13,7 @@ import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.payment.methods.PaymentMethod
 import com.hexagram.febys.ui.screens.payment.models.PayStackTransactionRequest
 import com.hexagram.febys.ui.screens.payment.models.Wallet
+import com.hexagram.febys.ui.screens.payment.models.brainTree.BraintreeRequest
 import com.hexagram.febys.ui.screens.payment.models.brainTree.TokenResponse
 import com.hexagram.febys.ui.screens.payment.models.feeSlabs.FeeSlabRequest
 import com.hexagram.febys.ui.screens.payment.models.feeSlabs.FeeSlabsResponse
@@ -52,6 +53,9 @@ class PaymentViewModel @Inject constructor(
 
     private var _braintreeTokenResponse = MutableLiveData<DataState<TokenResponse>>()
     var braintreeTokenResponse: LiveData<DataState<TokenResponse>> = _braintreeTokenResponse
+
+    private var _braintreeTransaction = MutableLiveData<DataState<Transaction>>()
+    var braintreeTransaction: LiveData<DataState<Transaction>> = _braintreeTransaction
 
     private var _feeSlabsResponse = MutableLiveData<DataState<FeeSlabsResponse>>()
     var feeSlabsResponse: LiveData<DataState<FeeSlabsResponse>> = _feeSlabsResponse
@@ -128,8 +132,16 @@ class PaymentViewModel @Inject constructor(
 
     fun getFeeSlab(feeSlabRequest: FeeSlabRequest) = viewModelScope.launch {
         _feeSlabsResponse.postValue(DataState.Loading())
-        paymentRepo.feeSlabs(Dispatchers.IO,feeSlabRequest).collect {
+        paymentRepo.feeSlabs(Dispatchers.IO, feeSlabRequest).collect {
             _feeSlabsResponse.postValue(it)
         }
     }
+
+    fun doBrainTreeTransaction(braintreeRequest: BraintreeRequest) = viewModelScope.launch {
+        _braintreeTransaction.postValue(DataState.Loading())
+        paymentRepo.braintreeTransaction(Dispatchers.IO, braintreeRequest).collect {
+            _braintreeTransaction.postValue(it)
+        }
+    }
+
 }

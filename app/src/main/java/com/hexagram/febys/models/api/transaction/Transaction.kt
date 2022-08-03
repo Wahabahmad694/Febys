@@ -3,6 +3,7 @@ package com.hexagram.febys.models.api.transaction
 import android.graphics.Color
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import com.hexagram.febys.ui.screens.payment.models.feeSlabs.Slab
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -29,6 +30,12 @@ data class Transaction(
     val updatedAt: String,
     @SerializedName("created_at")
     val createdAt: String,
+    @SerializedName("payment_method")
+    val paymentMethod: String?,
+    @SerializedName("transaction_fee")
+    val transactionFee : Float?,
+    @SerializedName("transaction_fee_info")
+    val transactionFeeInfo: Slab?
 ) : Parcelable {
     val statusColor
         get() = when (status) {

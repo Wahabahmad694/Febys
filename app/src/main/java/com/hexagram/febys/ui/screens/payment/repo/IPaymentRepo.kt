@@ -6,6 +6,7 @@ import com.hexagram.febys.models.api.transaction.Transaction
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.payment.models.PayStackTransactionRequest
 import com.hexagram.febys.ui.screens.payment.models.Wallet
+import com.hexagram.febys.ui.screens.payment.models.brainTree.BraintreeRequest
 import com.hexagram.febys.ui.screens.payment.models.brainTree.TokenResponse
 import com.hexagram.febys.ui.screens.payment.models.feeSlabs.FeeSlabRequest
 import com.hexagram.febys.ui.screens.payment.models.feeSlabs.FeeSlabsResponse
@@ -49,4 +50,9 @@ interface IPaymentRepo {
         dispatcher: CoroutineDispatcher = Dispatchers.IO,
         request: FeeSlabRequest
     ): Flow<DataState<FeeSlabsResponse>>
+
+    suspend fun braintreeTransaction(
+        dispatcher: CoroutineDispatcher = Dispatchers.IO,
+        request: BraintreeRequest
+    ): Flow<DataState<Transaction>>
 }

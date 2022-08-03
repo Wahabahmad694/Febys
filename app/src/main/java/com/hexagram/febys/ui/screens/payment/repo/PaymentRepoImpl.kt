@@ -8,13 +8,13 @@ import com.google.gson.JsonObject
 import com.hexagram.febys.models.api.request.PagingListRequest
 import com.hexagram.febys.models.api.request.PaymentRequest
 import com.hexagram.febys.models.api.transaction.Transaction
-import com.hexagram.febys.network.BrainTree
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.adapter.*
 import com.hexagram.febys.paginations.TransactionPagingSource
 import com.hexagram.febys.prefs.IPrefManger
 import com.hexagram.febys.ui.screens.payment.models.PayStackTransactionRequest
 import com.hexagram.febys.ui.screens.payment.models.Wallet
+import com.hexagram.febys.ui.screens.payment.models.brainTree.BraintreeRequest
 import com.hexagram.febys.ui.screens.payment.models.brainTree.TokenResponse
 import com.hexagram.febys.ui.screens.payment.models.feeSlabs.FeeSlabRequest
 import com.hexagram.febys.ui.screens.payment.models.feeSlabs.FeeSlabsResponse
@@ -28,7 +28,6 @@ import javax.inject.Inject
 
 class PaymentRepoImpl @Inject constructor(
     private val paymentService: PaymentService,
-    private val brainTree: BrainTree,
     private val pref: IPrefManger
 ) : IPaymentRepo {
     override fun fetchWallet(conversionCurrency: String?, dispatcher: CoroutineDispatcher) =
@@ -127,7 +126,7 @@ class PaymentRepoImpl @Inject constructor(
         dispatcher: CoroutineDispatcher
     ) = flow<DataState<TokenResponse>> {
         emit(DataState.Loading())
-        brainTree.getBraintreeToken()
+        paymentService.getBraintreeToken()
             .onSuccess { data?.let { emit(DataState.Data(it)) } }
             .onError { emit(DataState.ApiError(message)) }
             .onException { emit(DataState.ExceptionError()) }
@@ -140,10 +139,21 @@ class PaymentRepoImpl @Inject constructor(
     ) = flow<DataState<FeeSlabsResponse>>
     {
         emit(DataState.Loading())
-        brainTree.feeSlabs(
+        paymentService.feeSlabs(
             request = request
         )
             .onSuccess { data?.let { emit(DataState.Data(it)) } }
+            .onError { emit(DataState.ApiError(message)) }
+            .onException { emit(DataState.ExceptionError()) }
+            .onNetworkError { emit(DataState.NetworkError()) }
+    }.flowOn(dispatcher)
+
+    override suspend fun braintreeTransaction(
+        dispatcher: CoroutineDispatcher,
+        request: BraintreeRequest
+    ) = flow<DataState<Transaction>> {
+        paymentService.braintreeTransaction(request)
+            .onSuccess { emit(DataState.Data(data!!.transaction)) }
             .onError { emit(DataState.ApiError(message)) }
             .onException { emit(DataState.ExceptionError()) }
             .onNetworkError { emit(DataState.NetworkError()) }

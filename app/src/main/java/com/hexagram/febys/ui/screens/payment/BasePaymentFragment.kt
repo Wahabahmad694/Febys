@@ -75,8 +75,7 @@ abstract class BasePaymentFragment : BaseFragment() {
     }
 
     abstract fun doWalletPayment()
-
-        abstract fun doPaypalPayment()
+    abstract fun doPaypalPayment()
     abstract fun doPayStackPayment()
     abstract fun getCurrency(): String
     abstract fun onPaypalNotSupported()

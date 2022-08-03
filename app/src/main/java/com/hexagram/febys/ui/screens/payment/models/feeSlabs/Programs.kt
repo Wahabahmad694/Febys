@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class PaymentGatewaysFeeSlab(
+data class Programs(
     val gateway: String,
     val slab: Slab
 ) : Parcelable
