@@ -65,6 +65,7 @@
     <string name="label_manufacture">Manufacture</string>
     <string name="label_shipping_fee_and_returns"><![CDATA[Shipping Fee & Returns]]></string>
     <string name="label_shipping_fee">Shipping Fee</string>
+    <string name="label_processing_fee">Processing Fee</string>
     <string name="label_q_and_a"><![CDATA[Q&As]]></string>
     <string name="label_customer_q_and_a"><![CDATA[Customer Questions & Answers]]></string>
     <string name="label_reviews">Reviews</string>

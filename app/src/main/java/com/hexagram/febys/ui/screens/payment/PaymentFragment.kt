@@ -31,7 +31,7 @@ class PaymentFragment : BasePaymentFragment() {
 
     private val DROP_IN_REQUEST_CODE = 0
     private var brainTreeFee: Int = 0
-    var braintreeDeviceData: String = ""
+    private var braintreeDeviceData: String = ""
 
     private val args by navArgs<PaymentFragmentArgs>()
 
@@ -186,7 +186,7 @@ class PaymentFragment : BasePaymentFragment() {
                 }
                 is DataState.Data -> {
                     hideLoader()
-                    Log.d("Slabs Fee", "setObserver: ${it.data.programs}")
+                    Log.d("Slabs_Fee", "setObserver: ${it.data.programs}")
                     showFeeSlabs(it.data.programs)
                 }
             }
@@ -205,11 +205,7 @@ class PaymentFragment : BasePaymentFragment() {
                     hideLoader()
                     Log.d("BRAIN_TREE_TRANS", "setObserver: ${it.data}")
                     paymentViewModel.saveTransaction(it.data)
-
-//                    paymentViewModel.notifyPapalPayment(orderId, it.data)
-
                     onAllDone()
-
                 }
             }
         }
@@ -218,7 +214,7 @@ class PaymentFragment : BasePaymentFragment() {
     private fun dataCollector(token: String) {
         val braintreeClient = BraintreeClient(requireContext(), token)
         val dataCollector = DataCollector(braintreeClient)
-        dataCollector.collectDeviceData(requireContext()) { deviceData, error ->
+        dataCollector.collectDeviceData(requireContext()) { deviceData, _ ->
             // send deviceData to your server to be included in verification or transaction requests
             deviceData?.let {
                 braintreeDeviceData = it
@@ -254,14 +250,13 @@ class PaymentFragment : BasePaymentFragment() {
 
 
     private fun getProcessingFee(type: String, slabs: List<Programs>?): String? {
-
         slabs?.find { it.gateway == type }
             ?.let {
-                return when {
-                    it.slab.type == "BOTH" -> {
+                return when (it.slab.type) {
+                    "BOTH" -> {
                         "${(it.slab.percentage)}% + ${it.slab.currency}${it.slab.fixed} "
                     }
-                    it.slab.type == "PERCENTAGE" -> {
+                    "PERCENTAGE" -> {
                         "${it.slab.percentage}% "
                     }
                     else -> {
@@ -269,11 +264,8 @@ class PaymentFragment : BasePaymentFragment() {
                     }
                 }
             }
-
         return null
-
     }
-
 
     fun createBraintreeTransaction(nonce: String) {
         Log.d("PaymentFragment1234567", "onCreate: $nonce")
@@ -374,70 +366,26 @@ class PaymentFragment : BasePaymentFragment() {
 
     override fun doPaypalPayment() {
         paymentViewModel.getBraintreeToken()
-//
-//        val amount =
-//            if (paymentViewModel.isSplitMode) paymentViewModel.getRemainingPriceForSplit().value else args.paymentRequest.amount
-//        val createOrder = CreateOrder {
-//            val order = Order(
-//                intent = OrderIntent.CAPTURE,
-//                appContext = AppContext(userAction = UserAction.PAY_NOW),
-//                purchaseUnitList = listOf(
-//                    PurchaseUnit(
-//                        amount = Amount(
-//                            currencyCode = CurrencyCode.valueOf(args.paymentRequest.currency),
-//                            value = amount.toString()
-//                        )
-//                    )
-//                )
-//            )
-//            it.create(order)
-//        }
-//
-//        val onApprove = OnApprove { approval ->
-//            approval.orderActions.capture { captureOrderResult ->
-//                hideLoader()
-//                when (captureOrderResult) {
-//                    is CaptureOrderResult.Success -> {
-//                        handlePaypalSuccessResponse(
-//                            captureOrderResult.orderResponse?.id ?: return@capture
-//                        )
+    }
+
+//    private fun handlePaypalSuccessResponse(orderId: String) {
+//        paymentViewModel.notifyPapalPayment(orderId, args.paymentRequest.purpose)
+//            .observe(viewLifecycleOwner) {
+//                when (it) {
+//                    is DataState.Loading -> {
+//                        showLoader()
 //                    }
-//                    is CaptureOrderResult.Error -> {
-//                        showToast(captureOrderResult.reason)
+//                    is DataState.Error -> {
+//                        hideLoader()
+//                        ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
+//                    }
+//                    is DataState.Data -> {
+//                        hideLoader()
+//                        onAllDone()
 //                    }
 //                }
 //            }
-//        }
-//
-//        val onError = OnError { errorInfo ->
-//            hideLoader()
-//            showToast(errorInfo.reason)
-//        }
-//
-//        val onCancel = OnCancel { hideLoader() }
-//
-//        showLoader()
-//        PayPalCheckout.start(createOrder, onApprove, null, onCancel, onError)
-    }
-
-    private fun handlePaypalSuccessResponse(orderId: String) {
-        paymentViewModel.notifyPapalPayment(orderId, args.paymentRequest.purpose)
-            .observe(viewLifecycleOwner) {
-                when (it) {
-                    is DataState.Loading -> {
-                        showLoader()
-                    }
-                    is DataState.Error -> {
-                        hideLoader()
-                        ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
-                    }
-                    is DataState.Data -> {
-                        hideLoader()
-                        onAllDone()
-                    }
-                }
-            }
-    }
+//    }
 
     override fun doPayStackPayment() {
         paymentViewModel.doPayStackPayment().observe(viewLifecycleOwner) {
@@ -542,7 +490,6 @@ class PaymentFragment : BasePaymentFragment() {
             ContextCompat.getDrawable(requireContext(), R.drawable.bg_border_grey)
         tickView.isVisible = false
     }
-
 
 }
 

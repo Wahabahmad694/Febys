@@ -79,6 +79,18 @@ data class Order(
         )
         addVatToOrderSummary(containerOrderSummary, vatPercentage, productsAmount)
 
+        val transactionFee = transactions.firstOrNull()?.transactionFee
+        transactionFee?.let {
+            val transactionsPrice = Price("", it.toDouble(), productsAmount.currency)
+            addProductToOrderSummary(
+                containerOrderSummary,
+                context.getString(R.string.label_processing_fee),
+                1,
+                transactionsPrice,
+                true
+            )
+        }
+
         if (voucher != null) {
             val voucherDiscount = voucher.discount ?: 0.0
             val voucherPrice = Price("", -voucherDiscount, productsAmount.currency)
