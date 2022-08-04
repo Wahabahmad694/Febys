@@ -120,6 +120,15 @@ class PaymentViewModel @Inject constructor(
             if (it is DataState.Data) transactions.add(it.data)
         }.asLiveData()
 
+    fun saveTransaction(transaction: Transaction){
+        transactions.add(transaction)
+    }
+
+//    fun notifyBrainTree(orderId: String, purpose: String) =
+//        paymentRepo.braintreeTransaction(orderId, purpose).onEach {
+//            if (it is DataState.Data) transactions.add(it.data)
+//        }.asLiveData()
+
     fun getTransactions(): List<Transaction> = transactions
 
 

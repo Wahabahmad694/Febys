@@ -10,9 +10,7 @@ import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.navArgs
-import com.braintreepayments.api.DropInClient
-import com.braintreepayments.api.DropInRequest
-import com.braintreepayments.api.ThreeDSecureRequest
+import com.braintreepayments.api.*
 import com.hexagram.febys.R
 import com.hexagram.febys.databinding.FragmentPaymentBinding
 import com.hexagram.febys.models.api.price.Price
@@ -33,6 +31,7 @@ class PaymentFragment : BasePaymentFragment() {
 
     private val DROP_IN_REQUEST_CODE = 0
     private var brainTreeFee: Int = 0
+    var braintreeDeviceData: String = ""
 
     private val args by navArgs<PaymentFragmentArgs>()
 
@@ -163,11 +162,15 @@ class PaymentFragment : BasePaymentFragment() {
                 }
                 is DataState.Data -> {
                     hideLoader()
-                    Log.d("BRAIN_TREE", "setObserver: ${it.data.transaction.clientToken}")
-                    callBrainTree(
-                        it.data.transaction.clientToken,
-                        args.paymentRequest.amount.toString()
-                    )
+                    it.data.let { it1 ->
+                        val token = it1.transaction.clientToken
+                        Log.d("BRAIN_TREE", "setObserver: $token")
+                        callBrainTree(
+                            token,
+                            args.paymentRequest.amount.toString()
+                        )
+                        dataCollector(token)
+                    }
                 }
             }
         }
@@ -201,8 +204,24 @@ class PaymentFragment : BasePaymentFragment() {
                 is DataState.Data -> {
                     hideLoader()
                     Log.d("BRAIN_TREE_TRANS", "setObserver: ${it.data}")
+                    paymentViewModel.saveTransaction(it.data)
+
+//                    paymentViewModel.notifyPapalPayment(orderId, it.data)
+
+                    onAllDone()
 
                 }
+            }
+        }
+    }
+
+    private fun dataCollector(token: String) {
+        val braintreeClient = BraintreeClient(requireContext(), token)
+        val dataCollector = DataCollector(braintreeClient)
+        dataCollector.collectDeviceData(requireContext()) { deviceData, error ->
+            // send deviceData to your server to be included in verification or transaction requests
+            deviceData?.let {
+                braintreeDeviceData = it
             }
         }
     }
@@ -220,7 +239,7 @@ class PaymentFragment : BasePaymentFragment() {
                 binding.braintreeAmount
             )
         }
-        getProcessingFee("PAY_STACK", slabs)?.let {
+        getProcessingFee("PAYSTACK", slabs)?.let {
             binding.paystackAmount.text =
                 getString(R.string.processing_fee_will_be_charged, it)
             specificTextColorChange(
@@ -262,14 +281,12 @@ class PaymentFragment : BasePaymentFragment() {
         val totalAmountAfterConverted = brainTreeFee + args.paymentRequest.amount
         val request = BraintreeRequest(
             totalAmountAfterConverted,
-            "USD",
-            "",
+            args.paymentRequest.currency,
+            braintreeDeviceData,
             nonce,
-            1.0,
             brainTreeFee.toDouble(),
             args.paymentRequest.amount,
             args.paymentRequest.currency,
-            "PRODUCT_PURCHASE",
             "PRODUCT_PURCHASE"
         )
         paymentViewModel.doBrainTreeTransaction(request)
@@ -357,6 +374,7 @@ class PaymentFragment : BasePaymentFragment() {
 
     override fun doPaypalPayment() {
         paymentViewModel.getBraintreeToken()
+//
 //        val amount =
 //            if (paymentViewModel.isSplitMode) paymentViewModel.getRemainingPriceForSplit().value else args.paymentRequest.amount
 //        val createOrder = CreateOrder {

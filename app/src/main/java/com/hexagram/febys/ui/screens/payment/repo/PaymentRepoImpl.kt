@@ -125,8 +125,9 @@ class PaymentRepoImpl @Inject constructor(
     override suspend fun getBraintreeToken(
         dispatcher: CoroutineDispatcher
     ) = flow<DataState<TokenResponse>> {
+        val authToken = pref.getAccessToken()
         emit(DataState.Loading())
-        paymentService.getBraintreeToken()
+        paymentService.getBraintreeToken(authToken)
             .onSuccess { data?.let { emit(DataState.Data(it)) } }
             .onError { emit(DataState.ApiError(message)) }
             .onException { emit(DataState.ExceptionError()) }
@@ -138,8 +139,10 @@ class PaymentRepoImpl @Inject constructor(
         request: FeeSlabRequest
     ) = flow<DataState<FeeSlabsResponse>>
     {
+        val authToken = pref.getAccessToken()
         emit(DataState.Loading())
         paymentService.feeSlabs(
+            authToken,
             request = request
         )
             .onSuccess { data?.let { emit(DataState.Data(it)) } }
@@ -152,7 +155,8 @@ class PaymentRepoImpl @Inject constructor(
         dispatcher: CoroutineDispatcher,
         request: BraintreeRequest
     ) = flow<DataState<Transaction>> {
-        paymentService.braintreeTransaction(request)
+        val authToken = pref.getAccessToken()
+        paymentService.braintreeTransaction(authToken, request)
             .onSuccess { emit(DataState.Data(data!!.transaction)) }
             .onError { emit(DataState.ApiError(message)) }
             .onException { emit(DataState.ExceptionError()) }

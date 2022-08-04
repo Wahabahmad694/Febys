@@ -56,15 +56,19 @@ interface PaymentService {
     ): ApiResponse<Pagination>
 
     @GET("v1/payments/transaction/braintree/fetch-client-token")
-    suspend fun getBraintreeToken(): ApiResponse<TokenResponse>
+    suspend fun getBraintreeToken(
+        @Header("Authorization") authToken: String,
+    ): ApiResponse<TokenResponse>
 
     @POST("v1/payment-programs/fee-slabs")
     suspend fun feeSlabs(
+        @Header("Authorization") authToken: String,
         @Body request: FeeSlabRequest
     ): ApiResponse<FeeSlabsResponse>
 
     @POST("v1/payments/transaction/braintree")
     suspend fun braintreeTransaction(
+        @Header("Authorization") authToken: String,
         @Body request: BraintreeRequest
     ): ApiResponse<PaymentResponse>
 }
