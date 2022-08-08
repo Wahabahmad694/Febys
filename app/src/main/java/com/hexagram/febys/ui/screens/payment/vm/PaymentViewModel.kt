@@ -32,6 +32,8 @@ class PaymentViewModel @Inject constructor(
     var isWalletEnable: Boolean = true
     var paymentMethod: PaymentMethod? = null
     lateinit var paymentRequest: PaymentRequest
+    var transactionFeePaypal: Double = 0.0
+    var transactionFeePayStack: Double = 0.0
     private lateinit var wallet: Wallet
 
     /**
@@ -63,6 +65,15 @@ class PaymentViewModel @Inject constructor(
     val allTransactions: Flow<PagingData<Transaction>> =
         paymentRepo.fetchTransactions(viewModelScope)
 
+    fun initPaymentRequest(paymentRequest: PaymentRequest) {
+        this.paymentRequest = paymentRequest
+        val feeSlabRequest = FeeSlabRequest(
+            paymentRequest.currency,
+            paymentRequest.amount.toString()
+        )
+        getFeeSlab(feeSlabRequest)
+    }
+
     fun refreshWallet() =
         paymentRepo.fetchWallet(
             if (::paymentRequest.isInitialized) paymentRequest.currency else null
@@ -78,6 +89,12 @@ class PaymentViewModel @Inject constructor(
             if (it is DataState.Data) {
                 amountPaidFromWallet = Price("", paymentRequest.amount, paymentRequest.currency)
                 transactions.add(it.data)
+                val remainingPriceForSplit = getRemainingPriceForSplit()
+                val feeSlabRequest = FeeSlabRequest(
+                    remainingPriceForSplit.currency,
+                    remainingPriceForSplit.value.toString()
+                )
+                getFeeSlab(feeSlabRequest)
             }
         }.asLiveData()
     }
@@ -88,9 +105,15 @@ class PaymentViewModel @Inject constructor(
     }
 
     fun doPayStackPayment(): LiveData<DataState<PayStackTransactionRequest>> {
-        val paymentRequest =
+        val payStackRequest =
             if (isSplitMode) this.paymentRequest.copy(amount = getRemainingPriceForSplit().value) else this.paymentRequest
-        return paymentRepo.doPayStackPayment(paymentRequest).asLiveData()
+        val payStackReqWithTransFee = payStackRequest.copy(
+            transactionFee = transactionFeePayStack,
+            billingAmount = transactionFeePayStack +  payStackRequest.amount,
+            billingCurrency = this.paymentRequest.currency
+        )
+
+        return paymentRepo.doPayStackPayment(payStackReqWithTransFee).asLiveData()
     }
 
     fun listenToPayStackVerification(reference: String) = channelFlow {
@@ -120,7 +143,7 @@ class PaymentViewModel @Inject constructor(
             if (it is DataState.Data) transactions.add(it.data)
         }.asLiveData()
 
-    fun saveTransaction(transaction: Transaction){
+    fun saveTransaction(transaction: Transaction) {
         transactions.add(transaction)
     }
 
@@ -147,5 +170,4 @@ class PaymentViewModel @Inject constructor(
             _braintreeTransaction.postValue(it)
         }
     }
-
 }

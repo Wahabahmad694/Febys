@@ -13,5 +13,5 @@ data class Slab(
     val percentage: Double,
     val to: Double,
     val type: String,
-    val value: Int
+    val value: Double
 ) : Parcelable

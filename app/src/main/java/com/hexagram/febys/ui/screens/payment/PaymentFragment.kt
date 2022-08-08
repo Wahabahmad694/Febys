@@ -30,14 +30,17 @@ class PaymentFragment : BasePaymentFragment() {
     private lateinit var binding: FragmentPaymentBinding
 
     private val DROP_IN_REQUEST_CODE = 0
-    private var brainTreeFee: Int = 0
+    private var remainingPrice: String = ""
+    private var remaingFeeSlab: String = ""
     private var braintreeDeviceData: String = ""
 
     private val args by navArgs<PaymentFragmentArgs>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        paymentViewModel.paymentRequest = args.paymentRequest
+        paymentViewModel.initPaymentRequest(
+            args.paymentRequest
+        )
     }
 
     override fun onCreateView(
@@ -143,11 +146,20 @@ class PaymentFragment : BasePaymentFragment() {
     }
 
     private fun getFeeSlabs() {
-        val feeSlabRequest = FeeSlabRequest(
-            currency = args.paymentRequest.currency,
-            amount = args.paymentRequest.amount.toString()
-        )
-        paymentViewModel.getFeeSlab(feeSlabRequest)
+        if (paymentViewModel.isSplitMode) {
+            val remaingFeeSlab = FeeSlabRequest(
+                args.paymentRequest.currency,
+                paymentViewModel.getRemainingPriceForSplit().value.toString()
+            )
+            paymentViewModel.getFeeSlab(remaingFeeSlab)
+        } else {
+            val feeSlabRequest = FeeSlabRequest(
+                currency = args.paymentRequest.currency,
+                amount = args.paymentRequest.amount.toString()
+            )
+            paymentViewModel.getFeeSlab(feeSlabRequest)
+        }
+
     }
 
     private fun setObserver() {
@@ -224,7 +236,8 @@ class PaymentFragment : BasePaymentFragment() {
 
     private fun showFeeSlabs(slabs: List<Programs>) {
         getProcessingFee("BRAINTREE", slabs)?.let {
-            brainTreeFee = slabs.firstOrNull()?.slab?.value!!
+            paymentViewModel.transactionFeePaypal =
+                slabs.firstOrNull { it.gateway == "BRAINTREE" }?.slab?.value!!
             binding.braintreeAmount.text =
                 getString(R.string.processing_fee_will_be_charged, it)
             specificTextColorChange(
@@ -236,6 +249,8 @@ class PaymentFragment : BasePaymentFragment() {
             )
         }
         getProcessingFee("PAYSTACK", slabs)?.let {
+            paymentViewModel.transactionFeePayStack =
+                slabs.firstOrNull { it.gateway == "PAYSTACK" }?.slab?.value!!
             binding.paystackAmount.text =
                 getString(R.string.processing_fee_will_be_charged, it)
             specificTextColorChange(
@@ -269,19 +284,34 @@ class PaymentFragment : BasePaymentFragment() {
 
     fun createBraintreeTransaction(nonce: String) {
         Log.d("PaymentFragment1234567", "onCreate: $nonce")
+        val totalAmountAfterConverted = paymentViewModel.transactionFeePaypal + args.paymentRequest.amount
+        val remainingAmount = remaingFeeSlab + remainingPrice
+        if (paymentViewModel.isSplitMode) {
+            val requestRemainingAmount = BraintreeRequest(
+                remainingAmount.toDouble(),
+                getCurrency(),
+                braintreeDeviceData,
+                nonce,
+                paymentViewModel.transactionFeePaypal,
+                args.paymentRequest.amount,
+                getCurrency(),
+                "PRODUCT_PURCHASE"
+            )
+            paymentViewModel.doBrainTreeTransaction(requestRemainingAmount)
+        } else {
+            val request = BraintreeRequest(
+                totalAmountAfterConverted,
+                getCurrency(),
+                braintreeDeviceData,
+                nonce,
+                paymentViewModel.transactionFeePaypal,
+                args.paymentRequest.amount,
+                getCurrency(),
+                "PRODUCT_PURCHASE"
+            )
+            paymentViewModel.doBrainTreeTransaction(request)
+        }
 
-        val totalAmountAfterConverted = brainTreeFee + args.paymentRequest.amount
-        val request = BraintreeRequest(
-            totalAmountAfterConverted,
-            args.paymentRequest.currency,
-            braintreeDeviceData,
-            nonce,
-            brainTreeFee.toDouble(),
-            args.paymentRequest.amount,
-            args.paymentRequest.currency,
-            "PRODUCT_PURCHASE"
-        )
-        paymentViewModel.doBrainTreeTransaction(request)
     }
 
 
@@ -452,6 +482,7 @@ class PaymentFragment : BasePaymentFragment() {
             binding.walletFilledTick.isVisible = false
 
             val remainingPrice = paymentViewModel.getRemainingPriceForSplit().getFormattedPrice()
+
             val remainingPriceMsg =
                 getString(R.string.label_choose_payment_for_remaining, remainingPrice)
             binding.tvRemainingAmount.showHtml(remainingPriceMsg)
