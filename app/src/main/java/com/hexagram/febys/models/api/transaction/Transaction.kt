@@ -33,7 +33,7 @@ data class Transaction(
     @SerializedName("payment_method")
     val paymentMethod: String?,
     @SerializedName("transaction_fee")
-    val transactionFee : Float?,
+    val transactionFee: Float?,
     @SerializedName("transaction_fee_info")
     val transactionFeeInfo: Slab?
 ) : Parcelable {

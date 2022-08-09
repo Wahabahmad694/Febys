@@ -100,7 +100,7 @@ class PaymentViewModel @Inject constructor(
     }
 
     fun getRemainingPriceForSplit(): Price {
-        val remainingAmount = paymentRequest.amount - amountPaidFromWallet!!.value
+        val remainingAmount = paymentRequest.amount - amountPaidFromWallet?.value!!
         return Price("", remainingAmount, paymentRequest.currency)
     }
 
@@ -109,7 +109,7 @@ class PaymentViewModel @Inject constructor(
             if (isSplitMode) this.paymentRequest.copy(amount = getRemainingPriceForSplit().value) else this.paymentRequest
         val payStackReqWithTransFee = payStackRequest.copy(
             transactionFee = transactionFeePayStack,
-            billingAmount = transactionFeePayStack +  payStackRequest.amount,
+            billingAmount = transactionFeePayStack + payStackRequest.amount,
             billingCurrency = this.paymentRequest.currency
         )
 

@@ -79,7 +79,14 @@ class CheckoutFragment : BaseFragment() {
                     showInvalidVoucherDialog()
                     return@setOnClickListener
                 }
-                val paymentRequest = PaymentRequest(orderPrice!!.value, orderPrice!!.currency,"PRODUCT_PURCHASE",null,null,orderPrice!!.currency)
+                val paymentRequest = PaymentRequest(
+                    orderPrice!!.value,
+                    orderPrice!!.currency,
+                    "PRODUCT_PURCHASE",
+                    null,
+                    null,
+                    orderPrice!!.currency
+                )
                 val gotoPayment = NavGraphDirections
                     .toPaymentFragment(paymentRequest)
                 navigateTo(gotoPayment)

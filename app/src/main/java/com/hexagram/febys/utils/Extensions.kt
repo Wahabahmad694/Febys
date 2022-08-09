@@ -212,6 +212,7 @@ fun <T : View> BottomSheetBehavior<T>.onStateChange(callback: (state: Int) -> Un
     })
 }
 
+fun Double.convertTwoDecimal(): String = String.format("%.2f", this)
 fun Double.toFixedDecimal(decimalCount: Int): String {
     return String.format("%.${decimalCount}f", this)
 }

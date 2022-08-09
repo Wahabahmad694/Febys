@@ -284,21 +284,26 @@ class PaymentFragment : BasePaymentFragment() {
 
     fun createBraintreeTransaction(nonce: String) {
         Log.d("PaymentFragment1234567", "onCreate: $nonce")
-        val totalAmountAfterConverted = paymentViewModel.transactionFeePaypal + args.paymentRequest.amount
-        val remainingAmount = remaingFeeSlab + remainingPrice
+
         if (paymentViewModel.isSplitMode) {
+            val remainingAmount =
+                (paymentViewModel.transactionFeePaypal + paymentViewModel.getRemainingPriceForSplit().value).convertTwoDecimal()
+                    .toDouble()
             val requestRemainingAmount = BraintreeRequest(
-                remainingAmount.toDouble(),
+                remainingAmount,
                 getCurrency(),
                 braintreeDeviceData,
                 nonce,
                 paymentViewModel.transactionFeePaypal,
-                args.paymentRequest.amount,
+                paymentViewModel.getRemainingPriceForSplit().value,
                 getCurrency(),
                 "PRODUCT_PURCHASE"
             )
             paymentViewModel.doBrainTreeTransaction(requestRemainingAmount)
         } else {
+            val totalAmountAfterConverted =
+                (paymentViewModel.transactionFeePaypal + args.paymentRequest.amount).convertTwoDecimal()
+                    .toDouble()
             val request = BraintreeRequest(
                 totalAmountAfterConverted,
                 getCurrency(),
