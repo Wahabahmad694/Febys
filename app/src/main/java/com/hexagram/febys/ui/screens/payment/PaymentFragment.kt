@@ -30,8 +30,6 @@ class PaymentFragment : BasePaymentFragment() {
     private lateinit var binding: FragmentPaymentBinding
 
     private val DROP_IN_REQUEST_CODE = 0
-    private var remainingPrice: String = ""
-    private var remaingFeeSlab: String = ""
     private var braintreeDeviceData: String = ""
 
     private val args by navArgs<PaymentFragmentArgs>()
@@ -284,7 +282,6 @@ class PaymentFragment : BasePaymentFragment() {
 
     fun createBraintreeTransaction(nonce: String) {
         Log.d("PaymentFragment1234567", "onCreate: $nonce")
-
         if (paymentViewModel.isSplitMode) {
             val remainingAmount =
                 (paymentViewModel.transactionFeePaypal + paymentViewModel.getRemainingPriceForSplit().value).convertTwoDecimal()
