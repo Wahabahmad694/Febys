@@ -204,7 +204,7 @@ dependencies {
     implementation "androidx.room:room-ktx:$room_version"
 
     // paypal
-    implementation('com.paypal.checkout:android-sdk:0.5.2')
+//    implementation('com.paypal.checkout:android-sdk:0.5.2')
 
     //crop image
     implementation 'com.github.CanHub:Android-Image-Cropper:4.1.0'
@@ -215,6 +215,14 @@ dependencies {
     //Glide property
     implementation 'com.github.bumptech.glide:glide:4.13.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.0'
+
+    //Brain Tree
+//    implementation 'com.braintreepayments.api:drop-in:3.7.1'
+    implementation ('com.braintreepayments.api:drop-in'){
+        version {
+            strictly '6.0.2'
+        }
+    }
 
     //zendesk
     implementation group: 'com.zendesk', name: 'messaging', version: '5.2.3'

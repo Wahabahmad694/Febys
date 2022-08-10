@@ -50,7 +50,7 @@ class FebysPlusFragment : BaseFragment() {
         febysPackageAdapter.onItemClick = {
             if (isUserLoggedIn) {
                 val paymentRequest =
-                    PaymentRequest(it.price.value, it.price.currency, "SUBSCRIPTION_PURCHASED")
+                    PaymentRequest(it.price.value, it.price.currency, "SUBSCRIPTION_PURCHASED",null,null,it.price.currency)
                 val gotoPayment = NavGraphDirections.toPaymentFragment(paymentRequest)
                 navigateTo(gotoPayment)
             } else gotoLogin()

@@ -14,6 +14,10 @@ import com.hexagram.febys.paginations.TransactionPagingSource
 import com.hexagram.febys.prefs.IPrefManger
 import com.hexagram.febys.ui.screens.payment.models.PayStackTransactionRequest
 import com.hexagram.febys.ui.screens.payment.models.Wallet
+import com.hexagram.febys.ui.screens.payment.models.brainTree.BraintreeRequest
+import com.hexagram.febys.ui.screens.payment.models.brainTree.TokenResponse
+import com.hexagram.febys.ui.screens.payment.models.feeSlabs.FeeSlabRequest
+import com.hexagram.febys.ui.screens.payment.models.feeSlabs.FeeSlabsResponse
 import com.hexagram.febys.ui.screens.payment.service.PaymentService
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -117,6 +121,48 @@ class PaymentRepoImpl @Inject constructor(
             .flowOn(dispatcher)
             .cachedIn(scope)
     }
+
+    override suspend fun getBraintreeToken(
+        dispatcher: CoroutineDispatcher
+    ) = flow<DataState<TokenResponse>> {
+        val authToken = pref.getAccessToken()
+        emit(DataState.Loading())
+        paymentService.getBraintreeToken(authToken)
+            .onSuccess { data?.let { emit(DataState.Data(it)) } }
+            .onError { emit(DataState.ApiError(message)) }
+            .onException { emit(DataState.ExceptionError()) }
+            .onNetworkError { emit(DataState.NetworkError()) }
+    }.flowOn(dispatcher)
+
+    override suspend fun feeSlabs(
+        dispatcher: CoroutineDispatcher,
+        request: FeeSlabRequest
+    ) = flow<DataState<FeeSlabsResponse>>
+    {
+        val authToken = pref.getAccessToken()
+        emit(DataState.Loading())
+        paymentService.feeSlabs(
+            authToken,
+            request = request
+        )
+            .onSuccess { data?.let { emit(DataState.Data(it)) } }
+            .onError { emit(DataState.ApiError(message)) }
+            .onException { emit(DataState.ExceptionError()) }
+            .onNetworkError { emit(DataState.NetworkError()) }
+    }.flowOn(dispatcher)
+
+    override suspend fun braintreeTransaction(
+        dispatcher: CoroutineDispatcher,
+        request: BraintreeRequest
+    ) = flow<DataState<Transaction>> {
+        val authToken = pref.getAccessToken()
+        paymentService.braintreeTransaction(authToken, request)
+            .onSuccess { emit(DataState.Data(data!!.transaction)) }
+            .onError { emit(DataState.ApiError(message)) }
+            .onException { emit(DataState.ExceptionError()) }
+            .onNetworkError { emit(DataState.NetworkError()) }
+    }.flowOn(dispatcher)
+
 
     private fun getPagingListRequestForTransaction(): PagingListRequest {
         val pagingListRequest = PagingListRequest()

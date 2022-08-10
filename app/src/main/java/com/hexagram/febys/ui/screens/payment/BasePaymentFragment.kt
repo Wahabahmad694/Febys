@@ -11,7 +11,6 @@ import com.hexagram.febys.ui.screens.payment.methods.PaymentMethod
 import com.hexagram.febys.ui.screens.payment.vm.PaymentViewModel
 import com.hexagram.febys.utils.goBack
 import com.hexagram.febys.utils.showToast
-import com.paypal.checkout.createorder.CurrencyCode
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,14 +36,14 @@ abstract class BasePaymentFragment : BaseFragment() {
     private fun initPaypalConfig() {
         val currencyCode = getCurrency()
         val isCurrencySupported = isPaypalSupportedCurrency(currencyCode)
-        if (!isCurrencySupported) {
-            onPaypalNotSupported()
-            return
-        }
+//        if (!isCurrencySupported) {
+//            onPaypalNotSupported()
+//            return
+//        }
     }
 
     protected fun isPaypalSupportedCurrency(currencyCode: String) = try {
-        CurrencyCode.valueOf(currencyCode)
+//        CurrencyCode.valueOf(currencyCode)
         true
     } catch (e: Exception) {
         false
@@ -57,6 +56,7 @@ abstract class BasePaymentFragment : BaseFragment() {
             }
             PaymentMethod.PAYPAL -> {
                 doPaypalPayment()
+
             }
             PaymentMethod.PAY_STACK -> {
                 doPayStackPayment()

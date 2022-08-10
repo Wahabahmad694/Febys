@@ -19,10 +19,9 @@
             android:layout_marginStart="@dimen/_8sdp"
             android:layout_marginTop="@dimen/_18sdp"
             android:background="@drawable/placeholder_template"
-            app:actualImageScaleType="centerCrop"
+            app:actualImageScaleType="fitCenter"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:roundingBorderColor="@color/grey_e1e5e8"
             app:roundingBorderWidth="@dimen/_1sdp" />
 
         <TextView

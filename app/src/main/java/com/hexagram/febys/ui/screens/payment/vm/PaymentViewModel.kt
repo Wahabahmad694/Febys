@@ -1,6 +1,7 @@
 package com.hexagram.febys.ui.screens.payment.vm
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -12,13 +13,16 @@ import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.payment.methods.PaymentMethod
 import com.hexagram.febys.ui.screens.payment.models.PayStackTransactionRequest
 import com.hexagram.febys.ui.screens.payment.models.Wallet
+import com.hexagram.febys.ui.screens.payment.models.brainTree.BraintreeRequest
+import com.hexagram.febys.ui.screens.payment.models.brainTree.TokenResponse
+import com.hexagram.febys.ui.screens.payment.models.feeSlabs.FeeSlabRequest
+import com.hexagram.febys.ui.screens.payment.models.feeSlabs.FeeSlabsResponse
 import com.hexagram.febys.ui.screens.payment.repo.IPaymentRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.channelFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,6 +32,8 @@ class PaymentViewModel @Inject constructor(
     var isWalletEnable: Boolean = true
     var paymentMethod: PaymentMethod? = null
     lateinit var paymentRequest: PaymentRequest
+    var transactionFeePaypal: Double = 0.0
+    var transactionFeePayStack: Double = 0.0
     private lateinit var wallet: Wallet
 
     /**
@@ -46,8 +52,27 @@ class PaymentViewModel @Inject constructor(
     /**
      * history of all transactions
      */
+
+    private var _braintreeTokenResponse = MutableLiveData<DataState<TokenResponse>>()
+    var braintreeTokenResponse: LiveData<DataState<TokenResponse>> = _braintreeTokenResponse
+
+    private var _braintreeTransaction = MutableLiveData<DataState<Transaction>>()
+    var braintreeTransaction: LiveData<DataState<Transaction>> = _braintreeTransaction
+
+    private var _feeSlabsResponse = MutableLiveData<DataState<FeeSlabsResponse>>()
+    var feeSlabsResponse: LiveData<DataState<FeeSlabsResponse>> = _feeSlabsResponse
+
     val allTransactions: Flow<PagingData<Transaction>> =
         paymentRepo.fetchTransactions(viewModelScope)
+
+    fun initPaymentRequest(paymentRequest: PaymentRequest) {
+        this.paymentRequest = paymentRequest
+        val feeSlabRequest = FeeSlabRequest(
+            paymentRequest.currency,
+            paymentRequest.amount.toString()
+        )
+        getFeeSlab(feeSlabRequest)
+    }
 
     fun refreshWallet() =
         paymentRepo.fetchWallet(
@@ -64,19 +89,31 @@ class PaymentViewModel @Inject constructor(
             if (it is DataState.Data) {
                 amountPaidFromWallet = Price("", paymentRequest.amount, paymentRequest.currency)
                 transactions.add(it.data)
+                val remainingPriceForSplit = getRemainingPriceForSplit()
+                val feeSlabRequest = FeeSlabRequest(
+                    remainingPriceForSplit.currency,
+                    remainingPriceForSplit.value.toString()
+                )
+                getFeeSlab(feeSlabRequest)
             }
         }.asLiveData()
     }
 
     fun getRemainingPriceForSplit(): Price {
-        val remainingAmount = paymentRequest.amount - amountPaidFromWallet!!.value
+        val remainingAmount = paymentRequest.amount - amountPaidFromWallet?.value!!
         return Price("", remainingAmount, paymentRequest.currency)
     }
 
     fun doPayStackPayment(): LiveData<DataState<PayStackTransactionRequest>> {
-        val paymentRequest =
+        val payStackRequest =
             if (isSplitMode) this.paymentRequest.copy(amount = getRemainingPriceForSplit().value) else this.paymentRequest
-        return paymentRepo.doPayStackPayment(paymentRequest).asLiveData()
+        val payStackReqWithTransFee = payStackRequest.copy(
+            transactionFee = transactionFeePayStack,
+            billingAmount = transactionFeePayStack + payStackRequest.amount,
+            billingCurrency = this.paymentRequest.currency
+        )
+
+        return paymentRepo.doPayStackPayment(payStackReqWithTransFee).asLiveData()
     }
 
     fun listenToPayStackVerification(reference: String) = channelFlow {
@@ -106,5 +143,31 @@ class PaymentViewModel @Inject constructor(
             if (it is DataState.Data) transactions.add(it.data)
         }.asLiveData()
 
+    fun saveTransaction(transaction: Transaction) {
+        transactions.add(transaction)
+    }
+
     fun getTransactions(): List<Transaction> = transactions
+
+
+    fun getBraintreeToken() = viewModelScope.launch {
+        _braintreeTokenResponse.postValue(DataState.Loading())
+        paymentRepo.getBraintreeToken(Dispatchers.IO).collect {
+            _braintreeTokenResponse.postValue(it)
+        }
+    }
+
+    fun getFeeSlab(feeSlabRequest: FeeSlabRequest) = viewModelScope.launch {
+        _feeSlabsResponse.postValue(DataState.Loading())
+        paymentRepo.feeSlabs(Dispatchers.IO, feeSlabRequest).collect {
+            _feeSlabsResponse.postValue(it)
+        }
+    }
+
+    fun doBrainTreeTransaction(braintreeRequest: BraintreeRequest) = viewModelScope.launch {
+        _braintreeTransaction.postValue(DataState.Loading())
+        paymentRepo.braintreeTransaction(Dispatchers.IO, braintreeRequest).collect {
+            _braintreeTransaction.postValue(it)
+        }
+    }
 }

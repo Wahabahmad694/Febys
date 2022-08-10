@@ -6,12 +6,6 @@ import com.facebook.imagepipeline.core.ImagePipelineConfig
 import com.facebook.imagepipeline.core.ImageTranscoderType
 import com.facebook.imagepipeline.core.MemoryChunkType
 import com.hexagram.febys.models.api.notification.NotificationManager
-import com.paypal.checkout.PayPalCheckout
-import com.paypal.checkout.config.CheckoutConfig
-import com.paypal.checkout.config.Environment
-import com.paypal.checkout.config.SettingsConfig
-import com.paypal.checkout.createorder.CurrencyCode
-import com.paypal.checkout.createorder.UserAction
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
@@ -29,20 +23,20 @@ class FebysApp : Application() {
                 .build()
         )
 
-        val environment = if (BuildConfig.DEBUG) Environment.SANDBOX else Environment.LIVE
-        // todo change client id
-        val clientId =
-            "AVxMDtg2UkfX0IFBK86r_l_EcCeloAcMmOQf7vbOuPQsr10I5QJBf-u4YVn504puI-GyLQ0ZcKRYBG2T"
-        val config = CheckoutConfig(
-            application = this,
-            clientId = clientId,
-            environment = environment,
-            returnUrl = "${BuildConfig.APPLICATION_ID}://paypalpay",
-            currencyCode = CurrencyCode.USD,
-            userAction = UserAction.PAY_NOW,
-            settingsConfig = SettingsConfig(loggingEnabled = true)
-        )
-        PayPalCheckout.setConfig(config)
+//        val environment = if (BuildConfig.DEBUG) Environment.SANDBOX else Environment.LIVE
+//        // todo change client id
+//        val clientId =
+//            "AVxMDtg2UkfX0IFBK86r_l_EcCeloAcMmOQf7vbOuPQsr10I5QJBf-u4YVn504puI-GyLQ0ZcKRYBG2T"
+//        val config = CheckoutConfig(
+//            application = this,
+//            clientId = clientId,
+//            environment = environment,
+//            returnUrl = "${BuildConfig.APPLICATION_ID}://paypalpay",
+//            currencyCode = CurrencyCode.USD,
+//            userAction = UserAction.PAY_NOW,
+//            settingsConfig = SettingsConfig(loggingEnabled = true)
+//        )
+//        PayPalCheckout.setConfig(config)
 
         NotificationManager.createAllChannels(this)
     }

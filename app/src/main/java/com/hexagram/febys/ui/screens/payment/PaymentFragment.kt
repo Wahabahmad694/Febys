@@ -2,6 +2,7 @@ package com.hexagram.febys.ui.screens.payment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.navArgs
+import com.braintreepayments.api.*
 import com.hexagram.febys.R
 import com.hexagram.febys.databinding.FragmentPaymentBinding
 import com.hexagram.febys.models.api.price.Price
@@ -16,27 +18,27 @@ import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.ui.screens.payment.methods.PaymentMethod
 import com.hexagram.febys.ui.screens.payment.models.PayStackTransactionRequest
+import com.hexagram.febys.ui.screens.payment.models.brainTree.BraintreeRequest
+import com.hexagram.febys.ui.screens.payment.models.feeSlabs.FeeSlabRequest
+import com.hexagram.febys.ui.screens.payment.models.feeSlabs.Programs
 import com.hexagram.febys.ui.screens.payment.utils.PayStackWebViewClient
 import com.hexagram.febys.utils.*
-import com.paypal.checkout.PayPalCheckout
-import com.paypal.checkout.approve.OnApprove
-import com.paypal.checkout.cancel.OnCancel
-import com.paypal.checkout.createorder.CreateOrder
-import com.paypal.checkout.createorder.CurrencyCode
-import com.paypal.checkout.createorder.OrderIntent
-import com.paypal.checkout.createorder.UserAction
-import com.paypal.checkout.error.OnError
-import com.paypal.checkout.order.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class PaymentFragment : BasePaymentFragment() {
     private lateinit var binding: FragmentPaymentBinding
+
+    private val DROP_IN_REQUEST_CODE = 0
+    private var braintreeDeviceData: String = ""
+
     private val args by navArgs<PaymentFragmentArgs>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        paymentViewModel.paymentRequest = args.paymentRequest
+        paymentViewModel.initPaymentRequest(
+            args.paymentRequest
+        )
     }
 
     override fun onCreateView(
@@ -52,6 +54,8 @@ class PaymentFragment : BasePaymentFragment() {
         initUi()
         uiListeners()
         refreshWallet()
+        setObserver()
+        getFeeSlabs()
     }
 
     private fun initUi() {
@@ -86,6 +90,7 @@ class PaymentFragment : BasePaymentFragment() {
         binding.containerMomoPayment.setOnClickListener {
             paymentViewModel.paymentMethod = PaymentMethod.PAY_STACK
             updateUi(binding.containerMomoPayment, binding.momoFilledTick)
+
         }
 
         binding.containerPaypalPayment.setOnClickListener {
@@ -138,6 +143,214 @@ class PaymentFragment : BasePaymentFragment() {
         }
     }
 
+    private fun getFeeSlabs() {
+        if (paymentViewModel.isSplitMode) {
+            val remaingFeeSlab = FeeSlabRequest(
+                args.paymentRequest.currency,
+                paymentViewModel.getRemainingPriceForSplit().value.toString()
+            )
+            paymentViewModel.getFeeSlab(remaingFeeSlab)
+        } else {
+            val feeSlabRequest = FeeSlabRequest(
+                currency = args.paymentRequest.currency,
+                amount = args.paymentRequest.amount.toString()
+            )
+            paymentViewModel.getFeeSlab(feeSlabRequest)
+        }
+
+    }
+
+    private fun setObserver() {
+        paymentViewModel.braintreeTokenResponse.observe(viewLifecycleOwner) {
+            when (it) {
+                is DataState.Loading -> {
+                    showLoader()
+                }
+                is DataState.Error -> {
+                    hideLoader()
+                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
+                }
+                is DataState.Data -> {
+                    hideLoader()
+                    it.data.let { it1 ->
+                        val token = it1.transaction.clientToken
+                        Log.d("BRAIN_TREE", "setObserver: $token")
+                        callBrainTree(
+                            token,
+                            args.paymentRequest.amount.toString()
+                        )
+                        dataCollector(token)
+                    }
+                }
+            }
+        }
+
+        paymentViewModel.feeSlabsResponse.observe(viewLifecycleOwner) {
+            when (it) {
+                is DataState.Loading -> {
+                    showLoader()
+                }
+                is DataState.Error -> {
+                    hideLoader()
+                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
+                }
+                is DataState.Data -> {
+                    hideLoader()
+                    Log.d("Slabs_Fee", "setObserver: ${it.data.programs}")
+                    showFeeSlabs(it.data.programs)
+                }
+            }
+        }
+
+        paymentViewModel.braintreeTransaction.observe(viewLifecycleOwner) {
+            when (it) {
+                is DataState.Loading -> {
+                    showLoader()
+                }
+                is DataState.Error -> {
+                    hideLoader()
+                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
+                }
+                is DataState.Data -> {
+                    hideLoader()
+                    Log.d("BRAIN_TREE_TRANS", "setObserver: ${it.data}")
+                    paymentViewModel.saveTransaction(it.data)
+                    onAllDone()
+                }
+            }
+        }
+    }
+
+    private fun dataCollector(token: String) {
+        val braintreeClient = BraintreeClient(requireContext(), token)
+        val dataCollector = DataCollector(braintreeClient)
+        dataCollector.collectDeviceData(requireContext()) { deviceData, _ ->
+            // send deviceData to your server to be included in verification or transaction requests
+            deviceData?.let {
+                braintreeDeviceData = it
+            }
+        }
+    }
+
+    private fun showFeeSlabs(slabs: List<Programs>) {
+        getProcessingFee("BRAINTREE", slabs)?.let {
+            paymentViewModel.transactionFeePaypal =
+                slabs.firstOrNull { it.gateway == "BRAINTREE" }?.slab?.value!!
+            binding.braintreeAmount.text =
+                getString(R.string.processing_fee_will_be_charged, it)
+            specificTextColorChange(
+                binding.braintreeAmount.text.toString(),
+                0,
+                binding.braintreeAmount.text.toString().split("processing")
+                    .first().length,
+                binding.braintreeAmount
+            )
+        }
+        getProcessingFee("PAYSTACK", slabs)?.let {
+            paymentViewModel.transactionFeePayStack =
+                slabs.firstOrNull { it.gateway == "PAYSTACK" }?.slab?.value!!
+            binding.paystackAmount.text =
+                getString(R.string.processing_fee_will_be_charged, it)
+            specificTextColorChange(
+                binding.paystackAmount.text.toString(),
+                0,
+                binding.paystackAmount.text.toString().split("processing")
+                    .first().length,
+                binding.paystackAmount
+            )
+        }
+    }
+
+
+    private fun getProcessingFee(type: String, slabs: List<Programs>?): String? {
+        slabs?.find { it.gateway == type }
+            ?.let {
+                return when (it.slab.type) {
+                    "BOTH" -> {
+                        "${(it.slab.percentage)}% + ${it.slab.currency}${it.slab.fixed} "
+                    }
+                    "PERCENTAGE" -> {
+                        "${it.slab.percentage}% "
+                    }
+                    else -> {
+                        "${it.slab.currency}${it.slab.fixed} "
+                    }
+                }
+            }
+        return null
+    }
+
+    fun createBraintreeTransaction(nonce: String) {
+        Log.d("PaymentFragment1234567", "onCreate: $nonce")
+        if (paymentViewModel.isSplitMode) {
+            val remainingAmount =
+                (paymentViewModel.transactionFeePaypal + paymentViewModel.getRemainingPriceForSplit().value).convertTwoDecimal()
+                    .toDouble()
+            val requestRemainingAmount = BraintreeRequest(
+                remainingAmount,
+                getCurrency(),
+                braintreeDeviceData,
+                nonce,
+                paymentViewModel.transactionFeePaypal,
+                paymentViewModel.getRemainingPriceForSplit().value,
+                getCurrency(),
+                "PRODUCT_PURCHASE"
+            )
+            paymentViewModel.doBrainTreeTransaction(requestRemainingAmount)
+        } else {
+            val totalAmountAfterConverted =
+                (paymentViewModel.transactionFeePaypal + args.paymentRequest.amount).convertTwoDecimal()
+                    .toDouble()
+            val request = BraintreeRequest(
+                totalAmountAfterConverted,
+                getCurrency(),
+                braintreeDeviceData,
+                nonce,
+                paymentViewModel.transactionFeePaypal,
+                args.paymentRequest.amount,
+                getCurrency(),
+                "PRODUCT_PURCHASE"
+            )
+            paymentViewModel.doBrainTreeTransaction(request)
+        }
+
+    }
+
+
+    private fun callBrainTree(token: String, amount: String) {
+
+        val dropInRequest = DropInRequest()
+        dropInRequest.maskCardNumber = true
+        dropInRequest.maskSecurityCode = true
+        dropInRequest.isPayPalDisabled = !isPaypalSupported(args.paymentRequest.currency)
+        dropInRequest.threeDSecureRequest = demoThreeDSecureRequest(amount)
+        val dropInClient = DropInClient(requireContext(), token, dropInRequest)
+
+        dropInClient.launchDropInForResult(requireActivity(), DROP_IN_REQUEST_CODE)
+    }
+
+
+    private inline fun <reified T : Enum<T>> currencySupported(currencyCode: String?): Boolean {
+        return enumValues<T>().any { it.name == currencyCode }
+    }
+
+    private fun isPaypalSupported(currencyCode: String?): Boolean {
+        return try {
+            currencySupported<PaypalCurrency>(currencyCode)
+        } catch (e: java.lang.Exception) {
+            false
+        }
+    }
+
+    private fun demoThreeDSecureRequest(amount: String): ThreeDSecureRequest {
+
+        val threeDSecureRequest = ThreeDSecureRequest()
+        threeDSecureRequest.amount = amount.toDouble().toString()
+        threeDSecureRequest.versionRequested = ThreeDSecureRequest.VERSION_2
+        return threeDSecureRequest
+
+    }
+
     private fun disableWallet() {
         binding.tvDisableWalletPrice.text =
             Price("", 0.0, Utils.DEFAULT_CURRENCY).getFormattedPrice()
@@ -184,69 +397,27 @@ class PaymentFragment : BasePaymentFragment() {
     }
 
     override fun doPaypalPayment() {
-        val amount =
-            if (paymentViewModel.isSplitMode) paymentViewModel.getRemainingPriceForSplit().value else args.paymentRequest.amount
-        val createOrder = CreateOrder {
-            val order = Order(
-                intent = OrderIntent.CAPTURE,
-                appContext = AppContext(userAction = UserAction.PAY_NOW),
-                purchaseUnitList = listOf(
-                    PurchaseUnit(
-                        amount = Amount(
-                            currencyCode = CurrencyCode.valueOf(args.paymentRequest.currency),
-                            value = amount.toString()
-                        )
-                    )
-                )
-            )
-            it.create(order)
-        }
-
-        val onApprove = OnApprove { approval ->
-            approval.orderActions.capture { captureOrderResult ->
-                hideLoader()
-                when (captureOrderResult) {
-                    is CaptureOrderResult.Success -> {
-                        handlePaypalSuccessResponse(
-                            captureOrderResult.orderResponse?.id ?: return@capture
-                        )
-                    }
-                    is CaptureOrderResult.Error -> {
-                        showToast(captureOrderResult.reason)
-                    }
-                }
-            }
-        }
-
-        val onError = OnError { errorInfo ->
-            hideLoader()
-            showToast(errorInfo.reason)
-        }
-
-        val onCancel = OnCancel { hideLoader() }
-
-        showLoader()
-        PayPalCheckout.start(createOrder, onApprove, null, onCancel, onError)
+        paymentViewModel.getBraintreeToken()
     }
 
-    private fun handlePaypalSuccessResponse(orderId: String) {
-        paymentViewModel.notifyPapalPayment(orderId, args.paymentRequest.purpose)
-            .observe(viewLifecycleOwner) {
-                when (it) {
-                    is DataState.Loading -> {
-                        showLoader()
-                    }
-                    is DataState.Error -> {
-                        hideLoader()
-                        ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
-                    }
-                    is DataState.Data -> {
-                        hideLoader()
-                        onAllDone()
-                    }
-                }
-            }
-    }
+//    private fun handlePaypalSuccessResponse(orderId: String) {
+//        paymentViewModel.notifyPapalPayment(orderId, args.paymentRequest.purpose)
+//            .observe(viewLifecycleOwner) {
+//                when (it) {
+//                    is DataState.Loading -> {
+//                        showLoader()
+//                    }
+//                    is DataState.Error -> {
+//                        hideLoader()
+//                        ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
+//                    }
+//                    is DataState.Data -> {
+//                        hideLoader()
+//                        onAllDone()
+//                    }
+//                }
+//            }
+//    }
 
     override fun doPayStackPayment() {
         paymentViewModel.doPayStackPayment().observe(viewLifecycleOwner) {
@@ -313,6 +484,7 @@ class PaymentFragment : BasePaymentFragment() {
             binding.walletFilledTick.isVisible = false
 
             val remainingPrice = paymentViewModel.getRemainingPriceForSplit().getFormattedPrice()
+
             val remainingPriceMsg =
                 getString(R.string.label_choose_payment_for_remaining, remainingPrice)
             binding.tvRemainingAmount.showHtml(remainingPriceMsg)
@@ -321,7 +493,7 @@ class PaymentFragment : BasePaymentFragment() {
     }
 
     override fun onPaypalNotSupported() {
-        binding.containerPaypalPayment.isVisible = false
+        binding.containerPaypalPayment.isVisible = true
     }
 
     override fun onPayStackNotSupported() {
@@ -351,5 +523,6 @@ class PaymentFragment : BasePaymentFragment() {
             ContextCompat.getDrawable(requireContext(), R.drawable.bg_border_grey)
         tickView.isVisible = false
     }
+
 }
 

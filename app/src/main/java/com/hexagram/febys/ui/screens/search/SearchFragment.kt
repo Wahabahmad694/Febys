@@ -84,7 +84,7 @@ class SearchFragment : BaseFragment() {
 
     private fun uiListeners() {
 
-        binding.tvSearch.setOnClickListener {
+        binding.llSearchContainerSearchFragment.setOnClickListener {
             val gotoSearchProduct =
                 SearchFragmentDirections.actionSearchFragmentToSearchProductFragment()
             navigateTo(gotoSearchProduct)

@@ -7,5 +7,8 @@ import kotlinx.parcelize.Parcelize
 data class PaymentRequest(
     val amount: Double,
     val currency: String,
-    val purpose: String = "PRODUCT_PURCHASE"
+    val purpose: String = "PRODUCT_PURCHASE",
+    var transactionFee: Double?,
+    val billingAmount: Double?,
+    val billingCurrency: String,
 ) : Parcelable

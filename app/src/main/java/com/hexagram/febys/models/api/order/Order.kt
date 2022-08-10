@@ -79,6 +79,18 @@ data class Order(
         )
         addVatToOrderSummary(containerOrderSummary, vatPercentage, productsAmount)
 
+        val transactionFee = transactions.firstOrNull()?.transactionFee
+        transactionFee?.let {
+            val transactionsPrice = Price("", it.toDouble(), productsAmount.currency)
+            addProductToOrderSummary(
+                containerOrderSummary,
+                context.getString(R.string.label_processing_fee),
+                1,
+                transactionsPrice,
+                true
+            )
+        }
+
         if (voucher != null) {
             val voucherDiscount = voucher.discount ?: 0.0
             val voucherPrice = Price("", -voucherDiscount, productsAmount.currency)
@@ -91,9 +103,8 @@ data class Order(
             )
         }
 
-        updateTotalAmount(containerOrderSummary, billAmount)
+        updateTotalAmount(containerOrderSummary, billAmount, transactionFee)
     }
-
 
     private fun addProductToOrderSummary(
         containerOrderSummary: LayoutOrderSummaryBinding,
@@ -125,7 +136,7 @@ data class Order(
         )
 
         val vatLabel = context.getString(R.string.label_vat)
-        val vatWithPercentage = "$vatLabel ($vatPercentage%)"
+        val vatWithPercentage = "$vatLabel ($vatPercentage% incl)"
         productSummary.tvProductNameWithQuantity.text = vatWithPercentage
 
         val vatAmount =
@@ -149,8 +160,13 @@ data class Order(
     }
 
 
-    private fun updateTotalAmount(containerOrderSummary: LayoutOrderSummaryBinding, price: Price) {
-        val totalAmountAsString = price.getFormattedPrice()
+    private fun updateTotalAmount(
+        containerOrderSummary: LayoutOrderSummaryBinding,
+        price: Price,
+        transactions: Float?
+    ) {
+        val total: Double = price.value + (transactions?.toDouble() ?: 0.0)
+        val totalAmountAsString = Price("", total, price.currency).getFormattedPrice()
         containerOrderSummary.tvTotalPrice.text = totalAmountAsString
     }
 }
