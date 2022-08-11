@@ -83,19 +83,8 @@ data class Order(
         val transactionFees = transactions.filter { it.transactionFee!= null }
         var finalFee = 0f
 
-        if(transactionFees.isEmpty())
+        if(transactionFees.isNotEmpty())
         {
-
-            val transactionsPrice = Price("", finalFee.toDouble(), productsAmount.currency)
-            addProductToOrderSummary(
-                containerOrderSummary,
-                context.getString(R.string.label_processing_fee),
-                1,
-                transactionsPrice,
-                true
-            )
-        }
-        else{
             finalFee= transactionFees.map { it.transactionFee }.first { it!! > 0f } ?:0f
             val transactionsPrice = Price("", finalFee.toDouble(), productsAmount.currency)
             addProductToOrderSummary(

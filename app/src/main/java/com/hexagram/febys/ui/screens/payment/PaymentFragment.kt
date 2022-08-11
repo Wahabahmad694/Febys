@@ -175,11 +175,24 @@ class PaymentFragment : BasePaymentFragment() {
                     it.data.let { it1 ->
                         val token = it1.transaction.clientToken
                         Log.d("BRAIN_TREE", "setObserver: $token")
-                        callBrainTree(
-                            token,
-                            args.paymentRequest.amount.toString()
-                        )
                         dataCollector(token)
+                        if (paymentViewModel.isSplitMode) {
+                            val remainingAmount =
+                                (paymentViewModel.transactionFeePaypal + paymentViewModel.getRemainingPriceForSplit().value).convertTwoDecimal()
+                                    .toDouble()
+                            callBrainTree(
+                                token,
+                                remainingAmount.toString()
+                            )
+                        } else {
+                            val actualAmount =
+                                (paymentViewModel.transactionFeePaypal + args.paymentRequest.amount).convertTwoDecimal()
+                                    .toDouble()
+                            callBrainTree(
+                                token,
+                                actualAmount.toString()
+                            )
+                        }
                     }
                 }
             }
@@ -313,7 +326,6 @@ class PaymentFragment : BasePaymentFragment() {
             )
             paymentViewModel.doBrainTreeTransaction(request)
         }
-
     }
 
 
@@ -322,7 +334,7 @@ class PaymentFragment : BasePaymentFragment() {
         val dropInRequest = DropInRequest()
         dropInRequest.maskCardNumber = true
         dropInRequest.maskSecurityCode = true
-        dropInRequest.isPayPalDisabled = !isPaypalSupported(args.paymentRequest.currency)
+        dropInRequest.isPayPalDisabled = !isPaypalSupported(getCurrency())
         dropInRequest.threeDSecureRequest = demoThreeDSecureRequest(amount)
         val dropInClient = DropInClient(requireContext(), token, dropInRequest)
 
