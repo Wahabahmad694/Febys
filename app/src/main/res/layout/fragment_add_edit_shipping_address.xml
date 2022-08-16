@@ -175,6 +175,12 @@
                             android:layout_marginTop="2dp"
                             tools:text="Ghana" />
 
+                        <View
+                            android:id="@+id/bg_dim"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="?color_dim" />
+
                     </LinearLayout>
 
                     <View
@@ -280,12 +286,23 @@
                     <TextView
                         android:id="@+id/label_address_line_1"
                         style="@style/TextTheme.Arial.TS16"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/_16sdp"
                         android:layout_marginTop="@dimen/_32sdp"
                         android:text="@string/label_address_line_1"
+                        app:layout_constraintStart_toStartOf="@id/container_city"
                         app:layout_constraintTop_toBottomOf="@id/container_city" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ic_map"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_15sdp"
+                        android:src="@drawable/ic_map_place"
+                        app:layout_constraintBottom_toBottomOf="@id/label_address_line_1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/label_address_line_1" />
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/et_address_line_1"
@@ -458,14 +475,6 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.hexagram.febys.utils.ScrollView>
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <View
-            android:id="@+id/bg_dim"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="?color_dim"
-            app:layout_anchor="@+id/constraintLayout"
-            app:layout_anchorGravity="center" />
 
         <include
             android:id="@+id/bottom_sheet_region"

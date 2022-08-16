@@ -55,7 +55,7 @@ abstract class BasePaymentFragment : BaseFragment() {
                 doWalletPayment()
             }
             PaymentMethod.PAYPAL -> {
-                doPaypalPayment()
+                doBrainTreePayment()
 
             }
             PaymentMethod.PAY_STACK -> {
@@ -75,7 +75,7 @@ abstract class BasePaymentFragment : BaseFragment() {
     }
 
     abstract fun doWalletPayment()
-    abstract fun doPaypalPayment()
+    abstract fun doBrainTreePayment()
     abstract fun doPayStackPayment()
     abstract fun getCurrency(): String
     abstract fun onPaypalNotSupported()

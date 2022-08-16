@@ -408,28 +408,10 @@ class PaymentFragment : BasePaymentFragment() {
         }
     }
 
-    override fun doPaypalPayment() {
+    override fun doBrainTreePayment() {
         paymentViewModel.getBraintreeToken()
     }
 
-//    private fun handlePaypalSuccessResponse(orderId: String) {
-//        paymentViewModel.notifyPapalPayment(orderId, args.paymentRequest.purpose)
-//            .observe(viewLifecycleOwner) {
-//                when (it) {
-//                    is DataState.Loading -> {
-//                        showLoader()
-//                    }
-//                    is DataState.Error -> {
-//                        hideLoader()
-//                        ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
-//                    }
-//                    is DataState.Data -> {
-//                        hideLoader()
-//                        onAllDone()
-//                    }
-//                }
-//            }
-//    }
 
     override fun doPayStackPayment() {
         paymentViewModel.doPayStackPayment().observe(viewLifecycleOwner) {

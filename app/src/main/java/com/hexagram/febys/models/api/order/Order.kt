@@ -61,6 +61,8 @@ data class Order(
         }
         updateOrderSummaryQuantity(containerOrderSummary, totalItems)
 
+        addVatToOrderSummary(containerOrderSummary, vatPercentage, productsAmount)
+
         addProductToOrderSummary(
             containerOrderSummary,
             context.getString(R.string.label_subtotal),
@@ -68,6 +70,7 @@ data class Order(
             productsAmount,
             true
         )
+
 
         val deliveryFee = deliveryFee ?: Price("", 0.0, productsAmount.currency)
         addProductToOrderSummary(
@@ -77,7 +80,6 @@ data class Order(
             deliveryFee,
             true
         )
-        addVatToOrderSummary(containerOrderSummary, vatPercentage, productsAmount)
 
 
         val transactionFees = transactions.filter { it.transactionFee!= null }
@@ -141,7 +143,7 @@ data class Order(
         )
 
         val vatLabel = context.getString(R.string.label_vat)
-        val vatWithPercentage = "$vatLabel ($vatPercentage% incl)"
+        val vatWithPercentage = "$vatLabel ($vatPercentage%)"
         productSummary.tvProductNameWithQuantity.text = vatWithPercentage
 
         val vatAmount =

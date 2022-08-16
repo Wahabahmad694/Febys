@@ -5,6 +5,7 @@ import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.imagepipeline.core.ImagePipelineConfig
 import com.facebook.imagepipeline.core.ImageTranscoderType
 import com.facebook.imagepipeline.core.MemoryChunkType
+import com.google.android.libraries.places.api.Places
 import com.hexagram.febys.models.api.notification.NotificationManager
 import dagger.hilt.android.HiltAndroidApp
 
@@ -22,6 +23,9 @@ class FebysApp : Application() {
                 .experiment().setNativeCodeDisabled(true)
                 .build()
         )
+
+
+        Places.initialize(this, getString(R.string.GOOGLE_API_KEY))
 
 //        val environment = if (BuildConfig.DEBUG) Environment.SANDBOX else Environment.LIVE
 //        // todo change client id

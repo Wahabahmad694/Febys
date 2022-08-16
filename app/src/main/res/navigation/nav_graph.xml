@@ -623,6 +623,14 @@
         <argument
             android:name="forceSetAsDefault"
             app:argType="boolean" />
+
+        <action
+            android:id="@+id/action_addEditShippingAddressFragment_to_locationFragment"
+            app:destination="@id/locationFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/checkoutFragment"
@@ -674,6 +682,17 @@
             android:name="isHtml"
             android:defaultValue="false"
             app:argType="boolean" />
+    </fragment>
+    <fragment
+        android:id="@+id/locationFragment"
+        android:name="com.hexagram.febys.ui.screens.location.LocationFragment"
+        android:label="LocationFragment"
+        tools:layout="@layout/fragment_location">
+
+        <argument
+            android:name="lat"
+            app:argType="com.hexagram.febys.models.api.location.LatLong" />
+
     </fragment>
     <fragment
         android:id="@+id/febysPlusFragment"

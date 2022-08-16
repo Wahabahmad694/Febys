@@ -18,6 +18,7 @@ import com.hexagram.febys.databinding.FragmentAddEditShippingAddressBinding
 import com.hexagram.febys.models.api.cities.City
 import com.hexagram.febys.models.api.contact.PhoneNo
 import com.hexagram.febys.models.api.countries.Country
+import com.hexagram.febys.models.api.location.LatLong
 import com.hexagram.febys.models.api.request.GetCitiesRequest
 import com.hexagram.febys.models.api.request.GetStatesRequest
 import com.hexagram.febys.models.api.shippingAddress.Address
@@ -136,7 +137,7 @@ class AddEditShippingAddressFragment : BaseFragment() {
             binding.tvState.text = statesAdapter.getSelectedItem()
             binding.tvCity.text = citiesAdapter.getSelectedItem()
 
-           updateDefaultCCP(PhoneNo(Utils.DEFAULT_COUNTRY_CODE, ""))
+            updateDefaultCCP(PhoneNo(Utils.DEFAULT_COUNTRY_CODE, ""))
 
             return
         }
@@ -169,6 +170,13 @@ class AddEditShippingAddressFragment : BaseFragment() {
     }
 
     private fun uiListeners() {
+        binding.icMap.setOnClickListener {
+            val gotoMap =
+                AddEditShippingAddressFragmentDirections.actionAddEditShippingAddressFragmentToLocationFragment(
+                    LatLong(0.0, 0.0)
+                )
+            navigateTo(gotoMap)
+        }
         binding.btnSave.setOnClickListener {
             initFields()
             if (areAllFieldsValid()) {
