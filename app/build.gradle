@@ -231,7 +231,7 @@ dependencies {
     }
 
     // Google Maps
-    implementation "com.google.android.libraries.places:places:2.4.0"
+    implementation "com.google.android.libraries.places:places:2.6.0"
 
     //zendesk
     implementation group: 'com.zendesk', name: 'messaging', version: '5.2.3'
