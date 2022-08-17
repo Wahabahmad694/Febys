@@ -1,17 +1,15 @@
 package com.hexagram.febys.ui.screens.shipping.address
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.addCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentAddEditShippingAddressBinding
@@ -19,7 +17,7 @@ import com.hexagram.febys.models.api.cities.City
 import com.hexagram.febys.models.api.contact.PhoneNo
 import com.hexagram.febys.models.api.countries.Country
 import com.hexagram.febys.models.api.location.LatLong
-import com.hexagram.febys.models.api.request.GetCitiesRequest
+import com.hexagram.febys.models.api.location.LocationSuggestion
 import com.hexagram.febys.models.api.request.GetStatesRequest
 import com.hexagram.febys.models.api.shippingAddress.Address
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
@@ -28,6 +26,7 @@ import com.hexagram.febys.models.api.states.State
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.ui.screens.list.selection.ListSelectionAdapter
+import com.hexagram.febys.ui.screens.location.LocationFragment
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -41,9 +40,9 @@ class AddEditShippingAddressFragment : BaseFragment() {
     private val shippingAddressViewModel: ShippingAddressViewModel by viewModels()
     private val args: AddEditShippingAddressFragmentArgs by navArgs()
 
-    private val regionBottomSheet get() = BottomSheetBehavior.from(binding.bottomSheetRegion.root)
-    private val stateBottomSheet get() = BottomSheetBehavior.from(binding.bottomSheetState.root)
-    private val cityBottomSheet get() = BottomSheetBehavior.from(binding.bottomSheetCity.root)
+//    private val regionBottomSheet get() = BottomSheetBehavior.from(binding.bottomSheetRegion.root)
+//    private val stateBottomSheet get() = BottomSheetBehavior.from(binding.bottomSheetState.root)
+//    private val cityBottomSheet get() = BottomSheetBehavior.from(binding.bottomSheetCity.root)
 
     private val regionsAdapter = ListSelectionAdapter()
     private val statesAdapter = ListSelectionAdapter()
@@ -55,12 +54,12 @@ class AddEditShippingAddressFragment : BaseFragment() {
     private var addressLabel: String = ""
     private var countryCodeISO: String = ""
     private var addressLine1: String = ""
-    private var addressLine2: String = ""
     private var city: String = ""
     private var stateISO: String = ""
     private var zipCode: String = ""
     private var phoneNo: String = ""
     private var isDefault: Boolean = false
+    private var location: LocationSuggestion? = null
 
     private var countries = listOf<Country>()
     private var states = listOf<State>()
@@ -79,48 +78,49 @@ class AddEditShippingAddressFragment : BaseFragment() {
         initUi()
         uiListeners()
         setObserver()
+        observeLocation()
     }
 
     private fun initUi() {
-        closeBottomSheet(regionBottomSheet)
-        closeBottomSheet(stateBottomSheet)
-        closeBottomSheet(cityBottomSheet)
-
-        binding.bottomSheetRegion.rvSelectionList.apply {
-            setHasFixedSize(true)
-            adapter = regionsAdapter
-            addItemDecoration(
-                DividerItemDecoration(context, (layoutManager as LinearLayoutManager).orientation)
-            )
-        }
-
-        binding.bottomSheetRegion.btnClose.setOnClickListener {
-            closeBottomSheet(regionBottomSheet)
-        }
-
-        binding.bottomSheetState.rvSelectionList.apply {
-            setHasFixedSize(true)
-            adapter = statesAdapter
-            addItemDecoration(
-                DividerItemDecoration(context, (layoutManager as LinearLayoutManager).orientation)
-            )
-        }
-
-        binding.bottomSheetState.btnClose.setOnClickListener {
-            closeBottomSheet(stateBottomSheet)
-        }
-
-        binding.bottomSheetCity.rvSelectionList.apply {
-            setHasFixedSize(true)
-            adapter = citiesAdapter
-            addItemDecoration(
-                DividerItemDecoration(context, (layoutManager as LinearLayoutManager).orientation)
-            )
-        }
-
-        binding.bottomSheetCity.btnClose.setOnClickListener {
-            closeBottomSheet(cityBottomSheet)
-        }
+//        closeBottomSheet(regionBottomSheet)
+//        closeBottomSheet(stateBottomSheet)
+//        closeBottomSheet(cityBottomSheet)
+//
+//        binding.bottomSheetRegion.rvSelectionList.apply {
+//            setHasFixedSize(true)
+//            adapter = regionsAdapter
+//            addItemDecoration(
+//                DividerItemDecoration(context, (layoutManager as LinearLayoutManager).orientation)
+//            )
+//        }
+//
+//        binding.bottomSheetRegion.btnClose.setOnClickListener {
+//            closeBottomSheet(regionBottomSheet)
+//        }
+//
+//        binding.bottomSheetState.rvSelectionList.apply {
+//            setHasFixedSize(true)
+//            adapter = statesAdapter
+//            addItemDecoration(
+//                DividerItemDecoration(context, (layoutManager as LinearLayoutManager).orientation)
+//            )
+//        }
+//
+//        binding.bottomSheetState.btnClose.setOnClickListener {
+//            closeBottomSheet(stateBottomSheet)
+//        }
+//
+//        binding.bottomSheetCity.rvSelectionList.apply {
+//            setHasFixedSize(true)
+//            adapter = citiesAdapter
+//            addItemDecoration(
+//                DividerItemDecoration(context, (layoutManager as LinearLayoutManager).orientation)
+//            )
+//        }
+//
+//        binding.bottomSheetCity.btnClose.setOnClickListener {
+//            closeBottomSheet(cityBottomSheet)
+//        }
 
         updateUi(args.shippingAddress)
     }
@@ -152,7 +152,7 @@ class AddEditShippingAddressFragment : BaseFragment() {
         stateISO = shippingAddress.shippingDetail.address.state
         city = shippingAddress.shippingDetail.address.city
 
-        binding.etAddressLine1.setText(shippingAddress.shippingDetail.address.street)
+        binding.etAddressLine1.text = shippingAddress.shippingDetail.address.street
         binding.etPostalCode.setText(shippingAddress.shippingDetail.address.zipCode)
 
         updateDefaultCCP(shippingAddress.shippingDetail.contact)
@@ -170,7 +170,7 @@ class AddEditShippingAddressFragment : BaseFragment() {
     }
 
     private fun uiListeners() {
-        binding.icMap.setOnClickListener {
+        binding.containerAddress.setOnClickListener {
             val gotoMap =
                 AddEditShippingAddressFragmentDirections.actionAddEditShippingAddressFragmentToLocationFragment(
                     LatLong(0.0, 0.0)
@@ -188,49 +188,49 @@ class AddEditShippingAddressFragment : BaseFragment() {
             goBack()
         }
 
-        binding.containerRegion.setOnClickListener {
-            showBottomSheet(regionBottomSheet)
-        }
-        binding.containerState.setOnClickListener {
-            showBottomSheet(stateBottomSheet)
-        }
-        binding.containerCity.setOnClickListener {
-            showBottomSheet(cityBottomSheet)
-        }
-        regionsAdapter.interaction = { selectedItem ->
-            countryCodeISO = countries.firstOrNull { it.name == selectedItem }?.isoCode ?: ""
-            updateSelectedCountry()
-            updateDefaultCCP(PhoneNo(countryCodeISO, ""))
-            closeBottomSheet(regionBottomSheet)
-        }
-        statesAdapter.interaction = { selectedItem ->
-            stateISO = states.firstOrNull { it.name == selectedItem }?.isoCode ?: ""
-            updateSelectedState()
-            closeBottomSheet(stateBottomSheet)
-        }
-        citiesAdapter.interaction = { selectedItem ->
-            city = cities.firstOrNull { it.name == selectedItem }?.name ?: ""
-            updateSelectedCity()
-            closeBottomSheet(cityBottomSheet)
-        }
+//        binding.containerRegion.setOnClickListener {
+//            showBottomSheet(regionBottomSheet)
+//        }
+//        binding.containerState.setOnClickListener {
+//            showBottomSheet(stateBottomSheet)
+//        }
+//        binding.containerCity.setOnClickListener {
+//            showBottomSheet(cityBottomSheet)
+//        }
+//        regionsAdapter.interaction = { selectedItem ->
+//            countryCodeISO = countries.firstOrNull { it.name == selectedItem }?.isoCode ?: ""
+//            updateSelectedCountry()
+//            updateDefaultCCP(PhoneNo(countryCodeISO, ""))
+//            closeBottomSheet(regionBottomSheet)
+//        }
+//        statesAdapter.interaction = { selectedItem ->
+//            stateISO = states.firstOrNull { it.name == selectedItem }?.isoCode ?: ""
+//            updateSelectedState()
+//            closeBottomSheet(stateBottomSheet)
+//        }
+//        citiesAdapter.interaction = { selectedItem ->
+//            city = cities.firstOrNull { it.name == selectedItem }?.name ?: ""
+//            updateSelectedCity()
+//            closeBottomSheet(cityBottomSheet)
+//        }
 
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            closeBottomsSheetElseGoBack()
-        }
+//        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+//            closeBottomsSheetElseGoBack()
+//        }
 
-        regionBottomSheet.onStateChange { state ->
-            onBottomSheetStateChange(state)
-        }
-        stateBottomSheet.onStateChange { state ->
-            onBottomSheetStateChange(state)
-        }
-        cityBottomSheet.onStateChange { state ->
-            onBottomSheetStateChange(state)
-        }
-
-        binding.bgDim.setOnClickListener {
-            // do nothing, just add to avoid click on views that are behind of bg dim when bg dim is visible
-        }
+//        regionBottomSheet.onStateChange { state ->
+//            onBottomSheetStateChange(state)
+//        }
+//        stateBottomSheet.onStateChange { state ->
+//            onBottomSheetStateChange(state)
+//        }
+//        cityBottomSheet.onStateChange { state ->
+//            onBottomSheetStateChange(state)
+//        }
+//
+//        binding.bgDim.setOnClickListener {
+//            // do nothing, just add to avoid click on views that are behind of bg dim when bg dim is visible
+//        }
     }
 
     private fun setObserver() {
@@ -254,24 +254,24 @@ class AddEditShippingAddressFragment : BaseFragment() {
             }
         }
 
-        shippingAddressViewModel.countryResponse.observe(viewLifecycleOwner) {
-            when (it) {
-                is DataState.Loading -> {
-                    showLoader()
-                }
-                is DataState.Error -> {
-                    hideLoader()
-                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
-                }
-                is DataState.Data -> {
-                    hideLoader()
-                    countries = it.data.countries
-                    val countriesName = countries.map { country -> country.name }
-                    regionsAdapter.submitList(countriesName)
-                    updateSelectedCountry()
-                }
-            }
-        }
+//        shippingAddressViewModel.countryResponse.observe(viewLifecycleOwner) {
+//            when (it) {
+//                is DataState.Loading -> {
+//                    showLoader()
+//                }
+//                is DataState.Error -> {
+//                    hideLoader()
+//                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
+//                }
+//                is DataState.Data -> {
+//                    hideLoader()
+//                    countries = it.data.countries
+//                    val countriesName = countries.map { country -> country.name }
+//                    regionsAdapter.submitList(countriesName)
+//                    updateSelectedCountry()
+//                }
+//            }
+//        }
         shippingAddressViewModel.statesResponse.observe(viewLifecycleOwner) {
             when (it) {
                 is DataState.Loading -> {
@@ -284,95 +284,108 @@ class AddEditShippingAddressFragment : BaseFragment() {
                 is DataState.Data -> {
                     hideLoader()
                     states = it.data.states
+                    Log.d("States", "${it.data.states}")
                     val statesName = it.data.states.map { state -> state.name }
                     statesAdapter.submitList(statesName)
-                    updateSelectedState()
+//                    updateSelectedState()
                 }
             }
         }
-        shippingAddressViewModel.citiesResponse.observe(viewLifecycleOwner) {
-            when (it) {
-                is DataState.Loading -> {
-                    showLoader()
-                }
-                is DataState.Error -> {
-                    hideLoader()
-                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
-                }
-                is DataState.Data -> {
-                    hideLoader()
-                    cities = it.data.cities
-                    val citiesName = it.data.cities.map { city -> city.name }
-                    citiesAdapter.submitList(citiesName)
-                    updateSelectedCity()
-                }
-            }
-        }
+//        shippingAddressViewModel.citiesResponse.observe(viewLifecycleOwner) {
+//            when (it) {
+//                is DataState.Loading -> {
+//                    showLoader()
+//                }
+//                is DataState.Error -> {
+//                    hideLoader()
+//                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
+//                }
+//                is DataState.Data -> {
+//                    hideLoader()
+//                    cities = it.data.cities
+//                    val citiesName = it.data.cities.map { city -> city.name }
+//                    citiesAdapter.submitList(citiesName)
+//                    updateSelectedCity()
+//                }
+//            }
+//        }
     }
 
-    private fun updateSelectedCountry() {
-        val selectedCountry =
-            countries.firstOrNull { country -> country.isoCode == countryCodeISO }
-
-        if (selectedCountry != null) {
-            val index = countries.indexOf(selectedCountry)
-            binding.bottomSheetRegion.rvSelectionList.scrollToPosition(index)
-
-            shippingAddressViewModel.fetchStates(GetStatesRequest(countryCodeISO))
-        }
-
-        val countryName = selectedCountry?.name ?: ""
-        regionsAdapter.updateSelectedItem(countryName)
-        binding.tvRegion.text = countryName
-
-        binding.tvState.text = ""
-        binding.tvCity.text = ""
-
-        binding.containerState.isEnabled = selectedCountry != null
-        binding.containerCity.isEnabled = selectedCountry != null
-    }
-
-
-    private fun updateSelectedState() {
-        val selectedState =
-            states.firstOrNull { state -> state.isoCode == stateISO }
-
-        if (selectedState != null) {
-            val index = states.indexOf(selectedState)
-            binding.bottomSheetState.rvSelectionList.scrollToPosition(index)
-
-            shippingAddressViewModel.fetchCities(GetCitiesRequest(countryCodeISO, stateISO))
-        }
-
-        val stateName = selectedState?.name ?: ""
-        statesAdapter.updateSelectedItem(stateName)
-        binding.tvState.text = stateName
-
-        binding.tvCity.text = ""
-
-        binding.containerCity.isEnabled = selectedState != null
-    }
-
-    private fun updateSelectedCity() {
-        val selectedCity =
-            cities.firstOrNull { city -> city.name == this.city }
-
-        if (selectedCity != null) {
-            val index = cities.indexOf(selectedCity)
-            binding.bottomSheetCity.rvSelectionList.scrollToPosition(index)
-        }
-
-        val cityName = selectedCity?.name ?: ""
-        citiesAdapter.updateSelectedItem(cityName)
-        binding.tvCity.text = cityName
-    }
+    //    private fun updateSelectedCountry() {
+//        val selectedCountry =
+//            countries.firstOrNull { country -> country.isoCode == countryCodeISO }
+//
+//        if (selectedCountry != null) {
+//            val index = countries.indexOf(selectedCountry)
+//            binding.bottomSheetRegion.rvSelectionList.scrollToPosition(index)
+//
+//            shippingAddressViewModel.fetchStates(GetStatesRequest(countryCodeISO))
+//        }
+//
+//        val countryName = selectedCountry?.name ?: ""
+//        regionsAdapter.updateSelectedItem(countryName)
+//        binding.tvRegion.text = countryName
+//
+//        binding.tvState.text = ""
+//        binding.tvCity.text = ""
+//
+//        binding.containerState.isEnabled = selectedCountry != null
+//        binding.containerCity.isEnabled = selectedCountry != null
+//    }
+//
+//
+//    private fun updateSelectedState() {
+//        val selectedState =
+//            states.firstOrNull { state -> state.isoCode == stateISO }
+//
+//        if (selectedState != null) {
+//            val index = states.indexOf(selectedState)
+//            binding.bottomSheetState.rvSelectionList.scrollToPosition(index)
+//
+//            shippingAddressViewModel.fetchCities(GetCitiesRequest(countryCodeISO, stateISO))
+//        }
+//
+//        val stateName = selectedState?.name ?: ""
+//        statesAdapter.updateSelectedItem(stateName)
+//        binding.tvState.text = stateName
+//
+//        binding.tvCity.text = ""
+//
+//        binding.containerCity.isEnabled = selectedState != null
+//    }
+//
+//    private fun updateSelectedCity() {
+//        val selectedCity =
+//            cities.firstOrNull { city -> city.name == this.city }
+//
+//        if (selectedCity != null) {
+//            val index = cities.indexOf(selectedCity)
+//            binding.bottomSheetCity.rvSelectionList.scrollToPosition(index)
+//        }
+//
+//        val cityName = selectedCity?.name ?: ""
+//        citiesAdapter.updateSelectedItem(cityName)
+//        binding.tvCity.text = cityName
+//    }
 
     private fun saveOrUpdateShippingAddress() {
         val shippingAddress = createShippingAddress(args.shippingAddress?.id)
         shippingAddressViewModel.addEditShippingAddress(shippingAddress)
     }
 
+    private fun getStateIso(state: String) {
+        val isoCountryCode = location?.address?.country?.let { getCountryCode(it) }
+        shippingAddressViewModel.fetchStates(
+            getStatesRequest = GetStatesRequest(
+                countryCode = isoCountryCode!!
+            )
+        )
+        states.firstOrNull { it.name == state }?.isoCode
+    }
+
+
     private fun createShippingAddress(id: String?): ShippingAddress {
+        stateISO = (getStateIso(binding.tvState.text.toString()) ?: "") as String
         val phoneCountryCode = binding.ccpPhoneCode.selectedCountryNameCode
         val phoneNo = PhoneNo(
             countryCode = phoneCountryCode,
@@ -414,7 +427,6 @@ class AddEditShippingAddressFragment : BaseFragment() {
         addressLabel = binding.etAddressLabel.text.toString()
         city = binding.tvCity.text.toString()
         addressLine1 = binding.etAddressLine1.text.toString()
-        addressLine2 = binding.etAddressLine2.text.toString()
         zipCode = binding.etPostalCode.text.toString()
         phoneNo =
             binding.ccpPhoneCode.selectedCountryCodeWithPlus.toString() + binding.etPhone.text.toString()
@@ -447,10 +459,10 @@ class AddEditShippingAddressFragment : BaseFragment() {
             return false
         }
 
-        if (stateISO.isEmpty() && !Validator.isValidState(stateISO)) {
-            showErrorDialog(getString(R.string.error_enter_valid_state))
-            return false
-        }
+//        if (stateISO.isEmpty() && !Validator.isValidState(stateISO)) {
+//            showErrorDialog(getString(R.string.error_enter_valid_state))
+//            return false
+//        }
 
         if (countryCodeISO.isEmpty() && !Validator.isValidCountry(countryCodeISO)) {
             showErrorDialog(getString(R.string.error_enter_valid_country))
@@ -470,36 +482,49 @@ class AddEditShippingAddressFragment : BaseFragment() {
         return true
     }
 
-    private fun showBottomSheet(bottomSheet: BottomSheetBehavior<View>) {
-        binding.bgDim.fadeVisibility(true)
-        bottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
-    }
+//    private fun showBottomSheet(bottomSheet: BottomSheetBehavior<View>) {
+//        binding.bgDim.fadeVisibility(true)
+//        bottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
+//    }
+//
+//    private fun closeBottomSheet(bottomSheet: BottomSheetBehavior<View>) {
+//        binding.bgDim.fadeVisibility(false)
+//        bottomSheet.state = BottomSheetBehavior.STATE_HIDDEN
+//    }
+//
+//    private fun onBottomSheetStateChange(state: Int) {
+//        val isClosed = state == BottomSheetBehavior.STATE_HIDDEN
+//        if (isClosed) {
+//            binding.bgDim.fadeVisibility(false, 200)
+//        }
+//    }
+//
+//    private fun closeBottomsSheetElseGoBack() {
+//        listOf(
+//            regionBottomSheet,
+//            stateBottomSheet,
+//            cityBottomSheet
+//        ).forEach {
+//            if (it.state != BottomSheetBehavior.STATE_HIDDEN) {
+//                closeBottomSheet(it)
+//                return
+//            }
+//        }
+//
+//        goBack()
+//    }
 
-    private fun closeBottomSheet(bottomSheet: BottomSheetBehavior<View>) {
-        binding.bgDim.fadeVisibility(false)
-        bottomSheet.state = BottomSheetBehavior.STATE_HIDDEN
-    }
+    private fun observeLocation() {
+        setFragmentResultListener(LocationFragment.LOCATION) { _, bundle ->
+            location =
+                bundle.getParcelable<LocationSuggestion?>(LocationFragment.LOCATION)
+            binding.etAddressLine1.text = location?.address.toString()
+            binding.tvCity.text = location?.address?.city
+            binding.tvRegion.text = location?.address?.country?.let { getCountryCode(it) }
+            binding.tvState.text = location?.address?.state
+            binding.etPostalCode.setText(location?.address?.postalCode)
 
-    private fun onBottomSheetStateChange(state: Int) {
-        val isClosed = state == BottomSheetBehavior.STATE_HIDDEN
-        if (isClosed) {
-            binding.bgDim.fadeVisibility(false, 200)
         }
-    }
-
-    private fun closeBottomsSheetElseGoBack() {
-        listOf(
-            regionBottomSheet,
-            stateBottomSheet,
-            cityBottomSheet
-        ).forEach {
-            if (it.state != BottomSheetBehavior.STATE_HIDDEN) {
-                closeBottomSheet(it)
-                return
-            }
-        }
-
-        goBack()
     }
 
 }

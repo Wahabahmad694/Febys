@@ -202,6 +202,25 @@ fun EditText.getQueryTextChangeStateFlow(): StateFlow<String> {
 
 }
 
+fun getCountryCode(countryName: String): String? {
+
+    // Get all country codes in a string array.
+    val isoCountryCodes = Locale.getISOCountries()
+    var countryCode: String? = ""
+    // Iterate through all country codes:
+    for (code in isoCountryCodes) {
+        // Create a locale using each country code
+        val locale = Locale("", code)
+        // Get country name for each code.
+        val name = locale.displayCountry
+        if (name == countryName) {
+            countryCode = code
+            break
+        }
+    }
+    return countryCode
+}
+
 fun <T : View> BottomSheetBehavior<T>.onStateChange(callback: (state: Int) -> Unit) {
     addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
         override fun onStateChanged(bottomSheet: View, newState: Int) {

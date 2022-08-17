@@ -429,6 +429,7 @@
     <string name="description_sorry_it_seems_that_the_product_you_nare_looking_for_does_not_exit">Sorry, it seems that the product you \nare looking for does not exit.</string>
     <string name="label_search_result">Search Results</string>
     <string name="Label_location">Location</string>
+    <string name="label_shipping_method">Select Shipping Method</string>
 
 
     <!-- Value from build type: debug -->

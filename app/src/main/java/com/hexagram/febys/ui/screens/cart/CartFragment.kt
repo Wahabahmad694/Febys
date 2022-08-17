@@ -73,7 +73,7 @@ class CartFragment : BaseFragment() {
         binding.rvCart.adapter = cartAdapter
 
         val shippingPrice = Price("", 0.0, Utils.DEFAULT_CURRENCY)
-        binding.tvShippingAmount.text = shippingPrice.getFormattedPrice()
+//        binding.tvShippingAmount.text = shippingPrice.getFormattedPrice()
 
         updateFav()
     }

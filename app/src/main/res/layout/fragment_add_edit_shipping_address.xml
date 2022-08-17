@@ -127,14 +127,59 @@
                         android:inputType="textPersonName"
                         android:paddingVertical="@dimen/_8dp"
                         android:textAppearance="@style/TextTheme.Arial.TS16"
-                        app:layout_constraintTop_toBottomOf="@id/label_last_name" />
-
+                        app:layout_constraintTop_toBottomOf="@id/label_last_name"
+                        tools:layout_editor_absoluteX="21dp" />
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1dp"
                         android:layout_marginHorizontal="@dimen/_16sdp"
                         android:background="@color/grey_e1e5e8"
                         app:layout_constraintTop_toBottomOf="@id/et_last_name" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/container_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_32sdp"
+                        app:layout_constraintTop_toBottomOf="@id/et_last_name"
+                        app:layout_constraintStart_toStartOf="@id/et_last_name">
+
+                        <TextView
+                            android:id="@+id/label_address_line_1"
+                            style="@style/TextTheme.Arial.TS16"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/label_address_line_1"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ic_map"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/_15sdp"
+                            android:src="@drawable/ic_map_place"
+                            app:layout_constraintBottom_toBottomOf="@id/label_address_line_1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/label_address_line_1" />
+
+                        <TextView
+                            android:id="@+id/et_address_line_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:paddingVertical="@dimen/_8dp"
+                            android:textAppearance="@style/TextTheme.Arial.TS16"
+                            app:layout_constraintStart_toStartOf="@id/label_address_line_1"
+                            app:layout_constraintTop_toBottomOf="@id/label_address_line_1" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1dp"
+                            android:layout_marginHorizontal="@dimen/_16sdp"
+                            android:background="@color/grey_e1e5e8"
+                            app:layout_constraintTop_toBottomOf="@id/et_address_line_1" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <LinearLayout
                         android:id="@+id/container_region"
@@ -143,29 +188,16 @@
                         android:layout_marginTop="@dimen/_32sdp"
                         android:orientation="vertical"
                         android:paddingHorizontal="@dimen/_16sdp"
-                        app:layout_constraintTop_toBottomOf="@id/et_last_name">
+                        app:layout_constraintTop_toBottomOf="@id/container_address">
 
-                        <LinearLayout
+
+                        <TextView
+                            android:id="@+id/label_destination_or_region"
+                            style="@style/TextTheme.Arial.TS16"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/label_destination_or_region"
-                                style="@style/TextTheme.Arial.TS16"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="@string/label_country" />
-
-                            <androidx.appcompat.widget.AppCompatImageView
-                                android:id="@+id/region_arrow"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_arrow_down" />
-
-                        </LinearLayout>
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="@string/label_country" />
 
                         <TextView
                             android:id="@+id/tv_region"
@@ -175,11 +207,6 @@
                             android:layout_marginTop="2dp"
                             tools:text="Ghana" />
 
-                        <View
-                            android:id="@+id/bg_dim"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="?color_dim" />
 
                     </LinearLayout>
 
@@ -200,27 +227,13 @@
                         android:paddingHorizontal="@dimen/_16sdp"
                         app:layout_constraintTop_toBottomOf="@id/container_region">
 
-                        <LinearLayout
+                        <TextView
+                            android:id="@+id/label_state"
+                            style="@style/TextTheme.Arial.TS16"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/label_state"
-                                style="@style/TextTheme.Arial.TS16"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="@string/label_state" />
-
-                            <androidx.appcompat.widget.AppCompatImageView
-                                android:id="@+id/state_arrow"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_arrow_down" />
-
-                        </LinearLayout>
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="@string/label_state" />
 
                         <TextView
                             android:id="@+id/tv_state"
@@ -232,8 +245,8 @@
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginTop="@dimen/_8sdp"
+                            android:layout_height="@dimen/_1dp"
+                            android:layout_marginTop="@dimen/_5sdp"
                             android:background="@color/grey_e1e5e8" />
                     </LinearLayout>
 
@@ -246,27 +259,13 @@
                         android:paddingHorizontal="@dimen/_16sdp"
                         app:layout_constraintTop_toBottomOf="@id/container_state">
 
-                        <LinearLayout
+                        <TextView
+                            android:id="@+id/label_city"
+                            style="@style/TextTheme.Arial.TS16"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/label_city"
-                                style="@style/TextTheme.Arial.TS16"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="@string/label_city" />
-
-                            <androidx.appcompat.widget.AppCompatImageView
-                                android:id="@+id/city_arrow"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_arrow_down" />
-
-                        </LinearLayout>
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="@string/label_city" />
 
                         <TextView
                             android:id="@+id/tv_city"
@@ -278,79 +277,10 @@
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginTop="@dimen/_8sdp"
+                            android:layout_height="@dimen/_1dp"
+                            android:layout_marginTop="@dimen/_5sdp"
                             android:background="@color/grey_e1e5e8" />
                     </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/label_address_line_1"
-                        style="@style/TextTheme.Arial.TS16"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/_16sdp"
-                        android:layout_marginTop="@dimen/_32sdp"
-                        android:text="@string/label_address_line_1"
-                        app:layout_constraintStart_toStartOf="@id/container_city"
-                        app:layout_constraintTop_toBottomOf="@id/container_city" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ic_map"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/_15sdp"
-                        android:src="@drawable/ic_map_place"
-                        app:layout_constraintBottom_toBottomOf="@id/label_address_line_1"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/label_address_line_1" />
-
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/et_address_line_1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/_16sdp"
-                        android:background="@null"
-                        android:imeOptions="actionNext"
-                        android:inputType="textPostalAddress"
-                        android:paddingVertical="@dimen/_8dp"
-                        android:textAppearance="@style/TextTheme.Arial.TS16"
-                        app:layout_constraintTop_toBottomOf="@id/label_address_line_1" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1dp"
-                        android:layout_marginHorizontal="@dimen/_16sdp"
-                        android:background="@color/grey_e1e5e8"
-                        app:layout_constraintTop_toBottomOf="@id/et_address_line_1" />
-
-                    <TextView
-                        android:id="@+id/label_address_line_2"
-                        style="@style/TextTheme.Arial.TS16.Grey"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/_16sdp"
-                        android:layout_marginTop="@dimen/_32sdp"
-                        android:text="@string/label_address_line_2"
-                        app:layout_constraintTop_toBottomOf="@id/et_address_line_1" />
-
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/et_address_line_2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/_16sdp"
-                        android:background="@null"
-                        android:imeOptions="actionNext"
-                        android:inputType="textPostalAddress"
-                        android:paddingVertical="@dimen/_8dp"
-                        android:textAppearance="@style/TextTheme.Arial.TS16"
-                        app:layout_constraintTop_toBottomOf="@id/label_address_line_2" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1dp"
-                        android:layout_marginHorizontal="@dimen/_16sdp"
-                        android:background="@color/grey_e1e5e8"
-                        app:layout_constraintTop_toBottomOf="@id/et_address_line_2" />
 
                     <TextView
                         android:id="@+id/label_postal_code"
@@ -360,7 +290,7 @@
                         android:layout_marginHorizontal="@dimen/_16sdp"
                         android:layout_marginTop="@dimen/_32sdp"
                         android:text="@string/label_postal_code"
-                        app:layout_constraintTop_toBottomOf="@id/et_address_line_2" />
+                        app:layout_constraintTop_toBottomOf="@id/container_city" />
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/et_postal_code"
@@ -476,19 +406,5 @@
             </com.hexagram.febys.utils.ScrollView>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <include
-            android:id="@+id/bottom_sheet_region"
-            layout="@layout/bottom_sheet_list_of_selection"
-            app:title="@{@string/label_select_region}" />
-
-        <include
-            android:id="@+id/bottom_sheet_state"
-            layout="@layout/bottom_sheet_list_of_selection"
-            app:title="@{@string/label_select_state}" />
-
-        <include
-            android:id="@+id/bottom_sheet_city"
-            layout="@layout/bottom_sheet_list_of_selection"
-            app:title="@{@string/label_select_city}" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
