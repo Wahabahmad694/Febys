@@ -69,6 +69,9 @@ class CheckoutFragment : BaseFragment() {
             if (checkoutViewModel.getDefaultShippingAddress() == null) gotoShippingAddress()
             else showChangeShippingAddressWarningDialog()
         }
+        binding.containerCourier.setOnClickListener {
+            gotoShippingType()
+        }
 
         binding.btnPlaceOrder.setOnClickListener {
             if (orderPrice == null) return@setOnClickListener
@@ -261,6 +264,12 @@ class CheckoutFragment : BaseFragment() {
         val gotoShippingAddress =
             CheckoutFragmentDirections.actionCheckoutFragmentToShippingAddressFragment()
         navigateTo(gotoShippingAddress)
+    }
+
+    private fun gotoShippingType() {
+        val gotoShippingType =
+            CheckoutFragmentDirections.actionCheckoutFragmentToShippingTypeFragment()
+        navigateTo(gotoShippingType)
     }
 
     private fun placeOrder(transactions: List<Transaction>) {

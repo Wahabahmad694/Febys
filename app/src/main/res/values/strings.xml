@@ -215,6 +215,7 @@
     <string name="label_save_and_continue">Save and Continue</string>
     <string name="label_return">Return</string>
     <string name="label_save">Save</string>
+    <string name="label_choose_location">Choose Location</string>
     <string name="label_show_filter">Show %1s results</string>
     <string name="label_apply_filter">Apply Now</string>
     <string name="error_enter_valid_postal_code">Please enter valid postal code</string>

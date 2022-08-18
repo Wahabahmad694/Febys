@@ -1,7 +1,6 @@
 package com.hexagram.febys.ui.screens.shipping.address
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +17,6 @@ import com.hexagram.febys.models.api.contact.PhoneNo
 import com.hexagram.febys.models.api.countries.Country
 import com.hexagram.febys.models.api.location.LatLong
 import com.hexagram.febys.models.api.location.LocationSuggestion
-import com.hexagram.febys.models.api.request.GetStatesRequest
 import com.hexagram.febys.models.api.shippingAddress.Address
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
 import com.hexagram.febys.models.api.shippingAddress.ShippingDetail
@@ -52,10 +50,10 @@ class AddEditShippingAddressFragment : BaseFragment() {
     private var firstName: String = ""
     private var lastName: String = ""
     private var addressLabel: String = ""
-    private var countryCodeISO: String = ""
+    private var country: String = ""
     private var addressLine1: String = ""
     private var city: String = ""
-    private var stateISO: String = ""
+    private var state: String = ""
     private var zipCode: String = ""
     private var phoneNo: String = ""
     private var isDefault: Boolean = false
@@ -148,9 +146,9 @@ class AddEditShippingAddressFragment : BaseFragment() {
         binding.etFirstName.setText(shippingAddress.shippingDetail.firstName)
         binding.etLastName.setText(shippingAddress.shippingDetail.lastName)
 
-        countryCodeISO = shippingAddress.shippingDetail.address.countryCode
-        stateISO = shippingAddress.shippingDetail.address.state
-        city = shippingAddress.shippingDetail.address.city
+        binding.tvRegion.text = shippingAddress.shippingDetail.address.countryCode
+        binding.tvState.text = shippingAddress.shippingDetail.address.state.toString()
+        binding.tvCity.text = shippingAddress.shippingDetail.address.city.toString()
 
         binding.etAddressLine1.text = shippingAddress.shippingDetail.address.street
         binding.etPostalCode.setText(shippingAddress.shippingDetail.address.zipCode)
@@ -272,26 +270,26 @@ class AddEditShippingAddressFragment : BaseFragment() {
 //                }
 //            }
 //        }
-        shippingAddressViewModel.statesResponse.observe(viewLifecycleOwner) {
-            when (it) {
-                is DataState.Loading -> {
-                    showLoader()
-                }
-                is DataState.Error -> {
-                    hideLoader()
-                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
-                }
-                is DataState.Data -> {
-                    hideLoader()
-                    states = it.data.states
-                    Log.d("States", "${it.data.states}")
-                    val statesName = it.data.states.map { state -> state.name }
-                    statesAdapter.submitList(statesName)
-//                    updateSelectedState()
-                }
-            }
-        }
-//        shippingAddressViewModel.citiesResponse.observe(viewLifecycleOwner) {
+//        shippingAddressViewModel.statesResponse.observe(viewLifecycleOwner) {
+//            when (it) {
+//                is DataState.Loading -> {
+//                    showLoader()
+//                }
+//                is DataState.Error -> {
+//                    hideLoader()
+//                    ErrorDialog(it).show(childFragmentManager, ErrorDialog.TAG)
+//                }
+//                is DataState.Data -> {
+//                    hideLoader()
+//                    states = it.data.states
+//                    Log.d("States", "${it.data.states}")
+//                    val statesName = it.data.states.map { state -> state.name }
+//                    statesAdapter.submitList(statesName)
+////                    updateSelectedState()
+//                }
+//            }
+//        }
+////        shippingAddressViewModel.citiesResponse.observe(viewLifecycleOwner) {
 //            when (it) {
 //                is DataState.Loading -> {
 //                    showLoader()
@@ -373,19 +371,8 @@ class AddEditShippingAddressFragment : BaseFragment() {
         shippingAddressViewModel.addEditShippingAddress(shippingAddress)
     }
 
-    private fun getStateIso(state: String) {
-        val isoCountryCode = location?.address?.country?.let { getCountryCode(it) }
-        shippingAddressViewModel.fetchStates(
-            getStatesRequest = GetStatesRequest(
-                countryCode = isoCountryCode!!
-            )
-        )
-        states.firstOrNull { it.name == state }?.isoCode
-    }
-
 
     private fun createShippingAddress(id: String?): ShippingAddress {
-        stateISO = (getStateIso(binding.tvState.text.toString()) ?: "") as String
         val phoneCountryCode = binding.ccpPhoneCode.selectedCountryNameCode
         val phoneNo = PhoneNo(
             countryCode = phoneCountryCode,
@@ -393,8 +380,8 @@ class AddEditShippingAddressFragment : BaseFragment() {
         )
         val address = Address(
             city = city,
-            countryCode = countryCodeISO,
-            state = stateISO,
+            countryCode = country,
+            state = state,
             street = addressLine1,
             zipCode = zipCode,
         )
@@ -425,6 +412,8 @@ class AddEditShippingAddressFragment : BaseFragment() {
         firstName = binding.etFirstName.text.toString()
         lastName = binding.etLastName.text.toString()
         addressLabel = binding.etAddressLabel.text.toString()
+        country = binding.tvRegion.text.toString()
+        state = binding.tvState.text.toString()
         city = binding.tvCity.text.toString()
         addressLine1 = binding.etAddressLine1.text.toString()
         zipCode = binding.etPostalCode.text.toString()
@@ -459,12 +448,12 @@ class AddEditShippingAddressFragment : BaseFragment() {
             return false
         }
 
-//        if (stateISO.isEmpty() && !Validator.isValidState(stateISO)) {
-//            showErrorDialog(getString(R.string.error_enter_valid_state))
-//            return false
-//        }
+        if (state.isEmpty() && !Validator.isValidState(state)) {
+            showErrorDialog(getString(R.string.error_enter_valid_state))
+            return false
+        }
 
-        if (countryCodeISO.isEmpty() && !Validator.isValidCountry(countryCodeISO)) {
+        if (country.isEmpty() && !Validator.isValidCountry(country)) {
             showErrorDialog(getString(R.string.error_enter_valid_country))
             return false
         }
@@ -518,9 +507,9 @@ class AddEditShippingAddressFragment : BaseFragment() {
         setFragmentResultListener(LocationFragment.LOCATION) { _, bundle ->
             location =
                 bundle.getParcelable<LocationSuggestion?>(LocationFragment.LOCATION)
-            binding.etAddressLine1.text = location?.address.toString()
+            binding.etAddressLine1.text = location?.address?.fullAddress()
             binding.tvCity.text = location?.address?.city
-            binding.tvRegion.text = location?.address?.country?.let { getCountryCode(it) }
+            binding.tvRegion.text = location?.address?.country
             binding.tvState.text = location?.address?.state
             binding.etPostalCode.setText(location?.address?.postalCode)
 

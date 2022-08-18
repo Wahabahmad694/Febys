@@ -37,54 +37,72 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/backIV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_12sdp"
-            android:padding="@dimen/_4sdp"
-            android:src="@drawable/iv_close_2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <EditText
-            android:id="@+id/location_et"
+        <LinearLayout
+            android:id="@+id/container_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_12sdp"
-            android:layout_marginTop="@dimen/_12sdp"
-            android:drawableStart="@drawable/ic_map_place"
-            android:drawablePadding="@dimen/_8sdp"
-            android:ellipsize="end"
-            android:hint="@string/Label_location"
-            android:inputType="text"
-            android:paddingEnd="@dimen/_32sdp"
-            android:textAppearance="@style/TextTheme.Arial.TS16"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/_5sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/backIV"
-            tools:text="this is a veyr long text. this is a veyr long text. this is a veyr long text." />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/clearIV"
-            android:layout_width="@dimen/_16sdp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_12sdp"
-            android:padding="@dimen/_4sdp"
-            android:src="@drawable/iv_close_2"
-            app:layout_constraintBottom_toBottomOf="@id/location_et"
-            app:layout_constraintEnd_toEndOf="@id/location_et"
-            app:layout_constraintTop_toTopOf="@id/location_et" />
+            <ImageView
+                android:id="@+id/backIV"
+                android:layout_width="@dimen/_16sdp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_back"
+                android:layout_marginStart="@dimen/_3sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/container_location"
+                android:layout_width="@dimen/_235sdp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/location_et"
+                    android:layout_width="@dimen/_210sdp"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:hint="@string/Label_location"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textAppearance="@style/TextTheme.Arial.TS16"
+                    tools:text="this is a veyr long text. this is a veyr long." />
+
+                <ImageView
+                    android:id="@+id/clearIV"
+                    android:layout_width="@dimen/_10sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:src="@drawable/iv_close_2" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_current_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:src="@drawable/ic_map_place" />
+
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/suggestions_rv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_6sdp"
-            android:background="@color/bg_border_grey"
-            app:layout_constraintEnd_toEndOf="@+id/location_et"
-            app:layout_constraintStart_toStartOf="@+id/location_et"
-            app:layout_constraintTop_toBottomOf="@+id/location_et" />
+            android:layout_marginHorizontal="@dimen/_28sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/container_search" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -96,7 +114,7 @@
         android:layout_marginHorizontal="@dimen/_17sdp"
         android:layout_marginTop="@dimen/_32sdp"
         android:layout_marginBottom="@dimen/_14sdp"
-        android:text="@string/label_save"
+        android:text="@string/label_choose_location"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
