@@ -64,10 +64,13 @@ android {
             initWith debug
 
             def endpointsProperties = getBuildProperties()
+            def credentialsProperties = getCredentials()
+
             buildConfigField("String", "backendBaseUrl", endpointsProperties['QA_BASE_URL_BACKEND'])
             buildConfigField("String", "webCustomizationBaseUrl", endpointsProperties['QA_BASE_URL_WEB_CUSTOMIZATION'])
             buildConfigField("String", "searchBaseUrl", endpointsProperties['SEARCH_BASE_URL_BACKEND_QA'])
             buildConfigField("String", "GOOGLE_PLACES_API_BASE_URL", endpointsProperties['GOOGLE_PLACE_API_BASE_URL'])
+            resValue "string", "GOOGLE_PLACES_API_KEY", credentialsProperties['GOOGLE_PLACES_API_KEY']
 
             matchingFallbacks = ['debug', 'release']
         }
@@ -75,10 +78,13 @@ android {
             initWith debug
 
             def endpointsProperties = getBuildProperties()
+            def credentialsProperties = getCredentials()
+
             buildConfigField("String", "backendBaseUrl", endpointsProperties['STAGING_BASE_URL_BACKEND'])
             buildConfigField("String", "webCustomizationBaseUrl", endpointsProperties['STAGING_BASE_URL_WEB_CUSTOMIZATION'])
             buildConfigField("String", "searchBaseUrl", endpointsProperties['SEARCH_BASE_URL_BACKEND_STAGING'])
             buildConfigField("String", "GOOGLE_PLACES_API_BASE_URL", endpointsProperties['GOOGLE_PLACE_API_BASE_URL'])
+            resValue "string", "GOOGLE_PLACES_API_KEY", credentialsProperties['GOOGLE_PLACES_API_KEY']
 
             matchingFallbacks = ['debug', 'release']
         }
