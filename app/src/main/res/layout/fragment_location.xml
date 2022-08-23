@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <fragment xmlns:map="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/map_fragment"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        map:cameraZoom="10"
+        map:layout_constraintBottom_toBottomOf="parent"
+        map:layout_constraintEnd_toEndOf="parent"
+        map:layout_constraintStart_toStartOf="parent"
+        map:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:layout_width="@dimen/_13sdp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:src="@drawable/ic_pin_location"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/search_map"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/container_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/_5sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/backIV"
+                android:layout_width="@dimen/_16sdp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_3sdp"
+                android:src="@drawable/ic_back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/container_location"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_8sdp"
+
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/location_et"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:hint="@string/Label_location"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textAppearance="@style/TextTheme.Arial.TS16"
+                    tools:text="this is a veyr long text. this is a veyr long." />
+
+                <ImageView
+                    android:id="@+id/clearIV"
+                    android:layout_width="@dimen/_10sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/iv_close_2" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_current_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_5sdp"
+                android:src="@drawable/ic_user_location" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/suggestions_rv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_28sdp"
+            android:layout_marginTop="@dimen/_6sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/container_search" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_save"
+        style="@style/ButtonTheme.Contained"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_17sdp"
+        android:layout_marginTop="@dimen/_32sdp"
+        android:layout_marginBottom="@dimen/_14sdp"
+        android:text="@string/label_choose_location"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_max="@dimen/_298sdp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

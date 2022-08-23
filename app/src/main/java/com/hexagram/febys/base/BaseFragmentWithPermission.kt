@@ -7,7 +7,7 @@ import androidx.core.app.ActivityCompat
 import com.hexagram.febys.R
 import com.hexagram.febys.utils.showToast
 
-abstract class BaseFragmentWithPermission:BaseFragment() {
+abstract class BaseFragmentWithPermission : BaseFragment() {
     private var permissionArrays =
         arrayOf(
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -32,7 +32,10 @@ abstract class BaseFragmentWithPermission:BaseFragment() {
     }
 
     private fun hasPermissions(vararg permissions: String): Boolean = permissions.all {
-        ActivityCompat.checkSelfPermission(requireActivity(), it) == PackageManager.PERMISSION_GRANTED
+        ActivityCompat.checkSelfPermission(
+            requireActivity(),
+            it
+        ) == PackageManager.PERMISSION_GRANTED
     }
 
     override fun onRequestPermissionsResult(
@@ -50,6 +53,7 @@ abstract class BaseFragmentWithPermission:BaseFragment() {
 
                 if (permissionGranted) {
                     showToast(getString(R.string.permission_granted))
+                    getPermissionGranted()
                 } else {
                     showToast(getString(R.string.permission_denied))
                 }
@@ -58,4 +62,6 @@ abstract class BaseFragmentWithPermission:BaseFragment() {
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         }
     }
+
+    protected abstract fun getPermissionGranted()
 }

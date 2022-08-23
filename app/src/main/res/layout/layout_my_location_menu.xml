@@ -42,9 +42,7 @@
                 android:layout_marginTop="@dimen/_16sdp"
                 android:drawablePadding="@dimen/_4sdp"
                 android:gravity="center_vertical"
-                android:paddingEnd="@dimen/_14sdp"
-                android:text="@string/label_ghana"
-                app:drawableEndCompat="@drawable/ic_right_arrow" />
+                android:text="@string/label_ghana" />
         </LinearLayout>
 
         <View

@@ -337,7 +337,7 @@ class ProductDetailFragment : SliderFragment() {
     private fun showSnackBar() {
         val tv = view?.findViewById(com.google.android.material.R.id.snackbar_action) as? TextView
         tv?.typeface = ResourcesCompat.getFont(requireContext(), R.font.helvetica_neue)
-        tv?.setTypeface(null,Typeface.BOLD)
+        tv?.setTypeface(null, Typeface.BOLD)
         Snackbar.make(binding.root, getString(R.string.msg_item_added), Snackbar.LENGTH_SHORT)
             .setAction(getString(R.string.msg_view_bag)) {
                 val gotoCart = NavGraphDirections.actionToCartFragment()
@@ -826,7 +826,11 @@ class ProductDetailFragment : SliderFragment() {
 
         binding.btnAddToCart.isEnabled = variant.availability
         binding.btnPayNow.isEnabled = variant.availability
-
+        if (variant.availability) {
+            binding.icOutStock.hide()
+        } else {
+            binding.icOutStock.show()
+        }
         setupProductImagesSlider(variant.images)
 
         updateFavIcon(variant.skuId)

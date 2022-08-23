@@ -61,6 +61,10 @@ class AccountSettingsFragment : BaseFragmentWithPermission() {
         return binding.root
     }
 
+    override fun getPermissionGranted() {
+        TODO("Not yet implemented")
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         uiListeners()

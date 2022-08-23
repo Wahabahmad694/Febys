@@ -34,11 +34,21 @@ class MenuFragment : BaseFragment() {
     }
 
     private fun initUiListener() {
+
         binding.labelFebysPlus.setOnClickListener {
-            val gotoFebysPlus =
-                MenuFragmentDirections.actionMenuFragmentToFebysPlusFragment()
-            navigateTo(gotoFebysPlus)
+            val resId = R.drawable.ic_coming_soon
+            val title = getString(R.string.label_coming_soon)
+            val msg = getString(R.string.msg_for_febys_plus)
+
+            showInfoDialoge(resId, title, msg) {
+                //todo top-up
+            }
         }
+//        binding.labelFebysPlus.setOnClickListener {
+//            val gotoFebysPlus =
+//                MenuFragmentDirections.actionMenuFragmentToFebysPlusFragment()
+//            navigateTo(gotoFebysPlus)
+//        }
         binding.labelThriftMarket.setOnClickListener {
             val gotoThrift =
                 MenuFragmentDirections.actionMenuFragmentToSpecialProductListing(

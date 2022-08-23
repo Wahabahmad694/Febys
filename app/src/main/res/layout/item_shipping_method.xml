@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container_shipping_method"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_85sdp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/bg_border_grey"
+            app:layout_constraintTop_toBottomOf="@id/container_remaining_payment">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_shipping_method"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginStart="@dimen/_14sdp"
+                android:src="@drawable/ic_courier"
+                app:layout_constraintBottom_toBottomOf="@id/tv_shipping_fee"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/label_shipping_method_name" />
+
+            <TextView
+                android:id="@+id/label_shipping_method_name"
+                style="@style/TextTheme.Arial.TS16.bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_14sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                tools:text="@string/label_standard"
+                app:layout_constraintStart_toEndOf="@id/iv_shipping_method"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_delivery_days"
+                style="@style/TextTheme.Arial.TS14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                tools:text="3-5 days Delivery"
+                app:layout_constraintStart_toStartOf="@id/label_shipping_method_name"
+                app:layout_constraintTop_toBottomOf="@id/label_shipping_method_name" />
+
+            <TextView
+                android:id="@+id/tv_shipping_fee"
+                style="@style/TextTheme.Arial.TS16.bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                tools:text="GHS 200"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tv_delivery_days"
+                app:layout_constraintTop_toBottomOf="@+id/tv_delivery_days"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/ic_wallet" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/momo_filled_tick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_14sdp"
+                android:layout_marginBottom="15dp"
+                android:src="@drawable/ic_filled_tick"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+</layout>
