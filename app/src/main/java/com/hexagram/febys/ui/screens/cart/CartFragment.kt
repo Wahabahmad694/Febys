@@ -237,7 +237,6 @@ class CartFragment : BaseFragment() {
         else
             Price("", itemsTotal, priceCurrency).getFormattedPrice()
 
-        binding.tvSubtotalAmount.text = formattedTotalPrice
         binding.tvTotalAmount.text = formattedTotalPrice
     }
 

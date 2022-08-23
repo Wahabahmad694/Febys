@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
@@ -18,12 +19,12 @@ import com.hexagram.febys.models.api.countries.Country
 import com.hexagram.febys.models.api.location.LatLong
 import com.hexagram.febys.models.api.location.LocationSuggestion
 import com.hexagram.febys.models.api.shippingAddress.Address
+import com.hexagram.febys.models.api.shippingAddress.Coordinates
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
 import com.hexagram.febys.models.api.shippingAddress.ShippingDetail
 import com.hexagram.febys.models.api.states.State
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
-import com.hexagram.febys.ui.screens.list.selection.ListSelectionAdapter
 import com.hexagram.febys.ui.screens.location.LocationFragment
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,9 +43,9 @@ class AddEditShippingAddressFragment : BaseFragment() {
 //    private val stateBottomSheet get() = BottomSheetBehavior.from(binding.bottomSheetState.root)
 //    private val cityBottomSheet get() = BottomSheetBehavior.from(binding.bottomSheetCity.root)
 
-    private val regionsAdapter = ListSelectionAdapter()
-    private val statesAdapter = ListSelectionAdapter()
-    private val citiesAdapter = ListSelectionAdapter()
+//    private val regionsAdapter = ListSelectionAdapter()
+//    private val statesAdapter = ListSelectionAdapter()
+//    private val citiesAdapter = ListSelectionAdapter()
 
 
     private var firstName: String = ""
@@ -131,9 +132,9 @@ class AddEditShippingAddressFragment : BaseFragment() {
             binding.switchSetAsDefault.isChecked = args.forceSetAsDefault
             binding.switchSetAsDefault.isEnabled = !args.forceSetAsDefault
 
-            binding.tvRegion.text = regionsAdapter.getSelectedItem()
-            binding.tvState.text = statesAdapter.getSelectedItem()
-            binding.tvCity.text = citiesAdapter.getSelectedItem()
+//            binding.tvRegion.text = regionsAdapter.getSelectedItem()
+//            binding.tvState.text = statesAdapter.getSelectedItem()
+//            binding.tvCity.text = citiesAdapter.getSelectedItem()
 
             updateDefaultCCP(PhoneNo(Utils.DEFAULT_COUNTRY_CODE, ""))
 
@@ -309,6 +310,26 @@ class AddEditShippingAddressFragment : BaseFragment() {
 //        }
     }
 
+
+    private fun observeLocation() {
+        setFragmentResultListener(LocationFragment.LOCATION) { _, bundle ->
+            location =
+                bundle.getParcelable<LocationSuggestion?>(LocationFragment.LOCATION)
+            binding.etAddressLine1.text = location?.name
+            binding.tvCity.text = location?.address?.city
+            binding.tvRegion.text = location?.address?.country
+            binding.tvState.text = location?.address?.state
+            binding.etPostalCode.setText(location?.address?.postalCode)
+
+            if (!binding.etAddressLine1.text.isNullOrEmpty()) {
+                binding.containerRegion.isVisible = true
+                binding.containerState.isVisible = true
+                binding.containerCity.isVisible = true
+                binding.containerPostalCode.isVisible = true
+            }
+        }
+    }
+
     //    private fun updateSelectedCountry() {
 //        val selectedCountry =
 //            countries.firstOrNull { country -> country.isoCode == countryCodeISO }
@@ -378,12 +399,15 @@ class AddEditShippingAddressFragment : BaseFragment() {
             countryCode = phoneCountryCode,
             number = phoneNo
         )
+        val coordinates: MutableList<Double?> = mutableListOf(location?.lng, location?.lat)
+        val coordinate = Coordinates(coordinates)
         val address = Address(
             city = city,
             countryCode = country,
             state = state,
             street = addressLine1,
             zipCode = zipCode,
+            location = coordinate
         )
         val shippingDetail = ShippingDetail(
             shippingDetailId = id,
@@ -502,18 +526,5 @@ class AddEditShippingAddressFragment : BaseFragment() {
 //
 //        goBack()
 //    }
-
-    private fun observeLocation() {
-        setFragmentResultListener(LocationFragment.LOCATION) { _, bundle ->
-            location =
-                bundle.getParcelable<LocationSuggestion?>(LocationFragment.LOCATION)
-            binding.etAddressLine1.text = location?.address?.fullAddress()
-            binding.tvCity.text = location?.address?.city
-            binding.tvRegion.text = location?.address?.country
-            binding.tvState.text = location?.address?.state
-            binding.etPostalCode.setText(location?.address?.postalCode)
-
-        }
-    }
 
 }

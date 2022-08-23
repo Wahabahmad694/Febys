@@ -595,7 +595,7 @@
 
     <fragment
         android:id="@+id/shippingTypeFragment"
-        android:name="com.hexagram.febys.ui.screens.shippingType.ShippingTypeFragment"
+        android:name="com.hexagram.febys.ui.screens.shippingType.ShippingMethodFragment"
         android:label="WalletDetailFragment"
         app:enterAnim="@anim/slide_in_left"
         app:exitAnim="@anim/slide_out_left"

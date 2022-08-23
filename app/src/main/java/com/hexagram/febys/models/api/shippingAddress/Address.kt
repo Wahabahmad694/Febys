@@ -12,7 +12,8 @@ data class Address(
     val state: String?,
     val street: String,
     @SerializedName("zip_code")
-    val zipCode: String?
+    val zipCode: String?,
+    val location: Coordinates
 ):Parcelable{
     fun fullAddress(): String {
         return "$street, $city, $state\n$zipCode,\n$countryCode"

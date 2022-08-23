@@ -129,6 +129,7 @@
                         android:textAppearance="@style/TextTheme.Arial.TS16"
                         app:layout_constraintTop_toBottomOf="@id/label_last_name"
                         tools:layout_editor_absoluteX="21dp" />
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1dp"
@@ -141,8 +142,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_32sdp"
-                        app:layout_constraintTop_toBottomOf="@id/et_last_name"
-                        app:layout_constraintStart_toStartOf="@id/et_last_name">
+                        app:layout_constraintStart_toStartOf="@id/et_last_name"
+                        app:layout_constraintTop_toBottomOf="@id/et_last_name">
 
                         <TextView
                             android:id="@+id/label_address_line_1"
@@ -151,25 +152,30 @@
                             android:layout_height="wrap_content"
                             android:text="@string/label_address_line_1"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"/>
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/ic_map"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="@dimen/_15sdp"
-                            android:src="@drawable/ic_map_place"
+                            android:layout_width="@dimen/_20sdp"
+                            android:layout_height="@dimen/_20sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:src="@drawable/ic_pin_location"
                             app:layout_constraintBottom_toBottomOf="@id/label_address_line_1"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@id/label_address_line_1" />
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
                             android:id="@+id/et_address_line_1"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/_15sdp"
                             android:background="@null"
-                            android:paddingVertical="@dimen/_8dp"
+                            android:ellipsize="end"
+                            android:maxLines="2"
+                            android:paddingVertical="@dimen/_5sdp"
                             android:textAppearance="@style/TextTheme.Arial.TS16"
+                            app:layout_constraintEnd_toStartOf="@+id/ic_map"
                             app:layout_constraintStart_toStartOf="@id/label_address_line_1"
                             app:layout_constraintTop_toBottomOf="@id/label_address_line_1" />
 
@@ -187,6 +193,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_32sdp"
                         android:orientation="vertical"
+                        android:visibility="gone"
                         android:paddingHorizontal="@dimen/_16sdp"
                         app:layout_constraintTop_toBottomOf="@id/container_address">
 
@@ -207,16 +214,13 @@
                             android:layout_marginTop="2dp"
                             tools:text="Ghana" />
 
-
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1dp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:background="@color/grey_e1e5e8"
+                            app:layout_constraintTop_toBottomOf="@id/container_region" />
                     </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1dp"
-                        android:layout_marginHorizontal="@dimen/_16sdp"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:background="@color/grey_e1e5e8"
-                        app:layout_constraintTop_toBottomOf="@id/container_region" />
 
                     <LinearLayout
                         android:id="@+id/container_state"
@@ -224,6 +228,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_32sdp"
                         android:orientation="vertical"
+                        android:visibility="gone"
                         android:paddingHorizontal="@dimen/_16sdp"
                         app:layout_constraintTop_toBottomOf="@id/container_region">
 
@@ -256,6 +261,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_32sdp"
                         android:orientation="vertical"
+                        android:visibility="gone"
                         android:paddingHorizontal="@dimen/_16sdp"
                         app:layout_constraintTop_toBottomOf="@id/container_state">
 
@@ -282,41 +288,54 @@
                             android:background="@color/grey_e1e5e8" />
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/label_postal_code"
-                        style="@style/TextTheme.Arial.TS16"
+                    <LinearLayout
+                        android:id="@+id/container_postal_code"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/_16sdp"
                         android:layout_marginTop="@dimen/_32sdp"
-                        android:text="@string/label_postal_code"
-                        app:layout_constraintTop_toBottomOf="@id/container_city" />
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        android:paddingHorizontal="@dimen/_16sdp"
+                        app:layout_constraintEnd_toEndOf="@id/container_city"
+                        app:layout_constraintStart_toStartOf="@id/container_city"
+                        app:layout_constraintTop_toBottomOf="@id/container_city">
 
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/et_postal_code"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/_16sdp"
-                        android:background="@null"
-                        android:imeOptions="actionNext"
-                        android:inputType="numberSigned"
-                        android:paddingVertical="@dimen/_8dp"
-                        android:textAppearance="@style/TextTheme.Arial.TS16"
-                        app:layout_constraintTop_toBottomOf="@id/label_postal_code" />
+                        <TextView
+                            android:id="@+id/label_postal_code"
+                            style="@style/TextTheme.Arial.TS16"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="@string/label_postal_code"
+                            app:layout_constraintTop_toBottomOf="@id/container_city" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/et_postal_code"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:imeOptions="actionNext"
+                            android:inputType="numberSigned"
+                            android:paddingVertical="@dimen/_8dp"
+                            android:textAppearance="@style/TextTheme.Arial.TS16"
+                            app:layout_constraintTop_toBottomOf="@id/label_postal_code" />
+
+                    </LinearLayout>
+
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1dp"
                         android:layout_marginHorizontal="@dimen/_16sdp"
                         android:background="@color/grey_e1e5e8"
-                        app:layout_constraintTop_toBottomOf="@id/et_postal_code" />
+                        app:layout_constraintTop_toBottomOf="@id/container_postal_code" />
 
                     <LinearLayout
                         android:id="@+id/container_phone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        app:layout_constraintTop_toBottomOf="@id/et_postal_code">
+                        app:layout_constraintTop_toBottomOf="@id/container_postal_code">
 
                         <TextView
                             android:id="@+id/label_phone"

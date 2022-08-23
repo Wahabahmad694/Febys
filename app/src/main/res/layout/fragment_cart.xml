@@ -73,15 +73,15 @@
             app:layout_constraintStart_toStartOf="@id/iv_close"
             app:layout_constraintTop_toBottomOf="@id/label_shopping_cart" />
 
-        <TextView
-            android:id="@+id/tv_subtotal_amount"
-            style="@style/TextTheme.Arial.TS14.Grey"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_4sdp"
-            app:layout_constraintBaseline_toBaselineOf="@id/label_subtotal"
-            app:layout_constraintStart_toEndOf="@id/label_subtotal"
-            tools:text="$2,677" />
+<!--        <TextView-->
+<!--            android:id="@+id/tv_subtotal_amount"-->
+<!--            style="@style/TextTheme.Arial.TS14.Grey"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="@dimen/_4sdp"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/label_subtotal"-->
+<!--            app:layout_constraintStart_toStartOf="@id/label_subtotal"-->
+<!--            tools:text="$2,677" />-->
 
 <!--        <TextView-->
 <!--            android:id="@+id/label_shipping"-->
@@ -111,7 +111,7 @@
             android:maxLines="1"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_16sdp"
-            app:layout_constraintBottom_toBottomOf="@id/tv_subtotal_amount"
+            app:layout_constraintBottom_toBottomOf="@id/label_subtotal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toTopOf="@id/label_subtotal"
@@ -124,7 +124,7 @@
             android:paddingBottom="@dimen/_72sdp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_subtotal_amount">
+            app:layout_constraintTop_toBottomOf="@id/label_subtotal">
 
             <LinearLayout
                 android:layout_width="match_parent"

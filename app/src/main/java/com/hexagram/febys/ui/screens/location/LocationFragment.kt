@@ -49,7 +49,7 @@ class LocationFragment : BaseFragmentWithPermission(), OnMapReadyCallback {
     private lateinit var binding: FragmentLocationBinding
 
 
-    fun getPosition(): LatLng? {
+    private fun getPosition(): LatLng? {
         val position = arguments?.getParcelable<LatLng>(POSITION)
         return position
     }
@@ -69,6 +69,10 @@ class LocationFragment : BaseFragmentWithPermission(), OnMapReadyCallback {
     ): View {
         binding = FragmentLocationBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun getPermissionGranted() {
+//        viewModel.getCurrentLocation()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -104,6 +108,10 @@ class LocationFragment : BaseFragmentWithPermission(), OnMapReadyCallback {
 
         }
 
+        ivCurrentLocation.setOnClickListener {
+            viewModel.getCurrentLocation()
+        }
+
         btnSave.setOnClickListener {
             chooseLocation()
         }
@@ -130,7 +138,7 @@ class LocationFragment : BaseFragmentWithPermission(), OnMapReadyCallback {
 
     }
 
-    fun pickAddressUI() {
+    private fun pickAddressUI() {
 
         lifecycleScope.launchWhenStarted {
 
