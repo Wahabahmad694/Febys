@@ -55,7 +55,7 @@ android {
             buildConfigField("String", "GOOGLE_PLACES_API_BASE_URL", endpointsProperties['GOOGLE_PLACE_API_BASE_URL'])
             resValue "string", "google_web_client", credentialsProperties['GOOGLE_WEB_CLIENT']
             resValue "string", "facebook_app_id", credentialsProperties['FACEBOOK_APP_ID']
-            resValue "string", "GOOGLE_PLACES_API_KEY", credentialsProperties['GOOGLE_PLACES_API_KEY']
+            resValue "string", "google_places_api_key", credentialsProperties['GOOGLE_PLACES_API_KEY']
             resValue "string", "fb_login_protocol_scheme", credentialsProperties['FACEBOOK_LOGIN_PROTOCOL_SCHEME']
             resValue "string", "fb_client_token", credentialsProperties['FACEBOOK_CLIENT_TOKEN']
 
@@ -70,7 +70,7 @@ android {
             buildConfigField("String", "webCustomizationBaseUrl", endpointsProperties['QA_BASE_URL_WEB_CUSTOMIZATION'])
             buildConfigField("String", "searchBaseUrl", endpointsProperties['SEARCH_BASE_URL_BACKEND_QA'])
             buildConfigField("String", "GOOGLE_PLACES_API_BASE_URL", endpointsProperties['GOOGLE_PLACE_API_BASE_URL'])
-            resValue "string", "GOOGLE_PLACES_API_KEY", credentialsProperties['GOOGLE_PLACES_API_KEY']
+            resValue "string", "google_places_api_key", credentialsProperties['GOOGLE_PLACES_API_KEY']
 
             matchingFallbacks = ['debug', 'release']
         }
@@ -84,7 +84,7 @@ android {
             buildConfigField("String", "webCustomizationBaseUrl", endpointsProperties['STAGING_BASE_URL_WEB_CUSTOMIZATION'])
             buildConfigField("String", "searchBaseUrl", endpointsProperties['SEARCH_BASE_URL_BACKEND_STAGING'])
             buildConfigField("String", "GOOGLE_PLACES_API_BASE_URL", endpointsProperties['GOOGLE_PLACE_API_BASE_URL'])
-            resValue "string", "GOOGLE_PLACES_API_KEY", credentialsProperties['GOOGLE_PLACES_API_KEY']
+            resValue "string", "google_places_api_key", credentialsProperties['GOOGLE_PLACES_API_KEY']
 
             matchingFallbacks = ['debug', 'release']
         }
@@ -101,7 +101,7 @@ android {
             buildConfigField("String", "searchBaseUrl", endpointsProperties['SEARCH_BASE_URL_BACKEND_STAGING'])
             resValue "string", "google_web_client", credentialsProperties['GOOGLE_WEB_CLIENT']
             resValue "string", "facebook_app_id", credentialsProperties['FACEBOOK_APP_ID']
-            resValue "string", "GOOGLE_PLACES_API_KEY", credentialsProperties['GOOGLE_PLACES_API_KEY']
+            resValue "string", "google_places_api_key", credentialsProperties['GOOGLE_PLACES_API_KEY']
             resValue "string", "fb_login_protocol_scheme", credentialsProperties['FACEBOOK_LOGIN_PROTOCOL_SCHEME']
             resValue "string", "fb_client_token", credentialsProperties['FACEBOOK_CLIENT_TOKEN']
 
