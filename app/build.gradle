@@ -45,6 +45,7 @@ android {
 
     buildTypes {
         debug {
+
             def endpointsProperties = getBuildProperties()
             def credentialsProperties = getCredentials()
             buildConfigField("String", "backendBaseUrl", endpointsProperties['BASE_URL_BACKEND'])
