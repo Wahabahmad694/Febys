@@ -70,7 +70,7 @@
                 app:layoutManager="LinearLayoutManager" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_add_voucher"
+                android:id="@+id/btn_save_method"
                 style="@style/ButtonTheme.Contained"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -83,6 +83,7 @@
         <include
             android:id="@+id/empty_view"
             layout="@layout/layout_empty_view"
+            android:visibility="gone"
             app:warningTitle="@{@string/title_shipping_method}" />
 
     </RelativeLayout>

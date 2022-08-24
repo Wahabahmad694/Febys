@@ -601,7 +601,12 @@
         app:exitAnim="@anim/slide_out_left"
         app:popEnterAnim="@anim/slide_in_right"
         app:popExitAnim="@anim/slide_out_right"
-        tools:layout="@layout/fragment_shipping_type" />
+        tools:layout="@layout/fragment_shipping_type"
+        >
+        <argument
+            android:name="estimates"
+            app:argType="com.hexagram.febys.models.api.order.Order" />
+    </fragment>
     <fragment
         android:id="@+id/walletDetailFragment"
         android:name="com.hexagram.febys.ui.screens.wallet.WalletDetailFragment"

@@ -13,6 +13,7 @@ import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
 import com.hexagram.febys.models.api.transaction.Transaction
 import com.hexagram.febys.models.api.vouchers.VoucherDetail
 import com.hexagram.febys.models.db.CartDTO
+import com.hexagram.febys.models.swoove.SwooveEstimates
 import com.hexagram.febys.network.domain.util.CartMapper
 import kotlinx.parcelize.Parcelize
 
@@ -27,6 +28,8 @@ data class Order(
     val consumer: Consumer,
     @SerializedName("shipping_detail")
     val shippingAddress: ShippingAddress?,
+    @SerializedName("swoove_estimates")
+    val swooveEstimates: SwooveEstimates,
     @SerializedName("products_amount")
     val productsAmount: Price,
     @SerializedName("bill_amount")
@@ -87,7 +90,7 @@ data class Order(
 
         if(transactionFees.isNotEmpty())
         {
-            finalFee= transactionFees.map { it.transactionFee }.first { it!! > 0f } ?:0f
+            finalFee= transactionFees.map { it.transactionFee }.firstOrNull { it!= null && it > 0f } ?:0f
             val transactionsPrice = Price("", finalFee.toDouble(), productsAmount.currency)
             addProductToOrderSummary(
                 containerOrderSummary,

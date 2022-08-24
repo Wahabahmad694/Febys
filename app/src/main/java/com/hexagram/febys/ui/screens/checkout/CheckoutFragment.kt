@@ -32,6 +32,7 @@ class CheckoutFragment : BaseFragment() {
 
     private var orderPrice: Price? = null
 
+    private var order: Order? = null
     private var voucher = ""
     private var validVoucher = false
 
@@ -59,7 +60,16 @@ class CheckoutFragment : BaseFragment() {
         val shippingAddress = checkoutViewModel.getDefaultShippingAddress()
         updateShippingAddressUi(shippingAddress)
 
+        updateShippingMethod(order)
+
         updateFav()
+    }
+
+    private fun updateShippingMethod(order: Order?) {
+        val selectedMethod =
+            order?.swooveEstimates?.responses?.optimalEstimate?.estimateTypeDetails?.name ?: getString(R.string.msg_for_no_shipping_method)
+        binding.tvShippingMethod.text = selectedMethod
+
     }
 
     private fun uiListener() {
@@ -70,7 +80,7 @@ class CheckoutFragment : BaseFragment() {
             else showChangeShippingAddressWarningDialog()
         }
         binding.containerCourier.setOnClickListener {
-            gotoShippingType()
+            order?.let { it1 -> gotoShippingType(it1) }
         }
 
         binding.btnPlaceOrder.setOnClickListener {
@@ -204,15 +214,15 @@ class CheckoutFragment : BaseFragment() {
             }
             is DataState.Data -> {
                 hideLoader()
-                val order = orderInfoResponse.data
+                order = orderInfoResponse.data
                 if (order == null) {
                     goBack()
                     return
                 }
                 updateVoucherField()
-                order.addToOrderSummary(binding.containerOrderSummary)
-                updateTotalAmount(order.billAmount)
-                validVoucher = order.productsAmount.value > (order.voucher?.amount ?: 0.0)
+                order!!.addToOrderSummary(binding.containerOrderSummary)
+                updateTotalAmount(order!!.billAmount)
+                validVoucher = order!!.productsAmount.value > (order!!.voucher?.amount ?: 0.0)
                 if (!validVoucher) {
                     showInvalidVoucherDialog()
                 }
@@ -266,9 +276,9 @@ class CheckoutFragment : BaseFragment() {
         navigateTo(gotoShippingAddress)
     }
 
-    private fun gotoShippingType() {
+    private fun gotoShippingType(order: Order) {
         val gotoShippingType =
-            CheckoutFragmentDirections.actionCheckoutFragmentToShippingTypeFragment()
+            CheckoutFragmentDirections.actionCheckoutFragmentToShippingTypeFragment(order)
         navigateTo(gotoShippingType)
     }
 

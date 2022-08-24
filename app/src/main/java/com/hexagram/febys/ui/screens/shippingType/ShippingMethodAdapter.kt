@@ -4,9 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.hexagram.febys.databinding.ItemShippingMethodBinding
+import com.hexagram.febys.models.swoove.Estimate
+import com.hexagram.febys.utils.load
 
 class ShippingMethodAdapter : RecyclerView.Adapter<ShippingMethodAdapter.ViewHolder>() {
-    private var shippingMethods = listOf<String>()
+    private var shippingMethods = listOf<Estimate>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             ItemShippingMethodBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -21,13 +23,26 @@ class ShippingMethodAdapter : RecyclerView.Adapter<ShippingMethodAdapter.ViewHol
         return shippingMethods.size
     }
 
+    fun submitList(estimate: List<Estimate>) {
+        this.shippingMethods = estimate
+        notifyItemRangeChanged(0, estimate.size)
+    }
+
+    var onItemClick: ((method: Estimate) -> Unit)? = null
+
     inner class ViewHolder(
         private val binding: ItemShippingMethodBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(position: Int) = with(binding) {
 
-
+            val estimates = shippingMethods[position]
+            binding.apply {
+                ivShippingMethod.load(estimates.estimateTypeDetails.icon)
+                labelShippingMethodName.text = estimates.estimateTypeDetails.name
+                tvDeliveryDays.text = estimates.timeString
+                tvShippingFee.text = "${estimates.totalPricing.currency_code } ${estimates.totalPricing.value }"
+            }
         }
     }
 

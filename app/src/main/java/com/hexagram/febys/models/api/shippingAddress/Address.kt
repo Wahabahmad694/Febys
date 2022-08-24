@@ -20,6 +20,6 @@ data class Address(
     }
 
     fun singleLineAddress():String{
-        return "$street, $city, $state, $zipCode, $countryCode."
+        return street
     }
 }

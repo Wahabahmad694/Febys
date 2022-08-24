@@ -231,6 +231,7 @@
     <string name="label_select_city">Select City</string>
     <string name="label_checkout">Checkout</string>
     <string name="msg_for_no_shipping_address">Please add shipping address before placing the order</string>
+    <string name="msg_for_no_shipping_method">Please add shipping method before placing the order</string>
     <string name="msg_for_no_payment">Please add payment method before placing the order</string>
     <string name="msg_for_change_shipping_address">If you change the shipping address that will be effected on shipping cost.</string>
     <string name="label_payment">Payment</string>
