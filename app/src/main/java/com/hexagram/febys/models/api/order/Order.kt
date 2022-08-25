@@ -74,7 +74,8 @@ data class Order(
             true
         )
 
-
+        val shippingFee = swooveEstimates.responses.estimates.filter { true }
+        var shippingFinalFee = shippingFee.map { it.totalPricing.value }
         val deliveryFee = deliveryFee ?: Price("", 0.0, productsAmount.currency)
         addProductToOrderSummary(
             containerOrderSummary,

@@ -1,6 +1,8 @@
 package com.hexagram.febys.ui.screens.checkout
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,10 +19,12 @@ import com.hexagram.febys.models.api.request.PaymentRequest
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
 import com.hexagram.febys.models.api.transaction.Transaction
 import com.hexagram.febys.models.db.CartDTO
+import com.hexagram.febys.models.swoove.Estimate
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.cart.CartAdapter
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.ui.screens.payment.BasePaymentFragment
+import com.hexagram.febys.ui.screens.shippingType.ShippingMethodFragment
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -35,22 +39,63 @@ class CheckoutFragment : BaseFragment() {
     private var order: Order? = null
     private var voucher = ""
     private var validVoucher = false
+    private var isValueSet = false
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        Log.d("Error","onAttach")
+
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View {
         binding = FragmentCheckoutBinding.inflate(inflater, container, false)
+        Log.d("Error","onCreateView")
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Log.d("Error","onViewCreated")
+
         initUi()
         uiListener()
         setObserver()
 
         fetchOrderInfo()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+       Log.d("Error","onCreate")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("Error","onResume")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d("Error","onStart")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("Error","onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("Error","onStop")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.d("Error","onDestroy")
     }
 
     private fun initUi() {
@@ -60,16 +105,16 @@ class CheckoutFragment : BaseFragment() {
         val shippingAddress = checkoutViewModel.getDefaultShippingAddress()
         updateShippingAddressUi(shippingAddress)
 
-        updateShippingMethod(order)
-
         updateFav()
     }
 
     private fun updateShippingMethod(order: Order?) {
-        val selectedMethod =
-            order?.swooveEstimates?.responses?.optimalEstimate?.estimateTypeDetails?.name ?: getString(R.string.msg_for_no_shipping_method)
-        binding.tvShippingMethod.text = selectedMethod
-
+        val estimate = order?.swooveEstimates?.responses?.estimates
+        estimate?.forEach {
+            if (it.estimateTypeDetails.name == order.swooveEstimates.responses.optimalEstimate.estimateTypeDetails.name && !isValueSet) {
+                binding.tvShippingMethod.text = it.estimateTypeDetails.name
+            }
+        }
     }
 
     private fun uiListener() {
@@ -170,6 +215,16 @@ class CheckoutFragment : BaseFragment() {
         }
     }
 
+    private fun showErrorPopUpShippingMethod() {
+        val resId = R.drawable.ic_error
+        val title = getString(R.string.label_sorry)
+        val msg = getString(R.string.error_add_shipping_method)
+
+        showInfoDialoge(resId, title, msg) {
+            // do nothing
+        }
+    }
+
     private fun showErrorPopUp() {
         val resId = R.drawable.ic_error
         val title = getString(R.string.label_error)
@@ -220,12 +275,15 @@ class CheckoutFragment : BaseFragment() {
                     return
                 }
                 updateVoucherField()
+                updateShippingMethod(order)
                 order!!.addToOrderSummary(binding.containerOrderSummary)
                 updateTotalAmount(order!!.billAmount)
                 validVoucher = order!!.productsAmount.value > (order!!.voucher?.amount ?: 0.0)
                 if (!validVoucher) {
                     showInvalidVoucherDialog()
                 }
+
+                isValueSet = false
             }
         }
     }
@@ -242,6 +300,15 @@ class CheckoutFragment : BaseFragment() {
             hideLoader()
             val sortedListForCart = checkoutViewModel.sortListForCart(it)
             cartAdapter.submitList(sortedListForCart)
+        }
+
+
+        setFragmentResultListener(ShippingMethodFragment.ESTIMATE) { _, bundle ->
+            isValueSet = true
+            val estimate =
+                bundle.getParcelable<Estimate>(ShippingMethodFragment.ESTIMATE)
+                    ?.estimateTypeDetails?.name
+            binding.tvShippingMethod.text = estimate
         }
     }
 
@@ -277,9 +344,14 @@ class CheckoutFragment : BaseFragment() {
     }
 
     private fun gotoShippingType(order: Order) {
-        val gotoShippingType =
-            CheckoutFragmentDirections.actionCheckoutFragmentToShippingTypeFragment(order)
-        navigateTo(gotoShippingType)
+        if (order.shippingAddress == null) {
+            showErrorPopUpShippingMethod()
+        } else {
+            val gotoShippingType =
+                CheckoutFragmentDirections.actionCheckoutFragmentToShippingTypeFragment(order)
+            navigateTo(gotoShippingType)
+        }
+
     }
 
     private fun placeOrder(transactions: List<Transaction>) {

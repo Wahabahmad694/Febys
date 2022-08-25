@@ -91,6 +91,7 @@
     <string name="label_empty_wish_list_slogan">But not for long! Tap ♡ to start saving you favorite pieces</string>
     <string name="label_connection_error">Connection Error</string>
     <string name="label_error"> Error</string>
+    <string name="label_sorry"> Sorry</string>
     <string name="okay">Okay</string>
     <string name="label_try_again">Try Again</string>
     <string name="label_no_internet">There\'s a problem with your network connection. Please check your connection</string>
@@ -140,6 +141,7 @@
     <string name="error_enter_email">Please Enter Email</string>
     <string name="error_enter_valid_email">Please Enter Valid Email</string>
     <string name="error_add_shipping_address">Please select or add shipping address </string>
+    <string name="error_add_shipping_method">We are unable to proceed the next step please provide first shipping address </string>
     <string name="error_enter_password_characters">Password must be atleast 8 characters</string>
     <string name="error_enter_password">Please Enter Password</string>
     <string name="error_select_cancel_reason">Please Select Cancel Reason</string>

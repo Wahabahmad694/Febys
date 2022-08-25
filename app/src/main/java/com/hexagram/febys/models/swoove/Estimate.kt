@@ -22,5 +22,7 @@ data class Estimate(
     @SerializedName("total_distance")
     val totalDistance: Double,
     @SerializedName("total_pricing")
-    val totalPricing: TotalPricing
+    val totalPricing: TotalPricing,
+
+    var selected: Boolean = false
 ) : Parcelable
