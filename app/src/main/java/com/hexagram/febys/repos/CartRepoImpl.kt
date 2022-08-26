@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.hexagram.febys.dataSource.ICartDataSource
 import com.hexagram.febys.models.api.cart.Cart
 import com.hexagram.febys.models.api.order.Order
+import com.hexagram.febys.models.api.request.EstimateRequest
 import com.hexagram.febys.models.api.request.OrderRequest
 import com.hexagram.febys.models.api.transaction.Transaction
 import com.hexagram.febys.models.api.vendor.VendorMessage
@@ -71,7 +72,7 @@ class CartRepoImpl @Inject constructor(
     ): Flow<DataState<Order?>> = flow<DataState<Order?>> {
         emit(DataState.Loading())
         val authToken = pref.getAccessToken()
-        val orderRequest = getOrderRequest(voucher, null, listOf())
+        val orderRequest = getOrderRequest(voucher, null, listOf(),null)
         if (orderRequest.items.isEmpty()) emit(DataState.Data(null))
         backendService.fetchOrderInfo(authToken, orderRequest)
             .onSuccess {
@@ -89,7 +90,7 @@ class CartRepoImpl @Inject constructor(
         flow {
             val authToken = pref.getAccessToken()
             if (authToken.isEmpty()) return@flow
-            val orderRequest = getOrderRequest(null, null, listOf())
+            val orderRequest = getOrderRequest(null, null, listOf(),null)
             try {
                 val body = backendService.downloadPdf(authToken, orderRequest)
                 emit(DataState.Data(body))
@@ -101,10 +102,11 @@ class CartRepoImpl @Inject constructor(
     override fun placeOrder(
         transactions: List<Transaction>,
         voucher: String?,
-        vendorMessages: List<VendorMessage>
+        vendorMessages: List<VendorMessage>,
+        estimate: EstimateRequest?
     ) = flow<DataState<Order?>> {
         val authToken = pref.getAccessToken()
-        val orderRequest = getOrderRequest(voucher, transactions, vendorMessages)
+        val orderRequest = getOrderRequest(voucher, transactions, vendorMessages,estimate)
         if (orderRequest.items.isEmpty()) emit(DataState.Data(null))
 
         backendService.placeOrder(authToken, orderRequest)
@@ -119,14 +121,21 @@ class CartRepoImpl @Inject constructor(
     private fun getOrderRequest(
         voucher: String?,
         transactions: List<Transaction>? = null,
-        vendorMessages: List<VendorMessage>
+        vendorMessages: List<VendorMessage>,
+        estimate: EstimateRequest?
     ): OrderRequest {
         val shippingAddress = pref.getDefaultShippingAddress()
         val items: List<SkuIdAndQuantity> = cartDataSource.getCartSkuIdsAndQuantity()
         val transactionIds = transactions?.map { it._id }
+        val swooveEstimate = estimate
 
         return OrderRequest(
-            shippingAddress?.shippingDetail, voucher, items, vendorMessages, transactionIds
+            shippingAddress?.shippingDetail,
+            voucher,
+            items,
+            vendorMessages,
+            transactionIds,
+            swooveEstimate
         )
     }
 

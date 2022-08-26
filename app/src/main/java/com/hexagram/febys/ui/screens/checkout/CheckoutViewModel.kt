@@ -2,6 +2,7 @@ package com.hexagram.febys.ui.screens.checkout
 
 import androidx.lifecycle.viewModelScope
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
+import com.hexagram.febys.models.swoove.Estimate
 import com.hexagram.febys.repos.ICartRepo
 import com.hexagram.febys.repos.ICheckoutRepo
 import com.hexagram.febys.repos.IProductRepo
@@ -16,6 +17,8 @@ class CheckoutViewModel @Inject constructor(
     cartRepo: ICartRepo,
     productRepo: IProductRepo,
 ) : CartViewModel(cartRepo, productRepo) {
+
+    var estimate: Estimate? = null
 
     fun getDefaultShippingAddress(): ShippingAddress? {
         return checkoutRepo.getDefaultShippingAddress()

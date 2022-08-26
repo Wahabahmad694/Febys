@@ -5,7 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import com.google.gson.Gson
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
-import com.hexagram.febys.models.view.PaymentMethod
+import com.hexagram.febys.models.swoove.Estimate
 import com.hexagram.febys.ui.screens.payment.models.Wallet
 import java.text.SimpleDateFormat
 import java.util.*
@@ -65,6 +65,14 @@ object Utils {
 
     fun jsonToShippingAddress(json: String): ShippingAddress {
         return Gson().fromJson(json, ShippingAddress::class.java)
+    }
+
+    fun jsonFromShippingMethod(obj: Estimate): String {
+        return Gson().toJson(obj)
+    }
+
+    fun jsonToShippingMethod(json: String): Estimate {
+        return Gson().fromJson(json, Estimate::class.java)
     }
 
     fun jsonFromWallet(obj: Wallet): String {

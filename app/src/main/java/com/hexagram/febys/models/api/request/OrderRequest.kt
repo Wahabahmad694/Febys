@@ -17,4 +17,5 @@ data class OrderRequest constructor(
     val messages: List<VendorMessage>,
     @SerializedName("transaction_ids")
     var transaction: List<String>? = null,
+    val swoove: EstimateRequest?
 ) : Parcelable

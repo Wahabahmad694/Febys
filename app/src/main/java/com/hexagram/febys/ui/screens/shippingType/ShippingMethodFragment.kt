@@ -40,11 +40,14 @@ class ShippingMethodFragment : BaseFragment() {
     }
 
     private fun updateUi(estimates: Order) {
-        val estimate = estimates.swooveEstimates.responses.estimates
+        val estimate = estimates.swooveEstimates!!.responses.estimates
         estimate.forEach {
             if (it.estimateTypeDetails.name == estimates.swooveEstimates.responses.optimalEstimate.estimateTypeDetails.name) {
                 it.selected = true
             }
+        }
+        estimates.swooveEstimates.responses.selectedEstimate = estimate.first{
+            it.selected
         }
         binding.emptyView.root.isVisible = estimate.isEmpty()
         shippingMethodAdapter.submitList(estimate.toMutableList())

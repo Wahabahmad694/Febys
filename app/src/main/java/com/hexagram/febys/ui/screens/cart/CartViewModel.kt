@@ -6,6 +6,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.hexagram.febys.models.api.order.Order
 import com.hexagram.febys.models.api.product.Product
+import com.hexagram.febys.models.api.request.EstimateRequest
 import com.hexagram.febys.models.api.transaction.Transaction
 import com.hexagram.febys.models.api.vendor.VendorMessage
 import com.hexagram.febys.models.db.CartDTO
@@ -82,9 +83,10 @@ open class CartViewModel @Inject constructor(
     fun placeOrder(
         transactions: List<Transaction>,
         voucher: String?,
-        vendorMessages: List<VendorMessage>
+        vendorMessages: List<VendorMessage>,
+        estimate: EstimateRequest?
     ): LiveData<DataState<Order?>> =
-        cartRepo.placeOrder(transactions, voucher, vendorMessages)
+        cartRepo.placeOrder(transactions, voucher, vendorMessages,estimate)
             .onStart {
                 emit(DataState.Loading())
             }

@@ -111,7 +111,7 @@
     <string name="label_sign_out">Sign Out</string>
     <string name="label_pay_now">Pay Now</string>
     <string name="label_shopping_bag">Shopping Bag</string>
-    <string name="label_subtotal">Total (incl. VAT)</string>
+    <string name="label_subtotal">Subtotal</string>
     <string name="label_voucher">Voucher</string>
     <string name="label_wishlist_item">Wishlist Item</string>
     <string name="label_voucher_discount">Voucher Discount</string>
@@ -442,5 +442,6 @@
     <!-- Value from build type: debug -->
     <string name="GOOGLE_API_KEY" translatable="false">"AIzaSyAE5xmC3dxQ940GZJonf73Ddr9dzcvvxVs"</string>
     <string name="label_standard">Standard</string>
+    <string name="label_vat_inclusive">Vat Inclusive</string>
 
 </resources>

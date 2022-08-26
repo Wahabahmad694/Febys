@@ -178,19 +178,6 @@
                         app:selectedDotColor="@color/slider_dot_selected_color" />
 
 
-                    <TextView
-                        android:id="@+id/tv_product_brand"
-                        style="@style/TextTheme.HelveticaNeue.TS14.Bold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/_16dp"
-                        android:layout_marginTop="@dimen/_15sdp"
-                        android:text="@{product.vendor.shopName}"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/slider_product_images" />
-
-
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ic_out_stock"
                         android:layout_width="wrap_content"
@@ -202,7 +189,19 @@
                         app:actualImageScaleType="fitCenter"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_product_brand" />
+                        app:layout_constraintTop_toBottomOf="@id/slider_product_images" />
+
+                    <TextView
+                        android:id="@+id/tv_product_brand"
+                        style="@style/TextTheme.HelveticaNeue.TS14.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_16dp"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:text="@{product.vendor.shopName}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/ic_out_stock" />
 
                     <TextView
                         android:id="@+id/tv_product_name"
@@ -216,7 +215,7 @@
                         android:textAlignment="center"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/ic_out_stock"
+                        app:layout_constraintTop_toBottomOf="@id/tv_product_brand"
                         app:layout_constraintWidth_max="200dp" />
 
                     <TextView
@@ -558,6 +557,7 @@
                         android:layout_marginHorizontal="@dimen/_16dp"
                         android:layout_marginTop="@dimen/_24dp"
                         android:text="@string/label_add_delivery_address_info"
+                        android:visibility="gone"
                         app:layout_constraintTop_toBottomOf="@id/ll_container_add_delivery_address" />
 
                     <LinearLayout
