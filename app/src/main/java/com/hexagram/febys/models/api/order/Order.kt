@@ -16,6 +16,7 @@ import com.hexagram.febys.models.api.vouchers.VoucherDetail
 import com.hexagram.febys.models.db.CartDTO
 import com.hexagram.febys.models.swoove.SwooveEstimates
 import com.hexagram.febys.network.domain.util.CartMapper
+import com.hexagram.febys.utils.convertTwoDecimal
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -185,10 +186,20 @@ data class Order(
     ) {
         val total: Double = price.value + (transactions?.toDouble() ?: 0.0)
         val totalWithShippingFee = total + (shippingFinalFee ?: 0.0)
-        totalAmountAsString =
-            Price("", totalWithShippingFee, price.currency)
-        containerOrderSummary.tvTotalPrice.text =
-            "${totalAmountAsString.currency}${totalAmountAsString.value}"
+        if (swoove?.estimate == null) {
+            totalAmountAsString =
+                Price("", totalWithShippingFee, price.currency)
+            containerOrderSummary.tvTotalPrice.text =
+                "${totalAmountAsString.currency}${totalAmountAsString.value}"
+        } else {
+            val netPrice = totalWithShippingFee.minus(swoove.estimate.totalPricing.value)
+            val netPriceConverted = netPrice.convertTwoDecimal().toDouble()
+            totalAmountAsString =
+                Price("", netPriceConverted, price.currency)
+            containerOrderSummary.tvTotalPrice.text =
+                "${totalAmountAsString.currency}${totalAmountAsString.value}"
+        }
+
     }
 
 }

@@ -253,7 +253,7 @@ class PaymentFragment : BasePaymentFragment() {
                 getString(R.string.processing_fee_will_be_charged, it)
             specificTextColorChange(
                 binding.braintreeAmount.text.toString(),
-                0,
+                binding.braintreeAmount.text.toString().split("card").first().length,
                 binding.braintreeAmount.text.toString().split("processing")
                     .first().length,
                 binding.braintreeAmount
@@ -263,7 +263,7 @@ class PaymentFragment : BasePaymentFragment() {
             paymentViewModel.transactionFeePayStack =
                 slabs.firstOrNull { it.gateway == "PAYSTACK" }?.slab?.value!!
             binding.paystackAmount.text =
-                getString(R.string.processing_fee_will_be_charged, it)
+                getString(R.string.processing_fee_will_be_charged_for_paystack, it)
             specificTextColorChange(
                 binding.paystackAmount.text.toString(),
                 0,

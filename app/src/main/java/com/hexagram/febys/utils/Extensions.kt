@@ -29,6 +29,7 @@ import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseActivity
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
+import com.hexagram.febys.ui.screens.dialog.ErrorShippingMethodDialog
 import com.hexagram.febys.ui.screens.dialog.InfoDialog
 import com.hexagram.febys.ui.screens.dialog.WarningDialog
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -135,6 +136,9 @@ fun Fragment.showViews(vararg views: View) {
 
 fun Fragment.showErrorDialog(msg: String) {
     ErrorDialog<String>(DataState.ApiError(msg)).show(childFragmentManager, ErrorDialog.TAG)
+
+}fun Fragment.showShippingErrorDialog(msg: String) {
+    ErrorShippingMethodDialog<String>(DataState.ApiError(msg)).show(childFragmentManager, ErrorDialog.TAG)
 }
 
 fun Fragment.showWarningDialog(
@@ -202,7 +206,7 @@ fun EditText.getQueryTextChangeStateFlow(): StateFlow<String> {
 
 }
 
-fun getCountryCode(countryName: String): String? {
+fun getCountryCode(countryName: String?): String? {
 
     // Get all country codes in a string array.
     val isoCountryCodes = Locale.getISOCountries()

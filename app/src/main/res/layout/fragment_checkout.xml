@@ -132,6 +132,7 @@
                         android:text="@string/minus"
                         android:layout_marginEnd="@dimen/_2sdp"
                         android:layout_marginStart="@dimen/_2sdp"
+                        android:visibility="gone"
                         android:paddingHorizontal="@dimen/_5sdp"
                         app:layout_constraintBottom_toBottomOf="@id/tv_shipping_method"
                         app:layout_constraintStart_toEndOf="@id/tv_shipping_method"

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hexagram.febys.R
 import com.hexagram.febys.databinding.ItemShippingMethodBinding
 import com.hexagram.febys.models.swoove.Estimate
+import com.hexagram.febys.utils.capitalize
 import com.hexagram.febys.utils.load
 
 class ShippingMethodAdapter :
@@ -42,7 +43,7 @@ class ShippingMethodAdapter :
             val estimates = shippingMethods[position]
             binding.apply {
                 ivShippingMethod.load(estimates.estimateTypeDetails.icon)
-                labelShippingMethodName.text = estimates.estimateTypeDetails.name
+                labelShippingMethodName.text = (estimates.estimateTypeDetails.name).capitalize()
                 tvDeliveryDays.text = estimates.timeString
                 tvShippingFee.text =
                     "${estimates.totalPricing.currency_code} ${estimates.totalPricing.value}"

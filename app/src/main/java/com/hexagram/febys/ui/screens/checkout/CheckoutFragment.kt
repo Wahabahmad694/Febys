@@ -55,6 +55,7 @@ class CheckoutFragment : BaseFragment() {
         fetchOrderInfo()
     }
 
+
     private fun initUi() {
         binding.rvCart.isNestedScrollingEnabled = false
         binding.rvCart.adapter = cartAdapter
@@ -85,18 +86,16 @@ class CheckoutFragment : BaseFragment() {
         } else {
             val estimate = order?.swooveEstimates?.responses?.estimates
             estimate?.forEachIndexed { index, mEstimate ->
-                if (mEstimate.estimateTypeDetails.name == order.swooveEstimates.responses.optimalEstimate.estimateTypeDetails.name) {
+                if (mEstimate.estimateId == order.swooveEstimates.responses.optimalEstimate.estimateId) {
                     mEstimate.selected = true
                     binding.tvShippingMethod.text = mEstimate.estimateTypeDetails.name
                     binding.tvShippingDetail.text = mEstimate.timeString
                     binding.tvShippingFee.text =
                         "${mEstimate.totalPricing.currency_code} ${mEstimate.totalPricing.value}"
                 }
+                checkoutViewModel.estimate = mEstimate
             }
         }
-
-        order!!.addToOrderSummary(binding.containerOrderSummary)
-        updateTotalAmount(order.totalAmountAsString)
 
     }
 
@@ -259,6 +258,8 @@ class CheckoutFragment : BaseFragment() {
                 }
                 updateVoucherField()
                 updateShippingMethod(order)
+                order!!.addToOrderSummary(binding.containerOrderSummary)
+                updateTotalAmount(order!!.totalAmountAsString)
                 validVoucher = order!!.productsAmount.value > (order!!.voucher?.amount ?: 0.0)
                 if (!validVoucher) {
                     showInvalidVoucherDialog()
@@ -277,7 +278,6 @@ class CheckoutFragment : BaseFragment() {
 
     private fun setObserver() {
         checkoutViewModel.observeCart().observe(viewLifecycleOwner) {
-            hideLoader()
             val sortedListForCart = checkoutViewModel.sortListForCart(it)
             cartAdapter.submitList(sortedListForCart)
         }
@@ -340,7 +340,7 @@ class CheckoutFragment : BaseFragment() {
             )
         }
         checkoutViewModel
-            .placeOrder(transactions, voucher, vendorMessages,estimateRequest)
+            .placeOrder(transactions, voucher, vendorMessages, estimateRequest)
             .observe(viewLifecycleOwner) {
                 when (it) {
                     is DataState.Loading -> {

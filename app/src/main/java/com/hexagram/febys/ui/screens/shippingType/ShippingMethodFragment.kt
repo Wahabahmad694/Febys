@@ -12,6 +12,7 @@ import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentShippingTypeBinding
 import com.hexagram.febys.models.api.order.Order
 import com.hexagram.febys.utils.goBack
+import com.hexagram.febys.utils.showShippingErrorDialog
 
 class ShippingMethodFragment : BaseFragment() {
 
@@ -40,17 +41,22 @@ class ShippingMethodFragment : BaseFragment() {
     }
 
     private fun updateUi(estimates: Order) {
-        val estimate = estimates.swooveEstimates!!.responses.estimates
-        estimate.forEach {
-            if (it.estimateTypeDetails.name == estimates.swooveEstimates.responses.optimalEstimate.estimateTypeDetails.name) {
-                it.selected = true
+        if (estimates.swooveEstimates?.success == false) {
+            showShippingErrorDialog(estimates.swooveEstimates.message)
+        } else {
+            val estimate = estimates.swooveEstimates?.responses?.estimates
+            estimate?.forEach {
+                if (it.estimateTypeDetails.name == estimates.swooveEstimates.responses.optimalEstimate.estimateTypeDetails.name) {
+                    it.selected = true
+                }
             }
+            estimates.swooveEstimates?.responses?.selectedEstimate = estimate?.first {
+                it.selected
+            }!!
+            binding.emptyView.root.isVisible = estimate.isEmpty()
+            shippingMethodAdapter.submitList(estimate.toMutableList())
         }
-        estimates.swooveEstimates.responses.selectedEstimate = estimate.first{
-            it.selected
-        }
-        binding.emptyView.root.isVisible = estimate.isEmpty()
-        shippingMethodAdapter.submitList(estimate.toMutableList())
+
     }
 
     private fun initUi() {

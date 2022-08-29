@@ -91,7 +91,7 @@
     <string name="label_empty_wish_list_slogan">But not for long! Tap ♡ to start saving you favorite pieces</string>
     <string name="label_connection_error">Connection Error</string>
     <string name="label_error"> Error</string>
-    <string name="label_sorry"> Sorry</string>
+    <string name="label_sorry">Sorry</string>
     <string name="okay">Okay</string>
     <string name="label_try_again">Try Again</string>
     <string name="label_no_internet">There\'s a problem with your network connection. Please check your connection</string>
@@ -209,7 +209,7 @@
     <string name="label_address_label">Address Label</string>
     <string name="label_order_cancel_reason">Order Cancel Reason</string>
     <string name="label_return_reason">Return item Reason</string>
-    <string name="label_address_line_1">Address Line 1</string>
+    <string name="label_address_line_1">Address</string>
     <string name="label_address_line_2">Address Line 2 (Optional)</string>
     <string name="label_city">City</string>
     <string name="label_state">State</string>
@@ -338,7 +338,7 @@
     <string name="msg_for_withdraw">Withdraw feature is coming soon.</string>
     <string name="msg_for_pawn_shop">Pawn Shop feature is coming soon.</string>
     <string name="msg_for_top_up">Top-Up feature is coming soon.</string>
-    <string name="msg_for_febys_plus">Febys Plus Subscription feature is coming soon.</string>
+    <string name="msg_for_febys_plus">Febys Plus Subscription Feature is Coming Soon.</string>
     <string name="label_add_seller_feedback">Add Seller Feedback.</string>
     <string name="label_price">Price</string>
     <string name="label_celebrity">Celebrity</string>
@@ -432,7 +432,8 @@
     <string name="description_please_type_any_keyboard_in_the_top_search_bar">Please type any keyboard in the \ntop search bar</string>
     <string name="label_search">Search</string>
     <string name="braintree_powered_by_paypal">Braintree powered by PayPal</string>
-    <string name="processing_fee_will_be_charged"><b>%1$s</b> processing fee will be charged</string>
+    <string name="processing_fee_will_be_charged">Paypal, credit or debit card <b>%1$s</b> processing fee will be charged</string>
+    <string name="processing_fee_will_be_charged_for_paystack"><b>%1$s</b> processing fee will be charged</string>
     <string name="description_sorry_it_seems_that_the_product_you_nare_looking_for_does_not_exit">Sorry, it seems that the product you \nare looking for does not exit.</string>
     <string name="label_search_result">Search Results</string>
     <string name="Label_location">Location</string>

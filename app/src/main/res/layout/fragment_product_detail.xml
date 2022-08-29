@@ -183,7 +183,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/_16dp"
-                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginTop="@dimen/_15sdp"
                         android:src="@drawable/ic_our_of_stock"
                         android:visibility="gone"
                         app:actualImageScaleType="fitCenter"
@@ -197,7 +197,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/_16dp"
-                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
                         android:text="@{product.vendor.shopName}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -794,6 +794,7 @@
                                             android:id="@+id/tv_store_name"
                                             style="@style/TextTheme.Arial.TS14"
                                             android:layout_width="wrap_content"
+                                            tools:text="dbkjnvjdvjdjdbvkjdnvkjndvkjd"
                                             android:layout_height="wrap_content"
                                             android:text="@{product.vendor.shopName}" />
 
@@ -801,8 +802,8 @@
                                             android:id="@+id/iv_badge"
                                             android:layout_width="@dimen/_15sdp"
                                             android:layout_height="@dimen/_15sdp"
-                                            android:layout_marginStart="@dimen/_4sdp"
                                             android:layout_marginBottom="@dimen/_2sdp"
+                                            android:layout_marginStart="@dimen/_2sdp"
                                             android:src="@drawable/ic_badge"
                                             android:visibility="visible"
                                             app:layout_constraintTop_toTopOf="@id/vendor_name" />

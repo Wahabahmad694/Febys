@@ -164,9 +164,15 @@ class AddEditShippingAddressFragment : BaseFragment() {
 
             if (!binding.etAddressLine1.text.isNullOrEmpty()) {
                 binding.containerRegion.isVisible = true
-                binding.containerState.isVisible = true
-                binding.containerCity.isVisible = true
-                binding.containerPostalCode.isVisible = true
+                if (!location?.address?.state.isNullOrEmpty()) {
+                    binding.containerState.isVisible = true
+                }
+                if (!location?.address?.city.isNullOrEmpty()) {
+                    binding.containerCity.isVisible = true
+                }
+                if (!location?.address?.postalCode.isNullOrEmpty()) {
+                    binding.containerPostalCode.isVisible = true
+                }
             }
         }
     }

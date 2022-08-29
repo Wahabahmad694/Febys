@@ -155,12 +155,12 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/ic_map"
+                            android:id="@+id/ic_mpp"
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_20sdp"
                             android:layout_marginTop="@dimen/_5sdp"
                             android:layout_marginEnd="@dimen/_10sdp"
-                            android:src="@drawable/ic_pin_location"
+                            android:src="@drawable/ic_map_place"
                             app:layout_constraintBottom_toBottomOf="@id/label_address_line_1"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
