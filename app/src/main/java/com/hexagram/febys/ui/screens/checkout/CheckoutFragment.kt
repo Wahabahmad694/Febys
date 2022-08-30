@@ -92,8 +92,9 @@ class CheckoutFragment : BaseFragment() {
                     binding.tvShippingDetail.text = mEstimate.timeString
                     binding.tvShippingFee.text =
                         "${mEstimate.totalPricing.currency_code} ${mEstimate.totalPricing.value}"
+                    checkoutViewModel.estimate = mEstimate
+
                 }
-                checkoutViewModel.estimate = mEstimate
             }
         }
 

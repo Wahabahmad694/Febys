@@ -10,11 +10,11 @@ import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import com.google.android.gms.maps.model.LatLng
 import com.hexagram.febys.R
 import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentAddEditShippingAddressBinding
 import com.hexagram.febys.models.api.contact.PhoneNo
-import com.hexagram.febys.models.api.location.LatLong
 import com.hexagram.febys.models.api.location.LocationSuggestion
 import com.hexagram.febys.models.api.shippingAddress.Address
 import com.hexagram.febys.models.api.shippingAddress.Coordinates
@@ -42,6 +42,7 @@ class AddEditShippingAddressFragment : BaseFragment() {
     private var country: String = ""
     private var addressLine1: String = ""
     private var city: String = ""
+    private var latlng: LatLng? = null
     private var state: String = ""
     private var zipCode: String = ""
     private var phoneNo: String = ""
@@ -112,7 +113,7 @@ class AddEditShippingAddressFragment : BaseFragment() {
         binding.containerAddress.setOnClickListener {
             val gotoMap =
                 AddEditShippingAddressFragmentDirections.actionAddEditShippingAddressFragmentToLocationFragment(
-                    LatLong(0.0, 0.0)
+                    latlng
                 )
             navigateTo(gotoMap)
         }
@@ -156,6 +157,7 @@ class AddEditShippingAddressFragment : BaseFragment() {
         setFragmentResultListener(LocationFragment.LOCATION) { _, bundle ->
             location =
                 bundle.getParcelable<LocationSuggestion?>(LocationFragment.LOCATION)
+            latlng = LatLng(location?.lat ?: 0.0, location?.lng ?: 0.0)
             binding.etAddressLine1.text = location?.name
             binding.tvCity.text = location?.address?.city
             binding.tvRegion.text = location?.address?.country

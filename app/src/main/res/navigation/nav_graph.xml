@@ -714,7 +714,8 @@
 
         <argument
             android:name="lat"
-            app:argType="com.hexagram.febys.models.api.location.LatLong" />
+            app:argType="com.google.android.gms.maps.model.LatLng"
+            app:nullable="true"/>
 
     </fragment>
     <fragment

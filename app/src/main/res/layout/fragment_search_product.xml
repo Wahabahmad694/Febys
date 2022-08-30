@@ -58,6 +58,7 @@
                 android:layout_weight="1"
                 android:autofillHints="@null"
                 android:background="@null"
+                android:focusedByDefault="true"
                 android:hint="@string/hint_search"
                 android:imeOptions="actionSearch"
                 android:inputType="text"

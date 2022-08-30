@@ -8,6 +8,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -46,12 +47,13 @@ class LocationFragment : BaseFragmentWithPermission(), OnMapReadyCallback {
     private var googleMap: GoogleMap? = null
     private var hasPreviousLocation = false
 
+    private val args: LocationFragmentArgs by navArgs()
+
     private lateinit var binding: FragmentLocationBinding
 
 
     private fun getPosition(): LatLng? {
-        val position = arguments?.getParcelable<LatLng>(POSITION)
-        return position
+        return args.lat
     }
 
     private val searchLocationAdapter: SearchLocationAdapter by lazy {
@@ -72,7 +74,7 @@ class LocationFragment : BaseFragmentWithPermission(), OnMapReadyCallback {
     }
 
     override fun getPermissionGranted() {
-//        viewModel.getCurrentLocation()
+        viewModel.getCurrentLocation()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

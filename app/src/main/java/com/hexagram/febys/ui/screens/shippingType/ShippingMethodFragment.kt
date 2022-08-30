@@ -46,7 +46,7 @@ class ShippingMethodFragment : BaseFragment() {
         } else {
             val estimate = estimates.swooveEstimates?.responses?.estimates
             estimate?.forEach {
-                if (it.estimateTypeDetails.name == estimates.swooveEstimates.responses.optimalEstimate.estimateTypeDetails.name) {
+                if (it.estimateId == estimates.swooveEstimates.responses.optimalEstimate.estimateTypeDetails.name) {
                     it.selected = true
                 }
             }
