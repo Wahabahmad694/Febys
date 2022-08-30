@@ -182,6 +182,13 @@
         <item name="strokeColor">@color/black</item>
     </style>
 
+    <style name="ButtonTheme.OutLine.Gray">
+        <item name="android:textAppearance">@style/TextTheme.HelveticaNeue.TS16</item>
+        <item name="android:textColor">@color/disable_button_color</item>
+<!--        <item name="android:background">@color/white</item>-->
+        <item name="strokeColor">@color/disable_button_color</item>
+    </style>
+
     <style name="ButtonTheme.OutLine.Small">
         <item name="android:textAppearance">@style/TextTheme.HelveticaNeue.TS12</item>
     </style>

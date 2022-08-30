@@ -48,8 +48,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="$158.00" />
-
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/label_vat"
+            style="@style/TextTheme.HelveticaNeue.TS14.Grey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_minus11sdp"
+            android:text="@string/label_vat_inclusive" />
 
     </LinearLayout>
 </layout>

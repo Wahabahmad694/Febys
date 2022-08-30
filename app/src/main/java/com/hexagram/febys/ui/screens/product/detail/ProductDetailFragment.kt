@@ -824,12 +824,14 @@ class ProductDetailFragment : SliderFragment() {
         binding.variant = variant
         productDetailViewModel.selectedVariant = variant
 
-        binding.btnAddToCart.isEnabled = variant.availability
-        binding.btnPayNow.isEnabled = variant.availability
         if (variant.availability) {
             binding.icOutStock.hide()
+            binding.btnAddToCart.isEnabled = true
+            binding.btnPayNow.isEnabled = true
         } else {
             binding.icOutStock.show()
+            binding.btnAddToCart.isEnabled = false
+            binding.btnPayNow.isEnabled = false
         }
         setupProductImagesSlider(variant.images)
 

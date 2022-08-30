@@ -3,6 +3,7 @@ package com.hexagram.febys.repos
 import androidx.lifecycle.LiveData
 import com.hexagram.febys.models.api.cart.Cart
 import com.hexagram.febys.models.api.order.Order
+import com.hexagram.febys.models.api.request.EstimateRequest
 import com.hexagram.febys.models.api.transaction.Transaction
 import com.hexagram.febys.models.api.vendor.VendorMessage
 import com.hexagram.febys.models.db.CartDTO
@@ -40,6 +41,7 @@ interface ICartRepo {
     fun placeOrder(
         transactions: List<Transaction>,
         voucher: String?,
-        vendorMessages: List<VendorMessage>
+        vendorMessages: List<VendorMessage>,
+        estimate: EstimateRequest?
     ): Flow<DataState<Order?>>
 }

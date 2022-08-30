@@ -1,14 +1,12 @@
 package com.hexagram.febys.repos
 
-import com.hexagram.febys.models.api.cities.PostCitiesResponse
-import com.hexagram.febys.models.api.countries.CountryResponse
-import com.hexagram.febys.models.api.request.GetCitiesRequest
-import com.hexagram.febys.models.api.request.GetStatesRequest
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
-import com.hexagram.febys.models.api.states.PostStatesResponse
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.network.FebysBackendService
-import com.hexagram.febys.network.adapter.*
+import com.hexagram.febys.network.adapter.onError
+import com.hexagram.febys.network.adapter.onException
+import com.hexagram.febys.network.adapter.onNetworkError
+import com.hexagram.febys.network.adapter.onSuccess
 import com.hexagram.febys.prefs.IPrefManger
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -78,52 +76,6 @@ class ShippingAddressRepoImpl @Inject constructor(
         }
 
     }.flowOn(dispatcher)
-
-
-    override suspend fun fetchCountries(
-        dispatcher: CoroutineDispatcher
-    ): Flow<DataState<CountryResponse>> = flow<DataState<CountryResponse>> {
-        val authToken = getAuthToken()
-        if (authToken.isEmpty()) return@flow
-        backendService.fetchCountries(authToken)
-            .onSuccess {
-                emit(DataState.Data(data!!))
-            }
-            .onError { emit(DataState.ApiError(message)) }
-            .onException { emit(DataState.ExceptionError()) }
-            .onNetworkError { emit(DataState.NetworkError()) }
-
-    }.flowOn(dispatcher)
-
-    override suspend fun getStates(
-        getStatesRequest: GetStatesRequest,
-        dispatcher: CoroutineDispatcher
-    ): Flow<DataState<PostStatesResponse>> = flow<DataState<PostStatesResponse>> {
-        val authToken = getAuthToken()
-        if (authToken.isEmpty()) return@flow
-        backendService.getStates(authToken, getStatesRequest)
-            .onSuccess {
-                emit(DataState.Data(data!!))
-            }
-            .onError { emit(DataState.ApiError(message)) }
-            .onException { emit(DataState.ExceptionError()) }
-            .onNetworkError { emit(DataState.NetworkError()) }
-    }.flowOn(dispatcher)
-
-    override suspend fun getCities(
-        getCitiesRequest: GetCitiesRequest,
-        dispatcher: CoroutineDispatcher
-    ): Flow<DataState<PostCitiesResponse>> = flow<DataState<PostCitiesResponse>> {
-        val authToken = getAuthToken()
-        if (authToken.isEmpty()) return@flow
-        backendService.getCities(authToken, getCitiesRequest)
-            .onSuccess {
-                emit(DataState.Data(data!!))
-            }
-            .onError { emit(DataState.ApiError(message)) }
-            .onException { emit(DataState.ExceptionError()) }
-            .onNetworkError { emit(DataState.NetworkError()) }
-    }
 
     private fun sortShippingAddresses(shippingAddresses: List<ShippingAddress>): List<ShippingAddress> {
         val mutableShippingAddresses = shippingAddresses.toMutableList()

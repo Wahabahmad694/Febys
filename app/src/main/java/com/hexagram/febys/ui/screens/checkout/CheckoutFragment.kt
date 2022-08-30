@@ -13,14 +13,17 @@ import com.hexagram.febys.base.BaseFragment
 import com.hexagram.febys.databinding.FragmentCheckoutBinding
 import com.hexagram.febys.models.api.order.Order
 import com.hexagram.febys.models.api.price.Price
+import com.hexagram.febys.models.api.request.EstimateRequest
 import com.hexagram.febys.models.api.request.PaymentRequest
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
 import com.hexagram.febys.models.api.transaction.Transaction
 import com.hexagram.febys.models.db.CartDTO
+import com.hexagram.febys.models.swoove.Estimate
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.ui.screens.cart.CartAdapter
 import com.hexagram.febys.ui.screens.dialog.ErrorDialog
 import com.hexagram.febys.ui.screens.payment.BasePaymentFragment
+import com.hexagram.febys.ui.screens.shippingType.ShippingMethodFragment
 import com.hexagram.febys.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -32,6 +35,7 @@ class CheckoutFragment : BaseFragment() {
 
     private var orderPrice: Price? = null
 
+    private var order: Order? = null
     private var voucher = ""
     private var validVoucher = false
 
@@ -44,13 +48,13 @@ class CheckoutFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initUi()
         uiListener()
         setObserver()
 
         fetchOrderInfo()
     }
+
 
     private fun initUi() {
         binding.rvCart.isNestedScrollingEnabled = false
@@ -59,7 +63,41 @@ class CheckoutFragment : BaseFragment() {
         val shippingAddress = checkoutViewModel.getDefaultShippingAddress()
         updateShippingAddressUi(shippingAddress)
 
+        if (binding.tvShippingMethod.text.isEmpty()) {
+            binding.tvShippingMethod.text = "Please Select shipping Method"
+            binding.tvSeparator.hide()
+        }
+
         updateFav()
+    }
+
+    private fun updateShippingMethod(order: Order?) {
+        if (checkoutViewModel.estimate != null) {
+            val estimate = order?.swooveEstimates?.responses?.estimates
+            estimate?.forEachIndexed { index, mEstimate ->
+                if (mEstimate.estimateTypeDetails.name == checkoutViewModel.estimate!!.estimateTypeDetails.name) {
+                    mEstimate.selected = true
+                    binding.tvShippingMethod.text = mEstimate.estimateTypeDetails.name
+                    binding.tvShippingDetail.text = mEstimate.timeString
+                    binding.tvShippingFee.text =
+                        "${mEstimate.totalPricing.currency_code} ${mEstimate.totalPricing.value}"
+                }
+            }
+        } else {
+            val estimate = order?.swooveEstimates?.responses?.estimates
+            estimate?.forEachIndexed { index, mEstimate ->
+                if (mEstimate.estimateId == order.swooveEstimates.responses.optimalEstimate.estimateId) {
+                    mEstimate.selected = true
+                    binding.tvShippingMethod.text = mEstimate.estimateTypeDetails.name
+                    binding.tvShippingDetail.text = mEstimate.timeString
+                    binding.tvShippingFee.text =
+                        "${mEstimate.totalPricing.currency_code} ${mEstimate.totalPricing.value}"
+                    checkoutViewModel.estimate = mEstimate
+
+                }
+            }
+        }
+
     }
 
     private fun uiListener() {
@@ -70,7 +108,7 @@ class CheckoutFragment : BaseFragment() {
             else showChangeShippingAddressWarningDialog()
         }
         binding.containerCourier.setOnClickListener {
-            gotoShippingType()
+            order?.let { it1 -> gotoShippingType(it1) }
         }
 
         binding.btnPlaceOrder.setOnClickListener {
@@ -160,6 +198,16 @@ class CheckoutFragment : BaseFragment() {
         }
     }
 
+    private fun showErrorPopUpShippingMethod() {
+        val resId = R.drawable.ic_error
+        val title = getString(R.string.label_sorry)
+        val msg = getString(R.string.error_add_shipping_method)
+
+        showInfoDialoge(resId, title, msg) {
+            // do nothing
+        }
+    }
+
     private fun showErrorPopUp() {
         val resId = R.drawable.ic_error
         val title = getString(R.string.label_error)
@@ -204,18 +252,20 @@ class CheckoutFragment : BaseFragment() {
             }
             is DataState.Data -> {
                 hideLoader()
-                val order = orderInfoResponse.data
+                order = orderInfoResponse.data
                 if (order == null) {
                     goBack()
                     return
                 }
                 updateVoucherField()
-                order.addToOrderSummary(binding.containerOrderSummary)
-                updateTotalAmount(order.billAmount)
-                validVoucher = order.productsAmount.value > (order.voucher?.amount ?: 0.0)
+                updateShippingMethod(order)
+                order!!.addToOrderSummary(binding.containerOrderSummary)
+                updateTotalAmount(order!!.totalAmountAsString)
+                validVoucher = order!!.productsAmount.value > (order!!.voucher?.amount ?: 0.0)
                 if (!validVoucher) {
                     showInvalidVoucherDialog()
                 }
+
             }
         }
     }
@@ -229,9 +279,15 @@ class CheckoutFragment : BaseFragment() {
 
     private fun setObserver() {
         checkoutViewModel.observeCart().observe(viewLifecycleOwner) {
-            hideLoader()
             val sortedListForCart = checkoutViewModel.sortListForCart(it)
             cartAdapter.submitList(sortedListForCart)
+        }
+
+
+        setFragmentResultListener(ShippingMethodFragment.ESTIMATE) { _, bundle ->
+            val estimate =
+                bundle.getParcelable<Estimate>(ShippingMethodFragment.ESTIMATE)
+            checkoutViewModel.estimate = estimate
         }
     }
 
@@ -266,16 +322,26 @@ class CheckoutFragment : BaseFragment() {
         navigateTo(gotoShippingAddress)
     }
 
-    private fun gotoShippingType() {
-        val gotoShippingType =
-            CheckoutFragmentDirections.actionCheckoutFragmentToShippingTypeFragment()
-        navigateTo(gotoShippingType)
+    private fun gotoShippingType(order: Order) {
+        if (order.shippingAddress == null) {
+            showErrorPopUpShippingMethod()
+        } else {
+            val gotoShippingType =
+                CheckoutFragmentDirections.actionCheckoutFragmentToShippingTypeFragment(order)
+            navigateTo(gotoShippingType)
+        }
+
     }
 
     private fun placeOrder(transactions: List<Transaction>) {
         val vendorMessages = cartAdapter.getVendorMessages()
+        val estimateRequest = checkoutViewModel.estimate?.let {
+            EstimateRequest(
+                estimate = it
+            )
+        }
         checkoutViewModel
-            .placeOrder(transactions, voucher, vendorMessages)
+            .placeOrder(transactions, voucher, vendorMessages, estimateRequest)
             .observe(viewLifecycleOwner) {
                 when (it) {
                     is DataState.Loading -> {

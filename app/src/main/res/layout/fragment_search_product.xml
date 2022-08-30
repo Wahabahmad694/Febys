@@ -58,6 +58,7 @@
                 android:layout_weight="1"
                 android:autofillHints="@null"
                 android:background="@null"
+                android:focusedByDefault="true"
                 android:hint="@string/hint_search"
                 android:imeOptions="actionSearch"
                 android:inputType="text"
@@ -71,16 +72,16 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/hint_clear"
                 android:padding="@dimen/_16dp"
-                android:visibility="gone"
-                android:src="@drawable/iv_close_2" />
+                android:src="@drawable/iv_close_2"
+                android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/iv_search"
                 android:layout_width="@dimen/_43sdp"
                 android:layout_height="match_parent"
+                android:background="@color/red"
                 android:contentDescription="@string/hint_search"
                 android:padding="@dimen/_16dp"
-                android:background="@color/red"
                 android:src="@drawable/ic_search" />
 
         </LinearLayout>
@@ -89,24 +90,25 @@
             android:id="@+id/rv_product_search"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/_5sdp"
             android:layout_weight="1"
             android:clipToPadding="false"
             android:gravity="center_horizontal"
             android:paddingTop="@dimen/_10sdp"
             android:paddingBottom="@dimen/_2sdp"
             app:layoutManager="LinearLayoutManager"
-            tools:context=".ui.screens.suggestionSearch.SearchProductFragment"
-            tools:listitem="@layout/item_search_suggestion"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ll_search_container_search_fragment"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll_search_container_search_fragment"
+            tools:context=".ui.screens.suggestionSearch.SearchProductFragment"
+            tools:listitem="@layout/item_search_suggestion" />
 
         <include
             android:id="@+id/empty_view"
             layout="@layout/layout_empty_search_result"
             android:visibility="gone"
-            tools:visibility="visible"
-            />
+            tools:visibility="visible" />
 
         <include
             android:id="@+id/search_type_view"

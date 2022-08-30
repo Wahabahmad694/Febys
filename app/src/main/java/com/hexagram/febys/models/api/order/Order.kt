@@ -9,11 +9,14 @@ import com.hexagram.febys.databinding.LayoutOrderSummaryProductBinding
 import com.hexagram.febys.models.api.cart.VendorProducts
 import com.hexagram.febys.models.api.consumer.Consumer
 import com.hexagram.febys.models.api.price.Price
+import com.hexagram.febys.models.api.request.EstimateRequest
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
 import com.hexagram.febys.models.api.transaction.Transaction
 import com.hexagram.febys.models.api.vouchers.VoucherDetail
 import com.hexagram.febys.models.db.CartDTO
+import com.hexagram.febys.models.swoove.SwooveEstimates
 import com.hexagram.febys.network.domain.util.CartMapper
+import com.hexagram.febys.utils.convertTwoDecimal
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -27,6 +30,8 @@ data class Order(
     val consumer: Consumer,
     @SerializedName("shipping_detail")
     val shippingAddress: ShippingAddress?,
+    @SerializedName("swoove_estimates")
+    val swooveEstimates: SwooveEstimates?,
     @SerializedName("products_amount")
     val productsAmount: Price,
     @SerializedName("bill_amount")
@@ -42,7 +47,9 @@ data class Order(
     @SerializedName("created_at")
     val createdAt: String,
     @SerializedName("updated_at")
-    val updatedAt: String
+    val updatedAt: String,
+    var totalAmountAsString: Price,
+    val swoove: EstimateRequest?
 ) : Parcelable {
     fun toListOfCartDTO(): List<CartDTO> {
         return CartMapper().mapFromVendorProducts(vendorProducts)
@@ -61,7 +68,7 @@ data class Order(
         }
         updateOrderSummaryQuantity(containerOrderSummary, totalItems)
 
-        addVatToOrderSummary(containerOrderSummary, vatPercentage, productsAmount)
+//        addVatToOrderSummary(containerOrderSummary, vatPercentage, productsAmount)
 
         addProductToOrderSummary(
             containerOrderSummary,
@@ -71,8 +78,11 @@ data class Order(
             true
         )
 
-
-        val deliveryFee = deliveryFee ?: Price("", 0.0, productsAmount.currency)
+        val shippingFee =
+            if (swoove != null) listOf(swoove.estimate) else swooveEstimates?.responses?.estimates?.filter { it.selected }
+        var shippingFinalFee =
+            (shippingFee?.map { it.totalPricing.value }?.first { it > 0 })?.toDouble() ?: 0.0
+        val deliveryFee = Price("", shippingFinalFee, productsAmount.currency)
         addProductToOrderSummary(
             containerOrderSummary,
             context.getString(R.string.label_shipping_fee),
@@ -82,12 +92,13 @@ data class Order(
         )
 
 
-        val transactionFees = transactions.filter { it.transactionFee!= null }
+        val transactionFees = transactions.filter { it.transactionFee != null }
         var finalFee = 0f
 
-        if(transactionFees.isNotEmpty())
-        {
-            finalFee= transactionFees.map { it.transactionFee }.first { it!! > 0f } ?:0f
+        if (transactionFees.isNotEmpty()) {
+            finalFee =
+                transactionFees.map { it.transactionFee }.firstOrNull { it != null && it > 0f }
+                    ?: 0f
             val transactionsPrice = Price("", finalFee.toDouble(), productsAmount.currency)
             addProductToOrderSummary(
                 containerOrderSummary,
@@ -110,7 +121,7 @@ data class Order(
             )
         }
 
-        updateTotalAmount(containerOrderSummary, billAmount, finalFee)
+        updateTotalAmount(containerOrderSummary, billAmount, finalFee, shippingFinalFee)
     }
 
     private fun addProductToOrderSummary(
@@ -132,27 +143,27 @@ data class Order(
         containerOrderSummary.containerOrderSummaryProducts.addView(productSummary.root)
     }
 
-    private fun addVatToOrderSummary(
-        containerOrderSummary: LayoutOrderSummaryBinding,
-        vatPercentage: Double,
-        total: Price
-    ) {
-        val context = containerOrderSummary.root.context
-        val productSummary = LayoutOrderSummaryProductBinding.inflate(
-            LayoutInflater.from(context), containerOrderSummary.containerOrderSummaryProducts, false
-        )
-
-        val vatLabel = context.getString(R.string.label_vat)
-        val vatWithPercentage = "$vatLabel ($vatPercentage%)"
-        productSummary.tvProductNameWithQuantity.text = vatWithPercentage
-
-        val vatAmount =
-            if (vatPercentage > 0) total.value.times(vatPercentage).div(100.0) else 0.0
-        val vatPrice = Price("", vatAmount, total.currency)
-
-        productSummary.tvTotalPrice.text = vatPrice.getFormattedPrice()
-        containerOrderSummary.containerOrderSummaryProducts.addView(productSummary.root)
-    }
+//    private fun addVatToOrderSummary(
+//        containerOrderSummary: LayoutOrderSummaryBinding,
+//        vatPercentage: Double,
+//        total: Price
+//    ) {
+//        val context = containerOrderSummary.root.context
+//        val productSummary = LayoutOrderSummaryProductBinding.inflate(
+//            LayoutInflater.from(context), containerOrderSummary.containerOrderSummaryProducts, false
+//        )
+//
+//        val vatLabel = context.getString(R.string.label_vat)
+//        val vatWithPercentage = "$vatLabel ($vatPercentage%)"
+//        productSummary.tvProductNameWithQuantity.text = vatWithPercentage
+//
+//        val vatAmount =
+//            if (vatPercentage > 0) total.value.times(vatPercentage).div(100.0) else 0.0
+//        val vatPrice = Price("", vatAmount, total.currency)
+//
+//        productSummary.tvTotalPrice.text = vatPrice.getFormattedPrice()
+//        containerOrderSummary.containerOrderSummaryProducts.addView(productSummary.root)
+//    }
 
     private fun updateOrderSummaryQuantity(
         containerOrderSummary: LayoutOrderSummaryBinding,
@@ -170,10 +181,25 @@ data class Order(
     private fun updateTotalAmount(
         containerOrderSummary: LayoutOrderSummaryBinding,
         price: Price,
-        transactions: Float?
+        transactions: Float?,
+        shippingFinalFee: Double?
     ) {
         val total: Double = price.value + (transactions?.toDouble() ?: 0.0)
-        val totalAmountAsString = Price("", total, price.currency).getFormattedPrice()
-        containerOrderSummary.tvTotalPrice.text = totalAmountAsString
+        val totalWithShippingFee = total + (shippingFinalFee ?: 0.0)
+        if (swoove?.estimate == null) {
+            totalAmountAsString =
+                Price("", totalWithShippingFee, price.currency)
+            containerOrderSummary.tvTotalPrice.text =
+                "${totalAmountAsString.currency}${totalAmountAsString.value}"
+        } else {
+            val netPrice = totalWithShippingFee.minus(swoove.estimate.totalPricing.value)
+            val netPriceConverted = netPrice.convertTwoDecimal().toDouble()
+            totalAmountAsString =
+                Price("", netPriceConverted, price.currency)
+            containerOrderSummary.tvTotalPrice.text =
+                "${totalAmountAsString.currency}${totalAmountAsString.value}"
+        }
+
     }
+
 }
