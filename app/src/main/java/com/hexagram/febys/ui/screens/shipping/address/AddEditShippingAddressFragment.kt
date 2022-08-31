@@ -1,6 +1,7 @@
 package com.hexagram.febys.ui.screens.shipping.address
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -47,7 +48,6 @@ class AddEditShippingAddressFragment : BaseFragment() {
     private var zipCode: String = ""
     private var phoneNo: String = ""
     private var isDefault: Boolean = false
-    private var location: LocationSuggestion? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -95,7 +95,7 @@ class AddEditShippingAddressFragment : BaseFragment() {
         binding.etAddressLine1.text = shippingAddress.shippingDetail.address.street
         binding.etPostalCode.setText(shippingAddress.shippingDetail.address.zipCode)
 
-        updateDefaultCCP(shippingAddress.shippingDetail.contact)
+//        updateDefaultCCP(shippingAddress.shippingDetail.contact)
 
         isDefault = shippingAddress.shippingDetail.isDefault
         binding.switchSetAsDefault.isChecked = shippingAddress.shippingDetail.isDefault
@@ -103,7 +103,14 @@ class AddEditShippingAddressFragment : BaseFragment() {
     }
 
     private fun updateDefaultCCP(contact: PhoneNo) {
-        binding.ccpPhoneCode.setDefaultCountryUsingNameCode(contact.countryCode)
+        val ccp = getCountryCode(shippingAddressViewModel.location?.address?.country)
+        Log.d("TAG_COUNTRY", "getCountryCode: $ccp")
+        Log.d(
+            "TAG_COUNTRY_PICK",
+            "getCountryCode: ${shippingAddressViewModel.location?.address?.country}"
+        )
+
+        binding.ccpPhoneCode.setDefaultCountryUsingNameCode(ccp)
         binding.ccpPhoneCode.resetToDefaultCountry()
         val countryCodeWithPlus = binding.ccpPhoneCode.selectedCountryCodeWithPlus
         binding.etPhone.setText(contact.number.replace(countryCodeWithPlus, ""))
@@ -155,9 +162,10 @@ class AddEditShippingAddressFragment : BaseFragment() {
 
     private fun observeLocation() {
         setFragmentResultListener(LocationFragment.LOCATION) { _, bundle ->
-            location =
+           val location =
                 bundle.getParcelable<LocationSuggestion?>(LocationFragment.LOCATION)
             latlng = LatLng(location?.lat ?: 0.0, location?.lng ?: 0.0)
+            shippingAddressViewModel.location = location
             binding.etAddressLine1.text = location?.name
             binding.tvCity.text = location?.address?.city
             binding.tvRegion.text = location?.address?.country
@@ -176,6 +184,8 @@ class AddEditShippingAddressFragment : BaseFragment() {
                     binding.containerPostalCode.isVisible = true
                 }
             }
+            args.shippingAddress?.shippingDetail?.contact?.let { updateDefaultCCP(it) }
+            updateUi(args.shippingAddress)
         }
     }
 
@@ -192,7 +202,7 @@ class AddEditShippingAddressFragment : BaseFragment() {
             countryCode = phoneCountryCode,
             number = phoneNo
         )
-        val coordinates: MutableList<Double?> = mutableListOf(location?.lng, location?.lat)
+        val coordinates: MutableList<Double?> = mutableListOf(shippingAddressViewModel.location?.lng, shippingAddressViewModel.location?.lat)
         val coordinate = Coordinates(coordinates)
         val address = Address(
             city = city,
@@ -258,26 +268,6 @@ class AddEditShippingAddressFragment : BaseFragment() {
             showErrorDialog(getString(R.string.error_enter_valid_address))
             return false
         }
-
-//        if (!Validator.isValidCity(city)) {
-//            showErrorDialog(getString(R.string.error_enter_valid_city))
-//            return false
-//        }
-//
-//        if (state.isEmpty() && !Validator.isValidState(state)) {
-//            showErrorDialog(getString(R.string.error_enter_valid_state))
-//            return false
-//        }
-//
-//        if (country.isEmpty() && !Validator.isValidCountry(country)) {
-//            showErrorDialog(getString(R.string.error_enter_valid_country))
-//            return false
-//        }
-//
-//        if (!Validator.isValidPostalCode(zipCode)) {
-//            showErrorDialog(getString(R.string.error_enter_valid_postal_code))
-//            return false
-//        }
 
         if (!Validator.isValidPhone(phoneNo)) {
             showErrorDialog(getString(R.string.error_enter_valid_phone))

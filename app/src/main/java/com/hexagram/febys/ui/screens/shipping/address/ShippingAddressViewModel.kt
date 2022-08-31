@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.hexagram.febys.base.BaseViewModel
+import com.hexagram.febys.models.api.location.LocationSuggestion
 import com.hexagram.febys.models.api.shippingAddress.ShippingAddress
 import com.hexagram.febys.network.DataState
 import com.hexagram.febys.repos.IShippingAddressRepo
@@ -16,6 +17,8 @@ import javax.inject.Inject
 class ShippingAddressViewModel @Inject constructor(
     private val shippingRepo: IShippingAddressRepo
 ) : BaseViewModel() {
+
+    var location: LocationSuggestion? = null
     private val _shippingAddresses = MutableLiveData<DataState<List<ShippingAddress>>>()
     val shippingAddresses: LiveData<DataState<List<ShippingAddress>>> = _shippingAddresses
 
