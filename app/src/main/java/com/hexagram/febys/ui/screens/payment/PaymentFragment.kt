@@ -84,18 +84,25 @@ class PaymentFragment : BasePaymentFragment() {
             if (!paymentViewModel.isSplitMode) {
                 paymentViewModel.paymentMethod = PaymentMethod.WALLET
                 updateUi(binding.containerWalletPayment, binding.walletFilledTick)
+                binding.tvTotalAmount.text =
+                    "${args.paymentRequest.currency} ${args.paymentRequest.amount}"
             }
         }
 
         binding.containerMomoPayment.setOnClickListener {
             paymentViewModel.paymentMethod = PaymentMethod.PAY_STACK
             updateUi(binding.containerMomoPayment, binding.momoFilledTick)
-
+            binding.tvTotalAmount.text = "${args.paymentRequest.currency} ${
+                args.paymentRequest.amount.plus(paymentViewModel.transactionFeePayStack)
+            }"
         }
 
         binding.containerPaypalPayment.setOnClickListener {
             paymentViewModel.paymentMethod = PaymentMethod.PAYPAL
             updateUi(binding.containerPaypalPayment, binding.paypalFilledTick)
+            binding.tvTotalAmount.text = "${args.paymentRequest.currency} ${
+                args.paymentRequest.amount.plus(paymentViewModel.transactionFeePaypal)
+            }"
         }
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner) { handleBackPress() }
