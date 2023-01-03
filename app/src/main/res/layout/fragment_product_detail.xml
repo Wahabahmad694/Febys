@@ -920,20 +920,24 @@
         <include
             android:id="@+id/bottom_sheet_variant_first_attr"
             layout="@layout/bottom_sheet_product_variant"
+            android:visibility="gone"
             app:variantName="@{firstAttrName}" />
 
         <include
             android:id="@+id/bottom_sheet_variant_second_attr"
             layout="@layout/bottom_sheet_product_variant"
+            android:visibility="gone"
             app:variantName="@{secondAttrName}" />
 
         <include
             android:id="@+id/bottom_sheet_ask_question"
+            android:visibility="gone"
             layout="@layout/bottom_sheet_ask_question" />
 
         <include
             android:id="@+id/bottom_sheet_reply_question"
             layout="@layout/bottom_sheet_reply_question"
+            android:visibility="gone"
             app:thread="@{thread}" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

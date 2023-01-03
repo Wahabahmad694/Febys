@@ -110,8 +110,8 @@ class AddEditShippingAddressFragment : BaseFragment() {
             "getCountryCode: ${shippingAddressViewModel.location?.address?.country}"
         )
 
-        binding.ccpPhoneCode.setDefaultCountryUsingNameCode(ccp)
-        binding.ccpPhoneCode.resetToDefaultCountry()
+        binding.ccpPhoneCode.setDefaultCountryUsingNameCode(Utils.DEFAULT_COUNTRY_CODE)
+//        binding.ccpPhoneCode.resetToDefaultCountry()
         val countryCodeWithPlus = binding.ccpPhoneCode.selectedCountryCodeWithPlus
         binding.etPhone.setText(contact.number.replace(countryCodeWithPlus, ""))
     }

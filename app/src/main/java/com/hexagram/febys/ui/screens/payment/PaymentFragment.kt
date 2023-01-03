@@ -85,7 +85,7 @@ class PaymentFragment : BasePaymentFragment() {
                 paymentViewModel.paymentMethod = PaymentMethod.WALLET
                 updateUi(binding.containerWalletPayment, binding.walletFilledTick)
                 binding.tvTotalAmount.text =
-                    "${args.paymentRequest.currency} ${args.paymentRequest.amount}"
+                    "${args.paymentRequest.currency} ${args.paymentRequest.amount.toString().convertTwoDecimal()}"
             }
         }
 
@@ -185,7 +185,7 @@ class PaymentFragment : BasePaymentFragment() {
                         dataCollector(token)
                         if (paymentViewModel.isSplitMode) {
                             val remainingAmount =
-                                (paymentViewModel.transactionFeePaypal + paymentViewModel.getRemainingPriceForSplit().value).convertTwoDecimal()
+                                (paymentViewModel.transactionFeePaypal + paymentViewModel.getRemainingPriceForSplit().value).convertTwoDecimalForPayement()
                                     .toDouble()
                             callBrainTree(
                                 token,
@@ -193,7 +193,7 @@ class PaymentFragment : BasePaymentFragment() {
                             )
                         } else {
                             val actualAmount =
-                                (paymentViewModel.transactionFeePaypal + args.paymentRequest.amount).convertTwoDecimal()
+                                (paymentViewModel.transactionFeePaypal + args.paymentRequest.amount).convertTwoDecimalForPayement()
                                     .toDouble()
                             callBrainTree(
                                 token,
@@ -304,7 +304,7 @@ class PaymentFragment : BasePaymentFragment() {
         Log.d("PaymentFragment1234567", "onCreate: $nonce")
         if (paymentViewModel.isSplitMode) {
             val remainingAmount =
-                (paymentViewModel.transactionFeePaypal + paymentViewModel.getRemainingPriceForSplit().value).convertTwoDecimal()
+                (paymentViewModel.transactionFeePaypal + paymentViewModel.getRemainingPriceForSplit().value).convertTwoDecimalForPayement()
                     .toDouble()
             val requestRemainingAmount = BraintreeRequest(
                 remainingAmount,
@@ -319,7 +319,7 @@ class PaymentFragment : BasePaymentFragment() {
             paymentViewModel.doBrainTreeTransaction(requestRemainingAmount)
         } else {
             val totalAmountAfterConverted =
-                (paymentViewModel.transactionFeePaypal + args.paymentRequest.amount).convertTwoDecimal()
+                (paymentViewModel.transactionFeePaypal + args.paymentRequest.amount).convertTwoDecimalForPayement()
                     .toDouble()
             val request = BraintreeRequest(
                 totalAmountAfterConverted,

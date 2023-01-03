@@ -156,26 +156,28 @@
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/ic_mpp"
-                            android:layout_width="@dimen/_20sdp"
+                            android:layout_width="wrap_content"
                             android:layout_height="@dimen/_20sdp"
                             android:layout_marginTop="@dimen/_5sdp"
                             android:layout_marginEnd="@dimen/_10sdp"
                             android:src="@drawable/ic_map_place"
                             app:layout_constraintBottom_toBottomOf="@id/label_address_line_1"
                             app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/et_address_line_1"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
                             android:id="@+id/et_address_line_1"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="@dimen/_15sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
                             android:background="@null"
                             android:ellipsize="end"
                             android:maxLines="2"
+                            app:layout_constraintEnd_toStartOf="@+id/ic_mpp"
                             android:paddingVertical="@dimen/_5sdp"
                             android:textAppearance="@style/TextTheme.Arial.TS16"
-                            app:layout_constraintEnd_toStartOf="@+id/ic_map"
+                            tools:text="chvdscbihdsvcsbchsbcsbcshbcsbcsibcsbcjbcjvcshjvjchvjcvjavcjsbcsv"
                             app:layout_constraintStart_toStartOf="@id/label_address_line_1"
                             app:layout_constraintTop_toBottomOf="@id/label_address_line_1" />
 
@@ -361,6 +363,7 @@
                                 app:ccpDialog_keyboardAutoPopup="false"
                                 app:ccp_arrowColor="@color/black"
                                 app:ccp_contentColor="@color/black"
+                                app:ccp_countryPreference="gh,pk,nz,gb"
                                 app:ccp_hintExampleNumber="true"
                                 app:ccp_textSize="@dimen/_16sp" />
 

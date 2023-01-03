@@ -1,6 +1,7 @@
 package com.hexagram.febys.models.api.order
 
 import android.os.Parcelable
+import android.util.Log
 import android.view.LayoutInflater
 import com.google.gson.annotations.SerializedName
 import com.hexagram.febys.R
@@ -184,20 +185,21 @@ data class Order(
         transactions: Float?,
         shippingFinalFee: Double?
     ) {
-        val total: Double = price.value + (transactions?.toDouble() ?: 0.0)
-        val totalWithShippingFee = total + (shippingFinalFee ?: 0.0)
+        val total: Double = price.value.plus(transactions?.toDouble() ?: 0.0)
+        val totalWithShippingFee = total.plus(shippingFinalFee ?: 0.0)
+        Log.d("Price1", "updateTotal1: $totalWithShippingFee")
         if (swoove?.estimate == null) {
             totalAmountAsString =
                 Price("", totalWithShippingFee, price.currency)
             containerOrderSummary.tvTotalPrice.text =
-                "${totalAmountAsString.currency}${totalAmountAsString.value}"
+                "${totalAmountAsString.currency}${totalAmountAsString.value.toString().convertTwoDecimal()}"
         } else {
-            val netPrice = totalWithShippingFee.minus(swoove.estimate.totalPricing.value)
-            val netPriceConverted = netPrice.convertTwoDecimal().toDouble()
+            val netPrice =( totalWithShippingFee.minus(swoove.estimate.totalPricing.value))
+            Log.d("Price2", "updateTotal2: $netPrice")
             totalAmountAsString =
-                Price("", netPriceConverted, price.currency)
+                Price("", netPrice, price.currency)
             containerOrderSummary.tvTotalPrice.text =
-                "${totalAmountAsString.currency}${totalAmountAsString.value}"
+                "${totalAmountAsString.currency}${totalAmountAsString.value.toString().convertTwoDecimal()}"
         }
 
     }

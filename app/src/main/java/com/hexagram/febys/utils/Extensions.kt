@@ -35,6 +35,7 @@ import com.hexagram.febys.ui.screens.dialog.WarningDialog
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import java.io.IOException
+import java.math.BigDecimal
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.util.*
@@ -235,7 +236,15 @@ fun <T : View> BottomSheetBehavior<T>.onStateChange(callback: (state: Int) -> Un
     })
 }
 
-fun Double.convertTwoDecimal(): String = String.format("%.2f", this)
+fun Double.convertTwoDecimalForPayement(): String = String.format("%.2f", this)
+
+fun String.convertTwoDecimal(): String {
+    return String.format("%.2f", convertToBigDecimal())
+
+}
+
+fun String.convertToBigDecimal() = BigDecimal(this)
+
 fun Double.toFixedDecimal(decimalCount: Int): String {
     return String.format("%.${decimalCount}f", this)
 }

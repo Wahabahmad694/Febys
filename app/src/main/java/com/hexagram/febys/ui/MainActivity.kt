@@ -21,6 +21,7 @@ import com.hexagram.febys.ui.screens.home.HomeFragment
 import com.hexagram.febys.ui.screens.payment.PaymentFragment
 import dagger.hilt.android.AndroidEntryPoint
 
+
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -44,6 +45,7 @@ class MainActivity : BaseActivity() {
 
         setContentView(binding.root)
         setupBottomNav()
+//        printHashKey(this)
 
     }
 
@@ -111,12 +113,14 @@ class MainActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        val navFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
-        val mapFragment = navFragment!!.childFragmentManager.primaryNavigationFragment
+
 
 
         if (requestCode == DROP_IN_REQUEST_CODE) {
+            val navFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
+            val mapFragment = navFragment!!.childFragmentManager.primaryNavigationFragment
             if (resultCode == AppCompatActivity.RESULT_OK) {
+
                 val result: DropInResult? =
                     data?.getParcelableExtra(DropInResult.EXTRA_DROP_IN_RESULT)
                 val paymentMethodNonce = result?.paymentMethodNonce?.string
@@ -147,4 +151,21 @@ class MainActivity : BaseActivity() {
             }
         }
     }
+
+//    fun printHashKey(pContext: Context) {
+//        try {
+//            val info: PackageInfo = pContext.getPackageManager()
+//                .getPackageInfo(pContext.getPackageName(), PackageManager.GET_SIGNATURES)
+//            for (signature in info.signatures) {
+//                val md: MessageDigest = MessageDigest.getInstance("SHA")
+//                md.update(signature.toByteArray())
+//                val hashKey: String = String(Base64.encode(md.digest(), 0))
+//                Log.i("TAG", "printHashKey() Hash Key: $hashKey")
+//            }
+//        } catch (e: NoSuchAlgorithmException) {
+//            Log.e("TAG", "printHashKey()", e)
+//        } catch (e: java.lang.Exception) {
+//            Log.e("TAG", "printHashKey()", e)
+//        }
+//    }
 }

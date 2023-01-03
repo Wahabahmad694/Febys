@@ -25,7 +25,7 @@ abstract class SocialMediaAuthFragment : BaseFragment() {
     private lateinit var googleSignInActivityForResult: ActivityResultLauncher<Intent>
 
     private var fbSignInCallback: ((token: String) -> Unit)? = null
-    private val callbackManager = CallbackManager.Factory.create()
+    private var callbackManager = CallbackManager.Factory.create()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,10 +63,11 @@ abstract class SocialMediaAuthFragment : BaseFragment() {
 
     fun signInWithFacebook(callback: (idToken: String) -> Unit) {
         fbSignInCallback = callback
-
         LoginManager.getInstance().registerCallback(callbackManager,
-            object : FacebookCallback<LoginResult?> {
-                override fun onSuccess(result: LoginResult?) {
+            object : FacebookCallback<LoginResult> {
+                override fun onSuccess(result: LoginResult) {
+                    Log.e("SocialLogin", "onSuccess")
+
                     result?.accessToken?.token?.let {
                         fbSignInCallback?.invoke(it)
                         LoginManager.getInstance().logOut()
@@ -82,10 +83,14 @@ abstract class SocialMediaAuthFragment : BaseFragment() {
                 }
             })
 
-        LoginManager.getInstance().logIn(this, mutableListOf())
+        LoginManager.getInstance().logIn(this, arrayListOf("email","public_profile","user_friend"))
     }
 
+
+
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        callbackManager.onActivityResult(requestCode, resultCode, data)
+//        callbackManager.onActivityResult(requestCode, resultCode, data)
+        super.onActivityResult(requestCode, resultCode, data)
     }
 }

@@ -470,12 +470,11 @@ class HomeFragment : SliderFragment() {
         editorsPickItemAdapter.submitList(sameDayDeliveryItem)
 
         val isVisible = sameDayDeliveryItem.isNotEmpty()
-        isVisible.applyToViews(
-            binding.tvLabelSameDayDelivery,
-            binding.tvLabelSameDayDeliverySlogan,
-            binding.rvSameDayDeliveryItems,
-            binding.btnSameDayDeliveryItems
-        )
+            binding.tvLabelSameDayDelivery.hide()
+            binding.tvLabelSameDayDeliverySlogan.hide()
+            binding.rvSameDayDeliveryItems.hide()
+            binding.btnSameDayDeliveryItems.hide()
+
     }
 
     private fun setupStoreYouFollow(storeYouFollow: List<Product>) {
@@ -546,15 +545,12 @@ class HomeFragment : SliderFragment() {
     }
 
     private fun gotoChat() {
-        Zendesk.INSTANCE.init(
-            requireContext(), "https://synavos4743.zendesk.com",
-            "4bec6af177f6381b817a1beb0a6a856c2fb7ad17e8f03dfb",
-            "mobile_sdk_client_f2062f768e45a11d080d"
-        )
-
+        Zendesk.INSTANCE.init(requireContext(), "https://febys.zendesk.com",
+            "731a2fbda9e00bcc623fb9418e640728f727b0bf834fa6ef",
+            "mobile_sdk_client_55aa287fad5baebe4717")
         Support.INSTANCE.init(Zendesk.INSTANCE)
 
-        Chat.INSTANCE.init(requireContext(), "kK7tIQMiIaBGQQog0HSzbxISgnUnC7Gq")
+        Chat.INSTANCE.init(requireContext(), "9bdmD4Lfc1DndoNe0YnyLWXnl2vZ7x3R")
         AnswerBot.INSTANCE.init(Zendesk.INSTANCE, Guide.INSTANCE);
 
 
@@ -575,7 +571,7 @@ class HomeFragment : SliderFragment() {
             delay(1000)
             MessagingActivity.builder()
                 .withEngines(answerEngine, supportEngine, chatEngine)
-                .withBotLabelString("Alicia")
+                .withBotLabelString("Febys")
                 .show(requireContext())
         }
 

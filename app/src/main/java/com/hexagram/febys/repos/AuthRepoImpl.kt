@@ -229,12 +229,12 @@ class AuthRepoImpl @Inject constructor(
         return getConsumer()?.notification ?: false
     }
 
-    fun updateNotificationSubscription(topic: String, notify: Boolean) {
-        if (notify) {
-            FirebaseUtils.subscribeToTopic(topic)
-        } else {
-            FirebaseUtils.unSubscribeToTopic(topic)
+        fun updateNotificationSubscription(topic: String, notify: Boolean) {
+            if (notify) {
+                FirebaseUtils.subscribeToTopic(topic)
+            } else {
+                FirebaseUtils.unSubscribeToTopic(topic)
+            }
         }
-    }
 
 }
